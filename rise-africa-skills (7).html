@@ -1,0 +1,1910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rise Africa Skills</title>
+<style>
+:root{--primary:#2563eb;--primary-dark:#1d4ed8;--secondary:#f59e0b;--success:#10b981;--danger:#ef4444;--warning:#f97316;--dark:#1f2937;--light:#f3f4f6;--white:#ffffff;--gray:#6b7280;--border:#e5e7eb;--shadow:0 4px 6px -1px rgba(0,0,0,0.1);--shadow-lg:0 10px 15px -3px rgba(0,0,0,0.1)}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+body{background:var(--light);color:var(--dark);line-height:1.6}
+.container{max-width:1200px;margin:0 auto;padding:0 1rem}
+.btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.625rem 1.25rem;border-radius:0.5rem;border:none;cursor:pointer;font-size:0.875rem;font-weight:600;transition:all 0.2s}
+.btn-primary{background:var(--primary);color:var(--white)}.btn-primary:hover{background:var(--primary-dark)}
+.btn-secondary{background:var(--secondary);color:var(--white)}.btn-secondary:hover{filter:brightness(0.9)}
+.btn-success{background:var(--success);color:var(--white)}.btn-success:hover{filter:brightness(0.9)}
+.btn-danger{background:var(--danger);color:var(--white)}.btn-danger:hover{filter:brightness(0.9)}
+.btn-sm{padding:0.375rem 0.75rem;font-size:0.75rem}
+.btn-outline{background:transparent;border:2px solid var(--primary);color:var(--primary)}
+.btn-outline:hover{background:var(--primary);color:var(--white)}
+.card{background:var(--white);border-radius:0.75rem;box-shadow:var(--shadow);padding:1.5rem;margin-bottom:1rem}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;margin-bottom:0.375rem;font-weight:500;font-size:0.875rem;color:var(--gray)}
+.form-control{width:100%;padding:0.625rem 0.875rem;border:1px solid var(--border);border-radius:0.5rem;font-size:0.875rem;transition:border-color 0.2s}
+.form-control:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,0.1)}
+.badge{display:inline-flex;align-items:center;padding:0.25rem 0.625rem;border-radius:9999px;font-size:0.75rem;font-weight:600}
+.badge-success{background:#d1fae5;color:#065f46}.badge-warning{background:#fef3c7;color:#92400e}.badge-danger{background:#fee2e2;color:#991b1b}.badge-info{background:#dbeafe;color:#1e40af}
+.table{width:100%;border-collapse:collapse;font-size:0.875rem}
+.table th,.table td{padding:0.75rem 1rem;text-align:left;border-bottom:1px solid var(--border)}
+.table th{font-weight:600;color:var(--gray);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em}
+.table tbody tr:hover{background:var(--light)}
+.grid{display:grid;gap:1.5rem}
+.grid-2{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:repeat(3,1fr)}.grid-4{grid-template-columns:repeat(4,1fr)}
+.flex{display:flex;align-items:center;gap:0.75rem}.flex-between{display:flex;align-items:center;justify-content:space-between}
+.text-center{text-align:center}.text-right{text-align:right}.text-sm{font-size:0.875rem}.text-xs{font-size:0.75rem}
+.text-gray{color:var(--gray)}.text-primary{color:var(--primary)}.text-success{color:var(--success)}.text-danger{color:var(--danger)}
+.mb-1{margin-bottom:0.5rem}.mb-2{margin-bottom:1rem}.mb-3{margin-bottom:1.5rem}.mt-1{margin-top:0.5rem}.mt-2{margin-top:1rem}
+.p-1{padding:0.5rem}.p-2{padding:1rem}.p-3{padding:1.5rem}
+.hidden{display:none !important}.w-full{width:100%}
+.progress-bar{height:0.5rem;background:var(--light);border-radius:9999px;overflow:hidden}
+.progress-bar-fill{height:100%;background:var(--primary);border-radius:9999px;transition:width 0.3s}
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;padding:1rem 1.5rem;border-radius:0.5rem;color:var(--white);font-weight:500;box-shadow:var(--shadow-lg);z-index:9999;animation:slideIn 0.3s ease}
+.toast.success{background:var(--success)}.toast.error{background:var(--danger)}.toast.info{background:var(--primary)}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes fadeOut{from{opacity:1}to{opacity:0}}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:9998}
+.modal{background:var(--white);border-radius:0.75rem;max-width:600px;width:90%;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow-lg)}
+.modal-header{padding:1.5rem 1.5rem 0}.modal-body{padding:1.5rem}.modal-footer{padding:0 1.5rem 1.5rem;display:flex;gap:0.75rem;justify-content:flex-end}
+.tabs{display:flex;gap:0.25rem;border-bottom:2px solid var(--border);margin-bottom:1.5rem;overflow-x:auto}
+.tab{padding:0.75rem 1.25rem;font-weight:600;font-size:0.875rem;color:var(--gray);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all 0.2s}
+.tab.active{color:var(--primary);border-bottom-color:var(--primary)}
+.tab:hover{color:var(--primary)}
+.search-box{position:relative}.search-box input{padding-left:2.5rem}
+.search-box::before{content:"🔍";position:absolute;left:0.75rem;top:50%;transform:translateY(-50%);font-size:0.875rem}
+.pagination{display:flex;gap:0.5rem;justify-content:center;margin-top:1.5rem}
+.pagination button{padding:0.5rem 0.875rem;border:1px solid var(--border);background:var(--white);border-radius:0.375rem;cursor:pointer;font-size:0.875rem}
+.pagination button:hover{background:var(--light)}.pagination button.active{background:var(--primary);color:var(--white);border-color:var(--primary)}
+.offline-bar{background:var(--warning);color:var(--white);text-align:center;padding:0.5rem;font-size:0.875rem;font-weight:500;position:fixed;top:0;left:0;right:0;z-index:9997}
+.nav{position:sticky;top:0;background:var(--white);box-shadow:var(--shadow);z-index:100}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:1rem 0}
+.nav-links{display:flex;gap:1.5rem;align-items:center}
+.nav-link{color:var(--gray);text-decoration:none;font-weight:500;font-size:0.875rem;transition:color 0.2s}
+.nav-link:hover,.nav-link.active{color:var(--primary)}
+.hero{background:linear-gradient(135deg,var(--primary) 0%,#1e40af 100%);color:var(--white);padding:5rem 0;text-align:center}
+.hero h1{font-size:3rem;font-weight:800;margin-bottom:1rem}
+.hero p{font-size:1.25rem;opacity:0.9;max-width:600px;margin:0 auto 2rem}
+.section{padding:4rem 0}
+.section-title{font-size:2rem;font-weight:700;text-align:center;margin-bottom:3rem}
+.course-card{background:var(--white);border-radius:0.75rem;overflow:hidden;box-shadow:var(--shadow);transition:transform 0.2s,box-shadow 0.2s}
+.course-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.course-image{height:180px;background:linear-gradient(135deg,var(--primary),#3b82f6);display:flex;align-items:center;justify-content:center;color:var(--white);font-size:3rem}
+.course-body{padding:1.25rem}
+.course-title{font-size:1.125rem;font-weight:700;margin-bottom:0.5rem}
+.course-meta{display:flex;gap:1rem;color:var(--gray);font-size:0.75rem;margin-bottom:0.75rem}
+.price-tag{font-size:1.5rem;font-weight:800;color:var(--primary)}
+.price-original{font-size:0.875rem;color:var(--gray);text-decoration:line-through}
+.feature-icon{width:48px;height:48px;background:var(--primary);color:var(--white);border-radius:0.75rem;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1rem}
+.testimonial-card{background:var(--white);border-radius:0.75rem;padding:1.5rem;box-shadow:var(--shadow)}
+.faq-item{background:var(--white);border-radius:0.5rem;margin-bottom:0.75rem;overflow:hidden}
+.faq-question{padding:1rem 1.25rem;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.faq-answer{padding:0 1.25rem 1rem;color:var(--gray);display:none}
+.faq-item.open .faq-answer{display:block}
+.lesson-player{background:var(--dark);border-radius:0.75rem;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;color:var(--white);font-size:4rem;position:relative}
+.lesson-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.cert-frame{border:12px solid var(--secondary);padding:3rem;text-align:center;background:linear-gradient(135deg,#fffbeb,#fef3c7);border-radius:0.5rem;position:relative}
+.cert-frame::before{content:"";position:absolute;inset:4px;border:2px solid var(--secondary);border-radius:0.25rem;pointer-events:none}
+.cert-seal{width:80px;height:80px;background:var(--secondary);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);font-size:2rem;margin:1.5rem auto;box-shadow:0 4px 12px rgba(245,158,11,0.4)}
+.stat-card{background:var(--white);border-radius:0.75rem;padding:1.5rem;box-shadow:var(--shadow);text-align:center}
+.stat-value{font-size:2rem;font-weight:800;color:var(--primary)}
+.stat-label{font-size:0.875rem;color:var(--gray);margin-top:0.25rem}
+.chart-bar{background:var(--light);border-radius:0.375rem;height:1.5rem;overflow:hidden;margin-bottom:0.5rem}
+.chart-bar-fill{height:100%;background:var(--primary);border-radius:0.375rem;transition:width 0.5s ease}
+@media(max-width:768px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}.hero h1{font-size:2rem}.nav-links{display:none}.mobile-menu{display:block}}
+@media(min-width:769px){.mobile-menu{display:none}}
+</style>
+</head>
+<body>
+<div id="offlineBar" class="offline-bar hidden">📴 You are offline. Changes will sync when you reconnect.</div>
+<nav class="nav">
+<div class="container nav-inner">
+<a href="#" onclick="app.navigate('home')" style="font-size:1.5rem;font-weight:800;color:var(--primary);text-decoration:none">🌍 Rise Africa</a>
+<div class="nav-links" id="navLinks">
+<a href="#" class="nav-link" onclick="app.navigate('courses')">Courses</a>
+<a href="#" class="nav-link" onclick="app.navigate('dashboard')" id="navDashboard">Dashboard</a>
+<a href="#" class="nav-link" onclick="app.navigate('cart')">Cart <span id="cartBadge" class="badge badge-danger" style="display:none">0</span></a>
+<a href="#" class="nav-link" onclick="app.navigate('profile')" id="navProfile">Profile</a>
+<a href="#" class="nav-link" onclick="app.navigate('admin')" id="navAdmin" style="display:none">Admin</a>
+<a href="#" class="nav-link" onclick="app.logout()" id="navLogout">Logout</a>
+<a href="#" class="nav-link" onclick="app.navigate('login')" id="navLogin">Login</a>
+</div>
+<button class="mobile-menu btn btn-sm btn-outline" onclick="app.toggleMobileMenu()">☰</button>
+</div>
+</nav>
+
+<div id="app"></div>
+
+<script>
+// ==================== INDEXEDDB DATABASE LAYER ====================
+const DB_NAME = 'RiseAfricaDB';
+const DB_VERSION = 1;
+
+class Database {
+  constructor() {
+    this.db = null;
+    this.apiBase = localStorage.getItem('apiBase') || '';
+    this.syncQueue = [];
+    this.initSync();
+  }
+
+  async open() {
+    if (this.db) return this.db;
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(DB_NAME, DB_VERSION);
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => { this.db = request.result; resolve(this.db); };
+      request.onupgradeneeded = (e) => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains('users')) {
+          const users = db.createObjectStore('users', { keyPath: 'email' });
+          users.createIndex('role', 'role', { unique: false });
+          users.createIndex('status', 'status', { unique: false });
+        }
+        if (!db.objectStoreNames.contains('courses')) {
+          const courses = db.createObjectStore('courses', { keyPath: 'id', autoIncrement: true });
+          courses.createIndex('category', 'category', { unique: false });
+        }
+        if (!db.objectStoreNames.contains('purchases')) {
+          const purchases = db.createObjectStore('purchases', { keyPath: 'id', autoIncrement: true });
+          purchases.createIndex('userEmail', 'userEmail', { unique: false });
+          purchases.createIndex('courseId', 'courseId', { unique: false });
+        }
+        if (!db.objectStoreNames.contains('certificates')) {
+          db.createObjectStore('certificates', { keyPath: 'uniqueId' });
+        }
+        if (!db.objectStoreNames.contains('activity_log')) {
+          const logs = db.createObjectStore('activity_log', { keyPath: 'id', autoIncrement: true });
+          logs.createIndex('time', 'time', { unique: false });
+        }
+        if (!db.objectStoreNames.contains('prices')) db.createObjectStore('prices', { keyPath: 'id' });
+        if (!db.objectStoreNames.contains('settings')) db.createObjectStore('settings', { keyPath: 'key' });
+        if (!db.objectStoreNames.contains('syncQueue')) db.createObjectStore('syncQueue', { keyPath: 'id', autoIncrement: true });
+      };
+    });
+  }
+
+  async transaction(storeName, mode = 'readonly') {
+    const db = await this.open();
+    return db.transaction(storeName, mode).objectStore(storeName);
+  }
+
+  async getAll(storeName, indexName = null, query = null) {
+    const store = await this.transaction(storeName);
+    const source = indexName ? store.index(indexName) : store;
+    return new Promise((resolve, reject) => {
+      const request = query ? source.getAll(query) : source.getAll();
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  async get(storeName, key) {
+    const store = await this.transaction(storeName);
+    return new Promise((resolve, reject) => {
+      const request = store.get(key);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  async put(storeName, data) {
+    const store = await this.transaction(storeName, 'readwrite');
+    return new Promise((resolve, reject) => {
+      const request = store.put(data);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  async delete(storeName, key) {
+    const store = await this.transaction(storeName, 'readwrite');
+    return new Promise((resolve, reject) => {
+      const request = store.delete(key);
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  async clear(storeName) {
+    const store = await this.transaction(storeName, 'readwrite');
+    return new Promise((resolve, reject) => {
+      const request = store.clear();
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  async query(storeName, indexName, range) {
+    const store = await this.transaction(storeName);
+    const index = store.index(indexName);
+    return new Promise((resolve, reject) => {
+      const request = index.getAll(range);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  // ==================== API SYNC LAYER ====================
+  initSync() {
+    window.addEventListener('online', () => this.processSyncQueue());
+    if (navigator.onLine) this.processSyncQueue();
+  }
+
+  async apiRequest(method, endpoint, data = null) {
+    if (!this.apiBase || !navigator.onLine) {
+      if (data) await this.queueForSync(method, endpoint, data);
+      return null;
+    }
+    try {
+      const options = { method, headers: { 'Content-Type': 'application/json' } };
+      if (data) options.body = JSON.stringify(data);
+      const res = await fetch(this.apiBase + endpoint, options);
+      if (!res.ok) throw new Error(res.statusText);
+      return await res.json();
+    } catch (e) {
+      if (data) await this.queueForSync(method, endpoint, data);
+      return null;
+    }
+  }
+
+  async queueForSync(method, endpoint, data) {
+    await this.put('syncQueue', { method, endpoint, data, timestamp: Date.now() });
+  }
+
+  async processSyncQueue() {
+    if (!this.apiBase || !navigator.onLine) return;
+    const items = await this.getAll('syncQueue');
+    for (const item of items) {
+      try {
+        await this.apiRequest(item.method, item.endpoint, item.data);
+        await this.delete('syncQueue', item.id);
+      } catch (e) { break; }
+    }
+  }
+
+  async getSettings() {
+    const all = await this.getAll('settings');
+    const map = {};
+    all.forEach(s => map[s.key] = s.value);
+    return {
+      siteName: map.siteName || 'Rise Africa Skills',
+      supportEmail: map.supportEmail || 'support@rise.africa',
+      maintenance: map.maintenance || false,
+      ...map
+    };
+  }
+
+  async setSetting(key, value) {
+    await this.put('settings', { key, value });
+    await this.apiRequest('POST', '/api/settings', { key, value });
+  }
+
+  async logActivity(user, action, details) {
+    const entry = { time: Date.now(), user, action, details };
+    await this.put('activity_log', entry);
+    await this.apiRequest('POST', '/api/activity', entry);
+  }
+}
+
+const db = new Database();
+
+// ==================== APPLICATION STATE ====================
+const app = {
+  currentUser: null,
+  cart: [],
+  currentPage: 'home',
+  page: 1,
+  pageSize: 10,
+  filters: { search: '', category: '', role: '', status: '', type: '', dateFrom: '', dateTo: '' },
+  sort: { field: 'time', dir: 'desc' },
+
+  async init() {
+    await db.open();
+    await this.loadDemoData();
+    this.currentUser = JSON.parse(sessionStorage.getItem('currentUser') || 'null');
+    this.cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    this.updateNav();
+    this.navigate('home');
+    this.setupOfflineBar();
+  },
+
+  setupOfflineBar() {
+    const bar = document.getElementById('offlineBar');
+    const update = () => {
+      if (navigator.onLine) bar.classList.add('hidden');
+      else bar.classList.remove('hidden');
+    };
+    window.addEventListener('online', update);
+    window.addEventListener('offline', update);
+    update();
+  },
+
+  async loadDemoData() {
+    const existing = await db.getAll('users');
+    if (existing.length > 0) return;
+
+    const prices = { id: 'default', readonly: 3.50, full: 8.00, certificate: 10.00 };
+    await db.put('prices', prices);
+
+    const settings = [
+      { key: 'siteName', value: 'Rise Africa Skills' },
+      { key: 'supportEmail', value: 'support@rise.africa' },
+      { key: 'maintenance', value: false }
+    ];
+    for (const s of settings) await db.put('settings', s);
+
+    const users = [
+      { email: 'admin@rise.africa', name: 'Admin User', password: 'admin', role: 'admin', status: 'active', joined: Date.now() - 86400000 * 30, progress: {} },
+      { email: 'user@rise.africa', name: 'John Student', password: 'password', role: 'student', status: 'active', joined: Date.now() - 86400000 * 20, progress: { '1': { completed: [1,2,3,4,5], total: 5 }, '2': { completed: [1,2], total: 4 } } },
+      { email: 'amina@example.com', name: 'Amina Diallo', password: 'pass123', role: 'student', status: 'active', joined: Date.now() - 86400000 * 10, progress: {} }
+    ];
+    for (const u of users) await db.put('users', u);
+
+    const courses = [
+      { id: 1, title: 'Web Development Fundamentals', category: 'Technology', description: 'Learn HTML, CSS, and JavaScript from scratch.', image: '💻', price: 10.00, lessons: [{id:1,title:'HTML Basics',duration:'15 min'},{id:2,title:'CSS Styling',duration:'20 min'},{id:3,title:'JavaScript Intro',duration:'25 min'},{id:4,title:'DOM Manipulation',duration:'20 min'},{id:5,title:'Build a Project',duration:'30 min'}], createdAt: Date.now() - 86400000 * 25 },
+      { id: 2, title: 'Digital Marketing Mastery', category: 'Business', description: 'SEO, social media, and email marketing strategies.', image: '📈', price: 10.00, lessons: [{id:1,title:'SEO Fundamentals',duration:'18 min'},{id:2,title:'Social Media Strategy',duration:'22 min'},{id:3,title:'Email Campaigns',duration:'20 min'},{id:4,title:'Analytics & Tracking',duration:'25 min'}], createdAt: Date.now() - 86400000 * 20 },
+      { id: 3, title: 'Graphic Design with Canva', category: 'Design', description: 'Create stunning visuals for social media and print.', image: '🎨', price: 10.00, lessons: [{id:1,title:'Canva Interface',duration:'12 min'},{id:2,title:'Color Theory',duration:'15 min'},{id:3,title:'Typography',duration:'18 min'},{id:4,title:'Social Media Posts',duration:'20 min'},{id:5,title:'Brand Identity',duration:'25 min'}], createdAt: Date.now() - 86400000 * 18 },
+      { id: 4, title: 'Data Analysis with Excel', category: 'Technology', description: 'Master pivot tables, charts, and data visualization.', image: '📊', price: 10.00, lessons: [{id:1,title:'Excel Basics',duration:'15 min'},{id:2,title:'Formulas & Functions',duration:'25 min'},{id:3,title:'Pivot Tables',duration:'20 min'},{id:4,title:'Charts & Graphs',duration:'18 min'}], createdAt: Date.now() - 86400000 * 15 },
+      { id: 5, title: 'Entrepreneurship 101', category: 'Business', description: 'Start and grow your own business in Africa.', image: '🚀', price: 10.00, lessons: [{id:1,title:'Business Ideation',duration:'20 min'},{id:2,title:'Market Research',duration:'25 min'},{id:3,title:'Business Planning',duration:'30 min'},{id:4,title:'Funding & Investment',duration:'28 min'},{id:5,title:'Launch Strategy',duration:'22 min'}], createdAt: Date.now() - 86400000 * 12 },
+      { id: 6, title: 'Public Speaking & Communication', category: 'Personal Development', description: 'Overcome fear and deliver powerful presentations.', image: '🎤', price: 10.00, lessons: [{id:1,title:'Overcoming Fear',duration:'15 min'},{id:2,title:'Voice & Tone',duration:'18 min'},{id:3,title:'Body Language',duration:'20 min'},{id:4,title:'Storytelling',duration:'22 min'}], createdAt: Date.now() - 86400000 * 10 },
+      { id: 7, title: 'Financial Literacy', category: 'Finance', description: 'Budgeting, saving, investing, and wealth building.', image: '💰', price: 10.00, lessons: [{id:1,title:'Budgeting Basics',duration:'15 min'},{id:2,title:'Saving Strategies',duration:'18 min'},{id:3,title:'Introduction to Investing',duration:'25 min'},{id:4,title:'Debt Management',duration:'20 min'},{id:5,title:'Wealth Building',duration:'22 min'}], createdAt: Date.now() - 86400000 * 8 },
+      { id: 8, title: 'Agricultural Technology', category: 'Agriculture', description: 'Modern farming techniques and agri-tech tools.', image: '🌾', price: 10.00, lessons: [{id:1,title:'Soil Science',duration:'20 min'},{id:2,title:'Irrigation Systems',duration:'22 min'},{id:3,title:'Crop Management',duration:'25 min'},{id:4,title:'Agri-Tech Tools',duration:'28 min'}], createdAt: Date.now() - 86400000 * 5 }
+    ];
+    for (const c of courses) await db.put('courses', c);
+
+    const purchases = [
+      { id: 1, userEmail: 'user@rise.africa', courseId: 1, type: 'certificate', amount: 10.00, date: Date.now() - 86400000 * 15, status: 'completed' },
+      { id: 2, userEmail: 'user@rise.africa', courseId: 2, type: 'full', amount: 8.00, date: Date.now() - 86400000 * 10, status: 'completed' },
+      { id: 3, userEmail: 'amina@example.com', courseId: 1, type: 'readonly', amount: 3.50, date: Date.now() - 86400000 * 5, status: 'completed' },
+      { id: 4, userEmail: 'amina@example.com', courseId: 3, type: 'full', amount: 8.00, date: Date.now() - 86400000 * 3, status: 'completed' },
+      { id: 5, userEmail: 'user@rise.africa', courseId: 3, type: 'certificate', amount: 10.00, date: Date.now() - 86400000 * 2, status: 'completed' }
+    ];
+    for (const p of purchases) await db.put('purchases', p);
+
+    const certificates = [
+      { uniqueId: 'RAS-2026-001', userEmail: 'user@rise.africa', courseId: 1, courseTitle: 'Web Development Fundamentals', userName: 'John Student', issueDate: Date.now() - 86400000 * 10 }
+    ];
+    for (const c of certificates) await db.put('certificates', c);
+
+    const logs = [
+      { time: Date.now() - 86400000 * 5, user: 'admin@rise.africa', action: 'User Created', details: 'Created amina@example.com' },
+      { time: Date.now() - 86400000 * 3, user: 'user@rise.africa', action: 'Course Purchased', details: 'Web Development Fundamentals (Certificate)' },
+      { time: Date.now() - 86400000 * 2, user: 'amina@example.com', action: 'Course Purchased', details: 'Graphic Design with Canva (Full)' },
+      { time: Date.now() - 86400000 * 1, user: 'admin@rise.africa', action: 'Price Updated', details: 'Changed certificate price to $10.00' }
+    ];
+    for (const l of logs) await db.put('activity_log', l);
+  },
+
+  // ==================== AUTH ====================
+  async login(email, password) {
+    const user = await db.get('users', email);
+    if (!user || user.password !== password) {
+      this.toast('Invalid email or password', 'error');
+      return false;
+    }
+    if (user.status === 'banned') {
+      this.toast('Your account has been banned. Contact support.', 'error');
+      return false;
+    }
+    this.currentUser = user;
+    sessionStorage.setItem('currentUser', JSON.stringify(user));
+    await db.logActivity(user.email, 'Login', 'User logged in');
+    this.updateNav();
+    this.toast(`Welcome back, ${user.name}!`, 'success');
+    this.navigate('dashboard');
+    return true;
+  },
+
+  async register(name, email, password) {
+    const existing = await db.get('users', email);
+    if (existing) {
+      this.toast('Email already registered', 'error');
+      return false;
+    }
+    const user = { email, name, password, role: 'student', status: 'active', joined: Date.now(), progress: {} };
+    await db.put('users', user);
+    await db.apiRequest('POST', '/api/users', user);
+    await db.logActivity(email, 'Register', 'New account created');
+    this.toast('Account created! Please log in.', 'success');
+    this.navigate('login');
+    return true;
+  },
+
+  logout() {
+    if (this.currentUser) db.logActivity(this.currentUser.email, 'Logout', 'User logged out');
+    this.currentUser = null;
+    sessionStorage.removeItem('currentUser');
+    this.cart = [];
+    localStorage.removeItem('cart');
+    this.updateNav();
+    this.toast('Logged out successfully', 'info');
+    this.navigate('home');
+  },
+
+  async updateProfile(data) {
+    if (!this.currentUser) return;
+    const user = await db.get('users', this.currentUser.email);
+    Object.assign(user, data);
+    await db.put('users', user);
+    await db.apiRequest('PUT', `/api/users/${user.email}`, user);
+    this.currentUser = user;
+    sessionStorage.setItem('currentUser', JSON.stringify(user));
+    this.toast('Profile updated!', 'success');
+  },
+
+  updateNav() {
+    const loggedIn = !!this.currentUser;
+    const isAdmin = loggedIn && this.currentUser.role === 'admin';
+    document.getElementById('navLogin').style.display = loggedIn ? 'none' : '';
+    document.getElementById('navLogout').style.display = loggedIn ? '' : 'none';
+    document.getElementById('navProfile').style.display = loggedIn ? '' : 'none';
+    document.getElementById('navDashboard').style.display = loggedIn ? '' : 'none';
+    document.getElementById('navAdmin').style.display = isAdmin ? '' : 'none';
+    this.updateCartBadge();
+  },
+
+  updateCartBadge() {
+    const badge = document.getElementById('cartBadge');
+    if (this.cart.length > 0) { badge.textContent = this.cart.length; badge.style.display = ''; }
+    else badge.style.display = 'none';
+  },
+
+  // ==================== NAVIGATION ====================
+  navigate(page, params = {}) {
+    this.currentPage = page;
+    window.scrollTo(0, 0);
+    const appEl = document.getElementById('app');
+    const settings = db.getSettings();
+
+    switch (page) {
+      case 'home': appEl.innerHTML = this.renderHome(); break;
+      case 'courses': appEl.innerHTML = this.renderCourses(); break;
+      case 'course': appEl.innerHTML = this.renderCourseDetail(params.id); break;
+      case 'cart': appEl.innerHTML = this.renderCart(); break;
+      case 'checkout': appEl.innerHTML = this.renderCheckout(); break;
+      case 'login': appEl.innerHTML = this.renderLogin(); break;
+      case 'register': appEl.innerHTML = this.renderRegister(); break;
+      case 'dashboard': appEl.innerHTML = this.renderDashboard(); break;
+      case 'profile': appEl.innerHTML = this.renderProfile(); break;
+      case 'lesson': appEl.innerHTML = this.renderLesson(params.courseId, params.lessonId); break;
+      case 'certificate': appEl.innerHTML = this.renderCertificate(params.id); break;
+      case 'admin': appEl.innerHTML = this.renderAdmin(params.tab || 'overview'); break;
+      default: appEl.innerHTML = this.renderHome();
+    }
+
+    // Re-attach event listeners for dynamic content
+    if (page === 'courses') this.attachCourseFilters();
+    if (page === 'admin') this.attachAdminEvents(params.tab || 'overview');
+    if (page === 'dashboard') this.attachDashboardEvents();
+    if (page === 'home') this.attachHomeEvents();
+  },
+
+  toggleMobileMenu() {
+    const links = document.getElementById('navLinks');
+    links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+    if (links.style.display === 'flex') {
+      links.style.position = 'absolute';
+      links.style.top = '60px';
+      links.style.left = '0';
+      links.style.right = '0';
+      links.style.background = 'var(--white)';
+      links.style.flexDirection = 'column';
+      links.style.padding = '1rem';
+      links.style.boxShadow = 'var(--shadow-lg)';
+    }
+  },
+
+  toast(message, type = 'info') {
+    const existing = document.querySelector('.toast');
+    if (existing) existing.remove();
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => { toast.style.animation = 'fadeOut 0.3s ease'; setTimeout(() => toast.remove(), 300); }, 3000);
+  },
+
+  formatDate(ts) {
+    return new Date(ts).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  },
+
+  formatCurrency(n) {
+    return '$' + parseFloat(n).toFixed(2);
+  }
+};
+
+// ==================== HOME PAGE ====================
+app.renderHome = function() {
+  return `
+  <div class="hero">
+    <div class="container">
+      <h1>🌍 Rise Africa Skills</h1>
+      <p>Empowering African youth with world-class digital skills. Learn anytime, anywhere — even offline.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-secondary" style="font-size:1rem;padding:0.875rem 2rem" onclick="app.navigate('courses')">Explore Courses</button>
+        <button class="btn" style="font-size:1rem;padding:0.875rem 2rem;background:rgba(255,255,255,0.2);color:white;border:2px solid rgba(255,255,255,0.5)" onclick="app.navigate('register')">Get Started Free</button>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <h2 class="section-title">Why Learn With Us?</h2>
+      <div class="grid grid-4" style="margin-bottom:3rem">
+        <div class="card text-center">
+          <div class="feature-icon">📚</div>
+          <h3 style="font-size:1.125rem;font-weight:700;margin-bottom:0.5rem">8+ Courses</h3>
+          <p class="text-gray text-sm">Carefully curated for the African job market</p>
+        </div>
+        <div class="card text-center">
+          <div class="feature-icon">💻</div>
+          <h3 style="font-size:1.125rem;font-weight:700;margin-bottom:0.5rem">Learn Offline</h3>
+          <p class="text-gray text-sm">Download lessons and study without internet</p>
+        </div>
+        <div class="card text-center">
+          <div class="feature-icon">🏆</div>
+          <h3 style="font-size:1.125rem;font-weight:700;margin-bottom:0.5rem">Certificates</h3>
+          <p class="text-gray text-sm">Earn verified digital certificates</p>
+        </div>
+        <div class="card text-center">
+          <div class="feature-icon">💰</div>
+          <h3 style="font-size:1.125rem;font-weight:700;margin-bottom:0.5rem">Affordable</h3>
+          <p class="text-gray text-sm">Starting from just $3.50 per course</p>
+        </div>
+      </div>
+      <h2 class="section-title">Featured Courses</h2>
+      <div class="grid grid-4" id="featuredCourses"></div>
+      <div class="text-center mt-2">
+        <button class="btn btn-primary" onclick="app.navigate('courses')">View All Courses</button>
+      </div>
+    </div>
+  </div>
+  <div class="section" style="background:var(--white)">
+    <div class="container">
+      <h2 class="section-title">What Our Students Say</h2>
+      <div class="grid grid-3">
+        <div class="testimonial-card">
+          <p style="font-style:italic;margin-bottom:1rem">"Rise Africa changed my life. I went from unemployed to a full-time web developer in 3 months!"</p>
+          <div class="flex">
+            <div style="width:40px;height:40px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700">K</div>
+            <div><div style="font-weight:600">Kwame Asante</div><div class="text-gray text-xs">Web Developer, Ghana</div></div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p style="font-style:italic;margin-bottom:1rem">"The offline mode is a game-changer. I can study on the bus without worrying about data."</p>
+          <div class="flex">
+            <div style="width:40px;height:40px;background:var(--secondary);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700">A</div>
+            <div><div style="font-weight:600">Amina Diallo</div><div class="text-gray text-xs">Digital Marketer, Senegal</div></div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p style="font-style:italic;margin-bottom:1rem">"The certificates helped me land my first client. Professional and recognized."</p>
+          <div class="flex">
+            <div style="width:40px;height:40px;background:var(--success);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700">T</div>
+            <div><div style="font-weight:600">Thabo Mokoena</div><div class="text-gray text-xs">Freelance Designer, South Africa</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container" style="max-width:800px">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <div id="faqContainer"></div>
+    </div>
+  </div>
+  <footer style="background:var(--dark);color:var(--white);padding:3rem 0;text-align:center">
+    <div class="container">
+      <h3 style="font-size:1.5rem;margin-bottom:1rem">🌍 Rise Africa Skills</h3>
+      <p class="text-gray" style="margin-bottom:1.5rem">Empowering the next generation of African leaders through digital education.</p>
+      <p class="text-sm text-gray">© 2026 Rise Africa Skills. All rights reserved.</p>
+    </div>
+  </footer>`;
+};
+
+app.attachHomeEvents = async function() {
+  const courses = await db.getAll('courses');
+  const featured = courses.slice(0, 4);
+  const container = document.getElementById('featuredCourses');
+  if (container) {
+    container.innerHTML = featured.map(c => `
+      <div class="course-card" onclick="app.navigate('course', {id:${c.id}})">
+        <div class="course-image">${c.image}</div>
+        <div class="course-body">
+          <div class="course-title">${c.title}</div>
+          <div class="course-meta"><span>${c.category}</span><span>${c.lessons.length} lessons</span></div>
+          <div class="flex-between">
+            <span class="price-tag">$${c.price.toFixed(2)}</span>
+            <button class="btn btn-sm btn-primary" onclick="event.stopPropagation();app.addToCart(${c.id})">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  const faqs = [
+    { q: 'How do the pricing tiers work?', a: 'Read-Only ($3.50) gives you access to lessons. Full ($8.00) includes downloads and progress tracking. Full + Certificate ($10.00) adds a verified digital certificate upon completion.' },
+    { q: 'Can I learn offline?', a: 'Yes! Our service worker caches all course content. Once loaded, you can study without an internet connection.' },
+    { q: 'Are the certificates recognized?', a: 'Our certificates include a unique verification ID. Employers can verify authenticity online.' },
+    { q: 'What payment methods do you accept?', a: 'Currently we support demo payments. In production, we will integrate Stripe, PayPal, and M-Pesa.' },
+    { q: 'Can I get a refund?', a: 'Yes, refunds are available within 7 days of purchase if you have completed less than 20% of the course.' }
+  ];
+  const faqContainer = document.getElementById('faqContainer');
+  if (faqContainer) {
+    faqContainer.innerHTML = faqs.map((f, i) => `
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-question">${f.q}<span>▼</span></div>
+        <div class="faq-answer">${f.a}</div>
+      </div>
+    `).join('');
+  }
+};
+
+// ==================== COURSES PAGE ====================
+app.renderCourses = function() {
+  return `
+  <div class="section">
+    <div class="container">
+      <h1 class="section-title">Course Catalog</h1>
+      <div class="card" style="margin-bottom:2rem">
+        <div class="grid grid-3" style="gap:1rem">
+          <div class="search-box">
+            <input type="text" class="form-control" id="courseSearch" placeholder="Search courses..." value="${this.filters.search}">
+          </div>
+          <select class="form-control" id="courseCategory">
+            <option value="">All Categories</option>
+            <option value="Technology">Technology</option>
+            <option value="Business">Business</option>
+            <option value="Design">Design</option>
+            <option value="Finance">Finance</option>
+            <option value="Agriculture">Agriculture</option>
+            <option value="Personal Development">Personal Development</option>
+          </select>
+          <select class="form-control" id="courseSort">
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+            <option value="az">A-Z</option>
+            <option value="za">Z-A</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid grid-3" id="coursesGrid"></div>
+      <div id="coursesPagination"></div>
+    </div>
+  </div>`;
+};
+
+app.attachCourseFilters = async function() {
+  const render = async () => {
+    const search = document.getElementById('courseSearch').value.toLowerCase();
+    const category = document.getElementById('courseCategory').value;
+    const sort = document.getElementById('courseSort').value;
+    let courses = await db.getAll('courses');
+    if (search) courses = courses.filter(c => c.title.toLowerCase().includes(search) || c.description.toLowerCase().includes(search));
+    if (category) courses = courses.filter(c => c.category === category);
+    if (sort === 'az') courses.sort((a, b) => a.title.localeCompare(b.title));
+    if (sort === 'za') courses.sort((a, b) => b.title.localeCompare(a.title));
+    if (sort === 'newest') courses.sort((a, b) => b.createdAt - a.createdAt);
+    if (sort === 'oldest') courses.sort((a, b) => a.createdAt - b.createdAt);
+
+    const grid = document.getElementById('coursesGrid');
+    if (grid) {
+      grid.innerHTML = courses.map(c => `
+        <div class="course-card" onclick="app.navigate('course', {id:${c.id}})">
+          <div class="course-image">${c.image}</div>
+          <div class="course-body">
+            <div style="display:flex;gap:0.5rem;margin-bottom:0.5rem">
+              <span class="badge badge-info">${c.category}</span>
+            </div>
+            <div class="course-title">${c.title}</div>
+            <p class="text-gray text-sm" style="margin-bottom:0.75rem">${c.description}</p>
+            <div class="course-meta"><span>${c.lessons.length} lessons</span></div>
+            <div class="flex-between">
+              <span class="price-tag">$${c.price.toFixed(2)}</span>
+              <button class="btn btn-sm btn-primary" onclick="event.stopPropagation();app.addToCart(${c.id})">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+  };
+
+  document.getElementById('courseSearch').addEventListener('input', render);
+  document.getElementById('courseCategory').addEventListener('change', render);
+  document.getElementById('courseSort').addEventListener('change', render);
+  render();
+};
+
+// ==================== COURSE DETAIL ====================
+app.renderCourseDetail = async function(courseId) {
+  const course = await db.get('courses', courseId);
+  if (!course) return '<div class="section"><div class="container"><h1>Course not found</h1></div></div>';
+  const prices = await db.get('prices', 'default') || { readonly: 3.50, full: 8.00, certificate: 10.00 };
+  const hasAccess = this.currentUser && await this.hasCourseAccess(courseId);
+  const progress = this.currentUser && this.currentUser.progress && this.currentUser.progress[courseId];
+  const completedLessons = progress ? progress.completed : [];
+
+  return `
+  <div class="section">
+    <div class="container">
+      <div class="card" style="margin-bottom:2rem">
+        <div style="display:flex;gap:2rem;flex-wrap:wrap">
+          <div style="font-size:6rem;background:linear-gradient(135deg,var(--primary),#3b82f6);width:200px;height:200px;border-radius:1rem;display:flex;align-items:center;justify-content:center;color:white">${course.image}</div>
+          <div style="flex:1;min-width:280px">
+            <div style="display:flex;gap:0.5rem;margin-bottom:0.75rem">
+              <span class="badge badge-info">${course.category}</span>
+              <span class="badge badge-success">${course.lessons.length} Lessons</span>
+            </div>
+            <h1 style="font-size:2rem;font-weight:800;margin-bottom:0.75rem">${course.title}</h1>
+            <p class="text-gray" style="margin-bottom:1.5rem;font-size:1.125rem">${course.description}</p>
+            ${hasAccess ? `
+              <div class="mb-2">
+                <div class="flex-between text-sm mb-1"><span>Progress</span><span>${Math.round((completedLessons.length / course.lessons.length) * 100)}%</span></div>
+                <div class="progress-bar"><div class="progress-bar-fill" style="width:${(completedLessons.length / course.lessons.length) * 100}%"></div></div>
+              </div>
+              <button class="btn btn-primary" onclick="app.navigate('lesson', {courseId:${courseId},lessonId:${completedLessons.length < course.lessons.length ? course.lessons[completedLessons.length].id : course.lessons[0].id}})">
+                ${completedLessons.length > 0 ? 'Continue Learning' : 'Start Course'}
+              </button>
+            ` : `
+              <div class="grid grid-3" style="gap:1rem;margin-bottom:1rem">
+                <div class="card text-center" style="cursor:pointer;border:2px solid var(--border)" onclick="app.addToCart(${courseId}, 'readonly')">
+                  <div class="price-tag">$${prices.readonly.toFixed(2)}</div>
+                  <div class="text-sm text-gray">Read-Only Access</div>
+                </div>
+                <div class="card text-center" style="cursor:pointer;border:2px solid var(--primary)" onclick="app.addToCart(${courseId}, 'full')">
+                  <div class="price-tag">$${prices.full.toFixed(2)}</div>
+                  <div class="text-sm text-gray">Full Access</div>
+                </div>
+                <div class="card text-center" style="cursor:pointer;border:2px solid var(--secondary)" onclick="app.addToCart(${courseId}, 'certificate')">
+                  <div class="price-tag">$${prices.certificate.toFixed(2)}</div>
+                  <div class="text-sm text-gray">Full + Certificate</div>
+                </div>
+              </div>
+            `}
+          </div>
+        </div>
+      </div>
+      <h2 style="font-size:1.5rem;font-weight:700;margin-bottom:1rem">Course Curriculum</h2>
+      <div class="card">
+        ${course.lessons.map((l, i) => `
+          <div style="display:flex;align-items:center;gap:1rem;padding:1rem;border-bottom:1px solid var(--border);${i===course.lessons.length-1?'border-bottom:none':''}">
+            <div style="width:36px;height:36px;background:${completedLessons.includes(l.id)?'var(--success)':var(--light)};border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.875rem;font-weight:700;color:${completedLessons.includes(l.id)?'white':'var(--gray)'}">${completedLessons.includes(l.id)?'✓':i+1}</div>
+            <div style="flex:1">
+              <div style="font-weight:600">${l.title}</div>
+              <div class="text-gray text-sm">${l.duration}</div>
+            </div>
+            ${hasAccess ? `<button class="btn btn-sm btn-outline" onclick="app.navigate('lesson', {courseId:${courseId},lessonId:${l.id}})">Watch</button>` : `<span class="badge badge-warning">🔒 Locked</span>`}
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  </div>`;
+};
+
+app.hasCourseAccess = async function(courseId) {
+  if (!this.currentUser) return false;
+  const purchases = await db.query('purchases', 'userEmail', this.currentUser.email);
+  return purchases.some(p => p.courseId == courseId && p.status === 'completed');
+};
+
+app.getPurchaseType = async function(courseId) {
+  if (!this.currentUser) return null;
+  const purchases = await db.query('purchases', 'userEmail', this.currentUser.email);
+  const p = purchases.find(p => p.courseId == courseId && p.status === 'completed');
+  return p ? p.type : null;
+};
+
+// ==================== CART ====================
+app.addToCart = async function(courseId, type = 'certificate') {
+  const course = await db.get('courses', courseId);
+  const prices = await db.get('prices', 'default') || { readonly: 3.50, full: 8.00, certificate: 10.00 };
+  const existing = this.cart.find(item => item.courseId == courseId);
+  if (existing) { this.toast('Already in cart', 'warning'); return; }
+  const price = prices[type] || prices.certificate;
+  this.cart.push({ courseId, type, title: course.title, price, image: course.image });
+  localStorage.setItem('cart', JSON.stringify(this.cart));
+  this.updateCartBadge();
+  this.toast('Added to cart!', 'success');
+};
+
+app.removeFromCart = function(index) {
+  this.cart.splice(index, 1);
+  localStorage.setItem('cart', JSON.stringify(this.cart));
+  this.updateCartBadge();
+  this.navigate('cart');
+};
+
+app.renderCart = function() {
+  const total = this.cart.reduce((s, i) => s + i.price, 0);
+  return `
+  <div class="section">
+    <div class="container" style="max-width:800px">
+      <h1 class="section-title">Shopping Cart</h1>
+      ${this.cart.length === 0 ? `
+        <div class="card text-center">
+          <div style="font-size:4rem;margin-bottom:1rem">🛒</div>
+          <h2 style="margin-bottom:0.5rem">Your cart is empty</h2>
+          <p class="text-gray mb-2">Browse our courses and add some to get started.</p>
+          <button class="btn btn-primary" onclick="app.navigate('courses')">Browse Courses</button>
+        </div>
+      ` : `
+        <div class="card">
+          ${this.cart.map((item, i) => `
+            <div style="display:flex;align-items:center;gap:1rem;padding:1rem;border-bottom:1px solid var(--border)">
+              <div style="font-size:2rem;width:60px;height:60px;background:var(--light);border-radius:0.5rem;display:flex;align-items:center;justify-content:center">${item.image}</div>
+              <div style="flex:1">
+                <div style="font-weight:600">${item.title}</div>
+                <div class="text-gray text-sm">${item.type === 'readonly' ? 'Read-Only' : item.type === 'full' ? 'Full Access' : 'Full + Certificate'}</div>
+              </div>
+              <div style="font-weight:700;color:var(--primary)">$${item.price.toFixed(2)}</div>
+              <button class="btn btn-sm btn-danger" onclick="app.removeFromCart(${i})">✕</button>
+            </div>
+          `).join('')}
+          <div style="display:flex;justify-content:space-between;align-items:center;padding-top:1rem;margin-top:1rem;border-top:2px solid var(--border)">
+            <span style="font-size:1.25rem;font-weight:700">Total:</span>
+            <span style="font-size:1.5rem;font-weight:800;color:var(--primary)">$${total.toFixed(2)}</span>
+          </div>
+          <button class="btn btn-primary w-full mt-2" style="padding:1rem" onclick="app.navigate('checkout')">Proceed to Checkout</button>
+        </div>
+      `}
+    </div>
+  </div>`;
+};
+
+// ==================== CHECKOUT ====================
+app.renderCheckout = function() {
+  const total = this.cart.reduce((s, i) => s + i.price, 0);
+  return `
+  <div class="section">
+    <div class="container" style="max-width:600px">
+      <h1 class="section-title">Checkout</h1>
+      <div class="card">
+        <h3 style="margin-bottom:1rem">Order Summary</h3>
+        ${this.cart.map(item => `
+          <div style="display:flex;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid var(--border)">
+            <span>${item.title} (${item.type === 'readonly' ? 'Read-Only' : item.type === 'full' ? 'Full' : 'Cert'})</span>
+            <span style="font-weight:600">$${item.price.toFixed(2)}</span>
+          </div>
+        `).join('')}
+        <div style="display:flex;justify-content:space-between;padding:1rem 0;font-size:1.25rem;font-weight:700">
+          <span>Total</span>
+          <span style="color:var(--primary)">$${total.toFixed(2)}</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:1rem">Payment Details (Demo Mode)</h3>
+        <div class="form-group">
+          <label>Card Number</label>
+          <input type="text" class="form-control" value="4242 4242 4242 4242" readonly>
+        </div>
+        <div class="grid grid-2" style="gap:1rem">
+          <div class="form-group">
+            <label>Expiry</label>
+            <input type="text" class="form-control" value="12/28" readonly>
+          </div>
+          <div class="form-group">
+            <label>CVC</label>
+            <input type="text" class="form-control" value="123" readonly>
+          </div>
+        </div>
+        <button class="btn btn-success w-full mt-2" style="padding:1rem;font-size:1rem" onclick="app.processCheckout()">Pay $${total.toFixed(2)}</button>
+        <p class="text-center text-gray text-xs mt-1">🔒 Secure demo payment. No real charges.</p>
+      </div>
+    </div>
+  </div>`;
+};
+
+app.processCheckout = async function() {
+  if (!this.currentUser) { this.toast('Please log in first', 'error'); this.navigate('login'); return; }
+  for (const item of this.cart) {
+    const purchase = {
+      userEmail: this.currentUser.email,
+      courseId: item.courseId,
+      type: item.type,
+      amount: item.price,
+      date: Date.now(),
+      status: 'completed'
+    };
+    await db.put('purchases', purchase);
+    await db.apiRequest('POST', '/api/purchases', purchase);
+    await db.logActivity(this.currentUser.email, 'Course Purchased', `${item.title} (${item.type})`);
+  }
+  this.cart = [];
+  localStorage.removeItem('cart');
+  this.updateCartBadge();
+  this.toast('Payment successful! Courses added to your dashboard.', 'success');
+  this.navigate('dashboard');
+};
+
+// ==================== AUTH PAGES ====================
+app.renderLogin = function() {
+  return `
+  <div class="section">
+    <div class="container" style="max-width:400px">
+      <div class="card">
+        <h2 style="text-align:center;margin-bottom:1.5rem;font-size:1.75rem">Welcome Back</h2>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" class="form-control" id="loginEmail" placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" class="form-control" id="loginPassword" placeholder="••••••••">
+        </div>
+        <button class="btn btn-primary w-full" style="padding:0.75rem" onclick="app.login(document.getElementById('loginEmail').value, document.getElementById('loginPassword').value)">Log In</button>
+        <p class="text-center text-gray text-sm mt-2">Don't have an account? <a href="#" onclick="app.navigate('register')" style="color:var(--primary);font-weight:600">Sign up</a></p>
+        <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border)">
+          <p class="text-xs text-gray text-center">Demo accounts:</p>
+          <p class="text-xs text-gray text-center">admin@rise.africa / admin</p>
+          <p class="text-xs text-gray text-center">user@rise.africa / password</p>
+        </div>
+      </div>
+    </div>
+  </div>`;
+};
+
+app.renderRegister = function() {
+  return `
+  <div class="section">
+    <div class="container" style="max-width:400px">
+      <div class="card">
+        <h2 style="text-align:center;margin-bottom:1.5rem;font-size:1.75rem">Create Account</h2>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" class="form-control" id="regName" placeholder="John Doe">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" class="form-control" id="regEmail" placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" class="form-control" id="regPassword" placeholder="••••••••">
+        </div>
+        <button class="btn btn-primary w-full" style="padding:0.75rem" onclick="app.register(document.getElementById('regName').value, document.getElementById('regEmail').value, document.getElementById('regPassword').value)">Create Account</button>
+        <p class="text-center text-gray text-sm mt-2">Already have an account? <a href="#" onclick="app.navigate('login')" style="color:var(--primary);font-weight:600">Log in</a></p>
+      </div>
+    </div>
+  </div>`;
+};
+
+// ==================== STUDENT DASHBOARD ====================
+app.renderDashboard = async function() {
+  if (!this.currentUser) { this.navigate('login'); return ''; }
+  const purchases = await db.query('purchases', 'userEmail', this.currentUser.email);
+  const courses = await db.getAll('courses');
+  const certificates = await db.getAll('certificates');
+  const myCerts = certificates.filter(c => c.userEmail === this.currentUser.email);
+  const myCourses = purchases.filter(p => p.status === 'completed').map(p => {
+    const course = courses.find(c => c.id == p.courseId);
+    return { ...p, course };
+  }).filter(c => c.course);
+
+  const totalSpent = purchases.reduce((s, p) => s + p.amount, 0);
+  const completedLessons = Object.values(this.currentUser.progress || {}).reduce((s, p) => s + (p.completed ? p.completed.length : 0), 0);
+
+  return `
+  <div class="section">
+    <div class="container">
+      <h1 style="font-size:2rem;font-weight:800;margin-bottom:0.5rem">Welcome, ${this.currentUser.name}</h1>
+      <p class="text-gray mb-2">Here's your learning progress at a glance.</p>
+      <div class="grid grid-4" style="margin-bottom:2rem">
+        <div class="stat-card">
+          <div class="stat-value">${myCourses.length}</div>
+          <div class="stat-label">Courses Enrolled</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">${completedLessons}</div>
+          <div class="stat-label">Lessons Completed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">${myCerts.length}</div>
+          <div class="stat-label">Certificates</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">$${totalSpent.toFixed(2)}</div>
+          <div class="stat-label">Total Spent</div>
+        </div>
+      </div>
+
+      <h2 style="font-size:1.5rem;font-weight:700;margin-bottom:1rem">My Courses</h2>
+      ${myCourses.length === 0 ? `
+        <div class="card text-center">
+          <div style="font-size:3rem;margin-bottom:1rem">📚</div>
+          <h3>No courses yet</h3>
+          <p class="text-gray mb-2">Start your learning journey today.</p>
+          <button class="btn btn-primary" onclick="app.navigate('courses')">Browse Courses</button>
+        </div>
+      ` : `
+        <div class="grid grid-2">
+          ${myCourses.map(c => {
+            const prog = this.currentUser.progress && this.currentUser.progress[c.courseId];
+            const pct = prog && c.course ? Math.round((prog.completed.length / c.course.lessons.length) * 100) : 0;
+            const isCert = myCerts.find(cert => cert.courseId == c.courseId);
+            return `
+              <div class="card">
+                <div style="display:flex;gap:1rem;align-items:flex-start">
+                  <div style="font-size:3rem;width:80px;height:80px;background:var(--light);border-radius:0.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0">${c.course.image}</div>
+                  <div style="flex:1;min-width:0">
+                    <h3 style="font-size:1.125rem;font-weight:700;margin-bottom:0.25rem">${c.course.title}</h3>
+                    <div class="flex-between text-sm mb-1">
+                      <span class="text-gray">${pct}% complete</span>
+                      <span class="badge ${c.type === 'certificate' ? 'badge-success' : c.type === 'full' ? 'badge-info' : 'badge-warning'}">${c.type === 'certificate' ? 'Cert' : c.type === 'full' ? 'Full' : 'Read'}</span>
+                    </div>
+                    <div class="progress-bar mb-2"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+                    <div style="display:flex;gap:0.5rem">
+                      <button class="btn btn-sm btn-primary" onclick="app.navigate('course', {id:${c.courseId}})">Continue</button>
+                      ${pct >= 100 && c.type === 'certificate' && !isCert ? `<button class="btn btn-sm btn-secondary" onclick="app.generateCertificate(${c.courseId})">Get Certificate</button>` : ''}
+                      ${isCert ? `<button class="btn btn-sm btn-outline" onclick="app.navigate('certificate', {id:'${isCert.uniqueId}'})">View Certificate</button>` : ''}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `}
+
+      <h2 style="font-size:1.5rem;font-weight:700;margin:2rem 0 1rem">Purchase History</h2>
+      <div class="card" style="overflow-x:auto">
+        <table class="table">
+          <thead><tr><th>Course</th><th>Type</th><th>Amount</th><th>Date</th><th>Status</th></tr></thead>
+          <tbody>
+            ${purchases.map(p => {
+              const course = courses.find(c => c.id == p.courseId);
+              return `<tr><td>${course ? course.title : 'Unknown'}</td><td><span class="badge ${p.type === 'certificate' ? 'badge-success' : p.type === 'full' ? 'badge-info' : 'badge-warning'}">${p.type}</span></td><td>$${p.amount.toFixed(2)}</td><td>${app.formatDate(p.date)}</td><td><span class="badge badge-success">${p.status}</span></td></tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>`;
+};
+
+app.attachDashboardEvents = function() {};
+
+// ==================== LESSON PLAYER ====================
+app.renderLesson = async function(courseId, lessonId) {
+  if (!this.currentUser) { this.navigate('login'); return ''; }
+  const hasAccess = await this.hasCourseAccess(courseId);
+  if (!hasAccess) { this.toast('Purchase required', 'error'); this.navigate('course', {id: courseId}); return ''; }
+  const course = await db.get('courses', courseId);
+  const lesson = course.lessons.find(l => l.id == lessonId);
+  const lessonIndex = course.lessons.findIndex(l => l.id == lessonId);
+  const prevLesson = lessonIndex > 0 ? course.lessons[lessonIndex - 1] : null;
+  const nextLesson = lessonIndex < course.lessons.length - 1 ? course.lessons[lessonIndex + 1] : null;
+  const purchaseType = await this.getPurchaseType(courseId);
+  const isReadOnly = purchaseType === 'readonly';
+
+  return `
+  <div class="section">
+    <div class="container">
+      <div style="margin-bottom:1rem">
+        <button class="btn btn-sm btn-outline" onclick="app.navigate('course', {id:${courseId}})">← Back to Course</button>
+      </div>
+      <h1 style="font-size:1.5rem;font-weight:700;margin-bottom:0.5rem">${lesson.title}</h1>
+      <p class="text-gray mb-2">${course.title} • Lesson ${lessonIndex + 1} of ${course.lessons.length}</p>
+      <div class="lesson-player">
+        <div class="lesson-overlay" onclick="this.style.display='none';document.getElementById('videoSim').style.display='flex'">
+          <div style="text-align:center">
+            <div style="font-size:4rem;margin-bottom:1rem">▶️</div>
+            <div style="font-size:1.25rem;font-weight:600">Click to Play</div>
+            <div class="text-sm" style="opacity:0.8">${lesson.duration}</div>
+          </div>
+        </div>
+        <div id="videoSim" style="display:none;flex-direction:column;align-items:center;justify-content:center;height:100%">
+          <div style="font-size:5rem;margin-bottom:1rem">📹</div>
+          <div style="font-size:1.125rem">Video Simulation</div>
+          <div class="text-sm" style="opacity:0.8;margin-top:0.5rem">${lesson.duration} • Playing...</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:1rem;margin-top:1rem;flex-wrap:wrap">
+        ${!isReadOnly ? `
+          <button class="btn btn-success" onclick="app.markComplete(${courseId}, ${lessonId})">✓ Mark Complete</button>
+          <button class="btn btn-outline" onclick="app.toast('Download started', 'success')">⬇ Download</button>
+          <button class="btn btn-outline" onclick="window.print()">🖨 Print</button>
+          <button class="btn btn-outline" onclick="app.toast('Link copied!', 'success')">🔗 Share</button>
+        ` : `
+          <span class="badge badge-warning">Read-Only Mode — Upgrade for downloads & certificates</span>
+        `}
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:2rem">
+        ${prevLesson ? `<button class="btn btn-outline" onclick="app.navigate('lesson', {courseId:${courseId},lessonId:${prevLesson.id}})">← ${prevLesson.title}</button>` : '<span></span>'}
+        ${nextLesson ? `<button class="btn btn-primary" onclick="app.navigate('lesson', {courseId:${courseId},lessonId:${nextLesson.id}})">${nextLesson.title} →</button>` : '<span></span>'}
+      </div>
+    </div>
+  </div>`;
+};
+
+app.markComplete = async function(courseId, lessonId) {
+  const user = await db.get('users', this.currentUser.email);
+  if (!user.progress) user.progress = {};
+  if (!user.progress[courseId]) user.progress[courseId] = { completed: [], total: 0 };
+  if (!user.progress[courseId].completed.includes(lessonId)) {
+    user.progress[courseId].completed.push(lessonId);
+  }
+  const course = await db.get('courses', courseId);
+  user.progress[courseId].total = course.lessons.length;
+  await db.put('users', user);
+  await db.apiRequest('PUT', `/api/users/${user.email}`, user);
+  this.currentUser = user;
+  sessionStorage.setItem('currentUser', JSON.stringify(user));
+  this.toast('Lesson completed!', 'success');
+
+  // Check if course fully completed
+  if (user.progress[courseId].completed.length === course.lessons.length) {
+    this.toast('🎉 Course completed!', 'success');
+    await db.logActivity(user.email, 'Course Completed', course.title);
+  }
+};
+
+// ==================== CERTIFICATE ====================
+app.generateCertificate = async function(courseId) {
+  const course = await db.get('courses', courseId);
+  const uniqueId = 'RAS-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 9000) + 1000);
+  const cert = {
+    uniqueId,
+    userEmail: this.currentUser.email,
+    userName: this.currentUser.name,
+    courseId,
+    courseTitle: course.title,
+    issueDate: Date.now()
+  };
+  await db.put('certificates', cert);
+  await db.apiRequest('POST', '/api/certificates', cert);
+  await db.logActivity(this.currentUser.email, 'Certificate Issued', `${course.title} — ${uniqueId}`);
+  this.toast('Certificate generated!', 'success');
+  this.navigate('certificate', { id: uniqueId });
+};
+
+app.renderCertificate = async function(uniqueId) {
+  const cert = await db.get('certificates', uniqueId);
+  if (!cert) return '<div class="section"><div class="container"><h1>Certificate not found</h1></div></div>';
+  return `
+  <div class="section">
+    <div class="container" style="max-width:900px">
+      <div style="margin-bottom:1rem;display:flex;gap:1rem">
+        <button class="btn btn-outline" onclick="window.print()">🖨 Print</button>
+        <button class="btn btn-outline" onclick="app.toast('Certificate downloaded!', 'success')">⬇ Download PDF</button>
+        <button class="btn btn-outline" onclick="app.toast('Link copied!', 'success')">🔗 Share</button>
+      </div>
+      <div class="cert-frame" id="certFrame">
+        <div style="font-size:1.25rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--secondary);font-weight:700;margin-bottom:1rem">Rise Africa Skills</div>
+        <h1 style="font-size:2.5rem;font-weight:800;margin-bottom:0.5rem">Certificate of Completion</h1>
+        <p style="font-size:1.125rem;color:var(--gray);margin-bottom:2rem">This certifies that</p>
+        <h2 style="font-size:2rem;font-weight:700;color:var(--primary);margin-bottom:0.5rem;border-bottom:2px solid var(--secondary);display:inline-block;padding-bottom:0.5rem">${cert.userName}</h2>
+        <p style="font-size:1.125rem;color:var(--gray);margin:1.5rem 0">has successfully completed</p>
+        <h3 style="font-size:1.5rem;font-weight:700;margin-bottom:1rem">${cert.courseTitle}</h3>
+        <div class="cert-seal">🏆</div>
+        <p style="font-size:0.875rem;color:var(--gray)">Issued on ${app.formatDate(cert.issueDate)}</p>
+        <p style="font-size:0.75rem;color:var(--gray);margin-top:1rem">Certificate ID: <strong>${cert.uniqueId}</strong></p>
+        <p style="font-size:0.75rem;color:var(--gray)">Verify at: rise.africa/verify/${cert.uniqueId}</p>
+      </div>
+    </div>
+  </div>`;
+};
+
+// ==================== PROFILE ====================
+app.renderProfile = async function() {
+  if (!this.currentUser) { this.navigate('login'); return ''; }
+  return `
+  <div class="section">
+    <div class="container" style="max-width:600px">
+      <h1 class="section-title">My Profile</h1>
+      <div class="card">
+        <div style="text-align:center;margin-bottom:2rem">
+          <div style="width:100px;height:100px;background:linear-gradient(135deg,var(--primary),#3b82f6);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:white;font-size:2.5rem;font-weight:700;margin-bottom:1rem">${this.currentUser.name.charAt(0)}</div>
+          <h2 style="font-size:1.5rem;font-weight:700">${this.currentUser.name}</h2>
+          <p class="text-gray">${this.currentUser.email}</p>
+          <span class="badge ${this.currentUser.role === 'admin' ? 'badge-danger' : 'badge-info'}">${this.currentUser.role.toUpperCase()}</span>
+        </div>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" class="form-control" id="profileName" value="${this.currentUser.name}">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" class="form-control" value="${this.currentUser.email}" disabled>
+        </div>
+        <div class="form-group">
+          <label>New Password (leave blank to keep current)</label>
+          <input type="password" class="form-control" id="profilePassword" placeholder="••••••••">
+        </div>
+        <button class="btn btn-primary w-full" onclick="app.saveProfile()">Save Changes</button>
+      </div>
+    </div>
+  </div>`;
+};
+
+app.saveProfile = async function() {
+  const name = document.getElementById('profileName').value;
+  const password = document.getElementById('profilePassword').value;
+  const updates = { name };
+  if (password) updates.password = password;
+  await this.updateProfile(updates);
+};
+
+// ==================== ADMIN PANEL ====================
+app.renderAdmin = async function(tab) {
+  if (!this.currentUser || this.currentUser.role !== 'admin') { this.navigate('home'); return ''; }
+  const settings = await db.getSettings();
+
+  return `
+  <div class="section">
+    <div class="container">
+      <h1 style="font-size:2rem;font-weight:800;margin-bottom:0.5rem">Admin Panel</h1>
+      <p class="text-gray mb-2">Manage your platform from one place.</p>
+      <div class="tabs">
+        <div class="tab ${tab === 'overview' ? 'active' : ''}" onclick="app.navigate('admin', {tab:'overview'})">📊 Overview</div>
+        <div class="tab ${tab === 'users' ? 'active' : ''}" onclick="app.navigate('admin', {tab:'users'})">👥 Users</div>
+        <div class="tab ${tab === 'courses' ? 'active' : ''}" onclick="app.navigate('admin', {tab:'courses'})">📚 Courses</div>
+        <div class="tab ${tab === 'transactions' ? 'active' : ''}" onclick="app.navigate('admin', {tab:'transactions'})">💳 Transactions</div>
+        <div class="tab ${tab === 'analytics' ? 'active' : ''}" onclick="app.navigate('admin', {tab:'analytics'})">📈 Analytics</div>
+        <div class="tab ${tab === 'settings' ? 'active' : ''}" onclick="app.navigate('admin', {tab:'settings'})">⚙️ Settings</div>
+      </div>
+      <div id="adminContent"></div>
+    </div>
+  </div>`;
+};
+
+app.attachAdminEvents = async function(tab) {
+  const content = document.getElementById('adminContent');
+  if (!content) return;
+
+  if (tab === 'overview') {
+    const users = await db.getAll('users');
+    const courses = await db.getAll('courses');
+    const purchases = await db.getAll('purchases');
+    const logs = await db.getAll('activity_log');
+    const last7 = purchases.filter(p => p.date > Date.now() - 86400000 * 7);
+    const revenue7 = last7.reduce((s, p) => s + p.amount, 0);
+    const topCourses = {};
+    purchases.forEach(p => { topCourses[p.courseId] = (topCourses[p.courseId] || 0) + 1; });
+    const top5 = Object.entries(topCourses).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([id, count]) => {
+      const c = courses.find(c => c.id == id);
+      return { title: c ? c.title : 'Unknown', count };
+    });
+
+    content.innerHTML = `
+      <div class="grid grid-4" style="margin-bottom:2rem">
+        <div class="stat-card"><div class="stat-value">${users.length}</div><div class="stat-label">Total Users</div></div>
+        <div class="stat-card"><div class="stat-value">${courses.length}</div><div class="stat-label">Courses</div></div>
+        <div class="stat-card"><div class="stat-value">${purchases.length}</div><div class="stat-label">Transactions</div></div>
+        <div class="stat-card"><div class="stat-value">$${revenue7.toFixed(2)}</div><div class="stat-label">Revenue (7d)</div></div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3 style="margin-bottom:1rem">Revenue (Last 7 Days)</h3>
+          <div style="display:flex;align-items:flex-end;gap:0.5rem;height:200px;padding-top:1rem">
+            ${[6,5,4,3,2,1,0].map(d => {
+              const dayStart = Date.now() - 86400000 * d;
+              const dayEnd = dayStart + 86400000;
+              const dayPurchases = purchases.filter(p => p.date >= dayStart && p.date < dayEnd);
+              const dayRev = dayPurchases.reduce((s, p) => s + p.amount, 0);
+              const maxRev = Math.max(...[6,5,4,3,2,1,0].map(d2 => {
+                const ds = Date.now() - 86400000 * d2;
+                const de = ds + 86400000;
+                return purchases.filter(p => p.date >= ds && p.date < de).reduce((s, p) => s + p.amount, 0);
+              }));
+              const height = maxRev > 0 ? (dayRev / maxRev) * 100 : 0;
+              return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0.25rem">
+                <div style="width:100%;background:var(--primary);border-radius:0.25rem;transition:height 0.3s;height:${Math.max(height, 5)}%"></div>
+                <span style="font-size:0.625rem;color:var(--gray)">${new Date(dayStart).toLocaleDateString('en-US', {weekday:'short'})}</span>
+              </div>`;
+            }).join('')}
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="margin-bottom:1rem">Top 5 Courses</h3>
+          ${top5.map((c, i) => `
+            <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem">
+              <span style="width:24px;height:24px;background:var(--primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700">${i+1}</span>
+              <span style="flex:1;font-size:0.875rem">${c.title}</span>
+              <span class="badge badge-info">${c.count} sales</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      <div class="card mt-2">
+        <h3 style="margin-bottom:1rem">Recent Activity</h3>
+        <div style="max-height:300px;overflow-y:auto">
+          ${logs.slice().sort((a, b) => b.time - a.time).slice(0, 10).map(l => `
+            <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 0;border-bottom:1px solid var(--border)">
+              <span class="text-gray text-xs" style="white-space:nowrap">${app.formatDate(l.time)}</span>
+              <span class="badge badge-info">${l.user.split('@')[0]}</span>
+              <span style="font-size:0.875rem">${l.action}</span>
+              <span class="text-gray text-sm" style="flex:1;text-align:right">${l.details}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  if (tab === 'users') {
+    this.renderUsersTab(content);
+  }
+  if (tab === 'courses') {
+    this.renderCoursesTab(content);
+  }
+  if (tab === 'transactions') {
+    this.renderTransactionsTab(content);
+  }
+  if (tab === 'analytics') {
+    this.renderAnalyticsTab(content);
+  }
+  if (tab === 'settings') {
+    this.renderSettingsTab(content);
+  }
+};
+
+// ==================== USERS TAB ====================
+app.renderUsersTab = async function(container) {
+  let users = await db.getAll('users');
+  const search = this.filters.search.toLowerCase();
+  if (search) users = users.filter(u => u.name.toLowerCase().includes(search) || u.email.toLowerCase().includes(search));
+  if (this.filters.role) users = users.filter(u => u.role === this.filters.role);
+  if (this.filters.status) users = users.filter(u => u.status === this.filters.status);
+  const total = users.length;
+  const start = (this.page - 1) * this.pageSize;
+  users = users.slice(start, start + this.pageSize);
+
+  container.innerHTML = `
+    <div class="card" style="margin-bottom:1rem">
+      <div class="grid grid-4" style="gap:1rem">
+        <div class="search-box"><input type="text" class="form-control" id="userSearch" placeholder="Search users..." value="${this.filters.search}"></div>
+        <select class="form-control" id="userRole"><option value="">All Roles</option><option value="admin">Admin</option><option value="student">Student</option></select>
+        <select class="form-control" id="userStatus"><option value="">All Status</option><option value="active">Active</option><option value="banned">Banned</option></select>
+        <button class="btn btn-primary" onclick="app.openUserModal()">+ Add User</button>
+      </div>
+    </div>
+    <div class="card" style="overflow-x:auto">
+      <table class="table">
+        <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Joined</th><th>Actions</th></tr></thead>
+        <tbody>
+          ${users.map(u => `
+            <tr>
+              <td><strong>${u.name}</strong></td>
+              <td>${u.email}</td>
+              <td><span class="badge ${u.role === 'admin' ? 'badge-danger' : 'badge-info'}">${u.role}</span></td>
+              <td><span class="badge ${u.status === 'active' ? 'badge-success' : 'badge-danger'}">${u.status}</span></td>
+              <td>${app.formatDate(u.joined)}</td>
+              <td>
+                <button class="btn btn-sm btn-outline" onclick="app.editUser('${u.email}')">Edit</button>
+                <button class="btn btn-sm ${u.status === 'active' ? 'btn-danger' : 'btn-success'}" onclick="app.toggleUserStatus('${u.email}')">${u.status === 'active' ? 'Ban' : 'Unban'}</button>
+                <button class="btn btn-sm btn-danger" onclick="app.deleteUser('${u.email}')">Delete</button>
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+    ${this.renderPagination(total)}
+  `;
+
+  document.getElementById('userSearch').addEventListener('input', (e) => { this.filters.search = e.target.value; this.page = 1; this.renderUsersTab(container); });
+  document.getElementById('userRole').addEventListener('change', (e) => { this.filters.role = e.target.value; this.page = 1; this.renderUsersTab(container); });
+  document.getElementById('userStatus').addEventListener('change', (e) => { this.filters.status = e.target.value; this.page = 1; this.renderUsersTab(container); });
+};
+
+app.openUserModal = function(user = null) {
+  const isEdit = !!user;
+  const modal = document.createElement('div');
+  modal.className = 'modal-overlay';
+  modal.innerHTML = `
+    <div class="modal">
+      <div class="modal-header"><h2>${isEdit ? 'Edit' : 'Add'} User</h2></div>
+      <div class="modal-body">
+        <div class="form-group"><label>Name</label><input type="text" class="form-control" id="modalUserName" value="${user ? user.name : ''}"></div>
+        <div class="form-group"><label>Email</label><input type="email" class="form-control" id="modalUserEmail" value="${user ? user.email : ''}" ${isEdit ? 'disabled' : ''}></div>
+        <div class="form-group"><label>Password ${isEdit ? '(leave blank to keep)' : ''}</label><input type="password" class="form-control" id="modalUserPassword" placeholder="••••••••"></div>
+        <div class="form-group"><label>Role</label><select class="form-control" id="modalUserRole"><option value="student">Student</option><option value="admin">Admin</option></select></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="this.closest('.modal-overlay').remove()">Cancel</button>
+        <button class="btn btn-primary" onclick="app.saveUser('${user ? user.email : ''}')">Save</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+};
+
+app.saveUser = async function(email) {
+  const name = document.getElementById('modalUserName').value;
+  const newEmail = document.getElementById('modalUserEmail').value;
+  const password = document.getElementById('modalUserPassword').value;
+  const role = document.getElementById('modalUserRole').value;
+  if (!name || !newEmail) { this.toast('Name and email required', 'error'); return; }
+
+  if (email) {
+    const user = await db.get('users', email);
+    user.name = name; user.role = role;
+    if (password) user.password = password;
+    await db.put('users', user);
+    await db.apiRequest('PUT', `/api/users/${email}`, user);
+    await db.logActivity(this.currentUser.email, 'User Updated', name);
+  } else {
+    const existing = await db.get('users', newEmail);
+    if (existing) { this.toast('Email already exists', 'error'); return; }
+    const user = { email: newEmail, name, password: password || 'password', role, status: 'active', joined: Date.now(), progress: {} };
+    await db.put('users', user);
+    await db.apiRequest('POST', '/api/users', user);
+    await db.logActivity(this.currentUser.email, 'User Created', name);
+  }
+  document.querySelector('.modal-overlay').remove();
+  this.toast('User saved!', 'success');
+  this.navigate('admin', {tab:'users'});
+};
+
+app.editUser = async function(email) {
+  const user = await db.get('users', email);
+  this.openUserModal(user);
+};
+
+app.toggleUserStatus = async function(email) {
+  const user = await db.get('users', email);
+  user.status = user.status === 'active' ? 'banned' : 'active';
+  await db.put('users', user);
+  await db.apiRequest('PUT', `/api/users/${email}`, user);
+  await db.logActivity(this.currentUser.email, user.status === 'active' ? 'User Unbanned' : 'User Banned', user.name);
+  this.toast(`User ${user.status === 'active' ? 'unbanned' : 'banned'}`, 'success');
+  this.navigate('admin', {tab:'users'});
+};
+
+app.deleteUser = async function(email) {
+  if (!confirm('Are you sure? This cannot be undone.')) return;
+  await db.delete('users', email);
+  await db.apiRequest('DELETE', `/api/users/${email}`);
+  await db.logActivity(this.currentUser.email, 'User Deleted', email);
+  this.toast('User deleted', 'success');
+  this.navigate('admin', {tab:'users'});
+};
+
+app.renderPagination = function(total) {
+  const pages = Math.ceil(total / this.pageSize);
+  if (pages <= 1) return '';
+  return `
+    <div class="pagination">
+      ${Array.from({length: pages}, (_, i) => `
+        <button class="${i + 1 === this.page ? 'active' : ''}" onclick="app.page = ${i + 1}; app.navigate('admin', {tab: app.currentPage === 'admin' ? 'users' : app.currentPage})">${i + 1}</button>
+      `).join('')}
+    </div>
+  `;
+};
+
+// ==================== COURSES TAB ====================
+app.renderCoursesTab = async function(container) {
+  let courses = await db.getAll('courses');
+  if (this.filters.search) courses = courses.filter(c => c.title.toLowerCase().includes(this.filters.search.toLowerCase()));
+  if (this.filters.category) courses = courses.filter(c => c.category === this.filters.category);
+
+  container.innerHTML = `
+    <div class="card" style="margin-bottom:1rem">
+      <div class="grid grid-3" style="gap:1rem">
+        <div class="search-box"><input type="text" class="form-control" id="courseAdminSearch" placeholder="Search courses..." value="${this.filters.search}"></div>
+        <select class="form-control" id="courseAdminCategory">
+          <option value="">All Categories</option>
+          <option value="Technology">Technology</option>
+          <option value="Business">Business</option>
+          <option value="Design">Design</option>
+          <option value="Finance">Finance</option>
+          <option value="Agriculture">Agriculture</option>
+          <option value="Personal Development">Personal Development</option>
+        </select>
+        <button class="btn btn-primary" onclick="app.openCourseModal()">+ Add Course</button>
+      </div>
+    </div>
+    <div class="grid grid-2">
+      ${courses.map(c => `
+        <div class="card">
+          <div style="display:flex;gap:1rem;align-items:flex-start">
+            <div style="font-size:3rem;width:80px;height:80px;background:var(--light);border-radius:0.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0">${c.image}</div>
+            <div style="flex:1;min-width:0">
+              <h3 style="font-size:1.125rem;font-weight:700;margin-bottom:0.25rem">${c.title}</h3>
+              <span class="badge badge-info">${c.category}</span>
+              <p class="text-gray text-sm mt-1">${c.lessons.length} lessons</p>
+              <div style="display:flex;gap:0.5rem;margin-top:0.75rem">
+                <button class="btn btn-sm btn-outline" onclick="app.editCourse(${c.id})">Edit</button>
+                <button class="btn btn-sm btn-danger" onclick="app.deleteCourse(${c.id})">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  document.getElementById('courseAdminSearch').addEventListener('input', (e) => { this.filters.search = e.target.value; this.renderCoursesTab(container); });
+  document.getElementById('courseAdminCategory').addEventListener('change', (e) => { this.filters.category = e.target.value; this.renderCoursesTab(container); });
+};
+
+app.openCourseModal = function(course = null) {
+  const isEdit = !!course;
+  const lessons = course ? course.lessons : [{id:1,title:'',duration:''}];
+  const modal = document.createElement('div');
+  modal.className = 'modal-overlay';
+  modal.innerHTML = `
+    <div class="modal" style="max-width:700px">
+      <div class="modal-header"><h2>${isEdit ? 'Edit' : 'Add'} Course</h2></div>
+      <div class="modal-body">
+        <div class="form-group"><label>Title</label><input type="text" class="form-control" id="modalCourseTitle" value="${course ? course.title : ''}"></div>
+        <div class="grid grid-2" style="gap:1rem">
+          <div class="form-group"><label>Category</label>
+            <select class="form-control" id="modalCourseCategory">
+              <option value="Technology">Technology</option>
+              <option value="Business">Business</option>
+              <option value="Design">Design</option>
+              <option value="Finance">Finance</option>
+              <option value="Agriculture">Agriculture</option>
+              <option value="Personal Development">Personal Development</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Image Emoji</label><input type="text" class="form-control" id="modalCourseImage" value="${course ? course.image : '📚'}"></div>
+        </div>
+        <div class="form-group"><label>Description</label><textarea class="form-control" id="modalCourseDesc" rows="3">${course ? course.description : ''}</textarea></div>
+        <h3 style="margin:1rem 0 0.5rem;font-size:1rem;font-weight:700">Lessons</h3>
+        <div id="modalLessons">
+          ${lessons.map((l, i) => `
+            <div style="display:flex;gap:0.5rem;margin-bottom:0.5rem" class="lesson-row">
+              <input type="text" class="form-control" placeholder="Lesson title" value="${l.title}" style="flex:1">
+              <input type="text" class="form-control" placeholder="Duration" value="${l.duration}" style="width:120px">
+              <button class="btn btn-sm btn-danger" onclick="this.parentElement.remove()">✕</button>
+            </div>
+          `).join('')}
+        </div>
+        <button class="btn btn-sm btn-outline" onclick="app.addLessonRow()">+ Add Lesson</button>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="this.closest('.modal-overlay').remove()">Cancel</button>
+        <button class="btn btn-primary" onclick="app.saveCourse(${course ? course.id : 'null'})">Save</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  if (course) document.getElementById('modalCourseCategory').value = course.category;
+};
+
+app.addLessonRow = function() {
+  const container = document.getElementById('modalLessons');
+  const div = document.createElement('div');
+  div.className = 'lesson-row';
+  div.style.cssText = 'display:flex;gap:0.5rem;margin-bottom:0.5rem';
+  div.innerHTML = `<input type="text" class="form-control" placeholder="Lesson title" style="flex:1"><input type="text" class="form-control" placeholder="Duration" style="width:120px"><button class="btn btn-sm btn-danger" onclick="this.parentElement.remove()">✕</button>`;
+  container.appendChild(div);
+};
+
+app.saveCourse = async function(id) {
+  const title = document.getElementById('modalCourseTitle').value;
+  const category = document.getElementById('modalCourseCategory').value;
+  const image = document.getElementById('modalCourseImage').value;
+  const description = document.getElementById('modalCourseDesc').value;
+  const rows = document.querySelectorAll('.lesson-row');
+  const lessons = Array.from(rows).map((row, i) => ({
+    id: i + 1,
+    title: row.children[0].value,
+    duration: row.children[1].value
+  })).filter(l => l.title);
+
+  if (!title || lessons.length === 0) { this.toast('Title and at least one lesson required', 'error'); return; }
+
+  const course = id ? await db.get('courses', id) : { createdAt: Date.now() };
+  course.title = title; course.category = category; course.image = image; course.description = description; course.lessons = lessons;
+  await db.put('courses', course);
+  await db.apiRequest(id ? 'PUT' : 'POST', id ? `/api/courses/${id}` : '/api/courses', course);
+  await db.logActivity(this.currentUser.email, id ? 'Course Updated' : 'Course Created', title);
+  document.querySelector('.modal-overlay').remove();
+  this.toast('Course saved!', 'success');
+  this.navigate('admin', {tab:'courses'});
+};
+
+app.editCourse = async function(id) {
+  const course = await db.get('courses', id);
+  this.openCourseModal(course);
+};
+
+app.deleteCourse = async function(id) {
+  if (!confirm('Delete this course and all associated data?')) return;
+  await db.delete('courses', id);
+  await db.apiRequest('DELETE', `/api/courses/${id}`);
+  await db.logActivity(this.currentUser.email, 'Course Deleted', 'ID: ' + id);
+  this.toast('Course deleted', 'success');
+  this.navigate('admin', {tab:'courses'});
+};
+
+// ==================== TRANSACTIONS TAB ====================
+app.renderTransactionsTab = async function(container) {
+  let purchases = await db.getAll('purchases');
+  const users = await db.getAll('users');
+  const courses = await db.getAll('courses');
+
+  if (this.filters.search) purchases = purchases.filter(p => {
+    const user = users.find(u => u.email === p.userEmail);
+    const course = courses.find(c => c.id == p.courseId);
+    return (user && user.name.toLowerCase().includes(this.filters.search.toLowerCase())) ||
+           (course && course.title.toLowerCase().includes(this.filters.search.toLowerCase())) ||
+           String(p.id).includes(this.filters.search);
+  });
+  if (this.filters.type) purchases = purchases.filter(p => p.type === this.filters.type);
+  if (this.filters.dateFrom) purchases = purchases.filter(p => p.date >= new Date(this.filters.dateFrom).getTime());
+  if (this.filters.dateTo) purchases = purchases.filter(p => p.date <= new Date(this.filters.dateTo).getTime() + 86400000);
+
+  const totalRev = purchases.reduce((s, p) => s + p.amount, 0);
+  const avg = purchases.length > 0 ? totalRev / purchases.length : 0;
+
+  container.innerHTML = `
+    <div class="card" style="margin-bottom:1rem">
+      <div class="grid grid-4" style="gap:1rem">
+        <div class="search-box"><input type="text" class="form-control" id="txSearch" placeholder="Search user/course/ID..." value="${this.filters.search}"></div>
+        <select class="form-control" id="txType"><option value="">All Types</option><option value="readonly">Read-Only</option><option value="full">Full</option><option value="certificate">Certificate</option></select>
+        <input type="date" class="form-control" id="txFrom" value="${this.filters.dateFrom}">
+        <input type="date" class="form-control" id="txTo" value="${this.filters.dateTo}">
+      </div>
+    </div>
+    <div class="grid grid-3" style="margin-bottom:1rem">
+      <div class="stat-card"><div class="stat-value">${purchases.length}</div><div class="stat-label">Transactions</div></div>
+      <div class="stat-card"><div class="stat-value">$${totalRev.toFixed(2)}</div><div class="stat-label">Total Revenue</div></div>
+      <div class="stat-card"><div class="stat-value">$${avg.toFixed(2)}</div><div class="stat-label">Average</div></div>
+    </div>
+    <div class="card" style="overflow-x:auto">
+      <table class="table">
+        <thead><tr><th>ID</th><th>User</th><th>Course</th><th>Type</th><th>Amount</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody>
+          ${purchases.map(p => {
+            const user = users.find(u => u.email === p.userEmail);
+            const course = courses.find(c => c.id == p.courseId);
+            return `<tr>
+              <td>#${p.id}</td>
+              <td>${user ? user.name : p.userEmail}</td>
+              <td>${course ? course.title : 'Unknown'}</td>
+              <td><span class="badge ${p.type === 'certificate' ? 'badge-success' : p.type === 'full' ? 'badge-info' : 'badge-warning'}">${p.type}</span></td>
+              <td>$${p.amount.toFixed(2)}</td>
+              <td>${app.formatDate(p.date)}</td>
+              <td><span class="badge ${p.status === 'completed' ? 'badge-success' : p.status === 'refunded' ? 'badge-danger' : 'badge-warning'}">${p.status}</span></td>
+              <td>${p.status === 'completed' ? `<button class="btn btn-sm btn-danger" onclick="app.refundTransaction(${p.id})">Refund</button>` : '<span class="text-gray text-sm">—</span>'}</td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+
+  document.getElementById('txSearch').addEventListener('input', (e) => { this.filters.search = e.target.value; this.renderTransactionsTab(container); });
+  document.getElementById('txType').addEventListener('change', (e) => { this.filters.type = e.target.value; this.renderTransactionsTab(container); });
+  document.getElementById('txFrom').addEventListener('change', (e) => { this.filters.dateFrom = e.target.value; this.renderTransactionsTab(container); });
+  document.getElementById('txTo').addEventListener('change', (e) => { this.filters.dateTo = e.target.value; this.renderTransactionsTab(container); });
+};
+
+app.refundTransaction = async function(id) {
+  if (!confirm('Refund this transaction?')) return;
+  const purchases = await db.getAll('purchases');
+  const p = purchases.find(p => p.id == id);
+  if (!p) return;
+  p.status = 'refunded';
+  await db.put('purchases', p);
+  await db.apiRequest('PUT', `/api/purchases/${id}`, p);
+  await db.logActivity(this.currentUser.email, 'Transaction Refunded', `ID: ${id}`);
+  this.toast('Transaction refunded', 'success');
+  this.navigate('admin', {tab:'transactions'});
+};
+
+// ==================== ANALYTICS TAB ====================
+app.renderAnalyticsTab = async function(container) {
+  const purchases = await db.getAll('purchases');
+  const courses = await db.getAll('courses');
+  const users = await db.getAll('users');
+
+  const salesByCourse = {};
+  purchases.forEach(p => { salesByCourse[p.courseId] = (salesByCourse[p.courseId] || 0) + p.amount; });
+  const courseSales = Object.entries(salesByCourse).map(([id, amount]) => {
+    const c = courses.find(c => c.id == id);
+    return { title: c ? c.title : 'Unknown', amount };
+  }).sort((a, b) => b.amount - a.amount);
+  const maxCourseSales = Math.max(...courseSales.map(c => c.amount), 1);
+
+  const salesByType = { readonly: 0, full: 0, certificate: 0 };
+  purchases.forEach(p => { if (salesByType[p.type] !== undefined) salesByType[p.type] += p.amount; });
+
+  const userGrowth = {};
+  users.forEach(u => {
+    const month = new Date(u.joined).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    userGrowth[month] = (userGrowth[month] || 0) + 1;
+  });
+  const growthMonths = Object.entries(userGrowth).sort((a, b) => new Date(a[0]) - new Date(b[0]));
+  const maxGrowth = Math.max(...growthMonths.map(m => m[1]), 1);
+
+  const completionRates = courses.map(c => {
+    const coursePurchases = purchases.filter(p => p.courseId == c.id);
+    const completed = coursePurchases.filter(p => {
+      const user = users.find(u => u.email === p.userEmail);
+      return user && user.progress && user.progress[c.id] && user.progress[c.id].completed.length === c.lessons.length;
+    }).length;
+    return { title: c.title, rate: coursePurchases.length > 0 ? Math.round((completed / coursePurchases.length) * 100) : 0 };
+  });
+
+  container.innerHTML = `
+    <div class="grid grid-2">
+      <div class="card">
+        <h3 style="margin-bottom:1rem">Sales by Course</h3>
+        ${courseSales.map(c => `
+          <div style="margin-bottom:0.75rem">
+            <div class="flex-between text-sm mb-1"><span>${c.title}</span><span style="font-weight:600">$${c.amount.toFixed(2)}</span></div>
+            <div class="chart-bar"><div class="chart-bar-fill" style="width:${(c.amount / maxCourseSales) * 100}%"></div></div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:1rem">Sales by Type</h3>
+        ${Object.entries(salesByType).map(([type, amount]) => `
+          <div style="margin-bottom:0.75rem">
+            <div class="flex-between text-sm mb-1"><span>${type === 'readonly' ? 'Read-Only' : type === 'full' ? 'Full Access' : 'Certificate'}</span><span style="font-weight:600">$${amount.toFixed(2)}</span></div>
+            <div class="chart-bar"><div class="chart-bar-fill" style="width:${(amount / Math.max(...Object.values(salesByType))) * 100}%"></div></div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    <div class="grid grid-2 mt-2">
+      <div class="card">
+        <h3 style="margin-bottom:1rem">User Growth</h3>
+        <div style="display:flex;align-items:flex-end;gap:0.5rem;height:200px;padding-top:1rem">
+          ${growthMonths.map(([month, count]) => `
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0.25rem">
+              <div style="width:100%;background:var(--success);border-radius:0.25rem;height:${(count / maxGrowth) * 100}%"></div>
+              <span style="font-size:0.625rem;color:var(--gray);transform:rotate(-45deg);white-space:nowrap">${month}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:1rem">Completion Rates</h3>
+        ${completionRates.map(c => `
+          <div style="margin-bottom:0.75rem">
+            <div class="flex-between text-sm mb-1"><span>${c.title}</span><span style="font-weight:600">${c.rate}%</span></div>
+            <div class="chart-bar"><div class="chart-bar-fill" style="width:${c.rate}%;background:${c.rate >= 70 ? 'var(--success)' : c.rate >= 40 ? 'var(--warning)' : 'var(--danger)'}"></div></div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+};
+
+// ==================== SETTINGS TAB ====================
+app.renderSettingsTab = async function(container) {
+  const settings = await db.getSettings();
+  const prices = await db.get('prices', 'default') || { readonly: 3.50, full: 8.00, certificate: 10.00 };
+
+  container.innerHTML = `
+    <div class="grid grid-2">
+      <div class="card">
+        <h3 style="margin-bottom:1rem">Pricing</h3>
+        <div class="form-group"><label>Read-Only Price ($)</label><input type="number" step="0.01" class="form-control" id="priceReadonly" value="${prices.readonly}"></div>
+        <div class="form-group"><label>Full Access Price ($)</label><input type="number" step="0.01" class="form-control" id="priceFull" value="${prices.full}"></div>
+        <div class="form-group"><label>Certificate Price ($)</label><input type="number" step="0.01" class="form-control" id="priceCert" value="${prices.certificate}"></div>
+        <button class="btn btn-primary" onclick="app.savePrices()">Save Prices</button>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:1rem">Site Settings</h3>
+        <div class="form-group"><label>Site Name</label><input type="text" class="form-control" id="settingSiteName" value="${settings.siteName}"></div>
+        <div class="form-group"><label>Support Email</label><input type="email" class="form-control" id="settingEmail" value="${settings.supportEmail}"></div>
+        <div class="form-group">
+          <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer">
+            <input type="checkbox" id="settingMaintenance" ${settings.maintenance ? 'checked' : ''}>
+            <span>Maintenance Mode</span>
+          </label>
+        </div>
+        <button class="btn btn-primary" onclick="app.saveSettings()">Save Settings</button>
+      </div>
+    </div>
+    <div class="card mt-2">
+      <h3 style="margin-bottom:1rem">Data Management</h3>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap">
+        <button class="btn btn-outline" onclick="app.exportData()">📤 Export All Data to JSON</button>
+        <button class="btn btn-outline" onclick="app.resetDemoData()">🔄 Reset Demo Data</button>
+        <button class="btn btn-danger" onclick="app.clearAllData()">🗑 Clear All Data</button>
+      </div>
+    </div>
+    <div class="card mt-2">
+      <h3 style="margin-bottom:1rem">API Configuration</h3>
+      <div class="form-group">
+        <label>Backend API Base URL (leave empty for offline-only mode)</label>
+        <input type="text" class="form-control" id="apiBaseUrl" placeholder="https://api.rise.africa" value="${db.apiBase}">
+      </div>
+      <button class="btn btn-primary" onclick="app.saveApiBase()">Save API URL</button>
+      <p class="text-gray text-sm mt-1">When set, data will sync to your backend. When offline, changes queue automatically.</p>
+    </div>
+  `;
+};
+
+app.savePrices = async function() {
+  const prices = {
+    id: 'default',
+    readonly: parseFloat(document.getElementById('priceReadonly').value),
+    full: parseFloat(document.getElementById('priceFull').value),
+    certificate: parseFloat(document.getElementById('priceCert').value)
+  };
+  await db.put('prices', prices);
+  await db.apiRequest('PUT', '/api/prices', prices);
+  await db.logActivity(this.currentUser.email, 'Prices Updated', `RO:$${prices.readonly} F:$${prices.full} C:$${prices.certificate}`);
+  this.toast('Prices saved!', 'success');
+};
+
+app.saveSettings = async function() {
+  await db.setSetting('siteName', document.getElementById('settingSiteName').value);
+  await db.setSetting('supportEmail', document.getElementById('settingEmail').value);
+  await db.setSetting('maintenance', document.getElementById('settingMaintenance').checked);
+  await db.logActivity(this.currentUser.email, 'Settings Updated', 'Site settings changed');
+  this.toast('Settings saved!', 'success');
+};
+
+app.saveApiBase = function() {
+  const url = document.getElementById('apiBaseUrl').value.trim();
+  db.apiBase = url;
+  localStorage.setItem('apiBase', url);
+  this.toast(url ? 'API URL saved. Sync enabled.' : 'Offline mode. No sync.', 'success');
+};
+
+app.exportData = async function() {
+  const data = {
+    users: await db.getAll('users'),
+    courses: await db.getAll('courses'),
+    purchases: await db.getAll('purchases'),
+    certificates: await db.getAll('certificates'),
+    prices: await db.get('prices', 'default'),
+    settings: await db.getSettings(),
+    activity_log: await db.getAll('activity_log'),
+    exportedAt: new Date().toISOString()
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `rise-africa-export-${Date.now()}.json`; a.click();
+  URL.revokeObjectURL(url);
+  this.toast('Data exported!', 'success');
+};
+
+app.resetDemoData = async function() {
+  if (!confirm('Reset to demo data? All current data will be lost.')) return;
+  await db.clear('users'); await db.clear('courses'); await db.clear('purchases');
+  await db.clear('certificates'); await db.clear('activity_log'); await db.clear('prices'); await db.clear('settings');
+  await this.loadDemoData();
+  this.toast('Demo data restored!', 'success');
+  this.navigate('admin', {tab:'settings'});
+};
+
+app.clearAllData = async function() {
+  if (!confirm('⚠️ WARNING: This will delete ALL data permanently!')) return;
+  if (!confirm('Are you absolutely sure? This cannot be undone.')) return;
+  const stores = ['users', 'courses', 'purchases', 'certificates', 'activity_log', 'prices', 'settings', 'syncQueue'];
+  for (const s of stores) await db.clear(s);
+  sessionStorage.removeItem('currentUser');
+  localStorage.removeItem('cart');
+  this.currentUser = null; this.cart = [];
+  this.toast('All data cleared', 'success');
+  this.navigate('home');
+};
+
+// ==================== SERVICE WORKER (OFFLINE) ====================
+if ('serviceWorker' in navigator) {
+  const swCode = [
+    "self.addEventListener('install', e => {",
+    "  e.waitUntil(caches.open('rise-africa-v1').then(cache => cache.addAll(['/'])));",
+    "  self.skipWaiting();",
+    "});",
+    "self.addEventListener('activate', e => {",
+    "  e.waitUntil(self.clients.claim());",
+    "});",
+    "self.addEventListener('fetch', e => {",
+    "  e.respondWith(",
+    "    caches.match(e.request).then(response => {",
+    "      return response || fetch(e.request).catch(() => new Response('Offline', { status: 503 }));",
+    "    })",
+    "  );",
+    "});"
+  ].join("\n");
+  const swBlob = new Blob([swCode], { type: 'application/javascript' });
+  const swUrl = URL.createObjectURL(swBlob);
+  navigator.serviceWorker.register(swUrl).catch(() => {});
+}
+
+// ==================== INIT ====================
+document.addEventListener('DOMContentLoaded', () => app.init());
+</script>
+</body>
+</html>
