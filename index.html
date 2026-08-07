@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rise Africa Skills</title>
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'GA_MEASUREMENT_ID');
+</script>
 <style>
 :root{--primary:#2563eb;--primary-dark:#1d4ed8;--secondary:#f59e0b;--success:#10b981;--danger:#ef4444;--warning:#f97316;--dark:#1f2937;--light:#f3f4f6;--white:#ffffff;--gray:#6b7280;--border:#e5e7eb;--shadow:0 4px 6px -1px rgba(0,0,0,0.1);--shadow-lg:0 10px 15px -3px rgba(0,0,0,0.1)}
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
@@ -92,6 +100,11 @@ body{background:var(--light);color:var(--dark);line-height:1.6}
 @media(max-width:768px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}.hero h1{font-size:2rem}.nav-links{display:none}.mobile-menu{display:block}}
 @media(min-width:769px){.mobile-menu{display:none}}
 </style>
+<script src="https://js.stripe.com/v3/"></script>
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD" data-namespace="paypal_sdk"></script>
+<base target="_blank">
 </head>
 <body>
 <div id="offlineBar" class="offline-bar hidden">📴 You are offline. Changes will sync when you reconnect.</div>
@@ -122,6 +135,7 @@ class Database {
   constructor() {
     this.db = null;
     this.apiBase = localStorage.getItem('apiBase') || '';
+    this.supabaseKey = localStorage.getItem('supabaseKey') || '';
     this.syncQueue = [];
     this.initSync();
   }
@@ -303,8 +317,25 @@ const app = {
     this.currentUser = JSON.parse(sessionStorage.getItem('currentUser') || 'null');
     this.cart = JSON.parse(localStorage.getItem('cart') || '[]');
     this.updateNav();
+    this.handlePaymentReturn();
+    this.handleUrlParams();
     this.navigate('home');
     this.setupOfflineBar();
+  },
+
+  handleUrlParams() {
+    const params = new URLSearchParams(window.location.search);
+    const verify = params.get('verify');
+    const resetToken = params.get('reset');
+    if (verify) {
+      this.navigate('verify-cert', { id: verify });
+      return true;
+    }
+    if (resetToken) {
+      this.navigate('reset-password', { token: resetToken });
+      return true;
+    }
+    return false;
   },
 
   setupOfflineBar() {
@@ -388,6 +419,7 @@ const app = {
     this.currentUser = user;
     sessionStorage.setItem('currentUser', JSON.stringify(user));
     await db.logActivity(user.email, 'Login', 'User logged in');
+    this.trackEvent('login', { method: 'email' });
     this.updateNav();
     this.toast(`Welcome back, ${user.name}!`, 'success');
     this.navigate('dashboard');
@@ -404,6 +436,7 @@ const app = {
     await db.put('users', user);
     await db.apiRequest('POST', '/api/users', user);
     await db.logActivity(email, 'Register', 'New account created');
+    this.trackEvent('sign_up', { method: 'email' });
     this.toast('Account created! Please log in.', 'success');
     this.navigate('login');
     return true;
@@ -452,6 +485,7 @@ const app = {
   navigate(page, params = {}) {
     this.currentPage = page;
     window.scrollTo(0, 0);
+    this.trackPageView(page);
     const appEl = document.getElementById('app');
     const settings = db.getSettings();
 
@@ -460,7 +494,7 @@ const app = {
       case 'courses': appEl.innerHTML = this.renderCourses(); break;
       case 'course': appEl.innerHTML = this.renderCourseDetail(params.id); break;
       case 'cart': appEl.innerHTML = this.renderCart(); break;
-      case 'checkout': appEl.innerHTML = this.renderCheckout(); break;
+      case 'checkout': appEl.innerHTML = this.renderCheckout(); setTimeout(() => this.initPayPal(), 500); break;
       case 'login': appEl.innerHTML = this.renderLogin(); break;
       case 'register': appEl.innerHTML = this.renderRegister(); break;
       case 'dashboard': appEl.innerHTML = this.renderDashboard(); break;
@@ -802,6 +836,7 @@ app.addToCart = async function(courseId, type = 'certificate') {
   this.cart.push({ courseId, type, title: course.title, price, image: course.image });
   localStorage.setItem('cart', JSON.stringify(this.cart));
   this.updateCartBadge();
+  this.trackEvent('add_to_cart', { course_id: courseId, course_name: course.title, price, type });
   this.toast('Added to cart!', 'success');
 };
 
@@ -852,48 +887,296 @@ app.renderCart = function() {
 // ==================== CHECKOUT ====================
 app.renderCheckout = function() {
   const total = this.cart.reduce((s, i) => s + i.price, 0);
+  const cartItems = this.cart.map(item => `
+    <div style="display:flex;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid var(--border)">
+      <span>${item.title} <span class="badge ${item.type === 'certificate' ? 'badge-success' : item.type === 'full' ? 'badge-info' : 'badge-warning'}">${item.type === 'readonly' ? 'Read-Only' : item.type === 'full' ? 'Full' : 'Cert'}</span></span>
+      <span style="font-weight:600">$${item.price.toFixed(2)}</span>
+    </div>
+  `).join('');
+
   return `
   <div class="section">
-    <div class="container" style="max-width:600px">
-      <h1 class="section-title">Checkout</h1>
-      <div class="card">
-        <h3 style="margin-bottom:1rem">Order Summary</h3>
-        ${this.cart.map(item => `
-          <div style="display:flex;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid var(--border)">
-            <span>${item.title} (${item.type === 'readonly' ? 'Read-Only' : item.type === 'full' ? 'Full' : 'Cert'})</span>
-            <span style="font-weight:600">$${item.price.toFixed(2)}</span>
-          </div>
-        `).join('')}
-        <div style="display:flex;justify-content:space-between;padding:1rem 0;font-size:1.25rem;font-weight:700">
+    <div class="container" style="max-width:700px">
+      <h1 class="section-title">Secure Checkout</h1>
+      <div class="card" style="margin-bottom:1.5rem">
+        <h3 style="margin-bottom:1rem">📦 Order Summary</h3>
+        ${cartItems}
+        <div style="display:flex;justify-content:space-between;padding:1rem 0;margin-top:0.5rem;border-top:2px solid var(--border);font-size:1.25rem;font-weight:700">
           <span>Total</span>
           <span style="color:var(--primary)">$${total.toFixed(2)}</span>
         </div>
       </div>
+
       <div class="card">
-        <h3 style="margin-bottom:1rem">Payment Details (Demo Mode)</h3>
+        <h3 style="margin-bottom:1rem">💳 Choose Payment Method</h3>
+
+        <div onclick="app.payWithStripe()" style="border:2px solid var(--border);border-radius:0.75rem;padding:1.25rem;margin-bottom:1rem;cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="display:flex;align-items:center;gap:1rem">
+            <div style="font-size:2.5rem">💳</div>
+            <div style="flex:1">
+              <div style="font-weight:700;font-size:1.125rem">Credit / Debit Card</div>
+              <div class="text-gray text-sm">Powered by Stripe — Visa, Mastercard, Amex, Apple Pay, Google Pay</div>
+            </div>
+            <span style="font-size:1.5rem;color:var(--primary)">→</span>
+          </div>
+        </div>
+
+        <div onclick="app.showMpesaForm()" style="border:2px solid var(--border);border-radius:0.75rem;padding:1.25rem;margin-bottom:1rem;cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--success)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="display:flex;align-items:center;gap:1rem">
+            <div style="font-size:2.5rem">📱</div>
+            <div style="flex:1">
+              <div style="font-weight:700;font-size:1.125rem">M-Pesa</div>
+              <div class="text-gray text-sm">Mobile money — Kenya, Tanzania, Uganda, Rwanda, Ghana, Nigeria</div>
+            </div>
+            <span style="font-size:1.5rem;color:var(--success)">→</span>
+          </div>
+        </div>
+
+        <div onclick="app.showPaystackForm()" style="border:2px solid var(--border);border-radius:0.75rem;padding:1.25rem;margin-bottom:1rem;cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--success)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="display:flex;align-items:center;gap:1rem">
+            <div style="font-size:2.5rem">🇳🇬</div>
+            <div style="flex:1">
+              <div style="font-weight:700;font-size:1.125rem">Paystack</div>
+              <div class="text-gray text-sm">Cards, Bank Transfer, USSD — Nigeria, Ghana, South Africa</div>
+            </div>
+            <span style="font-size:1.5rem;color:var(--success)">→</span>
+          </div>
+        </div>
+
+        <div style="border:2px solid var(--border);border-radius:0.75rem;padding:1.25rem;cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="display:flex;align-items:center;gap:1rem;margin-bottom:0.75rem">
+            <div style="font-size:2.5rem">🅿️</div>
+            <div style="flex:1">
+              <div style="font-weight:700;font-size:1.125rem">PayPal</div>
+              <div class="text-gray text-sm">Pay with your PayPal account or card</div>
+            </div>
+          </div>
+          <div id="paypal-button-container"></div>
+        </div>
+      </div>
+
+      <p class="text-center text-gray text-xs mt-2">🔒 All payments are encrypted and secure. No card details are stored on our servers.</p>
+    </div>
+  </div>
+
+  <!-- Paystack Modal -->
+  <div id="paystackModal" class="modal-overlay hidden">
+    <div class="modal" style="max-width:420px">
+      <div class="modal-header"><h2>Pay with Paystack</h2></div>
+      <div class="modal-body">
         <div class="form-group">
-          <label>Card Number</label>
-          <input type="text" class="form-control" value="4242 4242 4242 4242" readonly>
+          <label>Email</label>
+          <input type="email" class="form-control" id="paystackEmail" value="${this.currentUser ? this.currentUser.email : ''}" placeholder="you@example.com">
         </div>
-        <div class="grid grid-2" style="gap:1rem">
-          <div class="form-group">
-            <label>Expiry</label>
-            <input type="text" class="form-control" value="12/28" readonly>
-          </div>
-          <div class="form-group">
-            <label>CVC</label>
-            <input type="text" class="form-control" value="123" readonly>
-          </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" class="form-control" id="paystackPhone" placeholder="+2348012345678">
         </div>
-        <button class="btn btn-success w-full mt-2" style="padding:1rem;font-size:1rem" onclick="app.processCheckout()">Pay $${total.toFixed(2)}</button>
-        <p class="text-center text-gray text-xs mt-1">🔒 Secure demo payment. No real charges.</p>
+        <p class="text-gray text-sm">Paystack supports:<br>💳 Visa / Mastercard / Verve<br>🏦 Bank Transfer<br>📱 USSD<br>🇳🇬 Nigeria • 🇬🇭 Ghana • 🇿🇦 South Africa</p>
+        <div class="form-group mt-1">
+          <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer">
+            <input type="checkbox" id="paystackSandbox" checked>
+            <span class="text-sm">Use Test Mode</span>
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="document.getElementById('paystackModal').classList.add('hidden')">Cancel</button>
+        <button class="btn btn-success" onclick="app.payWithPaystack()">💳 Pay Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- M-Pesa Modal -->
+  <div id="mpesaModal" class="modal-overlay hidden">
+    <div class="modal" style="max-width:420px">
+      <div class="modal-header"><h2>Pay with M-Pesa</h2></div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>M-Pesa Phone Number</label>
+          <input type="tel" class="form-control" id="mpesaPhone" placeholder="254712345678">
+        </div>
+        <p class="text-gray text-sm">Enter your M-Pesa registered number with country code:<br>🇰🇪 Kenya: <strong>2547XXXXXXXX</strong><br>🇹🇿 Tanzania: <strong>2557XXXXXXXX</strong><br>🇺🇬 Uganda: <strong>2567XXXXXXXX</strong></p>
+        <div class="form-group mt-1">
+          <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer">
+            <input type="checkbox" id="mpesaSandbox" checked>
+            <span class="text-sm">Use Sandbox (test mode)</span>
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="document.getElementById('mpesaModal').classList.add('hidden')">Cancel</button>
+        <button class="btn btn-success" onclick="app.payWithMpesa()">📲 Request STK Push</button>
       </div>
     </div>
   </div>`;
 };
 
 app.processCheckout = async function() {
+  this.toast('Please select a payment method above', 'info');
+};
+
+app.trackPurchase = function(provider, items, total) {
+  this.trackEvent('purchase', {
+    transaction_id: 'T-' + Date.now(),
+    value: total,
+    currency: 'USD',
+    provider: provider,
+    items: items.map(i => ({
+      item_id: i.courseId,
+      item_name: i.title,
+      item_category: i.type,
+      price: i.price,
+      quantity: 1
+    }))
+  });
+};
+
+// ==================== STRIPE PAYMENT ====================
+app.payWithStripe = async function() {
   if (!this.currentUser) { this.toast('Please log in first', 'error'); this.navigate('login'); return; }
+  if (this.cart.length === 0) { this.toast('Cart is empty', 'error'); return; }
+
+  const items = this.cart.map(item => ({
+    courseId: item.courseId,
+    type: item.type,
+    title: item.title,
+    price: item.price
+  }));
+
+  this.toast('Redirecting to secure payment...', 'info');
+  try {
+    const apiUrl = db.apiBase.replace('/rest/v1', '');
+    const response = await fetch(`${apiUrl}/functions/v1/stripe-checkout`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${db.supabaseKey || ''}`
+      },
+      body: JSON.stringify({
+        items,
+        userEmail: this.currentUser.email,
+        successUrl: `${window.location.origin}${window.location.pathname}?payment=success&provider=stripe`,
+        cancelUrl: `${window.location.origin}${window.location.pathname}?payment=cancel`
+      })
+    });
+    const data = await response.json();
+    if (data.url) {
+      // Save cart to sessionStorage for post-payment recovery
+      sessionStorage.setItem('pendingCart', JSON.stringify(this.cart));
+      window.location.href = data.url;
+    } else {
+      this.toast(data.error || 'Payment initialization failed', 'error');
+    }
+  } catch (e) {
+    this.toast('Payment error: ' + e.message, 'error');
+  }
+};
+
+// ==================== M-PESA PAYMENT ====================
+app.showMpesaForm = function() {
+  if (!this.currentUser) { this.toast('Please log in first', 'error'); this.navigate('login'); return; }
+  if (this.cart.length === 0) { this.toast('Cart is empty', 'error'); return; }
+  document.getElementById('mpesaModal').classList.remove('hidden');
+};
+
+app.payWithMpesa = async function() {
+  const phone = document.getElementById('mpesaPhone').value.trim();
+  const sandbox = document.getElementById('mpesaSandbox').checked;
+  if (!phone || phone.length < 10) { this.toast('Enter valid phone number with country code', 'error'); return; }
+
+  const total = this.cart.reduce((s, i) => s + i.price, 0);
+  const items = this.cart.map(item => ({ courseId: item.courseId, type: item.type, title: item.title, price: item.price }));
+
+  this.toast('Sending STK push to your phone...', 'info');
+  try {
+    const apiUrl = db.apiBase.replace('/rest/v1', '');
+    const response = await fetch(`${apiUrl}/functions/v1/mpesa-stk`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${db.supabaseKey || ''}`
+      },
+      body: JSON.stringify({ phone, amount: total, items, userEmail: this.currentUser.email, sandbox })
+    });
+    const data = await response.json();
+    if (data.success && data.checkoutRequestId) {
+      sessionStorage.setItem('pendingCart', JSON.stringify(this.cart));
+      document.getElementById('mpesaModal').classList.add('hidden');
+      this.toast('✅ STK push sent! Enter your M-Pesa PIN on your phone.', 'success');
+      this.pollMpesaStatus(data.checkoutRequestId);
+    } else {
+      this.toast(data.error || 'M-Pesa request failed', 'error');
+    }
+  } catch (e) {
+    this.toast('M-Pesa error: ' + e.message, 'error');
+  }
+};
+
+app.pollMpesaStatus = async function(checkoutRequestId) {
+  let attempts = 0;
+  const interval = setInterval(async () => {
+    attempts++;
+    if (attempts > 40) {
+      clearInterval(interval);
+      this.toast('⏱ Payment check timed out. Check your M-Pesa messages. If paid, your courses will appear shortly.', 'warning');
+      return;
+    }
+    try {
+      const apiUrl = db.apiBase.replace('/rest/v1', '');
+      const res = await fetch(`${apiUrl}/functions/v1/mpesa-status?checkoutRequestId=${checkoutRequestId}`, {
+        headers: { 'Authorization': `Bearer ${db.supabaseKey || ''}` }
+      });
+      const data = await res.json();
+      if (data.status === 'completed') {
+        clearInterval(interval);
+        const pendingCart = JSON.parse(sessionStorage.getItem('pendingCart') || '[]');
+        for (const item of pendingCart) {
+          const purchase = { userEmail: this.currentUser.email, courseId: item.courseId, type: item.type, amount: item.price, date: Date.now(), status: 'completed', provider: 'mpesa' };
+          await db.put('purchases', purchase);
+          await db.apiRequest('POST', '/purchases', purchase);
+        }
+        sessionStorage.removeItem('pendingCart');
+        const totalMpesa = pendingCart.reduce((s, i) => s + i.price, 0);
+        this.trackPurchase('mpesa', pendingCart, totalMpesa);
+        this.cart = []; localStorage.removeItem('cart'); this.updateCartBadge();
+        this.toast('🎉 M-Pesa payment successful! Courses added.', 'success');
+        this.navigate('dashboard');
+      } else if (data.status === 'failed') {
+        clearInterval(interval);
+        this.toast('❌ Payment failed: ' + (data.reason || 'Cancelled or insufficient funds'), 'error');
+      }
+    } catch (e) {}
+  }, 4000);
+};
+
+// ==================== PAYPAL PAYMENT ====================
+app.initPayPal = function() {
+  if (!window.paypal || this.cart.length === 0 || !this.currentUser) return;
+  const total = this.cart.reduce((s, i) => s + i.price, 0);
+  const container = document.getElementById('paypal-button-container');
+  if (!container || container.children.length > 0) return;
+
+  paypal.Buttons({
+    style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'pay' },
+    createOrder: (data, actions) => {
+      return actions.order.create({
+        purchase_units: [{
+          amount: { value: total.toFixed(2), currency_code: 'USD' },
+          description: 'Rise Africa Skills - ' + this.cart.map(i => i.title).join(', ')
+        }]
+      });
+    },
+    onApprove: async (data, actions) => {
+      const order = await actions.order.capture();
+      await app.recordPayPalPurchase(order);
+    },
+    onError: (err) => { app.toast('PayPal error: ' + err.message, 'error'); }
+  }).render('#paypal-button-container');
+};
+
+app.recordPayPalPurchase = async function(order) {
+  const total = this.cart.reduce((s, i) => s + i.price, 0);
   for (const item of this.cart) {
     const purchase = {
       userEmail: this.currentUser.email,
@@ -901,17 +1184,162 @@ app.processCheckout = async function() {
       type: item.type,
       amount: item.price,
       date: Date.now(),
-      status: 'completed'
+      status: 'completed',
+      provider: 'paypal',
+      transactionId: order.id
     };
     await db.put('purchases', purchase);
-    await db.apiRequest('POST', '/api/purchases', purchase);
-    await db.logActivity(this.currentUser.email, 'Course Purchased', `${item.title} (${item.type})`);
+    await db.apiRequest('POST', '/purchases', purchase);
+    await db.logActivity(this.currentUser.email, 'Course Purchased', `${item.title} (PayPal)`);
   }
-  this.cart = [];
-  localStorage.removeItem('cart');
-  this.updateCartBadge();
-  this.toast('Payment successful! Courses added to your dashboard.', 'success');
+  this.trackPurchase('paypal', this.cart, total);
+  this.cart = []; localStorage.removeItem('cart'); this.updateCartBadge();
+  this.toast('🎉 PayPal payment successful!', 'success');
   this.navigate('dashboard');
+};
+
+// ==================== PAYSTACK PAYMENT ====================
+app.showPaystackForm = function() {
+  if (!this.currentUser) { this.toast('Please log in first', 'error'); this.navigate('login'); return; }
+  if (this.cart.length === 0) { this.toast('Cart is empty', 'error'); return; }
+  document.getElementById('paystackModal').classList.remove('hidden');
+};
+
+app.payWithPaystack = async function() {
+  const email = document.getElementById('paystackEmail').value.trim();
+  const phone = document.getElementById('paystackPhone').value.trim();
+  const sandbox = document.getElementById('paystackSandbox').checked;
+  if (!email) { this.toast('Email is required', 'error'); return; }
+
+  const total = this.cart.reduce((s, i) => s + i.price, 0);
+  const items = this.cart.map(item => ({ courseId: item.courseId, type: item.type, title: item.title, price: item.price }));
+
+  // Get Paystack public key from settings or use test key
+  const paystackKey = sandbox ? 'pk_test_' : 'pk_live_';
+  // In production, store your real public key in settings or env
+  // For demo, we'll use the Edge Function approach
+
+  this.toast('Initializing Paystack...', 'info');
+  try {
+    const apiUrl = db.apiBase.replace('/rest/v1', '');
+    const res = await fetch(`${apiUrl}/functions/v1/paystack-init`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${db.supabaseKey || ''}`
+      },
+      body: JSON.stringify({ email, phone, amount: total * 100, items, userEmail: this.currentUser.email, sandbox })
+    });
+    const data = await res.json();
+
+    if (data.authorization_url) {
+      sessionStorage.setItem('pendingCart', JSON.stringify(this.cart));
+      sessionStorage.setItem('paystackRef', data.reference);
+      document.getElementById('paystackModal').classList.add('hidden');
+      window.location.href = data.authorization_url;
+    } else if (data.error) {
+      this.toast(data.error, 'error');
+    }
+  } catch (e) {
+    this.toast('Paystack error: ' + e.message, 'error');
+  }
+};
+
+app.handlePaystackReturn = async function() {
+  const params = new URLSearchParams(window.location.search);
+  const reference = params.get('reference') || params.get('trxref') || sessionStorage.getItem('paystackRef');
+  const status = params.get('status');
+
+  if (reference && status === 'success') {
+    this.toast('Verifying Paystack payment...', 'info');
+    try {
+      const apiUrl = db.apiBase.replace('/rest/v1', '');
+      const res = await fetch(`${apiUrl}/functions/v1/paystack-verify?reference=${reference}`, {
+        headers: { 'Authorization': `Bearer ${db.supabaseKey || ''}` }
+      });
+      const data = await res.json();
+
+      if (data.success && data.verified) {
+        const pendingCart = JSON.parse(sessionStorage.getItem('pendingCart') || '[]');
+        for (const item of pendingCart) {
+          const purchase = {
+            userEmail: this.currentUser.email,
+            courseId: item.courseId,
+            type: item.type,
+            amount: item.price,
+            date: Date.now(),
+            status: 'completed',
+            provider: 'paystack',
+            transactionId: reference
+          };
+          await db.put('purchases', purchase);
+          await db.apiRequest('POST', '/purchases', purchase);
+        }
+        sessionStorage.removeItem('pendingCart');
+        sessionStorage.removeItem('paystackRef');
+        const totalPs = pendingCart.reduce((s, i) => s + i.price, 0);
+        this.trackPurchase('paystack', pendingCart, totalPs);
+        this.cart = []; localStorage.removeItem('cart'); this.updateCartBadge();
+        window.history.replaceState({}, document.title, window.location.pathname);
+        this.toast('🎉 Paystack payment successful!', 'success');
+        this.navigate('dashboard');
+      } else {
+        this.toast('Payment verification failed: ' + (data.message || 'Unknown'), 'error');
+      }
+    } catch (e) {
+      this.toast('Verification error. Contact support.', 'error');
+    }
+  } else if (status === 'cancelled' || status === 'failed') {
+    this.toast('Payment was not completed.', 'warning');
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+};
+
+// ==================== PAYMENT RETURN HANDLING ====================
+app.handlePaymentReturn = async function() {
+  const params = new URLSearchParams(window.location.search);
+  const payment = params.get('payment');
+  const provider = params.get('provider');
+  const sessionId = params.get('session_id');
+  const trxref = params.get('trxref');
+
+  // Handle Paystack return first (it uses different params)
+  if (trxref || params.get('reference')) {
+    await this.handlePaystackReturn();
+    return;
+  }
+
+  if (payment === 'success' && provider === 'stripe' && sessionId) {
+    this.toast('Verifying payment...', 'info');
+    try {
+      const apiUrl = db.apiBase.replace('/rest/v1', '');
+      const res = await fetch(`${apiUrl}/functions/v1/verify-stripe?session_id=${sessionId}`, {
+        headers: { 'Authorization': `Bearer ${db.supabaseKey || ''}` }
+      });
+      const data = await res.json();
+      if (data.success && data.items) {
+        for (const item of data.items) {
+          await db.put('purchases', item);
+          await db.apiRequest('POST', '/purchases', item);
+        }
+        const totalStripe = pendingCart.reduce((s, i) => s + i.price, 0);
+        this.trackPurchase('stripe', pendingCart, totalStripe);
+        sessionStorage.removeItem('pendingCart');
+        this.cart = []; localStorage.removeItem('cart'); this.updateCartBadge();
+        this.toast('🎉 Payment successful! Welcome to your courses.', 'success');
+        // Clean URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+        this.navigate('dashboard');
+      } else {
+        this.toast('Payment verification failed. Contact support.', 'error');
+      }
+    } catch (e) {
+      this.toast('Verification error. Refresh or contact support.', 'error');
+    }
+  } else if (payment === 'cancel') {
+    this.toast('Payment was cancelled.', 'info');
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
 };
 
 // ==================== AUTH PAGES ====================
@@ -921,6 +1349,17 @@ app.renderLogin = function() {
     <div class="container" style="max-width:400px">
       <div class="card">
         <h2 style="text-align:center;margin-bottom:1.5rem;font-size:1.75rem">Welcome Back</h2>
+
+        <!-- Google Sign-In -->
+        <div id="g_id_onload" data-client_id="YOUR_GOOGLE_CLIENT_ID" data-context="signin" data-ux_mode="popup" data-callback="app.handleGoogleSignIn" data-auto_prompt="false"></div>
+        <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline" data-text="signin_with" data-size="large" data-logo_alignment="left" style="margin-bottom:1rem;display:flex;justify-content:center"></div>
+
+        <div style="display:flex;align-items:center;gap:1rem;margin:1rem 0">
+          <div style="flex:1;height:1px;background:var(--border)"></div>
+          <span class="text-gray text-sm">or with email</span>
+          <div style="flex:1;height:1px;background:var(--border)"></div>
+        </div>
+
         <div class="form-group">
           <label>Email</label>
           <input type="email" class="form-control" id="loginEmail" placeholder="you@example.com">
@@ -928,6 +1367,9 @@ app.renderLogin = function() {
         <div class="form-group">
           <label>Password</label>
           <input type="password" class="form-control" id="loginPassword" placeholder="••••••••">
+        </div>
+        <div style="text-align:right;margin-bottom:1rem">
+          <a href="#" onclick="app.navigate('forgot-password')" style="font-size:0.875rem;color:var(--primary)">Forgot password?</a>
         </div>
         <button class="btn btn-primary w-full" style="padding:0.75rem" onclick="app.login(document.getElementById('loginEmail').value, document.getElementById('loginPassword').value)">Log In</button>
         <p class="text-center text-gray text-sm mt-2">Don't have an account? <a href="#" onclick="app.navigate('register')" style="color:var(--primary);font-weight:600">Sign up</a></p>
@@ -947,6 +1389,17 @@ app.renderRegister = function() {
     <div class="container" style="max-width:400px">
       <div class="card">
         <h2 style="text-align:center;margin-bottom:1.5rem;font-size:1.75rem">Create Account</h2>
+
+        <!-- Google Sign-Up -->
+        <div id="g_id_onload" data-client_id="YOUR_GOOGLE_CLIENT_ID" data-context="signup" data-ux_mode="popup" data-callback="app.handleGoogleSignIn" data-auto_prompt="false"></div>
+        <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline" data-text="signup_with" data-size="large" data-logo_alignment="left" style="margin-bottom:1rem;display:flex;justify-content:center"></div>
+
+        <div style="display:flex;align-items:center;gap:1rem;margin:1rem 0">
+          <div style="flex:1;height:1px;background:var(--border)"></div>
+          <span class="text-gray text-sm">or with email</span>
+          <div style="flex:1;height:1px;background:var(--border)"></div>
+        </div>
+
         <div class="form-group">
           <label>Full Name</label>
           <input type="text" class="form-control" id="regName" placeholder="John Doe">
@@ -1082,18 +1535,18 @@ app.renderLesson = async function(courseId, lessonId) {
       </div>
       <h1 style="font-size:1.5rem;font-weight:700;margin-bottom:0.5rem">${lesson.title}</h1>
       <p class="text-gray mb-2">${course.title} • Lesson ${lessonIndex + 1} of ${course.lessons.length}</p>
-      <div class="lesson-player">
-        <div class="lesson-overlay" onclick="this.style.display='none';document.getElementById('videoSim').style.display='flex'">
-          <div style="text-align:center">
+      <div class="lesson-player" id="videoPlayer" style="position:relative">
+        <video id="lessonVideo" style="width:100%;height:100%;object-fit:cover;border-radius:0.75rem;display:none" controls preload="metadata" playsinline>
+          <source src="${lesson.videoUrl || ''}" type="video/mp4">
+          <p>Your browser does not support HTML5 video. <a href="${lesson.videoUrl || '#'}">Download</a></p>
+        </video>
+        <div id="videoOverlay" style="position:absolute;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:0.75rem" onclick="app.playLessonVideo()">
+          <div style="text-align:center;color:white">
             <div style="font-size:4rem;margin-bottom:1rem">▶️</div>
             <div style="font-size:1.25rem;font-weight:600">Click to Play</div>
             <div class="text-sm" style="opacity:0.8">${lesson.duration}</div>
+            ${lesson.videoUrl ? '' : '<div class="text-sm" style="opacity:0.6;margin-top:0.5rem">(Demo mode - no video uploaded)</div>'}
           </div>
-        </div>
-        <div id="videoSim" style="display:none;flex-direction:column;align-items:center;justify-content:center;height:100%">
-          <div style="font-size:5rem;margin-bottom:1rem">📹</div>
-          <div style="font-size:1.125rem">Video Simulation</div>
-          <div class="text-sm" style="opacity:0.8;margin-top:0.5rem">${lesson.duration} • Playing...</div>
         </div>
       </div>
       <div style="display:flex;gap:1rem;margin-top:1rem;flex-wrap:wrap">
@@ -1112,6 +1565,18 @@ app.renderLesson = async function(courseId, lessonId) {
       </div>
     </div>
   </div>`;
+};
+
+app.playLessonVideo = function() {
+  const video = document.getElementById('lessonVideo');
+  const overlay = document.getElementById('videoOverlay');
+  if (!video || !video.src || video.src === window.location.href) {
+    this.toast('No video available for this lesson yet.', 'warning');
+    return;
+  }
+  overlay.style.display = 'none';
+  video.style.display = 'block';
+  video.play().catch(() => {});
 };
 
 app.markComplete = async function(courseId, lessonId) {
@@ -1176,10 +1641,260 @@ app.renderCertificate = async function(uniqueId) {
         <div class="cert-seal">🏆</div>
         <p style="font-size:0.875rem;color:var(--gray)">Issued on ${app.formatDate(cert.issueDate)}</p>
         <p style="font-size:0.75rem;color:var(--gray);margin-top:1rem">Certificate ID: <strong>${cert.uniqueId}</strong></p>
-        <p style="font-size:0.75rem;color:var(--gray)">Verify at: rise.africa/verify/${cert.uniqueId}</p>
+        <p style="font-size:0.75rem;color:var(--gray)">Verify at: <a href="#" onclick="app.navigate('verify-cert', {id: '${cert.uniqueId}'})" style="color:var(--primary)">${window.location.origin}${window.location.pathname}?verify=${cert.uniqueId}</a></p>
       </div>
     </div>
   </div>`;
+};
+
+// ==================== CERTIFICATE VERIFICATION (PUBLIC) ====================
+app.renderVerifyCertificate = async function(uniqueId) {
+  // Support both direct param and URL query
+  if (!uniqueId) {
+    const params = new URLSearchParams(window.location.search);
+    uniqueId = params.get('verify') || params.get('id');
+  }
+
+  if (!uniqueId) {
+    return `
+    <div class="section">
+      <div class="container" style="max-width:600px">
+        <div class="card text-center">
+          <div style="font-size:4rem;margin-bottom:1rem">🔍</div>
+          <h2 style="margin-bottom:0.5rem">Verify Certificate</h2>
+          <p class="text-gray mb-2">Enter a certificate ID to verify its authenticity.</p>
+          <div class="form-group">
+            <input type="text" class="form-control" id="verifyCertId" placeholder="RAS-2026-001" style="text-align:center;font-size:1.125rem;letter-spacing:0.1em">
+          </div>
+          <button class="btn btn-primary w-full" onclick="app.navigate('verify-cert', {id: document.getElementById('verifyCertId').value.trim()})">Verify</button>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  // Try local first, then API
+  let cert = await db.get('certificates', uniqueId);
+
+  // If not in local DB and we have API, try Supabase
+  if (!cert && db.apiBase) {
+    try {
+      const res = await fetch(`${db.apiBase}/certificates?unique_id=eq.${uniqueId}`, {
+        headers: { 'Authorization': `Bearer ${db.supabaseKey || ''}`, 'apikey': db.supabaseKey || '' }
+      });
+      const data = await res.json();
+      if (data && data.length > 0) {
+        cert = data[0];
+        // Cache locally
+        await db.put('certificates', cert);
+      }
+    } catch (e) {}
+  }
+
+  if (!cert) {
+    return `
+    <div class="section">
+      <div class="container" style="max-width:600px">
+        <div class="card text-center">
+          <div style="font-size:4rem;margin-bottom:1rem">❌</div>
+          <h2 style="margin-bottom:0.5rem;color:var(--danger)">Certificate Not Found</h2>
+          <p class="text-gray mb-2">The certificate ID <strong>${uniqueId}</strong> could not be verified.</p>
+          <p class="text-gray text-sm mb-2">This may mean the certificate is invalid or has not been issued yet.</p>
+          <button class="btn btn-outline" onclick="app.navigate('verify-cert')">Try Another ID</button>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  const isValid = cert.issueDate && cert.userName && cert.courseTitle;
+  const verifyUrl = `${window.location.origin}${window.location.pathname}?verify=${uniqueId}`;
+
+  return `
+  <div class="section">
+    <div class="container" style="max-width:800px">
+      <div class="card text-center" style="border:3px solid ${isValid ? 'var(--success)' : 'var(--danger)'};padding:3rem">
+        <div style="font-size:4rem;margin-bottom:1rem">${isValid ? '✅' : '⚠️'}</div>
+        <h1 style="font-size:2rem;font-weight:800;margin-bottom:0.5rem;color:${isValid ? 'var(--success)' : 'var(--danger)'}">
+          ${isValid ? 'Certificate Verified' : 'Verification Issue'}
+        </h1>
+        <p class="text-gray mb-2">This certificate has been verified in the Rise Africa Skills database.</p>
+
+        <div style="background:var(--light);border-radius:0.75rem;padding:2rem;margin:2rem 0;text-align:left">
+          <div style="display:flex;gap:2rem;flex-wrap:wrap;justify-content:center">
+            <div style="text-align:center">
+              <div class="text-gray text-sm">Recipient</div>
+              <div style="font-size:1.5rem;font-weight:700;color:var(--primary)">${cert.userName || 'Unknown'}</div>
+            </div>
+            <div style="text-align:center">
+              <div class="text-gray text-sm">Course</div>
+              <div style="font-size:1.25rem;font-weight:700">${cert.courseTitle || 'Unknown'}</div>
+            </div>
+            <div style="text-align:center">
+              <div class="text-gray text-sm">Issued</div>
+              <div style="font-size:1.25rem;font-weight:700">${cert.issueDate ? app.formatDate(cert.issueDate) : 'Unknown'}</div>
+            </div>
+            <div style="text-align:center">
+              <div class="text-gray text-sm">Certificate ID</div>
+              <div style="font-size:1.125rem;font-weight:700;font-family:monospace">${cert.uniqueId}</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+          <button class="btn btn-outline" onclick="window.print()">🖨 Print</button>
+          <button class="btn btn-outline" onclick="app.toast('Link copied!', 'success')">🔗 Copy Link</button>
+          <button class="btn btn-primary" onclick="app.navigate('verify-cert')">Verify Another</button>
+        </div>
+
+        <p class="text-gray text-xs mt-2">Verified by Rise Africa Skills on ${new Date().toLocaleDateString()}</p>
+      </div>
+    </div>
+  </div>`;
+};
+
+// ==================== FORGOT PASSWORD ====================
+app.renderForgotPassword = function() {
+  return `
+  <div class="section">
+    <div class="container" style="max-width:400px">
+      <div class="card">
+        <h2 style="text-align:center;margin-bottom:0.5rem;font-size:1.75rem">Reset Password</h2>
+        <p class="text-gray text-sm text-center mb-2">Enter your email and we'll send you a reset link.</p>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" class="form-control" id="forgotEmail" placeholder="you@example.com">
+        </div>
+        <button class="btn btn-primary w-full" style="padding:0.75rem" onclick="app.sendPasswordReset()">Send Reset Link</button>
+        <p class="text-center text-gray text-sm mt-2">Remember your password? <a href="#" onclick="app.navigate('login')" style="color:var(--primary);font-weight:600">Log in</a></p>
+      </div>
+    </div>
+  </div>`;
+};
+
+app.sendPasswordReset = async function() {
+  const email = document.getElementById('forgotEmail').value.trim();
+  if (!email) { this.toast('Please enter your email', 'error'); return; }
+
+  const user = await db.get('users', email);
+  if (!user) {
+    // Don't reveal if email exists (security)
+    this.toast('If this email is registered, you will receive a reset link shortly.', 'success');
+    return;
+  }
+
+  this.toast('Sending reset link...', 'info');
+  try {
+    const apiUrl = db.apiBase.replace('/rest/v1', '');
+    const res = await fetch(`${apiUrl}/functions/v1/send-email`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${db.supabaseKey || ''}`
+      },
+      body: JSON.stringify({ type: 'password-reset', email, siteUrl: window.location.origin + window.location.pathname })
+    });
+    const data = await res.json();
+    if (data.success) {
+      this.toast('✅ Reset link sent! Check your email.', 'success');
+    } else {
+      this.toast(data.error || 'Failed to send email. Try again later.', 'error');
+    }
+  } catch (e) {
+    this.toast('Email service unavailable. Contact support.', 'error');
+  }
+};
+
+// ==================== RESET PASSWORD (FROM LINK) ====================
+app.renderResetPassword = function(token) {
+  return `
+  <div class="section">
+    <div class="container" style="max-width:400px">
+      <div class="card">
+        <h2 style="text-align:center;margin-bottom:1.5rem;font-size:1.75rem">Create New Password</h2>
+        <div class="form-group">
+          <label>New Password</label>
+          <input type="password" class="form-control" id="newPassword" placeholder="••••••••">
+        </div>
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" class="form-control" id="confirmPassword" placeholder="••••••••">
+        </div>
+        <button class="btn btn-primary w-full" style="padding:0.75rem" onclick="app.resetPassword('${token}')">Update Password</button>
+      </div>
+    </div>
+  </div>`;
+};
+
+app.resetPassword = async function(token) {
+  const password = document.getElementById('newPassword').value;
+  const confirm = document.getElementById('confirmPassword').value;
+  if (!password || password.length < 6) { this.toast('Password must be at least 6 characters', 'error'); return; }
+  if (password !== confirm) { this.toast('Passwords do not match', 'error'); return; }
+
+  try {
+    const apiUrl = db.apiBase.replace('/rest/v1', '');
+    const res = await fetch(`${apiUrl}/functions/v1/reset-password`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${db.supabaseKey || ''}`
+      },
+      body: JSON.stringify({ token, password })
+    });
+    const data = await res.json();
+    if (data.success) {
+      this.toast('✅ Password updated! Please log in.', 'success');
+      this.navigate('login');
+    } else {
+      this.toast(data.error || 'Invalid or expired token', 'error');
+    }
+  } catch (e) {
+    this.toast('Service unavailable. Try again later.', 'error');
+  }
+};
+
+// ==================== GOOGLE OAUTH ====================
+app.handleGoogleSignIn = async function(response) {
+  const credential = response.credential;
+  if (!credential) { app.toast('Google sign-in failed', 'error'); return; }
+
+  app.toast('Signing in with Google...', 'info');
+  try {
+    const apiUrl = db.apiBase.replace('/rest/v1', '');
+    const res = await fetch(`${apiUrl}/functions/v1/google-auth`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${db.supabaseKey || ''}`
+      },
+      body: JSON.stringify({ credential })
+    });
+    const data = await res.json();
+
+    if (data.success && data.user) {
+      // Save user locally
+      const user = {
+        email: data.user.email,
+        name: data.user.name,
+        password: 'google-oauth-' + Math.random().toString(36).slice(2),
+        role: data.user.role || 'student',
+        status: 'active',
+        joined: data.user.joined || Date.now(),
+        progress: data.user.progress || {}
+      };
+      await db.put('users', user);
+      app.currentUser = user;
+      sessionStorage.setItem('currentUser', JSON.stringify(user));
+      app.updateNav();
+      await db.logActivity(user.email, 'Login', 'Google OAuth sign-in');
+      app.trackEvent('login', { method: 'google' });
+      app.toast(`Welcome, ${user.name}!`, 'success');
+      app.navigate('dashboard');
+    } else {
+      app.toast(data.error || 'Google sign-in failed', 'error');
+    }
+  } catch (e) {
+    app.toast('Google sign-in error: ' + e.message, 'error');
+  }
 };
 
 // ==================== PROFILE ====================
@@ -1238,6 +1953,7 @@ app.renderAdmin = async function(tab) {
         <div class="tab ${tab === 'courses' ? 'active' : ''}" onclick="app.navigate('admin', {tab:'courses'})">📚 Courses</div>
         <div class="tab ${tab === 'transactions' ? 'active' : ''}" onclick="app.navigate('admin', {tab:'transactions'})">💳 Transactions</div>
         <div class="tab ${tab === 'analytics' ? 'active' : ''}" onclick="app.navigate('admin', {tab:'analytics'})">📈 Analytics</div>
+        <div class="tab ${tab === 'ga4' ? 'active' : ''}" onclick="app.navigate('admin', {tab:'ga4'})">📊 GA4 Live</div>
         <div class="tab ${tab === 'settings' ? 'active' : ''}" onclick="app.navigate('admin', {tab:'settings'})">⚙️ Settings</div>
       </div>
       <div id="adminContent"></div>
@@ -1330,6 +2046,9 @@ app.attachAdminEvents = async function(tab) {
   }
   if (tab === 'analytics') {
     this.renderAnalyticsTab(content);
+  }
+  if (tab === 'ga4') {
+    this.renderGA4Tab(content);
   }
   if (tab === 'settings') {
     this.renderSettingsTab(content);
@@ -1545,7 +2264,8 @@ app.openCourseModal = function(course = null) {
           ${lessons.map((l, i) => `
             <div style="display:flex;gap:0.5rem;margin-bottom:0.5rem" class="lesson-row">
               <input type="text" class="form-control" placeholder="Lesson title" value="${l.title}" style="flex:1">
-              <input type="text" class="form-control" placeholder="Duration" value="${l.duration}" style="width:120px">
+              <input type="text" class="form-control" placeholder="Duration" value="${l.duration}" style="width:100px">
+              <input type="text" class="form-control" placeholder="Video URL" value="${l.videoUrl || ''}" style="flex:1">
               <button class="btn btn-sm btn-danger" onclick="this.parentElement.remove()">✕</button>
             </div>
           `).join('')}
@@ -1567,7 +2287,7 @@ app.addLessonRow = function() {
   const div = document.createElement('div');
   div.className = 'lesson-row';
   div.style.cssText = 'display:flex;gap:0.5rem;margin-bottom:0.5rem';
-  div.innerHTML = `<input type="text" class="form-control" placeholder="Lesson title" style="flex:1"><input type="text" class="form-control" placeholder="Duration" style="width:120px"><button class="btn btn-sm btn-danger" onclick="this.parentElement.remove()">✕</button>`;
+  div.innerHTML = `<input type="text" class="form-control" placeholder="Lesson title" style="flex:1"><input type="text" class="form-control" placeholder="Duration" style="width:100px"><input type="text" class="form-control" placeholder="Video URL (optional)" style="flex:1"><button class="btn btn-sm btn-danger" onclick="this.parentElement.remove()">✕</button>`;
   container.appendChild(div);
 };
 
@@ -1580,7 +2300,8 @@ app.saveCourse = async function(id) {
   const lessons = Array.from(rows).map((row, i) => ({
     id: i + 1,
     title: row.children[0].value,
-    duration: row.children[1].value
+    duration: row.children[1].value,
+    videoUrl: row.children[2]?.value || ''
   })).filter(l => l.title);
 
   if (!title || lessons.length === 0) { this.toast('Title and at least one lesson required', 'error'); return; }
@@ -1686,6 +2407,46 @@ app.refundTransaction = async function(id) {
 };
 
 // ==================== ANALYTICS TAB ====================
+app.renderGA4Tab = function(container) {
+  container.innerHTML = `
+    <div class="card" style="margin-bottom:1rem">
+      <h3 style="margin-bottom:0.5rem">📊 Google Analytics 4 Integration</h3>
+      <p class="text-gray text-sm">Real-time event tracking is active. Replace <code>GA_MEASUREMENT_ID</code> in your HTML with your real GA4 ID.</p>
+    </div>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3 style="margin-bottom:1rem">How to Get Your GA4 ID</h3>
+        <ol style="padding-left:1.25rem;font-size:0.875rem;line-height:1.8;color:#4b5563">
+          <li>Go to <a href="https://analytics.google.com" target="_blank" style="color:var(--primary)">analytics.google.com</a></li>
+          <li>Create account → Create property</li>
+          <li>Property setup → Data stream → Web</li>
+          <li>Enter your website URL</li>
+          <li>Copy the <strong>Measurement ID</strong> (starts with G-)</li>
+          <li>In your <code>index.html</code>, replace <code>GA_MEASUREMENT_ID</code></li>
+          <li>Redeploy to GitHub Pages</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:1rem">Tracked Events</h3>
+        <div style="font-size:0.875rem;line-height:1.8">
+          <div class="flex-between" style="padding:0.5rem 0;border-bottom:1px solid var(--border)"><span>page_view</span><span class="badge badge-info">Auto</span></div>
+          <div class="flex-between" style="padding:0.5rem 0;border-bottom:1px solid var(--border)"><span>login</span><span class="badge badge-success">Active</span></div>
+          <div class="flex-between" style="padding:0.5rem 0;border-bottom:1px solid var(--border)"><span>sign_up</span><span class="badge badge-success">Active</span></div>
+          <div class="flex-between" style="padding:0.5rem 0;border-bottom:1px solid var(--border)"><span>add_to_cart</span><span class="badge badge-success">Active</span></div>
+          <div class="flex-between" style="padding:0.5rem 0;border-bottom:1px solid var(--border)"><span>purchase</span><span class="badge badge-success">Active</span></div>
+          <div class="flex-between" style="padding:0.5rem 0;border-bottom:1px solid var(--border)"><span>begin_checkout</span><span class="badge badge-warning">Coming</span></div>
+          <div class="flex-between" style="padding:0.5rem 0"><span>video_start</span><span class="badge badge-warning">Coming</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card mt-2">
+      <h3 style="margin-bottom:1rem">View Real-Time Data</h3>
+      <p class="text-gray text-sm mb-2">Open Google Analytics to see live users, events, and conversions.</p>
+      <a href="https://analytics.google.com" target="_blank" class="btn btn-primary">Open Google Analytics →</a>
+    </div>
+  `;
+};
+
 app.renderAnalyticsTab = async function(container) {
   const purchases = await db.getAll('purchases');
   const courses = await db.getAll('courses');
@@ -1801,13 +2562,27 @@ app.renderSettingsTab = async function(container) {
       </div>
     </div>
     <div class="card mt-2">
-      <h3 style="margin-bottom:1rem">API Configuration</h3>
+      <h3 style="margin-bottom:1rem">📊 Google Analytics 4</h3>
       <div class="form-group">
-        <label>Backend API Base URL (leave empty for offline-only mode)</label>
-        <input type="text" class="form-control" id="apiBaseUrl" placeholder="https://api.rise.africa" value="${db.apiBase}">
+        <label>GA4 Measurement ID</label>
+        <input type="text" class="form-control" id="ga4Id" placeholder="G-XXXXXXXXXX" value="${localStorage.getItem('ga4Id') || ''}">
       </div>
-      <button class="btn btn-primary" onclick="app.saveApiBase()">Save API URL</button>
-      <p class="text-gray text-sm mt-1">When set, data will sync to your backend. When offline, changes queue automatically.</p>
+      <button class="btn btn-primary" onclick="app.saveGA4Id()">Save GA4 ID</button>
+      <p class="text-gray text-sm mt-1">Get this from Google Analytics → Admin → Data Streams → Web Stream Details</p>
+    </div>
+
+    <div class="card mt-2">
+      <h3 style="margin-bottom:1rem">🔌 Supabase Connection</h3>
+      <div class="form-group">
+        <label>Supabase Project URL</label>
+        <input type="text" class="form-control" id="apiBaseUrl" placeholder="https://abcdefgh12345678.supabase.co/rest/v1" value="${db.apiBase}">
+      </div>
+      <div class="form-group">
+        <label>Supabase Anon Key</label>
+        <input type="password" class="form-control" id="supabaseKey" placeholder="eyJhbGciOiJIUzI1NiIs..." value="${db.supabaseKey}">
+      </div>
+      <button class="btn btn-primary" onclick="app.saveApiBase()">Save Connection</button>
+      <p class="text-gray text-sm mt-1">Get these from Supabase Dashboard → Project Settings → API. When set, payments and data sync to your Supabase backend.</p>
     </div>
   `;
 };
@@ -1833,11 +2608,25 @@ app.saveSettings = async function() {
   this.toast('Settings saved!', 'success');
 };
 
+app.saveGA4Id = function() {
+  const id = document.getElementById('ga4Id').value.trim();
+  localStorage.setItem('ga4Id', id);
+  if (id && typeof gtag === 'function') {
+    gtag('config', id);
+    this.toast('GA4 ID saved and tracking active!', 'success');
+  } else {
+    this.toast('GA4 ID saved. Refresh to activate.', 'info');
+  }
+};
+
 app.saveApiBase = function() {
   const url = document.getElementById('apiBaseUrl').value.trim();
+  const key = document.getElementById('supabaseKey').value.trim();
   db.apiBase = url;
+  db.supabaseKey = key;
   localStorage.setItem('apiBase', url);
-  this.toast(url ? 'API URL saved. Sync enabled.' : 'Offline mode. No sync.', 'success');
+  localStorage.setItem('supabaseKey', key);
+  this.toast(url && key ? '✅ Supabase connected. Payments & sync enabled.' : '⚠️ Offline mode. Enter both URL and key.', url && key ? 'success' : 'warning');
 };
 
 app.exportData = async function() {
@@ -1878,6 +2667,23 @@ app.clearAllData = async function() {
   this.currentUser = null; this.cart = [];
   this.toast('All data cleared', 'success');
   this.navigate('home');
+};
+
+// ==================== ANALYTICS TRACKING ====================
+app.trackEvent = function(eventName, params = {}) {
+  if (typeof gtag === 'function') {
+    gtag('event', eventName, params);
+  }
+  // Also log to local activity for admin analytics
+  if (this.currentUser) {
+    db.logActivity(this.currentUser.email, 'Analytics: ' + eventName, JSON.stringify(params)).catch(() => {});
+  }
+};
+
+app.trackPageView = function(page) {
+  if (typeof gtag === 'function') {
+    gtag('event', 'page_view', { page_title: page, page_location: window.location.href });
+  }
 };
 
 // ==================== SERVICE WORKER (OFFLINE) ====================
