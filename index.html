@@ -1,42 +1,886 @@
-// ==================== STRIPE PAYMENTS ====================
-// Setup: Create account at https://stripe.com, get publishable key
-// For production, you also need a backend (Supabase Edge Function or server) to create payment intents securely
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Rise Africa Skills - AI-Powered E-Learning for Africa. Learn practical skills with 100% AI teachers.">
+  <meta name="keywords" content="Africa, e-learning, skills, AI tutor, farming, solar, business">
+  <meta property="og:title" content="Rise Africa Skills | rAs">
+  <meta property="og:description" content="Learn practical, money-making skills with AI-powered courses for Africa.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://riseafricaskills.com">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Rise Africa Skills | rAs</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            ras: { 50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74', 400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c', 800: '#9a3412', 900: '#7c2d12' },
+            africa: { 50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 300: '#6ee7b7', 400: '#34d399', 500: '#10b981', 600: '#059669', 700: '#047857', 800: '#065f46', 900: '#064e3b' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .card-hover { transition: all 0.3s ease; }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.15); }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 50; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+    .modal-overlay.active { opacity: 1; pointer-events: all; }
+    .chat-window { position: fixed; bottom: 90px; right: 20px; width: 360px; height: 500px; background: white; border-radius: 20px; box-shadow: 0 20px 60px -10px rgba(0,0,0,0.3); z-index: 40; display: flex; flex-direction: column; transform: scale(0.9) translateY(20px); opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    .dark .chat-window { background: #1e293b; }
+    .chat-window.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+    .typing-dot { width: 6px; height: 6px; background: #9ca3af; border-radius: 50%; animation: typing 1.4s infinite; }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typing { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-8px); } }
+    .animate-fade-in { animation: fadeIn 0.6s ease-out forwards; opacity: 0; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .ras-box { display: inline-flex; align-items: center; justify-content: center; font-weight: 900; background: linear-gradient(135deg, #f97316, #ea580c); color: white; border-radius: 12px; }
+    .ras-box-sm { width: 32px; height: 32px; font-size: 10px; }
+    .qr-container { padding: 12px; background: white; border-radius: 12px; display: inline-block; }
+  </style>
+<base target="_blank">
+</head>
+<body class="bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+
+<!-- HEADER -->
+<header id="mainHeader" class="fixed top-0 w-full z-30 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-all">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <a href="#home" onclick="navigate('home')" class="flex items-center gap-2">
+        <div class="ras-box w-10 h-10 text-lg">rAs</div>
+        <span class="font-bold text-xl hidden sm:block">Rise Africa Skills</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6">
+        <a href="#home" onclick="navigate('home')" class="nav-link text-sm font-medium hover:text-ras-600 transition" data-page="home">Home</a>
+        <a href="#courses" onclick="navigate('courses')" class="nav-link text-sm font-medium hover:text-ras-600 transition" data-page="courses">Courses</a>
+        <a href="#dashboard" onclick="navigate('dashboard')" class="nav-link text-sm font-medium hover:text-ras-600 transition" data-page="dashboard">Dashboard</a>
+        <a href="#verify" onclick="navigate('verify')" class="nav-link text-sm font-medium hover:text-ras-600 transition" data-page="verify">Verify</a>
+        <a href="#contact" onclick="navigate('contact')" class="nav-link text-sm font-medium hover:text-ras-600 transition" data-page="contact">Contact</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <button onclick="toggleTheme()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition">
+          <i id="themeIcon" class="fas fa-moon"></i>
+        </button>
+        <button onclick="navigate('cart')" class="relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition">
+          <i class="fas fa-shopping-cart"></i>
+          <span id="cartCount" class="absolute -top-1 -right-1 w-5 h-5 bg-ras-500 text-white text-xs rounded-full flex items-center justify-center">0</span>
+        </button>
+        <button id="authBtn" onclick="openModal('loginModal')" class="px-4 py-2 bg-ras-500 hover:bg-ras-600 text-white rounded-lg text-sm font-medium transition">
+          <i class="fas fa-sign-in-alt mr-2"></i>Login
+        </button>
+        <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="hidden md:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-slate-900 px-4 py-4 space-y-3">
+    <a href="#home" onclick="navigate('home'); toggleMobileMenu()" class="block text-sm font-medium">Home</a>
+    <a href="#courses" onclick="navigate('courses'); toggleMobileMenu()" class="block text-sm font-medium">Courses</a>
+    <a href="#dashboard" onclick="navigate('dashboard'); toggleMobileMenu()" class="block text-sm font-medium">Dashboard</a>
+    <a href="#cart" onclick="navigate('cart'); toggleMobileMenu()" class="block text-sm font-medium">Cart (<span id="mobileCartCount">0</span>)</a>
+    <button id="mobileAuthBtn" onclick="openModal('loginModal'); toggleMobileMenu()" class="block text-sm font-medium text-ras-600">Login</button>
+  </div>
+</header>
+
+<!-- TOAST CONTAINER -->
+<div id="toastContainer"></div>
+
+<!-- ==================== PAGES ==================== -->
+
+<!-- HOME PAGE -->
+<section id="page-home" class="page-section pt-20">
+  <div class="relative overflow-hidden bg-gradient-to-br from-ras-500 via-ras-600 to-africa-600 text-white">
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute top-20 left-10 w-72 h-72 bg-white rounded-full blur-3xl"></div>
+      <div class="absolute bottom-20 right-10 w-96 h-96 bg-africa-400 rounded-full blur-3xl"></div>
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium mb-6">
+          <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+          Now serving 50+ practical courses
+        </div>
+        <h1 class="text-4xl sm:text-5xl lg:text-7xl font-black leading-tight mb-6">
+          Learn Skills That <span class="text-yellow-300">Pay</span>.<br>Build Africa's <span class="text-africa-300">Future</span>.
+        </h1>
+        <p class="text-lg sm:text-xl text-white/90 mb-8 max-w-2xl">
+          AI-powered e-learning for African entrepreneurs. From pig farming to solar tech, soap making to machine learning — learn practical skills with rAs, your 24/7 AI tutor.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <button onclick="navigate('courses')" class="px-8 py-4 bg-white text-ras-600 rounded-xl font-bold text-lg hover:bg-gray-100 transition shadow-lg">
+            <i class="fas fa-play-circle mr-2"></i>Browse Courses
+          </button>
+          <button onclick="openModal('registerModal')" class="px-8 py-4 bg-white/20 backdrop-blur-sm text-white rounded-xl font-bold text-lg hover:bg-white/30 transition border border-white/30">
+            <i class="fas fa-user-plus mr-2"></i>Get Started Free
+          </button>
+        </div>
+        <div class="mt-12 flex items-center gap-8 text-sm text-white/80">
+          <div class="flex items-center gap-2"><i class="fas fa-robot"></i> AI Tutor 24/7</div>
+          <div class="flex items-center gap-2"><i class="fas fa-certificate"></i> Verified Certs</div>
+          <div class="flex items-center gap-2"><i class="fas fa-globe-africa"></i> 9 Languages</div>
+          <div class="flex items-center gap-2"><i class="fas fa-wifi"></i> Offline Mode</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-10">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg text-center card-hover">
+        <div class="text-3xl font-black text-ras-600">50+</div>
+        <div class="text-sm text-gray-500 dark:text-gray-400 mt-1">Practical Courses</div>
+      </div>
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg text-center card-hover">
+        <div class="text-3xl font-black text-africa-600">9</div>
+        <div class="text-sm text-gray-500 dark:text-gray-400 mt-1">Languages</div>
+      </div>
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg text-center card-hover">
+        <div class="text-3xl font-black text-ras-600">$8</div>
+        <div class="text-sm text-gray-500 dark:text-gray-400 mt-1">Per Course</div>
+      </div>
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg text-center card-hover">
+        <div class="text-3xl font-black text-africa-600">100%</div>
+        <div class="text-sm text-gray-500 dark:text-gray-400 mt-1">AI Powered</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured Courses -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-black mb-4">Popular Courses</h2>
+      <p class="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">Start with these high-demand skills that create real income across Africa.</p>
+    </div>
+    <div id="featuredCourses" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    <div class="text-center mt-10">
+      <button onclick="navigate('courses')" class="px-8 py-3 border-2 border-ras-500 text-ras-600 dark:text-ras-400 rounded-xl font-bold hover:bg-ras-50 dark:hover:bg-ras-900/20 transition">
+        View All Courses <i class="fas fa-arrow-right ml-2"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- How It Works -->
+  <div class="bg-white dark:bg-slate-800 py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-black mb-4">How It Works</h2>
+        <p class="text-gray-500 dark:text-gray-400">From signup to certificate in 4 simple steps.</p>
+      </div>
+      <div class="grid md:grid-cols-4 gap-8">
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto bg-ras-100 dark:bg-ras-900/30 text-ras-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fas fa-user-plus"></i></div>
+          <h3 class="font-bold mb-2">1. Sign Up</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400">Create your free account in seconds.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto bg-africa-100 dark:bg-africa-900/30 text-africa-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fas fa-shopping-cart"></i></div>
+          <h3 class="font-bold mb-2">2. Choose Course</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400">Browse 50+ practical skills. From $8.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto bg-ras-100 dark:bg-ras-900/30 text-ras-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fas fa-robot"></i></div>
+          <h3 class="font-bold mb-2">3. Learn with rAs</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400">AI tutor guides you 24/7 in your language.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto bg-africa-100 dark:bg-africa-900/30 text-africa-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fas fa-certificate"></i></div>
+          <h3 class="font-bold mb-2">4. Get Certified</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400">Verified certificate with QR code. +$2.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES PAGE -->
+<section id="page-courses" class="page-section hidden pt-24 pb-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl font-black mb-4">All Courses</h2>
+      <p class="text-gray-500 dark:text-gray-400 mb-6">Practical skills for African entrepreneurs. Filter by category.</p>
+      <div class="flex flex-wrap justify-center gap-2" id="courseFilters">
+        <button onclick="filterCourses('all')" class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-ras-500 text-white transition" data-category="all">All</button>
+        <button onclick="filterCourses('Agriculture')" class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-100 dark:bg-slate-800 hover:bg-ras-100 transition" data-category="Agriculture">Agriculture</button>
+        <button onclick="filterCourses('Solar')" class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-100 dark:bg-slate-800 hover:bg-ras-100 transition" data-category="Solar">Solar</button>
+        <button onclick="filterCourses('Business')" class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-100 dark:bg-slate-800 hover:bg-ras-100 transition" data-category="Business">Business</button>
+        <button onclick="filterCourses('Technology')" class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-100 dark:bg-slate-800 hover:bg-ras-100 transition" data-category="Technology">Technology</button>
+      </div>
+    </div>
+    <div id="coursesGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </div>
+</section>
+
+<!-- CART PAGE -->
+<section id="page-cart" class="page-section hidden pt-24 pb-20">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-black mb-8">Shopping Cart</h2>
+    <div id="cartItems" class="space-y-4 mb-8"></div>
+    <div id="cartSummary" class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700"></div>
+  </div>
+</section>
+
+<!-- DASHBOARD PAGE -->
+<section id="page-dashboard" class="page-section hidden pt-24 pb-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-black mb-8">My Dashboard</h2>
+    <div class="grid md:grid-cols-3 gap-6 mb-8">
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700">
+        <div class="text-sm text-gray-500 dark:text-gray-400 mb-1">Courses Enrolled</div>
+        <div id="dashCourseCount" class="text-3xl font-black text-ras-600">0</div>
+      </div>
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700">
+        <div class="text-sm text-gray-500 dark:text-gray-400 mb-1">Completed</div>
+        <div id="dashCompleteCount" class="text-3xl font-black text-africa-600">0</div>
+      </div>
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700">
+        <div class="text-sm text-gray-500 dark:text-gray-400 mb-1">Certificates</div>
+        <div id="dashCertCount" class="text-3xl font-black text-ras-600">0</div>
+      </div>
+    </div>
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2 space-y-6">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700">
+          <h3 class="font-bold mb-4">Continue Learning</h3>
+          <div id="continueLearningList" class="space-y-3"></div>
+        </div>
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700">
+          <h3 class="font-bold mb-4">My Courses</h3>
+          <div id="myCoursesList" class="space-y-4"></div>
+        </div>
+      </div>
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700">
+          <h3 class="font-bold mb-4">Activity</h3>
+          <canvas id="activityChart" height="200"></canvas>
+        </div>
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700">
+          <h3 class="font-bold mb-4">My Certificates</h3>
+          <div id="myCertificatesList" class="grid gap-4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATOR PAGE -->
+<section id="page-calculator" class="page-section hidden pt-24 pb-20">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl font-black mb-4">Preservation Calculator</h2>
+      <p class="text-gray-500 dark:text-gray-400">Plan your food preservation yields before you invest.</p>
+    </div>
+    <div class="bg-white dark:bg-slate-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700 shadow-lg">
+      <div class="grid md:grid-cols-2 gap-6 mb-6">
+        <div>
+          <label class="block text-sm font-medium mb-2">Starting Quantity (kg)</label>
+          <input type="number" id="calcStartQty" value="100" oninput="updateCalc()" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-slate-900 focus:ring-2 focus:ring-ras-500 outline-none">
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-2">Product Type</label>
+          <select id="calcProduct" onchange="updateCalc()" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-slate-900 focus:ring-2 focus:ring-ras-500 outline-none">
+            <option value="fruits">Fruits</option>
+            <option value="vegetables">Vegetables</option>
+            <option value="meat">Meat</option>
+            <option value="fish">Fish</option>
+            <option value="grains">Grains</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-2">Preservation Method</label>
+          <select id="calcMethod" onchange="updateCalc()" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-slate-900 focus:ring-2 focus:ring-ras-500 outline-none">
+            <option value="drying">Sun Drying</option>
+            <option value="smoking">Smoking</option>
+            <option value="salting">Salting</option>
+            <option value="pickling">Pickling</option>
+            <option value="canning">Canning</option>
+            <option value="freezing">Freezing</option>
+            <option value="dehydrating">Dehydrating</option>
+            <option value="waxing">Waxing</option>
+            <option value="sugaring">Sugaring</option>
+            <option value="vacuum">Vacuum Sealing</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div class="bg-ras-50 dark:bg-ras-900/20 rounded-xl p-4 text-center">
+          <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Final Yield</div>
+          <div id="calcFinalQty" class="text-2xl font-black text-ras-600">--</div>
+        </div>
+        <div class="bg-africa-50 dark:bg-africa-900/20 rounded-xl p-4 text-center">
+          <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Shelf Life</div>
+          <div id="calcShelfLife" class="text-lg font-bold text-africa-600">--</div>
+        </div>
+        <div class="bg-ras-50 dark:bg-ras-900/20 rounded-xl p-4 text-center">
+          <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Storage Temp</div>
+          <div id="calcTemp" class="text-lg font-bold text-ras-600">--</div>
+        </div>
+        <div class="bg-africa-50 dark:bg-africa-900/20 rounded-xl p-4 text-center">
+          <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Yield %</div>
+          <div id="calcYield" class="text-2xl font-black text-africa-600">--</div>
+        </div>
+      </div>
+      <div class="bg-gray-50 dark:bg-slate-900 rounded-xl p-4">
+        <div class="text-sm font-medium mb-1">Expert Advice</div>
+        <p id="calcAdvice" class="text-sm text-gray-600 dark:text-gray-400">--</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VERIFY PAGE -->
+<section id="page-verify" class="page-section hidden pt-24 pb-20">
+  <div class="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-3xl font-black mb-4">Verify Certificate</h2>
+    <p class="text-gray-500 dark:text-gray-400 mb-8">Enter the certificate ID to verify its authenticity.</p>
+    <div class="bg-white dark:bg-slate-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700 shadow-lg">
+      <input type="text" id="verifyInput" placeholder="CERT-XXXXXXXXX" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-slate-900 text-center font-mono uppercase tracking-wider focus:ring-2 focus:ring-ras-500 outline-none mb-4">
+      <button onclick="verifyCertificate()" class="w-full py-3 bg-ras-500 hover:bg-ras-600 text-white rounded-xl font-bold transition">Verify Certificate</button>
+      <div id="verifyResult" class="hidden mt-6 text-left"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT PAGE -->
+<section id="page-contact" class="page-section hidden pt-24 pb-20">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl font-black mb-4">Contact Us</h2>
+      <p class="text-gray-500 dark:text-gray-400">Have questions? Reach out to the Rise Africa Skills team.</p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700">
+        <form onsubmit="handleContact(event)">
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">Name</label>
+            <input type="text" required class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-slate-900 focus:ring-2 focus:ring-ras-500 outline-none">
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">Email</label>
+            <input type="email" required class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-slate-900 focus:ring-2 focus:ring-ras-500 outline-none">
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">Category</label>
+            <select class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-slate-900 focus:ring-2 focus:ring-ras-500 outline-none">
+              <option>General Inquiry</option>
+              <option>Course Support</option>
+              <option>Payment Issue</option>
+              <option>Partnership</option>
+            </select>
+          </div>
+          <div class="mb-6">
+            <label class="block text-sm font-medium mb-2">Message</label>
+            <textarea rows="4" required class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-slate-900 focus:ring-2 focus:ring-ras-500 outline-none resize-none"></textarea>
+          </div>
+          <button type="submit" class="w-full py-3 bg-ras-500 hover:bg-ras-600 text-white rounded-xl font-bold transition">Send Message</button>
+        </form>
+      </div>
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-ras-100 dark:bg-ras-900/30 text-ras-600 rounded-xl flex items-center justify-center"><i class="fas fa-envelope"></i></div>
+            <div>
+              <div class="font-medium">Email</div>
+              <div class="text-sm text-gray-500 dark:text-gray-400">all@riseafricaskills.com</div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-africa-100 dark:bg-africa-900/30 text-africa-600 rounded-xl flex items-center justify-center"><i class="fas fa-phone"></i></div>
+            <div>
+              <div class="font-medium">Phone</div>
+              <div class="text-sm text-gray-500 dark:text-gray-400">+263 77 300 1353 / +44 735 972 4755</div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-ras-100 dark:bg-ras-900/30 text-ras-600 rounded-xl flex items-center justify-center"><i class="fas fa-map-marker-alt"></i></div>
+            <div>
+              <div class="font-medium">Address</div>
+              <div class="text-sm text-gray-500 dark:text-gray-400">350b Southway Waterfalls, Parktown, Harare, Africa</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-gray-800 py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+        <div class="flex items-center gap-2 mb-4">
+          <div class="ras-box w-8 h-8 text-sm">rAs</div>
+          <span class="font-bold">Rise Africa Skills</span>
+        </div>
+        <p class="text-sm text-gray-500 dark:text-gray-400">AI-powered e-learning for African entrepreneurs. Learn practical skills, build real income.</p>
+      </div>
+      <div>
+        <div class="font-bold mb-4">Platform</div>
+        <div class="space-y-2 text-sm text-gray-500 dark:text-gray-400">
+          <a href="#courses" onclick="navigate('courses')" class="block hover:text-ras-600">Courses</a>
+          <a href="#dashboard" onclick="navigate('dashboard')" class="block hover:text-ras-600">Dashboard</a>
+          <a href="#verify" onclick="navigate('verify')" class="block hover:text-ras-600">Verify Cert</a>
+          <a href="#calculator" onclick="navigate('calculator')" class="block hover:text-ras-600">Calculator</a>
+        </div>
+      </div>
+      <div>
+        <div class="font-bold mb-4">Legal</div>
+        <div class="space-y-2 text-sm text-gray-500 dark:text-gray-400">
+          <a href="#" onclick="showToast('Privacy Policy coming soon', 'info')" class="block hover:text-ras-600">Privacy Policy</a>
+          <a href="#" onclick="showToast('Terms of Service coming soon', 'info')" class="block hover:text-ras-600">Terms of Service</a>
+          <a href="#" onclick="showToast('Refund Policy coming soon', 'info')" class="block hover:text-ras-600">Refund Policy</a>
+        </div>
+      </div>
+      <div>
+        <div class="font-bold mb-4">Connect</div>
+        <div class="flex gap-3">
+          <a href="#" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-slate-700 flex items-center justify-center hover:bg-ras-500 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-slate-700 flex items-center justify-center hover:bg-ras-500 hover:text-white transition"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-slate-700 flex items-center justify-center hover:bg-ras-500 hover:text-white transition"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-slate-700 flex items-center justify-center hover:bg-ras-500 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-gray-200 dark:border-gray-700 pt-8 text-center text-sm text-gray-500 dark:text-gray-400">
+      © 2026 Rise Africa Skills. All rights reserved. Built for Africa, by Africa.
+    </div>
+  </div>
+</footer>
+
+<!-- ==================== MODALS ==================== -->
+
+<!-- Login Modal -->
+<div id="loginModal" class="modal-overlay">
+  <div class="bg-white dark:bg-slate-800 rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl transform scale-95 transition-transform">
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="text-2xl font-black">Welcome Back</h3>
+      <button onclick="closeModal('loginModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+    </div>
+    <form onsubmit="handleLogin(event)">
+      <div class="mb-4">
+        <label class="block text-sm font-medium mb-2">Email</label>
+        <input type="email" id="loginEmail" required class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-slate-900 focus:ring-2 focus:ring-ras-500 outline-none">
+      </div>
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2">Password</label>
+        <input type="password" id="loginPassword" required class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-slate-900 focus:ring-2 focus:ring-ras-500 outline-none">
+      </div>
+      <button type="submit" class="w-full py-3 bg-ras-500 hover:bg-ras-600 text-white rounded-xl font-bold transition mb-4">Login</button>
+      <div class="text-center text-sm text-gray-500 dark:text-gray-400">
+        Don't have an account? <a href="#" onclick="closeModal('loginModal'); openModal('registerModal')" class="text-ras-600 font-medium">Sign up</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Register Modal -->
+<div id="registerModal" class="modal-overlay">
+  <div class="bg-white dark:bg-slate-800 rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="text-2xl font-black">Create Account</h3>
+      <button onclick="closeModal('registerModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+    </div>
+    <form onsubmit="handleRegister(event)">
+      <div class="mb-4">
+        <label class="block text-sm font-medium mb-2">Full Name</label>
+        <input type="text" id="regName" required class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-slate-900 focus:ring-2 focus:ring-ras-500 outline-none">
+      </div>
+      <div class="mb-4">
+        <label class="block text-sm font-medium mb-2">Email</label>
+        <input type="email" id="regEmail" required class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-slate-900 focus:ring-2 focus:ring-ras-500 outline-none">
+      </div>
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2">Password</label>
+        <input type="password" id="regPassword" required minlength="6" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-slate-900 focus:ring-2 focus:ring-ras-500 outline-none">
+      </div>
+      <button type="submit" class="w-full py-3 bg-ras-500 hover:bg-ras-600 text-white rounded-xl font-bold transition mb-4">Create Account</button>
+      <div class="text-center text-sm text-gray-500 dark:text-gray-400">
+        Already have an account? <a href="#" onclick="closeModal('registerModal'); openModal('loginModal')" class="text-ras-600 font-medium">Login</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Video Modal -->
+<div id="videoModal" class="modal-overlay">
+  <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-4xl w-full mx-4 shadow-2xl overflow-hidden">
+    <div class="flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-700">
+      <h3 id="videoModalTitle" class="font-bold">Course Video</h3>
+      <button onclick="closeModal('videoModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+    </div>
+    <div class="grid md:grid-cols-3">
+      <div class="md:col-span-2 aspect-video bg-black" id="videoPlayerContainer"></div>
+      <div class="p-4 border-l border-gray-200 dark:border-gray-700 max-h-96 overflow-y-auto">
+        <div class="font-medium mb-3">Lessons</div>
+        <div id="videoPlaylist" class="space-y-2"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Certificate Preview Modal -->
+<div id="certModal" class="modal-overlay">
+  <div class="bg-white dark:bg-slate-800 rounded-2xl p-8 max-w-3xl w-full mx-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="text-2xl font-black">Certificate</h3>
+      <button onclick="closeModal('certModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+    </div>
+    <div id="certPreviewContent"></div>
+    <div class="flex gap-3 mt-6">
+      <button onclick="downloadCertificatePDF()" class="flex-1 py-3 bg-ras-500 hover:bg-ras-600 text-white rounded-xl font-bold transition"><i class="fas fa-download mr-2"></i>Download PDF</button>
+      <button onclick="printCertificate()" class="flex-1 py-3 border border-gray-200 dark:border-gray-700 rounded-xl font-bold hover:bg-gray-50 dark:hover:bg-slate-700 transition"><i class="fas fa-print mr-2"></i>Print</button>
+    </div>
+  </div>
+</div>
+
+<!-- Chat Widget -->
+<div id="chatWidget" class="fixed bottom-6 right-6 z-40">
+  <button onclick="toggleChat()" class="w-14 h-14 bg-ras-500 hover:bg-ras-600 text-white rounded-full shadow-lg flex items-center justify-center text-2xl transition hover:scale-110">
+    <i id="chatIcon" class="fas fa-robot"></i>
+  </button>
+  <div id="chatWindow" class="chat-window">
+    <div class="p-4 bg-ras-500 text-white rounded-t-2xl flex items-center gap-3">
+      <div class="ras-box ras-box-sm">rAs</div>
+      <div>
+        <div class="font-bold text-sm">rAs AI Tutor</div>
+        <div class="text-xs text-white/80">Online now</div>
+      </div>
+    </div>
+    <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-4">
+      <div class="flex items-start gap-2">
+        <div class="ras-box ras-box-sm flex-shrink-0">rAs</div>
+        <div class="bg-gray-100 dark:bg-slate-700 rounded-2xl rounded-tl-none px-4 py-2 text-sm max-w-[80%]">
+          <p>Hello! I'm rAs, your AI tutor. Ask me about courses, pricing, business advice, or preservation methods.</p>
+        </div>
+      </div>
+    </div>
+    <form onsubmit="sendChatMessage(event)" class="p-4 border-t border-gray-200 dark:border-gray-700">
+      <div class="flex gap-2">
+        <input type="text" id="chatInput" placeholder="Ask rAs anything..." class="flex-1 px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-slate-900 text-sm focus:ring-2 focus:ring-ras-500 outline-none">
+        <button type="submit" class="px-4 py-2 bg-ras-500 hover:bg-ras-600 text-white rounded-xl transition"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Back to Top -->
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-24 left-6 w-12 h-12 bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 rounded-full shadow-lg flex items-center justify-center text-gray-500 hover:text-ras-600 transition hidden z-30">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+// ==================== CONFIGURATION ====================
+// PASTE YOUR KEYS HERE:
+const SUPABASE_CONFIG = {
+  url: 'https://PASTE-YOUR-SUPABASE-URL-HERE.supabase.co',
+  anonKey: 'PASTE-YOUR-SUPABASE-ANON-KEY-HERE',
+  tables: { users: 'profiles', orders: 'orders', progress: 'course_progress', certificates: 'certificates', calendar: 'calendar_events' }
+};
 
 const STRIPE_CONFIG = {
-  publishableKey: 'pk_test_51U1vbLF437ipkDCtu0719GtoWF7bKXjd2n4yWHcvZs7ABM9BIlHqJa7HQB9kCP96fe17YaaWzFDLmgXqegvJELqq00CM0sT297',  // Replace with your Stripe publishable key
+  publishableKey: 'pk_test_PASTE-YOUR-STRIPE-KEY-HERE',
   successUrl: window.location.origin + '/#success',
   cancelUrl: window.location.origin + '/#cart'
 };
 
+// ==================== STATE ====================
+const state = {
+  user: null,
+  cart: [],
+  orders: [],
+  certificates: [],
+  calendarEvents: [],
+  currentPage: 'home',
+  currentCourse: null,
+  currentMonth: new Date(),
+  darkMode: false,
+  language: 'en'
+};
+
+// ==================== COURSE DATA ====================
+const COURSES = [
+  { id: 'pig-farming', title: 'Pig Farming Mastery', category: 'Agriculture', price: 8.00, duration: '6 hours', icon: 'fa-piggy-bank', image: 'from-pink-500 to-rose-600', description: 'Complete guide to starting and scaling a profitable pig farm in Africa. Housing, feeding, breeding, and disease management.', lessons: ['Introduction to Pig Farming', 'Housing & Infrastructure', 'Feed Formulation', 'Breeding & Reproduction', 'Disease Prevention', 'Marketing & Sales'] },
+  { id: 'poultry', title: 'Poultry Production', category: 'Agriculture', price: 8.00, duration: '5 hours', icon: 'fa-drumstick-bite', image: 'from-yellow-400 to-orange-500', description: 'Layer and broiler management for maximum profit. From day-old chicks to market-ready birds.', lessons: ['Broiler Management', 'Layer Management', 'Feed & Nutrition', 'Biosecurity', 'Egg Handling', 'Profit Calculation'] },
+  { id: 'rabbit-farming', title: 'Rabbit Farming', category: 'Agriculture', price: 8.00, duration: '4 hours', icon: 'fa-carrot', image: 'from-gray-400 to-gray-600', description: 'Low-capital, high-return rabbit farming. Housing, breeding, feeding, and market strategies.', lessons: ['Why Rabbits?', 'Hutch Design', 'Breeding Stock', 'Feeding Guide', 'Health Care', 'Marketing'] },
+  { id: 'goat-rearing', title: 'Goat & Sheep Rearing', category: 'Agriculture', price: 8.00, duration: '5 hours', icon: 'fa-paw', image: 'from-amber-600 to-yellow-700', description: 'Small ruminant production adapted for African conditions. Pasture, health, and breeding.', lessons: ['Breeds Selection', 'Pasture Management', 'Breeding Calendar', 'Common Diseases', 'Meat Production', 'Milk Production'] },
+  { id: 'cattle-rearing', title: 'Cattle Rearing', category: 'Agriculture', price: 8.00, duration: '6 hours', icon: 'fa-horse', image: 'from-amber-700 to-orange-800', description: 'Beef and dairy cattle management. From calf to cow, maximize your herd profitability.', lessons: ['Cattle Breeds', 'Nutrition & Feeding', 'Reproduction', 'Dairy Management', 'Beef Production', 'Record Keeping'] },
+  { id: 'solar-install', title: 'Solar Technology Installation', category: 'Solar', price: 8.00, duration: '8 hours', icon: 'fa-solar-panel', image: 'from-blue-400 to-cyan-500', description: 'Install and maintain solar power systems. Panels, inverters, batteries, and grid-tie solutions.', lessons: ['Solar Basics', 'System Design', 'Panel Installation', 'Inverter Setup', 'Battery Systems', 'Troubleshooting'] },
+  { id: 'solar-pump', title: 'Solar Dam Pump & Borehole', category: 'Solar', price: 8.00, duration: '6 hours', icon: 'fa-water', image: 'from-cyan-400 to-blue-600', description: 'Solar-powered water pumping for irrigation and livestock. Pump selection, installation, and maintenance.', lessons: ['Water Needs Assessment', 'Pump Types', 'Solar Array Sizing', 'Installation', 'Maintenance', 'Cost Analysis'] },
+  { id: 'preservation', title: 'Food Preservation Masterclass', category: 'Business', price: 8.00, duration: '7 hours', icon: 'fa-apple-alt', image: 'from-green-400 to-emerald-600', description: '10 methods of food preservation: drying, smoking, salting, pickling, canning, freezing, and more.', lessons: ['Sun Drying', 'Smoking', 'Salting & Curing', 'Pickling', 'Canning', 'Freezing', 'Dehydrating', 'Waxing', 'Sugaring', 'Vacuum Sealing'] },
+  { id: 'soap-making', title: 'Soap Making Business', category: 'Business', price: 8.00, duration: '4 hours', icon: 'fa-soap', image: 'from-purple-400 to-pink-500', description: 'Start a soap and detergent manufacturing business from home. Formulations, packaging, and sales.', lessons: ['Ingredients & Chemistry', 'Bar Soap', 'Liquid Soap', 'Detergent Powder', 'Packaging', 'Marketing'] },
+  { id: 'leather-making', title: 'Leather Making', category: 'Business', price: 8.00, duration: '5 hours', icon: 'fa-shoe-prints', image: 'from-amber-700 to-yellow-900', description: 'Tanning and leather craft. From raw hide to finished products like shoes, bags, and belts.', lessons: ['Skin Preparation', 'Tanning Process', 'Dyeing', 'Cutting & Stitching', 'Product Design', 'Selling'] },
+  { id: 'mushroom-farming', title: 'Mushroom Farming', category: 'Business', price: 8.00, duration: '4 hours', icon: 'fa-seedling', image: 'from-gray-500 to-gray-700', description: 'Oyster and button mushroom cultivation. Low space, high value crop for urban farmers.', lessons: ['Mushroom Types', 'Substrate Preparation', 'Inoculation', 'Growing Conditions', 'Harvesting', 'Market Strategy'] },
+  { id: 'intro-ai', title: 'Introduction to AI', category: 'Technology', price: 8.00, duration: '5 hours', icon: 'fa-brain', image: 'from-indigo-400 to-purple-600', description: 'Understand artificial intelligence, machine learning, and how to use AI tools for business.', lessons: ['What is AI?', 'Machine Learning Basics', 'Deep Learning', 'AI Tools for Business', 'Prompt Engineering', 'Ethics & Future'] },
+  { id: 'robotics', title: 'Robotics for Africa', category: 'Technology', price: 8.00, duration: '6 hours', icon: 'fa-robot', image: 'from-slate-400 to-slate-600', description: 'Build and program robots for African applications. Agriculture bots, automation, and IoT.', lessons: ['Robot Components', 'Programming Basics', 'Sensors & Actuators', 'Agri-Bots', 'Automation', 'IoT Integration'] },
+  { id: 'drone-tech', title: 'Drone Technology', category: 'Technology', price: 8.00, duration: '5 hours', icon: 'fa-plane', image: 'from-sky-400 to-blue-500', description: 'Commercial drone operation for agriculture, surveying, and photography. Licensing and safety.', lessons: ['Drone Types', 'Flight Basics', 'Agricultural Drones', 'Mapping & Surveying', 'Photography', 'Regulations'] },
+  { id: 'ml-basics', title: 'Machine Learning Basics', category: 'Technology', price: 8.00, duration: '7 hours', icon: 'fa-chart-line', image: 'from-violet-400 to-purple-600', description: 'Build your first ML models. Data preparation, training, and deployment with Python.', lessons: ['Python for ML', 'Data Preprocessing', 'Supervised Learning', 'Unsupervised Learning', 'Model Evaluation', 'Deployment'] }
+];
+
+const AI_ASSISTANTS = [
+  { name: 'rAs Tutor', role: 'Primary AI Teacher', icon: 'fa-robot', color: 'orange', task: 'Answers course questions and guides learning' },
+  { name: 'Biz Advisor', role: 'Business Coach', icon: 'fa-briefcase', color: 'green', task: 'Helps with business plans and pricing' },
+  { name: 'Agri Expert', role: 'Agriculture Specialist', icon: 'fa-tractor', color: 'yellow', task: 'Crop and livestock advice' },
+  { name: 'Tech Guide', role: 'Technology Mentor', icon: 'fa-microchip', color: 'blue', task: 'Explains tech concepts simply' }
+];
+
+// ==================== SUPABASE SETUP ====================
+let supabaseClient = null;
+let useSupabase = false;
+
+function initSupabase() {
+  if (typeof supabase === 'undefined') {
+    console.warn('Supabase library not loaded');
+    return false;
+  }
+  if (SUPABASE_CONFIG.url.includes('PASTE-YOUR')) {
+    console.warn('Supabase not configured yet');
+    return false;
+  }
+  try {
+    supabaseClient = supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
+    useSupabase = true;
+    console.log('✅ Supabase connected');
+    return true;
+  } catch (err) {
+    console.error('Supabase failed:', err);
+    return false;
+  }
+}
+
+// ==================== STRIPE SETUP ====================
 let stripe = null;
+let useStripe = false;
 
 function initStripe() {
   if (typeof Stripe === 'undefined') {
-    console.warn('Stripe.js not loaded. Payments will be simulated.');
+    console.warn('Stripe.js not loaded');
     return false;
   }
   if (STRIPE_CONFIG.publishableKey.includes('PASTE-YOUR')) {
-    console.warn('Stripe not configured. Using simulated payments.');
+    console.warn('Stripe not configured');
     return false;
   }
-  stripe = Stripe(STRIPE_CONFIG.publishableKey);
-  console.log('💳 Stripe ready');
-  return true;
+  try {
+    stripe = Stripe(STRIPE_CONFIG.publishableKey);
+    useStripe = true;
+    console.log('💳 Stripe ready');
+    return true;
+  } catch (err) {
+    console.error('Stripe failed:', err);
+    return false;
+  }
 }
 
-// Load Stripe.js dynamically
-function loadStripeScript() {
-  if (typeof Stripe !== 'undefined') return Promise.resolve();
+// ==================== AUTHENTICATION ====================
+async function handleLogin(e) {
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+
+  if (useSupabase) {
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    if (error) { showToast(error.message, 'error'); return; }
+    const { data: profile } = await supabaseClient
+      .from(SUPABASE_CONFIG.tables.users)
+      .select('*')
+      .eq('id', data.user.id)
+      .single();
+    state.user = { 
+      id: data.user.id,
+      name: profile?.full_name || data.user.user_metadata?.full_name || email.split('@')[0],
+      email: data.user.email,
+      role: profile?.role || 'student',
+      created: data.user.created_at
+    };
+  } else {
+    const user = state.users?.find(u => u.email === email) || { 
+      name: 'Demo User', email: email, role: 'student', created: new Date().toISOString() 
+    };
+    state.user = user;
+    if (!state.users) state.users = [];
+    state.users.push(user);
+  }
+
+  localStorage.setItem('ras-user', JSON.stringify(state.user));
+  showToast('Welcome back, ' + state.user.name + '!', 'success');
+  closeModal('loginModal');
+  updateUIForAuth();
+  navigate('dashboard');
+}
+
+async function handleRegister(e) {
+  e.preventDefault();
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const password = document.getElementById('regPassword').value;
+  if (password.length < 6) { showToast('Password must be at least 6 characters', 'error'); return; }
+
+  if (useSupabase) {
+    const { data, error } = await supabaseClient.auth.signUp({
+      email, password,
+      options: { data: { full_name: name } }
+    });
+    if (error) { showToast(error.message, 'error'); return; }
+    await supabaseClient.from(SUPABASE_CONFIG.tables.users).insert([{
+      id: data.user.id, full_name: name, email: email, role: 'student',
+      created_at: new Date().toISOString()
+    }]);
+    state.user = { id: data.user.id, name: name, email: email, role: 'student', created: data.user.created_at };
+  } else {
+    if (!state.users) state.users = [];
+    const user = { name, email, role: 'student', created: new Date().toISOString() };
+    state.users.push(user);
+    state.user = user;
+  }
+
+  localStorage.setItem('ras-user', JSON.stringify(state.user));
+  showToast('Account created! Welcome!', 'success');
+  closeModal('registerModal');
+  updateUIForAuth();
+  navigate('dashboard');
+}
+
+async function handleLogout() {
+  if (useSupabase) await supabaseClient.auth.signOut();
+  state.user = null;
+  state.cart = [];
+  localStorage.removeItem('ras-user');
+  updateCartUI();
+  showToast('Logged out', 'success');
+  updateUIForAuth();
+  navigate('home');
+}
+
+async function checkAuth() {
+  if (useSupabase) {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (session) {
+      const { data: profile } = await supabaseClient
+        .from(SUPABASE_CONFIG.tables.users)
+        .select('*')
+        .eq('id', session.user.id)
+        .single();
+      state.user = {
+        id: session.user.id,
+        name: profile?.full_name || session.user.user_metadata?.full_name || session.user.email.split('@')[0],
+        email: session.user.email,
+        role: profile?.role || 'student',
+        created: session.user.created_at
+      };
+      localStorage.setItem('ras-user', JSON.stringify(state.user));
+    }
+  } else {
+    const saved = localStorage.getItem('ras-user');
+    if (saved) { try { state.user = JSON.parse(saved); } catch(e) {} }
+  }
+  updateUIForAuth();
+}
+
+function updateUIForAuth() {
+  const authBtn = document.getElementById('authBtn');
+  const mobileAuthBtn = document.getElementById('mobileAuthBtn');
+  if (state.user) {
+    if (authBtn) { authBtn.innerHTML = '<i class="fas fa-user-circle mr-2"></i>' + state.user.name.split(' ')[0]; authBtn.onclick = () => navigate('dashboard'); }
+    if (mobileAuthBtn) { mobileAuthBtn.innerHTML = '<i class="fas fa-user-circle mr-2"></i>Profile'; mobileAuthBtn.onclick = () => { navigate('dashboard'); toggleMobileMenu(); }; }
+  } else {
+    if (authBtn) { authBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Login'; authBtn.onclick = () => openModal('loginModal'); }
+    if (mobileAuthBtn) { mobileAuthBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Login'; mobileAuthBtn.onclick = () => { openModal('loginModal'); toggleMobileMenu(); }; }
+  }
+}
+
+// ==================== DATABASE ====================
+const DB_NAME = 'RiseAfricaDB';
+const DB_VERSION = 1;
+let db = null;
+
+function initDB() {
   return new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-    script.src = 'https://js.stripe.com/v3/';
-    script.onload = resolve;
-    script.onerror = reject;
-    document.head.appendChild(script);
+    const request = indexedDB.open(DB_NAME, DB_VERSION);
+    request.onerror = () => reject(request.error);
+    request.onsuccess = () => { db = request.result; resolve(db); };
+    request.onupgradeneeded = (e) => {
+      const database = e.target.result;
+      if (!database.objectStoreNames.contains('progress')) database.createObjectStore('progress', { keyPath: 'id', autoIncrement: true });
+      if (!database.objectStoreNames.contains('certificates')) database.createObjectStore('certificates', { keyPath: 'id' });
+      if (!database.objectStoreNames.contains('calendar')) database.createObjectStore('calendar', { keyPath: 'id', autoIncrement: true });
+      if (!database.objectStoreNames.contains('users')) database.createObjectStore('users', { keyPath: 'email' });
+    };
   });
 }
 
-// ==================== CHECKOUT ====================
+async function dbPut(store, data) {
+  if (useSupabase && supabaseClient) {
+    const table = SUPABASE_CONFIG.tables[store] || store;
+    const { error } = await supabaseClient.from(table).upsert(data);
+    if (error) console.error('Supabase upsert error:', error);
+    return !error;
+  }
+  if (!db) await initDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(store, 'readwrite');
+    const st = tx.objectStore(store);
+    const req = st.put(data);
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function dbGetAll(store, filter = {}) {
+  if (useSupabase && supabaseClient) {
+    const table = SUPABASE_CONFIG.tables[store] || store;
+    let query = supabaseClient.from(table).select('*');
+    if (filter.user && state.user) query = query.eq('user_id', state.user.id);
+    const { data, error } = await query;
+    if (error) { console.error('Supabase fetch error:', error); return []; }
+    return data || [];
+  }
+  if (!db) await initDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(store, 'readonly');
+    const st = tx.objectStore(store);
+    const req = st.getAll();
+    req.onsuccess = () => resolve(req.result || []);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+// ==================== ORDERS & PAYMENTS ====================
+async function saveOrder(order) {
+  if (useSupabase && state.user) {
+    const { data, error } = await supabaseClient
+      .from(SUPABASE_CONFIG.tables.orders)
+      .insert([{ user_id: state.user.id, items: order.items, total: order.total, status: order.status, created_at: order.date }])
+      .select().single();
+    if (error) { console.error('Order save failed:', error); return null; }
+    return data;
+  }
+  state.orders.push(order);
+  return order;
+}
+
 async function initiateCheckout() {
   if (!state.user) {
     showToast('Please login to checkout', 'error');
@@ -47,18 +891,10 @@ async function initiateCheckout() {
     showToast('Your cart is empty', 'error');
     return;
   }
-
   const subtotal = state.cart.reduce((s, i) => s + i.price, 0);
   const certAddon = state.cart.length * 2;
   const total = subtotal + certAddon;
 
-  // If Stripe is configured, use real checkout
-  if (stripe && STRIPE_CONFIG.publishableKey.includes('pk_live')) {
-    await realStripeCheckout(total);
-    return;
-  }
-
-  // DEMO MODE: Simulated checkout (works without Stripe key for testing)
   showToast('Processing payment...', 'info');
   setTimeout(async () => {
     const order = {
@@ -70,11 +906,7 @@ async function initiateCheckout() {
       status: 'completed',
       date: new Date().toISOString()
     };
-
-    // Save to Supabase if available, otherwise local
     await saveOrder(order);
-
-    // Generate certificates for each course
     for (const item of state.cart) {
       const cert = {
         id: 'CERT-' + Math.random().toString(36).substr(2, 9).toUpperCase(),
@@ -87,61 +919,505 @@ async function initiateCheckout() {
       await saveCertificate(cert);
       state.certificates.push(cert);
     }
-
     state.cart = [];
     updateCartUI();
     renderCart();
     showToast('Payment successful! Courses unlocked.', 'success');
-    trackEvent('purchase', { value: total, currency: 'USD', items: state.cart.length });
     navigate('dashboard');
   }, 2000);
 }
 
-// Real Stripe Checkout (requires backend or Stripe Payment Links)
-async function realStripeCheckout(totalAmount) {
-  try {
-    // Option 1: Stripe Payment Link (easiest, no backend needed)
-    // Create a payment link in your Stripe Dashboard and paste the URL here:
-    const paymentLink = 'https://buy.stripe.com/test_YOUR_PAYMENT_LINK'; // Replace with your link
-    
-    if (!paymentLink.includes('YOUR_PAYMENT_LINK')) {
-      window.location.href = paymentLink + '?prefilled_email=' + encodeURIComponent(state.user.email);
-      return;
+// ==================== CERTIFICATES ====================
+async function saveCertificate(certData) {
+  if (useSupabase && state.user) {
+    const { data, error } = await supabaseClient.from(SUPABASE_CONFIG.tables.certificates).insert([{
+      user_id: state.user.id, course_id: certData.courseId, course_title: certData.courseTitle,
+      cert_id: certData.id, issued_at: certData.date
+    }]);
+    if (error) console.error('Certificate save error:', error);
+    return data;
+  }
+  state.certificates.push(certData);
+  await dbPut('certificates', certData);
+  return certData;
+}
+
+function previewCertificate(certId) {
+  const cert = state.certificates.find(c => c.id === certId);
+  if (!cert) return;
+  const content = document.getElementById('certPreviewContent');
+  content.innerHTML = `
+    <div id="certPDF" class="p-8 border-4 border-ras-500 rounded-2xl bg-white text-center max-w-2xl mx-auto">
+      <div class="flex justify-center mb-6"><div class="ras-box w-20 h-20 text-3xl">rAs</div></div>
+      <h2 class="text-3xl font-bold text-gray-800 mb-2">Certificate of Completion</h2>
+      <p class="text-gray-500 mb-6">This certifies that</p>
+      <h3 class="text-2xl font-bold text-ras-600 mb-6">${state.user ? state.user.name : 'Student'}</h3>
+      <p class="text-gray-500 mb-2">has successfully completed</p>
+      <h4 class="text-xl font-bold text-gray-800 mb-6">${cert.courseTitle}</h4>
+      <p class="text-sm text-gray-400 mb-6">Issued on ${new Date(cert.date).toLocaleDateString()} by Rise Africa Skills</p>
+      <div class="flex justify-center mb-4"><div id="certQR" class="qr-container"></div></div>
+      <p class="text-xs font-mono text-gray-400">${cert.id}</p>
+    </div>
+  `;
+  document.getElementById('certModal').classList.add('active');
+  setTimeout(() => {
+    if (document.getElementById('certQR')) {
+      new QRCode(document.getElementById('certQR'), { text: 'https://riseafricaskills.com/#verify?id=' + cert.id, width: 100, height: 100 });
     }
+  }, 100);
+}
 
-    // Option 2: Redirect to Stripe Checkout (requires backend to create session)
-    // For now, fall back to demo mode with a warning
-    showToast('Stripe live mode requires a backend. Using demo payment.', 'warning');
-    initiateCheckout(); // Calls the demo version above
+function downloadCertificatePDF() {
+  const element = document.getElementById('certPDF');
+  if (!element) return;
+  html2pdf().set({ margin: 10, filename: 'rAs-Certificate.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' } }).from(element).save();
+}
 
-  } catch (err) {
-    console.error('Stripe checkout error:', err);
-    showToast('Payment failed. Please try again.', 'error');
+function printCertificate() {
+  const cert = document.getElementById('certPDF');
+  if (!cert) return;
+  const printWindow = window.open('', '_blank');
+  printWindow.document.write('<html><head><title>Certificate</title><style>body{font-family:Arial,sans-serif;text-align:center;padding:40px}</style></head><body>' + cert.innerHTML + '</body></html>');
+  printWindow.document.close();
+  printWindow.print();
+}
+
+function verifyCertificate() {
+  const id = document.getElementById('verifyInput').value.trim().toUpperCase();
+  const result = document.getElementById('verifyResult');
+  const cert = state.certificates.find(c => c.id === id);
+  if (cert) {
+    result.classList.remove('hidden');
+    result.innerHTML = `
+      <div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 flex items-center justify-center"><i class="fas fa-check"></i></div><div><p class="font-bold text-green-600">Certificate Verified</p><p class="text-xs text-gray-400">This certificate is authentic</p></div></div>
+      <div class="space-y-2 text-sm"><p><span class="text-gray-500">Certificate ID:</span> <span class="font-mono font-medium">${cert.id}</span></p><p><span class="text-gray-500">Course:</span> <span class="font-medium">${cert.courseTitle}</span></p><p><span class="text-gray-500">Issued:</span> <span class="font-medium">${new Date(cert.date).toLocaleDateString()}</span></p><p><span class="text-gray-500">Status:</span> <span class="font-medium text-green-600">Valid</span></p></div>
+    `;
+  } else {
+    result.classList.remove('hidden');
+    result.innerHTML = `<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/30 text-red-600 flex items-center justify-center"><i class="fas fa-times"></i></div><div><p class="font-bold text-red-600">Certificate Not Found</p><p class="text-xs text-gray-400">The ID you entered could not be verified.</p></div></div>`;
   }
 }
 
-// ==================== STRIPE ELEMENTS (FOR EMBEDDED FORM) ====================
-// Use this if you want an inline card form instead of redirect
-async function initStripeElements() {
-  if (!stripe) return;
-  const elements = stripe.elements();
-  const card = elements.create('card', { style: { base: { fontSize: '16px' } } });
-  // Mount to a div with id="card-element" when needed
-  return { stripe, elements, card };
+// ==================== CART ====================
+function addToCart(courseId) {
+  const course = COURSES.find(c => c.id === courseId);
+  if (!course) return;
+  if (state.cart.find(item => item.id === courseId)) {
+    showToast('Course already in cart', 'error');
+    return;
+  }
+  state.cart.push(course);
+  updateCartUI();
+  showToast(course.title + ' added to cart', 'success');
 }
 
-// ==================== PAYMENT STATUS HANDLING ====================
-function handlePaymentSuccess() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const sessionId = urlParams.get('session_id');
-  if (sessionId) {
-    showToast('Payment confirmed! Welcome to your courses.', 'success');
-    navigate('dashboard');
+function removeFromCart(courseId) {
+  state.cart = state.cart.filter(item => item.id !== courseId);
+  updateCartUI();
+  renderCart();
+}
+
+function updateCartUI() {
+  const count = document.getElementById('cartCount');
+  const mobileCount = document.getElementById('mobileCartCount');
+  if (count) count.textContent = state.cart.length;
+  if (mobileCount) mobileCount.textContent = state.cart.length;
+}
+
+function renderCart() {
+  const container = document.getElementById('cartItems');
+  const summary = document.getElementById('cartSummary');
+  if (!container) return;
+  if (state.cart.length === 0) {
+    container.innerHTML = '<div class="text-center py-12"><i class="fas fa-shopping-cart text-4xl text-gray-300 mb-4"></i><p class="text-gray-500">Your cart is empty</p><a href="#courses" onclick="navigate('courses')" class="text-ras-500 hover:underline text-sm mt-2 inline-block">Browse courses</a></div>';
+    if (summary) summary.innerHTML = '';
+    return;
+  }
+  container.innerHTML = state.cart.map(item => `
+    <div class="flex items-center gap-4 p-4 rounded-xl bg-white dark:bg-slate-800 border border-gray-100 dark:border-gray-700">
+      <div class="w-16 h-16 rounded-lg bg-gradient-to-br ${item.image} flex items-center justify-center text-white text-xl"><i class="fas ${item.icon}"></i></div>
+      <div class="flex-1"><h4 class="font-bold text-sm">${item.title}</h4><p class="text-xs text-gray-500">${item.category}</p></div>
+      <div class="text-right"><p class="font-bold text-ras-600">$${item.price.toFixed(2)}</p><button onclick="removeFromCart('${item.id}')" class="text-xs text-red-500 hover:text-red-600 mt-1">Remove</button></div>
+    </div>
+  `).join('');
+  const subtotal = state.cart.reduce((s, i) => s + i.price, 0);
+  const certAddon = state.cart.length * 2;
+  const total = subtotal + certAddon;
+  if (summary) {
+    summary.innerHTML = `
+      <div class="space-y-2 text-sm"><div class="flex justify-between"><span>Subtotal</span><span>$${subtotal.toFixed(2)}</span></div>
+      <div class="flex justify-between"><span>Certificates (+$2 each)</span><span>$${certAddon.toFixed(2)}</span></div>
+      <div class="border-t border-gray-200 dark:border-gray-700 pt-2 flex justify-between font-bold text-lg"><span>Total</span><span class="text-ras-600">$${total.toFixed(2)}</span></div></div>
+      <button onclick="initiateCheckout()" class="w-full mt-4 py-3 bg-ras-500 hover:bg-ras-600 text-white rounded-xl font-bold transition">Proceed to Checkout</button>
+    `;
   }
 }
 
-// ==================== UPDATED INIT ====================
-// Add this inside your DOMContentLoaded, after initSupabase():
-// await loadStripeScript();
-// initStripe();
-Added Supabase + Stripe
+// ==================== DASHBOARD ====================
+async function renderDashboard() {
+  if (!state.user) { navigate('home'); return; }
+  const progs = await dbGetAll('progress');
+  const myProgs = progs.filter(p => p.user === state.user.email || p.user_id === state.user.id);
+  const certs = state.certificates;
+  const myCerts = certs.filter(c => c.user === state.user.email || c.user_id === state.user.id);
+
+  document.getElementById('dashCourseCount').textContent = myProgs.length;
+  document.getElementById('dashCompleteCount').textContent = myProgs.filter(p => p.progress >= 100).length;
+  document.getElementById('dashCertCount').textContent = myCerts.length;
+
+  const contList = document.getElementById('continueLearningList');
+  if (myProgs.length === 0) {
+    contList.innerHTML = '<p class="text-gray-400 text-sm">No courses in progress. <a href="#courses" onclick="navigate('courses')" class="text-ras-500 hover:underline">Browse courses</a></p>';
+  } else {
+    contList.innerHTML = myProgs.slice(0,3).map(p => {
+      const c = COURSES.find(x => x.id === p.courseId || x.id === p.course_id);
+      if (!c) return '';
+      return `<div class="flex items-center gap-4 p-3 rounded-xl bg-gray-50 dark:bg-slate-700/50">
+        <div class="w-12 h-12 rounded-lg bg-gradient-to-br ${c.image} flex items-center justify-center text-white"><i class="fas ${c.icon}"></i></div>
+        <div class="flex-1 min-w-0"><p class="font-medium text-sm truncate">${c.title}</p><div class="w-full h-2 bg-gray-200 dark:bg-gray-600 rounded-full mt-1"><div class="h-2 bg-ras-500 rounded-full" style="width:${p.progress}%"></div></div></div>
+        <span class="text-xs font-medium text-gray-500">${p.progress}%</span>
+      </div>`;
+    }).join('');
+  }
+
+  const myCoursesList = document.getElementById('myCoursesList');
+  if (myProgs.length === 0) {
+    myCoursesList.innerHTML = '<p class="text-gray-400">No enrolled courses.</p>';
+  } else {
+    myCoursesList.innerHTML = myProgs.map(p => {
+      const c = COURSES.find(x => x.id === p.courseId || x.id === p.course_id);
+      if (!c) return '';
+      return `<div class="p-4 rounded-2xl bg-white dark:bg-slate-800 border border-gray-100 dark:border-gray-700 flex items-center gap-4">
+        <div class="w-16 h-16 rounded-xl bg-gradient-to-br ${c.image} flex items-center justify-center text-white text-xl"><i class="fas ${c.icon}"></i></div>
+        <div class="flex-1"><h4 class="font-bold">${c.title}</h4><p class="text-sm text-gray-500">${c.lessons.length} lessons | ${c.duration}</p><div class="w-full h-2 bg-gray-100 dark:bg-gray-700 rounded-full mt-2"><div class="h-2 bg-gradient-to-r from-ras-500 to-africa-500 rounded-full" style="width:${p.progress}%"></div></div></div>
+        <button onclick="openVideoModal('${c.id}')" class="px-4 py-2 bg-ras-500 hover:bg-ras-600 text-white rounded-lg text-sm font-medium transition">Continue</button>
+      </div>`;
+    }).join('');
+  }
+
+  const certList = document.getElementById('myCertificatesList');
+  if (myCerts.length === 0) {
+    certList.innerHTML = '<p class="text-gray-400 col-span-2">No certificates yet. Complete a course and add certificate at checkout.</p>';
+  } else {
+    certList.innerHTML = myCerts.map(cert => `
+      <div class="p-4 rounded-2xl bg-white dark:bg-slate-800 border border-gray-100 dark:border-gray-700">
+        <div class="flex items-center gap-3 mb-3"><div class="ras-box ras-box-sm">rAs</div><div><p class="font-bold text-sm">${cert.courseTitle}</p><p class="text-xs text-gray-400">${new Date(cert.date).toLocaleDateString()}</p></div></div>
+        <p class="text-xs font-mono text-gray-500 mb-3">${cert.id}</p>
+        <div class="flex gap-2">
+          <button onclick="previewCertificate('${cert.id}')" class="flex-1 py-2 bg-ras-500 hover:bg-ras-600 text-white rounded-lg text-xs font-medium transition">View</button>
+          <button onclick="verifyCertificate()" class="flex-1 py-2 border border-gray-200 dark:border-gray-700 rounded-lg text-xs font-medium hover:bg-gray-50 dark:hover:bg-slate-700 transition">Verify</button>
+        </div>
+      </div>
+    `).join('');
+  }
+  renderActivityChart();
+}
+
+function renderActivityChart() {
+  const ctx = document.getElementById('activityChart');
+  if (!ctx) return;
+  if (window.activityChartInstance) window.activityChartInstance.destroy();
+  window.activityChartInstance = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+      datasets: [{ label: 'Minutes Studied', data: [30,45,20,60,35,50,40], borderColor: '#f97316', backgroundColor: 'rgba(249,115,22,0.1)', fill: true, tension: 0.4 }]
+    },
+    options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+  });
+}
+
+// ==================== VIDEO PLAYER ====================
+function openVideoModal(courseId) {
+  const course = COURSES.find(c => c.id === courseId);
+  if (!course) return;
+  state.currentCourse = course;
+  document.getElementById('videoModalTitle').textContent = course.title;
+  const player = document.getElementById('videoPlayerContainer');
+  player.innerHTML = `<div class="w-full h-full rounded-xl bg-gray-900 flex items-center justify-center text-white"><div class="text-center"><i class="fas fa-play-circle text-6xl mb-4 opacity-50"></i><p class="text-lg font-medium">Video content coming soon</p><p class="text-sm text-gray-400 mt-2">This course will be available shortly</p></div></div>`;
+  const playlist = document.getElementById('videoPlaylist');
+  if (playlist && course.lessons) {
+    playlist.innerHTML = course.lessons.map((lesson, i) => `
+      <div class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-700 cursor-pointer transition ${i === 0 ? 'bg-ras-50 dark:bg-ras-900/20 border-l-4 border-ras-500' : ''}" onclick="playLesson(${i})">
+        <div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-xs font-bold">${i + 1}</div>
+        <div class="flex-1 min-w-0"><p class="text-sm font-medium truncate">${lesson}</p><p class="text-xs text-gray-400">${Math.floor(Math.random() * 15 + 5)} min</p></div>
+      </div>
+    `).join('');
+  }
+  openModal('videoModal');
+}
+
+function playLesson(index) {
+  const course = state.currentCourse;
+  if (!course || !course.lessons) return;
+  showToast('Playing: ' + course.lessons[index], 'success');
+  document.querySelectorAll('#videoPlaylist > div').forEach((el, i) => {
+    el.classList.toggle('bg-ras-50', i === index);
+    el.classList.toggle('dark:bg-ras-900/20', i === index);
+    el.classList.toggle('border-l-4', i === index);
+    el.classList.toggle('border-ras-500', i === index);
+  });
+}
+
+// ==================== AI CHAT ====================
+function toggleChat() {
+  document.getElementById('chatWindow').classList.toggle('open');
+  document.getElementById('chatIcon').className = document.getElementById('chatWindow').classList.contains('open') ? 'fas fa-times' : 'fas fa-robot';
+}
+
+function sendChatMessage(e) {
+  e.preventDefault();
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  addChatMessage(msg, 'user');
+  input.value = '';
+  showTyping();
+  setTimeout(() => {
+    hideTyping();
+    addChatMessage(generateAIResponse(msg), 'ai');
+  }, 1000 + Math.random() * 1000);
+}
+
+function addChatMessage(text, sender) {
+  const container = document.getElementById('chatMessages');
+  if (sender === 'user') {
+    container.innerHTML += `<div class="flex items-start gap-2 justify-end"><div class="bg-ras-500 text-white rounded-2xl rounded-tr-none px-4 py-2 text-sm max-w-[80%]"><p>${escapeHtml(text)}</p></div></div>`;
+  } else {
+    container.innerHTML += `<div class="flex items-start gap-2"><div class="ras-box ras-box-sm flex-shrink-0">rAs</div><div class="bg-gray-100 dark:bg-slate-700 rounded-2xl rounded-tl-none px-4 py-2 text-sm max-w-[80%]"><p>${text}</p></div></div>`;
+  }
+  container.scrollTop = container.scrollHeight;
+}
+
+function showTyping() {
+  const container = document.getElementById('chatMessages');
+  container.innerHTML += `<div id="typingIndicator" class="flex items-start gap-2"><div class="ras-box ras-box-sm flex-shrink-0">rAs</div><div class="bg-gray-100 dark:bg-slate-700 rounded-2xl rounded-tl-none px-4 py-3 flex gap-1"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
+  container.scrollTop = container.scrollHeight;
+}
+
+function hideTyping() {
+  const el = document.getElementById('typingIndicator');
+  if (el) el.remove();
+}
+
+function generateAIResponse(msg) {
+  const lower = msg.toLowerCase();
+  if (lower.includes('price') || lower.includes('cost') || lower.includes('$')) return 'Our courses are $8.00 for full access. Add a verified certificate for +$2.00. If you only need to read, download, print, or share materials, that is $3.50 per course. No hidden fees.';
+  if (lower.includes('certificate') || lower.includes('cert')) return 'Certificates cost an additional $2.00 per course. They include a unique ID, QR code with rAs branding, and are verifiable on our website. You can download them as PDF.';
+  if (lower.includes('preserv') || lower.includes('dry') || lower.includes('smoke')) return 'We offer a Food Preservation Masterclass covering 10 methods: sun drying, smoking, salting, pickling, canning, freezing, dehydrating, waxing, sugaring, and vacuum sealing. Try our Preservation Calculator to plan your yields.';
+  if (lower.includes('pig') || lower.includes('poultry') || lower.includes('rabbit') || lower.includes('goat') || lower.includes('cattle')) return 'Our Agriculture & Livestock category has detailed courses on pig farming, poultry, rabbits, goats, sheep, cattle rearing, and more. Each course is designed for low-capital startup in Africa.';
+  if (lower.includes('solar') || lower.includes('pump') || lower.includes('panel')) return 'We have courses on Solar Technology Installation and Solar Dam Pump & Borehole systems. These are essential skills for rural Africa where grid electricity is unreliable.';
+  if (lower.includes('ai') || lower.includes('robot') || lower.includes('drone') || lower.includes('machine learning')) return 'Our Technology & AI courses cover Introduction to AI, Machine Learning Basics, Robotics for Africa, and Drone Technology. These are the skills of the future.';
+  if (lower.includes('soap') || lower.includes('detergent') || lower.includes('leather') || lower.includes('mushroom')) return 'Our Business & Cottage Industry courses include Soap Making, Detergent Manufacturing, Leather Making, Mushroom Farming, and many more low-capital businesses.';
+  if (lower.includes('contact') || lower.includes('phone') || lower.includes('email')) return 'You can reach us at all@riseafricaskills.com or call +263 77 300 1353 / +44 735 972 4755. Our address is 350b Southway Waterfalls, Parktown, Harare, Africa.';
+  if (lower.includes('hello') || lower.includes('hi') || lower.includes('hey')) return 'Hello! I am rAs, your AI tutor. How can I help you today? Ask me about courses, pricing, business advice, or preservation methods.';
+  return 'That is a great question. I recommend browsing our course catalog or checking the Preservation Calculator. If you need specific help, contact us at all@riseafricaskills.com.';
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// ==================== CALCULATOR ====================
+const PRESERVATION_DATA = {
+  drying: { yield: 0.25, shelf: '6-12 months', temp: 'Cool, dry place', advice: 'Sun drying is cheapest. Ensure good airflow and protect from rain. Best for fruits, vegetables, and fish.' },
+  smoking: { yield: 0.65, shelf: '1-2 months', temp: 'Room temperature', advice: 'Smoking adds flavor and preserves meat/fish. Use hardwoods like oak or fruit woods. Avoid softwoods.' },
+  salting: { yield: 0.55, shelf: '4-6 months', temp: 'Cool, dry place', advice: 'Salt curing draws moisture from meat. Use pure salt without iodine. Good for beef, pork, and fish.' },
+  pickling: { yield: 0.85, shelf: '12+ months', temp: 'Room temperature (sealed)', advice: 'Fermentation creates natural preservatives. Ensure sterile jars and proper acidity (pH < 4.6).' },
+  canning: { yield: 0.90, shelf: '1-2 years', temp: 'Cool, dark place', advice: 'Canning kills bacteria with heat. Follow exact timing and pressure for your altitude. Best for vegetables and fruits.' },
+  freezing: { yield: 0.95, shelf: '6-12 months', temp: '-18°C (0°F)', advice: 'Freezing maintains highest quality. Requires reliable electricity or solar freezer. Blanch vegetables before freezing.' },
+  dehydrating: { yield: 0.20, shelf: '6-12 months', temp: 'Airtight container', advice: 'Mechanical dehydrators work faster than sun drying. Good for herbs, fruits, and jerky. Check for moisture before storage.' },
+  waxing: { yield: 0.95, shelf: '1-3 months', temp: 'Cool, humid place', advice: 'Waxing seals fruits to prevent moisture loss. Best for apples, citrus, and root vegetables. Use food-grade wax only.' },
+  sugaring: { yield: 0.70, shelf: '12+ months', temp: 'Room temperature', advice: 'High sugar concentration preserves fruits. Good for jams, jellies, and candied fruits. Monitor for mold.' },
+  vacuum: { yield: 0.95, shelf: '1-3 years', temp: 'Cool, dark place', advice: 'Vacuum sealing removes oxygen that causes spoilage. Combine with freezing for best results. Requires vacuum equipment.' }
+};
+
+const PRODUCT_ADJUSTMENTS = {
+  fruits: { yieldMult: 1.0, shelfMult: 1.0, tempAdj: '' },
+  vegetables: { yieldMult: 0.9, shelfMult: 0.8, tempAdj: ' (slightly cooler)' },
+  meat: { yieldMult: 0.85, shelfMult: 0.7, tempAdj: ' (refrigerate if possible)' },
+  fish: { yieldMult: 0.8, shelfMult: 0.6, tempAdj: ' (keep cold)' },
+  grains: { yieldMult: 1.0, shelfMult: 1.5, tempAdj: ' (very dry storage)' }
+};
+
+function updateCalc() {
+  const startQty = parseFloat(document.getElementById('calcStartQty').value) || 0;
+  const method = document.getElementById('calcMethod').value;
+  const product = document.getElementById('calcProduct').value;
+  const data = PRESERVATION_DATA[method];
+  const adj = PRODUCT_ADJUSTMENTS[product];
+  const finalQty = (startQty * data.yield * adj.yieldMult).toFixed(1);
+  const shelfLife = data.shelf;
+  const temp = data.temp + adj.tempAdj;
+  const yieldPct = ((data.yield * adj.yieldMult) * 100).toFixed(0);
+  document.getElementById('calcFinalQty').textContent = finalQty + ' kg';
+  document.getElementById('calcShelfLife').textContent = shelfLife;
+  document.getElementById('calcTemp').textContent = temp;
+  document.getElementById('calcYield').textContent = yieldPct + '%';
+  document.getElementById('calcAdvice').textContent = data.advice + ' For ' + product + ', expect approximately ' + yieldPct + '% yield.';
+}
+
+// ==================== NAVIGATION ====================
+function navigate(page) {
+  state.currentPage = page;
+  document.querySelectorAll('.page-section').forEach(el => el.classList.add('hidden'));
+  const target = document.getElementById('page-' + page);
+  if (target) {
+    target.classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.classList.toggle('text-ras-600', link.dataset.page === page);
+    link.classList.toggle('font-semibold', link.dataset.page === page);
+  });
+  if (page === 'dashboard') renderDashboard();
+  if (page === 'cart') renderCart();
+  window.location.hash = page;
+}
+
+function handleRoute() {
+  const hash = window.location.hash.replace('#', '') || 'home';
+  navigate(hash);
+}
+
+// ==================== MODALS ====================
+function openModal(id) {
+  const modal = document.getElementById(id);
+  if (modal) modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(id) {
+  const modal = document.getElementById(id);
+  if (modal) modal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function closeAllModals() {
+  document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+  document.body.style.overflow = '';
+}
+
+// ==================== TOASTS ====================
+function showToast(message, type = 'info') {
+  const container = document.getElementById('toastContainer') || document.body;
+  const toast = document.createElement('div');
+  const colors = { success: 'bg-green-500', error: 'bg-red-500', info: 'bg-ras-500', warning: 'bg-yellow-500' };
+  const icons = { success: 'fa-check-circle', error: 'fa-times-circle', info: 'fa-info-circle', warning: 'fa-exclamation-circle' };
+  toast.className = `fixed bottom-4 right-4 ${colors[type]} text-white px-6 py-3 rounded-xl shadow-lg flex items-center gap-3 z-50 transform translate-y-20 opacity-0 transition-all duration-300`;
+  toast.innerHTML = `<i class="fas ${icons[type]}"></i><span class="font-medium text-sm">${message}</span>`;
+  container.appendChild(toast);
+  requestAnimationFrame(() => { toast.classList.remove('translate-y-20', 'opacity-0'); });
+  setTimeout(() => {
+    toast.classList.add('translate-y-20', 'opacity-0');
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+// ==================== THEME ====================
+function toggleTheme() {
+  state.darkMode = !state.darkMode;
+  document.documentElement.classList.toggle('dark', state.darkMode);
+  localStorage.setItem('ras-theme', state.darkMode ? 'dark' : 'light');
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const icon = document.getElementById('themeIcon');
+  if (icon) icon.className = state.darkMode ? 'fas fa-sun' : 'fas fa-moon';
+}
+
+function loadTheme() {
+  const saved = localStorage.getItem('ras-theme');
+  if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    state.darkMode = true;
+    document.documentElement.classList.add('dark');
+  }
+  updateThemeIcon();
+}
+
+// ==================== MOBILE MENU ====================
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobileMenu');
+  if (menu) menu.classList.toggle('hidden');
+}
+
+// ==================== COURSE RENDERING ====================
+function renderCourses(containerId, courses) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = courses.map(course => `
+    <div class="group bg-white dark:bg-slate-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 card-hover animate-on-scroll">
+      <div class="h-48 bg-gradient-to-br ${course.image} flex items-center justify-center text-white text-5xl relative overflow-hidden">
+        <i class="fas ${course.icon}"></i>
+        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition"></div>
+      </div>
+      <div class="p-5">
+        <div class="flex items-center gap-2 mb-2"><span class="px-2 py-1 bg-ras-100 dark:bg-ras-900/30 text-ras-700 dark:text-ras-300 text-[10px] font-bold rounded-full uppercase">${course.category}</span><span class="text-xs text-gray-400">${course.duration}</span></div>
+        <h3 class="font-bold text-lg mb-2 group-hover:text-ras-600 transition">${course.title}</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 line-clamp-2">${course.description}</p>
+        <div class="flex items-center justify-between">
+          <span class="text-xl font-bold text-ras-600">$${course.price.toFixed(2)}</span>
+          <button onclick="addToCart('${course.id}')" class="px-4 py-2 bg-ras-500 hover:bg-ras-600 text-white rounded-lg text-sm font-medium transition">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterCourses(category) {
+  navigate('courses');
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.classList.toggle('bg-ras-500', btn.dataset.category === category);
+    btn.classList.toggle('text-white', btn.dataset.category === category);
+    btn.classList.toggle('bg-gray-100', btn.dataset.category !== category);
+    btn.classList.toggle('dark:bg-slate-800', btn.dataset.category !== category);
+  });
+  const filtered = category === 'all' ? COURSES : COURSES.filter(c => c.category === category);
+  renderCourses('coursesGrid', filtered);
+}
+
+function handleContact(e) {
+  e.preventDefault();
+  showToast('Message sent! We will respond within 24 hours.', 'success');
+  e.target.reset();
+}
+
+// ==================== INITIALIZATION ====================
+document.addEventListener('DOMContentLoaded', async () => {
+  await initDB().catch(() => console.log('IndexedDB not available'));
+  initSupabase();
+  initStripe();
+  loadTheme();
+  await checkAuth();
+  updateCartUI();
+
+  // Render featured courses on home
+  renderCourses('featuredCourses', COURSES.slice(0, 6));
+  renderCourses('coursesGrid', COURSES);
+
+  // Init calculator
+  updateCalc();
+
+  // Handle routing
+  window.addEventListener('hashchange', handleRoute);
+  handleRoute();
+
+  // Close modals on escape
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAllModals(); });
+  document.querySelectorAll('.modal-overlay').forEach(modal => {
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
+  });
+
+  console.log('🌍 Rise Africa Skills Platform Loaded');
+  console.log(useSupabase ? '☁️ Supabase mode active' : '💾 Local mode (IndexedDB)');
+  console.log(useStripe ? '💳 Stripe ready' : '💳 Stripe not configured');
+  console.log('🔐 Auth:', state.user ? 'Logged in as ' + state.user.name : 'Guest');
+});
+
+window.RiseAfrica = { state, COURSES, navigate, addToCart, removeFromCart, toggleChat, toggleTheme, showToast };
+</script>
+</body>
+</html>
