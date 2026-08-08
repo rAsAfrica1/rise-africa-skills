@@ -1,1476 +1,895 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rise Africa Skills — Learn. Build. Rise.</title>
-    <meta name="description" content="Rise Africa Skills is an e-learning platform empowering African talent with world-class courses in tech, business, and design.">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌍</text></svg>">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <title>rAs — Rise Africa Skills</title>
+    <meta name="description" content="rAs Rise Africa Skills — 100% AI-powered education for Africa. Learn practical skills from $8. Agriculture, technology, trades, and entrepreneurship.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='10' y='10' width='80' height='80' rx='16' fill='%230f766e'/%3E%3Ctext x='50' y='62' font-family='Arial' font-weight='900' font-size='38' fill='white' text-anchor='middle'%3ErAs%3C/text%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #0f766e;
-            --primary-dark: #0d5c56;
-            --primary-light: #14b8a6;
-            --accent: #f59e0b;
-            --accent-hover: #d97706;
-            --bg: #fafaf9;
-            --surface: #ffffff;
-            --text: #1c1917;
-            --text-muted: #78716c;
-            --border: #e7e5e4;
+            --primary: #0f766e; --primary-dark: #0d5c56; --primary-light: #14b8a6;
+            --accent: #f59e0b; --accent-hover: #d97706; --danger: #dc2626;
+            --bg: #fafaf9; --surface: #ffffff; --surface-2: #f5f5f4;
+            --text: #1c1917; --text-muted: #78716c; --border: #e7e5e4;
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
             --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
             --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-            --radius: 12px;
-            --radius-lg: 16px;
-            --max-width: 1200px;
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            --radius: 12px; --radius-lg: 16px; --radius-xl: 24px;
+            --max-width: 1280px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
+        [data-theme="dark"] {
+            --bg: #0c0a09; --surface: #1c1917; --surface-2: #292524;
+            --text: #fafaf9; --text-muted: #a8a29e; --border: #44403c;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.4);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.6);
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         html { scroll-behavior: smooth; }
-
         body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
+            font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text);
+            line-height: 1.6; overflow-x: hidden; transition: background 0.3s, color 0.3s;
         }
-
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            line-height: 1.2;
-        }
-
+        h1,h2,h3,h4,h5,h6 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; line-height: 1.2; }
         a { text-decoration: none; color: inherit; }
-
         img { max-width: 100%; display: block; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+        .hidden { display: none !important; }
 
-        .container {
-            max-width: var(--max-width);
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* ===== NAVIGATION ===== */
         .navbar {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 1000;
-            background: rgba(250, 250, 249, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
-            transition: all 0.3s ease;
-        }
-
-        .navbar.scrolled {
-            box-shadow: var(--shadow);
-        }
-
-        .nav-inner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 72px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            font-size: 1.35rem;
-            color: var(--primary);
-        }
-
-        .logo-icon {
-            width: 38px; height: 38px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 1.2rem;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 32px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            font-weight: 500;
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            transition: color 0.2s;
-            position: relative;
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--primary);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px; left: 0;
-            width: 0; height: 2px;
-            background: var(--primary);
-            transition: width 0.3s;
-        }
-
-        .nav-links a:hover::after, .nav-links a.active::after {
-            width: 100%;
-        }
-
-        .nav-cta {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 10px 24px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            border: none;
-            transition: all 0.2s;
-            font-family: inherit;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            box-shadow: 0 4px 14px rgba(15, 118, 110, 0.35);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(15, 118, 110, 0.45);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text);
-            border: 1.5px solid var(--border);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .btn-accent {
-            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-            color: white;
-            box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
-        }
-
-        .btn-accent:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text);
-        }
-
-        /* ===== HERO ===== */
-        .hero {
-            padding: 140px 0 100px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: -10%; right: -5%;
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(20, 184, 166, 0.12) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        .hero-bg-2 {
-            position: absolute;
-            bottom: -10%; left: -10%;
-            width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.08) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: rgba(15, 118, 110, 0.08);
-            border: 1px solid rgba(15, 118, 110, 0.15);
-            border-radius: 100px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 24px;
-        }
-
-        .hero-badge span {
-            width: 8px; height: 8px;
-            background: var(--primary-light);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            margin-bottom: 24px;
-            color: var(--text);
-        }
-
-        .hero h1 .highlight {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero p {
-            font-size: 1.15rem;
-            color: var(--text-muted);
-            margin-bottom: 32px;
-            max-width: 540px;
-            line-height: 1.7;
-        }
-
-        .hero-cta {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .hero-stats {
-            display: flex;
-            gap: 40px;
-            margin-top: 48px;
-            padding-top: 32px;
-            border-top: 1px solid var(--border);
-        }
-
-        .stat-item h3 {
-            font-size: 1.75rem;
-            color: var(--primary);
-            margin-bottom: 4px;
-        }
-
-        .stat-item p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin: 0;
-        }
-
-        .hero-visual {
-            position: relative;
-        }
-
-        .hero-card {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border);
-        }
-
-        .hero-card-img {
-            width: 100%;
-            height: 280px;
-            background: linear-gradient(135deg, #e0f2fe, #ccfbf1);
-            border-radius: var(--radius);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            margin-bottom: 16px;
-        }
-
-        .hero-card h4 {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-        }
-
-        .hero-card p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin: 0;
-        }
-
-        .floating-card {
-            position: absolute;
-            background: var(--surface);
-            border-radius: var(--radius);
-            padding: 16px 20px;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border);
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .floating-card-1 {
-            top: -20px; right: -20px;
-            animation-delay: 0s;
-        }
-
-        .floating-card-2 {
-            bottom: 40px; left: -30px;
-            animation-delay: 2s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
-        }
-
-        /* ===== SECTIONS COMMON ===== */
-        section {
-            padding: 100px 0;
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 640px;
-            margin: 0 auto 64px;
-        }
-
-        .section-header h2 {
-            font-size: clamp(2rem, 4vw, 2.75rem);
-            margin-bottom: 16px;
-        }
-
-        .section-header p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
-
-        .tag {
-            display: inline-block;
-            padding: 6px 14px;
-            background: rgba(15, 118, 110, 0.08);
-            color: var(--primary);
-            border-radius: 100px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 16px;
-        }
-
-        /* ===== FEATURES ===== */
-        .features {
-            background: var(--surface);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-        }
-
-        .feature-card {
-            padding: 32px;
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border);
-            background: var(--bg);
-            transition: all 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-            border-color: rgba(15, 118, 110, 0.2);
-        }
-
-        .feature-icon {
-            width: 52px; height: 52px;
-            border-radius: 14px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-        }
-
-        .feature-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-        }
-
-        .feature-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        /* ===== COURSES ===== */
-        .courses-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 28px;
-        }
-
-        .course-card {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            border: 1px solid var(--border);
-            transition: all 0.3s;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .course-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .course-image {
-            height: 200px;
-            background: linear-gradient(135deg, #e0f2fe, #ccfbf1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            position: relative;
-        }
-
-        .course-badge {
-            position: absolute;
-            top: 16px; left: 16px;
-            padding: 6px 12px;
-            background: var(--accent);
-            color: white;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            font-weight: 700;
-        }
-
-        .course-content {
-            padding: 24px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .course-meta {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 12px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .course-meta span {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .course-card h3 {
-            font-size: 1.15rem;
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-
-        .course-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            flex: 1;
-        }
-
-        .course-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-top: 16px;
-            border-top: 1px solid var(--border);
-        }
-
-        .course-price {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .course-price span {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            font-weight: 400;
-            text-decoration: line-through;
-            margin-left: 6px;
-        }
-
-        /* ===== ABOUT ===== */
-        .about {
-            background: var(--surface);
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: center;
-        }
-
-        .about-visual {
-            position: relative;
-        }
-
-        .about-img {
-            width: 100%;
-            height: 480px;
-            background: linear-gradient(135deg, #f0fdf4, #ccfbf1);
-            border-radius: var(--radius-lg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5rem;
-        }
-
-        .about-stats-card {
-            position: absolute;
-            bottom: -24px;
-            right: -24px;
-            background: var(--surface);
-            border-radius: var(--radius);
-            padding: 24px;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border);
-            min-width: 200px;
-        }
-
-        .about-stats-card h4 {
-            font-size: 2rem;
-            color: var(--primary);
-            margin-bottom: 4px;
-        }
-
-        .about-stats-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .about-content h2 {
-            font-size: clamp(1.75rem, 3vw, 2.5rem);
-            margin-bottom: 20px;
-        }
-
-        .about-content > p {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-            line-height: 1.7;
-            margin-bottom: 32px;
-        }
-
-        .about-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-bottom: 32px;
-        }
-
-        .about-list li {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            font-size: 0.95rem;
-        }
-
-        .about-list .check {
-            width: 24px; height: 24px;
-            min-width: 24px;
-            background: rgba(15, 118, 110, 0.1);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--primary);
-            font-size: 0.8rem;
-            margin-top: 2px;
-        }
-
-        /* ===== TESTIMONIALS ===== */
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 24px;
-        }
-
-        .testimonial-card {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 32px;
-            border: 1px solid var(--border);
-            position: relative;
-        }
-
-        .testimonial-card::before {
-            content: '"';
-            position: absolute;
-            top: 20px; right: 24px;
-            font-size: 4rem;
-            color: var(--primary);
-            opacity: 0.1;
-            font-family: Georgia, serif;
-            line-height: 1;
-        }
-
-        .testimonial-stars {
-            color: var(--accent);
-            margin-bottom: 16px;
-            font-size: 1.1rem;
-        }
-
-        .testimonial-text {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.7;
-            margin-bottom: 24px;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .author-avatar {
-            width: 48px; height: 48px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            display: flex; align-items: center; justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 1rem;
-        }
-
-        .author-info h4 {
-            font-size: 1rem;
-            margin-bottom: 2px;
-        }
-
-        .author-info p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        /* ===== CTA SECTION ===== */
-        .cta-section {
-            padding: 80px 0;
-        }
-
-        .cta-box {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border-radius: var(--radius-lg);
-            padding: 80px 40px;
-            text-align: center;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-box::before {
-            content: '';
-            position: absolute;
-            top: -50%; right: -10%;
-            width: 400px; height: 400px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 50%;
-        }
-
-        .cta-box h2 {
-            font-size: clamp(1.75rem, 3vw, 2.5rem);
-            margin-bottom: 16px;
-            position: relative;
-        }
-
-        .cta-box p {
-            opacity: 0.9;
-            font-size: 1.1rem;
-            max-width: 560px;
-            margin: 0 auto 32px;
-            position: relative;
-        }
-
-        .cta-box .btn-accent {
-            position: relative;
-            font-size: 1.05rem;
-            padding: 14px 36px;
-        }
-
-        /* ===== FOOTER ===== */
-        .footer {
-            background: var(--text);
-            color: #a8a29e;
-            padding: 80px 0 40px;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 48px;
-            margin-bottom: 64px;
-        }
-
-        .footer-brand .logo {
-            color: white;
-            margin-bottom: 16px;
-        }
-
-        .footer-brand p {
-            font-size: 0.95rem;
-            line-height: 1.7;
-            max-width: 320px;
-        }
-
-        .footer-links h4 {
-            color: white;
-            font-size: 1rem;
-            margin-bottom: 20px;
-        }
-
-        .footer-links ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .footer-links a {
-            font-size: 0.9rem;
-            transition: color 0.2s;
-        }
-
-        .footer-links a:hover {
-            color: white;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #44403c;
-            padding-top: 32px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .footer-bottom p {
-            font-size: 0.85rem;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 16px;
-        }
-
-        .social-links a {
-            width: 40px; height: 40px;
-            border-radius: 10px;
-            background: #44403c;
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.2s;
-            font-size: 1.1rem;
-        }
-
-        .social-links a:hover {
-            background: var(--primary);
-            transform: translateY(-3px);
-        }
-
-        /* ===== MODALS ===== */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
-            z-index: 2000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            width: 100%;
-            max-width: 480px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: var(--shadow-lg);
-            animation: modalIn 0.3s ease;
-        }
-
-        @keyframes modalIn {
-            from { opacity: 0; transform: scale(0.95) translateY(10px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-
-        .modal-header {
-            padding: 24px 32px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header h3 {
-            font-size: 1.25rem;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-muted);
-            width: 36px; height: 36px;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 8px;
-            transition: all 0.2s;
-        }
-
-        .modal-close:hover {
-            background: var(--bg);
-            color: var(--text);
-        }
-
-        .modal-body {
-            padding: 32px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.9rem;
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: var(--text);
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1.5px solid var(--border);
-            border-radius: 10px;
-            font-family: inherit;
-            font-size: 0.95rem;
-            transition: all 0.2s;
-            background: var(--bg);
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .form-error {
-            color: #dc2626;
-            font-size: 0.85rem;
-            margin-top: 6px;
-            display: none;
-        }
-
-        .form-group.error input,
-        .form-group.error textarea {
-            border-color: #dc2626;
-        }
-
-        .form-group.error .form-error {
-            display: block;
-        }
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(250,250,249,0.85); backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border); transition: var(--transition);
+        }
+        [data-theme="dark"] .navbar { background: rgba(28,25,23,0.85); }
+        .navbar.scrolled { box-shadow: var(--shadow); }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+        .logo { display: flex; align-items: center; gap: 12px; font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--primary); }
+        .logo-box { width: 42px; height: 42px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.85rem; font-weight: 900; letter-spacing: -0.5px; }
+        .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+        .nav-links a { font-weight: 500; font-size: 0.88rem; color: var(--text-muted); transition: color 0.2s; position: relative; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--primary); transition: width 0.3s; }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-actions { display: flex; align-items: center; gap: 10px; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 22px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; cursor: pointer; border: none; transition: var(--transition); font-family: inherit; }
+        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; box-shadow: 0 4px 14px rgba(15,118,110,0.35); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(15,118,110,0.45); }
+        .btn-secondary { background: transparent; color: var(--text); border: 1.5px solid var(--border); }
+        .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
+        .btn-accent { background: linear-gradient(135deg, var(--accent), var(--accent-hover)); color: white; box-shadow: 0 4px 14px rgba(245,158,11,0.35); }
+        .btn-accent:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245,158,11,0.45); }
+        .btn-sm { padding: 8px 16px; font-size: 0.8rem; }
+        .icon-btn { width: 40px; height: 40px; border-radius: 10px; background: var(--surface-2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.1rem; transition: var(--transition); color: var(--text); }
+        .icon-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+        .mobile-menu-btn { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text); }
+
+        .hero { padding: 140px 0 100px; position: relative; overflow: hidden; }
+        .hero-bg { position: absolute; top: -20%; right: -10%; width: 700px; height: 700px; background: radial-gradient(circle, rgba(20,184,166,0.1) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(15,118,110,0.08); border: 1px solid rgba(15,118,110,0.15); border-radius: 100px; font-size: 0.8rem; font-weight: 600; color: var(--primary); margin-bottom: 24px; }
+        .hero-badge span { width: 8px; height: 8px; background: var(--primary-light); border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+        .hero h1 { font-size: clamp(2.2rem, 5vw, 3.5rem); margin-bottom: 24px; }
+        .hero h1 .highlight { background: linear-gradient(135deg, var(--primary), var(--primary-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero p { font-size: 1.05rem; color: var(--text-muted); margin-bottom: 32px; max-width: 520px; line-height: 1.7; }
+        .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; }
+        .hero-stats { display: flex; gap: 40px; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border); }
+        .stat-item h3 { font-size: 1.6rem; color: var(--primary); margin-bottom: 4px; }
+        .stat-item p { font-size: 0.85rem; color: var(--text-muted); margin: 0; }
+        .hero-visual { position: relative; }
+        .qr-display { background: var(--surface); border-radius: var(--radius-xl); padding: 32px; box-shadow: var(--shadow-xl); border: 1px solid var(--border); text-align: center; }
+        .qr-box { width: 200px; height: 200px; margin: 0 auto 20px; background: white; padding: 12px; border-radius: var(--radius); position: relative; }
+        .qr-box svg { width: 100%; height: 100%; }
+        .qr-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 48px; height: 48px; background: white; border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+        .qr-center span { font-family: 'Space Grotesk', sans-serif; font-weight: 900; font-size: 0.65rem; color: var(--primary); line-height: 1; text-align: center; }
+        .qr-display p { color: var(--text-muted); font-size: 0.8rem; margin: 0; }
+        .floating-card { position: absolute; background: var(--surface); border-radius: var(--radius); padding: 14px 18px; box-shadow: var(--shadow-lg); border: 1px solid var(--border); animation: float 6s ease-in-out infinite; }
+        .floating-card-1 { top: -10px; right: -20px; animation-delay: 0s; }
+        .floating-card-2 { bottom: 60px; left: -30px; animation-delay: 2s; }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+
+        section { padding: 90px 0; }
+        .section-header { text-align: center; max-width: 680px; margin: 0 auto 56px; }
+        .section-header h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 14px; }
+        .section-header p { color: var(--text-muted); font-size: 1rem; }
+        .tag { display: inline-block; padding: 6px 14px; background: rgba(15,118,110,0.08); color: var(--primary); border-radius: 100px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+
+        .pricing-banner { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-radius: var(--radius-lg); padding: 40px; color: white; text-align: center; margin-bottom: 0; }
+        .pricing-banner h3 { font-size: 1.4rem; margin-bottom: 24px; }
+        .pricing-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .pricing-card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: var(--radius); padding: 28px; border: 1px solid rgba(255,255,255,0.15); transition: var(--transition); }
+        .pricing-card:hover { transform: translateY(-4px); background: rgba(255,255,255,0.15); }
+        .pricing-card .price { font-size: 2.2rem; font-weight: 800; margin-bottom: 8px; }
+        .pricing-card .price span { font-size: 1rem; font-weight: 400; opacity: 0.8; }
+        .pricing-card p { font-size: 0.85rem; opacity: 0.9; line-height: 1.5; }
+
+        .courses-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .course-card { background: var(--surface); border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border); transition: var(--transition); display: flex; flex-direction: column; }
+        .course-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-xl); }
+        .course-image { height: 160px; background: linear-gradient(135deg, #e0f2fe, #ccfbf1); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; position: relative; }
+        .course-badge { position: absolute; top: 10px; left: 10px; padding: 4px 10px; background: var(--accent); color: white; border-radius: 6px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; }
+        .course-content { padding: 18px; flex: 1; display: flex; flex-direction: column; }
+        .course-category { font-size: 0.7rem; font-weight: 600; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+        .course-card h3 { font-size: 0.95rem; margin-bottom: 6px; line-height: 1.3; }
+        .course-card p { color: var(--text-muted); font-size: 0.8rem; line-height: 1.55; margin-bottom: 14px; flex: 1; }
+        .course-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--border); gap: 8px; flex-wrap: wrap; }
+        .course-price { font-size: 1rem; font-weight: 700; color: var(--primary); }
+        .course-price .cert { font-size: 0.7rem; color: var(--text-muted); font-weight: 400; display: block; }
+
+        .calendar-section { background: var(--surface); }
+        .calendar-wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: 32px; }
+        .calendar-box { background: var(--bg); border-radius: var(--radius-lg); padding: 20px; border: 1px solid var(--border); }
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+        .calendar-header h4 { font-size: 1rem; }
+        .calendar-nav { display: flex; gap: 6px; }
+        .calendar-nav button { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); cursor: pointer; font-size: 0.9rem; transition: var(--transition); }
+        .calendar-nav button:hover { background: var(--primary); color: white; border-color: var(--primary); }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+        .cal-day-label { text-align: center; font-size: 0.65rem; font-weight: 600; color: var(--text-muted); padding: 6px 0; text-transform: uppercase; }
+        .cal-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 0.8rem; cursor: pointer; transition: var(--transition); position: relative; background: var(--surface); border: 1px solid transparent; }
+        .cal-day:hover { background: rgba(15,118,110,0.08); }
+        .cal-day.today { background: var(--primary); color: white; font-weight: 700; }
+        .cal-day.has-event::after { content: ''; position: absolute; bottom: 3px; width: 4px; height: 4px; background: var(--accent); border-radius: 50%; }
+        .cal-day.other-month { color: var(--border); }
+        .cal-day.selected { border-color: var(--primary); background: rgba(15,118,110,0.08); }
+        .diary-panel { background: var(--bg); border-radius: var(--radius-lg); padding: 20px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 12px; }
+        .diary-panel h4 { font-size: 1rem; }
+        .diary-date { color: var(--text-muted); font-size: 0.8rem; }
+        .diary-input { width: 100%; padding: 10px; border: 1.5px solid var(--border); border-radius: 10px; font-family: inherit; font-size: 0.85rem; background: var(--surface); color: var(--text); resize: vertical; min-height: 80px; }
+        .diary-input:focus { outline: none; border-color: var(--primary); }
+        .diary-list { max-height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+        .diary-item { background: var(--surface); padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); font-size: 0.8rem; }
+        .diary-item time { font-size: 0.7rem; color: var(--text-muted); display: block; margin-bottom: 3px; }
+        .diary-item .reminder-badge { display: inline-block; background: var(--accent); color: white; font-size: 0.65rem; padding: 2px 8px; border-radius: 100px; margin-left: 6px; font-weight: 600; }
+        .reminder-row { display: flex; gap: 8px; align-items: center; }
+        .reminder-row input[type="time"] { padding: 8px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); font-family: inherit; font-size: 0.85rem; }
+
+        .calc-section { background: var(--surface); }
+        .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+        .calc-form { background: var(--bg); border-radius: var(--radius-lg); padding: 28px; border: 1px solid var(--border); }
+        .calc-form h3 { margin-bottom: 20px; font-size: 1.15rem; }
+        .calc-group { margin-bottom: 16px; }
+        .calc-group label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 6px; }
+        .calc-group input, .calc-group select { width: 100%; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 10px; font-family: inherit; font-size: 0.85rem; background: var(--surface); color: var(--text); }
+        .calc-group input:focus, .calc-group select:focus { outline: none; border-color: var(--primary); }
+        .calc-result { background: var(--bg); border-radius: var(--radius-lg); padding: 28px; border: 1px solid var(--border); position: sticky; top: 90px; }
+        .calc-result h3 { margin-bottom: 20px; font-size: 1.15rem; }
+        .result-card { background: var(--surface); border-radius: var(--radius); padding: 16px; border: 1px solid var(--border); margin-bottom: 12px; }
+        .result-card h4 { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; }
+        .result-card .value { font-size: 1.3rem; font-weight: 700; color: var(--primary); }
+        .method-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-top: 10px; }
+        .method-chip { padding: 6px 10px; background: var(--surface-2); border-radius: 8px; font-size: 0.75rem; text-align: center; border: 1px solid var(--border); }
+        .method-chip.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .ai-office-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+        .ai-card { background: var(--surface); border-radius: var(--radius-lg); padding: 24px; border: 1px solid var(--border); transition: var(--transition); position: relative; overflow: hidden; }
+        .ai-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: rgba(15,118,110,0.2); }
+        .ai-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--primary), var(--primary-light)); }
+        .ai-icon { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; margin-bottom: 14px; }
+        .ai-card h4 { font-size: 0.95rem; margin-bottom: 5px; }
+        .ai-card p { color: var(--text-muted); font-size: 0.8rem; line-height: 1.55; margin-bottom: 10px; }
+        .ai-status { display: inline-flex; align-items: center; gap: 6px; font-size: 0.7rem; font-weight: 600; padding: 4px 10px; background: rgba(16,185,129,0.1); color: #10b981; border-radius: 100px; }
+        .ai-status::before { content: ''; width: 6px; height: 6px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite; }
+
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .contact-info h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 16px; }
+        .contact-info > p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.65; margin-bottom: 28px; }
+        .contact-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 18px; }
+        .contact-icon { width: 40px; height: 40px; min-width: 40px; background: rgba(15,118,110,0.08); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1rem; }
+        .contact-item div h4 { font-size: 0.9rem; margin-bottom: 2px; }
+        .contact-item div p { color: var(--text-muted); font-size: 0.85rem; }
+        .contact-map { background: var(--surface-2); border-radius: var(--radius-lg); height: 100%; min-height: 360px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); flex-direction: column; gap: 14px; padding: 32px; }
+        .contact-map .map-pin { font-size: 3.5rem; }
+        .contact-map h4 { font-size: 1.1rem; }
+        .contact-map p { color: var(--text-muted); text-align: center; max-width: 280px; font-size: 0.85rem; }
+
+        .footer { background: var(--text); color: #a8a29e; padding: 70px 0 32px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+        .footer-brand .logo { color: white; margin-bottom: 14px; }
+        .footer-brand p { font-size: 0.85rem; line-height: 1.65; max-width: 300px; }
+        .footer-links h4 { color: white; font-size: 0.9rem; margin-bottom: 16px; }
+        .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        .footer-links a { font-size: 0.8rem; transition: color 0.2s; }
+        .footer-links a:hover { color: white; }
+        .footer-bottom { border-top: 1px solid #44403c; padding-top: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; }
+        .footer-bottom p { font-size: 0.75rem; }
+        .social-links { display: flex; gap: 10px; }
+        .social-links a { width: 36px; height: 36px; border-radius: 10px; background: #44403c; display: flex; align-items: center; justify-content: center; transition: var(--transition); font-size: 0.9rem; }
+        .social-links a:hover { background: var(--primary); transform: translateY(-3px); }
+
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 24px; }
+        .modal-overlay.active { display: flex; }
+        .modal { background: var(--surface); border-radius: var(--radius-lg); width: 100%; max-width: 460px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-xl); animation: modalIn 0.3s ease; }
+        @keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        .modal-header { padding: 20px 28px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h3 { font-size: 1.1rem; }
+        .modal-close { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--text-muted); width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 8px; transition: var(--transition); }
+        .modal-close:hover { background: var(--bg); color: var(--text); }
+        .modal-body { padding: 28px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 6px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 10px; font-family: inherit; font-size: 0.85rem; background: var(--bg); color: var(--text); transition: var(--transition); }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(15,118,110,0.1); }
+        .form-group textarea { resize: vertical; min-height: 70px; }
+
+        .lang-dropdown { position: relative; }
+        .lang-menu { position: absolute; top: calc(100% + 8px); right: 0; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-lg); min-width: 170px; display: none; overflow: hidden; z-index: 1001; }
+        .lang-menu.active { display: block; }
+        .lang-menu button { width: 100%; text-align: left; padding: 9px 14px; background: none; border: none; font-family: inherit; font-size: 0.8rem; cursor: pointer; color: var(--text); display: flex; align-items: center; gap: 10px; transition: var(--transition); }
+        .lang-menu button:hover { background: var(--bg); color: var(--primary); }
+        .lang-flag { font-size: 1rem; }
+
+        .toast { position: fixed; bottom: 24px; right: 24px; padding: 14px 22px; background: var(--text); color: white; border-radius: 12px; box-shadow: var(--shadow-xl); z-index: 3000; transform: translateY(100px); opacity: 0; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); font-weight: 500; max-width: 380px; font-size: 0.9rem; }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast.success { background: var(--primary); }
+        .toast.error { background: var(--danger); }
+
+        .mobile-menu { position: fixed; top: 72px; left: 0; right: 0; background: var(--surface); border-bottom: 1px solid var(--border); padding: 20px; z-index: 999; display: none; box-shadow: var(--shadow-lg); }
+        .mobile-menu.active { display: block; }
+        .mobile-menu a { display: block; padding: 10px 0; font-weight: 500; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+        .mobile-menu a:last-child { border-bottom: none; }
+
+        .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; display: none; }
+        .btn.loading .spinner { display: inline-block; }
+        .btn.loading .btn-text { opacity: 0.7; }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 1024px) {
-            .hero-grid,
-            .about-grid {
-                grid-template-columns: 1fr;
-                gap: 48px;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .hero-visual {
-                order: -1;
-            }
+            .hero-grid, .calc-grid, .contact-grid, .calendar-wrap { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .pricing-cards { grid-template-columns: 1fr; }
+            .hero-visual { order: -1; }
         }
-
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .mobile-menu-btn { display: block; }
-            .nav-cta .btn-secondary { display: none; }
-
+            .nav-actions .btn-secondary { display: none; }
             .hero { padding: 120px 0 60px; }
-            .hero-stats { gap: 24px; }
+            .hero-stats { gap: 20px; }
             .hero-cta { flex-direction: column; }
             .hero-cta .btn { width: 100%; }
-
             section { padding: 60px 0; }
-
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .about-stats-card {
-                right: 0;
-                bottom: -16px;
-            }
+            .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+            .method-grid { grid-template-columns: 1fr; }
+            .qr-box { width: 160px; height: 160px; }
         }
-
-        /* ===== UTILITIES ===== */
-        .text-center { text-align: center; }
-        .hidden { display: none !important; }
-
-        /* Toast notification */
-        .toast {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            padding: 16px 24px;
-            background: var(--text);
-            color: white;
-            border-radius: 12px;
-            box-shadow: var(--shadow-lg);
-            z-index: 3000;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-weight: 500;
-        }
-
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .toast.success { background: var(--primary); }
-        .toast.error { background: #dc2626; }
-
-        /* Loading spinner */
-        .spinner {
-            width: 20px; height: 20px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            display: none;
-        }
-
-        .btn.loading .spinner { display: inline-block; }
-        .btn.loading .btn-text { opacity: 0.7; }
-
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* Mobile menu */
-        .mobile-menu {
-            position: fixed;
-            top: 72px; left: 0; right: 0;
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
-            padding: 24px;
-            z-index: 999;
-            display: none;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .mobile-menu.active { display: block; }
-
-        .mobile-menu a {
-            display: block;
-            padding: 12px 0;
-            font-weight: 500;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .mobile-menu a:last-child { border-bottom: none; }
     </style>
 <base target="_blank">
 </head>
 <body>
 
-    <!-- ===== NAVIGATION ===== -->
+    <!-- NAVIGATION -->
     <nav class="navbar" id="navbar">
         <div class="container nav-inner">
             <a href="#" class="logo">
-                <div class="logo-icon">🌍</div>
-                Rise Africa Skills
+                <div class="logo-box">rAs</div>
+                <span data-i18n="brand">Rise Africa Skills</span>
             </a>
             <ul class="nav-links">
-                <li><a href="#home" class="active">Home</a></li>
-                <li><a href="#courses">Courses</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#testimonials">Stories</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#home" class="active" data-i18n="nav_home">Home</a></li>
+                <li><a href="#pricing" data-i18n="nav_pricing">Pricing</a></li>
+                <li><a href="#courses" data-i18n="nav_courses">Courses</a></li>
+                <li><a href="#calendar" data-i18n="nav_calendar">Calendar</a></li>
+                <li><a href="#calculator" data-i18n="nav_calc">Calculator</a></li>
+                <li><a href="#ai-office" data-i18n="nav_ai">AI Office</a></li>
+                <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
             </ul>
-            <div class="nav-cta">
-                <button class="btn btn-secondary" onclick="openModal('loginModal')">Sign In</button>
-                <button class="btn btn-primary" onclick="openModal('signupModal')">Get Started</button>
+            <div class="nav-actions">
+                <div class="lang-dropdown">
+                    <button class="icon-btn" onclick="toggleLangMenu()" title="Language">🌐</button>
+                    <div class="lang-menu" id="langMenu">
+                        <button onclick="setLang('sw')"><span class="lang-flag">🇹🇿</span> Kiswahili</button>
+                        <button onclick="setLang('yo')"><span class="lang-flag">🇳🇬</span> Yorùbá</button>
+                        <button onclick="setLang('sn')"><span class="lang-flag">🇿🇼</span> Shona</button>
+                        <button onclick="setLang('ar')"><span class="lang-flag">🇸🇦</span> العربية</button>
+                        <button onclick="setLang('zh')"><span class="lang-flag">🇨🇳</span> 中文</button>
+                        <button onclick="setLang('ru')"><span class="lang-flag">🇷🇺</span> Русский</button>
+                        <button onclick="setLang('en')"><span class="lang-flag">🇬🇧</span> English</button>
+                        <button onclick="setLang('pt')"><span class="lang-flag">🇵🇹</span> Português</button>
+                        <button onclick="setLang('fr')"><span class="lang-flag">🇫🇷</span> Français</button>
+                    </div>
+                </div>
+                <button class="icon-btn" onclick="toggleTheme()" title="Toggle theme" id="themeBtn">🌙</button>
+                <button class="btn btn-secondary btn-sm" onclick="openModal('loginModal')" data-i18n="signin">Sign In</button>
+                <button class="btn btn-primary btn-sm" onclick="openModal('signupModal')" data-i18n="getstarted">Get Started</button>
             </div>
             <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
         </div>
         <div class="mobile-menu" id="mobileMenu">
             <div class="container">
                 <a href="#home" onclick="toggleMobileMenu()">Home</a>
+                <a href="#pricing" onclick="toggleMobileMenu()">Pricing</a>
                 <a href="#courses" onclick="toggleMobileMenu()">Courses</a>
-                <a href="#about" onclick="toggleMobileMenu()">About</a>
-                <a href="#testimonials" onclick="toggleMobileMenu()">Stories</a>
+                <a href="#calendar" onclick="toggleMobileMenu()">Calendar</a>
+                <a href="#calculator" onclick="toggleMobileMenu()">Calculator</a>
+                <a href="#ai-office" onclick="toggleMobileMenu()">AI Office</a>
                 <a href="#contact" onclick="toggleMobileMenu()">Contact</a>
-                <a href="#" onclick="openModal('loginModal'); toggleMobileMenu();">Sign In</a>
             </div>
         </div>
     </nav>
 
-    <!-- ===== HERO ===== -->
+    <!-- HERO -->
     <section class="hero" id="home">
         <div class="hero-bg"></div>
-        <div class="hero-bg-2"></div>
         <div class="container">
             <div class="hero-grid">
                 <div class="hero-content">
-                    <div class="hero-badge">
-                        <span></span>
-                        Now enrolling for 2026 cohort
-                    </div>
-                    <h1>Learn In-Demand Skills. <span class="highlight">Build Your Future.</span></h1>
-                    <p>Join thousands of African learners mastering tech, business, and creative skills through expert-led courses designed for real-world impact.</p>
+                    <div class="hero-badge"><span></span><span data-i18n="hero_badge">100% AI-Powered Education for Africa</span></div>
+                    <h1><span data-i18n="hero_title1">Learn Practical Skills.</span> <span class="highlight" data-i18n="hero_title2">Start Your Business.</span></h1>
+                    <p data-i18n="hero_desc">rAs AI Tutor delivers real, fact-based courses built entirely by artificial intelligence. From agriculture to solar technology — learn skills that work in Africa, with little to no starting capital.</p>
                     <div class="hero-cta">
-                        <button class="btn btn-primary" onclick="document.getElementById('courses').scrollIntoView({behavior:'smooth'})">
-                            Explore Courses
-                        </button>
-                        <button class="btn btn-secondary" onclick="openModal('signupModal')">
-                            Start Free Trial
-                        </button>
+                        <button class="btn btn-primary" onclick="document.getElementById('courses').scrollIntoView({behavior:'smooth'})"><span data-i18n="explore">Explore Courses</span></button>
+                        <button class="btn btn-secondary" onclick="openModal('signupModal')"><span data-i18n="start_free">Start Free</span></button>
                     </div>
                     <div class="hero-stats">
-                        <div class="stat-item">
-                            <h3>12K+</h3>
-                            <p>Active Learners</p>
-                        </div>
-                        <div class="stat-item">
-                            <h3>85+</h3>
-                            <p>Expert Courses</p>
-                        </div>
-                        <div class="stat-item">
-                            <h3>94%</h3>
-                            <p>Completion Rate</p>
-                        </div>
+                        <div class="stat-item"><h3>100%</h3><p data-i18n="stat_ai">AI Teachers</p></div>
+                        <div class="stat-item"><h3>$8</h3><p data-i18n="stat_price">Per Course</p></div>
+                        <div class="stat-item"><h3>40+</h3><p data-i18n="stat_courses">Practical Courses</p></div>
                     </div>
                 </div>
                 <div class="hero-visual">
-                    <div class="hero-card">
-                        <div class="hero-card-img">💻</div>
-                        <h4>Full-Stack Web Development</h4>
-                        <p>Master React, Node.js & modern databases</p>
+                    <div class="qr-display">
+                        <div class="qr-box">
+                            <svg viewBox="0 0 100 100">
+                                <rect x="0" y="0" width="100" height="100" fill="white"/>
+                                <rect x="5" y="5" width="25" height="25" fill="#0f766e"/><rect x="8" y="8" width="19" height="19" fill="white"/><rect x="11" y="11" width="13" height="13" fill="#0f766e"/>
+                                <rect x="70" y="5" width="25" height="25" fill="#0f766e"/><rect x="73" y="8" width="19" height="19" fill="white"/><rect x="76" y="11" width="13" height="13" fill="#0f766e"/>
+                                <rect x="5" y="70" width="25" height="25" fill="#0f766e"/><rect x="8" y="73" width="19" height="19" fill="white"/><rect x="11" y="76" width="13" height="13" fill="#0f766e"/>
+                                <rect x="35" y="5" width="5" height="5" fill="#0f766e"/><rect x="45" y="5" width="5" height="5" fill="#0f766e"/><rect x="55" y="5" width="5" height="5" fill="#0f766e"/>
+                                <rect x="35" y="15" width="5" height="5" fill="#0f766e"/><rect x="50" y="15" width="5" height="5" fill="#0f766e"/><rect x="60" y="15" width="5" height="5" fill="#0f766e"/>
+                                <rect x="40" y="25" width="5" height="5" fill="#0f766e"/><rect x="55" y="25" width="5" height="5" fill="#0f766e"/>
+                                <rect x="5" y="35" width="5" height="5" fill="#0f766e"/><rect x="15" y="35" width="5" height="5" fill="#0f766e"/><rect x="25" y="35" width="5" height="5" fill="#0f766e"/>
+                                <rect x="35" y="35" width="5" height="5" fill="#0f766e"/><rect x="50" y="35" width="5" height="5" fill="#0f766e"/><rect x="60" y="35" width="5" height="5" fill="#0f766e"/>
+                                <rect x="70" y="35" width="5" height="5" fill="#0f766e"/><rect x="85" y="35" width="5" height="5" fill="#0f766e"/><rect x="95" y="35" width="5" height="5" fill="#0f766e"/>
+                                <rect x="5" y="45" width="5" height="5" fill="#0f766e"/><rect x="20" y="45" width="5" height="5" fill="#0f766e"/>
+                                <rect x="35" y="45" width="5" height="5" fill="#0f766e"/><rect x="45" y="45" width="5" height="5" fill="#0f766e"/><rect x="55" y="45" width="5" height="5" fill="#0f766e"/>
+                                <rect x="70" y="45" width="5" height="5" fill="#0f766e"/><rect x="80" y="45" width="5" height="5" fill="#0f766e"/><rect x="90" y="45" width="5" height="5" fill="#0f766e"/>
+                                <rect x="10" y="55" width="5" height="5" fill="#0f766e"/><rect x="25" y="55" width="5" height="5" fill="#0f766e"/>
+                                <rect x="40" y="55" width="5" height="5" fill="#0f766e"/><rect x="50" y="55" width="5" height="5" fill="#0f766e"/><rect x="60" y="55" width="5" height="5" fill="#0f766e"/>
+                                <rect x="75" y="55" width="5" height="5" fill="#0f766e"/><rect x="85" y="55" width="5" height="5" fill="#0f766e"/><rect x="95" y="55" width="5" height="5" fill="#0f766e"/>
+                                <rect x="35" y="65" width="5" height="5" fill="#0f766e"/><rect x="45" y="65" width="5" height="5" fill="#0f766e"/><rect x="55" y="65" width="5" height="5" fill="#0f766e"/>
+                                <rect x="65" y="65" width="5" height="5" fill="#0f766e"/><rect x="75" y="65" width="5" height="5" fill="#0f766e"/><rect x="85" y="65" width="5" height="5" fill="#0f766e"/><rect x="95" y="65" width="5" height="5" fill="#0f766e"/>
+                                <rect x="35" y="75" width="5" height="5" fill="#0f766e"/><rect x="50" y="75" width="5" height="5" fill="#0f766e"/><rect x="60" y="75" width="5" height="5" fill="#0f766e"/>
+                                <rect x="70" y="75" width="5" height="5" fill="#0f766e"/><rect x="85" y="75" width="5" height="5" fill="#0f766e"/><rect x="95" y="75" width="5" height="5" fill="#0f766e"/>
+                                <rect x="35" y="85" width="5" height="5" fill="#0f766e"/><rect x="45" y="85" width="5" height="5" fill="#0f766e"/><rect x="55" y="85" width="5" height="5" fill="#0f766e"/>
+                                <rect x="65" y="85" width="5" height="5" fill="#0f766e"/><rect x="80" y="85" width="5" height="5" fill="#0f766e"/><rect x="90" y="85" width="5" height="5" fill="#0f766e"/>
+                                <rect x="35" y="95" width="5" height="5" fill="#0f766e"/><rect x="50" y="95" width="5" height="5" fill="#0f766e"/><rect x="60" y="95" width="5" height="5" fill="#0f766e"/>
+                                <rect x="75" y="95" width="5" height="5" fill="#0f766e"/><rect x="85" y="95" width="5" height="5" fill="#0f766e"/><rect x="95" y="95" width="5" height="5" fill="#0f766e"/>
+                            </svg>
+                            <div class="qr-center"><span>rAs</span></div>
+                        </div>
+                        <p data-i18n="qr_text">Scan to visit rAs on mobile</p>
                     </div>
                     <div class="floating-card floating-card-1">
                         <div style="display:flex;align-items:center;gap:10px;">
-                            <div style="width:36px;height:36px;background:linear-gradient(135deg,var(--primary),var(--primary-light));border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:0.9rem;">✓</div>
-                            <div>
-                                <div style="font-weight:700;font-size:0.9rem;">Course Completed!</div>
-                                <div style="font-size:0.8rem;color:var(--text-muted);">Amina from Lagos</div>
-                            </div>
+                            <div style="width:36px;height:36px;background:linear-gradient(135deg,var(--primary),var(--primary-light));border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:0.9rem;">🤖</div>
+                            <div><div style="font-weight:700;font-size:0.85rem;">rAs AI Tutor</div><div style="font-size:0.75rem;color:var(--text-muted);">Online Now</div></div>
                         </div>
                     </div>
                     <div class="floating-card floating-card-2">
-                        <div style="font-weight:700;color:var(--primary);font-size:1.1rem;">4.9 ★</div>
-                        <div style="font-size:0.8rem;color:var(--text-muted);">Average Rating</div>
+                        <div style="font-weight:700;color:var(--primary);font-size:1.1rem;">$8.00</div>
+                        <div style="font-size:0.75rem;color:var(--text-muted);" data-i18n="per_course">Per Full Course</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== FEATURES ===== -->
-    <section class="features" id="features">
+    <!-- PRICING -->
+    <section id="pricing">
         <div class="container">
             <div class="section-header">
-                <span class="tag">Why Choose Us</span>
-                <h2>Everything You Need to Succeed</h2>
-                <p>We have built a learning experience that puts you first — with practical projects, mentor support, and a community that pushes you forward.</p>
+                <span class="tag" data-i18n="pricing_tag">Simple Pricing</span>
+                <h2 data-i18n="pricing_title">Affordable Education for Everyone</h2>
+                <p data-i18n="pricing_desc">No hidden fees. No subscriptions. Pay only for what you need. All courses are designed for low-capital African entrepreneurs.</p>
             </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon" style="background:rgba(15,118,110,0.1);color:var(--primary);">🎓</div>
-                    <h3>Expert-Led Courses</h3>
-                    <p>Learn from industry professionals who have worked at top companies. Every course is designed with real-world applications in mind.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon" style="background:rgba(245,158,11,0.1);color:var(--accent);">🚀</div>
-                    <h3>Project-Based Learning</h3>
-                    <p>Build a portfolio as you learn. Each module includes hands-on projects that you can showcase to potential employers.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon" style="background:rgba(220,38,38,0.08);color:#dc2626;">👥</div>
-                    <h3>Community Support</h3>
-                    <p>Join a thriving community of learners. Get feedback, collaborate on projects, and grow your professional network.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon" style="background:rgba(37,99,235,0.08);color:#2563eb;">📜</div>
-                    <h3>Verified Certificates</h3>
-                    <p>Earn industry-recognized certificates upon completion. Shareable on LinkedIn with unique verification URLs.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon" style="background:rgba(16,185,129,0.08);color:#10b981;">💼</div>
-                    <h3>Career Support</h3>
-                    <p>Get resume reviews, interview prep, and direct connections to hiring partners across Africa and beyond.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon" style="background:rgba(139,92,246,0.08);color:#8b5cf6;">⚡</div>
-                    <h3>Flexible Learning</h3>
-                    <p>Study at your own pace, on any device. Download lessons for offline viewing and learn on your schedule.</p>
+            <div class="pricing-banner">
+                <h3 data-i18n="pricing_banner">Choose Your Access Level</h3>
+                <div class="pricing-cards">
+                    <div class="pricing-card">
+                        <div class="price">$8.00</div>
+                        <p data-i18n="price_full">Full Course Access<br>Learn online or offline<br>All lessons + materials</p>
+                    </div>
+                    <div class="pricing-card">
+                        <div class="price">$10.00</div>
+                        <p data-i18n="price_cert">Full Course + Certificate<br>Verified digital certificate<br>Shareable on LinkedIn</p>
+                    </div>
+                    <div class="pricing-card">
+                        <div class="price">$3.50</div>
+                        <p data-i18n="price_read">Read / Download / Print / Share<br>Per course document access<br>One-time purchase</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== COURSES ===== -->
+    <!-- COURSES -->
     <section id="courses">
         <div class="container">
             <div class="section-header">
-                <span class="tag">Popular Courses</span>
-                <h2>Start Learning Today</h2>
-                <p>Choose from our most in-demand courses and begin your journey to a new career.</p>
+                <span class="tag" data-i18n="courses_tag">Course Catalog</span>
+                <h2 data-i18n="courses_title">Skills That Build Africa</h2>
+                <p data-i18n="courses_desc">Every course is 100% AI-generated, fact-checked, and designed for real African conditions. Start with little to no capital.</p>
             </div>
-            <div class="courses-grid" id="coursesGrid">
-                <!-- Course cards rendered by JS -->
-            </div>
-            <div class="text-center" style="margin-top:48px;">
-                <button class="btn btn-secondary" onclick="showToast('More courses coming soon!', 'success')">
-                    View All Courses
-                </button>
-            </div>
+            <div class="courses-grid" id="coursesGrid"></div>
         </div>
     </section>
 
-    <!-- ===== ABOUT ===== -->
-    <section class="about" id="about">
-        <div class="container">
-            <div class="about-grid">
-                <div class="about-visual">
-                    <div class="about-img">🌍</div>
-                    <div class="about-stats-card">
-                        <h4>50K+</h4>
-                        <p>Skills taught across Africa</p>
-                    </div>
-                </div>
-                <div class="about-content">
-                    <span class="tag">About Us</span>
-                    <h2>Empowering Africa's Next Generation of Talent</h2>
-                    <p>Rise Africa Skills was founded with a simple mission: to make world-class education accessible to every African, regardless of location or background.</p>
-                    <ul class="about-list">
-                        <li>
-                            <span class="check">✓</span>
-                            <span><strong>Accessible Pricing</strong> — Quality education should not break the bank. We offer flexible payment plans and scholarships.</span>
-                        </li>
-                        <li>
-                            <span class="check">✓</span>
-                            <span><strong>Local Relevance</strong> — Our curriculum addresses real challenges and opportunities in African markets.</span>
-                        </li>
-                        <li>
-                            <span class="check">✓</span>
-                            <span><strong>Global Standards</strong> — We align our programs with international certifications and industry best practices.</span>
-                        </li>
-                        <li>
-                            <span class="check">✓</span>
-                            <span><strong>Job Placement</strong> — Our hiring network spans 200+ companies actively seeking African talent.</span>
-                        </li>
-                    </ul>
-                    <button class="btn btn-primary" onclick="openModal('signupModal')">
-                        Join the Movement
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== TESTIMONIALS ===== -->
-    <section id="testimonials">
+    <!-- CALENDAR / DIARY -->
+    <section class="calendar-section" id="calendar">
         <div class="container">
             <div class="section-header">
-                <span class="tag">Success Stories</span>
-                <h2>Hear From Our Learners</h2>
-                <p>Real people, real transformations. See how Rise Africa Skills has changed lives across the continent.</p>
+                <span class="tag" data-i18n="calendar_tag">Study Planner</span>
+                <h2 data-i18n="calendar_title">Your Learning Calendar</h2>
+                <p data-i18n="calendar_desc">Plan your study schedule, set reminders, and keep a learning diary. All data stays in your browser.</p>
             </div>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">★★★★★</div>
-                    <p class="testimonial-text">"I went from zero coding knowledge to landing a full-time developer role in Nairobi within 6 months. The mentorship and community here are unmatched."</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">KO</div>
-                        <div class="author-info">
-                            <h4>Kwame Osei</h4>
-                            <p>Software Developer, Nairobi</p>
+            <div class="calendar-wrap">
+                <div class="calendar-box">
+                    <div class="calendar-header">
+                        <h4 id="calMonthYear">August 2026</h4>
+                        <div class="calendar-nav">
+                            <button onclick="changeMonth(-1)">‹</button>
+                            <button onclick="changeMonth(1)">›</button>
                         </div>
                     </div>
+                    <div class="calendar-grid" id="calGrid"></div>
                 </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">★★★★★</div>
-                    <p class="testimonial-text">"The digital marketing course helped me triple my agency's revenue. The project-based approach meant I could apply everything immediately to real clients."</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">AN</div>
-                        <div class="author-info">
-                            <h4>Amara Nwosu</h4>
-                            <p>Agency Founder, Lagos</p>
-                        </div>
+                <div class="diary-panel">
+                    <div>
+                        <h4 data-i18n="diary_title">Study Diary</h4>
+                        <p class="diary-date" id="selectedDate">Select a date</p>
                     </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">★★★★★</div>
-                    <p class="testimonial-text">"As a single mother in Accra, the flexible schedule was a lifesaver. I studied at night and now work remotely for a UK tech company. Forever grateful."</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">FA</div>
-                        <div class="author-info">
-                            <h4>Fatima Addo</h4>
-                            <p>UX Designer, Accra</p>
-                        </div>
+                    <div class="reminder-row">
+                        <input type="time" id="reminderTime" value="09:00">
+                        <button class="btn btn-primary btn-sm" onclick="addReminder()" data-i18n="add_reminder">Add Reminder</button>
                     </div>
+                    <textarea class="diary-input" id="diaryNote" placeholder="Write your study notes here..."></textarea>
+                    <button class="btn btn-primary" onclick="saveDiary()" data-i18n="save_entry">Save Entry</button>
+                    <div class="diary-list" id="diaryList"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== CTA ===== -->
-    <section class="cta-section" id="contact">
+    <!-- PRESERVATION CALCULATOR -->
+    <section class="calc-section" id="calculator">
         <div class="container">
-            <div class="cta-box">
-                <h2>Ready to Transform Your Career?</h2>
-                <p>Join 12,000+ learners who are already building their future. Your first course starts today.</p>
-                <button class="btn btn-accent" onclick="openModal('signupModal')">
-                    Get Started for Free
-                </button>
+            <div class="section-header">
+                <span class="tag" data-i18n="calc_tag">Food Preservation</span>
+                <h2 data-i18n="calc_title">Preservation Calculator</h2>
+                <p data-i18n="calc_desc">Calculate yield, shelf life, and storage requirements for your food preservation business.</p>
+            </div>
+            <div class="calc-grid">
+                <div class="calc-form">
+                    <h3 data-i18n="calc_inputs">Enter Your Details</h3>
+                    <div class="calc-group">
+                        <label data-i18n="label_product">Product Type</label>
+                        <select id="calcProduct">
+                            <option value="tomatoes">Tomatoes</option>
+                            <option value="mangoes">Mangoes</option>
+                            <option value="fish">Fish</option>
+                            <option value="meat">Meat (Beef/Goat)</option>
+                            <option value="vegetables">Leafy Vegetables</option>
+                            <option value="fruits">Mixed Fruits</option>
+                            <option value="milk">Milk / Dairy</option>
+                            <option value="grains">Grains / Maize</option>
+                        </select>
+                    </div>
+                    <div class="calc-group">
+                        <label data-i18n="label_start_qty">Starting Quantity (kg)</label>
+                        <input type="number" id="calcStartQty" value="100" min="1">
+                    </div>
+                    <div class="calc-group">
+                        <label data-i18n="label_method">Preservation Method</label>
+                        <select id="calcMethod">
+                            <option value="drying">Sun / Solar Drying</option>
+                            <option value="smoking">Smoking</option>
+                            <option value="salting">Salting / Brining</option>
+                            <option value="pickling">Pickling / Fermentation</option>
+                            <option value="canning">Canning / Bottling</option>
+                            <option value="freezing">Freezing / Cold Storage</option>
+                            <option value="vacuum">Vacuum Sealing</option>
+                            <option value="waxing">Waxing / Coating</option>
+                            <option value="sugar">Sugar Preservation</option>
+                            <option value="oil">Oil Preservation</option>
+                        </select>
+                    </div>
+                    <div class="calc-group">
+                        <label data-i18n="label_temp">Storage Temperature (°C)</label>
+                        <input type="number" id="calcTemp" value="25" min="-20" max="50">
+                    </div>
+                    <button class="btn btn-primary" onclick="calculatePreservation()" data-i18n="calculate">Calculate Results</button>
+                </div>
+                <div class="calc-result">
+                    <h3 data-i18n="calc_results">Results</h3>
+                    <div class="result-card">
+                        <h4 data-i18n="res_final_qty">Final Quantity</h4>
+                        <div class="value" id="resFinalQty">—</div>
+                    </div>
+                    <div class="result-card">
+                        <h4 data-i18n="res_shelf">Shelf Life</h4>
+                        <div class="value" id="resShelf">—</div>
+                    </div>
+                    <div class="result-card">
+                        <h4 data-i18n="res_best_temp">Best Storage Temperature</h4>
+                        <div class="value" id="resBestTemp">—</div>
+                    </div>
+                    <div class="result-card">
+                        <h4 data-i18n="res_methods">All 10 Preservation Methods</h4>
+                        <div class="method-grid" id="methodGrid"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== FOOTER ===== -->
+    <!-- AI BACK OFFICE -->
+    <section id="ai-office">
+        <div class="container">
+            <div class="section-header">
+                <span class="tag">AI Back Office</span>
+                <h2 data-i18n="ai_title">12 rAs AI Assistants</h2>
+                <p data-i18n="ai_desc">Our entire back office runs on artificial intelligence. 12 specialized AI agents handle every task — from content creation to student support.</p>
+            </div>
+            <div class="ai-office-grid" id="aiGrid"></div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <span class="tag" data-i18n="contact_tag">Get In Touch</span>
+                    <h2 data-i18n="contact_title">Contact Rise Africa Skills</h2>
+                    <p data-i18n="contact_desc">We are here to help you start your learning journey. Reach out to our rAs AI support team or contact us directly.</p>
+                    <div class="contact-item">
+                        <div class="contact-icon">📧</div>
+                        <div><h4 data-i18n="label_email">Email</h4><p>all@riseafricaskills.com</p></div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📱</div>
+                        <div><h4 data-i18n="label_phone">Phone</h4><p>+263 77 300 1353<br>+44 735 972 4755</p></div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div><h4 data-i18n="label_address">Address</h4><p>350B Southway<br>Waterfalls, Parktown<br>Harare, Zimbabwe</p></div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">🌐</div>
+                        <div><h4 data-i18n="label_web">Website</h4><p>riseafricaskills.com</p></div>
+                    </div>
+                </div>
+                <div class="contact-map">
+                    <div class="map-pin">📍</div>
+                    <h4>Harare, Zimbabwe</h4>
+                    <p>350B Southway, Waterfalls, Parktown, Harare, Africa</p>
+                    <p style="font-size:0.8rem;color:var(--text-muted);margin-top:8px;">GPS: -17.8252° S, 31.0335° E</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <a href="#" class="logo">
-                        <div class="logo-icon">🌍</div>
-                        Rise Africa Skills
-                    </a>
-                    <p>Empowering African talent with world-class education in technology, business, and design. Learn anywhere, build everywhere.</p>
+                    <a href="#" class="logo"><div class="logo-box">rAs</div> Rise Africa Skills</a>
+                    <p>100% AI-powered education for Africa. Learn practical skills in agriculture, technology, trades, and entrepreneurship. Low cost, high impact.</p>
                 </div>
                 <div class="footer-links">
                     <h4>Platform</h4>
                     <ul>
                         <li><a href="#courses">Browse Courses</a></li>
-                        <li><a href="#" onclick="showToast('Mentorship launching Q3 2026', 'success'); return false;">Mentorship</a></li>
-                        <li><a href="#" onclick="showToast('Enterprise portal coming soon', 'success'); return false;">For Business</a></li>
-                        <li><a href="#" onclick="openModal('signupModal')">Become an Instructor</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#calendar">Study Calendar</a></li>
+                        <li><a href="#calculator">Preservation Calculator</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
                     <h4>Company</h4>
                     <ul>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#" onclick="showToast('Careers page coming soon', 'success'); return false;">Careers</a></li>
-                        <li><a href="#" onclick="showToast('Blog launching soon', 'success'); return false;">Blog</a></li>
+                        <li><a href="#ai-office">AI Back Office</a></li>
                         <li><a href="#contact">Contact</a></li>
+                        <li><a href="#" onclick="showToast('Blog coming soon','success');return false;">Blog</a></li>
+                        <li><a href="#" onclick="showToast('Careers page coming soon','success');return false;">Careers</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
                     <h4>Legal</h4>
                     <ul>
-                        <li><a href="#" onclick="showToast('Privacy Policy page in development', 'success'); return false;">Privacy Policy</a></li>
-                        <li><a href="#" onclick="showToast('Terms of Service page in development', 'success'); return false;">Terms of Service</a></li>
-                        <li><a href="#" onclick="showToast('Cookie Policy page in development', 'success'); return false;">Cookie Policy</a></li>
-                        <li><a href="#" onclick="showToast('Certificate verification launching soon', 'success'); return false;">Verify Certificate</a></li>
+                        <li><a href="#" onclick="showToast('Privacy Policy in development','success');return false;">Privacy Policy</a></li>
+                        <li><a href="#" onclick="showToast('Terms of Service in development','success');return false;">Terms of Service</a></li>
+                        <li><a href="#" onclick="showToast('Certificate verification launching soon','success');return false;">Verify Certificate</a></li>
+                        <li><a href="#" onclick="showToast('Refund Policy in development','success');return false;">Refund Policy</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2026 Rise Africa Skills. All rights reserved.</p>
+                <p>© 2026 Rise Africa Skills (rAs). All rights reserved. Harare, Zimbabwe.</p>
                 <div class="social-links">
-                    <a href="#" onclick="showToast('Twitter/X link coming soon', 'success'); return false;" title="Twitter">𝕏</a>
-                    <a href="#" onclick="showToast('LinkedIn link coming soon', 'success'); return false;" title="LinkedIn">in</a>
-                    <a href="#" onclick="showToast('Instagram link coming soon', 'success'); return false;" title="Instagram">📷</a>
-                    <a href="#" onclick="showToast('YouTube link coming soon', 'success'); return false;" title="YouTube">▶</a>
+                    <a href="#" onclick="showToast('WhatsApp link coming soon','success');return false;" title="WhatsApp">💬</a>
+                    <a href="#" onclick="showToast('LinkedIn link coming soon','success');return false;" title="LinkedIn">in</a>
+                    <a href="#" onclick="showToast('YouTube link coming soon','success');return false;" title="YouTube">▶</a>
+                    <a href="#" onclick="showToast('Facebook link coming soon','success');return false;" title="Facebook">f</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- ===== SIGNUP MODAL ===== -->
+    <!-- SIGNUP MODAL -->
     <div class="modal-overlay" id="signupModal">
         <div class="modal">
             <div class="modal-header">
-                <h3>Create Your Account</h3>
+                <h3 data-i18n="signup_title">Create Your Account</h3>
                 <button class="modal-close" onclick="closeModal('signupModal')">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="signupForm" onsubmit="handleSignup(event)">
                     <div class="form-group">
-                        <label for="signupName">Full Name</label>
-                        <input type="text" id="signupName" placeholder="Kwame Osei" required>
-                        <div class="form-error">Please enter your full name</div>
+                        <label data-i18n="label_name">Full Name</label>
+                        <input type="text" id="signupName" placeholder="Your full name" required>
                     </div>
                     <div class="form-group">
-                        <label for="signupEmail">Email Address</label>
-                        <input type="email" id="signupEmail" placeholder="kwame@example.com" required>
-                        <div class="form-error">Please enter a valid email</div>
+                        <label data-i18n="label_email2">Email Address</label>
+                        <input type="email" id="signupEmail" placeholder="you@example.com" required>
                     </div>
                     <div class="form-group">
-                        <label for="signupPassword">Password</label>
+                        <label data-i18n="label_password">Password</label>
                         <input type="password" id="signupPassword" placeholder="Min 8 characters" minlength="8" required>
-                        <div class="form-error">Password must be at least 8 characters</div>
                     </div>
                     <div class="form-group">
-                        <label for="signupInterest">I'm interested in</label>
+                        <label data-i18n="label_interest">I'm interested in</label>
                         <select id="signupInterest" required>
                             <option value="">Select a track...</option>
-                            <option value="web">Web Development</option>
-                            <option value="data">Data Science</option>
-                            <option value="design">UI/UX Design</option>
-                            <option value="marketing">Digital Marketing</option>
+                            <option value="agriculture">Agriculture & Livestock</option>
+                            <option value="food">Food Processing</option>
+                            <option value="trades">Construction & Trades</option>
+                            <option value="tech">Technology & AI</option>
+                            <option value="languages">Languages</option>
                             <option value="business">Business & Entrepreneurship</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width:100%;padding:14px;">
-                        <span class="spinner"></span>
-                        <span class="btn-text">Create Free Account</span>
+                    <button type="submit" class="btn btn-primary" style="width:100%;padding:12px;">
+                        <span class="spinner"></span><span class="btn-text" data-i18n="btn_create">Create Free Account</span>
                     </button>
                 </form>
-                <p style="text-align:center;margin-top:20px;font-size:0.9rem;color:var(--text-muted);">
-                    Already have an account? <a href="#" onclick="closeModal('signupModal'); openModal('loginModal'); return false;" style="color:var(--primary);font-weight:600;">Sign In</a>
+                <p style="text-align:center;margin-top:18px;font-size:0.85rem;color:var(--text-muted);">
+                    <span data-i18n="have_account">Already have an account?</span> <a href="#" onclick="closeModal('signupModal');openModal('loginModal');return false;" style="color:var(--primary);font-weight:600;">Sign In</a>
                 </p>
             </div>
         </div>
     </div>
 
-    <!-- ===== LOGIN MODAL ===== -->
+    <!-- LOGIN MODAL -->
     <div class="modal-overlay" id="loginModal">
         <div class="modal">
             <div class="modal-header">
-                <h3>Welcome Back</h3>
+                <h3 data-i18n="login_title">Welcome Back</h3>
                 <button class="modal-close" onclick="closeModal('loginModal')">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="loginForm" onsubmit="handleLogin(event)">
                     <div class="form-group">
-                        <label for="loginEmail">Email Address</label>
+                        <label data-i18n="label_email2">Email Address</label>
                         <input type="email" id="loginEmail" placeholder="you@example.com" required>
                     </div>
                     <div class="form-group">
-                        <label for="loginPassword">Password</label>
+                        <label data-i18n="label_password">Password</label>
                         <input type="password" id="loginPassword" placeholder="Your password" required>
                     </div>
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-                        <label style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--text-muted);cursor:pointer;">
-                            <input type="checkbox" style="width:16px;height:16px;"> Remember me
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+                        <label style="display:flex;align-items:center;gap:6px;font-size:0.8rem;color:var(--text-muted);cursor:pointer;">
+                            <input type="checkbox" style="width:14px;height:14px;"> <span data-i18n="remember">Remember me</span>
                         </label>
-                        <a href="#" onclick="showToast('Password reset feature coming soon', 'success'); return false;" style="font-size:0.85rem;color:var(--primary);font-weight:500;">Forgot password?</a>
+                        <a href="#" onclick="showToast('Password reset coming soon','success');return false;" style="font-size:0.8rem;color:var(--primary);font-weight:500;">Forgot password?</a>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width:100%;padding:14px;">
-                        <span class="spinner"></span>
-                        <span class="btn-text">Sign In</span>
+                    <button type="submit" class="btn btn-primary" style="width:100%;padding:12px;">
+                        <span class="spinner"></span><span class="btn-text" data-i18n="btn_login">Sign In</span>
                     </button>
                 </form>
-                <div style="margin:24px 0;text-align:center;position:relative;">
+                <div style="margin:20px 0;text-align:center;position:relative;">
                     <div style="position:absolute;top:50%;left:0;right:0;height:1px;background:var(--border);"></div>
-                    <span style="background:var(--surface);padding:0 16px;position:relative;font-size:0.85rem;color:var(--text-muted);">or continue with</span>
+                    <span style="background:var(--surface);padding:0 14px;position:relative;font-size:0.8rem;color:var(--text-muted);" data-i18n="or_continue">or continue with</span>
                 </div>
-                <button class="btn btn-secondary" style="width:100%;margin-bottom:12px;" onclick="handleOAuth('google')">
-                    <span style="margin-right:8px;">🔍</span> Google
-                </button>
-                <button class="btn btn-secondary" style="width:100%;" onclick="handleOAuth('github')">
-                    <span style="margin-right:8px;">🐙</span> GitHub
-                </button>
-                <p style="text-align:center;margin-top:20px;font-size:0.9rem;color:var(--text-muted);">
-                    New here? <a href="#" onclick="closeModal('loginModal'); openModal('signupModal'); return false;" style="color:var(--primary);font-weight:600;">Create account</a>
+                <button class="btn btn-secondary" style="width:100%;margin-bottom:10px;" onclick="handleOAuth('google')">🔍 Google</button>
+                <button class="btn btn-secondary" style="width:100%;" onclick="handleOAuth('github')">🐙 GitHub</button>
+                <p style="text-align:center;margin-top:18px;font-size:0.85rem;color:var(--text-muted);">
+                    <span data-i18n="new_here">New here?</span> <a href="#" onclick="closeModal('loginModal');openModal('signupModal');return false;" style="color:var(--primary);font-weight:600;">Create account</a>
                 </p>
             </div>
         </div>
     </div>
 
-    <!-- ===== TOAST ===== -->
+    <!-- TOAST -->
     <div class="toast" id="toast"></div>
 
-    <!-- ===== JAVASCRIPT ===== -->
+    <!-- JAVASCRIPT -->
     <script>
-        // ===== SUPABASE CONFIG =====
-        // Replace with your actual Supabase credentials
-        const SUPABASE_URL = 'https://your-project.supabase.co';
-        const SUPABASE_ANON_KEY = 'your-anon-key';
-        let supabase = null;
+        // ===== COURSES DATA =====
+        const courses = [
+            { id: 1, category: "Agriculture", title: "Pig Farming", desc: "Start a profitable pig farm with minimal capital. Learn housing, feeding, breeding, disease control, and market access strategies for African conditions.", emoji: "🐷", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 2, category: "Agriculture", title: "Poultry Farming", desc: "Raise chickens, layers, and broilers for meat and eggs. Covers feed formulation, vaccination schedules, coop design, and sales channels.", emoji: "🐔", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 3, category: "Agriculture", title: "Rabbit Farming", desc: "Low-cost, high-return rabbit production. Learn breeds, housing, nutrition, breeding cycles, and processing for meat and fur markets.", emoji: "🐰", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 4, category: "Agriculture", title: "Goat & Sheep Rearing", desc: "Master small ruminant farming. Grazing management, supplementary feeding, disease prevention, and value-added products like milk and cheese.", emoji: "🐐", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 5, category: "Agriculture", title: "Ostrich Farming", desc: "Enter the exotic poultry market. Learn ostrich breeding, chick rearing, meat and leather production, and export opportunities.", emoji: "🦩", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 6, category: "Agriculture", title: "Steer Fattening", desc: "Buy young cattle and fatten them for market. Learn feedlot management, ration formulation, weight gain tracking, and optimal selling times.", emoji: "🐂", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 7, category: "Agriculture", title: "Mushroom Farming", desc: "Grow oyster and button mushrooms indoors with low startup costs. Learn substrate preparation, inoculation, harvesting, and packaging.", emoji: "🍄", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 8, category: "Agriculture", title: "Animal Feed Making", desc: "Produce balanced animal feed using locally available ingredients. Formulate rations for poultry, pigs, cattle, and fish at low cost.", emoji: "🌾", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 9, category: "Agriculture", title: "Grafting, Budding & Orchards", desc: "Propagate fruit trees through grafting and budding. Establish mango, citrus, avocado, and banana orchards for long-term income.", emoji: "🌳", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 10, category: "Agriculture", title: "Fishery & Fish Farming", desc: "Build and manage fish ponds for tilapia and catfish. Covers pond construction, water quality, feeding, harvesting, and processing.", emoji: "🐟", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 11, category: "Agriculture", title: "Forestry & Tree Planting", desc: "Plant and manage timber, fruit, and medicinal trees. Learn nursery establishment, planting techniques, and sustainable harvesting.", emoji: "🌲", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 12, category: "Food Processing", title: "Meat Curing", desc: "Preserve meat through salting, smoking, and drying. Learn traditional and modern curing methods, safety standards, and packaging.", emoji: "🥩", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 13, category: "Food Processing", title: "Meat Aging", desc: "Age beef and game meat to improve flavor and tenderness. Learn dry-aging and wet-aging techniques, temperature control, and timing.", emoji: "🍖", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 14, category: "Food Processing", title: "Spice Production", desc: "Grow, dry, blend, and package spices. Learn value addition for chili, turmeric, ginger, garlic, and mixed spice blends for local and export markets.", emoji: "🌶️", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 15, category: "Food Processing", title: "Sauce Making", desc: "Produce tomato sauce, chili sauce, mayonnaise, and chutneys. Learn recipes, preservation, bottling, labeling, and distribution.", emoji: "🥫", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 16, category: "Cottage Industry", title: "Soap Making", desc: "Make bar soap and liquid soap using local oils and lye. Learn cold process, hot process, and melt-and-pour methods with safety protocols.", emoji: "🧼", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 17, category: "Cottage Industry", title: "Detergent Production", desc: "Manufacture laundry detergent, dish soap, and all-purpose cleaners. Formulate with affordable local chemicals and package for retail.", emoji: "🫧", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 18, category: "Cottage Industry", title: "Soap & Washing Powder", desc: "Produce powdered laundry detergent at scale. Learn mixing, granulation, perfuming, and packaging for wholesale and retail.", emoji: "✨", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 19, category: "Cottage Industry", title: "Leather Making", desc: "Tan and process hides into finished leather. Learn vegetable tanning, chrome tanning, dyeing, and crafting leather goods.", emoji: "🧥", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 20, category: "Trades", title: "Construction Basics", desc: "Learn masonry, concrete work, bricklaying, and plastering. Start small building projects and grow into a construction business.", emoji: "🏗️", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 21, category: "Trades", title: "Plumbing", desc: "Install and repair water systems, pipes, taps, toilets, and drainage. Learn from basics to advanced systems for homes and businesses.", emoji: "🔧", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 22, category: "Trades", title: "Road Construction", desc: "Understand road building from surveying to compaction. Learn about materials, equipment, drainage, and maintenance for rural and urban roads.", emoji: "🛣️", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 23, category: "Technology", title: "Solar Technology", desc: "Design and install solar power systems for homes and businesses. Learn panel selection, battery sizing, inverter setup, and maintenance.", emoji: "☀️", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 24, category: "Technology", title: "Solar Dam Pump & Borehole", desc: "Install solar-powered water pumps for irrigation and community water supply. Learn pump selection, solar array sizing, and system maintenance.", emoji: "💧", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 25, category: "Technology", title: "Artificial Intelligence Basics", desc: "Understand AI, machine learning, and how to use AI tools for business. Learn prompt engineering, automation, and AI-powered productivity.", emoji: "🤖", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 26, category: "Technology", title: "Robotics & Drone Technology", desc: "Build and program simple robots and drones. Learn automation, remote sensing, and drone applications in agriculture and surveying.", emoji: "🚁", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 27, category: "Languages", title: "Russian Language", desc: "Learn Russian from beginner to conversational level. Cyrillic alphabet, grammar, vocabulary, and business communication for trade with Russia.", emoji: "🇷🇺", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 28, category: "Languages", title: "Chinese Language (Mandarin)", desc: "Master Mandarin Chinese for business. Learn Pinyin, characters, tones, and essential phrases for trade and investment with China.", emoji: "🇨🇳", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 29, category: "Languages", title: "Arabic Language", desc: "Learn Modern Standard Arabic and dialects. Reading, writing, speaking, and business Arabic for trade across North Africa and the Middle East.", emoji: "🇸🇦", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 30, category: "Business", title: "Cottage Industry Setup", desc: "Start a small manufacturing business from home. Learn registration, equipment sourcing, quality control, and scaling strategies.", emoji: "🏭", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 31, category: "Agriculture", title: "General Agriculture", desc: "Comprehensive farming fundamentals. Soil science, crop rotation, pest management, irrigation, and farm business planning for African climates.", emoji: "🌾", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" },
+            { id: 32, category: "Food Processing", title: "Food Preservation Methods", desc: "Master all 10 preservation techniques: drying, smoking, salting, pickling, canning, freezing, vacuum sealing, waxing, sugar, and oil preservation.", emoji: "🥫", price: "$8.00", cert: "+$2.00 cert", read: "$3.50" }
+        ];
 
-        // Initialize Supabase if credentials are set
-        if (SUPABASE_URL.includes('your-project') === false) {
-            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // ===== AI ASSISTANTS DATA =====
+        const aiAssistants = [
+            { name: "rAs Content Creator", role: "Generates all course materials, videos, and assessments using verified facts and real-world data.", icon: "✍️" },
+            { name: "rAs Fact Checker", role: "Verifies every piece of content against scientific and industry standards before publication.", icon: "🔍" },
+            { name: "rAs Student Onboarder", role: "Welcomes new students, explains the platform, and recommends the best starting courses.", icon: "👋" },
+            { name: "rAs Payment Processor", role: "Handles all transactions securely. Manages $8 courses, $10 certificates, and $3.50 document sales.", icon: "💳" },
+            { name: "rAs Certificate Issuer", role: "Generates and signs verified digital certificates with unique IDs for LinkedIn sharing.", icon: "📜" },
+            { name: "rAs Study Scheduler", role: "Creates personalized study plans and manages the student calendar with smart reminders.", icon: "📅" },
+            { name: "rAs Translator", role: "Translates all course content into Swahili, Yoruba, Shona, Arabic, Chinese, Russian, Portuguese, and French.", icon: "🌐" },
+            { name: "rAs Marketing Assistant", role: "Promotes courses, manages social media, and runs targeted campaigns across Africa.", icon: "📢" },
+            { name: "rAs Support Agent", role: "Answers student questions 24/7 via chat and email. Escalates complex issues to human oversight.", icon: "💬" },
+            { name: "rAs Analytics Officer", role: "Tracks enrollment, completion rates, revenue, and student satisfaction in real-time.", icon: "📊" },
+            { name: "rAs Course Updater", role: "Continuously updates course content with the latest research, prices, and techniques.", icon: "🔄" },
+            { name: "rAs Community Moderator", role: "Manages student forums, facilitates peer learning, and maintains a positive environment.", icon: "👥" }
+        ];
+
+        // ===== TRANSLATIONS =====
+        const translations = {
+            en: {
+                brand: "Rise Africa Skills", nav_home: "Home", nav_pricing: "Pricing", nav_courses: "Courses",
+                nav_calendar: "Calendar", nav_calc: "Calculator", nav_ai: "AI Office", nav_contact: "Contact",
+                signin: "Sign In", getstarted: "Get Started", hero_badge: "100% AI-Powered Education for Africa",
+                hero_title1: "Learn Practical Skills.", hero_title2: "Start Your Business.",
+                hero_desc: "rAs AI Tutor delivers real, fact-based courses built entirely by artificial intelligence. From agriculture to solar technology — learn skills that work in Africa, with little to no starting capital.",
+                explore: "Explore Courses", start_free: "Start Free", stat_ai: "AI Teachers", stat_price: "Per Course", stat_courses: "Practical Courses",
+                qr_text: "Scan to visit rAs on mobile", per_course: "Per Full Course",
+                pricing_tag: "Simple Pricing", pricing_title: "Affordable Education for Everyone",
+                pricing_desc: "No hidden fees. No subscriptions. Pay only for what you need. All courses are designed for low-capital African entrepreneurs.",
+                pricing_banner: "Choose Your Access Level",
+                price_full: "Full Course Access<br>Learn online or offline<br>All lessons + materials",
+                price_cert: "Full Course + Certificate<br>Verified digital certificate<br>Shareable on LinkedIn",
+                price_read: "Read / Download / Print / Share<br>Per course document access<br>One-time purchase",
+                courses_tag: "Course Catalog", courses_title: "Skills That Build Africa",
+                courses_desc: "Every course is 100% AI-generated, fact-checked, and designed for real African conditions. Start with little to no capital.",
+                calendar_tag: "Study Planner", calendar_title: "Your Learning Calendar",
+                calendar_desc: "Plan your study schedule, set reminders, and keep a learning diary. All data stays in your browser.",
+                diary_title: "Study Diary", add_reminder: "Add Reminder", save_entry: "Save Entry",
+                calc_tag: "Food Preservation", calc_title: "Preservation Calculator",
+                calc_desc: "Calculate yield, shelf life, and storage requirements for your food preservation business.",
+                calc_inputs: "Enter Your Details", label_product: "Product Type", label_start_qty: "Starting Quantity (kg)",
+                label_method: "Preservation Method", label_temp: "Storage Temperature (°C)", calculate: "Calculate Results",
+                calc_results: "Results", res_final_qty: "Final Quantity", res_shelf: "Shelf Life", res_best_temp: "Best Storage Temperature", res_methods: "All 10 Methods",
+                ai_title: "12 rAs AI Assistants", ai_desc: "Our entire back office runs on artificial intelligence. 12 specialized AI agents handle every task.",
+                contact_tag: "Get In Touch", contact_title: "Contact Rise Africa Skills",
+                contact_desc: "We are here to help you start your learning journey. Reach out to our rAs AI support team or contact us directly.",
+                label_email: "Email", label_phone: "Phone", label_address: "Address", label_web: "Website",
+                signup_title: "Create Your Account", label_name: "Full Name", label_email2: "Email Address",
+                label_password: "Password", label_interest: "I'm interested in", btn_create: "Create Free Account",
+                have_account: "Already have an account?", login_title: "Welcome Back", btn_login: "Sign In",
+                remember: "Remember me", or_continue: "or continue with", new_here: "New here?"
+            },
+            sw: {
+                brand: "Rise Africa Skills", nav_home: "Nyumbani", nav_pricing: "Bei", nav_courses: "Kozi",
+                nav_calendar: "Kalenda", nav_calc: "Kikokotoo", nav_ai: "Ofisi ya AI", nav_contact: "Mawasiliano",
+                signin: "Ingia", getstarted: "Anza", hero_badge: "Elimu Inayoendeshwa na AI 100% kwa Afrika",
+                hero_title1: "Jifunze Ujuzi wa Vitendo.", hero_title2: "Anza Biashara Yako.",
+                hero_desc: "rAs AI Tutor hutoa kozi halisi zilizojengwa kabisa na akili bandia. Kutoka kilimo hadi teknolojia ya jua — jifunze ujuzi unaofanya kazi Afrika, na mtaji mdogo au bila mtaji.",
+                explore: "Chunguza Kozi", start_free: "Anza Bila Malipo", stat_ai: "Walimu wa AI", stat_price: "Kwa Kozi", stat_courses: "Kozi za Vitendo",
+                qr_text: "Scan kufikia rAs kwenye simu", per_course: "Kwa Kozi Kamili",
+                pricing_tag: "Bei Rahisi", pricing_title: "Elimu Inayofikika kwa Kila Mtu",
+                pricing_desc: "Hakuna malipo ya siri. Hakuna usajili. Lipa tu unachohitaji. Kozi zote zimeundwa kwa wajasiriamali wa Afrika wenye mtaji mdogo.",
+                pricing_banner: "Chagua Kiwango Chako cha Mfikiaji",
+                price_full: "Mfikiaji wa Kozi Kamili<br>Jifunze mtandaoni au nje ya mtandao<br>Somo zote + nyenzo",
+                price_cert: "Kozi Kamili + Cheti<br>Cheti cha kidijitali kilichothibitishwa<br>Kushirikiwa kwenye LinkedIn",
+                price_read: "Soma / Pakua / Chapisha / Shiriki<br>Mfikiaji wa hati za kozi<br>Manunuzi ya mara moja",
+                courses_tag: "Orodha ya Kozi", courses_title: "Ujuzi Unaojenga Afrika",
+                courses_desc: "Kozi kimeundwa 100% na AI, kimekaguliwa, na kimeundwa kwa hali halisi za Afrika. Anza na mtaji mdogo au bila mtaji.",
+                calendar_tag: "Mpango wa Masomo", calendar_title: "Kalenda Yako ya Kujifunza",
+                calendar_desc: "Panga ratiba yako ya masomo, weka vikumbusho, na weka daftari la kujifunza. Data zote zinabaki kwenye kivinjari chako.",
+                diary_title: "Daftari la Masomo", add_reminder: "Ongeza Kikumbusho", save_entry: "Hifadhi Kuingizo",
+                calc_tag: "Uchomaji wa Chakula", calc_title: "Kikokotoo cha Uchomaji",
+                calc_desc: "Kokotoa mavuno, muda wa kuhifadhi, na mahitaji ya hifadhi kwa biashara yako ya uchomaji wa chakula.",
+                calc_inputs: "Weka Maelezo Yako", label_product: "Aina ya Bidhaa", label_start_qty: "Kiasi cha Mwanzo (kg)",
+                label_method: "Njia ya Uchomaji", label_temp: "Joto la Hifadhi (°C)", calculate: "Kokotoa Matokeo",
+                calc_results: "Matokeo", res_final_qty: "Kiasi cha Mwisho", res_shelf: "Muda wa Kuhifadhi", res_best_temp: "Joto Bora la Kuhifadhi", res_methods: "Njia 10 Zote",
+                ai_title: "Wasaidizi 12 wa rAs AI", ai_desc: "Ofisi yetu yote inaendeshwa na akili bandia. Wakala 12 wa AI wanaoshughulikia kila kazi.",
+                contact_tag: "Wasiliana Nasi", contact_title: "Wasiliana na Rise Africa Skills",
+                contact_desc: "Tuko hapa kukusaidia kuanza safari yako ya kujifunza. Wasiliana na timu yetu ya rAs AI au wasiliana nasi moja kwa moja.",
+                label_email: "Barua pepe", label_phone: "Simu", label_address: "Anwani", label_web: "Tovuti",
+                signup_title: "Unda Akaunti Yako", label_name: "Jina Kamili", label_email2: "Barua pepe",
+                label_password: "Nenosiri", label_interest: "Nina hamu ya", btn_create: "Unda Akaunti Bila Malipo",
+                have_account: "Tayari una akaunti?", login_title: "Karibu Tena", btn_login: "Ingia",
+                remember: "Nikumbuke", or_continue: "au endelea na", new_here: "Mgeni hapa?"
+            }
+        };
+
+        // Default to English for missing translations
+        function t(key) {
+            const lang = currentLang;
+            if (translations[lang] && translations[lang][key]) return translations[lang][key];
+            if (translations['en'][key]) return translations['en'][key];
+            return key;
         }
 
-        // ===== NAVBAR SCROLL =====
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 20) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+        let currentLang = 'en';
+        function setLang(lang) {
+            currentLang = lang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                } else if (translations['en'][key]) {
+                    el.innerHTML = translations['en'][key];
+                }
+            });
+            document.getElementById('langMenu').classList.remove('active');
+            showToast('Language updated: ' + lang.toUpperCase(), 'success');
+        }
+        function toggleLangMenu() {
+            document.getElementById('langMenu').classList.toggle('active');
+        }
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.lang-dropdown')) document.getElementById('langMenu').classList.remove('active');
         });
 
-        // ===== MOBILE MENU =====
+        // ===== THEME =====
+        function toggleTheme() {
+            const html = document.documentElement;
+            const btn = document.getElementById('themeBtn');
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.setAttribute('data-theme', 'light');
+                btn.textContent = '🌙';
+                localStorage.setItem('ras-theme', 'light');
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                btn.textContent = '☀️';
+                localStorage.setItem('ras-theme', 'dark');
+            }
+        }
+        const savedTheme = localStorage.getItem('ras-theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.getElementById('themeBtn').textContent = '☀️';
+        }
+
+        // ===== NAVBAR =====
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 20);
+        });
         function toggleMobileMenu() {
             document.getElementById('mobileMenu').classList.toggle('active');
         }
@@ -1480,28 +899,18 @@
             document.getElementById(id).classList.add('active');
             document.body.style.overflow = 'hidden';
         }
-
         function closeModal(id) {
             document.getElementById(id).classList.remove('active');
             document.body.style.overflow = '';
         }
-
-        // Close modal on overlay click
         document.querySelectorAll('.modal-overlay').forEach(overlay => {
             overlay.addEventListener('click', (e) => {
-                if (e.target === overlay) {
-                    overlay.classList.remove('active');
-                    document.body.style.overflow = '';
-                }
+                if (e.target === overlay) { overlay.classList.remove('active'); document.body.style.overflow = ''; }
             });
         });
-
-        // Close modal on Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                document.querySelectorAll('.modal-overlay.active').forEach(modal => {
-                    modal.classList.remove('active');
-                });
+                document.querySelectorAll('.modal-overlay.active').forEach(m => { m.classList.remove('active'); });
                 document.body.style.overflow = '';
             }
         });
@@ -1515,108 +924,174 @@
             setTimeout(() => toast.classList.remove('show'), 3500);
         }
 
-        // ===== COURSES DATA =====
-        const courses = [
-            {
-                id: 1,
-                title: 'Full-Stack Web Development',
-                description: 'Master HTML, CSS, JavaScript, React, Node.js, and databases. Build real-world projects for your portfolio.',
-                emoji: '💻',
-                duration: '16 weeks',
-                level: 'Beginner',
-                price: '$149',
-                oldPrice: '$299',
-                badge: 'Bestseller'
-            },
-            {
-                id: 2,
-                title: 'Data Science & Machine Learning',
-                description: 'Learn Python, pandas, scikit-learn, and neural networks. Analyze real African datasets and build predictive models.',
-                emoji: '📊',
-                duration: '20 weeks',
-                level: 'Intermediate',
-                price: '$199',
-                oldPrice: '$399',
-                badge: 'New'
-            },
-            {
-                id: 3,
-                title: 'UI/UX Design Masterclass',
-                description: 'From user research to high-fidelity prototypes in Figma. Learn design systems and accessibility best practices.',
-                emoji: '🎨',
-                duration: '12 weeks',
-                level: 'Beginner',
-                price: '$129',
-                oldPrice: '$249',
-                badge: null
-            },
-            {
-                id: 4,
-                title: 'Digital Marketing & Growth',
-                description: 'SEO, social media, email marketing, and paid ads. Learn to grow businesses in African and global markets.',
-                emoji: '📈',
-                duration: '10 weeks',
-                level: 'Beginner',
-                price: '$99',
-                oldPrice: '$199',
-                badge: 'Popular'
-            },
-            {
-                id: 5,
-                title: 'Mobile App Development',
-                description: 'Build iOS and Android apps with React Native. Deploy to app stores and monetize your applications.',
-                emoji: '📱',
-                duration: '14 weeks',
-                level: 'Intermediate',
-                price: '$169',
-                oldPrice: '$349',
-                badge: null
-            },
-            {
-                id: 6,
-                title: 'Business & Entrepreneurship',
-                description: 'From idea to profitable business. Learn fundraising, operations, and scaling strategies tailored for Africa.',
-                emoji: '🚀',
-                duration: '8 weeks',
-                level: 'Beginner',
-                price: '$79',
-                oldPrice: '$159',
-                badge: null
-            }
-        ];
-
-        // Render courses
+        // ===== RENDER COURSES =====
         function renderCourses() {
             const grid = document.getElementById('coursesGrid');
-            grid.innerHTML = courses.map(course => `
+            grid.innerHTML = courses.map(c => `
                 <div class="course-card">
                     <div class="course-image">
-                        ${course.badge ? `<span class="course-badge">${course.badge}</span>` : ''}
-                        <span style="font-size:4rem;">${course.emoji}</span>
+                        <span style="font-size:3rem;">${c.emoji}</span>
+                        <span class="course-badge">${c.category}</span>
                     </div>
                     <div class="course-content">
-                        <div class="course-meta">
-                            <span>⏱ ${course.duration}</span>
-                            <span>📊 ${course.level}</span>
-                        </div>
-                        <h3>${course.title}</h3>
-                        <p>${course.description}</p>
+                        <div class="course-category">${c.category}</div>
+                        <h3>${c.title}</h3>
+                        <p>${c.desc}</p>
                         <div class="course-footer">
-                            <div class="course-price">${course.price} <span>${course.oldPrice}</span></div>
-                            <button class="btn btn-primary" style="padding:8px 20px;font-size:0.85rem;" onclick="enrollCourse(${course.id})">
-                                Enroll Now
-                            </button>
+                            <div class="course-price">
+                                ${c.price}
+                                <span class="cert">${c.cert}</span>
+                            </div>
+                            <div style="display:flex;gap:6px;">
+                                <button class="btn btn-primary btn-sm" onclick="enrollCourse(${c.id}, 'full')">Enroll</button>
+                                <button class="btn btn-secondary btn-sm" onclick="enrollCourse(${c.id}, 'read')">$3.50</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             `).join('');
         }
+        function enrollCourse(id, type) {
+            const c = courses.find(x => x.id === id);
+            const price = type === 'full' ? '$8.00' : '$3.50';
+            const extra = type === 'full' ? ' (+$2.00 for certificate)' : '';
+            showToast(`Selected: ${c.title} — ${price}${extra}. Payment gateway integration coming.`, 'success');
+        }
 
-        function enrollCourse(courseId) {
-            const course = courses.find(c => c.id === courseId);
-            showToast(`Starting enrollment for "${course.title}"...`, 'success');
-            // TODO: Integrate payment gateway (Paystack/Flutterwave)
-            // TODO: Redirect to checkout or course dashboard
+        // ===== RENDER AI ASSISTANTS =====
+        function renderAI() {
+            const grid = document.getElementById('aiGrid');
+            grid.innerHTML = aiAssistants.map(a => `
+                <div class="ai-card">
+                    <div class="ai-icon">${a.icon}</div>
+                    <h4>${a.name}</h4>
+                    <p>${a.role}</p>
+                    <span class="ai-status">Active</span>
+                </div>
+            `).join('');
+        }
+
+        // ===== CALENDAR =====
+        let calDate = new Date();
+        let selectedCalDate = null;
+        const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+        function renderCalendar() {
+            const year = calDate.getFullYear();
+            const month = calDate.getMonth();
+            document.getElementById('calMonthYear').textContent = monthNames[month] + ' ' + year;
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const prevDays = new Date(year, month, 0).getDate();
+            const grid = document.getElementById('calGrid');
+            let html = '';
+            const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+            days.forEach(d => html += `<div class="cal-day-label">${d}</div>`);
+            for (let i = firstDay; i > 0; i--) {
+                html += `<div class="cal-day other-month">${prevDays - i + 1}</div>`;
+            }
+            const today = new Date();
+            const diary = getDiaryData();
+            for (let i = 1; i <= daysInMonth; i++) {
+                const isToday = (i === today.getDate() && month === today.getMonth() && year === today.getFullYear());
+                const dateKey = `${year}-${String(month+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
+                const hasEvent = diary[dateKey] && (diary[dateKey].notes || diary[dateKey].reminders);
+                const isSelected = selectedCalDate === dateKey;
+                html += `<div class="cal-day ${isToday ? 'today' : ''} ${hasEvent ? 'has-event' : ''} ${isSelected ? 'selected' : ''}" onclick="selectDate('${dateKey}', ${i})">${i}</div>`;
+            }
+            grid.innerHTML = html;
+        }
+        function changeMonth(dir) {
+            calDate.setMonth(calDate.getMonth() + dir);
+            renderCalendar();
+        }
+        function selectDate(key, day) {
+            selectedCalDate = key;
+            document.getElementById('selectedDate').textContent = key;
+            renderCalendar();
+            renderDiaryList();
+        }
+        function getDiaryData() {
+            const data = localStorage.getItem('ras-diary');
+            return data ? JSON.parse(data) : {};
+        }
+        function saveDiaryData(data) {
+            localStorage.setItem('ras-diary', JSON.stringify(data));
+        }
+        function saveDiary() {
+            if (!selectedCalDate) { showToast('Please select a date first', 'error'); return; }
+            const note = document.getElementById('diaryNote').value.trim();
+            if (!note) { showToast('Please write a note', 'error'); return; }
+            const data = getDiaryData();
+            if (!data[selectedCalDate]) data[selectedCalDate] = { notes: [], reminders: [] };
+            data[selectedCalDate].notes.push({ text: note, time: new Date().toLocaleTimeString() });
+            saveDiaryData(data);
+            document.getElementById('diaryNote').value = '';
+            renderDiaryList();
+            renderCalendar();
+            showToast('Diary entry saved!', 'success');
+        }
+        function addReminder() {
+            if (!selectedCalDate) { showToast('Please select a date first', 'error'); return; }
+            const time = document.getElementById('reminderTime').value;
+            const data = getDiaryData();
+            if (!data[selectedCalDate]) data[selectedCalDate] = { notes: [], reminders: [] };
+            data[selectedCalDate].reminders.push({ time });
+            saveDiaryData(data);
+            renderDiaryList();
+            renderCalendar();
+            showToast(`Reminder set for ${selectedCalDate} at ${time}`, 'success');
+        }
+        function renderDiaryList() {
+            const list = document.getElementById('diaryList');
+            if (!selectedCalDate) { list.innerHTML = ''; return; }
+            const data = getDiaryData()[selectedCalDate];
+            if (!data || (!data.notes.length && !data.reminders.length)) { list.innerHTML = '<p style="color:var(--text-muted);font-size:0.8rem;">No entries for this date.</p>'; return; }
+            let html = '';
+            (data.reminders || []).forEach(r => {
+                html += `<div class="diary-item"><time>⏰ ${r.time}</time><span class="reminder-badge">Reminder</span></div>`;
+            });
+            (data.notes || []).forEach(n => {
+                html += `<div class="diary-item"><time>${n.time}</time>${n.text}</div>`;
+            });
+            list.innerHTML = html;
+        }
+
+        // ===== PRESERVATION CALCULATOR =====
+        const preservationData = {
+            drying: { yield: 0.25, shelf: "6–12 months", bestTemp: "15–25°C", name: "Drying" },
+            smoking: { yield: 0.70, shelf: "2–4 weeks", bestTemp: "10–15°C", name: "Smoking" },
+            salting: { yield: 0.65, shelf: "4–6 months", bestTemp: "0–5°C", name: "Salting" },
+            pickling: { yield: 0.90, shelf: "12–24 months", bestTemp: "Room temp", name: "Pickling" },
+            canning: { yield: 0.85, shelf: "12–36 months", bestTemp: "10–21°C", name: "Canning" },
+            freezing: { yield: 0.95, shelf: "6–12 months", bestTemp: "-18°C", name: "Freezing" },
+            vacuum: { yield: 0.90, shelf: "1–3 years", bestTemp: "0–4°C", name: "Vacuum" },
+            waxing: { yield: 0.95, shelf: "3–6 months", bestTemp: "10–15°C", name: "Waxing" },
+            sugar: { yield: 0.80, shelf: "12–24 months", bestTemp: "Room temp", name: "Sugar" },
+            oil: { yield: 0.85, shelf: "6–12 months", bestTemp: "15–20°C", name: "Oil" }
+        };
+        const productMoisture = {
+            tomatoes: 0.94, mangoes: 0.83, fish: 0.80, meat: 0.75,
+            vegetables: 0.90, fruits: 0.85, milk: 0.87, grains: 0.12
+        };
+        function calculatePreservation() {
+            const product = document.getElementById('calcProduct').value;
+            const startQty = parseFloat(document.getElementById('calcStartQty').value) || 0;
+            const method = document.getElementById('calcMethod').value;
+            const temp = parseFloat(document.getElementById('calcTemp').value) || 25;
+            const data = preservationData[method];
+            const moisture = productMoisture[product] || 0.8;
+            let finalQty = startQty * data.yield;
+            if (method === 'drying') finalQty = startQty * (1 - moisture) * 1.1;
+            document.getElementById('resFinalQty').textContent = finalQty.toFixed(1) + ' kg';
+            document.getElementById('resShelf').textContent = data.shelf;
+            document.getElementById('resBestTemp').textContent = data.bestTemp;
+            const grid = document.getElementById('methodGrid');
+            grid.innerHTML = Object.entries(preservationData).map(([k, v]) => {
+                const isActive = k === method;
+                return `<div class="method-chip ${isActive ? 'active' : ''}">${v.name}</div>`;
+            }).join('');
+            showToast('Calculation complete!', 'success');
         }
 
         // ===== FORM HANDLERS =====
@@ -1624,73 +1099,43 @@
             e.preventDefault();
             const btn = e.target.querySelector('button[type="submit"]');
             btn.classList.add('loading');
-
             const name = document.getElementById('signupName').value;
-            const email = document.getElementById('signupEmail').value;
-            const password = document.getElementById('signupPassword').value;
-            const interest = document.getElementById('signupInterest').value;
-
-            // TODO: Connect to Supabase Auth
-            // const { data, error } = await supabase.auth.signUp({ email, password });
-
-            // Simulate API call
-            await new Promise(r => setTimeout(r, 1500));
-
+            await new Promise(r => setTimeout(r, 1200));
             btn.classList.remove('loading');
             closeModal('signupModal');
-            showToast(`Welcome, ${name}! Check your email to verify your account.`, 'success');
+            showToast(`Welcome, ${name}! Your rAs account is ready.`, 'success');
             e.target.reset();
         }
-
         async function handleLogin(e) {
             e.preventDefault();
             const btn = e.target.querySelector('button[type="submit"]');
             btn.classList.add('loading');
-
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-
-            // TODO: Connect to Supabase Auth
-            // const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-
-            await new Promise(r => setTimeout(r, 1500));
-
+            await new Promise(r => setTimeout(r, 1200));
             btn.classList.remove('loading');
             closeModal('loginModal');
-            showToast('Welcome back! You are now signed in.', 'success');
+            showToast('Welcome back to rAs!', 'success');
             e.target.reset();
         }
-
         function handleOAuth(provider) {
-            // TODO: Implement OAuth with Supabase
-            // supabase.auth.signInWithOAuth({ provider });
-            showToast(`${provider} OAuth integration coming soon!`, 'success');
+            showToast(`${provider} login integration coming soon.`, 'success');
         }
 
-        // ===== ACTIVE NAV LINK =====
+        // ===== ACTIVE NAV =====
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('.nav-links a');
-
         window.addEventListener('scroll', () => {
             let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 100;
-                if (scrollY >= sectionTop) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + current) {
-                    link.classList.add('active');
-                }
-            });
+            sections.forEach(s => { if (scrollY >= s.offsetTop - 100) current = s.getAttribute('id'); });
+            navLinks.forEach(l => { l.classList.remove('active'); if (l.getAttribute('href') === '#' + current) l.classList.add('active'); });
         });
 
         // ===== INIT =====
         document.addEventListener('DOMContentLoaded', () => {
             renderCourses();
+            renderAI();
+            renderCalendar();
+            calculatePreservation();
+            selectDate(new Date().toISOString().split('T')[0], new Date().getDate());
         });
     </script>
 </body>
