@@ -683,6 +683,19 @@ body.light .enrolled-card h4{color:#1a1a1a}
     };
     enrollments.push(enrollment);
     localStorage.setItem('enrollments', JSON.stringify(enrollments));
+       // Save to Supabase
+    supabase.from('enrollments').insert([{
+      full_name: name,
+      email: email,
+      country: country,
+      course_title: course,
+      course_category: '',
+      payment_method: payment,
+      amount: 8.00
+    }]).then(function(result){
+      if(result.error) console.error('Supabase error:', result.error);
+      else console.log('Saved to Supabase');
+    });
     // Clear form
     document.getElementById('regName').value = '';
     document.getElementById('regEmail').value = '';
