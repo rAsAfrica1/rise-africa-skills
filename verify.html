@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify Certificate | Rise Africa Skills</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
             --green-deep: #1a5c3a;
@@ -16,11 +17,7 @@
             --white: #ffffff;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -31,7 +28,6 @@
             flex-direction: column;
         }
 
-        /* Header */
         .header {
             background: var(--charcoal);
             padding: 1rem 2rem;
@@ -69,11 +65,8 @@
             letter-spacing: 0.5px;
         }
 
-        .logo-text span {
-            color: var(--gold);
-        }
+        .logo-text span { color: var(--gold); }
 
-        /* Main Container */
         .main {
             flex: 1;
             display: flex;
@@ -97,12 +90,8 @@
             margin-bottom: 0.5rem;
         }
 
-        .hero p {
-            color: #666;
-            font-size: 1.05rem;
-        }
+        .hero p { color: #666; font-size: 1.05rem; }
 
-        /* Verification Box */
         .verify-box {
             background: var(--white);
             border-radius: 16px;
@@ -118,16 +107,12 @@
         .verify-box::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             height: 4px;
             background: var(--gold);
         }
 
-        .input-group {
-            margin-bottom: 1.5rem;
-        }
+        .input-group { margin-bottom: 1.5rem; }
 
         .input-group label {
             display: block;
@@ -182,7 +167,6 @@
             transform: none;
         }
 
-        /* Results */
         .result {
             margin-top: 1.5rem;
             padding: 1.5rem;
@@ -217,13 +201,8 @@
             font-size: 1.1rem;
         }
 
-        .valid .result-header {
-            color: var(--green-deep);
-        }
-
-        .invalid .result-header {
-            color: var(--red-earth);
-        }
+        .valid .result-header { color: var(--green-deep); }
+        .invalid .result-header { color: var(--red-earth); }
 
         .icon {
             width: 28px;
@@ -235,17 +214,9 @@
             font-size: 14px;
         }
 
-        .valid .icon {
-            background: var(--green-deep);
-            color: white;
-        }
+        .valid .icon { background: var(--green-deep); color: white; }
+        .invalid .icon { background: var(--red-earth); color: white; }
 
-        .invalid .icon {
-            background: var(--red-earth);
-            color: white;
-        }
-
-        /* Certificate Card */
         .cert-card {
             background: var(--white);
             border: 2px solid var(--gold-light);
@@ -258,10 +229,7 @@
         .cert-card::after {
             content: '';
             position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
             border-radius: 14px;
             background: var(--gold);
             z-index: -1;
@@ -275,9 +243,7 @@
             border-bottom: 1px solid #f0ece4;
         }
 
-        .cert-field:last-child {
-            border-bottom: none;
-        }
+        .cert-field:last-child { border-bottom: none; }
 
         .cert-field label {
             font-weight: 600;
@@ -324,9 +290,7 @@
             color: var(--white);
         }
 
-        .btn-primary:hover {
-            background: var(--green-light);
-        }
+        .btn-primary:hover { background: var(--green-light); }
 
         .btn-secondary {
             background: transparent;
@@ -339,22 +303,26 @@
             color: var(--gold);
         }
 
-        /* Demo Notice */
-        .demo-notice {
-            margin-top: 1.5rem;
-            padding: 1rem;
-            background: #fff8e6;
-            border-left: 4px solid var(--gold);
-            border-radius: 6px;
-            font-size: 0.9rem;
-            color: #665;
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .demo-notice strong {
-            color: var(--charcoal);
+        .status-active {
+            background: #d4edda;
+            color: #155724;
         }
 
-        /* Footer */
+        .status-expired {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
         .footer {
             text-align: center;
             padding: 1.5rem;
@@ -368,7 +336,6 @@
             text-decoration: none;
         }
 
-        /* Responsive */
         @media (max-width: 600px) {
             .hero h1 { font-size: 1.5rem; }
             .verify-box { padding: 1.5rem; }
@@ -377,7 +344,6 @@
             .actions { flex-direction: column; }
         }
 
-        /* Print styles */
         @media print {
             .header, .verify-box, .footer, .actions { display: none !important; }
             .result.valid { display: block !important; border: none; }
@@ -408,7 +374,7 @@
                     <input 
                         type="text" 
                         id="certInput" 
-                        placeholder="e.g. RAS-2026-001234"
+                        placeholder="e.g. RAS-2026-001"
                         autocomplete="off"
                         maxlength="20"
                     >
@@ -417,56 +383,26 @@
             </div>
 
             <div id="resultBox" class="result"></div>
-
-            <div class="demo-notice">
-                <strong>Demo Mode:</strong> Try these sample IDs — <code>RAS-2026-001</code>, <code>RAS-2026-002</code>, <code>RAS-2026-003</code>. 
-                In production, this connects to your Supabase database.
-            </div>
         </div>
     </main>
 
     <footer class="footer">
-        © 2026 Rise Africa Skills · <a href="https://riseafricaskills.com">riseafricaskills.com</a>
+        &copy; 2026 Rise Africa Skills &middot; <a href="https://riseafricaskills.com">riseafricaskills.com</a>
     </footer>
 
     <script>
-        // Demo certificate database (replace with Supabase fetch in production)
-        const demoCertificates = {
-            'RAS-2026-001': {
-                recipient: 'Amara Okafor',
-                course: 'Full-Stack Web Development',
-                issueDate: '14 August 2026',
-                expiryDate: 'No Expiration',
-                instructor: 'Dr. James Mwangi',
-                grade: 'Distinction',
-                hours: 120
-            },
-            'RAS-2026-002': {
-                recipient: 'Kwame Asante',
-                course: 'Data Science Fundamentals',
-                issueDate: '10 August 2026',
-                expiryDate: 'No Expiration',
-                instructor: 'Prof. Amina Diallo',
-                grade: 'Merit',
-                hours: 80
-            },
-            'RAS-2026-003': {
-                recipient: 'Zara Mensah',
-                course: 'Digital Marketing Mastery',
-                issueDate: '5 August 2026',
-                expiryDate: 'No Expiration',
-                instructor: 'Sarah Nkosi',
-                grade: 'Distinction',
-                hours: 60
-            }
-        };
+        // Initialize Supabase client
+        const SUPABASE_URL = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc';
+
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // Allow Enter key to trigger verification
         document.getElementById('certInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') verifyCertificate();
         });
 
-        function verifyCertificate() {
+        async function verifyCertificate() {
             const input = document.getElementById('certInput');
             const resultBox = document.getElementById('resultBox');
             const btn = document.getElementById('verifyBtn');
@@ -477,32 +413,66 @@
                 return;
             }
 
-            // Simulate loading
             btn.disabled = true;
             btn.textContent = 'Verifying...';
             resultBox.style.display = 'none';
 
-            // Simulate network delay
-            setTimeout(() => {
-                const cert = demoCertificates[certId];
+            try {
+                const { data, error } = await supabase
+                    .from('certificates')
+                    .select('*')
+                    .eq('unique_id', certId)
+                    .single();
 
-                if (cert) {
-                    showValid(certId, cert);
-                } else {
-                    showInvalid(`Certificate <strong>${certId}</strong> not found. Please check the ID and try again.`);
+                if (error) {
+                    if (error.code === 'PGRST116') {
+                        showInvalid(`Certificate <strong>${certId}</strong> not found in our records. Please check the ID and try again.`);
+                    } else {
+                        showInvalid('Unable to verify right now. Please try again later.');
+                        console.error('Supabase error:', error);
+                    }
+                    return;
                 }
 
+                if (data) {
+                    showValid(certId, data);
+                }
+            } catch (err) {
+                showInvalid('Network error. Please check your connection and try again.');
+                console.error('Network error:', err);
+            } finally {
                 btn.disabled = false;
                 btn.textContent = 'Verify';
-            }, 600);
+            }
+        }
+
+        function formatDate(epochMs) {
+            if (!epochMs) return 'N/A';
+            const date = new Date(epochMs);
+            return date.toLocaleDateString('en-GB', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
         }
 
         function showValid(certId, cert) {
             const resultBox = document.getElementById('resultBox');
+            const issueDate = formatDate(cert.issue_date);
+
+            // Check if expired (if expires_at exists and is in the past)
+            let statusHtml = '<span class="status-badge status-active">Active</span>';
+            if (cert.expires_at) {
+                const expiryDate = new Date(cert.expires_at);
+                if (expiryDate < new Date()) {
+                    statusHtml = '<span class="status-badge status-expired">Expired</span>';
+                }
+            }
+
             resultBox.className = 'result valid';
             resultBox.innerHTML = `
                 <div class="result-header">
-                    <div class="icon">✓</div>
+                    <div class="icon">&#10003;</div>
                     <span>Certificate Verified Successfully</span>
                 </div>
                 <div class="cert-card">
@@ -521,36 +491,36 @@
                     </div>
                     <div class="cert-field">
                         <label>Recipient</label>
-                        <span>${cert.recipient}</span>
+                        <span>${cert.user_name || 'N/A'}</span>
                     </div>
                     <div class="cert-field">
                         <label>Course</label>
-                        <span>${cert.course}</span>
+                        <span>${cert.course_title || 'N/A'}</span>
                     </div>
                     <div class="cert-field">
                         <label>Grade</label>
-                        <span style="color: var(--gold); font-weight: 700;">${cert.grade}</span>
+                        <span style="color: var(--gold); font-weight: 700;">${cert.grade || 'N/A'}</span>
                     </div>
                     <div class="cert-field">
                         <label>Hours Completed</label>
-                        <span>${cert.hours}</span>
+                        <span>${cert.hours || 'N/A'}</span>
                     </div>
                     <div class="cert-field">
                         <label>Instructor</label>
-                        <span>${cert.instructor}</span>
+                        <span>${cert.instructor_name || 'N/A'}</span>
                     </div>
                     <div class="cert-field">
                         <label>Issue Date</label>
-                        <span>${cert.issueDate}</span>
+                        <span>${issueDate}</span>
                     </div>
                     <div class="cert-field">
                         <label>Status</label>
-                        <span style="color: var(--green-deep);">Active</span>
+                        ${statusHtml}
                     </div>
                 </div>
                 <div class="actions">
                     <button class="btn btn-primary" onclick="window.print()">Print Certificate</button>
-                    <button class="btn btn-secondary" onclick="shareCertificate('${certId}', '${cert.recipient}', '${cert.course}')">Share</button>
+                    <button class="btn btn-secondary" onclick="shareCertificate('${certId}', '${cert.user_name}', '${cert.course_title}')">Share</button>
                 </div>
             `;
         }
@@ -560,7 +530,7 @@
             resultBox.className = 'result invalid';
             resultBox.innerHTML = `
                 <div class="result-header">
-                    <div class="icon">✕</div>
+                    <div class="icon">&#10005;</div>
                     <span>Verification Failed</span>
                 </div>
                 <p>${message}</p>
@@ -575,35 +545,6 @@
                 navigator.clipboard.writeText(text).then(() => alert('Certificate details copied to clipboard!'));
             }
         }
-
-        // ======================
-        // SUPABASE INTEGRATION
-        // ======================
-        // To connect this to your Supabase backend, replace the setTimeout block
-        // in verifyCertificate() with:
-        /*
-        async function verifyCertificate() {
-            const certId = document.getElementById('certInput').value.trim().toUpperCase();
-            const { data, error } = await supabase
-                .from('certificates')
-                .select('*')
-                .eq('cert_id', certId)
-                .single();
-
-            if (data) {
-                showValid(certId, {
-                    recipient: data.recipient_name,
-                    course: data.course_name,
-                    issueDate: new Date(data.issued_at).toLocaleDateString(),
-                    instructor: data.instructor_name,
-                    grade: data.grade,
-                    hours: data.hours
-                });
-            } else {
-                showInvalid('Certificate not found');
-            }
-        }
-        */
     </script>
 </body>
 </html>
