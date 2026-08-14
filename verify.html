@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Certificate | Rise Africa Skills</title>
+    <style>
+        :root {
+            --green-deep: #1a5c3a;
+            --green-light: #2d8a5e;
+            --gold: #c9a227;
+            --gold-light: #e8d5a3;
+            --red-earth: #a04030;
+            --charcoal: #2c2c2c;
+            --cream: #faf8f3;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: var(--charcoal);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--green-deep);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--gold);
+            font-weight: bold;
+            color: var(--gold);
+            font-size: 14px;
+        }
+
+        .logo-text {
+            color: var(--white);
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-text span {
+            color: var(--gold);
+        }
+
+        /* Main Container */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 3rem 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            color: var(--green-deep);
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            color: #666;
+            font-size: 1.05rem;
+        }
+
+        /* Verification Box */
+        .verify-box {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 520px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            border: 1px solid #e8e4dc;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .verify-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gold);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--charcoal);
+            font-size: 0.95rem;
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        #certInput {
+            flex: 1;
+            padding: 0.85rem 1rem;
+            border: 2px solid #ddd8cf;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #certInput:focus {
+            outline: none;
+            border-color: var(--green-deep);
+        }
+
+        #verifyBtn {
+            padding: 0.85rem 1.8rem;
+            background: var(--green-deep);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        #verifyBtn:hover {
+            background: var(--green-light);
+            transform: translateY(-1px);
+        }
+
+        #verifyBtn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Results */
+        .result {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border-radius: 12px;
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result.valid {
+            display: block;
+            background: #f0faf3;
+            border: 1px solid #b8e0c8;
+        }
+
+        .result.invalid {
+            display: block;
+            background: #fdf2f0;
+            border: 1px solid #f0c4bc;
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .valid .result-header {
+            color: var(--green-deep);
+        }
+
+        .invalid .result-header {
+            color: var(--red-earth);
+        }
+
+        .icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .valid .icon {
+            background: var(--green-deep);
+            color: white;
+        }
+
+        .invalid .icon {
+            background: var(--red-earth);
+            color: white;
+        }
+
+        /* Certificate Card */
+        .cert-card {
+            background: var(--white);
+            border: 2px solid var(--gold-light);
+            border-radius: 12px;
+            padding: 1.8rem;
+            margin-top: 1rem;
+            position: relative;
+        }
+
+        .cert-card::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 14px;
+            background: var(--gold);
+            z-index: -1;
+            opacity: 0.15;
+        }
+
+        .cert-field {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #f0ece4;
+        }
+
+        .cert-field:last-child {
+            border-bottom: none;
+        }
+
+        .cert-field label {
+            font-weight: 600;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .cert-field span {
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+
+        .cert-badge {
+            text-align: center;
+            margin: 1.5rem 0 1rem;
+        }
+
+        .cert-badge svg {
+            width: 80px;
+            height: 80px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--green-deep);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--green-light);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--charcoal);
+            border: 2px solid #ddd8cf;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        /* Demo Notice */
+        .demo-notice {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #fff8e6;
+            border-left: 4px solid var(--gold);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: #665;
+        }
+
+        .demo-notice strong {
+            color: var(--charcoal);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: #999;
+            font-size: 0.85rem;
+            border-top: 1px solid #e8e4dc;
+        }
+
+        .footer a {
+            color: var(--green-deep);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.5rem; }
+            .verify-box { padding: 1.5rem; }
+            .input-wrapper { flex-direction: column; }
+            #verifyBtn { width: 100%; }
+            .actions { flex-direction: column; }
+        }
+
+        /* Print styles */
+        @media print {
+            .header, .verify-box, .footer, .actions { display: none !important; }
+            .result.valid { display: block !important; border: none; }
+            .cert-card { box-shadow: none; border: 2px solid var(--gold); }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <header class="header">
+        <a href="/" class="logo">
+            <div class="logo-icon">rAs</div>
+            <div class="logo-text">rise <span>AFRICA</span> skills</div>
+        </a>
+    </header>
+
+    <main class="main">
+        <div class="hero">
+            <h1>Certificate Verification</h1>
+            <p>Enter a certificate ID to verify its authenticity</p>
+        </div>
+
+        <div class="verify-box">
+            <div class="input-group">
+                <label for="certInput">Certificate ID</label>
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        id="certInput" 
+                        placeholder="e.g. RAS-2026-001234"
+                        autocomplete="off"
+                        maxlength="20"
+                    >
+                    <button id="verifyBtn" onclick="verifyCertificate()">Verify</button>
+                </div>
+            </div>
+
+            <div id="resultBox" class="result"></div>
+
+            <div class="demo-notice">
+                <strong>Demo Mode:</strong> Try these sample IDs — <code>RAS-2026-001</code>, <code>RAS-2026-002</code>, <code>RAS-2026-003</code>. 
+                In production, this connects to your Supabase database.
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        © 2026 Rise Africa Skills · <a href="https://riseafricaskills.com">riseafricaskills.com</a>
+    </footer>
+
+    <script>
+        // Demo certificate database (replace with Supabase fetch in production)
+        const demoCertificates = {
+            'RAS-2026-001': {
+                recipient: 'Amara Okafor',
+                course: 'Full-Stack Web Development',
+                issueDate: '14 August 2026',
+                expiryDate: 'No Expiration',
+                instructor: 'Dr. James Mwangi',
+                grade: 'Distinction',
+                hours: 120
+            },
+            'RAS-2026-002': {
+                recipient: 'Kwame Asante',
+                course: 'Data Science Fundamentals',
+                issueDate: '10 August 2026',
+                expiryDate: 'No Expiration',
+                instructor: 'Prof. Amina Diallo',
+                grade: 'Merit',
+                hours: 80
+            },
+            'RAS-2026-003': {
+                recipient: 'Zara Mensah',
+                course: 'Digital Marketing Mastery',
+                issueDate: '5 August 2026',
+                expiryDate: 'No Expiration',
+                instructor: 'Sarah Nkosi',
+                grade: 'Distinction',
+                hours: 60
+            }
+        };
+
+        // Allow Enter key to trigger verification
+        document.getElementById('certInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') verifyCertificate();
+        });
+
+        function verifyCertificate() {
+            const input = document.getElementById('certInput');
+            const resultBox = document.getElementById('resultBox');
+            const btn = document.getElementById('verifyBtn');
+            const certId = input.value.trim().toUpperCase();
+
+            if (!certId) {
+                showInvalid('Please enter a certificate ID');
+                return;
+            }
+
+            // Simulate loading
+            btn.disabled = true;
+            btn.textContent = 'Verifying...';
+            resultBox.style.display = 'none';
+
+            // Simulate network delay
+            setTimeout(() => {
+                const cert = demoCertificates[certId];
+
+                if (cert) {
+                    showValid(certId, cert);
+                } else {
+                    showInvalid(`Certificate <strong>${certId}</strong> not found. Please check the ID and try again.`);
+                }
+
+                btn.disabled = false;
+                btn.textContent = 'Verify';
+            }, 600);
+        }
+
+        function showValid(certId, cert) {
+            const resultBox = document.getElementById('resultBox');
+            resultBox.className = 'result valid';
+            resultBox.innerHTML = `
+                <div class="result-header">
+                    <div class="icon">✓</div>
+                    <span>Certificate Verified Successfully</span>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-badge">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="#c9a227" stroke-width="3"/>
+                            <circle cx="50" cy="50" r="35" fill="none" stroke="#1a5c3a" stroke-width="2"/>
+                            <text x="50" y="45" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a5c3a">rAs</text>
+                            <text x="50" y="62" text-anchor="middle" font-size="7" fill="#666">VERIFIED</text>
+                            <path d="M35 55 L45 65 L65 40" fill="none" stroke="#1a5c3a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="cert-field">
+                        <label>Certificate ID</label>
+                        <span>${certId}</span>
+                    </div>
+                    <div class="cert-field">
+                        <label>Recipient</label>
+                        <span>${cert.recipient}</span>
+                    </div>
+                    <div class="cert-field">
+                        <label>Course</label>
+                        <span>${cert.course}</span>
+                    </div>
+                    <div class="cert-field">
+                        <label>Grade</label>
+                        <span style="color: var(--gold); font-weight: 700;">${cert.grade}</span>
+                    </div>
+                    <div class="cert-field">
+                        <label>Hours Completed</label>
+                        <span>${cert.hours}</span>
+                    </div>
+                    <div class="cert-field">
+                        <label>Instructor</label>
+                        <span>${cert.instructor}</span>
+                    </div>
+                    <div class="cert-field">
+                        <label>Issue Date</label>
+                        <span>${cert.issueDate}</span>
+                    </div>
+                    <div class="cert-field">
+                        <label>Status</label>
+                        <span style="color: var(--green-deep);">Active</span>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button class="btn btn-primary" onclick="window.print()">Print Certificate</button>
+                    <button class="btn btn-secondary" onclick="shareCertificate('${certId}', '${cert.recipient}', '${cert.course}')">Share</button>
+                </div>
+            `;
+        }
+
+        function showInvalid(message) {
+            const resultBox = document.getElementById('resultBox');
+            resultBox.className = 'result invalid';
+            resultBox.innerHTML = `
+                <div class="result-header">
+                    <div class="icon">✕</div>
+                    <span>Verification Failed</span>
+                </div>
+                <p>${message}</p>
+            `;
+        }
+
+        function shareCertificate(id, recipient, course) {
+            const text = `I earned the ${course} certificate from Rise Africa Skills! Verify: ${id}`;
+            if (navigator.share) {
+                navigator.share({ title: 'My Certificate', text: text });
+            } else {
+                navigator.clipboard.writeText(text).then(() => alert('Certificate details copied to clipboard!'));
+            }
+        }
+
+        // ======================
+        // SUPABASE INTEGRATION
+        // ======================
+        // To connect this to your Supabase backend, replace the setTimeout block
+        // in verifyCertificate() with:
+        /*
+        async function verifyCertificate() {
+            const certId = document.getElementById('certInput').value.trim().toUpperCase();
+            const { data, error } = await supabase
+                .from('certificates')
+                .select('*')
+                .eq('cert_id', certId)
+                .single();
+
+            if (data) {
+                showValid(certId, {
+                    recipient: data.recipient_name,
+                    course: data.course_name,
+                    issueDate: new Date(data.issued_at).toLocaleDateString(),
+                    instructor: data.instructor_name,
+                    grade: data.grade,
+                    hours: data.hours
+                });
+            } else {
+                showInvalid('Certificate not found');
+            }
+        }
+        */
+    </script>
+</body>
+</html>
