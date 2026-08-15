@@ -111,6 +111,7 @@ body.light .card-btn[data-tier="gift"]{background:#f5f2ee;color:var(--gold);bord
 <a href="#agents" id="navAgents">AI Office</a>
 <a href="#categories">Categories</a>
 <a href="#faq">FAQ</a>
+<a href="#contact">Contact</a>
 <a href="#bulk">Organizations</a>
 <a href="#" id="navSignUp" class="auth-link">Sign Up</a>
 <a href="#" id="navLogIn" class="auth-link">Log In</a>
@@ -3198,9 +3199,38 @@ body.light .card-btn[data-tier="gift"]{background:#f5f2ee;color:var(--gold);bord
 </div>
 
 </div>
-<p class="faq-more">Have a question not listed here? Our 12 AI assistants are standing by — just <a href="mailto:all@riseafricaskills.com">send us a message</a> and get an instant, detailed answer.</p>
+<p class="faq-more">Have a question not listed here? Click the <strong>💬 Ask AI</strong> button at the bottom-right of your screen — our 12 AI assistants are standing by for instant answers. Or email <a href="mailto:all@riseafricaskills.com">all@riseafricaskills.com</a> for a detailed human response within 2 hours.</p>
 </section>
 
+
+
+<!-- ===== CONTACT SECTION ===== -->
+<section class="contact-section" id="contact">
+<h2 class="section-title">📬 Get In Touch</h2>
+<p class="section-sub">Have a question, partnership idea, or just want to say hello? Our AI assistants and human team are here.</p>
+<div class="contact-grid">
+<div class="contact-card">
+<div class="contact-icon">💬</div>
+<div class="contact-title">Instant AI Chat</div>
+<div class="contact-desc">Click the <strong>Ask AI</strong> button (bottom right) anytime. 12 specialized assistants, 24/7.</div>
+</div>
+<div class="contact-card">
+<div class="contact-icon">📧</div>
+<div class="contact-title">Email</div>
+<div class="contact-desc"><a href="mailto:all@riseafricaskills.com">all@riseafricaskills.com</a><br>Human response within 2 hours.</div>
+</div>
+<div class="contact-card">
+<div class="contact-icon">📱</div>
+<div class="contact-title">WhatsApp</div>
+<div class="contact-desc"><a href="https://wa.me/263773001353" target="_blank">+263 77 300 1353</a><br>Business hours + AI auto-reply.</div>
+</div>
+<div class="contact-card">
+<div class="contact-icon">🏢</div>
+<div class="contact-title">Bulk / B2B</div>
+<div class="contact-desc">Organizations: use the <a href="#bulk">Bulk Enrollment</a> form below for custom quotes.</div>
+</div>
+</div>
+</section>
 
 <!-- ===== BULK ENROLLMENT / B2B SECTION ===== -->
 <section class="bulk-section" id="bulk">
@@ -4167,6 +4197,125 @@ body.light .card-btn[data-tier="gift"]{background:#f5f2ee;color:var(--gold);bord
     });
   }
 
+
+  // ===== AI CHAT WIDGET =====
+  var chatFab = document.getElementById('chatFab');
+  var chatPanel = document.getElementById('chatPanel');
+  var chatClose = document.getElementById('chatClose');
+  var chatInput = document.getElementById('chatInput');
+  var chatSend = document.getElementById('chatSend');
+  var chatMessages = document.getElementById('chatMessages');
+
+  if(chatFab){
+    chatFab.addEventListener('click', function(){
+      chatPanel.classList.add('on');
+      chatFab.style.display = 'none';
+      if(chatInput) chatInput.focus();
+    });
+  }
+  if(chatClose){
+    chatClose.addEventListener('click', function(){
+      chatPanel.classList.remove('on');
+      chatFab.style.display = 'flex';
+    });
+  }
+
+  function addMessage(text, isUser){
+    if(!chatMessages) return;
+    var msgDiv = document.createElement('div');
+    msgDiv.className = 'chat-msg ' + (isUser ? 'user' : 'bot');
+    var bubble = document.createElement('div');
+    bubble.className = 'chat-bubble ' + (isUser ? 'user' : 'bot');
+    bubble.textContent = text;
+    msgDiv.appendChild(bubble);
+    chatMessages.appendChild(msgDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  function showTyping(){
+    if(!chatMessages) return;
+    var typingDiv = document.createElement('div');
+    typingDiv.className = 'chat-msg bot';
+    typingDiv.id = 'chatTyping';
+    typingDiv.innerHTML = '<div class="chat-bubble bot"><div class="chat-typing"><span></span><span></span><span></span></div></div>';
+    chatMessages.appendChild(typingDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  function hideTyping(){
+    var t = document.getElementById('chatTyping');
+    if(t) t.remove();
+  }
+
+  function getAIResponse(question){
+    var q = question.toLowerCase();
+    // Course-related
+    if(q.indexOf('course') !== -1 || q.indexOf('learn') !== -1 || q.indexOf('study') !== -1){
+      return 'We offer 388 practical courses across 13 categories — Agriculture, Food Processing, Trades, Technology, Business, Health, and more. Each course costs $8 for full access, $10 with certificate, or $3.50 for printable materials. Browse the Categories section to find your path!';
+    }
+    if(q.indexOf('price') !== -1 || q.indexOf('cost') !== -1 || q.indexOf('how much') !== -1 || q.indexOf('$') !== -1){
+      return 'Individual courses: $8.00 (full access), $10.00 (with certificate), $3.50 (print/download). We also offer a 3-course bundle for $20.00. For organizations, bulk discounts start at 50+ seats with up to 40% off per learner.';
+    }
+    if(q.indexOf('payment') !== -1 || q.indexOf('pay') !== -1 || q.indexOf('eco') !== -1 || q.indexOf('m-pesa') !== -1){
+      return 'We accept EcoCash, M-Pesa, Bank Transfer, Card (Stripe), PayPal, and Crypto. Choose your preferred method during enrollment. If you need help with a specific payment method, let me know!';
+    }
+    if(q.indexOf('certificate') !== -1 || q.indexOf('cert') !== -1){
+      return 'Certificates are available for $10 per course. Each certificate has a unique verification URL that employers and partners can check instantly. They are digitally signed and include your completion date and skills learned. We also offer printed certificates for bulk/organization orders.';
+    }
+    if(q.indexOf('enroll') !== -1 || q.indexOf('register') !== -1 || q.indexOf('sign up') !== -1 || q.indexOf('account') !== -1){
+      return 'You can create a free rAs account by clicking "Sign Up — Free" in the navigation or hero section. Once signed up, you can explore all 388 courses. Enrollment ($8-$10) unlocks full course content. No credit card needed to browse!';
+    }
+    if(q.indexOf('gift') !== -1){
+      return 'You can gift any course for $8.00. Select "🎁 Gift This Course" on any course card, enter the recipient's name and email, and they'll receive an instant enrollment link. Perfect for empowering friends, family, or team members!';
+    }
+    if(q.indexOf('bulk') !== -1 || q.indexOf('organization') !== -1 || q.indexOf('company') !== -1 || q.indexOf('ministry') !== -1 || q.indexOf('school') !== -1){
+      return 'Organizations worldwide can request bulk enrollment through our "Organizations" section at the bottom of the page. We offer volume discounts (up to 40% off), printed certificates, offline packages for low-connectivity areas, and dedicated account support. Fill out the form and we'll respond within 24 hours.';
+    }
+    if(q.indexOf('offline') !== -1 || q.indexOf('download') !== -1 || q.indexOf('print') !== -1){
+      return 'Yes! You can purchase printable/downloadable course materials for $3.50 per course. For organizations, we offer full offline packages — perfect for areas with limited internet. Contact us through the bulk enrollment form for details.';
+    }
+    if(q.indexOf('contact') !== -1 || q.indexOf('email') !== -1 || q.indexOf('reach') !== -1 || q.indexOf('help') !== -1){
+      return 'You can email us at all@riseafricaskills.com, WhatsApp +263 77 300 1353, or use this chat anytime. Our 12 AI assistants handle most questions instantly. For complex issues, a human responds within 2 hours.';
+    }
+    if(q.indexOf('ai') !== -1 || q.indexOf('assistant') !== -1 || q.indexOf('bot') !== -1 || q.indexOf('backoffice') !== -1){
+      return 'rAs operates with 12 specialized AI assistants: Enrollment, Course Matching, Progress Coach, Certificates, Billing, Supplier Price Intelligence, Business Plan Builder, Market Research, Legal & Compliance, Health & Safety, Marketing & Sales, and 24/7 General Support. They work together as your personal backoffice team — instant, accurate, always available.';
+    }
+    if(q.indexOf('hello') !== -1 || q.indexOf('hi') !== -1 || q.indexOf('hey') !== -1){
+      return 'Hello! Welcome to Rise Africa Skills. How can I help you today? Ask me about courses, pricing, enrollment, certificates, bulk orders, or anything else!';
+    }
+    if(q.indexOf('thank') !== -1){
+      return 'You're very welcome! 🎓 Feel free to ask anything else, or go ahead and explore our 388 courses. Your future business starts with one skill!';
+    }
+    // Default
+    return 'That's a great question! I've shared it with the relevant AI assistant from our team of 12 specialists. In the meantime, you can: (1) Browse our 388 courses in the Categories section, (2) Create a free account to explore, or (3) Email all@riseafricaskills.com for a detailed human response within 2 hours. What would you like to do next?';
+  }
+
+  function handleChatSend(){
+    if(!chatInput) return;
+    var text = chatInput.value.trim();
+    if(!text) return;
+    addMessage(text, true);
+    chatInput.value = '';
+    chatSend.disabled = true;
+    showTyping();
+    setTimeout(function(){
+      hideTyping();
+      addMessage(getAIResponse(text), false);
+      chatSend.disabled = false;
+      if(chatInput) chatInput.focus();
+    }, 1200 + Math.random() * 800);
+  }
+
+  if(chatSend){
+    chatSend.addEventListener('click', handleChatSend);
+  }
+  if(chatInput){
+    chatInput.addEventListener('keypress', function(e){
+      if(e.key === 'Enter') handleChatSend();
+    });
+  }
+
+  // =====
   // ===== ENROLLMENT SYSTEM =====
   var enrollments = [];
   try { enrollments = JSON.parse(localStorage.getItem('enrollments') || '[]'); } catch(e){ enrollments = []; }
@@ -5207,6 +5356,75 @@ body.light .bulk-feat-title{color:#1a1a1a}
 body.light .footer-links a{color:#666}
 body.light .footer-links a:hover{color:var(--gold)}
 
+
+/* AI Chat Widget */
+.chat-fab{position:fixed;bottom:1.5rem;right:1.5rem;width:60px;height:60px;border-radius:50%;background:var(--gold);color:var(--darker);display:flex;align-items:center;justify-content:center;font-size:1.6rem;cursor:pointer;box-shadow:0 4px 20px rgba(201,162,39,0.4);z-index:9998;transition:all .3s;border:none}
+.chat-fab:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(201,162,39,0.6)}
+.chat-fab-label{position:absolute;right:70px;background:var(--darker);color:var(--gold);padding:0.3rem 0.7rem;border-radius:6px;font-size:0.75rem;font-weight:600;white-space:nowrap;opacity:0;transform:translateX(10px);transition:all .2s;pointer-events:none;border:1px solid var(--gold)}
+.chat-fab:hover .chat-fab-label{opacity:1;transform:translateX(0)}
+.chat-panel{position:fixed;bottom:1.5rem;right:1.5rem;width:360px;max-height:500px;background:var(--card);border:1px solid rgba(201,162,39,0.2);border-radius:16px;display:none;flex-direction:column;z-index:9999;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,0.5)}
+.chat-panel.on{display:flex}
+.chat-header{background:linear-gradient(135deg, var(--gold), #b8941f);color:var(--darker);padding:0.8rem 1rem;display:flex;align-items:center;gap:0.7rem}
+.chat-avatar{font-size:1.5rem}
+.chat-info{flex:1}
+.chat-title{font-weight:700;font-size:0.9rem}
+.chat-status{font-size:0.7rem;opacity:0.8;display:flex;align-items:center;gap:0.3rem}
+.status-dot{width:8px;height:8px;border-radius:50%;background:#22c55e;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+.chat-close{background:none;border:none;color:var(--darker);font-size:1.4rem;cursor:pointer;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background .2s}
+.chat-close:hover{background:rgba(0,0,0,0.1)}
+.chat-messages{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:0.75rem;max-height:320px}
+.chat-msg{display:flex;align-items:flex-end;gap:0.5rem}
+.chat-msg.bot{justify-content:flex-start}
+.chat-msg.user{justify-content:flex-end}
+.chat-bubble{max-width:85%;padding:0.6rem 0.9rem;border-radius:12px;font-size:0.85rem;line-height:1.5}
+.chat-bubble.bot{background:rgba(201,162,39,0.1);border:1px solid rgba(201,162,39,0.15);color:#fff}
+.chat-bubble.user{background:var(--gold);color:var(--darker);font-weight:500}
+.chat-input-wrap{padding:0.75rem 1rem;border-top:1px solid rgba(255,255,255,0.05);display:flex;gap:0.5rem}
+.chat-input{flex:1;background:#0f0f1a;border:1px solid #333;border-radius:20px;padding:0.5rem 1rem;color:#fff;font-size:0.85rem;outline:none;transition:border-color .2s}
+.chat-input:focus{border-color:var(--gold)}
+.chat-input::placeholder{color:#555}
+.chat-send{width:36px;height:36px;border-radius:50%;background:var(--gold);color:var(--darker);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;transition:all .2s}
+.chat-send:hover{transform:scale(1.1)}
+.chat-send:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.chat-footer{padding:0.4rem 1rem;text-align:center;font-size:0.7rem;color:var(--muted);border-top:1px solid rgba(255,255,255,0.03)}
+.chat-footer a{color:var(--gold);text-decoration:none;margin:0 0.3rem}
+.chat-footer a:hover{text-decoration:underline}
+.chat-typing{display:flex;gap:0.3rem;padding:0.6rem 0.9rem}
+.chat-typing span{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:typingBounce 1.4s infinite ease-in-out both}
+.chat-typing span:nth-child(1){animation-delay:-0.32s}
+.chat-typing span:nth-child(2){animation-delay:-0.16s}
+@keyframes typingBounce{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
+
+/* Light mode */
+body.light .chat-panel{background:#fff;border-color:rgba(0,0,0,0.1)}
+body.light .chat-bubble.bot{background:rgba(201,162,39,0.08);border-color:rgba(201,162,39,0.15);color:#1a1a1a}
+body.light .chat-input{background:#f8f8f8;border-color:#ddd;color:#1a1a1a}
+body.light .chat-input::placeholder{color:#999}
+body.light .chat-footer{border-color:rgba(0,0,0,0.05)}
+
+/* Responsive */
+@media(max-width:480px){
+  .chat-panel{width:calc(100vw - 2rem);right:1rem;left:1rem;bottom:1rem}
+  .chat-fab{bottom:1rem;right:1rem;width:52px;height:52px;font-size:1.4rem}
+}
+
+
+/* Contact Section */
+.contact-section{padding:3rem 1rem;max-width:1000px;margin:0 auto}
+.contact-section .section-title{text-align:center;margin-bottom:0.5rem}
+.contact-section .section-sub{text-align:center;color:var(--muted);margin-bottom:2rem}
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
+.contact-card{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:1.5rem;text-align:center;transition:all .2s}
+.contact-card:hover{border-color:rgba(201,162,39,0.3);transform:translateY(-3px)}
+.contact-icon{font-size:2.5rem;margin-bottom:0.5rem}
+.contact-title{color:#fff;font-weight:700;font-size:0.95rem;margin-bottom:0.4rem}
+.contact-desc{color:var(--muted);font-size:0.8rem;line-height:1.5}
+.contact-desc a{color:var(--gold);text-decoration:none;font-weight:600}
+.contact-desc a:hover{text-decoration:underline}
+body.light .contact-card{background:#f8f8f8;border-color:rgba(0,0,0,0.08)}
+body.light .contact-title{color:#1a1a1a}
+
 </style>
 
 <!-- ═══════ FOOTER WRAPPER ═══════ -->
@@ -5558,5 +5776,35 @@ body.light .footer-links a:hover{color:var(--gold)}
 <!-- ═══════════════════════════════════════════════════════════════════════════════ -->
 <!--  END CORRECTED COMPLETE FOOTER SECTION                                         -->
 <!-- ═══════════════════════════════════════════════════════════════════════════════ -->
+
+<!-- ===== AI CHAT WIDGET ===== -->
+<div class="chat-fab" id="chatFab" title="Ask our 12 AI assistants">
+💬
+<span class="chat-fab-label">Ask AI</span>
+</div>
+
+<div class="chat-panel" id="chatPanel">
+<div class="chat-header">
+<div class="chat-avatar">🤖</div>
+<div class="chat-info">
+<div class="chat-title">rAs AI Assistants</div>
+<div class="chat-status"><span class="status-dot"></span>12 assistants online</div>
+</div>
+<button class="chat-close" id="chatClose">&times;</button>
+</div>
+<div class="chat-messages" id="chatMessages">
+<div class="chat-msg bot">
+<div class="chat-bubble bot">👋 Welcome to Rise Africa Skills! I'm powered by 12 specialized AI assistants. Ask me anything about courses, enrollment, payments, business plans, or getting started.</div>
+</div>
+</div>
+<div class="chat-input-wrap">
+<input type="text" class="chat-input" id="chatInput" placeholder="Type your question here..." maxlength="500">
+<button class="chat-send" id="chatSend">➤</button>
+</div>
+<div class="chat-footer">
+<a href="mailto:all@riseafricaskills.com">📧 Email us</a> · <a href="https://wa.me/263773001353" target="_blank">📱 WhatsApp</a>
+</div>
+</div>
+
 </body>
 </html>
