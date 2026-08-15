@@ -776,6 +776,788 @@ body.light .enrolled-card h4{color:#1a1a1a}
 
 })();
 </script>
+ <!-- ═══════════════════════════════════════════════════════════════════════════════ -->
+<!--  RISE AFRICA SKILLS — COMPLETE FOOTER SECTION                                 -->
+<!--  Contains: Institutional/Bulk Enrollment | Investors | Social | Footer Bottom -->
+<!--  Drop this entire block just BEFORE your closing </body> tag                  -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════ -->
+
+<style>
+  /* ═══════ ROOT VARIABLES (scoped to footer only) ═══════ */
+  .ras-footer-wrap {
+    --rf-primary: #1a1a2e;
+    --rf-primary-light: #16213e;
+    --rf-accent: #e94560;
+    --rf-accent-hover: #d63d56;
+    --rf-gold: #f4a261;
+    --rf-card: #ffffff;
+    --rf-card-dark: #f8f9fa;
+    --rf-text: #2d3436;
+    --rf-text-light: #636e72;
+    --rf-border: #e9ecef;
+    --rf-green: #27ae60;
+    --rf-green-light: #e8f5e9;
+    --rf-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    --rf-shadow-hover: 0 12px 32px rgba(0,0,0,0.10);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--rf-text);
+  }
+
+  /* ═══════ SECTION HEADERS ═══════ */
+  .ras-footer-wrap .rf-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+  }
+  .ras-footer-wrap .rf-section-title {
+    text-align: center;
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--rf-primary);
+    margin-bottom: 0.3rem;
+  }
+  .ras-footer-wrap .rf-section-sub {
+    text-align: center;
+    color: var(--rf-text-light);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+
+  /* ═══════ INSTITUTIONAL — PRICING CARDS ═══════ */
+  .rf-pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .rf-pricing-card {
+    background: var(--rf-card);
+    border: 2px solid var(--rf-border);
+    border-radius: 16px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    position: relative;
+    transition: all 0.25s ease;
+    cursor: default;
+  }
+  .rf-pricing-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--rf-shadow-hover);
+    border-color: var(--rf-accent);
+  }
+  .rf-pricing-card.popular {
+    border-color: var(--rf-accent);
+    background: linear-gradient(180deg, #fff5f7 0%, #fff 100%);
+  }
+  .rf-popular-badge {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--rf-accent);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .rf-pricing-card .rf-tier-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--rf-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+  }
+  .rf-pricing-card .rf-seats {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--rf-accent);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .rf-pricing-card .rf-seats-label {
+    font-size: 0.75rem;
+    color: var(--rf-text-light);
+    margin-bottom: 0.75rem;
+  }
+  .rf-pricing-card .rf-price {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--rf-primary);
+    margin-bottom: 0.3rem;
+  }
+  .rf-pricing-card .rf-save {
+    display: inline-block;
+    background: var(--rf-green-light);
+    color: var(--rf-green);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+  }
+  .rf-pricing-card.custom .rf-seats {
+    font-size: 1.8rem;
+    color: var(--rf-gold);
+  }
+
+  /* ═══════ INSTITUTIONAL — FORM ═══════ */
+  .rf-form-wrap {
+    background: var(--rf-card-dark);
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid var(--rf-border);
+  }
+  .rf-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem 1.25rem;
+  }
+  .rf-form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  .rf-form-group.full-width {
+    grid-column: 1 / -1;
+  }
+  .rf-form-group label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--rf-primary);
+    margin-bottom: 0.35rem;
+  }
+  .rf-form-group input,
+  .rf-form-group select,
+  .rf-form-group textarea {
+    padding: 0.7rem 0.9rem;
+    border: 1.5px solid var(--rf-border);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    background: white;
+    color: var(--rf-text);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+  .rf-form-group input:focus,
+  .rf-form-group select:focus,
+  .rf-form-group textarea:focus {
+    border-color: var(--rf-accent);
+    box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.1);
+  }
+  .rf-form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  .rf-submit-btn {
+    grid-column: 1 / -1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--rf-accent);
+    color: white;
+    border: none;
+    padding: 0.9rem 2rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    margin-top: 0.5rem;
+  }
+  .rf-submit-btn:hover {
+    background: var(--rf-accent-hover);
+    transform: translateY(-2px);
+  }
+
+  /* ═══════ INVESTORS ═══════ */
+  .rf-investors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+  .rf-investor-card {
+    background: var(--rf-card);
+    border: 1px solid var(--rf-border);
+    border-radius: 16px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    transition: all 0.25s ease;
+  }
+  .rf-investor-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--rf-shadow-hover);
+    border-color: var(--rf-accent);
+  }
+  .rf-investor-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .rf-investor-icon {
+    font-size: 1.8rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .rf-investor-meta {
+    flex: 1;
+    min-width: 0;
+  }
+  .rf-investor-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--rf-primary);
+    line-height: 1.3;
+  }
+  .rf-investor-type {
+    font-size: 0.75rem;
+    color: var(--rf-text-light);
+    margin-top: 0.15rem;
+  }
+  .rf-investor-focus {
+    font-size: 0.82rem;
+    color: var(--rf-text);
+    line-height: 1.5;
+  }
+  .rf-investor-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .rf-tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+    background: var(--rf-card-dark);
+    color: var(--rf-text-light);
+    border: 1px solid var(--rf-border);
+  }
+  .rf-investor-contact {
+    font-size: 0.78rem;
+    color: var(--rf-text-light);
+    border-top: 1px solid var(--rf-border);
+    padding-top: 0.6rem;
+    margin-top: auto;
+  }
+  .rf-investor-contact a {
+    color: var(--rf-accent);
+    text-decoration: none;
+  }
+  .rf-investor-contact a:hover {
+    text-decoration: underline;
+  }
+
+  /* ═══════ SOCIAL ═══════ */
+  .rf-social-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+  .rf-social-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0.5rem;
+    background: var(--rf-card);
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--rf-text);
+    border: 1px solid var(--rf-border);
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+  .rf-social-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--rf-shadow-hover);
+    border-color: var(--rf-accent);
+  }
+  .rf-social-item .rf-icon {
+    font-size: 1.6rem;
+    margin-bottom: 0.4rem;
+    line-height: 1;
+  }
+  .rf-social-item .rf-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  .rf-share-bar {
+    background: linear-gradient(135deg, var(--rf-primary) 0%, var(--rf-primary-light) 100%);
+    border-radius: 16px;
+    padding: 1.5rem;
+    color: white;
+    text-align: center;
+  }
+  .rf-share-bar h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .rf-share-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+  .rf-share-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.12);
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+  .rf-share-btn:hover {
+    background: var(--rf-accent);
+    transform: scale(1.1);
+  }
+  .rf-share-url {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .rf-share-url input {
+    flex: 1;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    font-size: 0.85rem;
+    outline: none;
+  }
+  .rf-share-url input::placeholder { color: rgba(255,255,255,0.5); }
+  .rf-share-url button {
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    border: none;
+    background: var(--rf-accent);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.2s;
+  }
+  .rf-share-url button:hover { background: var(--rf-accent-hover); }
+
+  /* ═══════ FOOTER BOTTOM ═══════ */
+  .rf-footer-bottom {
+    background: var(--rf-primary);
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+  .rf-footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .rf-footer-logo {
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+  }
+  .rf-footer-logo span {
+    color: var(--rf-accent);
+  }
+  .rf-footer-email {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 1rem;
+  }
+  .rf-footer-email a {
+    color: var(--rf-gold);
+    text-decoration: none;
+  }
+  .rf-footer-email a:hover { text-decoration: underline; }
+  .rf-footer-copy {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 1rem;
+    margin-top: 1rem;
+  }
+
+  /* ═══════ TOAST ═══════ */
+  .rf-toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--rf-primary);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 9999;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+  .rf-toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  /* ═══════ RESPONSIVE ═══════ */
+  @media (max-width: 768px) {
+    .rf-form-grid { grid-template-columns: 1fr; }
+    .rf-pricing-grid { grid-template-columns: repeat(2, 1fr); }
+    .rf-investors-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .rf-pricing-grid { grid-template-columns: 1fr; }
+    .rf-social-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.5rem; }
+    .rf-social-item { padding: 0.75rem 0.4rem; }
+    .rf-social-item .rf-icon { font-size: 1.3rem; }
+    .rf-social-item .rf-label { font-size: 0.7rem; }
+    .rf-section { padding: 2rem 0.75rem; }
+    .rf-form-wrap { padding: 1.25rem; }
+  }
+</style>
+
+<!-- ═══════ FOOTER WRAPPER ═══════ -->
+<div class="ras-footer-wrap">
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <!--  1. INSTITUTIONAL & BULK ENROLLMENT                                          -->
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <section class="rf-section" id="institutional">
+    <h2 class="rf-section-title">🏛️ Institutional & Bulk Enrollment</h2>
+    <p class="rf-section-sub">NGOs, Charities, Governments, Schools, Clubs & Corporations — empower your people with practical skills</p>
+
+    <!-- Pricing Tiers -->
+    <div class="rf-pricing-grid">
+      <div class="rf-pricing-card">
+        <div class="rf-tier-name">Small Team</div>
+        <div class="rf-seats">10</div>
+        <div class="rf-seats-label">seats</div>
+        <div class="rf-price">$72.00</div>
+        <span class="rf-save">Save 10%</span>
+      </div>
+      <div class="rf-pricing-card popular">
+        <span class="rf-popular-badge">Popular</span>
+        <div class="rf-tier-name">Organization</div>
+        <div class="rf-seats">50</div>
+        <div class="rf-seats-label">seats</div>
+        <div class="rf-price">$320.00</div>
+        <span class="rf-save">Save 20%</span>
+      </div>
+      <div class="rf-pricing-card">
+        <div class="rf-tier-name">Large Org</div>
+        <div class="rf-seats">100</div>
+        <div class="rf-seats-label">seats</div>
+        <div class="rf-price">$560.00</div>
+        <span class="rf-save">Save 30%</span>
+      </div>
+      <div class="rf-pricing-card">
+        <div class="rf-tier-name">Enterprise</div>
+        <div class="rf-seats">500</div>
+        <div class="rf-seats-label">seats</div>
+        <div class="rf-price">$2,400.00</div>
+        <span class="rf-save">Save 40%</span>
+      </div>
+      <div class="rf-pricing-card">
+        <div class="rf-tier-name">Government</div>
+        <div class="rf-seats">1,000</div>
+        <div class="rf-seats-label">seats</div>
+        <div class="rf-price">$4,000.00</div>
+        <span class="rf-save">Save 50%</span>
+      </div>
+      <div class="rf-pricing-card custom">
+        <div class="rf-tier-name">Custom</div>
+        <div class="rf-seats">?</div>
+        <div class="rf-seats-label">seats</div>
+        <div class="rf-price">Quote</div>
+        <span class="rf-save">Contact us</span>
+      </div>
+    </div>
+
+    <!-- Enrollment Form -->
+    <div class="rf-form-wrap">
+      <form id="rfBulkForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="rf-form-grid">
+          <div class="rf-form-group">
+            <label for="rf-org-name">Organization Name</label>
+            <input type="text" id="rf-org-name" name="organization_name" placeholder="e.g. Ministry of Education, Zimbabwe" required>
+          </div>
+          <div class="rf-form-group">
+            <label for="rf-org-type">Organization Type</label>
+            <select id="rf-org-type" name="organization_type" required>
+              <option value="" disabled selected>Select type...</option>
+              <option value="ngo">NGO / Charity</option>
+              <option value="government">Government</option>
+              <option value="school">School / University</option>
+              <option value="corporation">Corporation</option>
+              <option value="club">Club / Association</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="rf-form-group">
+            <label for="rf-contact-person">Contact Person</label>
+            <input type="text" id="rf-contact-person" name="contact_person" placeholder="Full name of authorized representative" required>
+          </div>
+          <div class="rf-form-group">
+            <label for="rf-email">Email Address</label>
+            <input type="email" id="rf-email" name="email" placeholder="official@organization.org" required>
+          </div>
+          <div class="rf-form-group">
+            <label for="rf-phone">Phone / WhatsApp</label>
+            <input type="tel" id="rf-phone" name="phone" placeholder="+263 77 123 4567" required>
+          </div>
+          <div class="rf-form-group">
+            <label for="rf-country">Country</label>
+            <select id="rf-country" name="country" required>
+              <option value="" disabled selected>Select country...</option>
+              <option value="zimbabwe">Zimbabwe</option>
+              <option value="nigeria">Nigeria</option>
+              <option value="kenya">Kenya</option>
+              <option value="ghana">Ghana</option>
+              <option value="south_africa">South Africa</option>
+              <option value="uganda">Uganda</option>
+              <option value="tanzania">Tanzania</option>
+              <option value="ethiopia">Ethiopia</option>
+              <option value="zambia">Zambia</option>
+              <option value="malawi">Malawi</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="rf-form-group">
+            <label for="rf-seats">Number of Seats</label>
+            <input type="number" id="rf-seats" name="number_of_seats" placeholder="50" min="1" required>
+          </div>
+          <div class="rf-form-group">
+            <label for="rf-courses">Preferred Course(s)</label>
+            <input type="text" id="rf-courses" name="preferred_courses" placeholder="e.g. Pig Farming, Solar Technology, Web Development">
+          </div>
+          <div class="rf-form-group full-width">
+            <label for="rf-message">Additional Requirements / Message</label>
+            <textarea id="rf-message" name="message" placeholder="Tell us about your program goals, timeline, special needs (e.g. offline access, local language, printed certificates)..."></textarea>
+          </div>
+          <button type="submit" class="rf-submit-btn">📨 Request Bulk Enrollment Quote</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <!--  2. INVESTORS SUPPORTING AFRICAN GROWTH                                      -->
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <section class="rf-section" id="investors" style="background:#f8f9fa; margin:0 -1rem; padding:3rem 1rem;">
+    <div style="max-width:1200px; margin:0 auto;">
+      <h2 class="rf-section-title">🤝 Investors Supporting African Growth</h2>
+      <p class="rf-section-sub">Organizations and funds actively investing in African education, skills, and entrepreneurship</p>
+
+      <div class="rf-investors-grid" id="rfInvestorsGrid"></div>
+    </div>
+  </section>
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <!--  3. SOCIAL & SHARE                                                           -->
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <section class="rf-section" id="social">
+    <h2 class="rf-section-title">🌐 Connect With Us</h2>
+    <p class="rf-section-sub">Follow, share, and spread the word across 40 platforms</p>
+
+    <div class="rf-social-grid" id="rfSocialGrid"></div>
+
+    <div class="rf-share-bar">
+      <h3>🔗 Share this page</h3>
+      <div class="rf-share-buttons" id="rfShareButtons"></div>
+      <div class="rf-share-url">
+        <input type="text" id="rfPageUrl" readonly value="https://riseafricaskills.com/">
+        <button onclick="rfCopyUrl()">📋 Copy</button>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /ras-footer-wrap -->
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<!--  4. FOOTER BOTTOM                                                            -->
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<footer class="rf-footer-bottom">
+  <div class="rf-footer-inner">
+    <div class="rf-footer-logo">r<span>A</span>s</div>
+    <div class="rf-footer-logo" style="font-size:1rem; font-weight:600; margin-bottom:0.5rem;">rise <span style="color:var(--rf-accent);">AFRICA</span> skills</div>
+    <div class="rf-footer-email">
+      📧 <a href="mailto:all@riseafricaskills.com">all@riseafricaskills.com</a>
+    </div>
+    <div class="rf-footer-copy">
+      © 2026 Rise Africa Skills. All rights reserved. Built for Africa, by Africa.
+    </div>
+  </div>
+</footer>
+
+<div class="rf-toast" id="rfToast">Copied to clipboard!</div>
+
+<!-- ═══════ JAVASCRIPT ═══════ -->
+<script>
+  /* ─── INVESTOR DATA ─── */
+  const rfInvestors = [
+    {icon:"🌍", name:"African Development Bank (AfDB)", type:"Multilateral Development Bank", focus:"Education, skills development, youth employment, and entrepreneurship across all 54 African countries. Provides loans, grants, and technical assistance.", tags:["$10B+ AUM","Pan-Africa","Education","Grants"], email:"education@afdb.org", web:"afdb.org"},
+    {icon:"💰", name:"Mastercard Foundation", type:"Private Foundation", focus:"Young Africans' education and employment. $1.5B committed to enabling 30 million young people to secure dignified work by 2030.", tags:["$1.5B Commitment","Youth","EdTech","Scholarships"], email:"info@mastercardfdn.org", web:"mastercardfdn.org"},
+    {icon:"🚀", name:"Andela", type:"Tech Talent Investor", focus:"Investing in African software developers and tech talent. Connects African engineers with global tech companies (Google, Microsoft, IBM).", tags:["$180M+ Raised","Tech","Remote Work","Nigeria/Kenya"], email:"partners@andela.com", web:"andela.com"},
+    {icon:"🌱", name:"Acumen Fund", type:"Impact Venture Capital", focus:"Patient capital for companies solving poverty in Africa. Invests in education, agriculture, energy, and healthcare. $150M+ deployed.", tags:["$150M+","Impact","Patient Capital","East Africa"], email:"info@acumen.org", web:"acumen.org"},
+    {icon:"📚", name:"Global Partnership for Education (GPE)", type:"Multilateral Partnership", focus:"The largest global fund dedicated to transforming education in lower-income countries. $5B+ invested in African education systems.", tags:["$5B+ Fund","K-12","System Reform","Grants"], email:"info@globalpartnership.org", web:"globalpartnership.org"},
+    {icon:"⚡", name:"Energy Access Ventures (EAV)", type:"Venture Capital", focus:"Investing in energy access and productive use in Africa. Supports solar-powered productive equipment and skills training for rural communities.", tags:["$50M+","Clean Energy","Rural","West Africa"], email:"contact@energyaccessventures.com", web:"energyaccessventures.com"},
+    {icon:"🎓", name:"Edukans", type:"International NGO", focus:"Quality education and vocational training in Africa. Works with local partners to improve teaching, learning materials, and school management.", tags:["Netherlands-based","Vocational","Teacher Training","Ethiopia/Malawi"], email:"info@edukans.org", web:"edukans.org"},
+    {icon:"🐝", name:"Beehive Holdings", type:"Impact Investment Firm", focus:"SME financing and skills development in Africa. Provides debt and equity to high-growth African businesses with strong social impact.", tags:["SME Focus","Debt+Equity","East Africa","Fintech"], email:"info@beehiveholdings.com", web:"beehiveholdings.com"},
+    {icon:"🌾", name:"One Acre Fund", type:"Social Enterprise / NGO", focus:"Supplies smallholder farmers with financing, seeds, fertilizer, and training. Serves 4M+ farmers across 9 African countries. Strong skills component.", tags:["4M+ Farmers","Agriculture","Microfinance","East/West Africa"], email:"info@oneacrefund.org", web:"oneacrefund.org"},
+    {icon:"💡", name:"GSMA Innovation Fund", type:"Mobile Industry Fund", focus:"Supports startups using mobile technology to deliver educational services in Africa. Grants and equity for EdTech and mobile learning.", tags:["Mobile-first","EdTech","Grants","Innovation"], email:"innovationfund@gsma.com", web:"gsma.com"},
+    {icon:"🏦", name:"CDC Group (British International Investment)", type:"Development Finance Institution", focus:"UK government's development finance institution. $5B+ portfolio in Africa. Invests in education infrastructure, skills platforms, and job creation.", tags:["$5B+ Portfolio","DFI","Infrastructure","UK-backed"], email:"enquiries@bii.co.uk", web:"bii.co.uk"},
+    {icon:"🎯", name:"Partech Africa", type:"Venture Capital", focus:"Leading VC fund for African tech startups. $300M+ under management. Invests in education technology, fintech, and digital infrastructure.", tags:["$300M+ AUM","Tech","Series A/B","Pan-Africa"], email:"africa@partechpartners.com", web:"partechpartners.com"},
+    {icon:"🌊", name:"Blue Haven Initiative", type:"Impact Family Office", focus:"One of the largest family offices focused on impact investing in Africa. Supports education, financial inclusion, and clean energy ventures.", tags:["Family Office","Impact","Education","Clean Energy"], email:"info@bluehaveninitiative.com", web:"bluehaveninitiative.com"},
+    {icon:"🎤", name:"Tony Elumelu Foundation (TEF)", type:"African Philanthropy", focus:"$100M commitment to empower 10,000 African entrepreneurs. Provides seed capital, training, and mentoring. Strong focus on youth skills and entrepreneurship.", tags:["$100M Fund","Entrepreneurship","Seed Capital","Nigeria-led"], email:"info@tonyelumelufoundation.org", web:"tonyelumelufoundation.org"},
+    {icon:"🔄", name:"Alitheia Capital", type:"Gender-Lens VC", focus:"First gender-lens private equity fund in Africa. $100M fund investing in women-led businesses, including education and skills platforms.", tags:["$100M Fund","Gender-Lens","Women-led","West Africa"], email:"info@alitheiacapital.com", web:"alitheiacapital.com"},
+    {icon:"📱", name:"Samurai Incubate Africa", type:"Japanese VC / Incubator", focus:"Japanese venture capital investing in early-stage African startups. Strong interest in education technology, agritech, and fintech.", tags:["Japanese VC","Seed","East Africa","Tech"], email:"africa@samurai-incubate.co.jp", web:"samurai-incubate.co.jp"},
+    {icon:"🏗️", name:"IFC (International Finance Corporation)", type:"World Bank Group", focus:"Largest global development institution focused on private sector. $50B+ in Africa. Invests in education, skills, digital infrastructure, and SME growth.", tags:["$50B+","World Bank","Private Sector","Global"], email:"info@ifc.org", web:"ifc.org"},
+    {icon:"🎨", name:"Creative Industries Fund NL", type:"Cultural Development Fund", focus:"Supports creative and cultural industries in Africa. Funds digital skills, creative entrepreneurship, and media training programs.", tags:["Creative","Digital Skills","Media","Netherlands"], email:"info@stimuleringsfonds.nl", web:"stimuleringsfonds.nl"},
+    {icon:"🌳", name:"African Forest Forum (AFF)", type:"Pan-African NGO", focus:"Capacity building in forestry and natural resource management. Provides training, research grants, and skills development for rural communities.", tags:["Forestry","Rural","Grants","Environment"], email:"info@afforum.org", web:"afforum.org"},
+    {icon:"📊", name:"Lok Capital", type:"Impact Investment Fund", focus:"Invests in financial inclusion, education, and healthcare in Africa and India. $200M+ under management. Patient capital approach.", tags:["$200M+","Financial Inclusion","India+Africa","Impact"], email:"info@lokcapital.com", web:"lokcapital.com"}
+  ];
+
+  const rfInvGrid = document.getElementById('rfInvestorsGrid');
+  rfInvestors.forEach(inv => {
+    const card = document.createElement('div');
+    card.className = 'rf-investor-card';
+    card.innerHTML = `
+      <div class="rf-investor-header">
+        <span class="rf-investor-icon">${inv.icon}</span>
+        <div class="rf-investor-meta">
+          <div class="rf-investor-name">${inv.name}</div>
+          <div class="rf-investor-type">${inv.type}</div>
+        </div>
+      </div>
+      <div class="rf-investor-focus"><strong>Focus:</strong> ${inv.focus}</div>
+      <div class="rf-investor-tags">${inv.tags.map(t => `<span class="rf-tag">${t}</span>`).join('')}</div>
+      <div class="rf-investor-contact">
+        📧 <a href="mailto:${inv.email}">${inv.email}</a> | 🌐 <a href="https://${inv.web}" target="_blank" rel="noopener">${inv.web}</a>
+      </div>
+    `;
+    rfInvGrid.appendChild(card);
+  });
+
+  /* ─── SOCIAL LINKS — UPDATE THESE TO YOUR REAL HANDLES ─── */
+  const rfSocials = [
+    {icon:"📘", name:"Facebook",       url:"https://facebook.com/riseafricaskills"},
+    {icon:"📸", name:"Instagram",      url:"https://instagram.com/riseafricaskills"},
+    {icon:"𝕏",  name:"Twitter / X",    url:"https://x.com/riseafricaskills"},
+    {icon:"💼", name:"LinkedIn",       url:"https://linkedin.com/company/riseafricaskills"},
+    {icon:"▶️", name:"YouTube",        url:"https://youtube.com/@riseafricaskills"},
+    {icon:"🎵", name:"TikTok",         url:"https://tiktok.com/@riseafricaskills"},
+    {icon:"💬", name:"WhatsApp",       url:"https://wa.me/263771234567"},
+    {icon:"✈️", name:"Telegram",       url:"https://t.me/riseafricaskills"},
+    {icon:"👻", name:"Snapchat",       url:"https://snapchat.com/add/riseafricaskills"},
+    {icon:"📌", name:"Pinterest",      url:"https://pinterest.com/riseafricaskills"},
+    {icon:"🧵", name:"Threads",        url:"https://threads.net/@riseafricaskills"},
+    {icon:"🔴", name:"Reddit",         url:"https://reddit.com/r/riseafricaskills"},
+    {icon:"🎮", name:"Discord",        url:"https://discord.gg/riseafricaskills"},
+    {icon:"🎥", name:"Twitch",         url:"https://twitch.tv/riseafricaskills"},
+    {icon:"📝", name:"Medium",         url:"https://medium.com/@riseafricaskills"},
+    {icon:"📰", name:"Substack",       url:"https://riseafricaskills.substack.com"},
+    {icon:"💻", name:"GitHub",         url:"https://github.com/riseafricaskills"},
+    {icon:"🦊", name:"GitLab",         url:"https://gitlab.com/riseafricaskills"},
+    {icon:"🎨", name:"Behance",        url:"https://behance.net/riseafricaskills"},
+    {icon:"🏀", name:"Dribbble",       url:"https://dribbble.com/riseafricaskills"},
+    {icon:"🎧", name:"Spotify",        url:"https://open.spotify.com/show/riseafricaskills"},
+    {icon:"🍎", name:"Apple Podcasts", url:"https://podcasts.apple.com/riseafricaskills"},
+    {icon:"☁️", name:"SoundCloud",     url:"https://soundcloud.com/riseafricaskills"},
+    {icon:"❓", name:"Quora",          url:"https://quora.com/profile/riseafricaskills"},
+    {icon:"🌀", name:"Tumblr",         url:"https://riseafricaskills.tumblr.com"},
+    {icon:"🐘", name:"Mastodon",       url:"https://mastodon.social/@riseafricaskills"},
+    {icon:"🔒", name:"Signal",         url:"https://signal.me/#p/+263771234567"},
+    {icon:"🎬", name:"Vimeo",          url:"https://vimeo.com/riseafricaskills"},
+    {icon:"🎛️", name:"Mixcloud",       url:"https://mixcloud.com/riseafricaskills"},
+    {icon:"🎸", name:"Bandcamp",       url:"https://riseafricaskills.bandcamp.com"},
+    {icon:"👩‍💻",name:"Dev.to",         url:"https://dev.to/riseafricaskills"},
+    {icon:"🌐", name:"Hashnode",       url:"https://hashnode.com/@riseafricaskills"},
+    {icon:"🚀", name:"Product Hunt",   url:"https://producthunt.com/@riseafricaskills"},
+    {icon:"👼", name:"AngelList",      url:"https://angel.co/company/riseafricaskills"},
+    {icon:"💎", name:"Crunchbase",     url:"https://crunchbase.com/organization/rise-africa-skills"},
+    {icon:"📚", name:"Goodreads",      url:"https://goodreads.com/riseafricaskills"},
+    {icon:"💚", name:"WeChat",         url:"weixin://dl/officialaccounts?riseafricaskills"},
+    {icon:"🟢", name:"LINE",           url:"https://line.me/ti/p/@riseafricaskills"},
+    {icon:"🇷🇺",name:"VKontakte",      url:"https://vk.com/riseafricaskills"},
+    {icon:"🟠", name:"Odnoklassniki",  url:"https://ok.ru/riseafricaskills"}
+  ];
+
+  const rfSocGrid = document.getElementById('rfSocialGrid');
+  rfSocials.forEach(s => {
+    const a = document.createElement('a');
+    a.className = 'rf-social-item';
+    a.href = s.url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.innerHTML = `<span class="rf-icon">${s.icon}</span><span class="rf-label">${s.name}</span>`;
+    rfSocGrid.appendChild(a);
+  });
+
+  /* ─── SHARE BUTTONS ─── */
+  const rfShareBtns = [
+    {icon:"f",  name:"Facebook",  share:"https://www.facebook.com/sharer/sharer.php?u="},
+    {icon:"𝕏",  name:"Twitter",   share:"https://twitter.com/intent/tweet?url="},
+    {icon:"in", name:"LinkedIn",  share:"https://www.linkedin.com/sharing/share-offsite/?url="},
+    {icon:"📱", name:"WhatsApp",  share:"https://wa.me/?text="},
+    {icon:"✉️", name:"Email",     share:"mailto:?subject=Check%20out%20Rise%20Africa%20Skills&body="},
+    {icon:"✈️", name:"Telegram",  share:"https://t.me/share/url?url="},
+    {icon:"P",  name:"Pinterest", share:"https://pinterest.com/pin/create/button/?url="},
+    {icon:"R",  name:"Reddit",    share:"https://reddit.com/submit?url="}
+  ];
+
+  const rfSb = document.getElementById('rfShareButtons');
+  const rfPageUrl = encodeURIComponent(window.location.href);
+  const rfPageTitle = encodeURIComponent(document.title);
+  rfShareBtns.forEach(b => {
+    const btn = document.createElement('button');
+    btn.className = 'rf-share-btn';
+    btn.title = 'Share on ' + b.name;
+    btn.innerHTML = b.icon;
+    btn.onclick = () => {
+      let url = b.share + rfPageUrl;
+      if(b.name === 'Twitter')  url += '&text=' + rfPageTitle;
+      if(b.name === 'Telegram') url += '&text=' + rfPageTitle;
+      if(b.name === 'Email')    url += rfPageUrl + '%0A%0A' + rfPageTitle;
+      if(b.name === 'WhatsApp') url += rfPageUrl + '%20-%20' + rfPageTitle;
+      window.open(url, '_blank', 'width=600,height=400');
+    };
+    rfSb.appendChild(btn);
+  });
+
+  document.getElementById('rfPageUrl').value = window.location.href;
+
+  function rfCopyUrl() {
+    const input = document.getElementById('rfPageUrl');
+    input.select();
+    navigator.clipboard.writeText(input.value).then(() => {
+      const toast = document.getElementById('rfToast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    });
+  }
+</script>
+<!-- ═══════════════════════════════════════════════════════════════════════════════ -->
+<!--  END COMPLETE FOOTER SECTION                                                   -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════ -->
 </body>
 </html>
 
