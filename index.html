@@ -78,6 +78,7 @@ body.light .card-btn[data-tier="gift"]{background:#f5f2ee;color:var(--gold);bord
 
  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script> 
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
  <div style="background:#fff; border-bottom:1px solid #e5e7eb; padding:1rem 1.5rem; text-align:right;">
@@ -134,7 +135,7 @@ body.light .card-btn[data-tier="gift"]{background:#f5f2ee;color:var(--gold);bord
 <p>Our AI Tutor delivers real, fact-based courses built entirely by artificial intelligence. From agriculture to solar technology — learn skills that work in Africa, with little to no starting capital.</p>
 <div class="hero-buttons">
 <button class="hero-btn" id="btnExplore">Explore Courses</button>
-<button class="hero-btn-outline" id="btnExplore">🔍 Explore Courses</button>
+<button class="hero-btn-outline" id="btnExplore2">🔍 Explore Courses</button>
 <button class="hero-btn-outline" id="btnStartFree">🎓 Sign Up — Free</button>
 <button class="hero-btn-gold" id="btnRegister">📝 Enroll Now</button>
 </div>
@@ -3748,24 +3749,28 @@ body.light .card-btn[data-tier="gift"]{background:#f5f2ee;color:var(--gold);bord
   "use strict";
   const SUPABASE_URL = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc';
-  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  var supabaseClient = null;
+  if(typeof supabase !== 'undefined' && supabase.createClient){
+    try { supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY); }
+    catch(e){ console.warn('Supabase init failed:', e.message); }
+  }
   // ===== THEME =====
   var btnTheme = document.getElementById('btnTheme');
   if(btnTheme){
     btnTheme.addEventListener('click', function(){
       document.body.classList.toggle('light');
       var isLight = document.body.classList.contains('light');
-      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+      localStorage.setItem('ras-theme', isLight ? 'light' : 'dark'); localStorage.setItem('theme', isLight ? 'light' : 'dark');
       btnTheme.textContent = isLight ? '☀️ Light' : '🌙 Dark';
     });
-    if(localStorage.getItem('theme') === 'light'){
+    if((localStorage.getItem('ras-theme') || (localStorage.getItem('ras-theme') || localStorage.getItem('theme'))) === 'light'){
       document.body.classList.add('light');
       btnTheme.textContent = '☀️ Light';
     }
   }
 
   // ===== UNITS =====
-  var currentUnit = localStorage.getItem('unit') || 'metric';
+  var currentUnit = (localStorage.getItem('ras-unit') || localStorage.getItem('unit')) || 'metric';
   var btnUnit = document.getElementById('btnUnit');
   function applyUnits(){
     var isM = currentUnit === 'metric';
@@ -3779,7 +3784,7 @@ body.light .card-btn[data-tier="gift"]{background:#f5f2ee;color:var(--gold);bord
   if(btnUnit){
     btnUnit.addEventListener('click', function(){
       currentUnit = currentUnit === 'metric' ? 'imperial' : 'metric';
-      localStorage.setItem('unit', currentUnit);
+      localStorage.setItem('ras-unit', currentUnit); localStorage.setItem('unit', currentUnit);
       applyUnits();
     });
   }
@@ -3849,7 +3854,10 @@ body.light .card-btn[data-tier="gift"]{background:#f5f2ee;color:var(--gold);bord
   document.getElementById('navAgents').addEventListener('click', function(e){ e.preventDefault(); scrollToId('agents'); });
   document.getElementById('navSignUp').addEventListener('click', function(e){ e.preventDefault(); openAuthModal('signup'); });
   document.getElementById('navLogIn').addEventListener('click', function(e){ e.preventDefault(); openAuthModal('login'); });
-  document.getElementById('btnExplore').addEventListener('click', function(){ scrollToId('courses'); });
+  var btnExplore = document.getElementById('btnExplore');
+  if(btnExplore) btnExplore.addEventListener('click', function(){ scrollToId('courses'); });
+  var btnExplore2 = document.getElementById('btnExplore2');
+  if(btnExplore2) btnExplore2.addEventListener('click', function(e){ e.preventDefault(); scrollToId('courses'); });
   // ===== COURSE SEARCH (fixed: search titles & categories only) =====
   var inpSearch = document.getElementById('inpSearch');
   if(inpSearch){
@@ -4455,6 +4463,7 @@ body.light .card-btn[data-tier="gift"]{background:#f5f2ee;color:var(--gold);bord
             payment_method: payment, amount: prices[tier]||8, tier: tier
           };
           if(currentUser && currentUser.id) supabasePayload.user_id = currentUser.id;
+          if(!supabaseClient){ alert('Service unavailable. Please try again later.'); return; }
           supabaseClient.from('enrollments').insert([supabasePayload]).then(function(result){
             if(result.error) console.error('Supabase error:', result.error);
             else console.log('Saved to Supabase');
@@ -4587,6 +4596,7 @@ body.light .card-btn[data-tier="gift"]{background:#f5f2ee;color:var(--gold);bord
   }
 
   // Check existing session
+  if(supabaseClient && supabaseClient.auth){
   supabaseClient.auth.getSession().then(function(res){
     if(res.data && res.data.session){
       currentUser = res.data.session.user;
@@ -4595,6 +4605,7 @@ body.light .card-btn[data-tier="gift"]{background:#f5f2ee;color:var(--gold);bord
   });
 
   // Listen for auth changes
+  if(supabaseClient && supabaseClient.auth){
   supabaseClient.auth.onAuthStateChange(function(event, session){
     if(event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED'){
       currentUser = session ? session.user : null;
@@ -4604,6 +4615,7 @@ body.light .card-btn[data-tier="gift"]{background:#f5f2ee;color:var(--gold);bord
       updateUserUI();
     }
   });
+  }
 
   function updateUserUI(){
     if(!userBadge || !userName || !userAvatar) return;
@@ -4614,7 +4626,7 @@ body.light .card-btn[data-tier="gift"]{background:#f5f2ee;color:var(--gold);bord
       userName.textContent = name;
       userAvatar.textContent = initial;
       userBadge.style.display = 'flex';
-      userBadge.onclick = function(){ if(confirm('Log out of rAs?')){ supabaseClient.auth.signOut(); } };
+      userBadge.onclick = function(){ if(confirm('Log out of rAs?')){ if(supabaseClient && supabaseClient.auth){ supabaseClient.auth.signOut(); } } };
       // Pre-fill enrollment form
       var regName = document.getElementById('regName');
       var regEmail = document.getElementById('regEmail');
@@ -4642,6 +4654,7 @@ body.light .card-btn[data-tier="gift"]{background:#f5f2ee;color:var(--gold);bord
 
       if(isLoginMode){
         // LOG IN
+        if(!supabaseClient || !supabaseClient.auth){ alert('Service unavailable. Please try again later.'); return; }
         supabaseClient.auth.signInWithPassword({email:email, password:password}).then(function(res){
           if(res.error){ alert('Login failed: ' + res.error.message); return; }
           currentUser = res.data.user;
@@ -4657,6 +4670,7 @@ body.light .card-btn[data-tier="gift"]{background:#f5f2ee;color:var(--gold);bord
         var confirmPass = document.getElementById('authConfirm').value;
         if(!name){ alert('Please enter your full name.'); return; }
         if(password !== confirmPass){ alert('Passwords do not match.'); return; }
+        if(!supabaseClient || !supabaseClient.auth){ alert('Service unavailable. Please try again later.'); return; }
         supabaseClient.auth.signUp({
           email: email,
           password: password,
@@ -4676,15 +4690,6 @@ body.light .card-btn[data-tier="gift"]{background:#f5f2ee;color:var(--gold);bord
     closeAuthModal();
     scrollToId('courses');
   });
-
-  // ===== EXPLORE COURSES BUTTON =====
-  var btnExplore = document.getElementById('btnExplore');
-  if(btnExplore){
-    btnExplore.addEventListener('click', function(e){
-      e.preventDefault();
-      scrollToId('courses');
-    });
-  }
 
   // ===== FIX START FREE BUTTON =====
   var btnStartFree = document.getElementById('btnStartFree');
@@ -5810,33 +5815,7 @@ body.light .contact-title{color:#1a1a1a}
 <a href="mailto:all@riseafricaskills.com">📧 Email us</a> · <a href="https://wa.me/263773001353" target="_blank">📱 WhatsApp</a>
 </div>
 </div>
-<script>
-(function(){
-  const btn = document.getElementById('btnTheme');
-  const body = document.body;
-  if (localStorage.getItem('ras-theme') === 'light') body.classList.add('light');
-  function updateBtn(){ if(btn) btn.textContent = body.classList.contains('light') ? '🌙 Dark' : '☀️ Light'; }
-  if(btn){ btn.addEventListener('click', function(){
-    body.classList.toggle('light');
-    localStorage.setItem('ras-theme', body.classList.contains('light') ? 'light' : 'dark');
-    updateBtn();
-  });}
-  updateBtn();
-})();
-</script>
- <script>
-(function(){
-  const btn = document.getElementById('btnUnit');
-  const body = document.body;
-  if (localStorage.getItem('ras-unit') === 'imperial') body.classList.add('imperial');
-  function updateBtn(){ if(btn) btn.textContent = body.classList.contains('imperial') ? '📐 Imperial' : '📏 Metric'; }
-  if(btn){ btn.addEventListener('click', function(){
-    body.classList.toggle('imperial');
-    localStorage.setItem('ras-unit', body.classList.contains('imperial') ? 'imperial' : 'metric');
-    updateBtn();
-  });}
-  updateBtn();
-})();
-</script>
+
+ 
 </body>
 </html>
