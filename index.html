@@ -5824,5 +5824,19 @@ body.light .contact-title{color:#1a1a1a}
   updateBtn();
 })();
 </script>
+ <script>
+(function(){
+  const btn = document.getElementById('btnUnit');
+  const body = document.body;
+  if (localStorage.getItem('ras-unit') === 'imperial') body.classList.add('imperial');
+  function updateBtn(){ if(btn) btn.textContent = body.classList.contains('imperial') ? '📐 Imperial' : '📏 Metric'; }
+  if(btn){ btn.addEventListener('click', function(){
+    body.classList.toggle('imperial');
+    localStorage.setItem('ras-unit', body.classList.contains('imperial') ? 'imperial' : 'metric');
+    updateBtn();
+  });}
+  updateBtn();
+})();
+</script>
 </body>
 </html>
