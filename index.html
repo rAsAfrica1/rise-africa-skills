@@ -73,51 +73,32 @@ body.light .guest-notice a{color:#1a1a1a;font-weight:700}
 .card-btn:hover{transform:translateY(-1px);opacity:0.9}
 body.light .card-actions{border-color:#e0e0e0}
 body.light .card-btn[data-tier="gift"]{background:#f5f2ee;color:var(--gold);border-color:var(--gold)}
-/* ═══════ PRICING CARDS (matches course colours) ═══════ */
-.pricing-section{max-width:1100px;margin:0 auto;padding:2rem 1rem}
-.pricing-section h2{text-align:center;color:var(--gold);font-size:1.5rem;margin-bottom:.3rem}
-.pricing-sub{text-align:center;color:var(--muted);font-size:.9rem;margin-bottom:1.5rem}
-.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
-.price-card{background:var(--card);border:1px solid #333;border-radius:12px;padding:1.5rem;text-align:left;transition:border-color .2s,transform .2s}
-.price-card:hover{transform:translateY(-3px)}
-.tier-course:hover{border-color:var(--gold)}
-.tier-cert:hover{border-color:var(--green)}
-.tier-print:hover{border-color:var(--blue)}
-.tier-label{font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;font-weight:600;margin-bottom:.4rem;display:block}
-.tier-course .tier-label{color:var(--gold)}
-.tier-cert .tier-label{color:var(--green)}
-.tier-print .tier-label{color:var(--blue)}
-.price-card h3{font-size:1.15rem;color:#fff;margin-bottom:.3rem}
-.price-card .price{font-size:1.8rem;font-weight:700;margin-bottom:.8rem}
-.tier-course .price{color:var(--gold)}
-.tier-cert .price{color:var(--green)}
-.tier-print .price{color:var(--blue)}
-.price-card ul{list-style:none;padding:0;margin:0 0 1.2rem;color:var(--muted);font-size:.82rem;line-height:1.7}
-.price-card ul li{padding-left:1.2rem;position:relative}
-.price-card ul li::before{content:"✓";position:absolute;left:0}
-.tier-course ul li::before{color:var(--gold)}
-.tier-cert ul li::before{color:var(--green)}
-.tier-print ul li::before{color:var(--blue)}
-.btn-buy{display:inline-block;width:100%;text-align:center;padding:.6rem 1rem;border-radius:8px;font-weight:600;font-size:.9rem;cursor:pointer;border:none;transition:opacity .2s;text-decoration:none}
-.btn-buy:hover{opacity:.9}
-.btn-buy[data-tier=course]{background:var(--gold);color:var(--darker)}
-.btn-buy[data-tier=cert]{background:var(--green);color:#fff}
-.btn-buy[data-tier=print]{background:var(--blue);color:#fff}
-.price-check-note{text-align:center;color:var(--muted);font-size:.75rem;margin-top:1rem}
-body.light .price-card{background:#fff;border-color:#e0e0e0}
-body.light .price-card h3{color:#1a1a1a}</style>
-<base target="_blank">
 
- <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script> 
+/* ===== MISSING CATEGORY & UTILITY CSS ===== */
+.categories-section{max-width:1200px;margin:2rem auto;padding:0 2rem;}
+.section-sub{text-align:center;color:var(--muted);margin-bottom:1.5rem;font-size:0.9rem;}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1rem;margin-bottom:1rem;}
+.cat-card{background:var(--card);border:1px solid #2a2a2a;border-radius:10px;padding:1rem;text-align:center;cursor:pointer;transition:all .2s;}
+.cat-card:hover{border-color:var(--gold);transform:translateY(-2px);}
+.cat-card.active{border-color:var(--gold);background:rgba(201,162,39,0.08);}
+.cat-emoji{font-size:1.8rem;margin-bottom:0.3rem;}
+.cat-name{font-size:0.8rem;font-weight:600;color:#fff;margin-bottom:0.2rem;}
+.cat-count{font-size:0.7rem;color:var(--muted);}
+.cat-results{text-align:center;color:var(--muted);font-size:0.8rem;margin-top:0.5rem;}
+/* User badge */
+.user-badge{display:flex;align-items:center;gap:0.4rem;background:var(--card);border:1px solid #333;border-radius:20px;padding:0.3rem 0.8rem;color:var(--text);font-size:0.8rem;}
+.u-avatar{width:28px;height:28px;background:var(--gold);color:var(--darker);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.75rem;}
+/* Light theme fixes */
+body.light .cat-card{background:#fff;border-color:#e0e0e0;}
+body.light .cat-name{color:#1a1a1a;}
+body.light .user-badge{background:#fff;border-color:#ddd;color:#1a1a1a;}
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <base target="_blank">
 <base target="_blank">
 </head>
 <body>
- <div style="background:#fff; border-bottom:1px solid #e5e7eb; padding:1rem 1.5rem; text-align:right;">
-  <a href="/study-diary.html" style="font-weight:700; color:#059669; text-decoration:none; font-size:1rem;">
-    📅 Study Diary
-  </a>
-</div>
 <header>
 <div class="logo"><div class="logo-icon">rAs</div><span>rise AFRICA skills</span></div>
 <div class="toggles">
@@ -179,7 +160,9 @@ body.light .price-card h3{color:#1a1a1a}</style>
 <div class="ai-badge">🤖 100% AI BACKOFFICE</div>
 </section>
 <section class="pricing" id="pricing">
-<div class="price-card"><h3></li></ul></div>
+<div class="price-card"><h3>Full Course Access</h3><div class="price">$8.00</div><ul><li>Complete video lessons</li><li>Downloadable materials</li><li>AI Tutor support</li><li>Lifetime access</li></ul></div>
+<div class="price-card"><h3>Course + Certificate</h3><div class="price">$10.00</div><ul><li>Everything in Full Access</li><li>Verified digital certificate</li><li>Shareable on LinkedIn</li><li>Blockchain verified</li></ul></div>
+<div class="price-card"><h3>Print / Download / Share</h3><div class="price">$3.50</div><ul><li>High-res PDF download</li><li>Physical print option</li><li>Social media sharing</li><li>One-time purchase</li></ul></div>
 </section>
 <div class="search-bar"><input type="text" id="inpSearch" placeholder="Search 388 courses..."></div>
 <section class="enrolled-section" id="enrolled">
@@ -280,57 +263,7 @@ body.light .price-card h3{color:#1a1a1a}</style>
 </div>
 <div class="cat-results" id="catResults">Showing all 388 courses</div>
 </section>
-<!-- ═══════ PRICING CARDS ═══════ -->
-<section class="pricing-section">
-  <h2>💳 Choose Your Access</h2>
-  <p class="pricing-sub">One-time purchase. Lifetime access. No subscriptions.</p>
 
-  <div class="pricing-grid">
-    <!-- $8.00 Course -->
-    <div class="price-card tier-course">
-      <span class="tier-label">Course Only</span>
-      <h3>Full Course Access</h3>
-      <div class="price">$8.00</div>
-      <ul>
-        <li>Complete video lessons</li>
-        <li>Downloadable materials</li>
-        <li>AI Tutor support</li>
-        <li>Lifetime access</li>
-      </ul>
-      <button class="btn-buy" data-tier="course">Get Full Access</button>
-    </div>
-
-    <!-- $10.00 +Cert -->
-    <div class="price-card tier-cert">
-      <span class="tier-label">Most Popular</span>
-      <h3>Course + Certificate</h3>
-      <div class="price">$10.00</div>
-      <ul>
-        <li>Everything in Full Access</li>
-        <li>Verified digital certificate</li>
-        <li>Shareable on LinkedIn</li>
-        <li>Blockchain verified</li>
-      </ul>
-      <button class="btn-buy" data-tier="cert">Get Course + Cert</button>
-    </div>
-
-    <!-- $3.50 Print -->
-    <div class="price-card tier-print">
-      <span class="tier-label">Add-on</span>
-      <h3>Print / Download / Share</h3>
-      <div class="price">$3.50</div>
-      <ul>
-        <li>High-res PDF download</li>
-        <li>Physical print option</li>
-        <li>Social media sharing</li>
-        <li>One-time purchase</li>
-      </ul>
-      <button class="btn-buy" data-tier="print">Get Print Option</button>
-    </div>
-  </div>
-
-  <p class="price-check-note">✅ Iron-Clad Price Check: Call 3 suppliers before you buy.</p>
-</section>
 <section id="courses"><h2 class="section-title" id="coursesTitle">All Courses</h2>
 <div class="course-grid" id="gridCourses">
 <div class="course-card" data-cat="AGRICULTURE"><div class="course-category">AGRICULTURE</div><h3>Pig Farming</h3><p>Start a profitable pig farm with minimal capital. Learn housing, feeding, breeding, disease control, and market strategies for African conditions.</p><div class="price-check">✅ Iron-Clad Price Check: Call 3 suppliers before you buy.</div>
@@ -3829,28 +3762,24 @@ body.light .price-card h3{color:#1a1a1a}</style>
   "use strict";
   const SUPABASE_URL = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc';
-  var supabaseClient = null;
-  if(typeof supabase !== 'undefined' && supabase.createClient){
-    try { supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY); }
-    catch(e){ console.warn('Supabase init failed:', e.message); }
-  }
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
   // ===== THEME =====
   var btnTheme = document.getElementById('btnTheme');
   if(btnTheme){
     btnTheme.addEventListener('click', function(){
       document.body.classList.toggle('light');
       var isLight = document.body.classList.contains('light');
-      localStorage.setItem('ras-theme', isLight ? 'light' : 'dark'); localStorage.setItem('theme', isLight ? 'light' : 'dark');
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
       btnTheme.textContent = isLight ? '☀️ Light' : '🌙 Dark';
     });
-    if((localStorage.getItem('ras-theme') || (localStorage.getItem('ras-theme') || localStorage.getItem('theme'))) === 'light'){
+    if(localStorage.getItem('theme') === 'light'){
       document.body.classList.add('light');
       btnTheme.textContent = '☀️ Light';
     }
   }
 
   // ===== UNITS =====
-  var currentUnit = (localStorage.getItem('ras-unit') || localStorage.getItem('unit')) || 'metric';
+  var currentUnit = localStorage.getItem('unit') || 'metric';
   var btnUnit = document.getElementById('btnUnit');
   function applyUnits(){
     var isM = currentUnit === 'metric';
@@ -3864,7 +3793,7 @@ body.light .price-card h3{color:#1a1a1a}</style>
   if(btnUnit){
     btnUnit.addEventListener('click', function(){
       currentUnit = currentUnit === 'metric' ? 'imperial' : 'metric';
-      localStorage.setItem('ras-unit', currentUnit); localStorage.setItem('unit', currentUnit);
+      localStorage.setItem('unit', currentUnit);
       applyUnits();
     });
   }
@@ -3934,10 +3863,7 @@ body.light .price-card h3{color:#1a1a1a}</style>
   document.getElementById('navAgents').addEventListener('click', function(e){ e.preventDefault(); scrollToId('agents'); });
   document.getElementById('navSignUp').addEventListener('click', function(e){ e.preventDefault(); openAuthModal('signup'); });
   document.getElementById('navLogIn').addEventListener('click', function(e){ e.preventDefault(); openAuthModal('login'); });
-  var btnExplore = document.getElementById('btnExplore');
-  if(btnExplore) btnExplore.addEventListener('click', function(){ scrollToId('courses'); });
-  var btnExplore2 = document.getElementById('btnExplore2');
-  if(btnExplore2) btnExplore2.addEventListener('click', function(e){ e.preventDefault(); scrollToId('courses'); });
+  document.getElementById('btnExplore').addEventListener('click', function(){ scrollToId('courses'); });
   // ===== COURSE SEARCH (fixed: search titles & categories only) =====
   var inpSearch = document.getElementById('inpSearch');
   if(inpSearch){
@@ -4543,7 +4469,6 @@ body.light .price-card h3{color:#1a1a1a}</style>
             payment_method: payment, amount: prices[tier]||8, tier: tier
           };
           if(currentUser && currentUser.id) supabasePayload.user_id = currentUser.id;
-          if(!supabaseClient){ alert('Service unavailable. Please try again later.'); return; }
           supabaseClient.from('enrollments').insert([supabasePayload]).then(function(result){
             if(result.error) console.error('Supabase error:', result.error);
             else console.log('Saved to Supabase');
@@ -4676,16 +4601,14 @@ body.light .price-card h3{color:#1a1a1a}</style>
   }
 
   // Check existing session
-  if(supabaseClient && supabaseClient.auth){
   supabaseClient.auth.getSession().then(function(res){
     if(res.data && res.data.session){
       currentUser = res.data.session.user;
       updateUserUI();
     }
   });
-  }
+
   // Listen for auth changes
-  if(supabaseClient && supabaseClient.auth){
   supabaseClient.auth.onAuthStateChange(function(event, session){
     if(event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED'){
       currentUser = session ? session.user : null;
@@ -4695,7 +4618,6 @@ body.light .price-card h3{color:#1a1a1a}</style>
       updateUserUI();
     }
   });
-  }
 
   function updateUserUI(){
     if(!userBadge || !userName || !userAvatar) return;
@@ -4706,7 +4628,7 @@ body.light .price-card h3{color:#1a1a1a}</style>
       userName.textContent = name;
       userAvatar.textContent = initial;
       userBadge.style.display = 'flex';
-      userBadge.onclick = function(){ if(confirm('Log out of rAs?')){ if(supabaseClient && supabaseClient.auth){ supabaseClient.auth.signOut(); } } };
+      userBadge.onclick = function(){ if(confirm('Log out of rAs?')){ supabaseClient.auth.signOut(); } };
       // Pre-fill enrollment form
       var regName = document.getElementById('regName');
       var regEmail = document.getElementById('regEmail');
@@ -4734,7 +4656,6 @@ body.light .price-card h3{color:#1a1a1a}</style>
 
       if(isLoginMode){
         // LOG IN
-        if(!supabaseClient || !supabaseClient.auth){ alert('Service unavailable. Please try again later.'); return; }
         supabaseClient.auth.signInWithPassword({email:email, password:password}).then(function(res){
           if(res.error){ alert('Login failed: ' + res.error.message); return; }
           currentUser = res.data.user;
@@ -4750,7 +4671,6 @@ body.light .price-card h3{color:#1a1a1a}</style>
         var confirmPass = document.getElementById('authConfirm').value;
         if(!name){ alert('Please enter your full name.'); return; }
         if(password !== confirmPass){ alert('Passwords do not match.'); return; }
-        if(!supabaseClient || !supabaseClient.auth){ alert('Service unavailable. Please try again later.'); return; }
         supabaseClient.auth.signUp({
           email: email,
           password: password,
@@ -4770,6 +4690,15 @@ body.light .price-card h3{color:#1a1a1a}</style>
     closeAuthModal();
     scrollToId('courses');
   });
+
+  // ===== EXPLORE COURSES BUTTON =====
+  var btnExplore = document.getElementById('btnExplore');
+  if(btnExplore){
+    btnExplore.addEventListener('click', function(e){
+      e.preventDefault();
+      scrollToId('courses');
+    });
+  }
 
   // ===== FIX START FREE BUTTON =====
   var btnStartFree = document.getElementById('btnStartFree');
@@ -5515,6 +5444,26 @@ body.light .chat-footer{border-color:rgba(0,0,0,0.05)}
 body.light .contact-card{background:#f8f8f8;border-color:rgba(0,0,0,0.08)}
 body.light .contact-title{color:#1a1a1a}
 
+
+/* ===== MISSING CATEGORY & UTILITY CSS ===== */
+.categories-section{max-width:1200px;margin:2rem auto;padding:0 2rem;}
+.section-sub{text-align:center;color:var(--muted);margin-bottom:1.5rem;font-size:0.9rem;}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1rem;margin-bottom:1rem;}
+.cat-card{background:var(--card);border:1px solid #2a2a2a;border-radius:10px;padding:1rem;text-align:center;cursor:pointer;transition:all .2s;}
+.cat-card:hover{border-color:var(--gold);transform:translateY(-2px);}
+.cat-card.active{border-color:var(--gold);background:rgba(201,162,39,0.08);}
+.cat-emoji{font-size:1.8rem;margin-bottom:0.3rem;}
+.cat-name{font-size:0.8rem;font-weight:600;color:#fff;margin-bottom:0.2rem;}
+.cat-count{font-size:0.7rem;color:var(--muted);}
+.cat-results{text-align:center;color:var(--muted);font-size:0.8rem;margin-top:0.5rem;}
+/* User badge */
+.user-badge{display:flex;align-items:center;gap:0.4rem;background:var(--card);border:1px solid #333;border-radius:20px;padding:0.3rem 0.8rem;color:var(--text);font-size:0.8rem;}
+.u-avatar{width:28px;height:28px;background:var(--gold);color:var(--darker);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.75rem;}
+/* Light theme fixes */
+body.light .cat-card{background:#fff;border-color:#e0e0e0;}
+body.light .cat-name{color:#1a1a1a;}
+body.light .user-badge{background:#fff;border-color:#ddd;color:#1a1a1a;}
+
 </style>
 
 <!-- ═══════ FOOTER WRAPPER ═══════ -->
@@ -5896,6 +5845,222 @@ body.light .contact-title{color:#1a1a1a}
 </div>
 </div>
 
- 
 </body>
 </html>
+<section class="agents-section" id="agents">
+  <h2 class="section-title">🤖 AI Office Agents</h2>
+  <div class="agents-grid">
+    <div class="agent-card"><span class="agent-icon">🎓</span><div><h4>Course Advisor</h4><p>Suggests courses based on your goals.</p><div class="ok">● Online</div></div></div>
+    <div class="agent-card"><span class="agent-icon">💰</span><div><h4>Finance Agent</h4><p>Calculates startup costs and ROI.</p><div class="ok">● Online</div></div></div>
+    <div class="agent-card"><span class="agent-icon">📋</span><div><h4>Business Plan Agent</h4><p>Drafts a plan for your chosen skill.</p><div class="ok">● Online</div></div></div>
+    <div class="agent-card"><span class="agent-icon">🌍</span><div><h4>Market Research Agent</h4><p>Finds buyers and competitors near you.</p><div class="ok">● Online</div></div></div>
+  </div>
+</section>
+
+<section class="cert-section" id="certificate">
+  <h2 class="section-title">🏆 Sample Certificate</h2>
+  <div class="cert-box">
+    <div class="cert-logo">rise AFRICA skills</div>
+    <div class="cert-title">Certificate of Completion</div>
+    <div class="cert-sub">This certifies that</div>
+    <div class="cert-name">Student Name</div>
+    <div class="cert-sub">has successfully completed</div>
+    <div style="color:#fff;font-weight:600;">Course Title Here</div>
+    <div class="cert-meta"><div><strong>Date</strong>2026</div><div><strong>ID</strong>RAS-0000</div></div>
+  </div>
+</section>
+
+<section id="faq" style="max-width:800px;margin:3rem auto;padding:0 2rem;">
+  <h2 class="section-title">❓ Frequently Asked Questions</h2>
+  <details style="background:var(--card);border:1px solid #333;border-radius:8px;padding:1rem;margin-bottom:0.5rem;color:var(--text);">
+    <summary style="cursor:pointer;font-weight:600;color:var(--gold);">How do I access my course after payment?</summary>
+    <p style="margin-top:0.5rem;color:var(--muted);font-size:0.85rem;">Log in and go to "My Courses". All enrolled courses appear instantly after Stripe confirms payment.</p>
+  </details>
+  <details style="background:var(--card);border:1px solid #333;border-radius:8px;padding:1rem;margin-bottom:0.5rem;color:var(--text);">
+    <summary style="cursor:pointer;font-weight:600;color:var(--gold);">Is the certificate verified?</summary>
+    <p style="margin-top:0.5rem;color:var(--muted);font-size:0.85rem;">Yes. Each certificate has a unique blockchain-backed verification URL.</p>
+  </details>
+</section>
+
+<section id="contact" style="text-align:center;padding:3rem 2rem;">
+  <h2 class="section-title">📧 Contact Us</h2>
+  <p style="color:var(--muted);">Email: <a href="mailto:all@riseafricaskills.com">all@riseafricaskills.com</a></p>
+</section>
+
+<section id="bulk" style="max-width:900px;margin:3rem auto;padding:0 2rem;">
+  <h2 class="section-title">🏢 Organizations & Bulk Enrollment</h2>
+  <p style="color:var(--muted);text-align:center;">Contact us for NGO, school, and corporate packages.</p>
+</section>
+
+<footer>
+  <div class="logo"><div class="logo-icon">rAs</div><span>rise AFRICA skills</span></div>
+  <div class="email">all@riseafricaskills.com</div>
+  <div>© 2026 rise AFRICA skills. All rights reserved.</div>
+</footer>
+
+<!-- Modals -->
+<div class="reg-modal-bg" id="regModal">
+  <div class="reg-modal-box">
+    <h3>📝 Enroll Now</h3>
+    <p class="sub">Create your free account to get started.</p>
+    <div class="reg-form">
+      <div class="reg-field"><label>Full Name</label><input type="text" id="regName" placeholder="Your name"></div>
+      <div class="reg-field"><label>Email</label><input type="email" id="regEmail" placeholder="you@email.com"></div>
+      <div class="reg-field"><label>Password</label><input type="password" id="regPass" placeholder="Min 6 characters"></div>
+      <button class="reg-submit" id="btnRegSubmit">Create Account</button>
+    </div>
+    <div class="reg-success" id="regSuccess"><div class="big">🎉</div><h3>Welcome!</h3><p>Your account is ready.</p><button class="start-btn" onclick="document.getElementById('regModal').classList.remove('on')">Start Learning</button></div>
+    <button class="modal-x" onclick="document.getElementById('regModal').classList.remove('on')">×</button>
+  </div>
+</div>
+
+<div class="modal-bg" id="enrollModal">
+  <div class="modal-box">
+    <h3>Confirm Enrollment</h3>
+    <p id="enrollModalText">You are enrolling in:</p>
+    <button class="hero-btn" id="btnPayStripe" style="width:100%;margin-top:1rem;">Pay with Stripe</button>
+    <button class="modal-x" onclick="document.getElementById('enrollModal').classList.remove('on')">×</button>
+  </div>
+</div>
+
+<!-- QR Float -->
+<div class="qr-float" id="qrFloat">
+  <button class="x" onclick="document.getElementById('qrFloat').classList.add('off');document.getElementById('qrShow').classList.add('on')">×</button>
+  <div class="qr-inner"><img src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=https://riseafricaskills.com" alt="QR"><div class="logo-o">rAs</div></div>
+  <div class="lbl"><strong>Scan to Visit</strong>riseafricaskills.com</div>
+</div>
+<button class="qr-show" id="qrShow" onclick="document.getElementById('qrFloat').classList.remove('off');this.classList.remove('on')">📱</button>
+
+<!-- EMERGENCY SCRIPT — REPLACE WITH YOUR FULL SUPABASE/STRIPE LOGIC -->
+<script>
+// --- Supabase init (REPLACE with your real keys) ---
+const SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';
+const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY';
+let sb = null;
+try { sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); } catch(e){ console.error('Supabase failed',e); }
+
+// --- Auth state ---
+let currentUser = null;
+async function checkAuth(){
+  if(!sb)return;
+  const {data:{session}} = await sb.auth.getSession();
+  currentUser = session?.user ?? null;
+  updateUI();
+}
+function updateUI(){
+  const badge = document.getElementById('userBadge');
+  const navSign = document.getElementById('navSignUp');
+  const navLog = document.getElementById('navLogIn');
+  if(currentUser){
+    if(badge){ badge.style.display='flex'; document.getElementById('userName').textContent = currentUser.email.split('@')[0]; document.getElementById('userAvatar').textContent = currentUser.email[0].toUpperCase(); }
+    if(navSign) navSign.style.display='none';
+    if(navLog){ navLog.textContent='Log Out'; navLog.onclick=()=>sb.auth.signOut().then(()=>location.reload()); }
+    document.getElementById('enrolled').classList.add('on');
+  } else {
+    if(badge) badge.style.display='none';
+    if(navSign) navSign.style.display='inline-block';
+    if(navLog){ navLog.textContent='Log In'; navLog.onclick=()=>document.getElementById('regModal').classList.add('on'); }
+    document.getElementById('enrolled').classList.remove('on');
+  }
+}
+
+// --- Enrollment / Stripe stub ---
+let selectedCourse = null;
+function openEnroll(btn){
+  const card = btn.closest('.course-card');
+  const title = card.querySelector('h3').textContent;
+  const tier = btn.dataset.tier;
+  const price = btn.dataset.price || '0';
+  selectedCourse = {title, tier, price};
+  document.getElementById('enrollModalText').innerHTML = `<strong>${title}</strong><br>Tier: ${tier.toUpperCase()}<br>Price: $${price}`;
+  document.getElementById('enrollModal').classList.add('on');
+}
+document.getElementById('btnPayStripe').onclick = function(){
+  alert('Stripe checkout would open here for: ' + (selectedCourse?.title || 'course'));
+  // window.location.href = 'YOUR-STRIPE-CHECKOUT-URL?course=' + encodeURIComponent(selectedCourse.title);
+};
+
+// --- Category filter ---
+function filterCourses(cat, el){
+  document.querySelectorAll('.cat-card').forEach(c=>c.classList.remove('active'));
+  if(el) el.classList.add('active');
+  const cards = document.querySelectorAll('.course-card');
+  let n = 0;
+  cards.forEach(card=>{
+    const ok = cat==='ALL' || card.dataset.cat===cat;
+    card.style.display = ok ? 'block' : 'none';
+    if(ok) n++;
+  });
+  document.getElementById('coursesTitle').textContent = cat==='ALL' ? 'All Courses' : cat;
+  const res = document.getElementById('catResults');
+  if(res) res.textContent = `Showing ${n} course${n!==1?'s':''}`;
+}
+
+// --- Calendar ---
+let calDate = new Date();
+function renderCal(){
+  const grid = document.getElementById('gridCal');
+  if(!grid) return;
+  grid.innerHTML = '';
+  const y = calDate.getFullYear(), m = calDate.getMonth();
+  document.getElementById('lblMonth').textContent = calDate.toLocaleString('default',{month:'long',year:'numeric'});
+  const first = new Date(y,m,1).getDay();
+  const days = new Date(y,m+1,0).getDate();
+  for(let i=0;i<first;i++) grid.appendChild(document.createElement('div'));
+  for(let d=1;d<=days;d++){
+    const cell = document.createElement('div'); cell.className='cal-day'; cell.textContent=d;
+    const today = new Date();
+    if(d===today.getDate() && m===today.getMonth() && y===today.getFullYear()) cell.classList.add('today');
+    cell.onclick = ()=>{
+      document.querySelectorAll('.cal-day').forEach(x=>x.classList.remove('sel'));
+      cell.classList.add('sel');
+      document.getElementById('boxDiary').innerHTML = `<h4>📖 ${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}</h4><p>Study log entry would save to Supabase here.</p><button onclick="alert('Saved')">Save Entry</button>`;
+    };
+    grid.appendChild(cell);
+  }
+}
+document.getElementById('btnPrevMonth').onclick = ()=>{calDate.setMonth(calDate.getMonth()-1);renderCal();};
+document.getElementById('btnNextMonth').onclick = ()=>{calDate.setMonth(calDate.getMonth()+1);renderCal();};
+
+// --- Search ---
+document.getElementById('inpSearch').oninput = function(){
+  const q = this.value.toLowerCase();
+  document.querySelectorAll('.course-card').forEach(card=>{
+    const ok = card.textContent.toLowerCase().includes(q);
+    card.style.display = ok ? 'block' : 'none';
+  });
+};
+
+// --- Theme ---
+document.getElementById('btnTheme').onclick = ()=>{
+  document.body.classList.toggle('light');
+  document.getElementById('btnTheme').textContent = document.body.classList.contains('light') ? '☀️ Light' : '🌙 Dark';
+};
+
+// --- Language dropdown ---
+document.getElementById('btnLang').onclick = (e)=>{e.stopPropagation();document.getElementById('menuLang').classList.toggle('active');};
+document.addEventListener('click',()=>document.getElementById('menuLang').classList.remove('active'));
+
+// --- Nav / Modal triggers ---
+document.getElementById('navSignUp').onclick = (e)=>{e.preventDefault();document.getElementById('regModal').classList.add('on');};
+document.getElementById('navLogIn').onclick = (e)=>{e.preventDefault();document.getElementById('regModal').classList.add('on');};
+document.getElementById('btnRegister').onclick = ()=>document.getElementById('regModal').classList.add('on');
+document.getElementById('btnStartFree').onclick = ()=>document.getElementById('regModal').classList.add('on');
+
+// --- Registration submit stub ---
+document.getElementById('btnRegSubmit').onclick = async function(){
+  if(!sb){ alert('Supabase not configured in this emergency script'); return; }
+  const email = document.getElementById('regEmail').value;
+  const pass = document.getElementById('regPass').value;
+  const name = document.getElementById('regName').value;
+  const {data,error} = await sb.auth.signUp({email,password:pass,options:{data:{full_name:name}}});
+  if(error){ alert(error.message); return; }
+  document.querySelector('.reg-form').style.display='none';
+  document.getElementById('regSuccess').classList.add('on');
+  currentUser = data.user; updateUI();
+};
+
+// --- Init ---
+renderCal(); checkAuth();
+</script>
+</body></html>
