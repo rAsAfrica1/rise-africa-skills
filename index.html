@@ -5810,6 +5810,19 @@ body.light .contact-title{color:#1a1a1a}
 <a href="mailto:all@riseafricaskills.com">📧 Email us</a> · <a href="https://wa.me/263773001353" target="_blank">📱 WhatsApp</a>
 </div>
 </div>
-
+<script>
+(function(){
+  const btn = document.getElementById('btnTheme');
+  const body = document.body;
+  if (localStorage.getItem('ras-theme') === 'light') body.classList.add('light');
+  function updateBtn(){ if(btn) btn.textContent = body.classList.contains('light') ? '🌙 Dark' : '☀️ Light'; }
+  if(btn){ btn.addEventListener('click', function(){
+    body.classList.toggle('light');
+    localStorage.setItem('ras-theme', body.classList.contains('light') ? 'light' : 'dark');
+    updateBtn();
+  });}
+  updateBtn();
+})();
+</script>
 </body>
 </html>
