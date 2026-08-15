@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study Diary — Rise Africa Skills</title>
+  <style>
+    :root {
+      --green: #059669;
+      --green-dark: #047857;
+      --green-light: #ecfdf5;
+      --red: #dc2626;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --radius: 10px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+    }
+
+    /* Header */
+    .site-header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .brand { font-weight: 800; font-size: 1.25rem; color: var(--green-dark); letter-spacing: -0.3px; }
+    .brand span { color: var(--text); font-weight: 700; }
+    .back-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .back-link:hover { color: var(--text); }
+
+    /* Container */
+    .container {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .page-title {
+      margin: 0 0 0.25rem;
+      font-size: 1.5rem;
+    }
+    .page-sub {
+      margin: 0 0 1.5rem;
+      color: var(--muted);
+    }
+
+    /* Layout */
+    .diary-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+    @media (max-width: 860px) {
+      .diary-layout { grid-template-columns: 1fr; }
+    }
+
+    /* Calendar Card */
+    .cal-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.25rem;
+    }
+
+    .cal-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .cal-month-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    .cal-btn {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .cal-btn:hover { background: #f3f4f6; }
+
+    /* Grid */
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+    .cal-dow {
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      padding: 0.5rem 0;
+    }
+    .cal-cell {
+      aspect-ratio: 1;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: 2px solid transparent;
+      background: #fff;
+      position: relative;
+      transition: transform .05s, background .15s, border-color .15s;
+    }
+    .cal-cell:hover { background: #f9fafb; transform: translateY(-1px); }
+    .cal-cell.empty { background: transparent; cursor: default; border-color: transparent; }
+    .cal-cell.empty:hover { transform: none; }
+
+    .cal-cell.today {
+      border-color: var(--green);
+      background: var(--green-light);
+      font-weight: 800;
+    }
+    .cal-cell.selected {
+      outline: 2px solid var(--green);
+      outline-offset: -2px;
+      background: #fff;
+    }
+    .cal-cell.weekend { color: #374151; }
+
+    .cal-num {
+      font-size: 0.95rem;
+      line-height: 1;
+    }
+    .cal-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: transparent;
+      margin-top: 5px;
+    }
+    .cal-dot.has-data { background: var(--green); }
+
+    /* Panel */
+    .panel-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.25rem;
+    }
+
+    .panel-date {
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin: 0 0 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .empty-state {
+      color: var(--muted);
+      font-style: italic;
+      padding: 1rem 0;
+    }
+
+    .session-item {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.85rem;
+      margin-bottom: 0.7rem;
+      position: relative;
+      background: #fff;
+    }
+    .session-topic {
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.15rem;
+      padding-right: 1.5rem;
+    }
+    .session-meta {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .session-del {
+      position: absolute;
+      top: 0.6rem;
+      right: 0.6rem;
+      background: #fee2e2;
+      color: var(--red);
+      border: none;
+      border-radius: 6px;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .session-del:hover { background: #fecaca; }
+
+    .form-section {
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px dashed var(--border);
+    }
+    .form-title {
+      margin: 0 0 0.75rem;
+      font-size: 1rem;
+    }
+    .field {
+      width: 100%;
+      padding: 0.65rem 0.75rem;
+      margin-bottom: 0.6rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+    .field:focus {
+      outline: none;
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(5,150,105,0.12);
+    }
+    textarea.field { resize: vertical; min-height: 64px; }
+
+    .btn-primary {
+      width: 100%;
+      padding: 0.75rem;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+    .btn-primary:hover { background: var(--green-dark); }
+
+    .badge {
+      display: inline-block;
+      background: var(--green-light);
+      color: var(--green-dark);
+      border: 1px solid rgba(5,150,105,0.25);
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-top: 0.5rem;
+    }
+
+    .footer-note {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin: 2rem 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="brand">Rise <span>Africa Skills</span></div>
+    <a class="back-link" href="/">← Back to Courses</a>
+  </header>
+
+  <main class="container">
+    <h1 class="page-title">📅 Study Diary</h1>
+    <p class="page-sub">Track your 31-day learning streak. Pick a day, log your session, build the habit.</p>
+
+    <div class="diary-layout">
+      <!-- Calendar -->
+      <section class="cal-card">
+        <div class="cal-toolbar">
+          <button class="cal-btn" onclick="changeMonth(-1)">◀ Prev</button>
+          <div class="cal-month-title" id="monthTitle">Loading…</div>
+          <button class="cal-btn" onclick="changeMonth(1)">Next ▶</button>
+        </div>
+
+        <div class="cal-grid" id="calendarGrid">
+          <!-- JS builds this -->
+        </div>
+      </section>
+
+      <!-- Side Panel -->
+      <aside class="panel-card">
+        <div class="panel-date" id="panelDate">Select a date</div>
+
+        <div id="sessionsBox">
+          <div class="empty-state">No study session logged yet.</div>
+        </div>
+
+        <div class="form-section">
+          <div class="form-title">Log Study Session</div>
+          <input type="text" id="inTopic" class="field" placeholder="Topic (e.g., Pig Farming)" />
+          <input type="number" id="inMinutes" class="field" placeholder="Minutes studied" min="1" />
+          <textarea id="inNotes" class="field" placeholder="Notes (optional)"></textarea>
+          <button class="btn-primary" onclick="saveSession()">Save Session</button>
+        </div>
+      </aside>
+    </div>
+
+    <div class="footer-note">
+      💡 Tip: Call 3 suppliers before you buy any course equipment.
+    </div>
+  </main>
+
+  <script>
+    /* ============================================================
+       Rise Africa Skills — Study Diary (IndexedDB, single file)
+       ============================================================ */
+
+    const DB_NAME = 'RiseAfricaDB_v1';
+    const STORE = 'studySessions';
+    let db = null;
+    let viewDate = new Date();   // month being viewed
+    let selectedDateStr = null;  // YYYY-MM-DD
+
+    // ---- IndexedDB ----
+    function openDB() {
+      return new Promise((resolve, reject) => {
+        const req = indexedDB.open(DB_NAME, 1);
+        req.onerror = () => reject(req.error);
+        req.onsuccess = () => { db = req.result; resolve(db); };
+        req.onupgradeneeded = (e) => {
+          const d = e.target.result;
+          if (!d.objectStoreNames.contains(STORE)) {
+            const s = d.createObjectStore(STORE, { keyPath: 'id', autoIncrement: true });
+            s.createIndex('date', 'date', { unique: false });
+          }
+        };
+      });
+    }
+
+    function dbAdd(rec) {
+      return new Promise((res, rej) => {
+        const tx = db.transaction(STORE, 'readwrite');
+        const os = tx.objectStore(STORE);
+        const r = os.add(rec);
+        r.onsuccess = () => res(r.result);
+        r.onerror = () => rej(r.error);
+      });
+    }
+
+    function dbDelete(id) {
+      return new Promise((res, rej) => {
+        const tx = db.transaction(STORE, 'readwrite');
+        const r = tx.objectStore(STORE).delete(id);
+        r.onsuccess = () => res();
+        r.onerror = () => rej(r.error);
+      });
+    }
+
+    function dbGetByDate(dateStr) {
+      return new Promise((res, rej) => {
+        const tx = db.transaction(STORE, 'readonly');
+        const idx = tx.objectStore(STORE).index('date');
+        const r = idx.getAll(dateStr);
+        r.onsuccess = () => res(r.result || []);
+        r.onerror = () => rej(r.error);
+      });
+    }
+
+    function dbGetMonthDates(year, month) {
+      // month is 0-based
+      const prefix = `${year}-${String(month + 1).padStart(2, '0')}-`;
+      const start = prefix + '01';
+      const end   = prefix + '31';
+      return new Promise((res, rej) => {
+        const tx = db.transaction(STORE, 'readonly');
+        const idx = tx.objectStore(STORE).index('date');
+        const range = IDBKeyRange.bound(start, end);
+        const out = new Set();
+        const cur = idx.openCursor(range);
+        cur.onsuccess = (e) => {
+          const c = e.target.result;
+          if (!c) return res(out);
+          out.add(c.value.date);
+          c.continue();
+        };
+        cur.onerror = () => rej(cur.error);
+      });
+    }
+
+    // ---- Dates ----
+    function toISODate(d) {
+      // local date -> YYYY-MM-DD
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
+    function fmtLong(dateStr) {
+      const [y, m, d] = dateStr.split('-').map(Number);
+      const date = new Date(y, m - 1, d);
+      return date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    }
+
+    // ---- Calendar Render ----
+    async function renderCalendar() {
+      const grid = document.getElementById('calendarGrid');
+      const title = document.getElementById('monthTitle');
+      const y = viewDate.getFullYear();
+      const m = viewDate.getMonth();
+
+      title.textContent = viewDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+      const first = new Date(y, m, 1);
+      const last  = new Date(y, m + 1, 0);
+      const daysInMonth = last.getDate();
+      const startDow = first.getDay(); // 0=Sun
+
+      // Header row
+      const dowNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+      let html = dowNames.map(n => `<div class="cal-dow">${n}</div>`).join('');
+
+      // Empty lead cells
+      for (let i = 0; i < startDow; i++) {
+        html += `<div class="cal-cell empty"></div>`;
+      }
+
+      const todayStr = toISODate(new Date());
+      const activeDates = await dbGetMonthDates(y, m);
+
+      for (let d = 1; d <= daysInMonth; d++) {
+        const dateObj = new Date(y, m, d);
+        const ds = toISODate(dateObj);
+        const isToday = ds === todayStr;
+        const isSelected = ds === selectedDateStr;
+        const isWeekend = (dateObj.getDay() === 0 || dateObj.getDay() === 6);
+        const hasData = activeDates.has(ds);
+
+        html += `
+          <div class="cal-cell ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''} ${isWeekend ? 'weekend' : ''}"
+               onclick="onDayClick('${ds}')" aria-label="${ds}">
+            <div class="cal-num">${d}</div>
+            <div class="cal-dot ${hasData ? 'has-data' : ''}"></div>
+          </div>
+        `;
+      }
+
+      grid.innerHTML = html;
+    }
+
+    function changeMonth(delta) {
+      viewDate.setMonth(viewDate.getMonth() + delta);
+      renderCalendar();
+    }
+
+    // ---- Panel / Sessions ----
+    async function onDayClick(ds) {
+      selectedDateStr = ds;
+      renderCalendar(); // refresh selection outline
+      await loadPanel(ds);
+    }
+
+    async function loadPanel(ds) {
+      document.getElementById('panelDate').textContent = fmtLong(ds);
+      const box = document.getElementById('sessionsBox');
+      const rows = await dbGetByDate(ds);
+
+      if (!rows.length) {
+        box.innerHTML = `<div class="empty-state">No study session logged yet.</div>`;
+        return;
+      }
+
+      box.innerHTML = rows.map(r => `
+        <div class="session-item">
+          <div class="session-topic">${esc(r.topic)}</div>
+          <div class="session-meta">${r.minutes} min · ${esc(r.notes || 'No notes')}</div>
+          <button class="session-del" onclick="removeSession(${r.id}, '${ds}')" title="Delete">×</button>
+        </div>
+      `).join('');
+    }
+
+    async function saveSession() {
+      const topic = document.getElementById('inTopic').value.trim();
+      const minutes = parseInt(document.getElementById('inMinutes').value, 10);
+      const notes = document.getElementById('inNotes').value.trim();
+      const ds = selectedDateStr || toISODate(new Date());
+
+      if (!topic || !minutes || minutes < 1) {
+        alert('Please enter a topic and valid minutes.');
+        return;
+      }
+
+      await dbAdd({ date: ds, topic, minutes, notes, createdAt: new Date().toISOString() });
+
+      // Clear form
+      document.getElementById('inTopic').value = '';
+      document.getElementById('inMinutes').value = '';
+      document.getElementById('inNotes').value = '';
+
+      // Refresh
+      await renderCalendar();
+      await loadPanel(ds);
+    }
+
+    async function removeSession(id, ds) {
+      await dbDelete(id);
+      await renderCalendar();
+      await loadPanel(ds);
+    }
+
+    function esc(s) {
+      const d = document.createElement('div');
+      d.textContent = s;
+      return d.innerHTML;
+    }
+
+    // ---- Boot ----
+    (async function init() {
+      try {
+        await openDB();
+        selectedDateStr = toISODate(new Date());
+        await renderCalendar();
+        await loadPanel(selectedDateStr);
+      } catch (e) {
+        console.error(e);
+        document.getElementById('calendarGrid').innerHTML =
+          '<div style="grid-column:1/-1;color:#b91c1c;padding:1rem">Calendar failed to load. Try clearing site data and refreshing.</div>';
+      }
+    })();
+  </script>
+</body>
+</html>
