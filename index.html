@@ -777,13 +777,19 @@ body.light .enrolled-card h4{color:#1a1a1a}
 })();
 </script>
  <!-- ═══════════════════════════════════════════════════════════════════════════════ -->
-<!--  RISE AFRICA SKILLS — COMPLETE FOOTER SECTION                                 -->
-<!--  Contains: Institutional/Bulk Enrollment | Investors | Social | Footer Bottom -->
+<!-- <!-- ═══════════════════════════════════════════════════════════════════════════════ -->
+<!--  RISE AFRICA SKILLS — CORRECTED COMPLETE FOOTER                              -->
+<!--  Fixes: symmetric grids, contact section aligned, no overflow                 -->
 <!--  Drop this entire block just BEFORE your closing </body> tag                  -->
 <!-- ═══════════════════════════════════════════════════════════════════════════════ -->
 
 <style>
-  /* ═══════ ROOT VARIABLES (scoped to footer only) ═══════ */
+  /* ═══════ RESET / BOX-SIZING (scoped) ═══════ */
+  .ras-footer-wrap *, .ras-footer-wrap *::before, .ras-footer-wrap *::after {
+    box-sizing: border-box;
+  }
+
+  /* ═══════ ROOT VARIABLES ═══════ */
   .ras-footer-wrap {
     --rf-primary: #1a1a2e;
     --rf-primary-light: #16213e;
@@ -801,6 +807,7 @@ body.light .enrolled-card h4{color:#1a1a1a}
     --rf-shadow-hover: 0 12px 32px rgba(0,0,0,0.10);
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     color: var(--rf-text);
+    width: 100%;
   }
 
   /* ═══════ SECTION HEADERS ═══════ */
@@ -823,10 +830,10 @@ body.light .enrolled-card h4{color:#1a1a1a}
     margin-bottom: 2rem;
   }
 
-  /* ═══════ INSTITUTIONAL — PRICING CARDS ═══════ */
+  /* ═══════ INSTITUTIONAL — PRICING CARDS (SYMMETRIC) ═══════ */
   .rf-pricing-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(6, 1fr);
     gap: 1rem;
     margin-bottom: 2.5rem;
   }
@@ -834,11 +841,14 @@ body.light .enrolled-card h4{color:#1a1a1a}
     background: var(--rf-card);
     border: 2px solid var(--rf-border);
     border-radius: 16px;
-    padding: 1.5rem 1rem;
+    padding: 1.5rem 0.75rem;
     text-align: center;
     position: relative;
     transition: all 0.25s ease;
-    cursor: default;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   .rf-pricing-card:hover {
     transform: translateY(-4px);
@@ -862,9 +872,10 @@ body.light .enrolled-card h4{color:#1a1a1a}
     border-radius: 20px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    white-space: nowrap;
   }
   .rf-pricing-card .rf-tier-name {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 700;
     color: var(--rf-primary);
     text-transform: uppercase;
@@ -872,19 +883,19 @@ body.light .enrolled-card h4{color:#1a1a1a}
     margin-bottom: 0.5rem;
   }
   .rf-pricing-card .rf-seats {
-    font-size: 2.2rem;
+    font-size: 2rem;
     font-weight: 800;
     color: var(--rf-accent);
     line-height: 1;
     margin-bottom: 0.3rem;
   }
   .rf-pricing-card .rf-seats-label {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--rf-text-light);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.6rem;
   }
   .rf-pricing-card .rf-price {
-    font-size: 1.3rem;
+    font-size: 1.15rem;
     font-weight: 700;
     color: var(--rf-primary);
     margin-bottom: 0.3rem;
@@ -893,13 +904,13 @@ body.light .enrolled-card h4{color:#1a1a1a}
     display: inline-block;
     background: var(--rf-green-light);
     color: var(--rf-green);
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 700;
-    padding: 0.2rem 0.6rem;
+    padding: 0.2rem 0.5rem;
     border-radius: 6px;
   }
   .rf-pricing-card.custom .rf-seats {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     color: var(--rf-gold);
   }
 
@@ -940,6 +951,7 @@ body.light .enrolled-card h4{color:#1a1a1a}
     color: var(--rf-text);
     transition: border-color 0.2s, box-shadow 0.2s;
     outline: none;
+    width: 100%;
   }
   .rf-form-group input:focus,
   .rf-form-group select:focus,
@@ -967,16 +979,21 @@ body.light .enrolled-card h4{color:#1a1a1a}
     cursor: pointer;
     transition: background 0.2s, transform 0.2s;
     margin-top: 0.5rem;
+    width: 100%;
   }
   .rf-submit-btn:hover {
     background: var(--rf-accent-hover);
     transform: translateY(-2px);
   }
 
-  /* ═══════ INVESTORS ═══════ */
+  /* ═══════ INVESTORS (SYMMETRIC) ═══════ */
+  .rf-investors-section {
+    background: var(--rf-card-dark);
+    width: 100%;
+  }
   .rf-investors-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.25rem;
   }
   .rf-investor-card {
@@ -988,6 +1005,7 @@ body.light .enrolled-card h4{color:#1a1a1a}
     flex-direction: column;
     gap: 0.6rem;
     transition: all 0.25s ease;
+    height: 100%;
   }
   .rf-investor-card:hover {
     transform: translateY(-3px);
@@ -1009,41 +1027,42 @@ body.light .enrolled-card h4{color:#1a1a1a}
     min-width: 0;
   }
   .rf-investor-name {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 700;
     color: var(--rf-primary);
     line-height: 1.3;
   }
   .rf-investor-type {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--rf-text-light);
     margin-top: 0.15rem;
   }
   .rf-investor-focus {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     color: var(--rf-text);
     line-height: 1.5;
   }
   .rf-investor-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
+    gap: 0.35rem;
   }
   .rf-tag {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     font-weight: 600;
-    padding: 0.2rem 0.5rem;
+    padding: 0.15rem 0.45rem;
     border-radius: 6px;
     background: var(--rf-card-dark);
     color: var(--rf-text-light);
     border: 1px solid var(--rf-border);
   }
   .rf-investor-contact {
-    font-size: 0.78rem;
+    font-size: 0.75rem;
     color: var(--rf-text-light);
     border-top: 1px solid var(--rf-border);
     padding-top: 0.6rem;
     margin-top: auto;
+    word-break: break-word;
   }
   .rf-investor-contact a {
     color: var(--rf-accent);
@@ -1053,10 +1072,10 @@ body.light .enrolled-card h4{color:#1a1a1a}
     text-decoration: underline;
   }
 
-  /* ═══════ SOCIAL ═══════ */
+  /* ═══════ SOCIAL (SYMMETRIC) ═══════ */
   .rf-social-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    grid-template-columns: repeat(8, 1fr);
     gap: 0.75rem;
     margin-bottom: 2.5rem;
   }
@@ -1065,7 +1084,7 @@ body.light .enrolled-card h4{color:#1a1a1a}
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 1rem 0.5rem;
+    padding: 1rem 0.4rem;
     background: var(--rf-card);
     border-radius: 12px;
     text-decoration: none;
@@ -1073,6 +1092,7 @@ body.light .enrolled-card h4{color:#1a1a1a}
     border: 1px solid var(--rf-border);
     transition: all 0.2s ease;
     cursor: pointer;
+    min-height: 90px;
   }
   .rf-social-item:hover {
     transform: translateY(-3px);
@@ -1080,14 +1100,15 @@ body.light .enrolled-card h4{color:#1a1a1a}
     border-color: var(--rf-accent);
   }
   .rf-social-item .rf-icon {
-    font-size: 1.6rem;
-    margin-bottom: 0.4rem;
+    font-size: 1.5rem;
+    margin-bottom: 0.35rem;
     line-height: 1;
   }
   .rf-social-item .rf-label {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 600;
     text-align: center;
+    line-height: 1.2;
   }
   .rf-share-bar {
     background: linear-gradient(135deg, var(--rf-primary) 0%, var(--rf-primary-light) 100%);
@@ -1156,28 +1177,75 @@ body.light .enrolled-card h4{color:#1a1a1a}
     cursor: pointer;
     font-size: 0.85rem;
     transition: background 0.2s;
+    white-space: nowrap;
   }
   .rf-share-url button:hover { background: var(--rf-accent-hover); }
 
+  /* ═══════ CONTACT SECTION ═══════ */
+  .rf-contact-section {
+    background: linear-gradient(135deg, var(--rf-primary) 0%, var(--rf-primary-light) 100%);
+    color: white;
+    width: 100%;
+  }
+  .rf-contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    text-align: center;
+  }
+  .rf-contact-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .rf-contact-item .rf-contact-icon {
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
+  }
+  .rf-contact-item h4 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+  .rf-contact-item p,
+  .rf-contact-item a {
+    margin: 0;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+  }
+  .rf-contact-item a:hover {
+    color: var(--rf-gold);
+    text-decoration: underline;
+  }
+
   /* ═══════ FOOTER BOTTOM ═══════ */
   .rf-footer-bottom {
-    background: var(--rf-primary);
+    background: #0f0f1a;
     color: white;
     padding: 2rem 1rem;
     text-align: center;
+    width: 100%;
   }
   .rf-footer-inner {
     max-width: 1200px;
     margin: 0 auto;
   }
-  .rf-footer-logo {
-    font-size: 1.4rem;
+  .rf-footer-logo-big {
+    font-size: 1.6rem;
     font-weight: 800;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
     letter-spacing: -0.5px;
   }
-  .rf-footer-logo span {
+  .rf-footer-logo-big span {
     color: var(--rf-accent);
+  }
+  .rf-footer-logo-small {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: rgba(255,255,255,0.9);
   }
   .rf-footer-email {
     font-size: 0.9rem;
@@ -1191,8 +1259,8 @@ body.light .enrolled-card h4{color:#1a1a1a}
   .rf-footer-email a:hover { text-decoration: underline; }
   .rf-footer-copy {
     font-size: 0.8rem;
-    color: rgba(255,255,255,0.5);
-    border-top: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.45);
+    border-top: 1px solid rgba(255,255,255,0.08);
     padding-top: 1rem;
     margin-top: 1rem;
   }
@@ -1219,19 +1287,32 @@ body.light .enrolled-card h4{color:#1a1a1a}
   }
 
   /* ═══════ RESPONSIVE ═══════ */
+  @media (max-width: 1024px) {
+    .rf-pricing-grid { grid-template-columns: repeat(3, 1fr); }
+    .rf-investors-grid { grid-template-columns: repeat(2, 1fr); }
+    .rf-social-grid { grid-template-columns: repeat(5, 1fr); }
+    .rf-contact-grid { grid-template-columns: repeat(3, 1fr); }
+  }
   @media (max-width: 768px) {
-    .rf-form-grid { grid-template-columns: 1fr; }
     .rf-pricing-grid { grid-template-columns: repeat(2, 1fr); }
     .rf-investors-grid { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 480px) {
-    .rf-pricing-grid { grid-template-columns: 1fr; }
-    .rf-social-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.5rem; }
-    .rf-social-item { padding: 0.75rem 0.4rem; }
-    .rf-social-item .rf-icon { font-size: 1.3rem; }
-    .rf-social-item .rf-label { font-size: 0.7rem; }
+    .rf-social-grid { grid-template-columns: repeat(4, 1fr); }
+    .rf-contact-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .rf-form-grid { grid-template-columns: 1fr; }
     .rf-section { padding: 2rem 0.75rem; }
     .rf-form-wrap { padding: 1.25rem; }
+  }
+  @media (max-width: 480px) {
+    .rf-pricing-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+    .rf-pricing-card { padding: 1rem 0.5rem; }
+    .rf-pricing-card .rf-seats { font-size: 1.6rem; }
+    .rf-pricing-card .rf-price { font-size: 1rem; }
+    .rf-social-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+    .rf-social-item { padding: 0.75rem 0.3rem; min-height: 80px; }
+    .rf-social-item .rf-icon { font-size: 1.3rem; }
+    .rf-social-item .rf-label { font-size: 0.65rem; }
+    .rf-share-url { flex-direction: column; }
+    .rf-share-url button { width: 100%; }
   }
 </style>
 
@@ -1362,11 +1443,10 @@ body.light .enrolled-card h4{color:#1a1a1a}
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
   <!--  2. INVESTORS SUPPORTING AFRICAN GROWTH                                      -->
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="rf-section" id="investors" style="background:#f8f9fa; margin:0 -1rem; padding:3rem 1rem;">
-    <div style="max-width:1200px; margin:0 auto;">
+  <section class="rf-investors-section">
+    <div class="rf-section">
       <h2 class="rf-section-title">🤝 Investors Supporting African Growth</h2>
       <p class="rf-section-sub">Organizations and funds actively investing in African education, skills, and entrepreneurship</p>
-
       <div class="rf-investors-grid" id="rfInvestorsGrid"></div>
     </div>
   </section>
@@ -1390,15 +1470,42 @@ body.light .enrolled-card h4{color:#1a1a1a}
     </div>
   </section>
 
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <!--  4. CONTACT SECTION                                                          -->
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <section class="rf-contact-section">
+    <div class="rf-section">
+      <h2 class="rf-section-title" style="color:white;">📞 Get In Touch</h2>
+      <p class="rf-section-sub" style="color:rgba(255,255,255,0.75);">We are here to help. Reach out anytime.</p>
+      <div class="rf-contact-grid">
+        <div class="rf-contact-item">
+          <span class="rf-contact-icon">📧</span>
+          <h4>Email</h4>
+          <a href="mailto:all@riseafricaskills.com">all@riseafricaskills.com</a>
+        </div>
+        <div class="rf-contact-item">
+          <span class="rf-contact-icon">💬</span>
+          <h4>WhatsApp</h4>
+          <a href="https://wa.me/263771234567">+263 77 123 4567</a>
+        </div>
+        <div class="rf-contact-item">
+          <span class="rf-contact-icon">🌐</span>
+          <h4>Website</h4>
+          <a href="https://riseafricaskills.com">riseafricaskills.com</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </div><!-- /ras-footer-wrap -->
 
 <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-<!--  4. FOOTER BOTTOM                                                            -->
+<!--  5. FOOTER BOTTOM                                                            -->
 <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
 <footer class="rf-footer-bottom">
   <div class="rf-footer-inner">
-    <div class="rf-footer-logo">r<span>A</span>s</div>
-    <div class="rf-footer-logo" style="font-size:1rem; font-weight:600; margin-bottom:0.5rem;">rise <span style="color:var(--rf-accent);">AFRICA</span> skills</div>
+    <div class="rf-footer-logo-big">r<span>A</span>s</div>
+    <div class="rf-footer-logo-small">rise <span style="color:var(--rf-accent);">AFRICA</span> skills</div>
     <div class="rf-footer-email">
       📧 <a href="mailto:all@riseafricaskills.com">all@riseafricaskills.com</a>
     </div>
@@ -1554,6 +1661,10 @@ body.light .enrolled-card h4{color:#1a1a1a}
       setTimeout(() => toast.classList.remove('show'), 2000);
     });
   }
+</script>
+<!-- ═══════════════════════════════════════════════════════════════════════════════ -->
+<!--  END CORRECTED COMPLETE FOOTER SECTION                                         -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════ -->
 </script>
 <!-- ═══════════════════════════════════════════════════════════════════════════════ -->
 <!--  END COMPLETE FOOTER SECTION                                                   -->
