@@ -73,7 +73,39 @@ body.light .guest-notice a{color:#1a1a1a;font-weight:700}
 .card-btn:hover{transform:translateY(-1px);opacity:0.9}
 body.light .card-actions{border-color:#e0e0e0}
 body.light .card-btn[data-tier="gift"]{background:#f5f2ee;color:var(--gold);border-color:var(--gold)}
-</style>
+/* ═══════ PRICING CARDS (matches course colours) ═══════ */
+.pricing-section{max-width:1100px;margin:0 auto;padding:2rem 1rem}
+.pricing-section h2{text-align:center;color:var(--gold);font-size:1.5rem;margin-bottom:.3rem}
+.pricing-sub{text-align:center;color:var(--muted);font-size:.9rem;margin-bottom:1.5rem}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.price-card{background:var(--card);border:1px solid #333;border-radius:12px;padding:1.5rem;text-align:left;transition:border-color .2s,transform .2s}
+.price-card:hover{transform:translateY(-3px)}
+.tier-course:hover{border-color:var(--gold)}
+.tier-cert:hover{border-color:var(--green)}
+.tier-print:hover{border-color:var(--blue)}
+.tier-label{font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;font-weight:600;margin-bottom:.4rem;display:block}
+.tier-course .tier-label{color:var(--gold)}
+.tier-cert .tier-label{color:var(--green)}
+.tier-print .tier-label{color:var(--blue)}
+.price-card h3{font-size:1.15rem;color:#fff;margin-bottom:.3rem}
+.price-card .price{font-size:1.8rem;font-weight:700;margin-bottom:.8rem}
+.tier-course .price{color:var(--gold)}
+.tier-cert .price{color:var(--green)}
+.tier-print .price{color:var(--blue)}
+.price-card ul{list-style:none;padding:0;margin:0 0 1.2rem;color:var(--muted);font-size:.82rem;line-height:1.7}
+.price-card ul li{padding-left:1.2rem;position:relative}
+.price-card ul li::before{content:"✓";position:absolute;left:0}
+.tier-course ul li::before{color:var(--gold)}
+.tier-cert ul li::before{color:var(--green)}
+.tier-print ul li::before{color:var(--blue)}
+.btn-buy{display:inline-block;width:100%;text-align:center;padding:.6rem 1rem;border-radius:8px;font-weight:600;font-size:.9rem;cursor:pointer;border:none;transition:opacity .2s;text-decoration:none}
+.btn-buy:hover{opacity:.9}
+.btn-buy[data-tier=course]{background:var(--gold);color:var(--darker)}
+.btn-buy[data-tier=cert]{background:var(--green);color:#fff}
+.btn-buy[data-tier=print]{background:var(--blue);color:#fff}
+.price-check-note{text-align:center;color:var(--muted);font-size:.75rem;margin-top:1rem}
+body.light .price-card{background:#fff;border-color:#e0e0e0}
+body.light .price-card h3{color:#1a1a1a}</style>
 <base target="_blank">
 
  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script> 
@@ -5618,7 +5650,57 @@ body.light .contact-title{color:#1a1a1a}
     </div>
   </section>
 
-</div><!-- /ras-footer-wrap -->
+<!-- ═══════ PRICING CARDS ═══════ -->
+<section class="pricing-section">
+  <h2>💳 Choose Your Access</h2>
+  <p class="pricing-sub">One-time purchase. Lifetime access. No subscriptions.</p>
+
+  <div class="pricing-grid">
+    <!-- $8.00 Course -->
+    <div class="price-card tier-course">
+      <span class="tier-label">Course Only</span>
+      <h3>Full Course Access</h3>
+      <div class="price">$8.00</div>
+      <ul>
+        <li>Complete video lessons</li>
+        <li>Downloadable materials</li>
+        <li>AI Tutor support</li>
+        <li>Lifetime access</li>
+      </ul>
+      <button class="btn-buy" data-tier="course">Get Full Access</button>
+    </div>
+
+    <!-- $10.00 +Cert -->
+    <div class="price-card tier-cert">
+      <span class="tier-label">Most Popular</span>
+      <h3>Course + Certificate</h3>
+      <div class="price">$10.00</div>
+      <ul>
+        <li>Everything in Full Access</li>
+        <li>Verified digital certificate</li>
+        <li>Shareable on LinkedIn</li>
+        <li>Blockchain verified</li>
+      </ul>
+      <button class="btn-buy" data-tier="cert">Get Course + Cert</button>
+    </div>
+
+    <!-- $3.50 Print -->
+    <div class="price-card tier-print">
+      <span class="tier-label">Add-on</span>
+      <h3>Print / Download / Share</h3>
+      <div class="price">$3.50</div>
+      <ul>
+        <li>High-res PDF download</li>
+        <li>Physical print option</li>
+        <li>Social media sharing</li>
+        <li>One-time purchase</li>
+      </ul>
+      <button class="btn-buy" data-tier="print">Get Print Option</button>
+    </div>
+  </div>
+
+  <p class="price-check-note">✅ Iron-Clad Price Check: Call 3 suppliers before you buy.</p>
+</section></div><!-- /ras-footer-wrap -->
 
 <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
 <!--  5. FOOTER BOTTOM                                                            -->
