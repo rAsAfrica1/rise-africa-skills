@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rise Africa Skills — Pig Farming Newsletter</title>
+<style>
+:root {
+  --primary: #1a1a1a;
+  --secondary: #4a4a4a;
+  --accent: #c9a227;
+  --accent2: #2d7d46;
+  --bg: #f7f5f0;
+  --card: #ffffff;
+  --border: #e0ddd5;
+  --danger: #c0392b;
+  --success: #27ae60;
+  --warning: #f39c12;
+  --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font); background: var(--bg); color: var(--primary); line-height: 1.6; }
+.container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+.header { text-align: center; padding: 40px 20px; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); color: white; border-radius: 16px; margin-bottom: 24px; position: relative; overflow: hidden; }
+.header h1 { font-size: 2.2rem; font-weight: 700; margin-bottom: 8px; }
+.header .tagline { font-size: 1.1rem; opacity: 0.9; margin-bottom: 16px; }
+.pricing-badge { display: inline-flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.15); padding: 10px 24px; border-radius: 50px; font-size: 0.95rem; }
+.pricing-badge .price { font-size: 1.3rem; font-weight: 700; color: var(--accent); }
+.pricing-badge .free { background: var(--accent2); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+
+.nav-tabs { display: flex; gap: 8px; overflow-x: auto; padding: 4px; margin-bottom: 24px; background: var(--card); border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.nav-tab { flex: 1; min-width: 100px; padding: 12px 16px; border: none; background: transparent; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.9rem; color: var(--secondary); transition: all 0.2s; white-space: nowrap; text-align: center; }
+.nav-tab:hover { background: var(--bg); }
+.nav-tab.active { background: var(--primary); color: white; }
+.nav-tab .icon { display: block; font-size: 1.4rem; margin-bottom: 4px; }
+
+.section { display: none; }
+.section.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.card { background: var(--card); border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid var(--border); }
+.card h2 { font-size: 1.3rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.card h3 { font-size: 1.05rem; margin-bottom: 8px; color: var(--secondary); }
+
+.topics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+.topic-item { background: var(--bg); padding: 14px; border-radius: 10px; border-left: 4px solid var(--accent2); cursor: pointer; transition: all 0.2s; }
+.topic-item:hover { transform: translateX(4px); background: #ede9e0; }
+.topic-item .num { display: inline-block; width: 24px; height: 24px; background: var(--accent2); color: white; border-radius: 50%; text-align: center; line-height: 24px; font-size: 0.75rem; font-weight: 700; margin-right: 8px; }
+.topic-item.locked { opacity: 0.6; border-left-color: var(--border); }
+.topic-item.locked .num { background: var(--secondary); }
+
+.quiz-question { background: var(--bg); padding: 16px; border-radius: 10px; margin-bottom: 12px; }
+.quiz-question p { font-weight: 600; margin-bottom: 10px; }
+.quiz-options { display: flex; flex-direction: column; gap: 8px; }
+.quiz-option { padding: 10px 14px; background: white; border: 2px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 0.95rem; }
+.quiz-option:hover { border-color: var(--accent2); }
+.quiz-option.correct { border-color: var(--success); background: #e8f5e9; }
+.quiz-option.wrong { border-color: var(--danger); background: #ffebee; }
+.quiz-option.disabled { pointer-events: none; opacity: 0.7; }
+.quiz-score { text-align: center; padding: 20px; font-size: 1.2rem; font-weight: 700; }
+
+.sudoku-grid { display: grid; grid-template-columns: repeat(9, 1fr); gap: 1px; background: var(--primary); padding: 1px; border-radius: 8px; max-width: 360px; margin: 0 auto; }
+.sudoku-cell { aspect-ratio: 1; background: white; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1.1rem; cursor: pointer; border: none; outline: none; text-align: center; width: 100%; }
+.sudoku-cell:nth-child(3n) { border-right: 2px solid var(--primary); }
+.sudoku-cell:nth-child(9n) { border-right: none; }
+.sudoku-cell:nth-child(n+19):nth-child(-n+27),
+.sudoku-cell:nth-child(n+46):nth-child(-n+54) { border-bottom: 2px solid var(--primary); }
+.sudoku-cell.fixed { background: #f0f0f0; color: var(--primary); }
+.sudoku-cell.selected { background: #fff3cd; }
+.sudoku-cell.error { color: var(--danger); }
+.sudoku-controls { display: flex; justify-content: center; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.sudoku-btn { padding: 8px 16px; border: none; background: var(--primary); color: white; border-radius: 6px; cursor: pointer; font-weight: 600; }
+.sudoku-btn:hover { background: var(--secondary); }
+.sudoku-numpad { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; max-width: 280px; margin: 12px auto 0; }
+.numpad-btn { padding: 10px; border: 1px solid var(--border); background: white; border-radius: 6px; cursor: pointer; font-weight: 600; }
+.numpad-btn:hover { background: var(--bg); }
+
+.game-card { background: var(--bg); padding: 16px; border-radius: 10px; margin-bottom: 12px; display: flex; align-items: center; gap: 16px; cursor: pointer; transition: all 0.2s; }
+.game-card:hover { transform: scale(1.02); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.game-icon { width: 50px; height: 50px; background: var(--accent); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; flex-shrink: 0; }
+.game-info h4 { margin-bottom: 4px; }
+.game-info p { font-size: 0.85rem; color: var(--secondary); }
+.game-badge { margin-left: auto; background: var(--accent2); color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+
+.job-listing { background: var(--bg); padding: 16px; border-radius: 10px; margin-bottom: 12px; border-left: 4px solid var(--accent); }
+.job-listing h4 { margin-bottom: 4px; }
+.job-meta { display: flex; gap: 16px; font-size: 0.85rem; color: var(--secondary); margin-bottom: 8px; flex-wrap: wrap; }
+.job-salary { color: var(--accent2); font-weight: 600; }
+.job-btn { padding: 8px 16px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; margin-top: 8px; }
+
+.prize-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.prize-card { background: var(--bg); padding: 16px; border-radius: 10px; text-align: center; transition: all 0.2s; cursor: pointer; }
+.prize-card:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
+.prize-icon { font-size: 2.5rem; margin-bottom: 8px; }
+.prize-card h4 { font-size: 0.95rem; margin-bottom: 4px; }
+.prize-card p { font-size: 0.8rem; color: var(--secondary); }
+.prize-points { display: inline-block; background: var(--accent); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; margin-top: 8px; }
+
+.leaderboard { background: var(--bg); border-radius: 10px; overflow: hidden; }
+.leaderboard-row { display: flex; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.leaderboard-row:last-child { border-bottom: none; }
+.leaderboard-rank { width: 32px; font-weight: 700; font-size: 1.1rem; }
+.leaderboard-rank.gold { color: var(--accent); }
+.leaderboard-rank.silver { color: #95a5a6; }
+.leaderboard-rank.bronze { color: #cd7f32; }
+.leaderboard-name { flex: 1; font-weight: 500; }
+.leaderboard-score { font-weight: 700; color: var(--accent2); }
+
+.progress-bar { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; margin: 8px 0; }
+.progress-fill { height: 100%; background: var(--accent2); border-radius: 4px; transition: width 0.5s ease; }
+
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
+.modal-overlay.active { display: flex; }
+.modal { background: var(--card); border-radius: 16px; padding: 24px; max-width: 500px; width: 100%; max-height: 80vh; overflow-y: auto; position: relative; }
+.modal-close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border: none; background: var(--bg); border-radius: 50%; cursor: pointer; font-size: 1.2rem; }
+
+.wordsearch-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 2px; max-width: 400px; margin: 0 auto; }
+.wordsearch-cell { aspect-ratio: 1; background: white; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-weight: 600; cursor: pointer; user-select: none; border-radius: 4px; }
+.wordsearch-cell.found { background: var(--success); color: white; }
+.wordsearch-cell.selected { background: var(--accent); color: white; }
+.wordsearch-words { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; justify-content: center; }
+.wordsearch-word { padding: 4px 12px; background: var(--bg); border-radius: 20px; font-size: 0.85rem; }
+.wordsearch-word.found { background: var(--success); color: white; text-decoration: line-through; }
+
+.memory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 320px; margin: 0 auto; }
+.memory-card { aspect-ratio: 1; background: var(--primary); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; cursor: pointer; transition: transform 0.3s; color: white; }
+.memory-card.flipped { background: white; border: 2px solid var(--accent); color: var(--primary); }
+.memory-card.matched { background: var(--success); border-color: var(--success); color: white; }
+
+@media (max-width: 600px) {
+  .header h1 { font-size: 1.6rem; }
+  .topics-grid { grid-template-columns: 1fr; }
+  .prize-grid { grid-template-columns: repeat(2, 1fr); }
+  .nav-tab { min-width: 80px; padding: 10px 8px; font-size: 0.8rem; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>🐷 Rise Africa Skills</h1>
+  <p class="tagline">Pig Farming Mastery Newsletter — Edition #1</p>
+  <div class="pricing-badge">
+    <span class="price">£3.50</span>
+    <span>per month</span>
+    <span class="free">FREE for under 14</span>
+  </div>
+</div>
+
+<div class="nav-tabs">
+  <button class="nav-tab active" onclick="showSection('topics')">
+    <span class="icon">📚</span>23 Topics
+  </button>
+  <button class="nav-tab" onclick="showSection('games')">
+    <span class="icon">🎮</span>Games
+  </button>
+  <button class="nav-tab" onclick="showSection('quiz')">
+    <span class="icon">❓</span>Quiz
+  </button>
+  <button class="nav-tab" onclick="showSection('sudoku')">
+    <span class="icon">🔢</span>Sudoku
+  </button>
+  <button class="nav-tab" onclick="showSection('careers')">
+    <span class="icon">💼</span>Careers
+  </button>
+  <button class="nav-tab" onclick="showSection('prizes')">
+    <span class="icon">🏆</span>Prizes
+  </button>
+</div>
+
+<!-- TOPICS -->
+<div id="topics" class="section active">
+  <div class="card">
+    <h2>📚 23 Pig Farming Topics</h2>
+    <p style="color: var(--secondary); margin-bottom: 16px;">Master every aspect of pig farming. Click any topic to explore. First 10 unlocked — subscribe for full access!</p>
+    <div class="topics-grid">
+      <div class="topic-item" onclick="showTopic(1)"><span class="num">1</span>Breed Selection & Genetics</div>
+      <div class="topic-item" onclick="showTopic(2)"><span class="num">2</span>Housing & Shelter Design</div>
+      <div class="topic-item" onclick="showTopic(3)"><span class="num">3</span>Nutrition & Feed Formulation</div>
+      <div class="topic-item" onclick="showTopic(4)"><span class="num">4</span>Health & Disease Management</div>
+      <div class="topic-item" onclick="showTopic(5)"><span class="num">5</span>Reproduction & Breeding</div>
+      <div class="topic-item" onclick="showTopic(6)"><span class="num">6</span>Piglet Care & Weaning</div>
+      <div class="topic-item" onclick="showTopic(7)"><span class="num">7</span>Biosecurity Protocols</div>
+      <div class="topic-item" onclick="showTopic(8)"><span class="num">8</span>Waste Management</div>
+      <div class="topic-item" onclick="showTopic(9)"><span class="num">9</span>Record Keeping</div>
+      <div class="topic-item" onclick="showTopic(10)"><span class="num">10</span>Market & Sales Strategy</div>
+      <div class="topic-item locked"><span class="num">11</span>Financial Planning & Budgeting</div>
+      <div class="topic-item locked"><span class="num">12</span>Organic Pig Farming</div>
+      <div class="topic-item locked"><span class="num">13</span>Artificial Insemination</div>
+      <div class="topic-item locked"><span class="num">14</span>Vaccination Schedules</div>
+      <div class="topic-item locked"><span class="num">15</span>Feed Storage & Quality</div>
+      <div class="topic-item locked"><span class="num">16</span>Water Management</div>
+      <div class="topic-item locked"><span class="num">17</span>Pest Control</div>
+      <div class="topic-item locked"><span class="num">18</span>Meat Processing Basics</div>
+      <div class="topic-item locked"><span class="num">19</span>Export Regulations</div>
+      <div class="topic-item locked"><span class="num">20</span>Climate Adaptation</div>
+      <div class="topic-item locked"><span class="num">21</span>Cooperative Farming</div>
+      <div class="topic-item locked"><span class="num">22</span>Digital Farm Management</div>
+      <div class="topic-item locked"><span class="num">23</span>Sustainable Practices</div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>📈 Your Progress</h2>
+    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+      <span>Topics completed</span><span style="font-weight: 700;">3 / 23</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" style="width: 13%;"></div></div>
+    <div style="display: flex; justify-content: space-between; margin-top: 12px; font-size: 0.9rem; color: var(--secondary);">
+      <span>🎯 Quizzes passed: 2/10</span><span>🏅 Points: 340</span><span>⏱ Time: 4h 20m</span>
+    </div>
+  </div>
+</div>
+
+<!-- GAMES -->
+<div id="games" class="section">
+  <div class="card">
+    <h2>🎮 Learning Games</h2>
+    <p style="color: var(--secondary); margin-bottom: 16px;">Play, learn, and earn points! First 10 games available.</p>
+    <div class="game-card" onclick="startWordSearch()"><div class="game-icon">🔍</div><div class="game-info"><h4>Word Search Challenge</h4><p>Find pig farming terms hidden in the grid</p></div><span class="game-badge">+50 pts</span></div>
+    <div class="game-card" onclick="startMemoryGame()"><div class="game-icon">🧠</div><div class="game-info"><h4>Memory Match</h4><p>Match pig breeds with their characteristics</p></div><span class="game-badge">+40 pts</span></div>
+    <div class="game-card" onclick="alert('Feed Mix Calculator — coming next edition!')"><div class="game-icon">⚖️</div><div class="game-info"><h4>Feed Mix Calculator</h4><p>Balance the perfect feed ration</p></div><span class="game-badge">+60 pts</span></div>
+    <div class="game-card" onclick="alert('Disease Detective — coming next edition!')"><div class="game-icon">🔬</div><div class="game-info"><h4>Disease Detective</h4><p>Diagnose symptoms and find cures</p></div><span class="game-badge">+70 pts</span></div>
+    <div class="game-card" onclick="alert('Breed Identifier — coming next edition!')"><div class="game-icon">🐽</div><div class="game-info"><h4>Breed Identifier</h4><p>Guess the pig breed from photos</p></div><span class="game-badge">+45 pts</span></div>
+    <div class="game-card" onclick="alert('Profit Predictor — coming next edition!')"><div class="game-icon">📊</div><div class="game-info"><h4>Profit Predictor</h4><p>Calculate farm profits and losses</p></div><span class="game-badge">+80 pts</span></div>
+    <div class="game-card" onclick="alert('Biosecurity Builder — coming next edition!')"><div class="game-icon">🛡️</div><div class="game-info"><h4>Biosecurity Builder</h4><p>Design a disease-free zone</p></div><span class="game-badge">+55 pts</span></div>
+    <div class="game-card" onclick="alert('Pen Layout Puzzle — coming next edition!')"><div class="game-icon">🏗️</div><div class="game-info"><h4>Pen Layout Puzzle</h4><p>Optimize your farm layout</p></div><span class="game-badge">+50 pts</span></div>
+    <div class="game-card" onclick="alert('Vaccination Scheduler — coming next edition!')"><div class="game-icon">💉</div><div class="game-info"><h4>Vaccination Scheduler</h4><p>Plan the perfect health calendar</p></div><span class="game-badge">+45 pts</span></div>
+    <div class="game-card" onclick="alert('Market Trader — coming next edition!')"><div class="game-icon">💰</div><div class="game-info"><h4>Market Trader</h4><p>Buy low, sell high at the auction</p></div><span class="game-badge">+90 pts</span></div>
+  </div>
+  <div id="wordsearch-container" class="card" style="display:none;">
+    <h2>🔍 Word Search: Pig Farming</h2>
+    <p style="text-align:center; color: var(--secondary); margin-bottom: 12px;">Find: BREED, SWINE, FEED, STY, BACON, SOW, BOAR, LITTER</p>
+    <div class="wordsearch-grid" id="wordsearch-grid"></div>
+    <div class="wordsearch-words" id="wordsearch-words"></div>
+    <div style="text-align:center; margin-top: 16px;">
+      <button class="sudoku-btn" onclick="resetWordSearch()">New Game</button>
+      <button class="sudoku-btn" style="background: var(--secondary);" onclick="closeWordSearch()">Close</button>
+    </div>
+  </div>
+  <div id="memory-container" class="card" style="display:none;">
+    <h2>🧠 Memory Match: Pig Breeds</h2>
+    <p style="text-align:center; color: var(--secondary); margin-bottom: 12px;">Match the pairs! Moves: <span id="memory-moves">0</span></p>
+    <div class="memory-grid" id="memory-grid"></div>
+    <div style="text-align:center; margin-top: 16px;">
+      <button class="sudoku-btn" onclick="resetMemoryGame()">New Game</button>
+      <button class="sudoku-btn" style="background: var(--secondary);" onclick="closeMemoryGame()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz" class="section">
+  <div class="card">
+    <h2>❓ Pig Farming Quiz</h2>
+    <p style="color: var(--secondary); margin-bottom: 16px;">Test your knowledge! First 10 questions — earn points for correct answers.</p>
+    <div id="quiz-container"></div>
+    <div id="quiz-result" class="quiz-score" style="display:none;"></div>
+    <div style="text-align:center; margin-top: 16px;"><button class="sudoku-btn" onclick="resetQuiz()">Retake Quiz</button></div>
+  </div>
+</div>
+
+<!-- SUDOKU -->
+<div id="sudoku" class="section">
+  <div class="card">
+    <h2>🔢 Pig Farmer's Sudoku</h2>
+    <p style="text-align:center; color: var(--secondary); margin-bottom: 12px;">Fill the grid so each row, column, and 3×3 box contains 1-9. Complete for +100 points!</p>
+    <div class="sudoku-grid" id="sudoku-grid"></div>
+    <div class="sudoku-numpad" id="sudoku-numpad"></div>
+    <div class="sudoku-controls">
+      <button class="sudoku-btn" onclick="checkSudoku()">Check Solution</button>
+      <button class="sudoku-btn" onclick="hintSudoku()">Hint (-10 pts)</button>
+      <button class="sudoku-btn" style="background: var(--secondary);" onclick="resetSudoku()">Reset</button>
+    </div>
+    <p id="sudoku-message" style="text-align:center; margin-top: 12px; font-weight: 600; min-height: 24px;"></p>
+  </div>
+</div>
+
+<!-- CAREERS -->
+<div id="careers" class="section">
+  <div class="card">
+    <h2>💼 Pig Farming Job Market</h2>
+    <p style="color: var(--secondary); margin-bottom: 16px;">Explore career opportunities. First 10 roles featured.</p>
+    <div class="job-listing"><h4>🐷 Pig Farm Manager</h4><div class="job-meta"><span>📍 Nigeria, Ghana, Kenya</span><span class="job-salary">£800 – £1,500/month</span><span>📅 Full-time</span></div><p style="font-size: 0.9rem; color: var(--secondary);">Oversee daily operations, staff management, and production targets for commercial pig farms.</p><button class="job-btn" onclick="alert('Apply via careers@riseafricaskills.com')">Apply Now</button></div>
+    <div class="job-listing"><h4>🔬 Animal Health Technician</h4><div class="job-meta"><span>📍 South Africa, Uganda</span><span class="job-salary">£500 – £900/month</span><span>📅 Full-time</span></div><p style="font-size: 0.9rem; color: var(--secondary);">Monitor herd health, administer vaccines, and implement biosecurity protocols.</p><button class="job-btn" onclick="alert('Apply via careers@riseafricaskills.com')">Apply Now</button></div>
+    <div class="job-listing"><h4>🌾 Feed Formulation Specialist</h4><div class="job-meta"><span>📍 Zambia, Zimbabwe</span><span class="job-salary">£600 – £1,100/month</span><span>📅 Full-time</span></div><p style="font-size: 0.9rem; color: var(--secondary);">Develop cost-effective, nutritionally balanced feed rations for optimal pig growth.</p><button class="job-btn" onclick="alert('Apply via careers@riseafricaskills.com')">Apply Now</button></div>
+    <div class="job-listing"><h4>📊 Agricultural Extension Officer</h4><div class="job-meta"><span>📍 Multiple African Countries</span><span class="job-salary">£400 – £700/month</span><span>📅 Government/NGO</span></div><p style="font-size: 0.9rem; color: var(--secondary);">Train smallholder farmers on modern pig farming techniques and best practices.</p><button class="job-btn" onclick="alert('Apply via careers@riseafricaskills.com')">Apply Now</button></div>
+    <div class="job-listing"><h4>🏭 Meat Processing Supervisor</h4><div class="job-meta"><span>📍 Kenya, Botswana</span><span class="job-salary">£550 – £950/month</span><span>📅 Full-time</span></div><p style="font-size: 0.9rem; color: var(--secondary);">Manage pork processing operations, quality control, and packaging standards.</p><button class="job-btn" onclick="alert('Apply via careers@riseafricaskills.com')">Apply Now</button></div>
+    <div class="job-listing"><h4>💻 Farm Data Analyst</h4><div class="job-meta"><span>📍 Remote / Nigeria</span><span class="job-salary">£700 – £1,200/month</span><span>📅 Full-time / Remote</span></div><p style="font-size: 0.9rem; color: var(--secondary);">Analyze production data, optimize breeding programs, and forecast market trends.</p><button class="job-btn" onclick="alert('Apply via careers@riseafricaskills.com')">Apply Now</button></div>
+    <div class="job-listing"><h4>🧬 Breeding & Genetics Consultant</h4><div class="job-meta"><span>📍 South Africa, Kenya</span><span class="job-salary">£900 – £1,800/month</span><span>📅 Contract</span></div><p style="font-size: 0.9rem; color: var(--secondary);">Design breeding strategies, manage AI programs, and improve herd genetics.</p><button class="job-btn" onclick="alert('Apply via careers@riseafricaskills.com')">Apply Now</button></div>
+    <div class="job-listing"><h4>🛡️ Biosecurity Officer</h4><div class="job-meta"><span>📍 Ghana, Tanzania</span><span class="job-salary">£450 – £800/month</span><span>📅 Full-time</span></div><p style="font-size: 0.9rem; color: var(--secondary);">Implement and monitor disease prevention protocols across farm operations.</p><button class="job-btn" onclick="alert('Apply via careers@riseafricaskills.com')">Apply Now</button></div>
+    <div class="job-listing"><h4>📱 AgriTech Sales Representative</h4><div class="job-meta"><span>📍 West Africa Region</span><span class="job-salary">£500 – £1,000/month + commission</span><span>📅 Full-time</span></div><p style="font-size: 0.9rem; color: var(--secondary);">Sell farm management software, automated feeding systems, and IoT sensors.</p><button class="job-btn" onclick="alert('Apply via careers@riseafricaskills.com')">Apply Now</button></div>
+    <div class="job-listing"><h4>🎓 Pig Farming Trainer / Educator</h4><div class="job-meta"><span>📍 Multiple Locations</span><span class="job-salary">£400 – £750/month</span><span>📅 Part-time / Contract</span></div><p style="font-size: 0.9rem; color: var(--secondary);">Deliver training workshops, create course content, and mentor new farmers.</p><button class="job-btn" onclick="alert('Apply via careers@riseafricaskills.com')">Apply Now</button></div>
+  </div>
+  <div class="card">
+    <h2>📈 Industry Growth</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 16px; text-align: center;">
+      <div><div style="font-size: 2rem; font-weight: 700; color: var(--accent2);">+15%</div><div style="font-size: 0.85rem; color: var(--secondary);">Annual job growth</div></div>
+      <div><div style="font-size: 2rem; font-weight: 700; color: var(--accent2);">2.4M</div><div style="font-size: 0.85rem; color: var(--secondary);">Jobs in African pig farming</div></div>
+      <div><div style="font-size: 2rem; font-weight: 700; color: var(--accent2);">£3.2B</div><div style="font-size: 0.85rem; color: var(--secondary);">Market value by 2030</div></div>
+      <div><div style="font-size: 2rem; font-weight: 700; color: var(--accent2);">Top 5</div><div style="font-size: 0.85rem; color: var(--secondary);">Most in-demand skill</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PRIZES -->
+<div id="prizes" class="section">
+  <div class="card">
+    <h2>🏆 Prizes & Rewards</h2>
+    <p style="color: var(--secondary); margin-bottom: 16px;">Earn points by completing lessons, quizzes, and games. Redeem for amazing prizes!</p>
+    <div style="background: linear-gradient(135deg, var(--accent) 0%, #d4a017 100%); color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center;">
+      <div style="font-size: 3rem; margin-bottom: 8px;">⭐</div>
+      <div style="font-size: 1.3rem; font-weight: 700;">Your Points: <span id="user-points">340</span></div>
+      <div style="font-size: 0.9rem; opacity: 0.9; margin-top: 4px;">Keep learning to earn more!</div>
+    </div>
+    <h3 style="margin-bottom: 12px;">🎁 Available Prizes</h3>
+    <div class="prize-grid">
+      <div class="prize-card" onclick="redeemPrize('starter-kit', 500)"><div class="prize-icon">📦</div><h4>Starter Kit</h4><p>Basic pig farming tools</p><span class="prize-points">500 pts</span></div>
+      <div class="prize-card" onclick="redeemPrize('feed-sample', 300)"><div class="prize-icon">🌾</div><h4>Premium Feed</h4><p>50kg sample bag</p><span class="prize-points">300 pts</span></div>
+      <div class="prize-card" onclick="redeemPrize('ebook', 200)"><div class="prize-icon">📖</div><h4>E-Book Bundle</h4><p>5 farming guides</p><span class="prize-points">200 pts</span></div>
+      <div class="prize-card" onclick="redeemPrize('certificate', 400)"><div class="prize-icon">🎓</div><h4>Certificate</h4><p>Course completion</p><span class="prize-points">400 pts</span></div>
+      <div class="prize-card" onclick="redeemPrize('consultation', 800)"><div class="prize-icon">👨‍🏫</div><h4>1-on-1 Consultation</h4><p>30 min with expert</p><span class="prize-points">800 pts</span></div>
+      <div class="prize-card" onclick="redeemPrize('tshirt', 150)"><div class="prize-icon">👕</div><h4>Branded T-Shirt</h4><p>Show your pride</p><span class="prize-points">150 pts</span></div>
+      <div class="prize-card" onclick="redeemPrize('vaccines', 600)"><div class="prize-icon">💉</div><h4>Vaccine Pack</h4><p>Essential vaccines</p><span class="prize-points">600 pts</span></div>
+      <div class="prize-card" onclick="redeemPrize('tablet', 2000)"><div class="prize-icon">📱</div><h4>Farm Tablet</h4><p>Digital management</p><span class="prize-points">2000 pts</span></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>🏅 Leaderboard</h2>
+    <div class="leaderboard">
+      <div class="leaderboard-row"><span class="leaderboard-rank gold">🥇</span><span class="leaderboard-name">Amara Okafor</span><span class="leaderboard-score">2,450 pts</span></div>
+      <div class="leaderboard-row"><span class="leaderboard-rank silver">🥈</span><span class="leaderboard-name">Kwame Asante</span><span class="leaderboard-score">2,180 pts</span></div>
+      <div class="leaderboard-row"><span class="leaderboard-rank bronze">🥉</span><span class="leaderboard-name">Zara Mwangi</span><span class="leaderboard-score">1,920 pts</span></div>
+      <div class="leaderboard-row"><span class="leaderboard-rank">4</span><span class="leaderboard-name">Tendai Mutasa</span><span class="leaderboard-score">1,650 pts</span></div>
+      <div class="leaderboard-row"><span class="leaderboard-rank">5</span><span class="leaderboard-name">Fatima Diallo</span><span class="leaderboard-score">1,480 pts</span></div>
+      <div class="leaderboard-row"><span class="leaderboard-rank">6</span><span class="leaderboard-name">You</span><span class="leaderboard-score" style="color: var(--accent);">340 pts</span></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>🎯 How to Earn Points</h2>
+    <div style="display: grid; gap: 10px;">
+      <div style="display: flex; justify-content: space-between; padding: 10px; background: var(--bg); border-radius: 8px;"><span>Complete a lesson</span><span style="font-weight: 700;">+20 pts</span></div>
+      <div style="display: flex; justify-content: space-between; padding: 10px; background: var(--bg); border-radius: 8px;"><span>Pass a quiz (100%)</span><span style="font-weight: 700;">+50 pts</span></div>
+      <div style="display: flex; justify-content: space-between; padding: 10px; background: var(--bg); border-radius: 8px;"><span>Win a game</span><span style="font-weight: 700;">+40-90 pts</span></div>
+      <div style="display: flex; justify-content: space-between; padding: 10px; background: var(--bg); border-radius: 8px;"><span>Daily login streak</span><span style="font-weight: 700;">+10 pts/day</span></div>
+      <div style="display: flex; justify-content: space-between; padding: 10px; background: var(--bg); border-radius: 8px;"><span>Refer a friend</span><span style="font-weight: 700;">+100 pts</span></div>
+      <div style="display: flex; justify-content: space-between; padding: 10px; background: var(--bg); border-radius: 8px;"><span>Complete Sudoku</span><span style="font-weight: 700;">+100 pts</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Topic Modal -->
+<div class="modal-overlay" id="topic-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h2 id="modal-title">Topic</h2>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<script>
+// ===== NAVIGATION =====
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.closest('.nav-tab').classList.add('active');
+}
+
+// ===== TOPICS =====
+const topicData = {
+  1: { title: "Breed Selection & Genetics", content: "<h3>Choosing the Right Breed</h3><p>Selecting the appropriate pig breed is the foundation of successful farming. Key African breeds include:</p><ul><li><strong>Large White:</strong> Excellent growth rate, adaptable to tropical climates</li><li><strong>Landrace:</strong> Known for high litter sizes and mothering ability</li><li><strong>Duroc:</strong> Superior meat quality and fast growth</li><li><strong>Indigenous breeds:</strong> Hardy, disease-resistant, lower input costs</li></ul><p><strong>Key factors:</strong> Climate adaptability, feed conversion ratio, disease resistance, market preferences, and available resources.</p>" },
+  2: { title: "Housing & Shelter Design", content: "<h3>Building Effective Pig Housing</h3><p>Proper housing protects pigs from weather, predators, and disease while enabling efficient management.</p><ul><li><strong>Space requirements:</strong> 1.5-2m² per adult pig, 0.5m² per weaner</li><li><strong>Ventilation:</strong> Cross-ventilation essential for tropical climates</li><li><strong>Flooring:</strong> Concrete slatted floors for waste management</li><li><strong>Roofing:</strong> Insulated roofing to reduce heat stress</li></ul><p><strong>Design zones:</strong> Farrowing pens, nursery, grower pens, finishing pens, boar pens, and isolation area.</p>" },
+  3: { title: "Nutrition & Feed Formulation", content: "<h3>Feeding for Optimal Growth</h3><p>Proper nutrition accounts for 60-70% of production costs. A balanced diet includes:</p><ul><li><strong>Energy sources:</strong> Maize, sorghum, cassava, sweet potato</li><li><strong>Protein sources:</strong> Soybean meal, fish meal, groundnut cake</li><li><strong>Minerals:</strong> Calcium, phosphorus, salt, trace minerals</li><li><strong>Vitamins:</strong> A, D, E, K, B-complex</li></ul><p><strong>Growth stages:</strong> Starter (weaner), grower, and finisher diets with varying protein levels (18%, 16%, 14%).</p>" },
+  4: { title: "Health & Disease Management", content: "<h3>Keeping Your Herd Healthy</h3><p>Common pig diseases in Africa and prevention strategies:</p><ul><li><strong>African Swine Fever (ASF):</strong> No vaccine — strict biosecurity only</li><li><strong>Swine Flu:</strong> Vaccination and isolation of sick animals</li><li><strong>PRRS:</strong> Vaccination program</li><li><strong>Internal parasites:</strong> Regular deworming every 3 months</li><li><strong>External parasites:</strong> Dust baths, topical treatments</li></ul><p><strong>Signs of illness:</strong> Reduced appetite, lethargy, coughing, diarrhea, skin lesions, abnormal temperature.</p>" },
+  5: { title: "Reproduction & Breeding", content: "<h3>Maximizing Reproductive Success</h3><p>Efficient breeding programs are essential for farm profitability.</p><ul><li><strong>Heat detection:</strong> Restlessness, swollen vulva, mounting behavior</li><li><strong>Gestation period:</strong> 114 days (3 months, 3 weeks, 3 days)</li><li><strong>Farrowing signs:</strong> Nest building, milk let-down, restlessness</li><li><strong>Litter size:</strong> Target 10-12 piglets per litter</li></ul><p><strong>Techniques:</strong> Natural mating vs. artificial insemination (AI). AI offers genetic improvement and disease control.</p>" },
+  6: { title: "Piglet Care & Weaning", content: "<h3>Raising Healthy Piglets</h3><p>The first 8 weeks determine lifetime performance:</p><ul><li><strong>Colostrum:</strong> Must be consumed within 6 hours of birth</li><li><strong>Iron injection:</strong> 100-200mg iron dextran at 1-3 days</li><li><strong>Teeth clipping:</strong> Prevent sow udder damage</li><li><strong>Tail docking:</strong> Reduce tail biting</li><li><strong>Castration:</strong> 7-10 days for boar taint prevention</li></ul><p><strong>Weaning:</strong> 21-28 days at 6-8kg body weight. Gradual transition to solid feed essential.</p>" },
+  7: { title: "Biosecurity Protocols", content: "<h3>Building a Disease-Free Fortress</h3><p>Biosecurity is your first and most important defense:</p><ul><li><strong>Perimeter fencing:</strong> Keep wild pigs and stray animals out</li><li><strong>Foot baths:</strong> Disinfectant at all entry points</li><li><strong>Quarantine:</strong> 30-day isolation for new animals</li><li><strong>All-in, all-out:</strong> Empty and disinfect between batches</li><li><strong>Controlled access:</strong> Limit visitors, dedicated farm clothing</li></ul><p><strong>Disinfection rotation:</strong> Use different disinfectant classes to prevent resistance.</p>" },
+  8: { title: "Waste Management", content: "<h3>Turning Waste into Wealth</h3><p>Effective waste management protects the environment and creates additional income:</p><ul><li><strong>Manure collection:</strong> Daily scraping, slurry systems</li><li><strong>Composting:</strong> 3-6 month composting for organic fertilizer</li><li><strong>Biogas digesters:</strong> Convert manure to cooking gas and electricity</li><li><strong>Vermicomposting:</strong> Earthworms produce premium fertilizer</li></ul><p><strong>Economic benefit:</strong> 100 pigs produce ~5 tons manure/month = £200-400 value as fertilizer.</p>" },
+  9: { title: "Record Keeping", content: "<h3>Data-Driven Farming</h3><p>Accurate records are essential for management decisions:</p><ul><li><strong>Individual animal records:</strong> Birth date, parentage, health history</li><li><strong>Production records:</strong> Feed consumed, weight gain, FCR</li><li><strong>Financial records:</strong> Costs, revenue, profit per pig</li><li><strong>Breeding records:</strong> Matings, farrowing dates, litter sizes</li></ul><p><strong>Key metrics:</strong> Feed conversion ratio (FCR), average daily gain (ADG), mortality rate, cost per kg produced.</p>" },
+  10: { title: "Market & Sales Strategy", content: "<h3>Maximizing Your Profits</h3><p>Understanding markets ensures you get the best price:</p><ul><li><strong>Live weight sales:</strong> Auctions, direct to processors</li><li><strong>Carcass sales:</strong> Sold by dressed weight (65-72% yield)</li><li><strong>Direct consumer:</strong> Higher margins but more labor</li><li><strong>Contract farming:</strong> Guaranteed price, lower risk</li></ul><p><strong>Price factors:</strong> Weight (90-110kg optimal), meat quality, seasonality, transport costs, market access.</p>" }
+};
+
+function showTopic(id) {
+  const data = topicData[id];
+  if (!data) return;
+  document.getElementById('modal-title').textContent = data.title;
+  document.getElementById('modal-content').innerHTML = data.content;
+  document.getElementById('topic-modal').classList.add('active');
+}
+function closeModal() { document.getElementById('topic-modal').classList.remove('active'); }
+
+// ===== QUIZ =====
+const quizQuestions = [
+  { q: "What is the gestation period of a pig?", options: ["90 days", "114 days", "150 days", "280 days"], correct: 1 },
+  { q: "Which disease has NO vaccine available?", options: ["Swine Flu", "PRRS", "African Swine Fever", "Foot and Mouth"], correct: 2 },
+  { q: "What percentage of production costs is feed?", options: ["20-30%", "40-50%", "60-70%", "80-90%"], correct: 2 },
+  { q: "At what age are piglets typically weaned?", options: ["7 days", "14 days", "21-28 days", "56 days"], correct: 2 },
+  { q: "What is the optimal market weight for pigs?", options: ["50-60kg", "70-80kg", "90-110kg", "130-150kg"], correct: 2 },
+  { q: "How much space does an adult pig need?", options: ["0.5m²", "1-1.5m²", "1.5-2m²", "3-4m²"], correct: 2 },
+  { q: "What is the primary protein source in pig feed?", options: ["Maize", "Soybean meal", "Cassava", "Rice bran"], correct: 1 },
+  { q: "How often should pigs be dewormed?", options: ["Monthly", "Every 3 months", "Every 6 months", "Yearly"], correct: 1 },
+  { q: "What does FCR stand for?", options: ["Feed Cost Ratio", "Feed Conversion Ratio", "Farm Cost Record", "Fat Content Ratio"], correct: 1 },
+  { q: "Which pig breed is known for high litter sizes?", options: ["Duroc", "Large White", "Landrace", "Berkshire"], correct: 2 }
+];
+
+let quizScore = 0;
+let quizAnswered = 0;
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+  quizScore = 0;
+  quizAnswered = 0;
+  document.getElementById('quiz-result').style.display = 'none';
+  
+  quizQuestions.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-question';
+    div.innerHTML = `<p>Q${i+1}. ${q.q}</p><div class="quiz-options" id="q${i}"></div>`;
+    container.appendChild(div);
+    
+    const opts = document.getElementById(`q${i}`);
+    q.options.forEach((opt, j) => {
+      const btn = document.createElement('div');
+      btn.className = 'quiz-option';
+      btn.textContent = opt;
+      btn.onclick = () => answerQuiz(i, j, btn);
+      opts.appendChild(btn);
+    });
+  });
+}
+
+function answerQuiz(qIdx, optIdx, el) {
+  const q = quizQuestions[qIdx];
+  const parent = el.parentElement;
+  if (parent.querySelector('.disabled')) return;
+  
+  parent.querySelectorAll('.quiz-option').forEach(o => o.classList.add('disabled'));
+  
+  if (optIdx === q.correct) {
+    el.classList.add('correct');
+    quizScore++;
+  } else {
+    el.classList.add('wrong');
+    parent.children[q.correct].classList.add('correct');
+  }
+  quizAnswered++;
+  
+  if (quizAnswered === quizQuestions.length) {
+    const points = quizScore * 50;
+    document.getElementById('quiz-result').innerHTML = 
+      `🎉 You scored ${quizScore}/10! <br>Earned <strong>${points} points</strong>!`;
+    document.getElementById('quiz-result').style.display = 'block';
+    addPoints(points);
+  }
+}
+
+function resetQuiz() { renderQuiz(); }
+
+// ===== SUDOKU =====
+const sudokuSolution = [
+  [5,3,4,6,7,8,9,1,2],[6,7,2,1,9,5,3,4,8],[1,9,8,3,4,2,5,6,7],
+  [8,5,9,7,6,1,4,2,3],[4,2,6,8,5,3,7,9,1],[7,1,3,9,2,4,8,5,6],
+  [9,6,1,5,3,7,2,8,4],[2,8,7,4,1,9,6,3,5],[3,4,5,2,8,6,1,7,9]
+];
+const sudokuPuzzle = [
+  [5,3,0,0,7,0,0,0,0],[6,0,0,1,9,5,0,0,0],[0,9,8,0,0,0,0,6,0],
+  [8,0,0,0,6,0,0,0,3],[4,0,0,8,0,3,0,0,1],[7,0,0,0,2,0,0,0,6],
+  [0,6,0,0,0,0,2,8,0],[0,0,0,4,1,9,0,0,5],[0,0,0,0,8,0,0,7,9]
+];
+let sudokuCurrent = sudokuPuzzle.map(r => [...r]);
+let selectedCell = null;
+
+function renderSudoku() {
+  const grid = document.getElementById('sudoku-grid');
+  grid.innerHTML = '';
+  for (let r = 0; r < 9; r++) {
+    for (let c = 0; c < 9; c++) {
+      const cell = document.createElement('input');
+      cell.className = 'sudoku-cell';
+      cell.type = 'text';
+      cell.maxLength = 1;
+      cell.dataset.r = r;
+      cell.dataset.c = c;
+      if (sudokuPuzzle[r][c] !== 0) {
+        cell.value = sudokuPuzzle[r][c];
+        cell.classList.add('fixed');
+        cell.readOnly = true;
+      } else {
+        cell.value = sudokuCurrent[r][c] || '';
+        cell.onfocus = () => { selectedCell = {r,c}; highlightCell(cell); };
+        cell.oninput = (e) => {
+          const v = parseInt(e.target.value);
+          if (v >= 1 && v <= 9) { sudokuCurrent[r][c] = v; }
+          else { sudokuCurrent[r][c] = 0; e.target.value = ''; }
+        };
+      }
+      grid.appendChild(cell);
+    }
+  }
+  
+  const numpad = document.getElementById('sudoku-numpad');
+  numpad.innerHTML = '';
+  for (let n = 1; n <= 9; n++) {
+    const btn = document.createElement('button');
+    btn.className = 'numpad-btn';
+    btn.textContent = n;
+    btn.onclick = () => {
+      if (selectedCell) {
+        const {r, c} = selectedCell;
+        const cell = grid.children[r*9+c];
+        if (!cell.readOnly) { cell.value = n; sudokuCurrent[r][c] = n; }
+      }
+    };
+    numpad.appendChild(btn);
+  }
+  const clearBtn = document.createElement('button');
+  clearBtn.className = 'numpad-btn';
+  clearBtn.textContent = '⌫';
+  clearBtn.onclick = () => {
+    if (selectedCell) {
+      const {r, c} = selectedCell;
+      const cell = grid.children[r*9+c];
+      if (!cell.readOnly) { cell.value = ''; sudokuCurrent[r][c] = 0; }
+    }
+  };
+  numpad.appendChild(clearBtn);
+}
+
+function highlightCell(cell) {
+  document.querySelectorAll('.sudoku-cell').forEach(c => c.classList.remove('selected'));
+  cell.classList.add('selected');
+}
+
+function checkSudoku() {
+  let correct = true;
+  const cells = document.querySelectorAll('.sudoku-cell');
+  cells.forEach((cell, i) => {
+    const r = Math.floor(i / 9);
+    const c = i % 9;
+    if (!cell.readOnly) {
+      const val = parseInt(cell.value) || 0;
+      if (val !== sudokuSolution[r][c]) {
+        correct = false;
+        cell.classList.add('error');
+        setTimeout(() => cell.classList.remove('error'), 2000);
+      }
+    }
+  });
+  const msg = document.getElementById('sudoku-message');
+  if (correct) {
+    msg.innerHTML = '🎉 Perfect! You solved it! +100 points!';
+    msg.style.color = 'var(--success)';
+    addPoints(100);
+  } else {
+    msg.innerHTML = '❌ Some cells are incorrect. Keep trying!';
+    msg.style.color = 'var(--danger)';
+  }
+}
+
+function hintSudoku() {
+  if (!selectedCell) { document.getElementById('sudoku-message').textContent = 'Select a cell first!'; return; }
+  const {r, c} = selectedCell;
+  const cell = document.querySelectorAll('.sudoku-cell')[r*9+c];
+  if (!cell.readOnly) { cell.value = sudokuSolution[r][c]; sudokuCurrent[r][c] = sudokuSolution[r][c]; document.getElementById('sudoku-message').textContent = 'Hint used! (-10 points)'; }
+}
+
+function resetSudoku() {
+  sudokuCurrent = sudokuPuzzle.map(r => [...r]);
+  renderSudoku();
+  document.getElementById('sudoku-message').textContent = '';
+}
+
+// ===== WORD SEARCH =====
+const wsWords = ['BREED', 'SWINE', 'FEED', 'STY', 'BACON', 'SOW', 'BOAR', 'LITTER'];
+let wsFound = new Set();
+let wsSelected = [];
+
+function initWordSearch() {
+  const grid = document.getElementById('wordsearch-grid');
+  const wordsDiv = document.getElementById('wordsearch-words');
+  grid.innerHTML = '';
+  wordsDiv.innerHTML = '';
+  wsFound = new Set();
+  wsSelected = [];
+  
+  const letters = [
+    'B','R','E','E','D','X','F','E','E','D',
+    'O','W','I','N','E','S','T','Y','X','O',
+    'A','S','O','W','X','W','I','N','E','R',
+    'R','X','X','X','B','A','C','O','N','X',
+    'L','I','T','T','E','R','X','X','X','X',
+    'I','N','E','X','X','X','X','X','X','X',
+    'T','E','X','X','X','X','X','X','X','X',
+    'T','R','X','X','X','X','X','X','X','X',
+    'E','X','X','X','X','X','X','X','X','X',
+    'R','X','X','X','X','X','X','X','X','X'
+  ];
+  
+  letters.forEach((char, i) => {
+    const cell = document.createElement('div');
+    cell.className = 'wordsearch-cell';
+    cell.textContent = char;
+    cell.dataset.idx = i;
+    cell.onclick = () => toggleWSCell(cell, i);
+    grid.appendChild(cell);
+  });
+  
+  wsWords.forEach(w => {
+    const span = document.createElement('span');
+    span.className = 'wordsearch-word';
+    span.textContent = w;
+    span.id = `ws-word-${w}`;
+    wordsDiv.appendChild(span);
+  });
+}
+
+function toggleWSCell(cell, idx) {
+  if (cell.classList.contains('found')) return;
+  if (wsSelected.includes(idx)) {
+    wsSelected = wsSelected.filter(i => i !== idx);
+    cell.classList.remove('selected');
+  } else {
+    wsSelected.push(idx);
+    cell.classList.add('selected');
+  }
+  checkWSWords();
+}
+
+function checkWSWords() {
+  const selectedChars = wsSelected.map(i => document.querySelectorAll('.wordsearch-cell')[i].textContent).join('');
+  wsWords.forEach(word => {
+    if (!wsFound.has(word) && (selectedChars.includes(word) || selectedChars.split('').reverse().join('').includes(word))) {
+      wsFound.add(word);
+      document.getElementById(`ws-word-${word}`).classList.add('found');
+      wsSelected.forEach(i => document.querySelectorAll('.wordsearch-cell')[i].classList.add('found'));
+      wsSelected = [];
+      if (wsFound.size === wsWords.length) {
+        setTimeout(() => { alert('🎉 Congratulations! You found all words! +50 points!'); addPoints(50); }, 200);
+      }
+    }
+  });
+}
+
+function resetWordSearch() { initWordSearch(); }
+function closeWordSearch() { document.getElementById('wordsearch-container').style.display = 'none'; }
+function startWordSearch() { document.getElementById('wordsearch-container').style.display = 'block'; initWordSearch(); }
+
+// ===== MEMORY GAME =====
+const memoryItems = ['🐷','🐷','🌾','🌾','💉','💉','🏠','🏠','🥓','🥓','🐖','🐖','🍼','🍼','⚖️','⚖️'];
+let memoryFlipped = [];
+let memoryMatched = [];
+let memoryMoves = 0;
+
+function initMemoryGame() {
+  const grid = document.getElementById('memory-grid');
+  grid.innerHTML = '';
+  memoryFlipped = [];
+  memoryMatched = [];
+  memoryMoves = 0;
+  document.getElementById('memory-moves').textContent = '0';
+  const shuffled = [...memoryItems].sort(() => Math.random() - 0.5);
+  shuffled.forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'memory-card';
+    card.dataset.idx = i;
+    card.dataset.item = item;
+    card.textContent = '?';
+    card.onclick = () => flipMemoryCard(card);
+    grid.appendChild(card);
+  });
+}
+
+function flipMemoryCard(card) {
+  if (card.classList.contains('flipped') || card.classList.contains('matched') || memoryFlipped.length >= 2) return;
+  card.classList.add('flipped');
+  card.textContent = card.dataset.item;
+  memoryFlipped.push(card);
+  
+  if (memoryFlipped.length === 2) {
+    memoryMoves++;
+    document.getElementById('memory-moves').textContent = memoryMoves;
+    if (memoryFlipped[0].dataset.item === memoryFlipped[1].dataset.item) {
+      memoryFlipped.forEach(c => { c.classList.remove('flipped'); c.classList.add('matched'); memoryMatched.push(c); });
+      memoryFlipped = [];
+      if (memoryMatched.length === memoryItems.length) {
+        setTimeout(() => { alert(`🎉 Memory Master! Completed in ${memoryMoves} moves! +40 points!`); addPoints(40); }, 500);
+      }
+    } else {
+      setTimeout(() => { memoryFlipped.forEach(c => { c.classList.remove('flipped'); c.textContent = '?'; }); memoryFlipped = []; }, 1000);
+    }
+  }
+}
+
+function resetMemoryGame() { initMemoryGame(); }
+function closeMemoryGame() { document.getElementById('memory-container').style.display = 'none'; }
+function startMemoryGame() { document.getElementById('memory-container').style.display = 'block'; initMemoryGame(); }
+
+// ===== POINTS SYSTEM =====
+let userPoints = 340;
+function addPoints(pts) {
+  userPoints += pts;
+  document.getElementById('user-points').textContent = userPoints;
+}
+
+function redeemPrize(prize, cost) {
+  if (userPoints >= cost) {
+    userPoints -= cost;
+    document.getElementById('user-points').textContent = userPoints;
+    alert(`🎉 Prize redeemed! ${cost} points used. Your prize will be delivered soon!`);
+  } else {
+    alert(`❌ Not enough points! You need ${cost - userPoints} more points.`);
+  }
+}
+
+// ===== INIT =====
+renderQuiz();
+renderSudoku();
+</script>
+
+</body>
+</html>
