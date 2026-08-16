@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="{{COURSE_TITLE}} - A complete practical course from Rise Africa Skills. Learn offline, anytime.">
+<title>{{COURSE_TITLE}} | Rise Africa Skills</title>
+<style>
+  :root {
+    --primary: #16a34a;
+    --primary-dark: #15803d;
+    --accent: #fbbf24;
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    padding: 40px 20px;
+    text-align: center;
+  }
+  header h1 { font-size: 2rem; margin-bottom: 8px; }
+  header p { color: rgba(255,255,255,0.85); max-width: 600px; margin: 0 auto; }
+  .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #1e293b;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-top: 12px;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 30px 20px; }
+  .progress-bar {
+    background: var(--card);
+    border-radius: 10px;
+    height: 10px;
+    margin-bottom: 30px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    background: var(--primary);
+    height: 100%;
+    width: 0%;
+    border-radius: 10px;
+    transition: width 0.4s ease;
+  }
+  .lesson {
+    background: var(--card);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    border: 1px solid #334155;
+  }
+  .lesson-header {
+    padding: 18px 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: background 0.2s;
+  }
+  .lesson-header:hover { background: #26354a; }
+  .lesson-num {
+    background: var(--primary);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+  .lesson-title { flex: 1; font-weight: 600; }
+  .lesson-status {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 12px;
+    background: #334155;
+    color: var(--muted);
+  }
+  .lesson-status.done { background: var(--primary); color: white; }
+  .lesson-body {
+    display: none;
+    padding: 0 22px 22px;
+    border-top: 1px solid #334155;
+  }
+  .lesson-body.active { display: block; }
+  .lesson-body p { color: var(--muted); margin: 14px 0; }
+  .lesson-body ul { margin: 10px 0 10px 20px; color: var(--muted); }
+  .lesson-body li { margin: 6px 0; }
+  .lesson-body strong { color: var(--text); }
+  .check-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: background 0.2s;
+  }
+  .check-btn:hover { background: var(--primary-dark); }
+  .quiz-box {
+    background: #0b1220;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 16px;
+  }
+  .quiz-question { font-weight: 600; margin-bottom: 12px; color: var(--text); }
+  .quiz-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 10px 14px;
+    margin: 6px 0;
+    background: var(--card);
+    border: 1px solid #475569;
+    border-radius: 8px;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .quiz-option:hover { border-color: var(--primary); }
+  .quiz-option.correct { background: #14532d; border-color: var(--primary); }
+  .quiz-option.wrong { background: #7f1d1d; border-color: #ef4444; }
+  .cert-section {
+    text-align: center;
+    padding: 40px 20px;
+    background: var(--card);
+    border-radius: 16px;
+    margin-top: 30px;
+    border: 1px solid #334155;
+  }
+  .cert-section h2 { margin-bottom: 10px; }
+  .cert-section p { color: var(--muted); margin-bottom: 20px; }
+  .cert-btn {
+    background: var(--accent);
+    color: #1e293b;
+    border: none;
+    padding: 14px 36px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .cert-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: var(--card);
+    border-bottom: 1px solid #334155;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-bar a { color: var(--text); text-decoration: none; font-weight: 600; }
+  .nav-bar a:hover { color: var(--primary); }
+  .completion-count { color: var(--muted); font-size: 0.9rem; }
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.5rem; }
+    .lesson-header { padding: 14px 16px; }
+    .lesson-body { padding: 0 16px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+  <a href="index.html">&#8592; Back to Courses</a>
+  <span class="completion-count"><span id="completedCount">0</span> / {{TOTAL_LESSONS}} completed</span>
+</nav>
+
+<header>
+  <div class="badge">{{COURSE_LEVEL}}</div>
+  <h1>{{COURSE_TITLE}}</h1>
+  <p>{{COURSE_DESCRIPTION}}</p>
+</header>
+
+<div class="container">
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressBar"></div>
+  </div>
+
+  <!-- ==================== LESSON 1 ==================== -->
+  <div class="lesson" data-lesson="1">
+    <div class="lesson-header" onclick="toggleLesson(1)">
+      <div class="lesson-num">1</div>
+      <div class="lesson-title">{{LESSON_1_TITLE}}</div>
+      <div class="lesson-status" id="status1">Start</div>
+    </div>
+    <div class="lesson-body" id="body1">
+      <p>{{LESSON_1_INTRO}}</p>
+      <ul>
+        <li>{{LESSON_1_POINT_1}}</li>
+        <li>{{LESSON_1_POINT_2}}</li>
+        <li>{{LESSON_1_POINT_3}}</li>
+      </ul>
+      <p><strong>Key Takeaway:</strong> {{LESSON_1_TAKEAWAY}}</p>
+
+      <div class="quiz-box">
+        <div class="quiz-question">{{QUIZ_1_QUESTION}}</div>
+        <button class="quiz-option" onclick="checkAnswer(this, false, 1)">{{QUIZ_1_OPTION_A}}</button>
+        <button class="quiz-option" onclick="checkAnswer(this, true, 1)">{{QUIZ_1_OPTION_B}}</button>
+        <button class="quiz-option" onclick="checkAnswer(this, false, 1)">{{QUIZ_1_OPTION_C}}</button>
+      </div>
+
+      <button class="check-btn" id="btn1" onclick="markComplete(1)">Mark Lesson Complete</button>
+    </div>
+  </div>
+
+  <!-- ==================== LESSON 2 ==================== -->
+  <div class="lesson" data-lesson="2">
+    <div class="lesson-header" onclick="toggleLesson(2)">
+      <div class="lesson-num">2</div>
+      <div class="lesson-title">{{LESSON_2_TITLE}}</div>
+      <div class="lesson-status" id="status2">Locked</div>
+    </div>
+    <div class="lesson-body" id="body2">
+      <p>{{LESSON_2_INTRO}}</p>
+      <ul>
+        <li>{{LESSON_2_POINT_1}}</li>
+        <li>{{LESSON_2_POINT_2}}</li>
+        <li>{{LESSON_2_POINT_3}}</li>
+      </ul>
+      <p><strong>Key Takeaway:</strong> {{LESSON_2_TAKEAWAY}}</p>
+
+      <div class="quiz-box">
+        <div class="quiz-question">{{QUIZ_2_QUESTION}}</div>
+        <button class="quiz-option" onclick="checkAnswer(this, true, 2)">{{QUIZ_2_OPTION_A}}</button>
+        <button class="quiz-option" onclick="checkAnswer(this, false, 2)">{{QUIZ_2_OPTION_B}}</button>
+        <button class="quiz-option" onclick="checkAnswer(this, false, 2)">{{QUIZ_2_OPTION_C}}</button>
+      </div>
+
+      <button class="check-btn" id="btn2" onclick="markComplete(2)">Mark Lesson Complete</button>
+    </div>
+  </div>
+
+  <!-- ==================== LESSON 3 ==================== -->
+  <div class="lesson" data-lesson="3">
+    <div class="lesson-header" onclick="toggleLesson(3)">
+      <div class="lesson-num">3</div>
+      <div class="lesson-title">{{LESSON_3_TITLE}}</div>
+      <div class="lesson-status" id="status3">Locked</div>
+    </div>
+    <div class="lesson-body" id="body3">
+      <p>{{LESSON_3_INTRO}}</p>
+      <ul>
+        <li>{{LESSON_3_POINT_1}}</li>
+        <li>{{LESSON_3_POINT_2}}</li>
+        <li>{{LESSON_3_POINT_3}}</li>
+      </ul>
+      <p><strong>Key Takeaway:</strong> {{LESSON_3_TAKEAWAY}}</p>
+
+      <div class="quiz-box">
+        <div class="quiz-question">{{QUIZ_3_QUESTION}}</div>
+        <button class="quiz-option" onclick="checkAnswer(this, false, 3)">{{QUIZ_3_OPTION_A}}</button>
+        <button class="quiz-option" onclick="checkAnswer(this, false, 3)">{{QUIZ_3_OPTION_B}}</button>
+        <button class="quiz-option" onclick="checkAnswer(this, true, 3)">{{QUIZ_3_OPTION_C}}</button>
+      </div>
+
+      <button class="check-btn" id="btn3" onclick="markComplete(3)">Mark Lesson Complete</button>
+    </div>
+  </div>
+
+  <!-- ==================== LESSON 4 ==================== -->
+  <div class="lesson" data-lesson="4">
+    <div class="lesson-header" onclick="toggleLesson(4)">
+      <div class="lesson-num">4</div>
+      <div class="lesson-title">{{LESSON_4_TITLE}}</div>
+      <div class="lesson-status" id="status4">Locked</div>
+    </div>
+    <div class="lesson-body" id="body4">
+      <p>{{LESSON_4_INTRO}}</p>
+      <ul>
+        <li>{{LESSON_4_POINT_1}}</li>
+        <li>{{LESSON_4_POINT_2}}</li>
+        <li>{{LESSON_4_POINT_3}}</li>
+      </ul>
+      <p><strong>Key Takeaway:</strong> {{LESSON_4_TAKEAWAY}}</p>
+
+      <div class="quiz-box">
+        <div class="quiz-question">{{QUIZ_4_QUESTION}}</div>
+        <button class="quiz-option" onclick="checkAnswer(this, true, 4)">{{QUIZ_4_OPTION_A}}</button>
+        <button class="quiz-option" onclick="checkAnswer(this, false, 4)">{{QUIZ_4_OPTION_B}}</button>
+        <button class="quiz-option" onclick="checkAnswer(this, false, 4)">{{QUIZ_4_OPTION_C}}</button>
+      </div>
+
+      <button class="check-btn" id="btn4" onclick="markComplete(4)">Mark Lesson Complete</button>
+    </div>
+  </div>
+
+  <!-- ==================== LESSON 5 ==================== -->
+  <div class="lesson" data-lesson="5">
+    <div class="lesson-header" onclick="toggleLesson(5)">
+      <div class="lesson-num">5</div>
+      <div class="lesson-title">{{LESSON_5_TITLE}}</div>
+      <div class="lesson-status" id="status5">Locked</div>
+    </div>
+    <div class="lesson-body" id="body5">
+      <p>{{LESSON_5_INTRO}}</p>
+      <ul>
+        <li>{{LESSON_5_POINT_1}}</li>
+        <li>{{LESSON_5_POINT_2}}</li>
+        <li>{{LESSON_5_POINT_3}}</li>
+      </ul>
+      <p><strong>Key Takeaway:</strong> {{LESSON_5_TAKEAWAY}}</p>
+
+      <div class="quiz-box">
+        <div class="quiz-question">{{QUIZ_5_QUESTION}}</div>
+        <button class="quiz-option" onclick="checkAnswer(this, false, 5)">{{QUIZ_5_OPTION_A}}</button>
+        <button class="quiz-option" onclick="checkAnswer(this, true, 5)">{{QUIZ_5_OPTION_B}}</button>
+        <button class="quiz-option" onclick="checkAnswer(this, false, 5)">{{QUIZ_5_OPTION_C}}</button>
+      </div>
+
+      <button class="check-btn" id="btn5" onclick="markComplete(5)">Mark Lesson Complete</button>
+    </div>
+  </div>
+
+  <!-- ==================== LESSON 6 ==================== -->
+  <div class="lesson" data-lesson="6">
+    <div class="lesson-header" onclick="toggleLesson(6)">
+      <div class="lesson-num">6</div>
+      <div class="lesson-title">{{LESSON_6_TITLE}}</div>
+      <div class="lesson-status" id="status6">Locked</div>
+    </div>
+    <div class="lesson-body" id="body6">
+      <p>{{LESSON_6_INTRO}}</p>
+      <ul>
+        <li>{{LESSON_6_POINT_1}}</li>
+        <li>{{LESSON_6_POINT_2}}</li>
+        <li>{{LESSON_6_POINT_3}}</li>
+      </ul>
+      <p><strong>Key Takeaway:</strong> {{LESSON_6_TAKEAWAY}}</p>
+
+      <div class="quiz-box">
+        <div class="quiz-question">{{QUIZ_6_QUESTION}}</div>
+        <button class="quiz-option" onclick="checkAnswer(this, false, 6)">{{QUIZ_6_OPTION_A}}</button>
+        <button class="quiz-option" onclick="checkAnswer(this, false, 6)">{{QUIZ_6_OPTION_B}}</button>
+        <button class="quiz-option" onclick="checkAnswer(this, true, 6)">{{QUIZ_6_OPTION_C}}</button>
+      </div>
+
+      <button class="check-btn" id="btn6" onclick="markComplete(6)">Mark Lesson Complete</button>
+    </div>
+  </div>
+
+  <!-- ==================== LESSON 7 ==================== -->
+  <div class="lesson" data-lesson="7">
+    <div class="lesson-header" onclick="toggleLesson(7)">
+      <div class="lesson-num">7</div>
+      <div class="lesson-title">{{LESSON_7_TITLE}}</div>
+      <div class="lesson-status" id="status7">Locked</div>
+    </div>
+    <div class="lesson-body" id="body7">
+      <p>{{LESSON_7_INTRO}}</p>
+      <ul>
+        <li>{{LESSON_7_POINT_1}}</li>
+        <li>{{LESSON_7_POINT_2}}</li>
+        <li>{{LESSON_7_POINT_3}}</li>
+      </ul>
+      <p><strong>Key Takeaway:</strong> {{LESSON_7_TAKEAWAY}}</p>
+
+      <div class="quiz-box">
+        <div class="quiz-question">{{QUIZ_7_QUESTION}}</div>
+        <button class="quiz-option" onclick="checkAnswer(this, true, 7)">{{QUIZ_7_OPTION_A}}</button>
+        <button class="quiz-option" onclick="checkAnswer(this, false, 7)">{{QUIZ_7_OPTION_B}}</button>
+        <button class="quiz-option" onclick="checkAnswer(this, false, 7)">{{QUIZ_7_OPTION_C}}</button>
+      </div>
+
+      <button class="check-btn" id="btn7" onclick="markComplete(7)">Mark Lesson Complete</button>
+    </div>
+  </div>
+
+  <!-- ==================== LESSON 8 ==================== -->
+  <div class="lesson" data-lesson="8">
+    <div class="lesson-header" onclick="toggleLesson(8)">
+      <div class="lesson-num">8</div>
+      <div class="lesson-title">{{LESSON_8_TITLE}}</div>
+      <div class="lesson-status" id="status8">Locked</div>
+    </div>
+    <div class="lesson-body" id="body8">
+      <p>{{LESSON_8_INTRO}}</p>
+      <ul>
+        <li>{{LESSON_8_POINT_1}}</li>
+        <li>{{LESSON_8_POINT_2}}</li>
+        <li>{{LESSON_8_POINT_3}}</li>
+      </ul>
+      <p><strong>Key Takeaway:</strong> {{LESSON_8_TAKEAWAY}}</p>
+
+      <div class="quiz-box">
+        <div class="quiz-question">{{QUIZ_8_QUESTION}}</div>
+        <button class="quiz-option" onclick="checkAnswer(this, false, 8)">{{QUIZ_8_OPTION_A}}</button>
+        <button class="quiz-option" onclick="checkAnswer(this, true, 8)">{{QUIZ_8_OPTION_B}}</button>
+        <button class="quiz-option" onclick="checkAnswer(this, false, 8)">{{QUIZ_8_OPTION_C}}</button>
+      </div>
+
+      <button class="check-btn" id="btn8" onclick="markComplete(8)">Mark Lesson Complete</button>
+    </div>
+  </div>
+
+  <!-- ==================== CERTIFICATE SECTION ==================== -->
+  <div class="cert-section">
+    <h2>🎓 Course Completion</h2>
+    <p>Complete all lessons and pass the quizzes to unlock your certificate.</p>
+    <a href="certificate.html?course={{COURSE_URL_ENCODED}}" class="cert-btn" id="certBtn" disabled>Get Certificate</a>
+  </div>
+</div>
+
+<script>
+  const TOTAL_LESSONS = {{TOTAL_LESSONS}};
+  const COURSE_KEY = '{{COURSE_ID}}';
+  let completed = JSON.parse(localStorage.getItem(COURSE_KEY + '_progress') || '[]');
+
+  function toggleLesson(n) {
+    // Only allow opening if previous is done or it's lesson 1
+    if (n > 1 && !completed.includes(n-1)) return;
+    const body = document.getElementById('body' + n);
+    body.classList.toggle('active');
+  }
+
+  function checkAnswer(btn, isCorrect, lessonNum) {
+    const parent = btn.parentElement;
+    const buttons = parent.querySelectorAll('.quiz-option');
+    buttons.forEach(b => { b.disabled = true; b.classList.remove('correct','wrong'); });
+    if (isCorrect) {
+      btn.classList.add('correct');
+    } else {
+      btn.classList.add('wrong');
+      // Highlight correct one
+      buttons.forEach(b => {
+        if (b.getAttribute('onclick').includes('true')) b.classList.add('correct');
+      });
+    }
+  }
+
+  function markComplete(n) {
+    if (!completed.includes(n)) {
+      completed.push(n);
+      completed.sort((a,b) => a-b);
+      localStorage.setItem(COURSE_KEY + '_progress', JSON.stringify(completed));
+    }
+    updateUI();
+  }
+
+  function updateUI() {
+    document.getElementById('completedCount').textContent = completed.length;
+    const pct = (completed.length / TOTAL_LESSONS) * 100;
+    document.getElementById('progressBar').style.width = pct + '%';
+
+    for (let i = 1; i <= TOTAL_LESSONS; i++) {
+      const status = document.getElementById('status' + i);
+      const btn = document.getElementById('btn' + i);
+      if (completed.includes(i)) {
+        status.textContent = 'Done';
+        status.classList.add('done');
+        if (btn) btn.textContent = 'Completed';
+        if (btn) btn.disabled = true;
+      } else if (i === 1 || completed.includes(i-1)) {
+        status.textContent = 'Start';
+      } else {
+        status.textContent = 'Locked';
+      }
+    }
+
+    if (completed.length >= TOTAL_LESSONS) {
+      document.getElementById('certBtn').disabled = false;
+      document.getElementById('certBtn').textContent = 'Get Your Certificate!';
+    }
+  }
+
+  updateUI();
+</script>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificate of Completion | Rise Africa Skills</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    color: #1e293b;
+  }
+  .cert-container {
+    background: #fff;
+    width: 100%;
+    max-width: 900px;
+    padding: 50px 60px;
+    border: 12px solid #16a34a;
+    border-radius: 4px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    position: relative;
+    margin-bottom: 20px;
+  }
+  .cert-container::before {
+    content: '';
+    position: absolute;
+    top: 8px; left: 8px; right: 8px; bottom: 8px;
+    border: 2px solid #fbbf24;
+    pointer-events: none;
+  }
+  .header {
+    text-align: center;
+    border-bottom: 3px solid #16a34a;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+  }
+  .logo-text {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: #16a34a;
+    letter-spacing: 2px;
+  }
+  .logo-sub {
+    font-size: 0.9rem;
+    color: #64748b;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .cert-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 30px 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 6px;
+  }
+  .cert-subtitle {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #64748b;
+    margin-bottom: 30px;
+  }
+  .recipient {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #16a34a;
+    margin: 20px 0;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 10px;
+    display: inline-block;
+    width: 100%;
+  }
+  .course-name {
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 15px 0;
+  }
+  .body-text {
+    text-align: center;
+    font-size: 1rem;
+    color: #475569;
+    line-height: 1.8;
+    margin: 20px 0;
+  }
+  .details-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+  }
+  .detail-box {
+    text-align: center;
+    flex: 1;
+  }
+  .detail-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+  .detail-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1e293b;
+  }
+  .seal {
+    position: absolute;
+    bottom: 40px;
+    right: 50px;
+    width: 80px;
+    height: 80px;
+    border: 3px solid #fbbf24;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    text-align: center;
+    color: #fbbf24;
+    font-weight: 700;
+    transform: rotate(-15deg);
+    opacity: 0.8;
+  }
+  .controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .btn {
+    padding: 12px 28px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-primary {
+    background: #16a34a;
+    color: white;
+  }
+  .btn-primary:hover { background: #15803d; }
+  .btn-secondary {
+    background: #334155;
+    color: white;
+  }
+  .btn-secondary:hover { background: #1e293b; }
+  .input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .input-group input {
+    padding: 10px 16px;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    background: #1e293b;
+    color: white;
+    font-size: 0.95rem;
+    min-width: 200px;
+  }
+  .input-group input::placeholder { color: #94a3b8; }
+  @media print {
+    body { background: white; }
+    .controls, .input-group { display: none !important; }
+    .cert-container { box-shadow: none; border-width: 8px; }
+  }
+  @media (max-width: 600px) {
+    .cert-container { padding: 30px 20px; }
+    .cert-title { font-size: 1.6rem; }
+    .recipient { font-size: 1.4rem; }
+    .details-row { flex-direction: column; gap: 15px; }
+    .seal { display: none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="input-group">
+    <input type="text" id="studentName" placeholder="Student Full Name" value="">
+    <input type="text" id="courseTitle" placeholder="Course Title" value="">
+    <input type="text" id="completionDate" placeholder="Date (e.g., August 16, 2026)" value="">
+  </div>
+
+  <div class="controls">
+    <button class="btn btn-primary" onclick="updateCertificate()">Update Certificate</button>
+    <button class="btn btn-secondary" onclick="window.print()">Print / Save as PDF</button>
+    <button class="btn btn-secondary" onclick="shareCertificate()">Share</button>
+  </div>
+
+  <div class="cert-container" id="cert">
+    <div class="header">
+      <div class="logo-text">RISE AFRICA SKILLS</div>
+      <div class="logo-sub">Empowering Through Knowledge</div>
+    </div>
+
+    <div class="cert-title">Certificate<br>of Completion</div>
+    <div class="cert-subtitle">This certifies that</div>
+
+    <div class="recipient" id="displayName">_________________________</div>
+
+    <div class="body-text">
+      has successfully completed the course<br>
+      <span class="course-name" id="displayCourse">_________________________</span><br>
+      demonstrating commitment, practical understanding, and readiness<br>
+      to apply these skills for personal and community development.
+    </div>
+
+    <div class="details-row">
+      <div class="detail-box">
+        <div class="detail-label">Date of Completion</div>
+        <div class="detail-value" id="displayDate">_________________</div>
+      </div>
+      <div class="detail-box">
+        <div class="detail-label">Certificate ID</div>
+        <div class="detail-value" id="certId">RAS-2026-XXXX</div>
+      </div>
+      <div class="detail-box">
+        <div class="detail-label">Verification</div>
+        <div class="detail-value">riseafricaskills.com/verify</div>
+      </div>
+    </div>
+
+    <div class="seal">OFFICIAL<br>SEAL</div>
+  </div>
+
+<script>
+  // Auto-fill from URL params
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('name')) document.getElementById('studentName').value = params.get('name');
+  if (params.get('course')) document.getElementById('courseTitle').value = params.get('course');
+  if (params.get('date')) document.getElementById('completionDate').value = params.get('date');
+
+  function updateCertificate() {
+    const name = document.getElementById('studentName').value || '_________________________';
+    const course = document.getElementById('courseTitle').value || '_________________________';
+    const date = document.getElementById('completionDate').value || '_________________';
+    document.getElementById('displayName').textContent = name;
+    document.getElementById('displayCourse').textContent = course;
+    document.getElementById('displayDate').textContent = date;
+    document.getElementById('certId').textContent = 'RAS-' + new Date().getFullYear() + '-' + Math.random().toString(36).substr(2,6).toUpperCase();
+  }
+
+  function shareCertificate() {
+    const name = document.getElementById('studentName').value;
+    const course = document.getElementById('courseTitle').value;
+    const text = 'I just earned my certificate in ' + course + ' from Rise Africa Skills! 🎓';
+    if (navigator.share) {
+      navigator.share({ title: 'My Certificate', text: text, url: window.location.href });
+    } else {
+      navigator.clipboard.writeText(text + ' ' + window.location.href);
+      alert('Certificate link copied to clipboard!');
+    }
+  }
+
+  // Generate cert ID on load
+  document.getElementById('certId').textContent = 'RAS-' + new Date().getFullYear() + '-' + Math.random().toString(36).substr(2,6).toUpperCase();
+</script>
+</body>
+</html>
