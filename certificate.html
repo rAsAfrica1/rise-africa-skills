@@ -3,274 +3,195 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Certificate of Completion | Rise Africa Skills</title>
+<title>Business Seed Record | rise AFRICA skills</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: 'Georgia', 'Times New Roman', serif;
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    color: #1e293b;
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Georgia','Times New Roman',serif;background:linear-gradient(135deg,#12100a 0%,#1c1708 100%);
+    min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px;color:#1e293b}
+  .top-note{max-width:900px;width:100%;background:#1c1708;border:2px solid #d4af37;border-radius:12px;
+    padding:16px 20px;margin-bottom:20px;color:#e6e1d4;font-family:system-ui,-apple-system,sans-serif;
+    font-size:.92rem;line-height:1.6}
+  .top-note strong{color:#d4af37}
+  .input-group{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;justify-content:center}
+  .input-group input{padding:10px 16px;border:1px solid #d4af37;border-radius:6px;background:#12100a;
+    color:#fff;font-size:.95rem;min-width:200px;font-family:system-ui,sans-serif}
+  .input-group input::placeholder{color:#8a8270}
+  .controls{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:22px}
+  .btn{padding:12px 28px;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;
+    transition:all .2s;font-family:system-ui,sans-serif}
+  .btn-primary{background:#d4af37;color:#12100a}
+  .btn-primary:hover{background:#e8c65a}
+  .btn-secondary{background:#2a2413;color:#e6e1d4;border:1px solid #d4af37}
+  .btn-secondary:hover{background:#3a3219}
+
+  .cert-container{background:#fffdf7;width:100%;max-width:900px;padding:46px 56px 120px;
+    border:12px solid #d4af37;border-radius:4px;box-shadow:0 20px 60px rgba(0,0,0,.5);
+    position:relative;margin-bottom:20px}
+  .cert-container::before{content:'';position:absolute;top:8px;left:8px;right:8px;bottom:8px;
+    border:2px solid #b8952c;pointer-events:none}
+  .header{text-align:center;border-bottom:3px solid #d4af37;padding-bottom:18px;margin-bottom:8px}
+  .logo-text{font-size:2.1rem;font-weight:900;color:#12100a;letter-spacing:2px}
+  .logo-text .gold{color:#b8952c}
+  .logo-sub{font-size:.78rem;color:#6b6455;letter-spacing:4px;text-transform:uppercase;margin-top:6px}
+
+  .disclaimer-strip{background:#12100a;color:#f4e9c8;text-align:center;font-family:system-ui,sans-serif;
+    font-size:.74rem;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;
+    padding:9px 12px;margin:16px 0 26px;border-radius:4px;line-height:1.5}
+  .disclaimer-strip span{color:#d4af37}
+
+  .cert-title{text-align:center;font-size:2.1rem;font-weight:700;color:#12100a;margin:6px 0 6px;
+    text-transform:uppercase;letter-spacing:5px}
+  .cert-subtitle{text-align:center;font-size:1.05rem;color:#6b6455;margin-bottom:24px}
+  .recipient{text-align:center;font-size:2rem;font-weight:700;color:#b8952c;margin:16px 0;
+    border-bottom:2px solid #e5ddc7;padding-bottom:10px;display:inline-block;width:100%}
+  .course-name{display:block;text-align:center;font-size:1.3rem;font-weight:700;color:#12100a;margin:14px 0}
+  .body-text{text-align:center;font-size:1rem;color:#4a4438;line-height:1.85;margin:18px 0}
+
+  .formula{display:flex;gap:0;margin:28px 0 6px;border:1px solid #e0d8c0;border-radius:8px;overflow:hidden}
+  .formula div{flex:1;padding:16px 14px;text-align:center;font-family:system-ui,sans-serif}
+  .formula div+div{border-left:1px solid #e0d8c0}
+  .formula .k{font-size:.68rem;letter-spacing:1.6px;text-transform:uppercase;color:#8a8270;margin-bottom:6px}
+  .formula .v{font-size:.95rem;font-weight:700;color:#12100a;line-height:1.4}
+
+  .details-row{display:flex;justify-content:space-between;margin-top:30px;padding-top:18px;
+    border-top:1px solid #e5ddc7}
+  .detail-box{text-align:center;flex:1}
+  .detail-label{font-size:.7rem;text-transform:uppercase;color:#8a8270;letter-spacing:2px;margin-bottom:8px;
+    font-family:system-ui,sans-serif}
+  .detail-value{font-size:.95rem;font-weight:700;color:#12100a;font-family:system-ui,sans-serif;word-break:break-word}
+
+  .footnote{margin-top:22px;padding-top:14px;border-top:1px dashed #ded5bd;text-align:center;
+    font-family:system-ui,sans-serif;font-size:.72rem;color:#6b6455;line-height:1.7}
+  .footnote strong{color:#12100a}
+
+  .seal{position:absolute;bottom:22px;right:44px;width:92px;height:92px;border:3px solid #b8952c;
+    border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.55rem;
+    text-align:center;color:#b8952c;font-weight:800;transform:rotate(-15deg);opacity:.75;
+    font-family:system-ui,sans-serif;letter-spacing:.5px;padding:6px;line-height:1.3}
+
+  @media print{
+    body{background:#fff;padding:0}
+    .controls,.input-group,.top-note{display:none!important}
+    .cert-container{box-shadow:none;border-width:8px;margin:0}
   }
-  .cert-container {
-    background: #fff;
-    width: 100%;
-    max-width: 900px;
-    padding: 50px 60px;
-    border: 12px solid #16a34a;
-    border-radius: 4px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-    position: relative;
-    margin-bottom: 20px;
-  }
-  .cert-container::before {
-    content: '';
-    position: absolute;
-    top: 8px; left: 8px; right: 8px; bottom: 8px;
-    border: 2px solid #fbbf24;
-    pointer-events: none;
-  }
-  .header {
-    text-align: center;
-    border-bottom: 3px solid #16a34a;
-    padding-bottom: 20px;
-    margin-bottom: 30px;
-  }
-  .logo-text {
-    font-size: 2.2rem;
-    font-weight: 900;
-    color: #16a34a;
-    letter-spacing: 2px;
-  }
-  .logo-sub {
-    font-size: 0.9rem;
-    color: #64748b;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    margin-top: 4px;
-  }
-  .cert-title {
-    text-align: center;
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #1e293b;
-    margin: 30px 0 10px;
-    text-transform: uppercase;
-    letter-spacing: 6px;
-  }
-  .cert-subtitle {
-    text-align: center;
-    font-size: 1.1rem;
-    color: #64748b;
-    margin-bottom: 30px;
-  }
-  .recipient {
-    text-align: center;
-    font-size: 2rem;
-    font-weight: 700;
-    color: #16a34a;
-    margin: 20px 0;
-    border-bottom: 2px solid #e2e8f0;
-    padding-bottom: 10px;
-    display: inline-block;
-    width: 100%;
-  }
-  .course-name {
-    text-align: center;
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #1e293b;
-    margin: 15px 0;
-  }
-  .body-text {
-    text-align: center;
-    font-size: 1rem;
-    color: #475569;
-    line-height: 1.8;
-    margin: 20px 0;
-  }
-  .details-row {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 1px solid #e2e8f0;
-  }
-  .detail-box {
-    text-align: center;
-    flex: 1;
-  }
-  .detail-label {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    color: #94a3b8;
-    letter-spacing: 2px;
-    margin-bottom: 8px;
-  }
-  .detail-value {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #1e293b;
-  }
-  .seal {
-    position: absolute;
-    bottom: 40px;
-    right: 50px;
-    width: 80px;
-    height: 80px;
-    border: 3px solid #fbbf24;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.6rem;
-    text-align: center;
-    color: #fbbf24;
-    font-weight: 700;
-    transform: rotate(-15deg);
-    opacity: 0.8;
-  }
-  .controls {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .btn {
-    padding: 12px 28px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .btn-primary {
-    background: #16a34a;
-    color: white;
-  }
-  .btn-primary:hover { background: #15803d; }
-  .btn-secondary {
-    background: #334155;
-    color: white;
-  }
-  .btn-secondary:hover { background: #1e293b; }
-  .input-group {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .input-group input {
-    padding: 10px 16px;
-    border: 1px solid #334155;
-    border-radius: 6px;
-    background: #1e293b;
-    color: white;
-    font-size: 0.95rem;
-    min-width: 200px;
-  }
-  .input-group input::placeholder { color: #94a3b8; }
-  @media print {
-    body { background: white; }
-    .controls, .input-group { display: none !important; }
-    .cert-container { box-shadow: none; border-width: 8px; }
-  }
-  @media (max-width: 600px) {
-    .cert-container { padding: 30px 20px; }
-    .cert-title { font-size: 1.6rem; }
-    .recipient { font-size: 1.4rem; }
-    .details-row { flex-direction: column; gap: 15px; }
-    .seal { display: none; }
+  @media(max-width:640px){
+    .cert-container{padding:28px 20px}
+    .cert-title{font-size:1.5rem;letter-spacing:3px}
+    .recipient{font-size:1.35rem}
+    .details-row,.formula{flex-direction:column}
+    .formula div+div{border-left:none;border-top:1px solid #e0d8c0}
+    .details-row .detail-box{margin-bottom:14px}
+    .seal{display:none}
   }
 </style>
 </head>
 <body>
 
+  <div class="top-note">
+    <strong>Note:</strong> This is a <strong>Business Seed Record</strong> — not a diploma, degree or accredited
+    qualification. rise AFRICA skills is not a school, college or university, and this record has no academic or
+    regulatory standing. It records that the person named worked through and completed a business seed.
+  </div>
+
   <div class="input-group">
-    <input type="text" id="studentName" placeholder="Student Full Name" value="">
-    <input type="text" id="courseTitle" placeholder="Course Title" value="">
-    <input type="text" id="completionDate" placeholder="Date (e.g., August 16, 2026)" value="">
+    <input type="text" id="studentName" placeholder="Full Name" value="">
+    <input type="text" id="courseTitle" placeholder="Business Seed (e.g. Pig Farming)" value="">
+    <input type="text" id="completionDate" placeholder="Date (e.g. August 19, 2026)" value="">
   </div>
 
   <div class="controls">
-    <button class="btn btn-primary" onclick="updateCertificate()">Update Certificate</button>
+    <button class="btn btn-primary" onclick="updateCertificate()">Update Record</button>
     <button class="btn btn-secondary" onclick="window.print()">Print / Save as PDF</button>
     <button class="btn btn-secondary" onclick="shareCertificate()">Share</button>
   </div>
 
   <div class="cert-container" id="cert">
     <div class="header">
-      <div class="logo-text">RISE AFRICA SKILLS</div>
-      <div class="logo-sub">Empowering Through Knowledge</div>
+      <div class="logo-text">rise <span class="gold">AFRICA</span> skills</div>
+      <div class="logo-sub">An Instrom Idea Business Seed</div>
     </div>
 
-    <div class="cert-title">Certificate<br>of Completion</div>
-    <div class="cert-subtitle">This certifies that</div>
+    <div class="disclaimer-strip">
+      Not a school &middot; Not a college &middot; Not a university &middot;
+      <span>This is not an academic or accredited qualification</span>
+    </div>
+
+    <div class="cert-title">Business Seed<br>Record</div>
+    <div class="cert-subtitle">This record confirms that</div>
 
     <div class="recipient" id="displayName">_________________________</div>
 
     <div class="body-text">
-      has successfully completed the course<br>
-      <span class="course-name" id="displayCourse">_________________________</span><br>
-      demonstrating commitment, practical understanding, and readiness<br>
-      to apply these skills for personal and community development.
+      worked through and completed the business seed
+      <span class="course-name" id="displayCourse">_________________________</span>
+      We don't teach theory. We seed businesses. The idea and the blueprint were ours &mdash;<br>
+      from here the hustle, the execution and the drive are theirs.
+    </div>
+
+    <div class="formula">
+      <div><div class="k">What rAs provided</div><div class="v">The idea, the blueprint<br>and the working method</div></div>
+      <div><div class="k">What the holder provided</div><div class="v">The hustle, the execution<br>and the drive</div></div>
+      <div><div class="k">What this is not</div><div class="v">A diploma, degree or<br>accredited qualification</div></div>
     </div>
 
     <div class="details-row">
       <div class="detail-box">
-        <div class="detail-label">Date of Completion</div>
+        <div class="detail-label">Date Completed</div>
         <div class="detail-value" id="displayDate">_________________</div>
       </div>
       <div class="detail-box">
-        <div class="detail-label">Certificate ID</div>
-        <div class="detail-value" id="certId">RAS-2026-XXXX</div>
+        <div class="detail-label">Record Number</div>
+        <div class="detail-value" id="certId">RAS-2026-XXXXXX</div>
       </div>
       <div class="detail-box">
-        <div class="detail-label">Verification</div>
+        <div class="detail-label">Verify At</div>
         <div class="detail-value">riseafricaskills.com/verify</div>
       </div>
     </div>
 
-    <div class="seal">OFFICIAL<br>SEAL</div>
+    <div class="footnote">
+      <strong>rise AFRICA skills (rAs) is not a school, college or university.</strong> We do not hold classes, follow
+      academic semesters, or issue diplomas, degrees or accredited qualifications. We are an Instrom Idea Business Seed:
+      we supply ideas and starter resources for trade and commerce. This record is not recognised by any education
+      authority, licensing body or regulator, and should not be presented as an academic credential.
+    </div>
+
+    <div class="seal">BUSINESS<br>SEED<br>RECORD</div>
   </div>
 
 <script>
-  // Auto-fill from URL params
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('name')) document.getElementById('studentName').value = params.get('name');
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('name'))   document.getElementById('studentName').value = params.get('name');
   if (params.get('course')) document.getElementById('courseTitle').value = params.get('course');
-  if (params.get('date')) document.getElementById('completionDate').value = params.get('date');
+  if (params.get('date'))   document.getElementById('completionDate').value = params.get('date');
 
-  function updateCertificate() {
-    const name = document.getElementById('studentName').value || '_________________________';
-    const course = document.getElementById('courseTitle').value || '_________________________';
-    const date = document.getElementById('completionDate').value || '_________________';
-    document.getElementById('displayName').textContent = name;
-    document.getElementById('displayCourse').textContent = course;
-    document.getElementById('displayDate').textContent = date;
-    document.getElementById('certId').textContent = 'RAS-' + new Date().getFullYear() + '-' + Math.random().toString(36).substr(2,6).toUpperCase();
+  function makeId(){
+    return 'RAS-' + new Date().getFullYear() + '-' + Math.random().toString(36).substr(2,6).toUpperCase();
   }
 
-  function shareCertificate() {
-    const name = document.getElementById('studentName').value;
-    const course = document.getElementById('courseTitle').value;
-    const text = 'I just earned my certificate in ' + course + ' from Rise Africa Skills! 🎓';
-    if (navigator.share) {
-      navigator.share({ title: 'My Certificate', text: text, url: window.location.href });
+  function updateCertificate(){
+    var name   = document.getElementById('studentName').value    || '_________________________';
+    var course = document.getElementById('courseTitle').value    || '_________________________';
+    var date   = document.getElementById('completionDate').value || '_________________';
+    document.getElementById('displayName').textContent   = name;
+    document.getElementById('displayCourse').textContent = course;
+    document.getElementById('displayDate').textContent   = date;
+    document.getElementById('certId').textContent        = makeId();
+  }
+
+  function shareCertificate(){
+    var course = document.getElementById('courseTitle').value || 'a business seed';
+    var text = 'I completed the ' + course + ' business seed with rise AFRICA skills. Not a school — a launchpad. Now I build. 🌱';
+    if (navigator.share){
+      navigator.share({ title:'My Business Seed Record', text:text, url:window.location.href });
     } else {
       navigator.clipboard.writeText(text + ' ' + window.location.href);
-      alert('Certificate link copied to clipboard!');
+      alert('Link copied to clipboard!');
     }
   }
 
-  // Generate cert ID on load
-  document.getElementById('certId').textContent = 'RAS-' + new Date().getFullYear() + '-' + Math.random().toString(36).substr(2,6).toUpperCase();
+  document.getElementById('certId').textContent = makeId();
+  if (params.get('name') || params.get('course') || params.get('date')) updateCertificate();
 </script>
 </body>
 </html>
