@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Beans &amp; Legumes Farming - A complete practical course from Rise Africa Skills. Learn offline, anytime.">
+<title>Beans &amp; Legumes Farming | Rise Africa Skills</title>
+<style>
+  :root { --gold:#eab308; --gold-dark:#a16207; --green:#16a34a; --bg:#0f172a; --card:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --line:#334155; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:var(--bg); color:var(--text); line-height:1.65; }
+  header { background:linear-gradient(135deg,var(--gold-dark) 0%,#713f12 100%); padding:44px 20px; text-align:center; }
+  header h1 { font-size:2rem; margin-bottom:8px; }
+  header p { color:rgba(255,255,255,0.88); max-width:640px; margin:0 auto; }
+  .badge { display:inline-block; background:var(--gold); color:#1e293b; padding:4px 14px; border-radius:20px; font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-top:12px; letter-spacing:0.4px; }
+  .container { max-width:920px; margin:0 auto; padding:30px 20px; }
+  .progress-bar { background:var(--card); border-radius:10px; height:10px; margin-bottom:28px; overflow:hidden; }
+  .progress-fill { background:var(--gold); height:100%; width:0%; border-radius:10px; transition:width .4s ease; }
+  .overview { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-bottom:26px; }
+  .overview h2 { color:var(--gold); font-size:1.15rem; margin-bottom:10px; }
+  .overview ul { margin:8px 0 14px 20px; color:var(--muted); }
+  .overview li { margin:5px 0; }
+  .meta-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+  .meta-chip { background:#0b1220; border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:0.85rem; color:var(--muted); }
+  .meta-chip b { color:var(--text); }
+  .module { background:var(--card); border-radius:12px; margin-bottom:16px; overflow:hidden; border:1px solid var(--line); }
+  .module-header { padding:18px 22px; cursor:pointer; display:flex; align-items:center; gap:14px; transition:background .2s; }
+  .module-header:hover { background:#26354a; }
+  .module-num { background:var(--gold); color:#1e293b; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0; }
+  .module-title { flex:1; font-weight:600; }
+  .module-status { font-size:0.75rem; padding:4px 10px; border-radius:12px; background:var(--line); color:var(--muted); white-space:nowrap; }
+  .module-status.done { background:var(--green); color:#fff; }
+  .module-body { display:none; padding:0 22px 24px; border-top:1px solid var(--line); }
+  .module-body.active { display:block; }
+  .module-body p { color:var(--muted); margin:13px 0; }
+  .module-body ul, .module-body ol { margin:10px 0 10px 22px; color:var(--muted); }
+  .module-body li { margin:6px 0; }
+  .module-body strong { color:var(--text); }
+  .module-body h3 { color:var(--gold); font-size:1.05rem; margin:22px 0 4px; }
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.88rem; }
+  th { background:#0b1220; color:var(--gold); text-align:left; padding:9px 10px; border:1px solid var(--line); }
+  td { padding:8px 10px; border:1px solid var(--line); color:var(--muted); vertical-align:top; }
+  tr:nth-child(even) td { background:#1a2537; }
+  .tip-box { background:rgba(234,179,8,0.08); border-left:4px solid var(--gold); padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .tip-box strong { color:var(--gold); }
+  .warn-box { background:rgba(239,68,68,0.08); border-left:4px solid #ef4444; padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .warn-box strong { color:#f87171; }
+  .assign-box { background:#0b1220; border:1px dashed var(--gold-dark); border-radius:10px; padding:16px 18px; margin:16px 0; color:var(--muted); }
+  .assign-box strong { color:var(--gold); }
+  .video-box { background:#0b1220; border:1px solid var(--line); border-radius:10px; padding:14px 18px; margin:16px 0; color:var(--muted); font-size:0.9rem; }
+  .quiz-wrap { background:#0b1220; border:1px solid var(--line); border-radius:12px; padding:20px; margin-top:20px; }
+  .quiz-wrap h3 { margin-top:0 !important; }
+  .q-block { margin:16px 0; padding-bottom:14px; border-bottom:1px solid #1e293b; }
+  .q-block:last-child { border-bottom:none; }
+  .q-text { font-weight:600; color:var(--text); margin-bottom:8px; }
+  .q-opt { display:block; width:100%; text-align:left; padding:9px 13px; margin:5px 0; background:var(--card); border:1px solid #475569; border-radius:8px; color:var(--text); cursor:pointer; transition:all .2s; font-size:0.9rem; }
+  .q-opt:hover { border-color:var(--gold); }
+  .q-opt.correct { background:#14532d; border-color:var(--green); }
+  .q-opt.wrong { background:#7f1d1d; border-color:#ef4444; }
+  .q-exp { display:none; margin-top:8px; padding:10px 13px; background:rgba(234,179,8,0.07); border-left:3px solid var(--gold); border-radius:0 6px 6px 0; color:var(--muted); font-size:0.87rem; }
+  .q-exp.show { display:block; }
+  .quiz-score { margin-top:12px; font-weight:700; color:var(--gold); }
+  .check-btn { background:var(--gold); color:#1e293b; border:none; padding:11px 26px; border-radius:8px; font-weight:700; cursor:pointer; margin-top:16px; transition:background .2s; }
+  .check-btn:hover { background:#facc15; }
+  .check-btn:disabled { opacity:0.5; cursor:not-allowed; }
+  .final-section, .budget-section, .glossary-section, .resources-section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-top:26px; }
+  .final-section h2, .budget-section h2, .glossary-section h2, .resources-section h2 { color:var(--gold); font-size:1.2rem; margin-bottom:10px; }
+  .final-section p, .budget-section p, .resources-section p { color:var(--muted); margin:10px 0; }
+  .final-section ol, .resources-section ul { margin:10px 0 10px 22px; color:var(--muted); }
+  .final-section li, .resources-section li { margin:6px 0; }
+  dl.glossary dt { color:var(--text); font-weight:700; margin-top:12px; }
+  dl.glossary dd { color:var(--muted); margin-left:0; font-size:0.92rem; }
+  .cert-section { text-align:center; padding:40px 20px; background:var(--card); border-radius:16px; margin-top:30px; border:1px solid var(--line); }
+  .cert-section h2 { margin-bottom:10px; }
+  .cert-section p { color:var(--muted); margin-bottom:20px; }
+  .cert-btn { background:var(--gold); color:#1e293b; border:none; padding:14px 36px; border-radius:10px; font-size:1rem; font-weight:800; cursor:pointer; text-decoration:none; display:inline-block; }
+  .cert-btn[disabled] { opacity:0.4; pointer-events:none; }
+  .nav-bar { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:var(--card); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:100; }
+  .nav-bar a { color:var(--text); text-decoration:none; font-weight:600; }
+  .nav-bar a:hover { color:var(--gold); }
+  .completion-count { color:var(--muted); font-size:0.9rem; }
+  @media (max-width:600px){ header h1{font-size:1.5rem;} .module-header{padding:14px 16px;} .module-body{padding:0 16px 18px;} table{font-size:0.8rem;} th,td{padding:6px 7px;} }
+</style>
+</head>
+<body>
+<nav class="nav-bar">
+  <a href="index.html">&#8592; Back to Courses</a>
+  <span class="completion-count"><span id="completedCount">0</span> / 6 months completed</span>
+</nav>
+<header>
+  <div class="badge">Agriculture &middot; 6-Month Program</div>
+  <h1>Beans &amp; Legumes Farming</h1>
+  <p>Protein, nitrogen and markets in one crop family — the common bean, cowpea, pigeon pea, chickpea and lentil toolkit: P as the key fertiliser (not N), pod-borer scouting, hermetic storage against the weevil, and the export premium waiting for a clean-variety lot.</p>
+</header>
+<div class="container">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+
+  <div class="overview">
+    <h2>Course Overview</h2>
+    <p style="color:var(--muted);">Legumes are Africa's protein backbone and soil's nitrogen managers simultaneously: a well-nodulated crop fixes 30–100+ kg N/ha per season while producing the continent's most affordable protein food. The family is wide — common bean (60–90 days bush or 90–120 days climbing), cowpea (60–90 days, drought-tolerant, leaves as urban vegetable), pigeon pea (150–240 days, multi-season, deep-rooted), chickpea and lentil (cool-season highland exports) — and every member follows the same management logic: P is the key purchased input (not N, which suppresses the free-fixing bacteria), two well-timed weedings in the first 6 weeks, scouting for pod borer at flowering (the yield-deciding pest at podding), and hermetic storage against the cowpea weevil that turns an unhermetic sack to dust in 3–6 months. The business module opens the export channel: 30–80% premium for a single clean variety at 12–13% moisture with zero defects — achievable with field discipline alone, no processing equipment — through group aggregation of 2–5 tonne lots.</p>
+    <h2 style="margin-top:16px;">What You Will Learn</h2>
+    <ul><li>Choose the right legume for your season, rainfall and market — bean, cowpea, pigeon pea, chickpea or lentil</li>
+<li>Manage native rhizobium nodulation: pH, no excess N, P as the key fertiliser, nodule audit at 4–6 weeks</li>
+<li>Use clean disease-free seed with fungicide treatment; stake climbing beans before the second weeding</li>
+<li>Scout pod borer at flowering; apply threshold-based control and manage weevils in storage hermetically</li>
+<li>Harvest at pod rattling for dry, at tenderness for fresh; dry to 12–13%, store in PICS bags or ash</li>
+<li>Meet the export spec — one clean variety, correct moisture, zero defects — and access 30–80% price premium through group aggregation</li></ul>
+    <div class="meta-row">
+      <div class="meta-chip"><b>Duration:</b> 6 months, one module per month</div>
+      <div class="meta-chip"><b>Level:</b> Beginner &rarr; Job-ready</div>
+      <div class="meta-chip"><b>Units:</b> Metric with imperial where useful</div>
+      <div class="meta-chip"><b>Final project:</b> Your own business plan</div>
+    </div>
+  </div>
+
+  <div class="module" data-module="1">
+    <div class="module-header" onclick="toggleModule(1)">
+      <div class="module-num">1</div>
+      <div class="module-title">Month 1: The Legume Family — Protein, Nitrogen &amp; Markets</div>
+      <div class="module-status" id="status1">Start</div>
+    </div>
+    <div class="module-body" id="body1">
+
+      <h3>Lesson 1.1 — The legume family: protein, nitrogen and markets in one crop</h3>
+      <p>Legumes — beans, cowpea, pigeon pea, lentils, chickpea, lima bean and their relatives — are Africa's protein backbone and soil's nitrogen managers simultaneously. A well-nodulated legume crop fixes atmospheric nitrogen worth <strong>30–100+ kg N/ha</strong> per season (depending on species and inoculation): free fertiliser for the crops that follow. On plates, legumes are the continent's most affordable animal-protein substitute. On markets, dry grain prices are steady and rising as urban populations grow and food diversity increases. No other crop category earns income, builds soil, reduces disease in rotation, AND feeds the family for less capital than legumes.</p>
+      <h3>Lesson 1.2 — Meet the family</h3>
+      <table>
+        <tr><th>Legume</th><th>Season</th><th>Character &amp; market</th></tr>
+        <tr><td><strong>Common bean (Phaseolus)</strong></td><td>60–90 days (bush); 90–120 (climbing)</td><td>Africa's most widely grown; markets from household to export; highly variable in colour/type = market diversity</td></tr>
+        <tr><td><strong>Cowpea</strong></td><td>60–90 days</td><td>Drought-tolerant; leaves eaten as vegetable; grain and flour market; nodulates with native rhizobia</td></tr>
+        <tr><td><strong>Pigeon pea</strong></td><td>150–240 days (perennial types longer)</td><td>Drought-hardy; deep roots; traditional income crop; dal market; green pod and dry grain; multiple seasons from one planting</td></tr>
+        <tr><td><strong>Groundnut</strong></td><td>90–120 days</td><td>Covered in the Groundnut course; included here as rotation partner</td></tr>
+        <tr><td><strong>Chickpea</strong></td><td>90–110 days; cool season (altitude/drier climates)</td><td>High protein; dal market; altitude East Africa; growing demand</td></tr>
+        <tr><td><strong>Lentil</strong></td><td>80–110 days; cool season</td><td>Highlands; Ethiopian and North African production centres; export quality premium</td></tr>
+      </table>
+      <h3>Lesson 1.3 — The rhizobium advantage</h3>
+      <p>Legumes fix nitrogen through <strong>root nodules housing rhizobium bacteria</strong>. Unlike soybean (Module 1.2 of the Soybean course), most common beans, cowpea, pigeon pea, chickpea and lentil work with <strong>native rhizobia already present in most African soils</strong> — no commercial inoculant required. The key is keeping the partnership working: <strong>neutral to slightly acid soils (pH 5.5–7.0)</strong>, no waterlogging (drowns nodules), adequate P (energises nodulation), and no excess N (kills the partnership by making it unnecessary). Check nodules at 4–6 weeks: pink/red inside = working.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Common bean, cowpea, pigeon pea, chickpea, lentil — choosing the right crop for your zone &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 1:</strong> Survey your legume market: local dry bean prices (by colour/type), cowpea leaf price in the nearest town, pigeon pea dal price if known, chickpea or lentil if altitude permits. Identify which varieties are released for your area and note their colour and market type. Research whether any export buyer, processor or group certification scheme operates near you. Write your crop choice with a paragraph of reasons tied to season, rainfall and target market.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 1 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. A well-nodulated legume fixes:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_1')">30–100+ kg N/ha per season depending on species — free fertiliser for following crops</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">Nothing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">Only carbon</button>
+<div class="q-exp" id="exp1_1"><strong>Why:</strong> The nitrogen factory is the legume's gift to the rotation. A well-managed bean season can replace a significant fraction of next season's N fertiliser bill.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Most common beans, cowpea and pigeon pea nodulate with:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_2')">Native rhizobia already present in most African soils — no commercial inoculant required (unlike soybean)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">Specialist inoculant always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">Nothing (they don't fix N)</button>
+<div class="q-exp" id="exp1_2"><strong>Why:</strong> The easy nodulators are the reason legumes fit naturally into African smallholder systems: no purchased bacteria needed, just managed conditions.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Cowpea's characteristic advantages are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_3')">Drought tolerance, edible leaves as a vegetable, and nodulation with native rhizobia — a triple contribution</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">Water-hungry always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">Inedible in all parts</button>
+<div class="q-exp" id="exp1_3"><strong>Why:</strong> Cowpea's three-way contribution: leaves are sold in urban markets, grain feeds families and markets, and roots fix nitrogen. One plant, three income streams.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Pigeon pea's seasonal character is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_4')">150–240 days; deep-rooted and drought-hardy; multiple seasons from one planting on perennial types — a reliable long-season cash and food crop</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">Annual only with no re-cropping</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">60 days always</button>
+<div class="q-exp" id="exp1_4"><strong>Why:</strong> Pigeon pea's perennial advantage: replant once, harvest for 2–3 seasons on the same root system. Deep roots access subsoil water that drought kills annual crops before.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Legume nodulation is harmed by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_5')">Excess soil N (makes the partnership unnecessary), waterlogging (drowns nodules), and acid pH below 5.5</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Normal management</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Low N always</button>
+<div class="q-exp" id="exp1_5"><strong>Why:</strong> The partnership is an arrangement of convenience: if the plant can get N from soil, it stops paying the bacteria. Excess N before nodulation establishment ends the arrangement.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. The pink/red inside of a root nodule means:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_6')">Active nitrogen fixation — leghaemoglobin is working; check at 4–6 weeks by digging plants</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">Disease</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">No nitrogen fixed</button>
+<div class="q-exp" id="exp1_6"><strong>Why:</strong> The colour is the proof. Pink = working bacteria; white/green = inactive or failed partnership. Dig, don't pull (stripping nodules from roots).</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Legume markets in Africa are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_7')">Steady and rising — urban protein demand growing as populations grow and food diversity increases</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">Declining fast</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">Nonexistent</button>
+<div class="q-exp" id="exp1_7"><strong>Why:</strong> The protein gap in African diets is closing through legumes: affordable, durable, diverse by colour and type — the continent's most accessible protein market.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Common bean's colour and type diversity means:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_8')">Market diversity — different colours and seed types serve different regional markets; matching variety to local preference is a real income decision</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Nothing — all beans identical</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">A problem</button>
+<div class="q-exp" id="exp1_8"><strong>Why:</strong> Bean colour is a market signal: red, white, speckled and black beans each have regional preferences that determine the price. Know your market before choosing the variety.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Chickpea and lentils grow best:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_9')">In cool highland climates (altitude, East Africa, North Africa) as cool-season crops with export-quality markets</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">Everywhere identically</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">Only in Asia</button>
+<div class="q-exp" id="exp1_9"><strong>Why:</strong> Cool-season legumes need cold nights the lowlands don't provide. Where altitude delivers the cold, chickpea and lentils earn premium dal and export prices.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. The minimum soil pH for productive legume nodulation is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_10')">5.5–7.0 (neutral to slightly acid) — below 5.5, rhizobia activity drops and lime is the correction</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Any pH at all</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">10.0 (alkaline always)</button>
+<div class="q-exp" id="exp1_10"><strong>Why:</strong> Rhizobia are pH-sensitive. Acid soils below 5.5 are the hidden yield floor: applying lime opens the soil to bacterial partnership without any other input.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn1" onclick="markComplete(1)">Mark Month 1 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="2">
+    <div class="module-header" onclick="toggleModule(2)">
+      <div class="module-num">2</div>
+      <div class="module-title">Month 2: Seed, Inoculation, Spacing &amp; the P-Not-N Rule</div>
+      <div class="module-status" id="status2">Locked</div>
+    </div>
+    <div class="module-body" id="body2">
+
+      <h3>Lesson 2.1 — Seed, inoculation and planting</h3>
+      <p>Use <strong>clean, disease-free seed</strong> — never seed from a disease-damaged harvest. Seed-borne diseases (angular leaf spot in bean, cowpea mosaic) travel in the seed and launch infections at emergence. Seed treatment with a fungicide (thiram or equivalent) is standard in most programmes. For soybean (covered in the Soybean course), use the specialist inoculant; for common beans, cowpea, pigeon pea, chickpea and lentil, native rhizobia in most soils suffice — but on new, never-legume land, commercial inoculant for the specific species is worth trying.</p>
+      <h3>Lesson 2.2 — Spacing</h3>
+      <table>
+        <tr><th>Legume</th><th>Row spacing</th><th>In-row spacing</th><th>Notes</th></tr>
+        <tr><td>Common bean (bush)</td><td>40–50 cm</td><td>10–15 cm</td><td>Dense stands suppress weeds</td></tr>
+        <tr><td>Common bean (climbing)</td><td>50–60 cm</td><td>15–20 cm</td><td>Needs support — staking adds 30–60% yield vs sprawl</td></tr>
+        <tr><td>Cowpea</td><td>60–75 cm</td><td>20–25 cm</td><td>Can sprawl; denser in short-season</td></tr>
+        <tr><td>Pigeon pea</td><td>60–100 cm</td><td>30–50 cm</td><td>Larger plant; often intercropped with cereals in the inter-season</td></tr>
+        <tr><td>Chickpea / lentil</td><td>25–40 cm</td><td>5–10 cm</td><td>Dense; often broadcast in highland systems</td></tr>
+      </table>
+      <h3>Lesson 2.3 — Fertility: P is the key input, N is NOT</h3>
+      <p><strong>The most common legume fertility mistake: applying nitrogen.</strong> N applied to a healthy nodulating crop suppresses the bacteria that fix N for free — you pay for N that the plant was already making. Exception: a small 'starter' N dose (10–20 kg/ha) at planting on new land or when seeds are failing to nodulate can bridge the gap before nodules establish. <strong>Phosphorus is the real key</strong>: 30–60 kg/ha P₂O₅ at planting, in the hole or furrow, doubles nodulation and yield on P-deficient soils (most of Africa). Potassium and lime (on acid soils) round out the programme.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> P in the hole, not N in the bag — the legume fertility flip that changes everything &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 2:</strong> Source certified or carefully selected disease-free seed; treat with thiram where available. Sow at your chosen spacing (refer to Module 2 table), placing P fertiliser in the hole at planting. At 4–6 weeks, dig (don't pull) 5 plants and cut 3 nodules each — record pink/white/absent and your diagnosis. Stake climbing beans at 2 weeks; second weeding around stakes at 3 weeks. Record planting date, stand count and any node quality observations.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 2 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Seed-borne legume diseases (angular leaf spot, mosaic) are fought with:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_1')">Clean disease-free seed + fungicide dressing (thiram or equivalent) before planting — infections launched at emergence cannot be stopped later</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">A spray programme after infection</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">Nothing effective</button>
+<div class="q-exp" id="exp2_1"><strong>Why:</strong> The seed carries the disease's first deployment. Clean seed + treatment is the cheapest control; the expense of an infected crop proves it.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Common bean (climbing type) vs bush type:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_2')">Climbing yields 30–60% more when properly staked but needs support; bush is easier without trellis</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">Climbing always inferior</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">They are identical</button>
+<div class="q-exp" id="exp2_2"><strong>Why:</strong> The staking investment in climbing beans returns 30–60% more yield: the bean uses vertical space that bush types waste and compete for.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. The most common legume fertility mistake is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_3')">Applying full nitrogen — N suppresses the free-fixing rhizobium bacteria that the crop was making N with</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">Not applying any input at all</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">Using too much P</button>
+<div class="q-exp" id="exp2_3"><strong>Why:</strong> The irony of N on legumes: you pay for what the plant was making free. The only exception is a small starter dose on uninoculated new land.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Phosphorus in legume farming:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_4')">Is the real key input — 30–60 kg/ha P₂O₅ at planting doubles nodulation and yield on P-deficient soils</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">Is unnecessary always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">Is worse than no fertiliser</button>
+<div class="q-exp" id="exp2_4"><strong>Why:</strong> P energises the nodulation process: the bacteria use P to fix N. On P-deficient soils (most of Africa), P is the single input with the highest legume yield response.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. A starter nitrogen dose (10–20 kg/ha) on legumes is justified when:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_5')">Planting on new never-legume land or when nodulation is known to be poor — bridging before nodules establish</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">Always, every season</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">Never under any circumstance</button>
+<div class="q-exp" id="exp2_5"><strong>Why:</strong> The starter N is temporary scaffolding: it supports growth while the bacteria establish. Once pink nodules appear, the factory runs on its own.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Cowpea spacing is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_6')">60–75 cm rows, 20–25 cm in-row — accommodates sprawling habit or (where trellis available) more dense</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">1 cm everywhere</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">Random scattering</button>
+<div class="q-exp" id="exp2_6"><strong>Why:</strong> Cowpea's sprawl is a feature in intercropped systems and a challenge in monoculture: spacing reflects the use pattern.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Pigeon pea spacing in cereal intercrop systems:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_7')">60–100 cm row, 30–50 cm in-row — a large plant often grown in alternate inter-season rows alongside cereals</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Same as bean always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Not applicable</button>
+<div class="q-exp" id="exp2_7"><strong>Why:</strong> The pigeon pea's deep root and slow canopy make it the ideal inter-row cereal companion: it doesn't compete for canopy and it mines subsoil water the cereal leaves.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Chickpea and lentil systems use:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_8')">Dense spacing (25–40 cm rows, 5–10 cm in-row) and often broadcast in highland systems — reflecting their small seed and dense canopy preference</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">Identical spacing to maize</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">No spacing discipline</button>
+<div class="q-exp" id="exp2_8"><strong>Why:</strong> Small highland legumes are broadcast or drilled like cereals; their dense stands are the weed control and the yield architecture simultaneously.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Lime on acid soils below pH 5.5 benefits legumes by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_9')">Restoring rhizobium activity — the bacteria fail below 5.5, so lime is nodulation support, not just soil chemistry</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Reducing yield</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Burning roots</button>
+<div class="q-exp" id="exp2_9"><strong>Why:</strong> The rhizobium pH threshold is real. Lime on acid legume land is the cheapest nodule-building investment in the programme.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Seed on never-legume land should be:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_10')">Inoculated with the species-specific commercial rhizobium to ensure nodulation where native populations are absent</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">Never inoculated</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">Treated with N fertiliser only</button>
+<div class="q-exp" id="exp2_10"><strong>Why:</strong> New land may lack the right rhizobium partner. Species-specific inoculant bridges the gap the soil hasn't yet filled — the soybean course's lesson applied to all legumes.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn2" onclick="markComplete(2)">Mark Month 2 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="3">
+    <div class="module-header" onclick="toggleModule(3)">
+      <div class="module-num">3</div>
+      <div class="module-title">Month 3: Pod Borer, Bean Fly, Weevil &amp; Diseases</div>
+      <div class="module-status" id="status3">Locked</div>
+    </div>
+    <div class="module-body" id="body3">
+
+      <h3>Lesson 3.1 — Weeds: fast and early</h3>
+      <p>Legumes are slow early canopy formers — weeds in the first 4–6 weeks compete hard. <strong>Two weedings (at 2–3 weeks and 5–6 weeks) capture nearly all the benefit</strong>; after canopy close, the crop suppresses weeds itself. Climbing beans need their stakes or trellis in place before the second weeding — stakes at 2 weeks, weeding around them at 3 weeks. Hoe shallow near bean roots (the nodules are surface-close and hoeing severs them). Pre-emergent herbicides (where available) reduce labour; select legume-safe labels.</p>
+      <h3>Lesson 3.2 — Pests</h3>
+      <table>
+        <tr><th>Pest</th><th>Damage</th><th>Response</th></tr>
+        <tr><td>Bean fly (Ophiomyia)</td><td>Larvae mine stems at seedling stage; notch-feeding adults on cotyledons; damping-off appearance</td><td>Seed treatment (imidacloprid where available); vigorous early stands less affected; early plant</td></tr>
+        <tr><td>Legume pod borer (Maruca)</td><td>Larvae damage flowers and pods — the yield-deciding pest at podding</td><td>Scout at flowering; threshold-based spray (pyrethroid or Bt-based) at first pod damage</td></tr>
+        <tr><td>Cowpea weevil (Callosobruchus)</td><td>Destroys grain in storage — a devastating post-harvest pest</td><td>Hermetic storage (PICS bags, airtight drums) is the primary control; ash/dust treatments as alternatives</td></tr>
+        <tr><td>Aphids &amp; thrips</td><td>Sap-sucking; virus vectors; yellowing</td><td>Natural enemies usually control; treat only at threshold; viruses managed by early planting and resistant varieties</td></tr>
+        <tr><td>Bruchid weevil (bean)</td><td>Storage holes in dry beans</td><td>Same as cowpea weevil — hermetic storage or ash treatment</td></tr>
+      </table>
+      <h3>Lesson 3.3 — Diseases</h3>
+      <ul>
+        <li><strong>Angular leaf spot (Phaeoisariopsis):</strong> the most widespread bean disease; angular grey-brown lesions; clean seed, rotation, resistant varieties.</li>
+        <li><strong>Bean common mosaic / bean yellow mosaic virus:</strong> mosaic patterned leaves, stunting; seed-borne and aphid-spread; virus-free certified seed, resistant varieties.</li>
+        <li><strong>Anthracnose (Colletotrichum):</strong> dark sunken lesions on pods and seeds; wet seasons; clean seed, rotation, resistant varieties.</li>
+        <li><strong>Root rot (Pythium, Fusarium):</strong> pre- and post-emergence damping off; drainage, raised beds, seed treatment, rotation.</li>
+        <li><strong>Cowpea mosaic virus:</strong> similar to bean mosaic; aphid-vectored; resistant varieties and aphid control.</li>
+      </ul>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Maruca pod borer at flowering — scout, threshold, protect the pod &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 3:</strong> From flowering, scout weekly: inspect 20 plants per session for pod borer (look inside fresh pod damage), bean fly at seedlings, aphid colonies, and any pod discolouration. Record on a scouting sheet. Price hermetic PICS bags and wood ash locally. Identify disease symptoms on your crop: angular leaf spot, mosaic, anthracnose — record leaf photos where possible. Decide: spray or no-spray, based on your scouting numbers vs the threshold for pod borer in your scheme's or extension's guidance.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 3 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Legume weeding programme is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_1')">Two passes (2–3 weeks and 5–6 weeks) — early canopy closure after that does the rest; hoe SHALLOW to protect surface nodules</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Weekly all season</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Never needed</button>
+<div class="q-exp" id="exp3_1"><strong>Why:</strong> Two timely passes are the whole programme: early competition is costly; after canopy close it's free. Surface hoeing protects the nodules that are building next season's N bank.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Bean fly larvae at seedling stage cause:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_2')">Stem mining and notch-feeding that looks like damping off — early planting and vigorous stands are the main defences; seed treatment helps</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Leaf curling only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Nothing visible</button>
+<div class="q-exp" id="exp3_2"><strong>Why:</strong> Bean fly damage is early and fast: the narrow seedling stage is the window. Vigorous seeds in warm moist soil emerge fast enough to outgrow the worst attacks.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. The yield-deciding pest at legume podding is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_3')">Legume pod borer (Maruca) — larvae damage flowers and pods; scout at flowering and spray at first pod damage, threshold-based</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">Aphids only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">Soil bacteria</button>
+<div class="q-exp" id="exp3_3"><strong>Why:</strong> The pod is the product; a borer inside a pod is money destroyed before it can be picked. Flowering is the scouting trigger — not the calendar date.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Cowpea and bean weevil in storage is prevented by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_4')">Hermetic storage (PICS bags, airtight drums) as the primary control — zero oxygen kills the beetle at all life stages; ash/dust is the low-cost alternative</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Chemical sprays on grain</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Nothing effective</button>
+<div class="q-exp" id="exp3_4"><strong>Why:</strong> The storage weevil turns a good harvest into powder without intervention. PICS bags are the modern standard; ash between layers is the centuries-old alternative.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Angular leaf spot is managed by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_5')">Clean disease-free seed, crop rotation, and resistant varieties — the seed-borne disease control stack</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">A curative spray after infection</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Nothing works</button>
+<div class="q-exp" id="exp3_5"><strong>Why:</strong> Seed-borne diseases share the same management logic across all courses: clean seed is cheaper than a contaminated field. Rotation breaks the soil inoculum cycle.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Bean common mosaic virus is prevented by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_6')">Virus-free certified seed, resistant varieties, and aphid control — all preventing primary and secondary spread</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Curative spray</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Irrigation</button>
+<div class="q-exp" id="exp3_6"><strong>Why:</strong> Viral diseases are irreversible once in the plant. Prevention (seed quality, genetics, vector control) is the only strategy.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Root rot (damping off) in legumes is prevented by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_7')">Good drainage, raised beds, seed treatment, and rotation — a wet soil management problem as much as a pathogen problem</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Extra irrigation</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Deep planting always</button>
+<div class="q-exp" id="exp3_7"><strong>Why:</strong> Pythium and Fusarium live in wet, oxygen-poor soil. Raising the seedbed, draining the field and starting with treated seed removes their habitat.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Anthracnose on bean pods appears in:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_8')">Wet seasons as dark sunken lesions — clean seed, rotation and resistant varieties are the defences</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">Dry seasons only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">Never in the field</button>
+<div class="q-exp" id="exp3_8"><strong>Why:</strong> Rain splash is the anthracnose delivery system. Dense canopies in wet years amplify spread: wider spacing and resistant variety choice reduce both risk factors.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Climbing beans need stakes:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_9')">Installed at ~2 weeks, before the second weeding — vines trained up stakes yield 30–60% more than sprawling plants</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Only at maturity</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Never</button>
+<div class="q-exp" id="exp3_9"><strong>Why:</strong> Staking before the vine reaches for support is the window: it shapes the canopy, the airflow, and the pod position — all at once.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Aphid and thrips threshold decisions mean:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_10')">Treating only when populations exceed the economic level — natural enemies usually control aphids; viruses managed upstream by seed and variety choice</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Spray every week as prevention</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Never treat any insect</button>
+<div class="q-exp" id="exp3_10"><strong>Why:</strong> Below-threshold sprays kill the ladybirds and parasitoids that control aphids cheaply and permanently. Threshold decisions protect the free workforce.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn3" onclick="markComplete(3)">Mark Month 3 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="4">
+    <div class="module-header" onclick="toggleModule(4)">
+      <div class="module-num">4</div>
+      <div class="module-title">Month 4: Water, Intercropping &amp; Stage Reading</div>
+      <div class="module-status" id="status4">Locked</div>
+    </div>
+    <div class="module-body" id="body4">
+
+      <h3>Lesson 4.1 — Water in legumes</h3>
+      <p>Most African legumes are matched to rain-fed systems but have critical water windows:</p>
+      <ul>
+        <li><strong>Germination and emergence:</strong> moist soil essential; waterlogging fatal within 48 hours.</li>
+        <li><strong>Flowering and pod set:</strong> drought here causes flower abortion and blank pods — the legume's silking equivalent. Even a single heavy water stress event costs 20–40% yield.</li>
+        <li>Pigeon pea's deep root system tolerates mid-season drought far better than common bean — planting mix matters for risk management.</li>
+      </ul>
+      <h3>Lesson 4.2 — Intercropping legumes with cereals</h3>
+      <p>The legume-cereal intercrop is Africa's most widespread farming system for a reason: complementary canopies, fixed nitrogen, diversified income and food security in one field. Best-practice rules:</p>
+      <ul>
+        <li>Maintain cereal density (maize, sorghum) at full; add legume rows between.</li>
+        <li>Match legume season to the cereal's canopy-close timing — beans finishing before canopy close; pigeon pea in the inter-season rows.</li>
+        <li>Don't add N fertiliser on the legume rows — it suppresses nodulation on the most productive part of the intercrop system.</li>
+        <li>Harvest legume first (usually); the stubble mulch and N-fixing roots remain for the cereal.</li>
+      </ul>
+      <h3>Lesson 4.3 — Reading the crop</h3>
+      <table>
+        <tr><th>Stage</th><th>Watch for</th><th>Act</th></tr>
+        <tr><td>Emergence (5–10 days)</td><td>Damping off, bean fly, gaps in stand</td><td>Gap-fill within 10 days; treat only if threshold reached</td></tr>
+        <tr><td>Vegetative (2–5 weeks)</td><td>Vigour, leaf colour (yellowing = N failure or pH problem), nodule check at 4–6 weeks</td><td>Two weedings; stake climbing types; nodule audit</td></tr>
+        <tr><td>Flowering (5–10 weeks)</td><td>Pod borer; aphids; flower abortion (drought)</td><td>Scout and threshold-spray if Maruca appears</td></tr>
+        <tr><td>Pod fill (7–13 weeks)</td><td>Pod borer continuing; pod discolouration (anthracnose); harvest readiness</td><td>Final pest check; plan harvest logistics</td></tr>
+        <tr><td>Maturity / harvest</td><td>Pod browning and rattling (dry); green harvest for fresh market</td><td>Harvest promptly; dry immediately; hermetic storage</td></tr>
+      </table>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Flower-drop drought and the legume-cereal intercrop system &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 4:</strong> Track crop stages: emergence (5–10 days), first true leaves (10–15 days), flowering (5–10 weeks), pod fill, pod browning. Record flowering date and any signs of drought-related flower drop (petals falling without pod forming). If intercropped with a cereal, count both crops' densities at thinning stage and verify cereal density was maintained. Harvest cowpea leaves (if cowpea) in the vegetative stage and record the sale price per bunch in your nearest town.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 4 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Legume drought at flowering and pod set costs:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_1')">20–40% yield from flower abortion and blank pods — the legume's equivalent of maize's silking stress</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Nothing measurable</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Only colour</button>
+<div class="q-exp" id="exp4_1"><strong>Why:</strong> The legume sheds flowers under stress faster than any other crop response: a week without water at the wrong time erases what the whole season built.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Waterlogging at legume germination is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_2')">Fatal within 48 hours — drowns the seedling before nodules can form and sets off root rot</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">Helpful</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">Minor concern</button>
+<div class="q-exp" id="exp4_2"><strong>Why:</strong> The two enemies of legume emergence are dry soil (won't germinate) and wet soil (drowns after germination). The narrow window between them is the planting sweet spot.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Pigeon pea's mid-season drought tolerance comes from:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_3')">Its deep root system mining subsoil water common bean roots cannot reach</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Magic</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Leaves only</button>
+<div class="q-exp" id="exp4_3"><strong>Why:</strong> Root depth is drought insurance: pigeon pea's tap root accesses subsoil moisture that dries 30 cm down — the reason it fits semi-arid systems where common bean fails.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. In cereal-legume intercrops, N fertiliser on legume rows:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_4')">Should be avoided — excess N suppresses nodulation on the most productive part of the system</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">Should be maximised</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">Makes no difference</button>
+<div class="q-exp" id="exp4_4"><strong>Why:</strong> The intercrop logic: cereal rows get N; legume rows get P and lime. Applying N on legume rows is paying for nitrogen that the bacteria would have made free.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. The legume-cereal intercrop works because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_5')">Complementary canopies, fixed N from legume roots, diversified income and food security — Africa's most widespread farming system for good reason</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Nothing works between crops</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Only as decoration</button>
+<div class="q-exp" id="exp4_5"><strong>Why:</strong> Total land productivity from a well-designed legume-cereal intercrop routinely exceeds monoculture of either: temporal niche, root depth, N economy.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. The nodule audit at 4–6 weeks checks:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_6')">Pink/red inside = working partnership; white/green = failed or absent — dig (don't pull) to keep nodules attached</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Leaf colour only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Seed colour</button>
+<div class="q-exp" id="exp4_6"><strong>Why:</strong> The audit is the partnership's health check. White nodules at 6 weeks mean the N factory never started — lime, or soil pH is the diagnosis.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Legume harvesting at pod browning and rattling means:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_7')">Dry grain is ready — harvest promptly before shattering scatters seed; sun-dry immediately on racks/tarpaulins</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Overripe always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Green for fresh market</button>
+<div class="q-exp" id="exp4_7"><strong>Why:</strong> Shattering is the legume harvest's enemy: dry pods pop open and scatter seed. Harvest just before peak browning and dry quickly to finish.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Fresh-market cowpea leaves are harvested:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_8')">Young and tender before the leaf hardens — a high-value urban vegetable market alongside the grain</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">Never</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">Only at grain maturity</button>
+<div class="q-exp" id="exp4_8"><strong>Why:</strong> The leaf harvest is extra income: young cowpea leaves sell at vegetable-market prices. Managed carefully (don't strip too many), it doesn't harm the grain crop.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Climbing bean stakes are best made from:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_9')">Locally available wooden stakes or bamboo, installed at 2 weeks at the base of each plant or between pairs</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Steel rods only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Nothing — beans climb naturally without support</button>
+<div class="q-exp" id="exp4_9"><strong>Why:</strong> Any straight local material serves: a 1.5–2 m stake per plant or frame system converts a sprawling plant into a productive vertical canopy.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. After legume harvest, the stubble and root system left in the field:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_10')">Contains the fixed N and organic matter that benefits the next cereal crop — the rotation's free fertiliser contribution</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Should be burned always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Harms the next crop</button>
+<div class="q-exp" id="exp4_10"><strong>Why:</strong> The roots and stubble are the fertiliser delivery system. Incorporating rather than burning returns N, organic matter and root channels to the next crop's rooting zone.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn4" onclick="markComplete(4)">Mark Month 4 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="5">
+    <div class="module-header" onclick="toggleModule(5)">
+      <div class="module-num">5</div>
+      <div class="module-title">Month 5: Harvest Timing, Hermetic Storage &amp; Seed Stock</div>
+      <div class="module-status" id="status5">Locked</div>
+    </div>
+    <div class="module-body" id="body5">
+
+      <h3>Lesson 5.1 — Harvest timing</h3>
+      <p><strong>Dry beans and pulses:</strong> harvest when pods are brown and dry (rattling stage), before shattering opens pods. Morning harvest when dew slightly softens pods reduces losses. Cut whole plants or pick pods individually; stook (stand in small heaps) to complete any remaining drying. <strong>Fresh market (green beans, green cowpea):</strong> harvest at the right tenderness stage — stringy or starchy overripe beans lose their market premium. Check daily during the fresh window.</p>
+      <h3>Lesson 5.2 — Threshing and cleaning</h3>
+      <ul>
+        <li>Beat dry plants on tarpaulins or mats; tread by foot; small motorised threshers where available.</li>
+        <li>Winnow to remove chaff; sieve to remove broken seed and stones.</li>
+        <li><strong>Dry to 12–13%</strong> (bite test: hard crack, no dent) before storage — the grain moisture law for pulses.</li>
+      </ul>
+      <h3>Lesson 5.3 — Storage: hermetic against the weevil</h3>
+      <p><strong>Cowpea weevil (Callosobruchus maculatus)</strong> is the most devastating storage pest in Africa — it lays eggs on grain, larvae hatch and eat through seed, and a single infested sack turns to dust in 3–6 months. <strong>Hermetic storage (PICS bags, metal drums, airtight containers) is the only reliable control</strong>: zero oxygen kills eggs and larvae without chemicals. Where hermetic is not available: <strong>clean sand or wood ash mixed into the grain</strong> (1 part ash to 5 parts grain) physically blocks the weevil's breathing system — traditional technology proven effective.</p>
+      <h3>Lesson 5.4 — Seed stock</h3>
+      <p>Common bean and cowpea seed viability: <strong>12–18 months in open storage, 2–3 years hermetically sealed</strong>. Select seed from disease-free, vigorous, correctly-typed plants; dry to 12%; seal hermetically with variety label and date. Run a germination test (50 seeds, damp cloth, 5 days) before sowing season — the test prevents the heartbreak of a failed stand on a planted sack of dead seed.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> PICS bags vs cowpea weevil — why the $3 hermetic bag is not optional &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 5:</strong> Harvest at pod-rattling stage in the morning; stook plants to complete drying. Thresh on a tarpaulin, winnow, sieve, and dry to bite-test standard (hard crack). Fill a PICS bag (or use clean sealed tin/drum) for at least a 10 kg sample; fill a standard open sack with the same batch. Check both after 3 weeks and record any weevil activity differences. For seed stock: select 5 plants for best characteristics, dry to 12%, seal with label. Run a germination test on saved seed from last season if available.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 5 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Dry bean harvest timing is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_1')">At pod brown/rattling stage, morning when dew softens pods — before shattering scatters seed; stook plants to complete drying</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">After all pods split</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">At green stage for dry storage</button>
+<div class="q-exp" id="exp5_1"><strong>Why:</strong> The rattling test is the farmer's maturity meter: seeds loose inside the pod with a rattle sound = ready. Morning timing gets those pods before afternoon heat pops them open.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Fresh-market green bean harvest is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_2')">At the tenderness window — checked daily; stringy overripe beans lose premium instantly</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Only at full maturity</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Any time at all</button>
+<div class="q-exp" id="exp5_2"><strong>Why:</strong> The fresh market pays for tenderness; overripe beans pay nothing or go to the dry market at a fraction. Daily checking during the window is premium capture.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Pulse storage moisture target is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_3')">12–13% — bite test hard crack, no dent; above 14% moulds quickly; below 10% shatters on threshing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">25% is fine</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">5% always</button>
+<div class="q-exp" id="exp5_3"><strong>Why:</strong> The standard moisture-law range applies to pulses as to cereals. Twelve percent is safe for months; above this, storage weevil, mould and quality deterioration accelerate.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Cowpea weevil (Callosobruchus) turns infested grain to:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_4')">Dust in 3–6 months without control — the most devastating storage pest in African legumes</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">A premium product</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">Nothing — it's harmless</button>
+<div class="q-exp" id="exp5_4"><strong>Why:</strong> An uncontrolled cowpea weevil infestation literally eats the food. Hermetic storage is the modern solution; ash is the traditional one. Neither option is optional.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. PICS bags control cowpea weevil by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_5')">Removing oxygen — zero-oxygen environment kills eggs and larvae at all life stages; no chemicals needed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">Adding chemicals</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">Cooling the grain</button>
+<div class="q-exp" id="exp5_5"><strong>Why:</strong> Airtight = insect-dead. No oxygen, no respiration, no survivors — the principle that makes hermetic storage the universal grain-safe solution.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Traditional wood ash in stored grain works by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_6')">Physically blocking the weevil's breathing through the grain mass — traditional technology proven effective at 1 part ash to 5 parts grain</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">Poisoning the grain</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">Absorbing moisture only</button>
+<div class="q-exp" id="exp5_6"><strong>Why:</strong> The ash is a physical barrier: fine particles coat the grain and clog the spiracles (breathing pores) of beetle larvae. No toxicity, no residue — centuries of proven use.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Common bean seed viability is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_7')">12–18 months in open storage, 2–3 years in hermetic — always germination-test before the season</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Eternal in any bag</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">7 days maximum</button>
+<div class="q-exp" id="exp5_7"><strong>Why:</strong> Seed is perishable: viability declines with time, heat and moisture. The germination test before the season is the insurance policy that costs 50 seeds and 5 days.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Selecting seed for the next season means:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_8')">Disease-free, vigorous, correctly typed plants; dried to 12%; sealed hermetically with label and date — the farmer's breeding programme</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Any old cob or pod</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Buying the cheapest available</button>
+<div class="q-exp" id="exp5_8"><strong>Why:</strong> Self-selected legume seed is improvement: every season's best plants, chosen consistently, create a locally-adapted line better than any generic variety sold without care.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Morning harvest of dry beans:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_9')">Reduces shattering — overnight dew slightly softens dry pods so they don't pop open during cutting</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Makes no difference</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Is harmful</button>
+<div class="q-exp" id="exp5_9"><strong>Why:</strong> The microclimate trick: 6 AM pods are pliable; noon pods are powder-keg tight. One hour's temperature difference saves meaningful yield.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Winnowing after threshing removes:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_10')">Chaff, dust and light material — leaving clean grain for sieving to remove stones and broken seed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Nothing useful</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">The grain itself</button>
+<div class="q-exp" id="exp5_10"><strong>Why:</strong> A two-step clean: winnow removes light material, sieve removes stones. The clean lot fetches premium from any buyer; the uncleaned lot is discounted at every point.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn5" onclick="markComplete(5)">Mark Month 5 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="6">
+    <div class="module-header" onclick="toggleModule(6)">
+      <div class="module-num">6</div>
+      <div class="module-title">Month 6: Markets, Export Premium &amp; the Group Path</div>
+      <div class="module-status" id="status6">Locked</div>
+    </div>
+    <div class="module-body" id="body6">
+
+      <h3>Lesson 6.1 — Markets for legumes</h3>
+      <table>
+        <tr><th>Channel</th><th>Buyer</th><th>What they want</th></tr>
+        <tr><td>Household food</td><td>Own family</td><td>Colour/type matching family preference; never sell before food security</td></tr>
+        <tr><td>Local market (dry grain)</td><td>Village and town traders</td><td>Clean, dry, correct colour; immediate cash</td></tr>
+        <tr><td>Export buyers (beans, lentils, chickpea)</td><td>Regional/international traders</td><td>Tight grain type, size, colour, moisture, zero defects; premium 30–80% above local</td></tr>
+        <tr><td>Fresh vegetable (cowpea leaves, green beans)</td><td>Urban market, restaurants</td><td>Young leaves, correct pod size; premium per kg, daily market</td></tr>
+        <tr><td>Processed products</td><td>Flour mills, canning, dal processors</td><td>Volume + quality specs; opportunity for groups</td></tr>
+        <tr><td>Lean-season hold</td><td>All dry grain buyers at 20–50% higher prices</td><td>Hermetic storage is the enabler; same as maize hold strategy</td></tr>
+      </table>
+      <h3>Lesson 6.2 — An honest one-hectare bean budget</h3>
+      <table>
+        <tr><th>Item</th><th>Assumption</th><th>Amount</th></tr>
+        <tr><td>Yield (climbing bean, staked)</td><td>Staked, two weedings, P fertiliser, pod-borer scouted</td><td>~1.8–2.5 t/ha</td></tr>
+        <tr><td>Gross (local dry price)</td><td>$0.70–1.20/kg</td><td>~$1,260–3,000</td></tr>
+        <tr><td>Gross (export specs met)</td><td>$1.20–1.80/kg</td><td>~$2,160–4,500</td></tr>
+        <tr><td>Seed (60–80 kg) + treatment</td><td></td><td>$40–100</td></tr>
+        <tr><td>P fertiliser (30–40 kg P₂O₅)</td><td>SSP or compound at planting</td><td>$30–80</td></tr>
+        <tr><td>Stakes (climbing type)</td><td>~4,000–5,000 stakes/ha</td><td>$80–200</td></tr>
+        <tr><td>Weeding labour ×2 + staking</td><td></td><td>$80–180</td></tr>
+        <tr><td>Harvest + threshing + cleaning</td><td></td><td>$80–160</td></tr>
+        <tr><td>Hermetic storage (PICS bags)</td><td></td><td>$15–40</td></tr>
+        <tr><td><strong>Indicative margin</strong></td><td>Local price; export premium nearly doubles</td><td><strong>~$850–2,000/ha local; up to $3,500+ export</strong></td></tr>
+      </table>
+      <h3>Lesson 6.3 — The export premium: meeting the spec</h3>
+      <p><strong>Export buyers pay 30–80% more than local traders</strong> for beans, lentils and chickpea that meet grain-type, size, colour, moisture and defect specs. The spec checklist: <strong>correct variety (one colour, one type, no mixing), clean (zero stones, broken seed or foreign matter), 12–13% moisture, and consistent lot size</strong>. Meeting the spec is a farm discipline, not a processing one: variety selection, clean harvest, drying and hermetic storage deliver the export lot without any equipment beyond what the household already uses. <strong>Group certification and aggregation</strong> is the vehicle for access — individual sacks of 200 kg cannot enter the export channel; group lots of 2–5 tonnes can.</p>
+      <h3>Lesson 6.4 — Records and the growth path</h3>
+      <p>Per plot per season: variety and seed source; planting date; stand count; nodule audit at 4–6 weeks; weeding dates; scout records (pod borer at flowering, count and spray/no-spray decision); harvest date and yield; threshing and drying days; storage type and duration; sale date, channel and price. <strong>Report card: yield (kg/ha), moisture at storage, and sale price vs local trader price (the channel premium).</strong> Growth path: year one — one clean-variety staked bean plot done to export spec; year two — group aggregation and first export-quality lot sold; year three — consistent supply of a premium variety for export or processing contract.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> The export spec — one colour, 12% moisture, zero defects — and the group lot that unlocks it &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 6:</strong> Build the one-hectare budget from your recorded costs and local prices. Compare: local trader price, lean-season price (call 3 months later), and export price (if a buyer exists). Identify the export spec for your bean type from any available buyer, extension or NGO programme. Calculate the premium percentage. Identify 5 other farmers who grow the same bean variety (critical for colour consistency). Draft a proposal for a simple group lot: how many tonnes, from how many farmers, stored where, sold to whom. This is your year-two plan.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 6 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Export bean buyers pay compared to local traders:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_1')">30–80% more for beans meeting grain-type, size, colour, moisture and zero-defect specs</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">Less always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">The same always</button>
+<div class="q-exp" id="exp6_1"><strong>Why:</strong> The premium is the quality premium, and it is available without any equipment: correct variety, clean harvest, 12–13% moisture, hermetic storage. Discipline, not machinery.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Meeting export legume specs requires:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_2')">Correct single variety (no mixing), clean grain (zero stones/broken seed), 12–13% moisture and consistent lot — farm discipline, not processing equipment</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">A factory</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Lab testing at every step</button>
+<div class="q-exp" id="exp6_2"><strong>Why:</strong> The export spec is a harvest and storage standard. Every step is field and store discipline: single variety, clean picking, drying, hermetic hold.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Group aggregation for export access is needed because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_3')">Individual lots of 200 kg cannot enter the export channel; group lots of 2–5 tonnes can — organisation is the entry key</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Size never matters</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Individual always preferred</button>
+<div class="q-exp" id="exp6_3"><strong>Why:</strong> Export buyers are volume operators. The group is the unit of commerce; the individual farmer is an input into that unit. The logic runs through sorghum, soybean and now legumes.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. The lean-season price premium for pulses is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_4')">20–50% above harvest-day price — hermetic storage enables the hold; the PICS bag is again the financial instrument</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Nonexistent</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Negative (prices drop)</button>
+<div class="q-exp" id="exp6_4"><strong>Why:</strong> Dry grains and pulses follow the same harvest-glut / lean-season differential as maize. The same storage discipline captures the same premium.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Processed legume products (dal, flour, canned) require:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_5')">Volume and quality specs from processing groups — opportunity for organised farmer groups supplying a consistent product</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">Nothing special</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">Individual sacks only</button>
+<div class="q-exp" id="exp6_5"><strong>Why:</strong> Processing buyers, like export buyers, need reliability. A group that delivers 5 t of clean dry cowpea monthly wins the contract that an individual 100 kg lot cannot enter.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. The three report-card numbers for beans are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_6')">Yield (kg/ha), moisture at storage, and price vs local trader price — agronomy, quality and marketing captured in three figures</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">Rainfall only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">Field size only</button>
+<div class="q-exp" id="exp6_6"><strong>Why:</strong> Yield reveals the agronomy; moisture reveals the drying discipline; price-ratio reveals the channel discipline. All three must score for the enterprise to be productive.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. The cowpea leaf market is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_7')">A high-value urban vegetable market — young leaves sold daily at vegetable prices, often doubling income during the growing season</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Nonexistent</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Only for food security</button>
+<div class="q-exp" id="exp6_7"><strong>Why:</strong> Young cowpea leaves are a staple urban vegetable in many African cities. Daily picking during the vegetative stage adds income without significantly reducing grain yield.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Chickpea and lentil export quality is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_8')">Premium — East African highlands grow export-quality chickpea and lentil for dal and grain markets that pay well above local dry bean prices</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Unregulated</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Impossible to achieve</button>
+<div class="q-exp" id="exp6_8"><strong>Why:</strong> The dal trade is global; East African chickpea and lentil already enter it. The premium over common bean can be 2–3×. Altitude and cool climate are the agronomic prerequisites.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Staked climbing bean vs bush bean economics:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_9')">Staked climbing: 30–60% more yield at the cost of stakes and staking labour — profitable where stakes are cheap (bamboo, tree pruning)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Bush always better</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Staking too expensive everywhere</button>
+<div class="q-exp" id="exp6_9"><strong>Why:</strong> The stake is capital that earns: installed once, the yield gain recurs across the whole season. Where local bamboo or wood is free, the staking decision is a free 30–60% yield increase.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. The year-one focus for legumes is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_10')">One plot of a single correct variety, staked (if climbing), two weedings, P fertiliser, scout for pod borer at flowering, hermetic storage — done right</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Maximum area loosely managed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">No inputs, any variety</button>
+<div class="q-exp" id="exp6_10"><strong>Why:</strong> Quality before area: one clean, well-managed plot to export spec teaches the discipline that scales. Ten mixed-variety poorly-stored plots teach only how to sell at bottom price.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn6" onclick="markComplete(6)">Mark Month 6 Complete</button>
+    </div>
+  </div>
+
+  <div class="final-section">
+    <h2>&#127942; Final Project: Your Beans &amp; Legumes Business Plan</h2>
+    <p>The final project is your complete legume enterprise plan — crop choice, the P-not-N fertility logic, pod-borer scouting, hermetic storage, and the export-premium pathway through group aggregation.</p>
+    <ol><li><strong>Crop and market case:</strong> chosen legume, variety (colour and type for target market), season fit, and market channel identified (local, lean-season, fresh leaf, export, processing).</li>
+<li><strong>Establishment plan:</strong> seed source and treatment, spacing, P fertiliser (product, rate, placement), thinning/gap-fill plan, staking schedule for climbing types, rhizobium strategy for new land.</li>
+<li><strong>Nodule audit plan:</strong> dig date (4–6 weeks), sampling procedure, pink/white assessment, action if white (lime diagnosis, pH test, inoculant option).</li>
+<li><strong>Pest and disease protocol:</strong> pod-borer scouting routine (weekly from flowering), threshold (per extension guidance), approved product, bean fly and aphid watch, hermetic storage as weevil control.</li>
+<li><strong>Harvest and storage chain:</strong> pod-rattling trigger, morning harvest, threshing and drying to 12–13%, hermetic storage (PICS or ash alternative), seed stock selection and hermetic sealing.</li>
+<li><strong>Export spec compliance:</strong> single variety (no colour mixing), clean (stones/broken seed removed), 12–13% moisture, lot size for group aggregation — list the five steps as commitments.</li>
+<li><strong>Budget and group plan:</strong> hectare budget with three price scenarios, group-formation proposal (variety consistency partners, storage point, buyer contact), year-one/two/three path.</li></ol>
+    <p><strong>Submission standard:</strong> A plan you could hand to a savings group, a bank officer, or a family investor without embarrassment. Real local prices, real named buyers, honest risks.</p>
+  </div>
+
+  <div class="budget-section">
+    <h2>&#128176; Startup Budget &mdash; 1 Hectare Climbing Bean (Staked, Export-Spec Path)</h2>
+    <p>The climbing bean budget's key variables are the stake cost (once only if bamboo or free wood, recurring if bought) and the price channel: local market vs export-spec premium is a 30–80% difference on the same grain. The hermetic bag is the cheapest investment in the whole chain.</p>
+    <table>
+      <tr><th>Item</th><th>Details</th><th>Typical cost (USD)</th></tr>
+<tr><td>Seed (60–80 kg) + fungicide treatment</td><td>Disease-free, one colour variety</td><td>$40–100</td></tr>
+<tr><td>P fertiliser (SSP or compound at planting)</td><td>30–40 kg P₂O₅</td><td>$30–80</td></tr>
+<tr><td>Lime (where pH below 5.5)</td><td>To restore nodulation</td><td>$20–60</td></tr>
+<tr><td>Stakes (4,000–5,000 per ha, bamboo or wood)</td><td>Installed at 2 weeks</td><td>$80–200</td></tr>
+<tr><td>Weeding labour ×2 + staking labour</td><td>2–3 weeks and 5–6 weeks</td><td>$80–180</td></tr>
+<tr><td>Pod-borer spray (only if threshold crossed)</td><td>Approved pyrethroid or Bt product</td><td>$0–60</td></tr>
+<tr><td>Harvest, threshing, winnowing, sieving labour</td><td></td><td>$80–160</td></tr>
+<tr><td>Drying + hermetic storage (PICS bags)</td><td>PICS bags × 5–8 per tonne</td><td>$15–40</td></tr>
+<tr><td>Transport to market or group collection point</td><td></td><td>$30–80</td></tr>
+<tr><td>Contingency (10%)</td><td></td><td>$40–100</td></tr>
+<tr><td><strong>Total indicative costs</strong></td><td></td><td><strong>$415–1,060</strong></td></tr>
+<tr><td><strong>Local market margin</strong></td><td>1.8–2.5 t × $0.70–1.20</td><td><strong>~$850–2,000/ha</strong></td></tr>
+<tr><td><strong>Export-spec margin</strong></td><td>Same grain at $1.20–1.80/kg</td><td><strong>~$2,160–3,500+/ha</strong></td></tr>
+    </table>
+    <p><em>Prices vary widely by country. Before spending anything, price every line in your own town and rebuild this table — that exercise is part of your final project.</em></p>
+  </div>
+
+  <div class="glossary-section">
+    <h2>&#128218; Glossary</h2>
+    <dl class="glossary">
+<dt>Nodule</dt><dd>Root structure housing nitrogen-fixing rhizobium bacteria; pink/red inside = active.</dd>
+<dt>Native rhizobium</dt><dd>Bacteria already in most African soils that nodulate common bean, cowpea, pigeon pea, chickpea and lentil — unlike soybean's specialist.</dd>
+<dt>Pod borer (Maruca)</dt><dd>The legume family's yield-deciding pest at flowering and podding — scouted and spray-managed at threshold.</dd>
+<dt>Cowpea weevil (Callosobruchus)</dt><dd>Post-harvest beetle that destroys dry grain in 3–6 months; controlled by hermetic storage or ash.</dd>
+<dt>PICS bag</dt><dd>Three-layer hermetic grain bag; eliminates oxygen; kills storage insects without chemicals.</dd>
+<dt>Angular leaf spot</dt><dd>Most widespread bean leaf disease; angular grey-brown lesions; seed-borne; managed by clean seed, rotation, resistance.</dd>
+<dt>Anthracnose</dt><dd>Dark sunken lesions on pods and seed in wet seasons; seed-borne; same management as angular leaf spot.</dd>
+<dt>Bean fly (Ophiomyia)</dt><dd>Stem-mining larval pest at seedling stage; seed treatment and vigorous early stands are defences.</dd>
+<dt>Climbing bean</dt><dd>Indeterminate vining bean requiring staking; yields 30–60% more than bush types when staked.</dd>
+<dt>Bush bean</dt><dd>Determinate compact bean; no staking needed; lower yield ceiling; easier for limited-labour situations.</dd>
+<dt>Pigeon pea</dt><dd>Perennial legume with deep tap root; 150–240 days; multi-season from one planting; drought-hardy.</dd>
+<dt>Cowpea leaf market</dt><dd>Urban vegetable market for young cowpea leaves — often higher per-kg value than the grain.</dd>
+<dt>Export spec</dt><dd>Grain type, colour, moisture, cleanliness, and defect limits that export buyers require; 30–80% premium over local price.</dd>
+<dt>Group lot</dt><dd>2–5 tonnes of same-variety, same-spec grain aggregated from multiple farms; the unit of access for export channels.</dd>
+<dt>Starter N</dt><dd>A small (10–20 kg/ha) nitrogen dose at planting on uninoculated new land — bridges until nodules establish; not routine.</dd>
+<dt>Hermetic storage</dt><dd>Airtight storage eliminating oxygen; kills weevils and moulds without chemicals.</dd>
+<dt>Dal</dt><dd>South Asian term for split dried legume; East African chickpea and lentil enter this export market at premium prices.</dd>
+    </dl>
+  </div>
+
+  <div class="resources-section">
+    <h2>&#128279; Further Resources</h2>
+    <ul><li>CIAT (International Centre for Tropical Agriculture) — common bean variety database, disease and pest management for African bean systems.</li>
+<li>ICRISAT — cowpea and pigeon pea varieties, legume systems for semi-arid Africa, hermetic storage resources.</li>
+<li>Your national legumes programme and extension office — released varieties (colour, market type), pod borer threshold tables, and any export or outgrower programme.</li>
+<li>PICS bag suppliers and hermetic storage programmes — find the nearest source and price per bag.</li>
+<li>Rise Africa Skills companion courses: Maize (the intercrop cereal partner), Groundnut (the oil-crop legume counterpart), Soybean (inoculant lessons applied), Solar Drying (drying discipline).</li></ul>
+  </div>
+
+  <div class="cert-section">
+    <h2>&#127891; Course Completion</h2>
+    <p>Complete all 6 months and pass the quizzes to unlock your certificate.</p>
+    <a href="certificate.html?course=Beans%20%26%20Legumes%20Farming" class="cert-btn" id="certBtn" disabled>Get Certificate</a>
+  </div>
+</div>
+<script>
+  const TOTAL_MODULES = 6;
+  const COURSE_KEY = 'beans-legumes-farming';
+  let completed = JSON.parse(localStorage.getItem(COURSE_KEY + '_progress') || '[]');
+
+  function toggleModule(n) {
+    if (n > 1 && !completed.includes(n-1)) { alert('Complete Month ' + (n-1) + ' first.'); return; }
+    document.getElementById('body' + n).classList.toggle('active');
+  }
+  function answerQ(btn, isCorrect, expId) {
+    const parent = btn.parentElement;
+    const buttons = parent.querySelectorAll('.q-opt');
+    if (buttons[0].disabled) return;
+    buttons.forEach(b => { b.disabled = true; });
+    if (isCorrect) { btn.classList.add('correct'); }
+    else {
+      btn.classList.add('wrong');
+      buttons.forEach(b => { if (b.dataset.c === '1') b.classList.add('correct'); });
+    }
+    document.getElementById(expId).classList.add('show');
+    const quiz = btn.closest('.quiz-wrap');
+    quiz.dataset.answered = (parseInt(quiz.dataset.answered||'0') + 1);
+    quiz.dataset.score = (parseInt(quiz.dataset.score||'0') + (isCorrect ? 1 : 0));
+    if (parseInt(quiz.dataset.answered) >= parseInt(quiz.dataset.total)) {
+      const s = quiz.querySelector('.quiz-score');
+      s.textContent = 'Quiz result: ' + quiz.dataset.score + ' / ' + quiz.dataset.total + (parseInt(quiz.dataset.score) >= 7 ? ' — Pass. Well done!' : ' — Below 7/10. Re-read the module, then review your wrong answers.');
+    }
+  }
+  function markComplete(n) {
+    if (!completed.includes(n)) {
+      completed.push(n); completed.sort((a,b)=>a-b);
+      localStorage.setItem(COURSE_KEY + '_progress', JSON.stringify(completed));
+    }
+    updateUI();
+  }
+  function updateUI() {
+    document.getElementById('completedCount').textContent = completed.length;
+    document.getElementById('progressBar').style.width = (completed.length/TOTAL_MODULES*100) + '%';
+    for (let i=1; i<=TOTAL_MODULES; i++) {
+      const st = document.getElementById('status'+i), btn = document.getElementById('btn'+i);
+      if (completed.includes(i)) { st.textContent='Done'; st.classList.add('done'); if(btn){btn.textContent='Completed'; btn.disabled=true;} }
+      else if (i===1 || completed.includes(i-1)) { st.textContent='Start'; }
+      else { st.textContent='Locked'; }
+    }
+    if (completed.length >= TOTAL_MODULES) {
+      const c = document.getElementById('certBtn');
+      c.removeAttribute('disabled'); c.textContent = 'Get Your Certificate!';
+    }
+  }
+  updateUI();
+</script>
+</body>
+</html>

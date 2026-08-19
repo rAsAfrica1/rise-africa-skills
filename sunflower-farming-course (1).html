@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Sunflower Farming - A complete practical course from Rise Africa Skills. Learn offline, anytime.">
+<title>Sunflower Farming | Rise Africa Skills</title>
+<style>
+  :root { --gold:#eab308; --gold-dark:#a16207; --green:#16a34a; --bg:#0f172a; --card:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --line:#334155; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:var(--bg); color:var(--text); line-height:1.65; }
+  header { background:linear-gradient(135deg,var(--gold-dark) 0%,#713f12 100%); padding:44px 20px; text-align:center; }
+  header h1 { font-size:2rem; margin-bottom:8px; }
+  header p { color:rgba(255,255,255,0.88); max-width:640px; margin:0 auto; }
+  .badge { display:inline-block; background:var(--gold); color:#1e293b; padding:4px 14px; border-radius:20px; font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-top:12px; letter-spacing:0.4px; }
+  .container { max-width:920px; margin:0 auto; padding:30px 20px; }
+  .progress-bar { background:var(--card); border-radius:10px; height:10px; margin-bottom:28px; overflow:hidden; }
+  .progress-fill { background:var(--gold); height:100%; width:0%; border-radius:10px; transition:width .4s ease; }
+  .overview { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-bottom:26px; }
+  .overview h2 { color:var(--gold); font-size:1.15rem; margin-bottom:10px; }
+  .overview ul { margin:8px 0 14px 20px; color:var(--muted); }
+  .overview li { margin:5px 0; }
+  .meta-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+  .meta-chip { background:#0b1220; border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:0.85rem; color:var(--muted); }
+  .meta-chip b { color:var(--text); }
+  .module { background:var(--card); border-radius:12px; margin-bottom:16px; overflow:hidden; border:1px solid var(--line); }
+  .module-header { padding:18px 22px; cursor:pointer; display:flex; align-items:center; gap:14px; transition:background .2s; }
+  .module-header:hover { background:#26354a; }
+  .module-num { background:var(--gold); color:#1e293b; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0; }
+  .module-title { flex:1; font-weight:600; }
+  .module-status { font-size:0.75rem; padding:4px 10px; border-radius:12px; background:var(--line); color:var(--muted); white-space:nowrap; }
+  .module-status.done { background:var(--green); color:#fff; }
+  .module-body { display:none; padding:0 22px 24px; border-top:1px solid var(--line); }
+  .module-body.active { display:block; }
+  .module-body p { color:var(--muted); margin:13px 0; }
+  .module-body ul, .module-body ol { margin:10px 0 10px 22px; color:var(--muted); }
+  .module-body li { margin:6px 0; }
+  .module-body strong { color:var(--text); }
+  .module-body h3 { color:var(--gold); font-size:1.05rem; margin:22px 0 4px; }
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.88rem; }
+  th { background:#0b1220; color:var(--gold); text-align:left; padding:9px 10px; border:1px solid var(--line); }
+  td { padding:8px 10px; border:1px solid var(--line); color:var(--muted); vertical-align:top; }
+  tr:nth-child(even) td { background:#1a2537; }
+  .tip-box { background:rgba(234,179,8,0.08); border-left:4px solid var(--gold); padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .tip-box strong { color:var(--gold); }
+  .warn-box { background:rgba(239,68,68,0.08); border-left:4px solid #ef4444; padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .warn-box strong { color:#f87171; }
+  .assign-box { background:#0b1220; border:1px dashed var(--gold-dark); border-radius:10px; padding:16px 18px; margin:16px 0; color:var(--muted); }
+  .assign-box strong { color:var(--gold); }
+  .video-box { background:#0b1220; border:1px solid var(--line); border-radius:10px; padding:14px 18px; margin:16px 0; color:var(--muted); font-size:0.9rem; }
+  .quiz-wrap { background:#0b1220; border:1px solid var(--line); border-radius:12px; padding:20px; margin-top:20px; }
+  .quiz-wrap h3 { margin-top:0 !important; }
+  .q-block { margin:16px 0; padding-bottom:14px; border-bottom:1px solid #1e293b; }
+  .q-block:last-child { border-bottom:none; }
+  .q-text { font-weight:600; color:var(--text); margin-bottom:8px; }
+  .q-opt { display:block; width:100%; text-align:left; padding:9px 13px; margin:5px 0; background:var(--card); border:1px solid #475569; border-radius:8px; color:var(--text); cursor:pointer; transition:all .2s; font-size:0.9rem; }
+  .q-opt:hover { border-color:var(--gold); }
+  .q-opt.correct { background:#14532d; border-color:var(--green); }
+  .q-opt.wrong { background:#7f1d1d; border-color:#ef4444; }
+  .q-exp { display:none; margin-top:8px; padding:10px 13px; background:rgba(234,179,8,0.07); border-left:3px solid var(--gold); border-radius:0 6px 6px 0; color:var(--muted); font-size:0.87rem; }
+  .q-exp.show { display:block; }
+  .quiz-score { margin-top:12px; font-weight:700; color:var(--gold); }
+  .check-btn { background:var(--gold); color:#1e293b; border:none; padding:11px 26px; border-radius:8px; font-weight:700; cursor:pointer; margin-top:16px; transition:background .2s; }
+  .check-btn:hover { background:#facc15; }
+  .check-btn:disabled { opacity:0.5; cursor:not-allowed; }
+  .final-section, .budget-section, .glossary-section, .resources-section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-top:26px; }
+  .final-section h2, .budget-section h2, .glossary-section h2, .resources-section h2 { color:var(--gold); font-size:1.2rem; margin-bottom:10px; }
+  .final-section p, .budget-section p, .resources-section p { color:var(--muted); margin:10px 0; }
+  .final-section ol, .resources-section ul { margin:10px 0 10px 22px; color:var(--muted); }
+  .final-section li, .resources-section li { margin:6px 0; }
+  dl.glossary dt { color:var(--text); font-weight:700; margin-top:12px; }
+  dl.glossary dd { color:var(--muted); margin-left:0; font-size:0.92rem; }
+  .cert-section { text-align:center; padding:40px 20px; background:var(--card); border-radius:16px; margin-top:30px; border:1px solid var(--line); }
+  .cert-section h2 { margin-bottom:10px; }
+  .cert-section p { color:var(--muted); margin-bottom:20px; }
+  .cert-btn { background:var(--gold); color:#1e293b; border:none; padding:14px 36px; border-radius:10px; font-size:1rem; font-weight:800; cursor:pointer; text-decoration:none; display:inline-block; }
+  .cert-btn[disabled] { opacity:0.4; pointer-events:none; }
+  .nav-bar { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:var(--card); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:100; }
+  .nav-bar a { color:var(--text); text-decoration:none; font-weight:600; }
+  .nav-bar a:hover { color:var(--gold); }
+  .completion-count { color:var(--muted); font-size:0.9rem; }
+  @media (max-width:600px){ header h1{font-size:1.5rem;} .module-header{padding:14px 16px;} .module-body{padding:0 16px 18px;} table{font-size:0.8rem;} th,td{padding:6px 7px;} }
+</style>
+</head>
+<body>
+<nav class="nav-bar">
+  <a href="index.html">&#8592; Back to Courses</a>
+  <span class="completion-count"><span id="completedCount">0</span> / 6 months completed</span>
+</nav>
+<header>
+  <div class="badge">Agriculture &middot; 6-Month Program</div>
+  <h1>Sunflower Farming</h1>
+  <p>The oilseed of opportunity — full stands and the boron rule, the bee partnership, sclerotinia rotation discipline, cut-and-dry harvesting past the birds, and the pressing business where the margin lives.</p>
+</header>
+<div class="container">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+
+  <div class="overview">
+    <h2>Course Overview</h2>
+    <p style="color:var(--muted);">Sunflower points a 90–130 day drought-tolerant crop straight at Africa's cooking-oil import gap — and hands you a protein cake by-product that feeds this college's poultry, pig and dairy enterprises. This course teaches the crop and the business around it. In the field: full stands at the head-size sweet spot, modest N with real P, the boron rule that fills empty head centres on sandy soils, and the bee partnership worth 20–40% of seed set. Against its enemies: the rotation discipline that starves sclerotinia's black sclerotia bank, and the harvest logic — cut at brown-bract maturity, dry heads on racks — that is itself the crop's best bird control. Then the oilseed laws of 9–10% moisture and months-not-years storage, and the business ladder from raw seed through toll pressing to the motorised expeller that makes a farm the area's oilseed anchor, selling oil by the litre and cake by the kilogram.</p>
+    <h2 style="margin-top:16px;">What You Will Learn</h2>
+    <ul><li>Choose oil hybrids vs OPVs and site the crop on its deep-taproot strengths</li>
+<li>Build the 45–55,000/ha stand at 75 × 25–30 cm and guard emergence from doves and rodents</li>
+<li>Feed with manure, P and light N — and apply the boron rule on sandy soils, measured not guessed</li>
+<li>Run the bee partnership: hives at flowering, the no-daytime-spray law, honey plus 20–40% seed set</li>
+<li>Hold the sclerotinia rotation line (4+ years, volunteers hoed) and manage mildew, rust and head pests</li>
+<li>Harvest by the cut-and-dry method at brown-bract maturity — the bird defence that works</li>
+<li>Thresh, winnow and store to the oilseed laws: 9–10% moisture, cool, short, checked weekly</li>
+<li>Climb the business ladder — raw seed, toll pressing, own press — selling oil, cake and toll services</li></ul>
+    <div class="meta-row">
+      <div class="meta-chip"><b>Duration:</b> 6 months, one module per month</div>
+      <div class="meta-chip"><b>Level:</b> Beginner &rarr; Job-ready</div>
+      <div class="meta-chip"><b>Units:</b> Metric with imperial where useful</div>
+      <div class="meta-chip"><b>Final project:</b> Your own business plan</div>
+    </div>
+  </div>
+
+  <div class="module" data-module="1">
+    <div class="module-header" onclick="toggleModule(1)">
+      <div class="module-num">1</div>
+      <div class="module-title">Month 1: The Crop, Types &amp; the Oil Market</div>
+      <div class="module-status" id="status1">Start</div>
+    </div>
+    <div class="module-body" id="body1">
+
+      <h3>Lesson 1.1 — The oil crop that fits the gap</h3>
+      <p>Sunflower is the smallholder's oilseed of opportunity: <strong>90–130 days</strong>, drought-tolerant once established (its taproot mines moisture 2 m down), happy on moderate-fertility land, and pointed straight at one of Africa's most reliable markets — <strong>cooking oil</strong>, which most countries import at scale. Every litre pressed locally replaces an import, and the press's by-product, <strong>sunflower cake</strong>, feeds straight into the poultry, pig and dairy enterprises of this college. Sunflower is also the beekeeper's crop: a flowering field is a honey flow, and bees repay it with a measurable seed-set bonus.</p>
+      <ul>
+        <li>Yields: typical smallholder ~0.8–1.2 t/ha; good management with improved seed reaches <strong>1.5–2.5 t/ha</strong> (well-run hybrid crops higher).</li>
+        <li>Oil content is the crop's real product: modern varieties carry <strong>35–45% oil</strong>; a hand press extracts roughly a third of seed weight as oil, motorised expellers more.</li>
+        <li>Rotation friend: a deep-rooted break crop after cereals — but never after itself or too often (disease build-up, Module 4).</li>
+      </ul>
+      <h3>Lesson 1.2 — Know the types</h3>
+      <table>
+        <tr><th>Type</th><th>Character</th><th>Market</th></tr>
+        <tr><td><strong>Oil-type hybrids</strong></td><td>Black small seed, 40–45% oil, uniform maturity, higher yield; fresh seed each season</td><td>Pressing and oilseed buyers — the commercial standard</td></tr>
+        <tr><td><strong>Oil-type OPVs</strong></td><td>Slightly lower yield/oil; seed saveable 2–3 seasons</td><td>The low-cash entry point; widely grown</td></tr>
+        <tr><td>Confectionery/striped types</td><td>Large striped seed, lower oil</td><td>Snack and birdseed niches — premium per kg, smaller demand</td></tr>
+      </table>
+      <h3>Lesson 1.3 — One myth retired</h3>
+      <p>Young sunflower buds do track the sun across the sky — but <strong>mature heads stop and face EAST</strong>. This matters practically: rows and field orientation don't need engineering around the 'following the sun' story, and an east-facing wall of ripening heads dries evenly in morning sun while shading afternoon-laid bird ambushes... nothing you can control changes it. What you CAN control fills the rest of this course.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> From imported oil to local press — why sunflower fits the gap &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 1:</strong> Survey your oil economy: record retail prices of cooking oil (per litre, by brand/bulk), raw sunflower seed prices if traded, and sunflower cake prices at any feed seller. Find the nearest press (hand or motorised): record its fees and what it pays for seed. Get the released-variety list from extension, noting oil types (hybrid and OPV) available locally, and choose your seed with one paragraph of reasons.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 1 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Sunflower's market logic rests on:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_1')">Africa's large cooking-oil import bill — every locally pressed litre replaces an import</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">Timber exports</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">Nothing</button>
+<div class="q-exp" id="exp1_1"><strong>Why:</strong> Cooking oil is one of the continent's biggest food imports; a press in a farming town sells everything it makes. Sunflower is the crop pointed straight at that gap.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. The press's by-product, sunflower cake:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_2')">Is protein feed for poultry, pigs and dairy — a second product, not waste</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">Is thrown away</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">Is poison</button>
+<div class="q-exp" id="exp1_2"><strong>Why:</strong> Oil plus cake is the whole business: the cake line feeds this college's livestock courses and often decides whether a small press is profitable.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Sunflower tolerates drought because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_3')">Its taproot mines moisture up to ~2 m deep once established</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">It needs no water ever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">It is plastic</button>
+<div class="q-exp" id="exp1_3"><strong>Why:</strong> The deep taproot is the crop's insurance policy — establishment moisture matters, but a rooted crop finishes on subsoil water that shallow crops never reach.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Modern oil-type sunflower seed contains:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_4')">35–45% oil</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">5% oil</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">95% oil</button>
+<div class="q-exp" id="exp1_4"><strong>Why:</strong> Oil percentage IS the product: variety choice moves it, and buyers of scale pay on it. A hand press recovers roughly a third of seed weight as oil.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Oil hybrids versus OPVs:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_5')">Hybrids yield more with uniform maturity but need fresh seed yearly; OPVs are saveable 2–3 seasons</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">OPVs are always higher yielding</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Both are saved forever</button>
+<div class="q-exp" id="exp1_5"><strong>Why:</strong> The standard seed law: hybrids for the commercial push, OPVs for the low-cash entry — both legitimate, never confused.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Mature sunflower heads:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_6')">Stop tracking and face east</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">Follow the sun all day forever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">Face straight down into soil while growing</button>
+<div class="q-exp" id="exp1_6"><strong>Why:</strong> Only young buds heliotrack; ripening heads fix eastward. Retire the myth and plan the real controls — spacing, boron, bird timing — instead.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Sunflower and beekeeping:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_7')">Pair perfectly — a flowering field is a honey flow, and bees measurably improve seed set</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">Are enemies</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">Never meet</button>
+<div class="q-exp" id="exp1_7"><strong>Why:</strong> The synergy pays both ways: hives beside sunflower earn a distinctive honey crop while pollination fills more of every head — the Beekeeping course's favourite field.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Sunflower in rotation:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_8')">Is a deep-rooted break crop after cereals but must not follow itself frequently</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Must be grown on the same field forever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Cannot be rotated</button>
+<div class="q-exp" id="exp1_8"><strong>Why:</strong> Its root channel and disease profile refresh cereal land — but sclerotinia and other diseases build fast under sunflower-on-sunflower (Module 4's rotation rule).</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. A realistic improved-management yield is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_9')">1.5–2.5 t/ha</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">20 t/ha</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">0.05 t/ha</button>
+<div class="q-exp" id="exp1_9"><strong>Why:</strong> Against the smallholder average near a tonne, full stands, boron attention and bird timing lift the crop to the level where a pressing business becomes routine.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Confectionery striped types offer:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_10')">Premium snack/birdseed niches with smaller total demand and lower oil</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">The main oil market</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Nothing</button>
+<div class="q-exp" id="exp1_10"><strong>Why:</strong> A real but limited market: worth a corner of the field where a buyer exists, while black oil types carry the tonnage business.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn1" onclick="markComplete(1)">Mark Month 1 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="2">
+    <div class="module-header" onclick="toggleModule(2)">
+      <div class="module-num">2</div>
+      <div class="module-title">Month 2: Stands, Feeding &amp; the Boron Rule</div>
+      <div class="module-status" id="status2">Locked</div>
+    </div>
+    <div class="module-body" id="body2">
+
+      <h3>Lesson 2.1 — Seedbed, spacing, stand</h3>
+      <table>
+        <tr><th>Element</th><th>Standard</th><th>Why</th></tr>
+        <tr><td>Soil &amp; prep</td><td>Free-draining, moderate fertility; medium tilth, weed-free start</td><td>The taproot hates hardpans — rip or dig deep where compaction exists</td></tr>
+        <tr><td>Sowing</td><td>At first effective rains; rows <strong>75 cm, plants 25–30 cm</strong>, seed <strong>3–5 cm deep</strong>, 1–2 seeds/station thinned to 1</td><td>~45,000–55,000 plants/ha — the head-size sweet spot: crowd them and heads shrink; starve the stand and weeds plus birds win</td></tr>
+        <tr><td>Seed rate</td><td>4–6 kg/ha</td><td>Cheap for hybrids' value — never stretch seed by widening spacing</td></tr>
+        <tr><td>Emergence watch</td><td>5–10 days; guard from birds and rodents digging seed</td><td>Doves and rodents love sown sunflower rows; early gap-fill within 2 weeks</td></tr>
+      </table>
+      <h3>Lesson 2.2 — Feeding: modest N, real P... and the boron rule</h3>
+      <ul>
+        <li>Sunflower forages nutrients deep and wide, so it flatters poor soils — but responds honestly to <strong>manure ploughed in and a P-strong basal</strong> at planting, plus a light N top-dress at knee height. Heavy N grows stems that lodge and delays maturity.</li>
+        <li><strong>Boron is sunflower's signature micronutrient.</strong> Deficiency (common on sandy leached soils) shows as deformed heads, hollow stems near the head, poor seed set at the head's centre — and it can halve yield invisibly. Where sandy soils or past symptoms suggest it, a small borax application (soil at planting, ~5–10 kg/ha borax, or foliar per label at bud stage) is among the highest-return single inputs in this course. Do not overdose: boron's window between deficiency and toxicity is narrow — measure, don't guess.</li>
+      </ul>
+      <h3>Lesson 2.3 — Water rhythm</h3>
+      <p>Critical windows: <strong>establishment</strong> (shallow young roots) and above all <strong>flowering through early seed fill (~55–85 days)</strong> — stress there empties the head's centre. The deep taproot handles mid-vegetative dry spells that would wound maize. Rain-fed timing rule: plant so flowering meets the heart of the rains, not their tail.</p>
+      <h3>Lesson 2.4 — Weeds: two passes and canopy</h3>
+      <p>Weed at 2–3 weeks (with thinning) and again at 5–6 weeks; after that the crop's big leaves close the row and finish the job. Shallow hoeing only near rows — sunflower's feeding roots run close beneath the surface. The final pass can pull a little soil to the stem base, steadying tall stands against wind.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Planting to population — and reading boron deficiency before it halves the head &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 2:</strong> Prepare a deep-cultivated, weed-free plot; sow at least four 10-metre rows at 75 × 25–30 cm, 3–5 cm deep, recording date and seed used. Mount your emergence watch (note any dove/rodent digging) and gap-fill within two weeks; thin to one plant per station and record your stand count at three weeks. Assess your soil honestly for sandiness/leaching; if boron risk is real, price borax locally and record your application decision and rate.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 2 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Standard sunflower spacing is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_1')">Rows 75 cm, plants 25–30 cm, thinned to one — ~45,000–55,000/ha</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">2 m × 2 m</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">Broadcast thickly</button>
+<div class="q-exp" id="exp2_1"><strong>Why:</strong> The head-size sweet spot: population sets head diameter and seed yield. Crowding shrinks heads; sparse stands feed weeds and concentrate bird damage.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Sowing depth for sunflower is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_2')">3–5 cm</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">20 cm</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">Surface</button>
+<div class="q-exp" id="exp2_2"><strong>Why:</strong> Deep enough for moisture contact, shallow enough for the big seedling to surface fast — with doves and rodents watching the row from day one.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Sunflower's signature micronutrient is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_3')">Boron — deficiency deforms heads and empties their centres, and can halve yield invisibly</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">Gold</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">Chlorine</button>
+<div class="q-exp" id="exp2_3"><strong>Why:</strong> On sandy leached soils, a few kilograms of borax is one of the highest-return inputs in this college. But the deficiency-toxicity window is narrow: measured, never guessed.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Heavy nitrogen on sunflower causes:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_4')">Lodging-prone stems and delayed maturity</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">Perfect crops always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">Extra oil</button>
+<div class="q-exp" id="exp2_4"><strong>Why:</strong> The tall crop's weakness is its lever arm: lush N-fed stems snap in wind. Manure, real P, and only a light N top-dress is the balance.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. The most yield-critical water window is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_5')">Flowering through early seed fill (~55–85 days)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">The week after harvest</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">None</button>
+<div class="q-exp" id="exp2_5"><strong>Why:</strong> Stress at flowering empties the head's centre — the exact symptom boron deficiency mimics. Plant so flowering meets the heart of the rains.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. A hardpan under the field:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_6')">Blocks the taproot — rip or dig deep before planting</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">Helps roots</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">Is imaginary</button>
+<div class="q-exp" id="exp2_6"><strong>Why:</strong> The crop's drought machine is its deep root; compaction disarms it. One deep cultivation restores the insurance policy.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Weeding sunflower needs:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_7')">Two shallow passes (2–3 and 5–6 weeks) before the canopy closes the row</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Deep hoeing weekly all season</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Nothing ever</button>
+<div class="q-exp" id="exp2_7"><strong>Why:</strong> Big leaves finish the weed war themselves after week six; shallow work protects the surface feeding roots, and the last pass banks soil at the stem for wind stability.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Newly sown sunflower rows must be guarded from:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_8')">Doves and rodents digging the seed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">Butterflies</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">Rainbows</button>
+<div class="q-exp" id="exp2_8"><strong>Why:</strong> The oil-rich seed is bait from sowing day. An emergence watch and two-week gap-fill protect the stand the whole season depends on.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Hollow stems near the head with poor central seed set suggest:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_9')">Boron deficiency</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Perfect health</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Too much shade</button>
+<div class="q-exp" id="exp2_9"><strong>Why:</strong> The classic signature on sandy soils. Confirming and correcting it (soil or bud-stage foliar borax) turns half-empty heads into full ones.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Stretching expensive hybrid seed by widening spacing:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_10')">Backfires — thin stands lose more to weeds and birds than the seed saved</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">Is best practice</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">Doubles oil</button>
+<div class="q-exp" id="exp2_10"><strong>Why:</strong> Population is the yield architecture. The correct answer to seed cost is OPVs or smaller area at full density — never a gappy field.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn2" onclick="markComplete(2)">Mark Month 2 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="3">
+    <div class="module-header" onclick="toggleModule(3)">
+      <div class="module-num">3</div>
+      <div class="module-title">Month 3: Bees, Growth Stages &amp; the Standing Crop</div>
+      <div class="module-status" id="status3">Locked</div>
+    </div>
+    <div class="module-body" id="body3">
+
+      <h3>Lesson 3.1 — Bees: the input that pays you twice</h3>
+      <p>Sunflower is partially self-fertile but <strong>insect pollination lifts seed set substantially</strong> — well-pollinated fields commonly gain 20–40% more filled seed, with fuller head centres and better oil. The practical programme:</p>
+      <ul>
+        <li>Site hives (yours or a beekeeper partner's) within flight range at flowering; 2–4 colonies per hectare is a working benchmark.</li>
+        <li><strong>Never spray insecticide during flowering</strong> — if a treatment is ever unavoidable, late evening after bee flight, and told to the beekeeper first. A poisoned pollinator force is yield burned twice: seed set now, honey partnership forever.</li>
+        <li>The beekeeper's side of the trade: sunflower honey is a fast, distinctive crop. This is the Beekeeping course's favourite partnership — formalise it.</li>
+      </ul>
+      <h3>Lesson 3.2 — Reading the crop through the season</h3>
+      <table>
+        <tr><th>Stage</th><th>What to see</th><th>Your job</th></tr>
+        <tr><td>Star bud (R1–R2)</td><td>Small bud in a leaf star</td><td>Boron foliar window if used; last weeding done</td></tr>
+        <tr><td>Flowering (R5)</td><td>Ray petals open; disc flowers open in rings over ~1–2 weeks</td><td>Bees in place; no sprays; water status watched</td></tr>
+        <tr><td>Seed fill (R6–R8)</td><td>Petals wilt; head bows; back of head pale yellow</td><td>Bird watch begins as seeds harden</td></tr>
+        <tr><td>Maturity (R9)</td><td><strong>Back of head yellow-brown, bracts brown, seeds hard with final colour</strong></td><td>Harvest planning — Module 5's moisture logic</td></tr>
+      </table>
+      <h3>Lesson 3.3 — Support acts</h3>
+      <ul>
+        <li><strong>Wind:</strong> tall crops on light soils lodge in storms — full stands support each other; the soil banked at the last weeding helps; windbreak lines pay on exposed sites.</li>
+        <li><strong>Intercropping:</strong> sunflower's shade is heavy — classic companions are early short crops (beans finishing before the canopy) or field-edge arrangements rather than dense mixtures.</li>
+        <li><strong>Volunteer control:</strong> shattered seed grows next season's volunteers, which carry disease across the rotation gap — hoe them out wherever they appear.</li>
+      </ul>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Two weeks of opening rings — hives, heads and the no-spray flowering window &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 3:</strong> Arrange pollination: your own hives, a beekeeper partner, or a written note of the wild-bee situation; record hive numbers and distance. Track and date your crop's stages: star bud, first ray petals, end of flowering, head bow, back-of-head colour change. Complete both weedings with the final soil-banking pass, and record any lodging after storms with your assessment of cause.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 3 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Insect pollination on sunflower typically adds:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_1')">20–40% more filled seed with fuller head centres</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Nothing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Colour only</button>
+<div class="q-exp" id="exp3_1"><strong>Why:</strong> Bees move pollen between the disc's flower rings far better than wind or self-fertility manage — a free yield input with a honey by-product.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. A working hive benchmark for sunflower is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_2')">2–4 colonies per hectare within flight range at flowering</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">100 per plant</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Zero always</button>
+<div class="q-exp" id="exp3_2"><strong>Why:</strong> Enough foragers to work every head's opening rings daily through the two flowering weeks — the Beekeeping partnership made concrete.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Insecticide during sunflower flowering:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_3')">Is avoided entirely; if ever unavoidable, late evening after bee flight with the beekeeper warned</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">Is sprayed at noon</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">Improves pollination</button>
+<div class="q-exp" id="exp3_3"><strong>Why:</strong> A midday spray kills the workforce filling your heads. The no-spray-at-flower rule protects seed set now and the honey partnership permanently.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Sunflower maturity (R9) is read by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_4')">Yellow-brown head backs, brown bracts, hard seeds in final colour</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Petal brightness</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Root taste</button>
+<div class="q-exp" id="exp3_4"><strong>Why:</strong> The back of the head is the crop's gauge — the same read-the-plant principle as groundnut's shell test, and the trigger for Module 5's harvest moisture logic.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Lodging in storms is reduced by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_5')">Full mutually supporting stands, soil banked at stems, and windbreaks on exposed sites</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Sparse stands of giants</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Extra nitrogen</button>
+<div class="q-exp" id="exp3_5"><strong>Why:</strong> A tall crop is a sail; its defences are architecture — density, anchored stems and broken wind — not chemistry.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Classic sunflower intercropping uses:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_6')">Early short crops like beans that finish before the heavy canopy closes</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Dense maize mixtures under full shade</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Trees planted mid-row</button>
+<div class="q-exp" id="exp3_6"><strong>Why:</strong> Sunflower's shade is decisive; companions must live BEFORE it. Early beans in the establishment weeks are the proven fit.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Volunteer sunflowers from shattered seed:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_7')">Carry disease across the rotation gap — hoe them out wherever they appear</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Are free bonus crop worth protecting</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Never occur</button>
+<div class="q-exp" id="exp3_7"><strong>Why:</strong> Volunteers are the bridge sclerotinia and rust walk across between properly rotated crops. Rotation only works if the bridge is demolished.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Disc flowers open:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_8')">In rings over ~1–2 weeks — why pollinators must work the field daily</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">All in one hour</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">Underground</button>
+<div class="q-exp" id="exp3_8"><strong>Why:</strong> The head is a plate of hundreds of flowers opening in waves; every ring needs visiting on its day. This is why resident hives beat passing insects.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. The bird watch begins:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_9')">At seed fill, as seeds harden and heads bow</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">At sowing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Never</button>
+<div class="q-exp" id="exp3_9"><strong>Why:</strong> Birds arrive when there is something to steal. Seed-fill onset starts the guarding calendar that Module 4 turns into a full defence plan.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. The star-bud stage matters as:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_10')">The window for bud-stage foliar boron where used, and the deadline for final weeding</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Harvest time</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Nothing</button>
+<div class="q-exp" id="exp3_10"><strong>Why:</strong> Corrections must precede flowering: boron applied at bud reaches the developing head; weeds cut after canopy closure were already beaten by the crop.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn3" onclick="markComplete(3)">Mark Month 3 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="4">
+    <div class="module-header" onclick="toggleModule(4)">
+      <div class="module-num">4</div>
+      <div class="module-title">Month 4: Birds, Sclerotinia &amp; Plant Health</div>
+      <div class="module-status" id="status4">Locked</div>
+    </div>
+    <div class="module-body" id="body4">
+
+      <h3>Lesson 4.1 — Birds again — but with a calendar trick</h3>
+      <p>From seed hardening to harvest, doves, parrots, weavers and quelea treat a sunflower field as a feeding platform (the bowed east-facing heads are literally perches with meals). The defence mirrors the dryland cereals — <strong>neighbourhood synchrony, active scaring through the 2–3 critical weeks, reflective tape and platforms</strong> — plus sunflower's own lever: because maturity is visible on the head's back and the crop can be cut at physiological maturity and dried off the field (Module 5), <strong>harvesting promptly at maturity is itself the biggest bird-control measure</strong>. Every extra field day after brown-bract stage is a toll paid in seed.</p>
+      <h3>Lesson 4.2 — Diseases: rotation is the medicine</h3>
+      <table>
+        <tr><th>Disease</th><th>Recognise</th><th>Manage</th></tr>
+        <tr><td><strong>Sclerotinia (white mould) head &amp; stem rot</strong></td><td>Water-soaked rot with white cottony mould; hard black sclerotia like rat droppings in stem/head; heads shred and drop</td><td>THE rotation disease: 4+ years between sunflower (and it shares hosts with beans/rape); volunteers destroyed; wide spacing/airflow; no cure once seen — remove and burn infected plants; sclerotia survive years in soil</td></tr>
+        <tr><td>Downy mildew</td><td>Stunted pale seedlings, white down under leaves</td><td>Resistant hybrids, treated seed, drainage, rotation</td></tr>
+        <tr><td>Rust</td><td>Cinnamon pustules on leaves late season</td><td>Resistant varieties; early planting; usually tolerable</td></tr>
+        <tr><td>Alternaria / leaf spots</td><td>Dark target spots, early leaf death in wet years</td><td>Rotation, residue burial, tolerant varieties</td></tr>
+        <tr><td>Charcoal rot</td><td>Grey shredded stem base with black specks in drought-stressed crops</td><td>Full stands without overcrowding, moisture management, rotation</td></tr>
+      </table>
+      <h3>Lesson 4.3 — Insects worth knowing</h3>
+      <ul>
+        <li><strong>Cutworms</strong> at emergence: evening collection, clean seedbeds.</li>
+        <li><strong>Head-feeding caterpillars (bollworm etc.):</strong> scout flowering heads; treat only real infestations, and then only in the evening for the bees' sake.</li>
+        <li><strong>Aphids and leafhoppers:</strong> rarely economic on a healthy crop; natural enemies usually finish them.</li>
+        <li>Termites on drought-stressed late crops: timely harvest again.</li>
+      </ul>
+      <div class="warn-box"><strong>The rotation rule carries this crop.</strong> Sunflower after sunflower — or squeezed too often into the rotation — builds sclerotinia's black sclerotia bank in your soil until the crop fails no matter what you spray (and there is nothing effective to spray). Four-plus years between sunflower crops, volunteers hoed, infected plants burned: cheap discipline now, or a lost enterprise later.</div>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Black sclerotia and brown bracts — the rotation rule and the harvest-timing defence &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 4:</strong> Write your rotation map for four seasons showing sunflower's return interval and the sclerotinia host crops (beans, rape) positioned deliberately. Inspect your crop and any neighbouring sunflower for white mould, sclerotia, mildewed seedlings or rust, recording findings; remove and destroy any sclerotinia-affected plants. Build your bird plan: scaring resources for the seed-fill weeks and your committed harvest trigger (brown bracts, not the calendar).</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 4 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. The single biggest bird-control measure in sunflower is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_1')">Prompt harvest at physiological maturity — cutting and drying off the field</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Waiting weeks for field-drying while scaring occasionally</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Silence</button>
+<div class="q-exp" id="exp4_1"><strong>Why:</strong> Unlike thin-stemmed cereals, sunflower can leave the field at maturity and finish drying safely elsewhere. Every extra field day after brown bracts pays the birds.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Sclerotinia is recognised by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_2')">White cottony mould and hard black sclerotia like rat droppings in stems and heads</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">Orange stripes</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">Perfume</button>
+<div class="q-exp" id="exp4_2"><strong>Why:</strong> The sclerotia are the disease's survival capsules — years of soil persistence in one black grain. Their appearance is the signal that rotation discipline failed or must now begin.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Sclerotinia's management is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_3')">4+ year rotation, volunteer destruction, airflow, and burning infected plants — no cure exists</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">A weekly curative spray</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Extra irrigation</button>
+<div class="q-exp" id="exp4_3"><strong>Why:</strong> Nothing on the shelf kills it in the field; everything depends on starving the soil bank. This is the rotation disease that defines how often sunflower may return.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Sunflower shares sclerotinia with:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_4')">Beans and rape among others — plan the whole rotation, not just sunflower's slot</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">No other crop</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">Only trees</button>
+<div class="q-exp" id="exp4_4"><strong>Why:</strong> A bean crop between sunflowers feeds the same fungus. Rotation planning must track the disease's host list, not just the crop's name.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Downy mildew is fought with:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_5')">Resistant hybrids, treated seed, drainage and rotation</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Harvest sprays</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Music</button>
+<div class="q-exp" id="exp4_5"><strong>Why:</strong> A soil- and seed-borne seedling disease is beaten before and at planting — the by-now-familiar pattern: genetics and hygiene, not late chemistry.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Head caterpillars at flowering are treated:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_6')">Only when scouting shows real infestation, and only in the evening for the bees</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Preventively at noon weekly</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Never scouted</button>
+<div class="q-exp" id="exp4_6"><strong>Why:</strong> The threshold habit plus the bee rule: most heads never need spraying, and the ones that do get evening treatment after the foragers are home.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Charcoal rot appears in:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_7')">Drought-stressed crops — grey shredded stem bases with black specks</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Waterlogged cold crops only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Healthy crops preferentially</button>
+<div class="q-exp" id="exp4_7"><strong>Why:</strong> A stress disease: sound stands, moisture care and rotation keep it marginal. Its appearance is a note about the season as much as the pathogen.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Rust on sunflower late in the season is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_8')">Usually tolerable — resistant varieties and early planting keep it minor</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">Always fatal</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">A soil pest</button>
+<div class="q-exp" id="exp4_8"><strong>Why:</strong> Late rust costs little once seed fill is advanced; variety choice and calendar do the work without sprays.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Cutworm defence at emergence is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_9')">Clean seedbeds and evening collection around cut seedlings</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Flooding</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Nothing possible</button>
+<div class="q-exp" id="exp4_9"><strong>Why:</strong> The oldest controls are the right ones for a pest that hides by day at the scene of its night crime.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. The bird species treating sunflower as a feeding platform include:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_10')">Doves, parrots, weavers and quelea</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Penguins</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Ostriches only</button>
+<div class="q-exp" id="exp4_10"><strong>Why:</strong> The bowed head is a perch with a meal attached. Synchrony, scaring weeks and above all prompt harvest form the layered answer.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn4" onclick="markComplete(4)">Mark Month 4 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="5">
+    <div class="module-header" onclick="toggleModule(5)">
+      <div class="module-num">5</div>
+      <div class="module-title">Month 5: Cut-and-Dry Harvest, Storage &amp; Pressing</div>
+      <div class="module-status" id="status5">Locked</div>
+    </div>
+    <div class="module-body" id="body5">
+
+      <h3>Lesson 5.1 — Harvest logic: cut at maturity, dry off the field</h3>
+      <p>Physiological maturity: <strong>head backs yellow-brown, bracts brown, seeds hard and black (oil types)</strong> — moisture still ~15–25%. From here the field only loses: birds, shattering, lodging, head rot in late rain. The smallholder method that beats them all:</p>
+      <ol>
+        <li><strong>Cut heads</strong> with a knife (leave 10–20 cm of stalk as a handle), load into baskets/bags.</li>
+        <li><strong>Dry heads face-up on racks, mats or roofs</strong> — off the ground — for days to two weeks until seed rubs out freely.</li>
+        <li><strong>Thresh:</strong> rub heads over a ridged board, beat gently in sacks, or hire the small threshers appearing in oilseed areas.</li>
+        <li><strong>Winnow</strong> clean, then finish drying seed to <strong>9–10% moisture</strong> — the oilseed storage law (oily seed spoils faster than starchy grain; the rub-and-sniff test: no clumping, no oily rancid smell, seeds crack cleanly).</li>
+      </ol>
+      <h3>Lesson 5.2 — Storage: short, cool, dry, and sold with a plan</h3>
+      <ul>
+        <li>Sunflower seed stores <strong>months, not years</strong>: high oil turns rancid with heat, moisture and time. Cool, dry, ventilated, in clean sacks off the floor; hermetic storage works well for seed stock and short holds.</li>
+        <li>Rats love it and heat kills it — the store checks are weekly, not monthly.</li>
+        <li>The price logic: crushers and traders buy year-round, but prices firm in the months after harvest; a 2–4 month hold in good conditions is usually the sweet spot — beyond that, quality risk outruns price gain. Selling as OIL (Lesson 5.3) escapes the seed-quality clock almost entirely.</li>
+      </ul>
+      <h3>Lesson 5.3 — Pressing: where the margin lives</h3>
+      <table>
+        <tr><th>Route</th><th>What happens</th><th>Economics</th></tr>
+        <tr><td>Sell raw seed</td><td>To traders/crushers at farm gate or town</td><td>Simplest; lowest margin</td></tr>
+        <tr><td><strong>Hire pressing / toll pressing</strong></td><td>Town expeller presses your seed for a fee or share</td><td>You sell oil + cake at retail — usually +30–60% over raw seed value</td></tr>
+        <tr><td><strong>Own press</strong></td><td>Hand ram press (small, slow, cheap) or small motorised expeller</td><td>~30–35%+ oil recovery from good seed; oil sells locally by the litre, cake by the kg to feeders; press also earns toll fees from neighbours</td></tr>
+      </table>
+      <p>Crude sunflower oil for local sale is settled/filtered simply; frying-grade clarity comes from careful filtering. Follow local food-sale rules (clean containers, no reused pesticide bottles — ever). The cake: sell fresh or dry it; mouldy cake is toxic feed (the aflatoxin law crosses crops), so the drying-and-storage discipline applies to the by-product too.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Knife, rack, ridged board, press — from brown bracts to bottled oil &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 5:</strong> Harvest at brown-bract maturity by the cut-and-dry method: record the date gap from maturity to cutting, dry heads face-up on racks/mats, thresh, winnow, and finish-dry to the rub-and-sniff standard, weighing your seed. Store in clean sacks off the floor with a weekly check log. Take at least 20 kg to a press (or arrange toll pressing): record oil litres and cake kg per 100 kg seed and the prices each fetches — your first recovery data.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 5 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. At physiological maturity, seed moisture is still:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_1')">~15–25% — which is why heads are cut and dried off the field</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">5%</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">60%</button>
+<div class="q-exp" id="exp5_1"><strong>Why:</strong> Waiting for field-dry seed means weeks of bird toll and shattering. Cutting at maturity and rack-drying the heads captures the yield the field would have taxed away.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Cut heads are dried:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_2')">Face-up on racks, mats or roofs — off the ground — until seed rubs out freely</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">In sealed plastic immediately</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Buried</button>
+<div class="q-exp" id="exp5_2"><strong>Why:</strong> Air and sun through the face; no soil contact below. Days to two weeks converts a bird buffet into safe threshable heads.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. The oilseed storage moisture law is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_3')">9–10% — drier than starchy grain, because oil goes rancid</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">20% is fine</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">Moisture is irrelevant</button>
+<div class="q-exp" id="exp5_3"><strong>Why:</strong> Oily seed spoils on a faster clock than maize or sorghum: the rub-and-sniff test (no clumps, no rancid smell, clean crack) guards both sale grade and pressing quality.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Sunflower seed in ordinary storage keeps:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_4')">Months, not years — with weekly checks against heat, damp and rats</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">Decades</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">Forever</button>
+<div class="q-exp" id="exp5_4"><strong>Why:</strong> High oil is high perishability. The 2–4 month hold usually captures the post-harvest price rise before quality risk outruns gain — or press it and escape the clock.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Toll pressing at a town expeller typically:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_5')">Lifts your revenue 30–60% over raw seed by letting you sell oil and cake retail</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">Halves revenue</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">Is imaginary</button>
+<div class="q-exp" id="exp5_5"><strong>Why:</strong> The fee buys you the processor's margin: the same sack leaves as litres of oil plus kilograms of feed cake — the accessible middle rung before owning a press.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. A press's oil recovery from good seed is roughly:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_6')">A third or more of seed weight</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">95%</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">2%</button>
+<div class="q-exp" id="exp5_6"><strong>Why:</strong> 35–45% oil content minus press losses: plan the business on ~30–35% recovery for small presses, more for efficient expellers — and price the cake as the second product.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Cooking oil must never be sold in:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_7')">Reused pesticide or chemical bottles</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Clean food-grade containers</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Glass</button>
+<div class="q-exp" id="exp5_7"><strong>Why:</strong> A food business dies (and can kill) on one contaminated container. Clean dedicated bottles and local food-sale rules are the non-negotiable floor.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Mouldy sunflower cake as feed is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_8')">Toxic — the aflatoxin/mycotoxin law applies to by-products too</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Premium feed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Ideal for dairy</button>
+<div class="q-exp" id="exp5_8"><strong>Why:</strong> The by-product carries the same drying-and-storage duty as any food: dry cake, dry store, and rejects out of every trough.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Threshing dried heads is done by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_9')">Rubbing over a ridged board, gentle sack-beating, or hired small threshers</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Vehicle tyres on tar roads</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Explosives</button>
+<div class="q-exp" id="exp5_9"><strong>Why:</strong> Gentle mechanics protect the seed coat that protects the oil. Cracked seed spoils first and presses worst.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Selling as oil rather than seed mainly:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_10')">Escapes the seed-quality clock and captures processing margin</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Changes nothing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Is illegal</button>
+<div class="q-exp" id="exp5_10"><strong>Why:</strong> Oil in clean bottles holds value while stored seed degrades — pressing converts a perishable commodity into a shelf product plus a feed line.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn5" onclick="markComplete(5)">Mark Month 5 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="6">
+    <div class="module-header" onclick="toggleModule(6)">
+      <div class="module-num">6</div>
+      <div class="module-title">Month 6: The Pressing Business &amp; the Plan</div>
+      <div class="module-status" id="status6">Locked</div>
+    </div>
+    <div class="module-body" id="body6">
+
+      <h3>Lesson 6.1 — The pressing-town business model</h3>
+      <p>The strongest sunflower enterprises are built backwards from the press:</p>
+      <ol>
+        <li><strong>Year one:</strong> grow 1–2 ha well; sell part raw for cash flow; toll-press the rest and learn the oil-and-cake retail trade (who buys oil by the litre? who buys cake — poultry keepers, pig farmers, dairy?).</li>
+        <li><strong>Year two:</strong> contract or coordinate neighbours' plantings (same variety, synchronized calendar — bird logic AND supply logic); hold seed for the price rise in proper storage.</li>
+        <li><strong>Year three:</strong> the press decision — hand ram press (low cost, low volume) or small motorised expeller (real volume, toll income from the whole area). A pressing point with reliable seed supply becomes the area's oilseed anchor: buying seed, selling oil and cake, pressing for fees.</li>
+      </ol>
+      <h3>Lesson 6.2 — An honest one-hectare budget</h3>
+      <table>
+        <tr><th>Item</th><th>Assumption</th><th>Amount</th></tr>
+        <tr><td>Yield</td><td>Improved seed, full stand, boron where needed, bees at flowering, prompt harvest</td><td>~1.5 t seed</td></tr>
+        <tr><td>Gross — raw seed route</td><td>$0.35–0.55/kg</td><td>~$525–825</td></tr>
+        <tr><td>Gross — toll-press route</td><td>~480 L oil + ~600 kg cake, minus pressing fees</td><td>~$700–1,100</td></tr>
+        <tr><td>Seed (hybrid or OPV) + optional borax</td><td>5 kg + 5–10 kg borax where sandy</td><td>$30–80</td></tr>
+        <tr><td>Land prep + fertility</td><td>deep cultivation, manure, P basal, light N</td><td>$90–200</td></tr>
+        <tr><td>Labour + bird watch + harvest/threshing + sacks</td><td></td><td>$120–250</td></tr>
+        <tr><td><strong>Indicative margin</strong></td><td>raw ~$280–450; toll-pressed ~$450–700</td><td><strong>the press route wins on the same field</strong></td></tr>
+      </table>
+      <h3>Lesson 6.3 — The customer map</h3>
+      <ul>
+        <li><strong>Households and food stalls:</strong> oil by the litre and half-litre — repeat weekly customers; clean bottles and consistent quality are the brand.</li>
+        <li><strong>Poultry, pig and dairy keepers:</strong> the cake line — often pre-sold before pressing day in livestock areas; your own animals (companion courses) eat it too.</li>
+        <li><strong>Crushers and traders:</strong> the raw-seed floor price and the overflow channel; know their moisture and cleanliness specs.</li>
+        <li><strong>Bakers and snack makers:</strong> confectionery-type seed where that niche exists.</li>
+        <li><strong>The beekeeper partnership:</strong> honey revenue on their side, 20–40% seed set on yours — write the flowering calendar together.</li>
+      </ul>
+      <h3>Lesson 6.4 — Records and report card</h3>
+      <p>Per plot per season: variety/seed source; planting date and stand count at 3 weeks; boron and fertility applications; flowering dates and hive presence; bird-watch days; harvest date versus brown-bract date (the gap IS your bird loss meter); seed weight, drying days, moisture at store; pressing yields (oil litres and cake kg per 100 kg seed); sales by product and price. <strong>Report card: stand count, the maturity-to-harvest gap in days, and oil litres per 100 kg seed.</strong> Those three numbers are the field, the birds, and the press — the whole business.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Toll pressing to expeller anchor — the three-year business ladder &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 6:</strong> Build the one-hectare budget from your recorded costs in both routes: raw seed sale versus toll-pressed oil-and-cake retail, using your real local prices. Map your customers: three potential oil buyers (households/stalls) and three cake buyers (livestock keepers), with what and when they'd buy. Assess the neighbour-coordination opportunity (same variety, same calendar) honestly. Conclude with your year-one route and your year-three press decision.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 6 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. The strongest sunflower enterprises are built:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_1')">Backwards from the press — oil and cake retail first understood, then supply organised around it</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">On raw seed sales forever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">Without any plan</button>
+<div class="q-exp" id="exp6_1"><strong>Why:</strong> The margin lives at the press. Year one learns the oil-and-cake trade by toll-pressing; later years organise supply and finally own the pressing point.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Coordinating neighbours onto the same variety and calendar serves:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_2')">Both bird defence (synchrony) and press supply (volume) at once</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Nothing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Only paperwork</button>
+<div class="q-exp" id="exp6_2"><strong>Why:</strong> One organising act, two payoffs: the dryland synchrony lesson plus the tonnage a pressing point needs — community coordination as business infrastructure.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. On the same hectare, the toll-press route versus raw seed typically earns:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_3')">Roughly $450–700 versus $280–450 — the press route wins</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Less</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Exactly the same</button>
+<div class="q-exp" id="exp6_3"><strong>Why:</strong> Oil by the litre plus cake by the kilogram, minus a pressing fee, beats commodity seed prices — the budget's central comparison and the course's central argument.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. The cake line's natural customers are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_4')">Poultry, pig and dairy keepers — often pre-sold before pressing day</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Nobody</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Furniture makers</button>
+<div class="q-exp" id="exp6_4"><strong>Why:</strong> Protein feed in livestock country sells itself; in this college it also feeds your own broiler, piggery and dairy enterprises — the internal market.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. The maturity-to-harvest gap in days measures:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_5')">Your bird loss — every day after brown bracts is toll paid</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">Rainfall</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">Soil pH</button>
+<div class="q-exp" id="exp6_5"><strong>Why:</strong> Module 4's lesson turned into a record: the report card tracks how promptly you executed the cut-and-dry harvest that is sunflower's main bird defence.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Oil litres per 100 kg seed measures:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_6')">Seed quality and press performance together — the business's third vital sign</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">The weather</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">Nothing</button>
+<div class="q-exp" id="exp6_6"><strong>Why:</strong> Low recovery flags poor drying, cracked seed or a badly run press. Stand, harvest gap, and recovery: field, birds, press — the whole enterprise in three numbers.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. The beekeeper partnership is formalised around:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_7')">A shared flowering calendar — hives present, no daytime sprays, honey theirs, seed set yours</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Secrecy</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Rent for sunlight</button>
+<div class="q-exp" id="exp6_7"><strong>Why:</strong> Two enterprises, one fortnight of flowers: writing the calendar together makes the 20–40% seed-set gain and the honey crop both reliable.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Oil sold to households wins repeat customers through:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_8')">Clean bottles and consistent quality week after week</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Lowest price only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Mystery contents</button>
+<div class="q-exp" id="exp6_8"><strong>Why:</strong> A food brand at village scale is trust in a bottle. Consistency — of clarity, taste and container — is the whole marketing plan.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Raw-seed buyers' specs to know are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_9')">Moisture and cleanliness standards</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Favourite colours</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Nothing</button>
+<div class="q-exp" id="exp6_9"><strong>Why:</strong> Crushers dock or reject on moisture and admixture; knowing the spec turns the trader channel into a reliable floor price under the pressing business.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. The year-three press decision is between:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_10')">A hand ram press (cheap, slow) and a small motorised expeller (volume plus toll income)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Two identical machines</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">No options</button>
+<div class="q-exp" id="exp6_10"><strong>Why:</strong> Scale honestly: the ram press suits a household oil business; the expeller makes you the area's oilseed anchor — pressing for fees, buying seed, selling oil and cake.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn6" onclick="markComplete(6)">Mark Month 6 Complete</button>
+    </div>
+  </div>
+
+  <div class="final-section">
+    <h2>&#127942; Final Project: Your Sunflower Business Plan</h2>
+    <p>The final project is your complete sunflower enterprise plan — from stand architecture and the bee calendar to the pressing business the field is built to feed.</p>
+    <ol><li><strong>Market case:</strong> your local oil, seed and cake prices, press access and fees, and the raw-versus-pressed revenue comparison for your situation.</li>
+<li><strong>Field plan:</strong> variety and seed source, deep-cultivation and stand plan with target population, boron decision with evidence, feeding programme and calendar.</li>
+<li><strong>Pollination and health page:</strong> the bee arrangement and flowering rules, the four-year rotation map with sclerotinia hosts marked, volunteer control and scouting routine — written as commitments.</li>
+<li><strong>Harvest and storage plan:</strong> the brown-bract trigger, cut-and-dry logistics (racks, labour), threshing and drying to 9–10%, storage setup with the weekly check log and the 2–4 month sales window.</li>
+<li><strong>Processing plan:</strong> toll or own-press route, recovery targets (oil litres per 100 kg), bottling and food-safety rules, cake handling and its customer list.</li>
+<li><strong>Budget and cash-flow:</strong> the full budget both routes, the press investment case if chosen, and the coordination plan for neighbour supply.</li>
+<li><strong>Risk page and year-3 vision:</strong> three risks with mitigations, and the staged ladder — grow well, toll-press, then anchor the area's oilseed trade.</li></ol>
+    <p><strong>Submission standard:</strong> A plan you could hand to a savings group, a bank officer, or a family investor without embarrassment. Real local prices, real named buyers, honest risks.</p>
+  </div>
+
+  <div class="budget-section">
+    <h2>&#128176; Startup Budget &mdash; 1 Hectare + Toll-Pressing Route (+ Optional Press Investment)</h2>
+    <p>Sunflower's budget is light in the field and decided at the press: the same 1.5 tonnes earns half again as much leaving the farm as oil and cake instead of raw seed. The optional press line converts year-three profits into the area's oilseed anchor. Family labour reduces cash figures.</p>
+    <table>
+      <tr><th>Item</th><th>Details</th><th>Typical cost (USD)</th></tr>
+<tr><td>Seed (hybrid or OPV, 5 kg)</td><td>+ borax 5–10 kg where sandy soils indicate</td><td>$30–80</td></tr>
+<tr><td>Land preparation</td><td>Deep cultivation/ripping against hardpan, fine tilth</td><td>$60–140</td></tr>
+<tr><td>Manure + P basal + light N</td><td></td><td>$60–150</td></tr>
+<tr><td>Weeding &amp; thinning labour</td><td>Two shallow passes + soil banking</td><td>$40–100</td></tr>
+<tr><td>Bird watch &amp; harvest labour</td><td>Seed-fill scaring, cut-and-dry harvest, threshing</td><td>$60–150</td></tr>
+<tr><td>Drying &amp; storage gear</td><td>Racks/mats, sacks, store shelving</td><td>$30–80</td></tr>
+<tr><td>Toll pressing fees (route B)</td><td>For ~1.2 t pressed</td><td>$60–150</td></tr>
+<tr><td>Bottles/containers &amp; transport</td><td>Food-grade only</td><td>$30–90</td></tr>
+<tr><td>Contingency (10%)</td><td></td><td>$35–95</td></tr>
+<tr><td><strong>Total indicative startup</strong></td><td>Toll-press route; revenue in ~5 months</td><td><strong>$405–1,035</strong></td></tr>
+<tr><td>Optional: own press</td><td>Hand ram press ~$150–400; small motorised expeller ~$800–2,500</td><td>$150–2,500</td></tr>
+    </table>
+    <p><em>Prices vary widely by country. Before spending anything, price every line in your own town and rebuild this table — that exercise is part of your final project.</em></p>
+  </div>
+
+  <div class="glossary-section">
+    <h2>&#128218; Glossary</h2>
+    <dl class="glossary">
+<dt>Oilseed</dt><dd>A crop grown primarily for extractable oil — sunflower's seed is 35–45% oil.</dd>
+<dt>Hybrid / OPV</dt><dd>Fresh-seed-yearly high performers versus saveable open-pollinated varieties — the standard seed choice.</dd>
+<dt>Taproot</dt><dd>Sunflower's deep central root, mining moisture ~2 m down — its drought insurance.</dd>
+<dt>Head (capitulum)</dt><dd>The 'flower' — actually hundreds of disc flowers opening in rings over 1–2 weeks.</dd>
+<dt>Heliotropism</dt><dd>Sun-tracking by young buds only; mature heads fix facing east.</dd>
+<dt>Boron</dt><dd>Sunflower's signature micronutrient; deficiency deforms heads and empties centres — corrected with measured borax.</dd>
+<dt>Sclerotinia (white mould)</dt><dd>The rotation disease: cottony rot leaving black sclerotia that persist years in soil; no cure, only prevention.</dd>
+<dt>Sclerotia</dt><dd>The hard black survival bodies of sclerotinia — 'rat droppings' in stem and head.</dd>
+<dt>Volunteer</dt><dd>Self-sown plants from shattered seed — the disease bridge across rotation gaps; hoed out.</dd>
+<dt>Physiological maturity</dt><dd>Head backs yellow-brown, bracts brown, seeds hard — the cut-and-dry trigger at ~15–25% moisture.</dd>
+<dt>Cut-and-dry harvest</dt><dd>Cutting heads at maturity and rack-drying off the field — sunflower's main bird defence.</dd>
+<dt>Oilseed moisture law</dt><dd>Storage at 9–10% — drier than grain, because oil turns rancid.</dd>
+<dt>Rancidity</dt><dd>Oil spoilage from heat, moisture and time — why sunflower seed stores months, not years.</dd>
+<dt>Toll pressing</dt><dd>Paying a press to process your seed, keeping the oil and cake to sell — the accessible middle rung.</dd>
+<dt>Expeller</dt><dd>A motorised screw press — volume oil extraction and the anchor of an area oilseed business.</dd>
+<dt>Press cake</dt><dd>The protein-rich residue after pressing — feed for poultry, pigs and dairy; dried and stored like food.</dd>
+    </dl>
+  </div>
+
+  <div class="resources-section">
+    <h2>&#128279; Further Resources</h2>
+    <ul><li>Your national oilseeds programme and extension office — released sunflower hybrids and OPVs, boron guidance for your soils, and any outgrower schemes.</li>
+<li>FAO and national guides on small-scale oil pressing — ram press and expeller operation, food-safe bottling and filtration.</li>
+<li>Press manufacturers and importers serving your region — compare ram presses and small expellers on capacity, price and spares before year three.</li>
+<li>Local crushers, oil traders and feed sellers — moisture/cleanliness specs, seed prices and the cake market's shape.</li>
+<li>Rise Africa Skills companion courses: Beekeeping (the flowering partnership), Poultry &amp; Piggery (the cake customers), Sorghum &amp; Millet (the rotation cereal), Groundnut (shared oilseed drying laws).</li></ul>
+  </div>
+
+  <div class="cert-section">
+    <h2>&#127891; Course Completion</h2>
+    <p>Complete all 6 months and pass the quizzes to unlock your certificate.</p>
+    <a href="certificate.html?course=Sunflower%20Farming" class="cert-btn" id="certBtn" disabled>Get Certificate</a>
+  </div>
+</div>
+<script>
+  const TOTAL_MODULES = 6;
+  const COURSE_KEY = 'sunflower-farming';
+  let completed = JSON.parse(localStorage.getItem(COURSE_KEY + '_progress') || '[]');
+
+  function toggleModule(n) {
+    if (n > 1 && !completed.includes(n-1)) { alert('Complete Month ' + (n-1) + ' first.'); return; }
+    document.getElementById('body' + n).classList.toggle('active');
+  }
+  function answerQ(btn, isCorrect, expId) {
+    const parent = btn.parentElement;
+    const buttons = parent.querySelectorAll('.q-opt');
+    if (buttons[0].disabled) return;
+    buttons.forEach(b => { b.disabled = true; });
+    if (isCorrect) { btn.classList.add('correct'); }
+    else {
+      btn.classList.add('wrong');
+      buttons.forEach(b => { if (b.dataset.c === '1') b.classList.add('correct'); });
+    }
+    document.getElementById(expId).classList.add('show');
+    const quiz = btn.closest('.quiz-wrap');
+    quiz.dataset.answered = (parseInt(quiz.dataset.answered||'0') + 1);
+    quiz.dataset.score = (parseInt(quiz.dataset.score||'0') + (isCorrect ? 1 : 0));
+    if (parseInt(quiz.dataset.answered) >= parseInt(quiz.dataset.total)) {
+      const s = quiz.querySelector('.quiz-score');
+      s.textContent = 'Quiz result: ' + quiz.dataset.score + ' / ' + quiz.dataset.total + (parseInt(quiz.dataset.score) >= 7 ? ' — Pass. Well done!' : ' — Below 7/10. Re-read the module, then review your wrong answers.');
+    }
+  }
+  function markComplete(n) {
+    if (!completed.includes(n)) {
+      completed.push(n); completed.sort((a,b)=>a-b);
+      localStorage.setItem(COURSE_KEY + '_progress', JSON.stringify(completed));
+    }
+    updateUI();
+  }
+  function updateUI() {
+    document.getElementById('completedCount').textContent = completed.length;
+    document.getElementById('progressBar').style.width = (completed.length/TOTAL_MODULES*100) + '%';
+    for (let i=1; i<=TOTAL_MODULES; i++) {
+      const st = document.getElementById('status'+i), btn = document.getElementById('btn'+i);
+      if (completed.includes(i)) { st.textContent='Done'; st.classList.add('done'); if(btn){btn.textContent='Completed'; btn.disabled=true;} }
+      else if (i===1 || completed.includes(i-1)) { st.textContent='Start'; }
+      else { st.textContent='Locked'; }
+    }
+    if (completed.length >= TOTAL_MODULES) {
+      const c = document.getElementById('certBtn');
+      c.removeAttribute('disabled'); c.textContent = 'Get Your Certificate!';
+    }
+  }
+  updateUI();
+</script>
+</body>
+</html>

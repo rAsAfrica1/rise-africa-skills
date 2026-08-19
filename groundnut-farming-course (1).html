@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Groundnut Farming - A complete practical course from Rise Africa Skills. Learn offline, anytime.">
+<title>Groundnut Farming | Rise Africa Skills</title>
+<style>
+  :root { --gold:#eab308; --gold-dark:#a16207; --green:#16a34a; --bg:#0f172a; --card:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --line:#334155; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:var(--bg); color:var(--text); line-height:1.65; }
+  header { background:linear-gradient(135deg,var(--gold-dark) 0%,#713f12 100%); padding:44px 20px; text-align:center; }
+  header h1 { font-size:2rem; margin-bottom:8px; }
+  header p { color:rgba(255,255,255,0.88); max-width:640px; margin:0 auto; }
+  .badge { display:inline-block; background:var(--gold); color:#1e293b; padding:4px 14px; border-radius:20px; font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-top:12px; letter-spacing:0.4px; }
+  .container { max-width:920px; margin:0 auto; padding:30px 20px; }
+  .progress-bar { background:var(--card); border-radius:10px; height:10px; margin-bottom:28px; overflow:hidden; }
+  .progress-fill { background:var(--gold); height:100%; width:0%; border-radius:10px; transition:width .4s ease; }
+  .overview { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-bottom:26px; }
+  .overview h2 { color:var(--gold); font-size:1.15rem; margin-bottom:10px; }
+  .overview ul { margin:8px 0 14px 20px; color:var(--muted); }
+  .overview li { margin:5px 0; }
+  .meta-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+  .meta-chip { background:#0b1220; border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:0.85rem; color:var(--muted); }
+  .meta-chip b { color:var(--text); }
+  .module { background:var(--card); border-radius:12px; margin-bottom:16px; overflow:hidden; border:1px solid var(--line); }
+  .module-header { padding:18px 22px; cursor:pointer; display:flex; align-items:center; gap:14px; transition:background .2s; }
+  .module-header:hover { background:#26354a; }
+  .module-num { background:var(--gold); color:#1e293b; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0; }
+  .module-title { flex:1; font-weight:600; }
+  .module-status { font-size:0.75rem; padding:4px 10px; border-radius:12px; background:var(--line); color:var(--muted); white-space:nowrap; }
+  .module-status.done { background:var(--green); color:#fff; }
+  .module-body { display:none; padding:0 22px 24px; border-top:1px solid var(--line); }
+  .module-body.active { display:block; }
+  .module-body p { color:var(--muted); margin:13px 0; }
+  .module-body ul, .module-body ol { margin:10px 0 10px 22px; color:var(--muted); }
+  .module-body li { margin:6px 0; }
+  .module-body strong { color:var(--text); }
+  .module-body h3 { color:var(--gold); font-size:1.05rem; margin:22px 0 4px; }
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.88rem; }
+  th { background:#0b1220; color:var(--gold); text-align:left; padding:9px 10px; border:1px solid var(--line); }
+  td { padding:8px 10px; border:1px solid var(--line); color:var(--muted); vertical-align:top; }
+  tr:nth-child(even) td { background:#1a2537; }
+  .tip-box { background:rgba(234,179,8,0.08); border-left:4px solid var(--gold); padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .tip-box strong { color:var(--gold); }
+  .warn-box { background:rgba(239,68,68,0.08); border-left:4px solid #ef4444; padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .warn-box strong { color:#f87171; }
+  .assign-box { background:#0b1220; border:1px dashed var(--gold-dark); border-radius:10px; padding:16px 18px; margin:16px 0; color:var(--muted); }
+  .assign-box strong { color:var(--gold); }
+  .video-box { background:#0b1220; border:1px solid var(--line); border-radius:10px; padding:14px 18px; margin:16px 0; color:var(--muted); font-size:0.9rem; }
+  .quiz-wrap { background:#0b1220; border:1px solid var(--line); border-radius:12px; padding:20px; margin-top:20px; }
+  .quiz-wrap h3 { margin-top:0 !important; }
+  .q-block { margin:16px 0; padding-bottom:14px; border-bottom:1px solid #1e293b; }
+  .q-block:last-child { border-bottom:none; }
+  .q-text { font-weight:600; color:var(--text); margin-bottom:8px; }
+  .q-opt { display:block; width:100%; text-align:left; padding:9px 13px; margin:5px 0; background:var(--card); border:1px solid #475569; border-radius:8px; color:var(--text); cursor:pointer; transition:all .2s; font-size:0.9rem; }
+  .q-opt:hover { border-color:var(--gold); }
+  .q-opt.correct { background:#14532d; border-color:var(--green); }
+  .q-opt.wrong { background:#7f1d1d; border-color:#ef4444; }
+  .q-exp { display:none; margin-top:8px; padding:10px 13px; background:rgba(234,179,8,0.07); border-left:3px solid var(--gold); border-radius:0 6px 6px 0; color:var(--muted); font-size:0.87rem; }
+  .q-exp.show { display:block; }
+  .quiz-score { margin-top:12px; font-weight:700; color:var(--gold); }
+  .check-btn { background:var(--gold); color:#1e293b; border:none; padding:11px 26px; border-radius:8px; font-weight:700; cursor:pointer; margin-top:16px; transition:background .2s; }
+  .check-btn:hover { background:#facc15; }
+  .check-btn:disabled { opacity:0.5; cursor:not-allowed; }
+  .final-section, .budget-section, .glossary-section, .resources-section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-top:26px; }
+  .final-section h2, .budget-section h2, .glossary-section h2, .resources-section h2 { color:var(--gold); font-size:1.2rem; margin-bottom:10px; }
+  .final-section p, .budget-section p, .resources-section p { color:var(--muted); margin:10px 0; }
+  .final-section ol, .resources-section ul { margin:10px 0 10px 22px; color:var(--muted); }
+  .final-section li, .resources-section li { margin:6px 0; }
+  dl.glossary dt { color:var(--text); font-weight:700; margin-top:12px; }
+  dl.glossary dd { color:var(--muted); margin-left:0; font-size:0.92rem; }
+  .cert-section { text-align:center; padding:40px 20px; background:var(--card); border-radius:16px; margin-top:30px; border:1px solid var(--line); }
+  .cert-section h2 { margin-bottom:10px; }
+  .cert-section p { color:var(--muted); margin-bottom:20px; }
+  .cert-btn { background:var(--gold); color:#1e293b; border:none; padding:14px 36px; border-radius:10px; font-size:1rem; font-weight:800; cursor:pointer; text-decoration:none; display:inline-block; }
+  .cert-btn[disabled] { opacity:0.4; pointer-events:none; }
+  .nav-bar { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:var(--card); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:100; }
+  .nav-bar a { color:var(--text); text-decoration:none; font-weight:600; }
+  .nav-bar a:hover { color:var(--gold); }
+  .completion-count { color:var(--muted); font-size:0.9rem; }
+  @media (max-width:600px){ header h1{font-size:1.5rem;} .module-header{padding:14px 16px;} .module-body{padding:0 16px 18px;} table{font-size:0.8rem;} th,td{padding:6px 7px;} }
+</style>
+</head>
+<body>
+<nav class="nav-bar">
+  <a href="index.html">&#8592; Back to Courses</a>
+  <span class="completion-count"><span id="completedCount">0</span> / 6 months completed</span>
+</nav>
+<header>
+  <div class="badge">Agriculture &middot; 6-Month Program</div>
+  <h1>Groundnut Farming</h1>
+  <p>The underground legume — pegging agronomy, gypsum and dense early stands, the rosette defence, the shell-test harvest, and the drying-and-sorting discipline that beats aflatoxin and builds the peanut butter business.</p>
+</header>
+<div class="container">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+
+  <div class="overview">
+    <h2>Course Overview</h2>
+    <p style="color:var(--muted);">Groundnut is food, oil, peanut butter, livestock feed and free nitrogen from one plant — and the strangest grower in this college: it flowers in the air and fruits in the soil, on pegs that must never be disturbed. This course teaches the crop around its two decisive battles. In the field: rosette disease, Africa's own groundnut epidemic, defeated almost entirely by resistant varieties planted early and dense. From flowering to the store: aflatoxin, the invisible toxin that follows drought stress, pod damage, slow drying and poor sorting — beaten by a chain of ordinary disciplines this course drills one by one, because the same chain is also the road to premium buyers and safe peanut butter. Around these battles sit the craft lessons: seed kept in its shell, gypsum at flowering, the hands-off pegging law, the darkened-shell maturity test, windrow curing, gleaning, hay stacking and the honest budgets from one hectare to a processing startup.</p>
+    <h2 style="margin-top:16px;">What You Will Learn</h2>
+    <ul><li>Understand pegging and build the whole season around undisturbed, calcium-fed podding soil</li>
+<li>Choose Spanish vs Virginia types and rosette-resistant released varieties by season and market</li>
+<li>Keep seed in-shell, sort and test germination, and plant dense and early — the double defence</li>
+<li>Weed on the pegging law's clock; feed with P, gypsum and minimal N; capture the haulm hay</li>
+<li>Defeat rosette with the variety-agronomy stack and manage leaf spots, rust and soil pests</li>
+<li>Run the field half of aflatoxin control: variety length, stress, pod protection, timely harvest</li>
+<li>Read maturity by the shell test; lift, windrow, glean, dry fast off-ground, and hand-sort</li>
+<li>Store in-shell for the price rise; build the budgets, the peanut butter startup and premium channels</li></ul>
+    <div class="meta-row">
+      <div class="meta-chip"><b>Duration:</b> 6 months, one module per month</div>
+      <div class="meta-chip"><b>Level:</b> Beginner &rarr; Job-ready</div>
+      <div class="meta-chip"><b>Units:</b> Metric with imperial where useful</div>
+      <div class="meta-chip"><b>Final project:</b> Your own business plan</div>
+    </div>
+  </div>
+
+  <div class="module" data-module="1">
+    <div class="module-header" onclick="toggleModule(1)">
+      <div class="module-num">1</div>
+      <div class="module-title">Month 1: The Crop, Types &amp; the Aflatoxin Sentence</div>
+      <div class="module-status" id="status1">Start</div>
+    </div>
+    <div class="module-body" id="body1">
+
+      <h3>Lesson 1.1 — The crop that fruits underground</h3>
+      <p>Groundnut (peanut) is Africa's great oilseed-legume: food, cooking oil, peanut butter, snack, livestock feed and soil improver in one plant. Its strangest feature drives everything in this course: groundnut <strong>flowers above ground but fruits below it</strong>. After a flower is fertilised, it sends down a <strong>peg</strong> — a stalk that drills into the soil — and the pod develops underground at the peg's tip. Loose soil, calcium in the podding zone, and undisturbed pegs are therefore not details; they ARE groundnut agronomy.</p>
+      <ul>
+        <li>Season: <strong>90–140 days</strong> depending on type — a rains-season crop for semi-arid and savanna zones on light sandy-loam soils.</li>
+        <li>A legume: fixes its own nitrogen and leaves fertility behind — the premier rotation partner for maize and cereals (a story you know from the Beans course).</li>
+        <li>Yields: African average ~800–1,000 kg/ha in pods; good management with improved seed reaches <strong>2,000–3,500 kg/ha</strong>.</li>
+      </ul>
+      <h3>Lesson 1.2 — Two families of groundnut</h3>
+      <table>
+        <tr><th></th><th><strong>Spanish/bunch (erect) types</strong></th><th><strong>Virginia/runner (spreading) types</strong></th></tr>
+        <tr><td>Season</td><td>Shorter: ~90–110 days</td><td>Longer: ~120–140+ days</td></tr>
+        <tr><td>Habit</td><td>Upright; pods clustered at the base — easier lifting</td><td>Spreading; pods along runners — higher potential yield</td></tr>
+        <tr><td>Dormancy</td><td>Little seed dormancy — sprouts in the ground if harvest is late in rain</td><td>Fresh-seed dormancy — more forgiving at harvest</td></tr>
+        <tr><td>Fit</td><td>Short rains, confectionery and quick markets</td><td>Longer seasons, oil and export trade</td></tr>
+      </table>
+      <p>Ask extension for released varieties for your zone, and read two columns before any other: <strong>rosette resistance</strong> and <strong>days to maturity</strong>. Module 4 explains why rosette resistance can be the whole harvest, and Lesson 5.1 explains why maturity days matter more in groundnut than almost any crop.</p>
+      <h3>Lesson 1.3 — The aflatoxin sentence, stated on day one</h3>
+      <p>One word will follow this whole course: <strong>aflatoxin</strong> — the invisible toxin made by <em>Aspergillus</em> moulds in stressed, damaged or badly dried pods. It causes liver cancer, stunts children, and closes export markets. Everything you will learn — end-of-season stress management, gentle lifting, fast proper drying, sorting, dry storage — is also, simultaneously, aflatoxin control. Groundnut done right is safe food and premium exports; done carelessly it is quietly dangerous. This course teaches it right.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Pegs, pods and the underground harvest — groundnut's strange biology &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 1:</strong> Survey your groundnut market: record forms on sale (in-shell, kernels, roasted, butter, oil) with prices, and ask two traders how in-shell prices move across the year. Get the extension list of released varieties for your zone, copying the rosette-resistance and days-to-maturity columns. Match maturity days against your reliable rain window and choose your candidate variety, stating the reason in one paragraph.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 1 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Groundnut's defining oddity is that it:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_1')">Flowers above ground but fruits below it, via pegs that drill into the soil</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">Grows on trees</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">Has no flowers</button>
+<div class="q-exp" id="exp1_1"><strong>Why:</strong> The aerial flower sends a peg down into the soil where the pod forms. Loose soil, podding-zone calcium and undisturbed pegs follow directly from this one fact — it organises the whole crop.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. The peg is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_2')">The fertilised flower's stalk that carries the developing pod into the soil</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">A wooden tool</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">A disease</button>
+<div class="q-exp" id="exp1_2"><strong>Why:</strong> Pegging is the bridge between flower and harvest. Anything that blocks, breaks or dries out pegs — compacted soil, deep late weeding, drought — deletes pods before they exist.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. As a legume, groundnut:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_3')">Fixes nitrogen and improves the soil for following cereals</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">Exhausts soil worse than any crop</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">Cannot be rotated</button>
+<div class="q-exp" id="exp1_3"><strong>Why:</strong> Groundnut is the semi-arid rotation partner: it feeds itself N, leaves fertility for maize or sorghum after, and breaks cereal disease cycles — earning twice per season.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Spanish/bunch types differ from Virginia/runner types in:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_4')">Shorter season, erect habit, clustered pods, little seed dormancy</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">Being trees</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">Growing only in Spain</button>
+<div class="q-exp" id="exp1_4"><strong>Why:</strong> Bunch types fit short rains and lift easily but sprout in-ground if late harvest meets rain; runners run longer, yield more, and their dormancy forgives harvest delays.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. The two variety-list columns to read first are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_5')">Rosette resistance and days to maturity</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Flower colour and leaf gloss</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Packet design</button>
+<div class="q-exp" id="exp1_5"><strong>Why:</strong> Rosette can take an entire susceptible crop in epidemic years, and maturity days determine both your rain-window fit and your end-of-season aflatoxin risk.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Groundnut's preferred soils are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_6')">Light, loose sandy loams</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">Heavy waterlogged clays</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">Solid rock</button>
+<div class="q-exp" id="exp1_6"><strong>Why:</strong> Pegs must penetrate and pods must be liftable without snapping off underground. Light free-draining soils are also lower-risk for pod rots and easier at harvest.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. A well-managed groundnut yield versus the African average is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_7')">2,000–3,500 kg/ha versus ~800–1,000 kg/ha in pods</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">The same</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">Lower with management</button>
+<div class="q-exp" id="exp1_7"><strong>Why:</strong> Improved rosette-resistant seed, plant density and timely harvest routinely double or triple the average — the familiar gap, closed by knowledge more than money.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Aflatoxin is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_8')">An invisible mould toxin causing liver cancer and stunting, and closing export markets</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">A useful vitamin</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Visible as bright stripes</button>
+<div class="q-exp" id="exp1_8"><strong>Why:</strong> Aspergillus moulds infect stressed and damaged pods and bloom in slow drying and damp storage. Invisible and tasteless, it is managed by practice, not detection — the thread of this whole course.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Groundnut products include:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_9')">Food, cooking oil, peanut butter, snacks, feed cake and hay</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">Only birdseed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">Timber</button>
+<div class="q-exp" id="exp1_9"><strong>Why:</strong> Kernel, oil, cake and even the protein-rich haulms (hay) all sell. Few crops convert one hectare into as many markets — Module 6 sequences them.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. The crop calendar for groundnut is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_10')">90–140 days within the rains, matched by type to the season length</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Ten years</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Two weeks</button>
+<div class="q-exp" id="exp1_10"><strong>Why:</strong> Matching variety maturity to your reliable rain window is decision one: too long a variety in a short season meets end-of-season drought — the exact stress that invites aflatoxin.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn1" onclick="markComplete(1)">Mark Month 1 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="2">
+    <div class="module-header" onclick="toggleModule(2)">
+      <div class="module-num">2</div>
+      <div class="module-title">Month 2: Seed, Land &amp; the Dense Early Stand</div>
+      <div class="module-status" id="status2">Locked</div>
+    </div>
+    <div class="module-body" id="body2">
+
+      <h3>Lesson 2.1 — Seed: handle like eggs, shell at the last minute</h3>
+      <p>Groundnut seed is a living embryo in a thin skin, and cracked seed does not grow. The rules:</p>
+      <ul>
+        <li><strong>Store seed in the shell; hand-shell only 1–2 weeks before planting.</strong> Shelled seed loses viability fast and cracks in bags; the pod is nature's seed packet.</li>
+        <li>Shell gently by hand for seed (machines for food/sale stock, not seed); select bold, uniform, uncracked kernels with intact skins; discard shrivelled, mouldy or discoloured ones — that sorting is also your first aflatoxin cull.</li>
+        <li>Source improved, rosette-resistant varieties from certified/QDS suppliers or your own best plot; refresh every few seasons. Test germination the Bean-course way: 50 seeds, damp cloth, count at 5–7 days; below 75–80%, adjust rate or source better seed.</li>
+        <li>Where recommended locally, treat seed with a fungicide seed dressing against soil rots; where groundnut is new to a field, rhizobium inoculant (groundnut-type) helps nodulation.</li>
+      </ul>
+      <h3>Lesson 2.2 — Land: loose, level, and limed where sour</h3>
+      <p>Plough/dig to a fine loose tilth 15–20 cm deep — pegs and lifting both demand it. On crusting or wetter soils, low ridges or raised beds help; on light sands, flat planting is fine. Groundnut hates acid soils' aluminium and needs <strong>calcium where pods form</strong>: where soils are sour or pops (empty pods) are known locally, apply lime or gypsum — gypsum at flowering is the classic podding-zone calcium fix (Lesson 3.2).</p>
+      <h3>Lesson 2.3 — Density: the quiet yield (and rosette) decision</h3>
+      <table>
+        <tr><th>Type</th><th>Spacing</th><th>Population</th></tr>
+        <tr><td>Spanish/bunch</td><td>Rows 45–60 cm, plants 10–15 cm; 1 seed/station, 3–5 cm deep</td><td>~120,000–200,000/ha</td></tr>
+        <tr><td>Virginia/runner</td><td>Rows 60–75 cm, plants 15–20 cm</td><td>~80,000–110,000/ha</td></tr>
+      </table>
+      <p><strong>Plant DENSE and plant EARLY, at the first good rains.</strong> This is not only yield arithmetic: a closed canopy established early is the classic cultural defence against rosette disease, because the aphids that carry it land preferentially on sparse, late, gappy stands (Module 4 completes this story). Gap-fill within two weeks. Seed rate: commonly 60–100+ kg of good kernels per hectare — budget for it; thin stands are the most common groundnut mistake in Africa.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Hand-shelling, sorting and the germination test — seed handled like eggs &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 2:</strong> Obtain seed of your chosen variety in-shell. Hand-shell a planting batch no more than two weeks before your date, sorting rejects into a labelled container (weigh them — your first reject-percentage record). Run the 50-seed germination test and record the result. Prepare a fine-tilth plot and plant at least four 10-metre rows at correct spacing and depth, applying SSP or your compound; record date, seed weight used, and stand count at three weeks, then gap-fill.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 2 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Groundnut seed is stored:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_1')">In the shell, hand-shelled only 1–2 weeks before planting</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">Shelled a year ahead in plastic</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">Boiled</button>
+<div class="q-exp" id="exp2_1"><strong>Why:</strong> The pod is the seed's protective packet; shelled kernels crack, lose viability and absorb moisture. Late gentle hand-shelling delivers living seed to the planting hole.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Seed-lot sorting at shelling discards shrivelled, mouldy or discoloured kernels because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_2')">They germinate poorly AND are the aflatoxin-risk fraction</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">Buyers love them</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">Colour is fashion</button>
+<div class="q-exp" id="exp2_2"><strong>Why:</strong> The same kernels that fail as seed are the mould carriers. Sorting is simultaneously germination insurance and the first aflatoxin control point of the season.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. A germination test below ~75–80% means:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_3')">Increase seed rate or find better seed before planting</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">Plant anyway at normal rate</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">Abandon farming</button>
+<div class="q-exp" id="exp2_3"><strong>Why:</strong> Fifty seeds in a damp cloth for a week costs nothing and prevents the classic disaster: a thin, gappy, aphid-attracting stand discovered only after the rains have moved on.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Groundnut's special soil-chemistry need is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_4')">Calcium in the podding zone; lime/gypsum where soils are sour or 'pops' occur</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">Maximum acidity</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">Salt</button>
+<div class="q-exp" id="exp2_4"><strong>Why:</strong> Pods absorb calcium directly from surrounding soil, not through the roots' main stream. Sour or Ca-poor podding zones fill shells with nothing — the 'pops' that gypsum at flowering prevents.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Recommended planting depth and stations are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_5')">3–5 cm deep, one good seed per station</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">20 cm deep, five seeds</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">Surface broadcast</button>
+<div class="q-exp" id="exp2_5"><strong>Why:</strong> Shallow enough to emerge strongly, one bold seed per closely spaced station: groundnut yield is built on plant numbers, not on individual giant plants.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Planting dense and early is doubly valuable because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_6')">It raises yield AND the closed early canopy deters the aphids that carry rosette</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">It looks tidy only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">It saves seed money</button>
+<div class="q-exp" id="exp2_6"><strong>Why:</strong> Rosette epidemics feast on late, sparse, gappy fields. Density and earliness are the cultural vaccine — the cheapest disease control in the crop.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Typical groundnut seed rates are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_7')">60–100+ kg of kernels per hectare — a real budget line</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">1 kg/ha</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">500 kg/ha</button>
+<div class="q-exp" id="exp2_7"><strong>Why:</strong> High populations need real seed tonnage; under-budgeting seed is why thin stands are Africa's most common groundnut mistake. The seed line pays back in canopy and pods.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Rhizobium inoculant for groundnut is most useful when:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_8')">Groundnut (or its rhizobium group) is new to the field</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">The field has grown groundnut forever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">Never under any condition</button>
+<div class="q-exp" id="exp2_8"><strong>Why:</strong> Long-groundnut soils usually carry compatible rhizobia; new ground may not. A cheap inoculant sachet ensures the nodulation that powers the crop's free nitrogen.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Land preparation for groundnut aims at:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_9')">A fine loose tilth 15–20 cm deep that pegs can enter and lifting can leave</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Compacted hard ground</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Standing water</button>
+<div class="q-exp" id="exp2_9"><strong>Why:</strong> Every peg that cannot penetrate is a pod that never forms; every pod snapped off in hard ground at lifting stays lost in the soil. Tilth is yield at both ends of the season.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Gap-filling is done:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_10')">Within two weeks of emergence</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">Never</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">At harvest</button>
+<div class="q-exp" id="exp2_10"><strong>Why:</strong> Late gap-fills mature out of step and stay behind forever; a quick two-week replant walk restores the dense even canopy that yield and rosette-defence both demand.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn2" onclick="markComplete(2)">Mark Month 2 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="3">
+    <div class="module-header" onclick="toggleModule(3)">
+      <div class="module-num">3</div>
+      <div class="module-title">Month 3: The Pegging Law, Feeding &amp; Water</div>
+      <div class="module-status" id="status3">Locked</div>
+    </div>
+    <div class="module-body" id="body3">
+
+      <h3>Lesson 3.1 — The pegging law: weed early, then hands off the soil</h3>
+      <p>Groundnut weeding has a hard deadline written by the plant itself:</p>
+      <ul>
+        <li><strong>Weeks 2–6:</strong> weed thoroughly — two clean hoeings/hand-weedings before flowering ends. The crop is small, weeds are murder on it, and the soil may still be worked freely.</li>
+        <li><strong>From peak flowering/pegging (~6–7 weeks):</strong> <strong>STOP deep soil work near rows.</strong> Every hoe stroke now tears pegs and buries none — each broken peg is a pod deleted. Hand-pull big escapes only, stepping carefully.</li>
+        <li>Light <strong>earthing-up at final weeding</strong> (just before pegging peaks, especially for bunch types on ridges) banks loose soil where pegs will land — the last soil work of the season.</li>
+      </ul>
+      <h3>Lesson 3.2 — Feeding a legume</h3>
+      <table>
+        <tr><th>Input</th><th>Practice</th><th>Why</th></tr>
+        <tr><td>Nitrogen</td><td>Little or none — at most a small 'starter' where soils are very poor</td><td>Nodules supply N; heavy N grows leaf, suppresses nodulation, and wastes money</td></tr>
+        <tr><td>Phosphorus</td><td>The key purchased nutrient: SSP or compound at planting (SSP also brings Ca and S — ideal)</td><td>P powers nodulation, flowering and pod fill</td></tr>
+        <tr><td><strong>Calcium (gypsum/lime)</strong></td><td>Gypsum ~200–400 kg/ha dusted over rows at early flowering, where pops/sour soils occur</td><td>Pods drink Ca straight from podding-zone soil; deficiency = empty shells</td></tr>
+        <tr><td>Manure/compost</td><td>To the PREVIOUS crop, or well-rotted at land prep</td><td>Structure and moisture-holding without the N excess</td></tr>
+      </table>
+      <h3>Lesson 3.3 — Water rhythm</h3>
+      <p>Critical moisture windows: establishment, and above all <strong>flowering–pegging–pod fill (roughly weeks 5–11)</strong> — drought there cuts yield hardest and, at season's end, flips the aflatoxin switch (Module 4). Early planting into the rains is the main water strategy; on ridges, tied ridging harvests storms in drier zones. Waterlogging even briefly yellows and stunts the crop — drainage matters on heavier land.</p>
+      <h3>Lesson 3.4 — Groundnut in the farm system</h3>
+      <p>Rotate cereals → groundnut → cereals: the cereal that follows commonly gains the equivalent of a meaningful fertiliser dose from fixed N and residues. Never follow groundnut with groundnut — soil diseases and leaf spots build fast. Intercropping with widely spaced cereals is traditional; keep the cereal sparse or the shade cost exceeds the benefit. And plan the <strong>haulm harvest</strong>: groundnut hay (the vines after lifting) is premium livestock feed that sells or feeds your own animals — in many regions worth 20–30% as much as the pods themselves.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Gypsum at flowering and the last hoeing — soil work on the pegging clock &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 3:</strong> Complete two weedings before peak flowering with a light final earthing-up, recording dates. At early flowering, apply gypsum (or wood ash where gypsum is unavailable) over the rows of half your plot only — leaving the other half as your comparison for pops at harvest. From week 6, enforce the hands-off rule: hand-pull escapes only, and log every rainfall or irrigation event through week 11.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 3 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Deep hoeing near groundnut rows after pegging begins:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_1')">Tears pegs — deleting pods one hoe-stroke at a time</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Doubles yield</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Is required weekly</button>
+<div class="q-exp" id="exp3_1"><strong>Why:</strong> The pegging law: clean the field BEFORE flowering ends, then keep steel out of the row zone. Late-season weeds are hand-pulled with careful feet, not hoed.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. The final permitted soil work of the season is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_2')">Light earthing-up just before pegging peaks, banking loose soil for pegs</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Deep ploughing at pod fill</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Digging at week 10</button>
+<div class="q-exp" id="exp3_2"><strong>Why:</strong> That last pass serves the pegs a soft landing zone, then the soil is closed for business until lifting day.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Nitrogen fertiliser on groundnut is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_3')">Kept minimal — nodules supply N; heavy N suppresses them and grows useless leaf</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">The main input at high rates</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">Applied weekly</button>
+<div class="q-exp" id="exp3_3"><strong>Why:</strong> Paying for nitrogen a legume makes free is the classic groundnut money-waster; phosphorus and calcium are where the purchased-input budget belongs.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Gypsum at early flowering supplies:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_4')">Calcium directly to the podding zone, preventing empty 'pops'</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Nitrogen to leaves</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Colour</button>
+<div class="q-exp" id="exp3_4"><strong>Why:</strong> Pods absorb Ca from the soil touching them. Gypsum dusted over rows as flowering starts places calcium exactly where next month's pods will form — the signature groundnut input.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. The most yield-critical water window is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_5')">Flowering–pegging–pod fill, roughly weeks 5–11</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">The week after harvest</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">None</button>
+<div class="q-exp" id="exp3_5"><strong>Why:</strong> Drought in that window cuts pod numbers and fill hardest — and end-of-season drought stress additionally opens the door to Aspergillus. Early planting is the cheapest defence.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Following groundnut with groundnut on the same land:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_6')">Builds soil diseases and leaf spots fast — rotate with cereals instead</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Is ideal</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Fixes double nitrogen</button>
+<div class="q-exp" id="exp3_6"><strong>Why:</strong> Rotation is the legume contract: groundnut pays the following cereal in nitrogen, and the cereal break starves groundnut's diseases. Monoculture voids the contract both ways.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Groundnut haulms (hay) after lifting are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_7')">Premium livestock feed often worth 20–30% of the pods' value</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Rubbish to burn immediately</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Poisonous to all animals</button>
+<div class="q-exp" id="exp3_7"><strong>Why:</strong> Protein-rich vines are a second harvest: cured and stacked, they feed your animals or sell to others' — a revenue line careless harvesters leave to rot.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Single superphosphate (SSP) suits groundnut especially because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_8')">It delivers P plus calcium and sulphur in one bag</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">It is purple</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">It contains maximum nitrogen</button>
+<div class="q-exp" id="exp3_8"><strong>Why:</strong> Three nutrients groundnut actually wants, none it doesn't: SSP at planting plus gypsum at flowering is the classic affordable programme.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Brief waterlogging on groundnut causes:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_9')">Yellowing and stunting — drainage matters on heavier land</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Better nodulation</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Instant flowering</button>
+<div class="q-exp" id="exp3_9"><strong>Why:</strong> Nodules and roots both suffocate quickly in saturated soil. Light free-draining land, or ridges on heavier land, keeps the root zone breathing.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. In cereal intercrops, the cereal must be kept:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_10')">Sparse — dense cereal shade costs more than the intercrop gains</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">As dense as possible</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Taller than trees</button>
+<div class="q-exp" id="exp3_10"><strong>Why:</strong> Groundnut is a full-sun crop; a thick maize stand overhead starves it. Traditional wide-spaced intercropping works precisely because the cereal is thin.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn3" onclick="markComplete(3)">Mark Month 3 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="4">
+    <div class="module-header" onclick="toggleModule(4)">
+      <div class="module-num">4</div>
+      <div class="module-title">Month 4: Rosette, Leaf Spots &amp; Field Aflatoxin</div>
+      <div class="module-status" id="status4">Locked</div>
+    </div>
+    <div class="module-body" id="body4">
+
+      <h3>Lesson 4.1 — Rosette: the epidemic disease</h3>
+      <p><strong>Groundnut rosette</strong> is Africa's signature groundnut disease — a virus complex transmitted by <strong>aphids</strong>, found nowhere else in the world. Infected plants become stunted bunched 'rosettes' with mottled curled leaves (chlorotic yellow or green form) and yield <em>nothing</em>. In epidemic years unprotected late-planted fields lose 50–100%. The defence stack — you already hold most of it:</p>
+      <ol>
+        <li><strong>Rosette-resistant released varieties</strong> — widely available across the continent; the first line and the reason Module 1 sent you to that column.</li>
+        <li><strong>Early planting + dense stands</strong> — the closed canopy the aphid hates (Module 2's promise kept).</li>
+        <li>Rogue infected plants early, while they are few — each rosette is an aphid virus-fountain.</li>
+        <li>Insecticide against aphids is a narrow supplement in seed plots and epidemic outbreaks, not a habit — resistance + agronomy do the real work.</li>
+      </ol>
+      <h3>Lesson 4.2 — Leaf spots and rust: the slow thieves</h3>
+      <p><strong>Early and late leaf spot</strong> (brown/black spotted, yellowing, defoliating leaves from the bottom up) and <strong>groundnut rust</strong> are everywhere groundnut grows; together they quietly take 20–50% of yield and most of the haulm value. Management: resistant/tolerant varieties, rotation and destruction of volunteer plants and old crop debris (the spores' home), and — where the crop justifies it — 2–3 fungicide sprays (e.g. chlorothalonil/mancozeb-type or triazole per local recommendation) starting when the first spots appear around flowering. A defoliated crop also drops more pods at lifting: leaf health IS harvest efficiency.</p>
+      <h3>Lesson 4.3 — The aflatoxin chain, part one: the field</h3>
+      <div class="warn-box"><strong>Aflatoxin control begins BEFORE harvest.</strong> <em>Aspergillus</em> lives in soil and invades pods through three doors: <strong>end-of-season drought stress</strong> (the biggest), <strong>pod damage</strong> (termites, millipedes, pod borers, cracked shells), and <strong>over-mature pods left in the ground</strong>. Field rules: match variety length to your rain window so the crop finishes before deep drought; keep podding-zone soil covered and soft; control soil pests where serious; and harvest ON TIME — Module 5's maturity test, not the calendar, gives the date. A stressed, late, termite-chewed crop is an aflatoxin crop before it ever reaches the drying yard.</div>
+      <h3>Lesson 4.4 — Field pests worth knowing</h3>
+      <table>
+        <tr><th>Pest</th><th>Damage</th><th>Response</th></tr>
+        <tr><td>Aphids</td><td>Rosette vectors first, sap thieves second</td><td>The Lesson 4.1 stack</td></tr>
+        <tr><td>Termites</td><td>Scarify and hole pods late season — aflatoxin doors</td><td>Timely harvest, avoid dead-wood debris in fields, tolerant varieties where endemic</td></tr>
+        <tr><td>White grubs &amp; millipedes</td><td>Eat roots and young pods</td><td>Land prep exposure to sun and birds, rotation, clean seedbeds</td></tr>
+        <tr><td>Leaf-eating caterpillars</td><td>Defoliation flushes</td><td>Usually tolerated; treat only heavy outbreaks on young crops</td></tr>
+        <tr><td>Rodents &amp; pigs</td><td>Dig ripening pods</td><td>Field vigilance near maturity; harvest promptly</td></tr>
+      </table>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Recognising rosette and leaf spots; the field half of the aflatoxin chain &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 4:</strong> Walk your plot (and any neighbouring groundnut field) weekly for three weeks: record any rosette-symptomatic plants and rogue them from your own plot; record leaf-spot onset from the bottom leaves. Price the local options for a 2–3 spray leaf-spot programme at an agro-dealer without necessarily buying. Write your field aflatoxin plan: variety length vs rain window, stress points you can control, pod-damage risks present (termites?), and your target lifting window.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 4 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Groundnut rosette is transmitted by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_1')">Aphids</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Wind alone</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Rain splash only</button>
+<div class="q-exp" id="exp4_1"><strong>Why:</strong> The aphid is the syringe: every rosette control — resistant varieties, early dense planting, roguing — works by breaking the aphid–virus chain.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. A rosette-infected plant yields:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_2')">Essentially nothing — stunted bunched growth with mottled curled leaves</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">Double pods</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">Normal harvest</button>
+<div class="q-exp" id="exp4_2"><strong>Why:</strong> Rosette does not tax a plant, it deletes it — which is why epidemic years take entire late-planted susceptible fields, and why prevention carries the whole defence.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. The first line of rosette defence is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_3')">Rosette-resistant released varieties</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Loud music</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Harvest-day sprays</button>
+<div class="q-exp" id="exp4_3"><strong>Why:</strong> African breeding programmes have released resistant varieties across the continent; choosing one converts the crop's worst disease from catastrophe to footnote before a seed is sown.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Early planting and dense stands fight rosette because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_4')">Winged aphids preferentially land on sparse, late, gappy fields</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">Aphids fear tidy rows aesthetically</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">They don't</button>
+<div class="q-exp" id="exp4_4"><strong>Why:</strong> Aphids seek bare-soil contrast when landing; a closed early canopy reads as 'no landing zone'. Agronomy is the vaccine — the same practice that raises yield anyway.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Leaf spots and rust cost yield partly because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_5')">Defoliated plants also drop more pods at lifting — leaf health is harvest efficiency</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">They only change colour</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">They improve haulms</button>
+<div class="q-exp" id="exp4_5"><strong>Why:</strong> The diseases steal photosynthesis all season, then weaken pegs and pods so lifting leaves the crop underground. Resistant varieties, sanitation and timely sprays protect both.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. The biggest field door for aflatoxin is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_6')">End-of-season drought stress on the maturing crop</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Morning dew</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Cold nights</button>
+<div class="q-exp" id="exp4_6"><strong>Why:</strong> Drought-stressed pods lose their defences and Aspergillus walks in from the soil. Matching variety length to the rain window and timely harvest are aflatoxin control disguised as agronomy.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Termite-holed and cracked pods matter beyond lost weight because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_7')">Every wound is an Aspergillus entry — aflatoxin doors</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Termites improve flavour</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Buyers prefer holes</button>
+<div class="q-exp" id="exp4_7"><strong>Why:</strong> Damaged shells breach the pod's armour. Late harvest in termite country is a double error: more damage, more mould — one more argument for lifting on time.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Rosette roguing works best:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_8')">Early, while infected plants are few — each is an aphid virus-fountain</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">After harvest</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">Never</button>
+<div class="q-exp" id="exp4_8"><strong>Why:</strong> One rosette plant infects the aphids that infect the field. Pulling the first few cases is epidemic control at the cost of a short walk.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Fungicide against leaf spots, where justified, starts:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_9')">When first spots appear around flowering, 2–3 sprays per local recommendation</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Daily from planting</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">After all leaves have fallen</button>
+<div class="q-exp" id="exp4_9"><strong>Why:</strong> Sprays protect leaves that still exist. First-spot timing plus resistant varieties and debris sanitation is the economical programme; spraying a defoliated crop is paying for the past.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Old groundnut debris and volunteer plants near new fields:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_10')">House the leaf-spot spores and rosette bridge — destroy them</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Are protective charms</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Improve soil instantly</button>
+<div class="q-exp" id="exp4_10"><strong>Why:</strong> Last season's diseases wait in last season's remains. Field sanitation between crops is the free spray of this crop, exactly as it was in potato and yam.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn4" onclick="markComplete(4)">Mark Month 4 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="5">
+    <div class="module-header" onclick="toggleModule(5)">
+      <div class="module-num">5</div>
+      <div class="module-title">Month 5: Shell-Test Harvest, Drying &amp; Sorting</div>
+      <div class="module-status" id="status5">Locked</div>
+    </div>
+    <div class="module-body" id="body5">
+
+      <h3>Lesson 5.1 — The maturity test: open pods, read shells</h3>
+      <p>Groundnut hides its harvest date underground; the calendar only estimates it. From the expected window onward, <strong>lift 3–5 sample plants weekly and open pods</strong>:</p>
+      <ul>
+        <li><strong>Ready:</strong> ~70%+ of pods with the <strong>inside shell wall darkened</strong> (brown-black veining/blotching), kernels plump, filling the shell, skins coloured for the variety.</li>
+        <li><strong>Too early:</strong> white inner shells, watery pale kernels — light pods, poor oil, poor grades.</li>
+        <li><strong>Too late:</strong> pegs rotting, pods detaching in the ground (lost at lifting), Spanish types sprouting if rains linger, and aflatoxin risk climbing daily.</li>
+      </ul>
+      <h3>Lesson 5.2 — Lifting and the windrow cure</h3>
+      <ol>
+        <li>Lift with hoe or fork entering BESIDE the row, loosening under the pod zone, pulling plants gently so pods come attached; hand-glean the row for detached pods — in good ground gleaning recovers 5–10% of the crop.</li>
+        <li>Shake soil off. <strong>Never leave lifted plants flat on wet soil.</strong></li>
+        <li><strong>Windrow/stook to dry, pods UP:</strong> invert small bundles so pods face sun and air with foliage beneath, or build small A-frame stooks/racks (the 'Mandela cock' style stack in Southern Africa) — pods off the ground, air moving through. Field-dry 3–7 days by weather.</li>
+        <li>Then strip/pluck pods from haulms; stack haulms as hay (Module 3's second harvest); finish pod drying on mats, tarpaulins or raised racks — <strong>never directly on bare soil</strong> — turning daily.</li>
+      </ol>
+      <div class="warn-box"><strong>The drying target is not negotiable: pods to ~10% moisture, kernels ~7–8%, in days not weeks.</strong> The rattle test: dry pods rattle when shaken and kernels snap, not bend. Slow drying in heaps, on damp soil, or under rain showers is the second and biggest aflatoxin door. Fast, off-ground, well-turned drying is the single most protective act in the groundnut year.</div>
+      <h3>Lesson 5.3 — Sorting: the aflatoxin checkpoint you control</h3>
+      <p>Before storage or sale, hand-sort and discard: mouldy, discoloured, shrivelled, insect-holed and broken-shell pods (and later, at any shelling, the same classes of kernels). Research across Africa shows <strong>sorting alone removes the large majority of aflatoxin</strong> from a farm lot, because the toxin concentrates in exactly the damaged fraction. Sorted rejects go to disposal — <strong>not into home food, and not quietly into livestock feed</strong> (aflatoxin passes into milk and harms animals too).</p>
+      <h3>Lesson 5.4 — Storage</h3>
+      <ul>
+        <li>Store <strong>in the shell</strong> — the pod protects kernels from insects, damage and moisture swings. Shell only for sale, processing or seed.</li>
+        <li>Dry pods in clean woven sacks on pallets/racks in a dry, ventilated, rodent-proofed store; hermetic bags (your Beans-course technology) work excellently for shelled kernels and seed stock.</li>
+        <li>Inspect monthly; any musty smell or visible mould means re-dry and re-sort immediately.</li>
+        <li>Well-stored in-shell groundnut holds quality 6–10 months — carrying you from glut prices to the lean-season and festive peaks.</li>
+      </ul>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> The darkened-shell test, windrow curing, and the sorting table &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 5:</strong> From your expected maturity window, lift 3–5 sample plants weekly, opening ten pods per sample and recording the percentage with darkened inner shells until you cross ~70% and lift the plot. Windrow pods-up, then finish drying on mats/racks, recording days to the rattle test. Hand-sort the dried harvest, weighing accepts and rejects (compare reject rates and pops between your gypsum and no-gypsum halves). Stack haulms as hay and weigh them. Store accepts in-shell in sacks on a pallet.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 5 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Groundnut maturity is read by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_1')">Opening sample pods — ~70%+ showing darkened inner shell walls with plump kernels</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">The calendar alone</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Vine height</button>
+<div class="q-exp" id="exp5_1"><strong>Why:</strong> The inner-shell darkening is the crop's own gauge. Weekly sample lifts from the expected window replace guesswork with evidence — and set the date that controls both yield and aflatoxin.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Harvesting too late risks:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_2')">Pods detaching underground, Spanish types sprouting in rain, and climbing aflatoxin</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Nothing at all</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Prettier pods</button>
+<div class="q-exp" id="exp5_2"><strong>Why:</strong> Over-maturity breaks the peg's grip (pods stay in the soil), wakes non-dormant seed, and extends the stressed-pod window Aspergillus loves. Late is the expensive direction to miss.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Windrows and stooks are arranged:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_3')">Pods UP, off the wet soil, air moving through</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">Pods buried downward in damp earth</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">In sealed plastic immediately</button>
+<div class="q-exp" id="exp5_3"><strong>Why:</strong> Inverted bundles and A-frame stooks give pods sun and airflow while foliage sheds rain — field engineering that starts the fast-drying clock the moment lifting ends.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. The drying targets are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_4')">Pods ~10% moisture, kernels 7–8%, reached in days — the rattle-and-snap test</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">30% moisture in a month</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">No target exists</button>
+<div class="q-exp" id="exp5_4"><strong>Why:</strong> Fast to dry equals safe to store: rattle-dry pods and snap-dry kernels close the biggest aflatoxin door. Heaps, bare soil and rain-slowed drying leave it open.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Final pod drying happens on:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_5')">Mats, tarpaulins or raised racks — never bare soil — turned daily</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">Bare damp earth</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">The road</button>
+<div class="q-exp" id="exp5_5"><strong>Why:</strong> Soil contact rewets pods and hands them back to soil fungi. The mat/rack rule costs almost nothing and is standard in every premium and export supply chain.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Hand-sorting before storage or sale:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_6')">Removes the large majority of aflatoxin, which concentrates in damaged/mouldy pods</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">Is decorative</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">Adds toxin</button>
+<div class="q-exp" id="exp5_6"><strong>Why:</strong> The toxin rides the visibly bad fraction. Sorting is the one checkpoint fully in the farmer's hands — and the difference between a rejected lot and a premium one.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Sorted mouldy rejects should go:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_7')">To disposal — never into home food and never quietly into livestock feed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Into the children's porridge</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Into dairy feed</button>
+<div class="q-exp" id="exp5_7"><strong>Why:</strong> Aflatoxin harms livestock and passes into milk — feeding rejects moves the poison, not removes it. Disposal is the honest end of the sorting line.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Groundnut stores best:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_8')">In the shell, in sacks on pallets in a dry ventilated store — shelled only for sale, processing or seed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Shelled and damp in a pit</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">In an open heap outdoors</button>
+<div class="q-exp" id="exp5_8"><strong>Why:</strong> The pod is armour against insects and moisture swings. In-shell storage plus monthly inspection holds quality 6–10 months — long enough to reach the season's best prices.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Gleaning the lifted row by hand recovers:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_9')">Commonly 5–10% of the crop as detached pods</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Nothing worth bending for</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Only stones</button>
+<div class="q-exp" id="exp5_9"><strong>Why:</strong> Pods that snapped off at lifting are money lying in loosened soil. The gleaning pass — often children's traditional work turned honest wage — pays better per hour than most field tasks.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Haulms after pod stripping are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_10')">Cured and stacked as premium hay — the second harvest</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Burned where they lie always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Left to rot on the pods</button>
+<div class="q-exp" id="exp5_10"><strong>Why:</strong> Module 3's promise collected: protein-rich groundnut hay feeds or sells. Stripping pods promptly and stacking haulms dry captures both harvests instead of losing one to the other.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn5" onclick="markComplete(5)">Mark Month 5 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="6">
+    <div class="module-header" onclick="toggleModule(6)">
+      <div class="module-num">6</div>
+      <div class="module-title">Month 6: Markets, Peanut Butter &amp; the Business Plan</div>
+      <div class="module-status" id="status6">Locked</div>
+    </div>
+    <div class="module-body" id="body6">
+
+      <h3>Lesson 6.1 — Five ways to sell a groundnut</h3>
+      <table>
+        <tr><th>Channel</th><th>What it pays for</th><th>Notes</th></tr>
+        <tr><td>In-shell at harvest</td><td>Volume, speed</td><td>Glut prices; use for cash-flow needs only</td></tr>
+        <tr><td>Stored in-shell to the lean season</td><td>Patience + dry storage</td><td>Price rises of 30–80% are common across the year</td></tr>
+        <tr><td>Shelled, sorted kernels</td><td>Grading labour</td><td>Bold clean kernels earn a step above pod price per kg equivalent; sorting waste already removed</td></tr>
+        <tr><td><strong>Processing: roasted nuts, peanut butter, oil + cake</strong></td><td>Value addition</td><td>Peanut butter commonly retails at 2–3&times; the kernel cost it contains; small motorised/hand mills are accessible; oil pressing pairs with selling the protein cake as feed</td></tr>
+        <tr><td>Premium/aflatoxin-conscious buyers</td><td>Documented good practice</td><td>Exporters, processors and programmes increasingly test lots; your drying-and-sorting discipline becomes a certificate-shaped price premium</td></tr>
+      </table>
+      <h3>Lesson 6.2 — An honest one-hectare budget</h3>
+      <table>
+        <tr><th>Item</th><th>Assumption</th><th>Amount</th></tr>
+        <tr><td>Yield</td><td>Improved rosette-resistant seed, dense early stand, timely lift</td><td>~1,800 kg pods (+ haulm hay)</td></tr>
+        <tr><td>Gross — pods</td><td>blended in-shell/kernel sales across the curve ($0.35–0.70/kg pod-equivalent range)</td><td>~$800–1,100</td></tr>
+        <tr><td>Gross — haulms</td><td>hay sold or fed (valued)</td><td>~$100–200</td></tr>
+        <tr><td>Seed (70–90 kg kernels)</td><td>improved variety; self-saved from season two</td><td>$90–160</td></tr>
+        <tr><td>SSP + gypsum + dressing</td><td>the groundnut-specific input set</td><td>$60–130</td></tr>
+        <tr><td>Labour peaks + sundries</td><td>planting, 2 weedings, lifting/stripping (the big one), mats/sacks, transport</td><td>$180–320</td></tr>
+        <tr><td><strong>Indicative margin</strong></td><td>≈4 months, before value addition</td><td><strong>~$550–850/ha — rising steeply with storage timing and peanut-butter processing</strong></td></tr>
+      </table>
+      <h3>Lesson 6.3 — The peanut butter startup</h3>
+      <p>The most accessible value-add in this course: roast (drum or pan, even and light — burnt is bitter, under-roasted is flat), blanch/rub skins off, mill to butter (hand or small motor mill; two passes for smoothness), a pinch of salt, into clean jars/tubs. Start-up gear from a few hundred dollars; sell to shops, schools and households. Two absolute rules: <strong>only sorted clean kernels ever enter the roaster</strong> (aflatoxin concentrates in butter made from rejects — the toxin does not roast away), and taste-test every batch. Your Module 5 discipline is literally the brand.</p>
+      <h3>Lesson 6.4 — Records, seed saving and the growth path</h3>
+      <p>Per plot per season: variety and seed source; planting date and stand count at 3 weeks; weeding/gypsum/spray dates; lifting date with the shell-test evidence; pod and haulm weights; drying days to rattle; sorting reject percentage; storage checks; sales by date, form, price. <strong>Report card: stand density, days-to-dry, and reject percentage</strong> — the three numbers that predict both yield and safety. Save seed from your best plot in-shell, sorted, hermetically if shelled. Growth path: year one — one well-run hectare plus hay income; year two — storage timing plus shelling/grading; year three — peanut butter or oil-and-cake processing, and the documented-quality premium channels.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> From sack to jar — the peanut butter startup walkthrough &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 6:</strong> Build the one-hectare budget from your real recorded costs and local prices, in two scenarios: all sold in-shell at harvest, versus stored/graded blended sales using your Month-1 price calendar. Make a trial batch of peanut butter from your own sorted kernels (roast, skin, mill — even with a borrowed mill), cost it per jar against shop prices, and get three people's taste feedback. Conclude with one paragraph choosing your year-one channel mix and your processing decision.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 6 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Across the year, stored in-shell groundnut prices commonly rise:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_1')">30–80% above harvest-glut prices</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">Never</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">By 1%</button>
+<div class="q-exp" id="exp6_1"><strong>Why:</strong> The storage curve appears one more time: dry pods in a dry store are the machine that moves the same tonnage to a better month. In-shell storage makes it easy and safe.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Peanut butter typically retails at:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_2')">2–3× the cost of the kernels in it</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Below kernel cost</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Exactly kernel cost</button>
+<div class="q-exp" id="exp6_2"><strong>Why:</strong> Roasting and milling are simple, cheap and hugely value-adding — the most accessible processing startup in this course, with equipment from a few hundred dollars.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. The absolute rule of the peanut-butter roaster is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_3')">Only sorted clean kernels enter — aflatoxin concentrates in butter and does not roast away</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Rejects make the best butter</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Sorting is optional</button>
+<div class="q-exp" id="exp6_3"><strong>Why:</strong> Heat does not destroy the toxin; grinding rejects distributes it into every jar. The processor's brand IS the field-and-yard discipline of Modules 4 and 5.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. The three report-card numbers for groundnut are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_4')">Stand density, days-to-dry, and sorting reject percentage</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Vine colour, cloud cover, luck</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Jar label font</button>
+<div class="q-exp" id="exp6_4"><strong>Why:</strong> Density predicts yield and rosette safety; drying speed and reject rate predict aflatoxin safety and grade. Three numbers, most of the story.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Groundnut seed is best self-saved:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_5')">In-shell from your best sorted plot, shelled gently just before planting</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">Shelled and left in sunlight for months</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">From the mouldiest pods</button>
+<div class="q-exp" id="exp6_5"><strong>Why:</strong> Module 2's rules close the loop: the shell protects viability, sorting protects health, and late hand-shelling delivers living seed — self-supply from season two.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Selling bold sorted kernels rather than unsorted pods earns:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_6')">A price step up, since grading labour and waste removal are already done</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">Less money always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">The same</button>
+<div class="q-exp" id="exp6_6"><strong>Why:</strong> Buyers pay for work they no longer must do. Shelling and grading are wage-earning tasks in the slack season that lift the same crop into a better price class.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Documented drying-and-sorting practice increasingly earns:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_7')">Premiums from exporters, processors and programmes that test for aflatoxin</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Nothing anywhere</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Penalties</button>
+<div class="q-exp" id="exp6_7"><strong>Why:</strong> As testing spreads through African value chains, the farmer whose records and practices pass becomes the preferred supplier — safety discipline converted into a standing price advantage.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Oil pressing pairs naturally with:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_8')">Selling the protein-rich cake as livestock feed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Discarding the cake</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Burning the oil</button>
+<div class="q-exp" id="exp6_8"><strong>Why:</strong> Pressing splits the kernel into two products: oil for the kitchen market and cake for the feed market — including your own pigs and poultry via the companion courses.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. The haulm/hay line in the budget:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_9')">Adds ~$100–200/ha and should always be captured, fed or sold</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Is fictional</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Reduces income</button>
+<div class="q-exp" id="exp6_9"><strong>Why:</strong> The second harvest pays a meaningful share of costs for the work of stacking what lifting already produced. Leaving haulms to rot is leaving wages in the field.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. The recommended growth path is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_10')">Well-run hectare + hay → storage timing + grading → processing and premium channels</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Buy a factory before growing a crop</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Skip records forever</button>
+<div class="q-exp" id="exp6_10"><strong>Why:</strong> Each year's step funds and de-risks the next: agronomy first, marketing second, processing third — with the aflatoxin discipline running through all three as the non-negotiable spine.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn6" onclick="markComplete(6)">Mark Month 6 Complete</button>
+    </div>
+  </div>
+
+  <div class="final-section">
+    <h2>&#127942; Final Project: Your Groundnut Business Plan</h2>
+    <p>The final project is your complete groundnut enterprise plan — agronomy, safety discipline and market strategy in one funded, dated document.</p>
+    <ol><li><strong>Market and variety case:</strong> chosen type and rosette-resistant variety, maturity-days match to your rain window, and your price calendar with target channels.</li>
+<li><strong>Seed and stand plan:</strong> seed source, in-shell storage and late-shelling routine, germination result, seed rate, spacing and the dense-early commitment with its double justification.</li>
+<li><strong>Field calendar:</strong> planting window, both weedings and the final earthing-up dated before the pegging cutoff, gypsum application, and the hands-off period marked explicitly.</li>
+<li><strong>Plant-health and field-aflatoxin page:</strong> the rosette stack, leaf-spot thresholds and spray decision, pod-damage risks, and stress-management commitments — written as rules with dates.</li>
+<li><strong>Harvest-to-store chain:</strong> shell-test protocol, lifting and gleaning plan, windrow and rack drying arrangements with the days-to-rattle target, sorting standards and reject disposal rule, in-shell storage setup and inspection schedule.</li>
+<li><strong>Budget and cash-flow:</strong> the full hectare budget in local prices, two sales scenarios, the haulm-hay line, and the peanut-butter (or oil-and-cake) processing case with equipment costs if chosen.</li>
+<li><strong>Risk page and year-3 vision:</strong> three risks with mitigations, and the staged path — storage and grading in year two, processing and documented-quality premium channels in year three.</li></ol>
+    <p><strong>Submission standard:</strong> A plan you could hand to a savings group, a bank officer, or a family investor without embarrassment. Real local prices, real named buyers, honest risks.</p>
+  </div>
+
+  <div class="budget-section">
+    <h2>&#128176; Startup Budget &mdash; 1 Hectare + Drying/Sorting Setup (+ Optional Peanut Butter Startup)</h2>
+    <p>Groundnut's budget is dominated by seed and the lifting/stripping labour peak; its returns are dominated by drying speed, sorting honesty and sales timing. The optional processing line turns the same harvest into a retail product at 2–3× kernel value. Family labour reduces the cash figures.</p>
+    <table>
+      <tr><th>Item</th><th>Details</th><th>Typical cost (USD)</th></tr>
+<tr><td>Seed (70–90 kg improved kernels)</td><td>Rosette-resistant variety; self-saved from season two</td><td>$90–160</td></tr>
+<tr><td>Land preparation</td><td>Ploughing/digging to fine tilth, ridging where used</td><td>$60–130</td></tr>
+<tr><td>SSP at planting + gypsum at flowering</td><td>The groundnut-specific input pair (+ seed dressing)</td><td>$60–130</td></tr>
+<tr><td>Planting &amp; weeding labour</td><td>Dense planting, two weedings + earthing-up</td><td>$60–140</td></tr>
+<tr><td>Optional leaf-spot sprays</td><td>2–3 applications where pressure justifies</td><td>$25–70</td></tr>
+<tr><td>Lifting, stripping &amp; gleaning labour</td><td>The season's big labour peak</td><td>$80–160</td></tr>
+<tr><td>Drying &amp; storage gear</td><td>Mats/tarpaulins or racks, sacks, pallet, sorting basins</td><td>$40–100</td></tr>
+<tr><td>Transport &amp; market costs</td><td></td><td>$30–80</td></tr>
+<tr><td>Contingency (10%)</td><td></td><td>$45–100</td></tr>
+<tr><td><strong>Core total</strong></td><td>Revenue in ~4 months + haulm hay</td><td><strong>$490–1,070</strong></td></tr>
+<tr><td>Optional: peanut butter startup</td><td>Roasting drum/pans, mill (hand or small motor), jars, labels, licence where required</td><td>$200–600</td></tr>
+    </table>
+    <p><em>Prices vary widely by country. Before spending anything, price every line in your own town and rebuild this table — that exercise is part of your final project.</em></p>
+  </div>
+
+  <div class="glossary-section">
+    <h2>&#128218; Glossary</h2>
+    <dl class="glossary">
+<dt>Peg (gynophore)</dt><dd>The stalk a fertilised groundnut flower drives into the soil; the pod forms at its underground tip.</dd>
+<dt>Pegging law</dt><dd>This course's rule: weed clean before flowering ends, then no deep soil work near rows — broken pegs are deleted pods.</dd>
+<dt>Pops</dt><dd>Empty pods from calcium deficiency in the podding zone — prevented by gypsum or lime on sour soils.</dd>
+<dt>Gypsum</dt><dd>Calcium sulphate dusted over rows at early flowering, feeding calcium directly to where pods form.</dd>
+<dt>Spanish/bunch types</dt><dd>Erect, shorter-season groundnuts with clustered pods and little seed dormancy.</dd>
+<dt>Virginia/runner types</dt><dd>Spreading, longer-season, higher-potential types with fresh-seed dormancy.</dd>
+<dt>Rosette</dt><dd>Africa's aphid-borne groundnut virus complex; stunted bunched plants yielding nothing — beaten by resistant varieties planted early and dense.</dd>
+<dt>Leaf spots &amp; rust</dt><dd>The defoliating fungal 'slow thieves'; managed by resistance, sanitation, rotation and timed sprays.</dd>
+<dt>Aflatoxin</dt><dd>The invisible Aspergillus toxin following stress, damage, slow drying and damp storage; controlled by the field-to-store discipline chain.</dd>
+<dt>Shell test</dt><dd>Opening sample pods to read maturity: ~70%+ darkened inner shell walls means lift.</dd>
+<dt>Windrow / stook</dt><dd>Field-drying arrangements with pods up and off the soil, air moving through.</dd>
+<dt>Rattle test</dt><dd>Dry enough to store: pods rattle when shaken, kernels snap rather than bend (~10% / 7–8% moisture).</dd>
+<dt>Gleaning</dt><dd>Hand-recovering pods detached at lifting — commonly 5–10% of the crop.</dd>
+<dt>Haulms / groundnut hay</dt><dd>The protein-rich vines after pod stripping — premium fodder, the second harvest.</dd>
+<dt>Sorting</dt><dd>Removing mouldy, damaged and shrivelled pods/kernels — the checkpoint removing most aflatoxin from a lot.</dd>
+<dt>Press cake</dt><dd>The protein-rich residue after oil pressing, sold as livestock feed.</dd>
+    </dl>
+  </div>
+
+  <div class="resources-section">
+    <h2>&#128279; Further Resources</h2>
+    <ul><li>ICRISAT — the international groundnut research institute: free African guides on rosette-resistant varieties, aflatoxin management and seed systems.</li>
+<li>Your national legumes/oilseeds programme and extension office — released varieties with rosette resistance and maturity days, plus certified seed sources.</li>
+<li>IITA and national aflatoxin programmes (including Aflasafe biocontrol where registered in your country) — field-level aflatoxin reduction options and buyer requirements.</li>
+<li>Local processors, exporters and school-feeding programmes — the aflatoxin-conscious premium buyers; ask for their specs and testing rules early.</li>
+<li>Rise Africa Skills companion courses: Beans &amp; Legumes (hermetic storage and germination testing), Maize (the rotation partner), Piggery &amp; Poultry (press cake and haulm feeding), Solar Drying (rack drying discipline).</li></ul>
+  </div>
+
+  <div class="cert-section">
+    <h2>&#127891; Course Completion</h2>
+    <p>Complete all 6 months and pass the quizzes to unlock your certificate.</p>
+    <a href="certificate.html?course=Groundnut%20Farming" class="cert-btn" id="certBtn" disabled>Get Certificate</a>
+  </div>
+</div>
+<script>
+  const TOTAL_MODULES = 6;
+  const COURSE_KEY = 'groundnut-farming';
+  let completed = JSON.parse(localStorage.getItem(COURSE_KEY + '_progress') || '[]');
+
+  function toggleModule(n) {
+    if (n > 1 && !completed.includes(n-1)) { alert('Complete Month ' + (n-1) + ' first.'); return; }
+    document.getElementById('body' + n).classList.toggle('active');
+  }
+  function answerQ(btn, isCorrect, expId) {
+    const parent = btn.parentElement;
+    const buttons = parent.querySelectorAll('.q-opt');
+    if (buttons[0].disabled) return;
+    buttons.forEach(b => { b.disabled = true; });
+    if (isCorrect) { btn.classList.add('correct'); }
+    else {
+      btn.classList.add('wrong');
+      buttons.forEach(b => { if (b.dataset.c === '1') b.classList.add('correct'); });
+    }
+    document.getElementById(expId).classList.add('show');
+    const quiz = btn.closest('.quiz-wrap');
+    quiz.dataset.answered = (parseInt(quiz.dataset.answered||'0') + 1);
+    quiz.dataset.score = (parseInt(quiz.dataset.score||'0') + (isCorrect ? 1 : 0));
+    if (parseInt(quiz.dataset.answered) >= parseInt(quiz.dataset.total)) {
+      const s = quiz.querySelector('.quiz-score');
+      s.textContent = 'Quiz result: ' + quiz.dataset.score + ' / ' + quiz.dataset.total + (parseInt(quiz.dataset.score) >= 7 ? ' — Pass. Well done!' : ' — Below 7/10. Re-read the module, then review your wrong answers.');
+    }
+  }
+  function markComplete(n) {
+    if (!completed.includes(n)) {
+      completed.push(n); completed.sort((a,b)=>a-b);
+      localStorage.setItem(COURSE_KEY + '_progress', JSON.stringify(completed));
+    }
+    updateUI();
+  }
+  function updateUI() {
+    document.getElementById('completedCount').textContent = completed.length;
+    document.getElementById('progressBar').style.width = (completed.length/TOTAL_MODULES*100) + '%';
+    for (let i=1; i<=TOTAL_MODULES; i++) {
+      const st = document.getElementById('status'+i), btn = document.getElementById('btn'+i);
+      if (completed.includes(i)) { st.textContent='Done'; st.classList.add('done'); if(btn){btn.textContent='Completed'; btn.disabled=true;} }
+      else if (i===1 || completed.includes(i-1)) { st.textContent='Start'; }
+      else { st.textContent='Locked'; }
+    }
+    if (completed.length >= TOTAL_MODULES) {
+      const c = document.getElementById('certBtn');
+      c.removeAttribute('disabled'); c.textContent = 'Get Your Certificate!';
+    }
+  }
+  updateUI();
+</script>
+</body>
+</html>

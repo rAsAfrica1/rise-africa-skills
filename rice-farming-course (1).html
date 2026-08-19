@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Rice Farming - A complete practical course from Rise Africa Skills. Learn offline, anytime.">
+<title>Rice Farming | Rise Africa Skills</title>
+<style>
+  :root { --gold:#eab308; --gold-dark:#a16207; --green:#16a34a; --bg:#0f172a; --card:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --line:#334155; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:var(--bg); color:var(--text); line-height:1.65; }
+  header { background:linear-gradient(135deg,var(--gold-dark) 0%,#713f12 100%); padding:44px 20px; text-align:center; }
+  header h1 { font-size:2rem; margin-bottom:8px; }
+  header p { color:rgba(255,255,255,0.88); max-width:640px; margin:0 auto; }
+  .badge { display:inline-block; background:var(--gold); color:#1e293b; padding:4px 14px; border-radius:20px; font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-top:12px; letter-spacing:0.4px; }
+  .container { max-width:920px; margin:0 auto; padding:30px 20px; }
+  .progress-bar { background:var(--card); border-radius:10px; height:10px; margin-bottom:28px; overflow:hidden; }
+  .progress-fill { background:var(--gold); height:100%; width:0%; border-radius:10px; transition:width .4s ease; }
+  .overview { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-bottom:26px; }
+  .overview h2 { color:var(--gold); font-size:1.15rem; margin-bottom:10px; }
+  .overview ul { margin:8px 0 14px 20px; color:var(--muted); }
+  .overview li { margin:5px 0; }
+  .meta-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+  .meta-chip { background:#0b1220; border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:0.85rem; color:var(--muted); }
+  .meta-chip b { color:var(--text); }
+  .module { background:var(--card); border-radius:12px; margin-bottom:16px; overflow:hidden; border:1px solid var(--line); }
+  .module-header { padding:18px 22px; cursor:pointer; display:flex; align-items:center; gap:14px; transition:background .2s; }
+  .module-header:hover { background:#26354a; }
+  .module-num { background:var(--gold); color:#1e293b; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0; }
+  .module-title { flex:1; font-weight:600; }
+  .module-status { font-size:0.75rem; padding:4px 10px; border-radius:12px; background:var(--line); color:var(--muted); white-space:nowrap; }
+  .module-status.done { background:var(--green); color:#fff; }
+  .module-body { display:none; padding:0 22px 24px; border-top:1px solid var(--line); }
+  .module-body.active { display:block; }
+  .module-body p { color:var(--muted); margin:13px 0; }
+  .module-body ul, .module-body ol { margin:10px 0 10px 22px; color:var(--muted); }
+  .module-body li { margin:6px 0; }
+  .module-body strong { color:var(--text); }
+  .module-body h3 { color:var(--gold); font-size:1.05rem; margin:22px 0 4px; }
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.88rem; }
+  th { background:#0b1220; color:var(--gold); text-align:left; padding:9px 10px; border:1px solid var(--line); }
+  td { padding:8px 10px; border:1px solid var(--line); color:var(--muted); vertical-align:top; }
+  tr:nth-child(even) td { background:#1a2537; }
+  .tip-box { background:rgba(234,179,8,0.08); border-left:4px solid var(--gold); padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .tip-box strong { color:var(--gold); }
+  .warn-box { background:rgba(239,68,68,0.08); border-left:4px solid #ef4444; padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .warn-box strong { color:#f87171; }
+  .assign-box { background:#0b1220; border:1px dashed var(--gold-dark); border-radius:10px; padding:16px 18px; margin:16px 0; color:var(--muted); }
+  .assign-box strong { color:var(--gold); }
+  .video-box { background:#0b1220; border:1px solid var(--line); border-radius:10px; padding:14px 18px; margin:16px 0; color:var(--muted); font-size:0.9rem; }
+  .quiz-wrap { background:#0b1220; border:1px solid var(--line); border-radius:12px; padding:20px; margin-top:20px; }
+  .quiz-wrap h3 { margin-top:0 !important; }
+  .q-block { margin:16px 0; padding-bottom:14px; border-bottom:1px solid #1e293b; }
+  .q-block:last-child { border-bottom:none; }
+  .q-text { font-weight:600; color:var(--text); margin-bottom:8px; }
+  .q-opt { display:block; width:100%; text-align:left; padding:9px 13px; margin:5px 0; background:var(--card); border:1px solid #475569; border-radius:8px; color:var(--text); cursor:pointer; transition:all .2s; font-size:0.9rem; }
+  .q-opt:hover { border-color:var(--gold); }
+  .q-opt.correct { background:#14532d; border-color:var(--green); }
+  .q-opt.wrong { background:#7f1d1d; border-color:#ef4444; }
+  .q-exp { display:none; margin-top:8px; padding:10px 13px; background:rgba(234,179,8,0.07); border-left:3px solid var(--gold); border-radius:0 6px 6px 0; color:var(--muted); font-size:0.87rem; }
+  .q-exp.show { display:block; }
+  .quiz-score { margin-top:12px; font-weight:700; color:var(--gold); }
+  .check-btn { background:var(--gold); color:#1e293b; border:none; padding:11px 26px; border-radius:8px; font-weight:700; cursor:pointer; margin-top:16px; transition:background .2s; }
+  .check-btn:hover { background:#facc15; }
+  .check-btn:disabled { opacity:0.5; cursor:not-allowed; }
+  .final-section, .budget-section, .glossary-section, .resources-section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-top:26px; }
+  .final-section h2, .budget-section h2, .glossary-section h2, .resources-section h2 { color:var(--gold); font-size:1.2rem; margin-bottom:10px; }
+  .final-section p, .budget-section p, .resources-section p { color:var(--muted); margin:10px 0; }
+  .final-section ol, .resources-section ul { margin:10px 0 10px 22px; color:var(--muted); }
+  .final-section li, .resources-section li { margin:6px 0; }
+  dl.glossary dt { color:var(--text); font-weight:700; margin-top:12px; }
+  dl.glossary dd { color:var(--muted); margin-left:0; font-size:0.92rem; }
+  .cert-section { text-align:center; padding:40px 20px; background:var(--card); border-radius:16px; margin-top:30px; border:1px solid var(--line); }
+  .cert-section h2 { margin-bottom:10px; }
+  .cert-section p { color:var(--muted); margin-bottom:20px; }
+  .cert-btn { background:var(--gold); color:#1e293b; border:none; padding:14px 36px; border-radius:10px; font-size:1rem; font-weight:800; cursor:pointer; text-decoration:none; display:inline-block; }
+  .cert-btn[disabled] { opacity:0.4; pointer-events:none; }
+  .nav-bar { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:var(--card); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:100; }
+  .nav-bar a { color:var(--text); text-decoration:none; font-weight:600; }
+  .nav-bar a:hover { color:var(--gold); }
+  .completion-count { color:var(--muted); font-size:0.9rem; }
+  @media (max-width:600px){ header h1{font-size:1.5rem;} .module-header{padding:14px 16px;} .module-body{padding:0 16px 18px;} table{font-size:0.8rem;} th,td{padding:6px 7px;} }
+</style>
+</head>
+<body>
+<nav class="nav-bar">
+  <a href="index.html">&#8592; Back to Courses</a>
+  <span class="completion-count"><span id="completedCount">0</span> / 6 months completed</span>
+</nav>
+<header>
+  <div class="badge">Agriculture &middot; 6-Month Program</div>
+  <h1>Rice Farming</h1>
+  <p>Africa's fastest-growing staple — water as the non-negotiable input, the nursery foundation, puddling discipline, panicle-initiation yield bottleneck, hard-maturity harvest, and the three sale channels from household to regional export.</p>
+</header>
+<div class="container">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+
+  <div class="overview">
+    <h2>Course Overview</h2>
+    <p style="color:var(--muted);">Rice is Africa's fastest-growing staple — consumption climbing faster than any other cereal, booming in West Africa and just starting in East Africa, with a real open market for smallholders who control water. This course teaches rainfed-lowland and irrigated rice as a water-management crop, not a rain-dependent accident. The foundations: the nursery (20–30 days, weed-free, ready to transplant by the finger test), puddling (the flooded ploughing that levels and seals the field), and the transplant into 5–10 cm standing water at 20×20 cm spacing, 3–5 seedlings per hill. Then the water calendar — the panicle-initiation bottleneck (~55–80 days where drought kills grains-per-panicle forever), the mid-season 2–3 week drain for soil firming and nitrogen uptake, reflooding for panicle stability, and the final drain from boot through maturity. Harvest is hard maturity (R9, hard grain, golden straw), the drying discipline (12–14%, never over), storage science (grain vs hermetic seed stock), and three sale channels from household through local trader to export-spec regional buyers with grade premiums that pay for every quality decision made months earlier.</p>
+    <h2 style="margin-top:16px;">What You Will Learn</h2>
+    <ul><li>Choose rainfed lowland, irrigated, or upland rice by water reality and market destination</li>
+<li>Understand varieties: short-grain sticky (food), long-grain fluffy (trade), hybrids (yield), OPVs (saveability)</li>
+<li>Establish the perfect nursery: protected, weed-free, ready to transplant at the finger test</li>
+<li>Master puddling, flooding, bunding and water maintenance through all six growth stages</li>
+<li>Identify the panicle-initiation bottleneck and manage the mid-season drain-refood window</li>
+<li>Fight weeds, stem borers, blast disease and other pests with water-aware, variety-led strategies</li>
+<li>Harvest at hard maturity, dry to 12–14%, and separate grain from seed stocks</li>
+<li>Understand milling recovery, head-rice premium and the three sale channels to price premium</li></ul>
+    <div class="meta-row">
+      <div class="meta-chip"><b>Duration:</b> 6 months, one module per month</div>
+      <div class="meta-chip"><b>Level:</b> Beginner &rarr; Job-ready</div>
+      <div class="meta-chip"><b>Units:</b> Metric with imperial where useful</div>
+      <div class="meta-chip"><b>Final project:</b> Your own business plan</div>
+    </div>
+  </div>
+
+  <div class="module" data-module="1">
+    <div class="module-header" onclick="toggleModule(1)">
+      <div class="module-num">1</div>
+      <div class="module-title">Month 1: Africa's Rice Boom — Systems &amp; Markets</div>
+      <div class="module-status" id="status1">Start</div>
+    </div>
+    <div class="module-body" id="body1">
+
+      <h3>Lesson 1.1 — Rice is Africa's fastest-growing staple</h3>
+      <p>A decade ago, African rice was an import-dependent sideline. Today it is the fastest-growing staple on the continent: <strong>consumption climbing faster than any other cereal</strong>, driven by urbanisation, rising incomes and the simple fact that rice travels and stores better than maize or sorghum. Production is booming too — but unevenly: West Africa (especially Mali, Senegal, Côte d'Ivoire) leads, while East and Southern Africa still import half or more of what they eat. <strong>This is Africa's open market door.</strong> A smallholder with water control can sell everything she grows, and regional buyers exist to aggregate and mill it.</p>
+      <ul>
+        <li>Season: <strong>90–150 days</strong> depending on type (irrigated vs rainfed, long-grain vs short-grain).</li>
+        <li>Yields: rainfed African average ~1.5 t/ha; irrigated smallholder ~3–5 t/ha; industrial operations higher.</li>
+        <li>Water is the crop's hinge: rice flooded 5–10 cm, well-drained seedbeds for nurseries, and careful bunding/levelling pay dividends.</li>
+        <li>Markets: millers, traders and regional exporters buy in volume — the contract channel is real and growing.</li>
+      </ul>
+      <h3>Lesson 1.2 — Rainfed, irrigated, and the lowland valley play</h3>
+      <table>
+        <tr><th>System</th><th>Character</th><th>Yield / risk</th></tr>
+        <tr><td><strong>Rainfed upland</strong></td><td>Hill and plateau slopes; no standing water; broadcast or line sown like cereals</td><td>~1–1.5 t/ha; drought-prone; smaller total production</td></tr>
+        <tr><td><strong>Rainfed lowland / valley bottoms</strong></td><td>Seasonal waterlogged flats; rice planted in floods; user-managed water, not irrigation</td><td>~2–3.5 t/ha; more stable; the smallholder staple</td></tr>
+        <tr><td><strong>Irrigated (small-scale fed by stream, pond or hand pump)</strong></td><td>Controlled flooding; two crops per year possible; nurseries off-season</td><td>~3–5 t/ha; reliable; capital-intensive (water, bunding, levelling)</td></tr>
+      </table>
+      <h3>Lesson 1.3 — The varieties and markets</h3>
+      <p>Released African rice varieties cluster by maturity and market: <strong>short-grain types</strong> (sticky when cooked, eaten locally, the food security play) and <strong>long-grain</strong> (fluffy, trade grade, better prices). Hybrids (high-yield, fresh seed each year) and OPVs (saveable) both compete. Markets are three-tiered: <strong>household food</strong> (quality matters less), <strong>local trader/miller</strong> (basics: dry, clean), and <strong>export-oriented buyer</strong> (specs tight: grain type, length, breakage, moisture). Knowing your buyer changes variety choice and every downstream decision.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> From import dependency to fast-growing staple — where African rice is headed &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 1:</strong> Map your water reality: identify any nearby source (stream, seasonal flood, hand-pump possibility, rainfall pattern). Research rice prices locally: paddy vs milled, household retail, trader bulk, miller prices — and find out if any regional export scheme exists (some countries run outgrower programmes). Choose: rainfed lowland, irrigated, or upland, with a paragraph of reasons.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 1 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. African rice consumption is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_1')">Climbing faster than any other cereal</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">Flat for decades</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">Declining</button>
+<div class="q-exp" id="exp1_1"><strong>Why:</strong> Urbanisation plus rising incomes drives the boom — and regional production lags demand, making it the continent's open market door.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Irrigated smallholder rice yields reach:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_2')">~3–5 t/ha — several times the rainfed average</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">0.2 t/ha</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">50 t/ha</button>
+<div class="q-exp" id="exp1_2"><strong>Why:</strong> Water control — not genetics — is the yield hinge. The same seed, carefully flooded and levelled, doubles and triples output.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. The fastest-growing rice-producing regions include:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_3')">West Africa (Mali, Senegal, Côte d'Ivoire) leading; East and Southern Africa still importing half their rice</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">Only one tiny valley</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">Australia only</button>
+<div class="q-exp" id="exp1_3"><strong>Why:</strong> West Africa's head start means the knowledge exists; East Africa's boom is just starting — both opportunities for smallholders.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Rainfed lowland / valley-bottom rice yields:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_4')">~2–3.5 t/ha; more stable than upland despite no formal irrigation</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">Nearly zero</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">Infinite always</button>
+<div class="q-exp" id="exp1_4"><strong>Why:</strong> User-managed seasonal floods are NOT irrigation but are far more productive than upland rain alone — the African smallholder's sweet spot.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Irrigated rice can produce:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_5')">Two crops per year if water, land and labour allow</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">One grain per decade</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Nothing</button>
+<div class="q-exp" id="exp1_5"><strong>Why:</strong> The off-season nursery and second planting window multiply returns for the farmer with water discipline — but also multiple weed and pest cycles.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Rice season length is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_6')">90–150 days depending on type (irrigated faster, upland slower)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">Two years minimum</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">One season per lifetime</button>
+<div class="q-exp" id="exp1_6"><strong>Why:</strong> Short-season irrigated varieties finish before the next rainy season — the arithmetic that enables two crops on the same land.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Short-grain rice varieties are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_7')">Sticky when cooked, eaten locally, the food security choice</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">Tough and uncooked</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">Gold</button>
+<div class="q-exp" id="exp1_7"><strong>Why:</strong> Domestic rice culture favours the sticky finish — the household buyer's preference guides the field choice where food security drives the farm.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Long-grain rice is chosen for:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_8')">Trade and export markets preferring the fluffy dried-grain look and price premium</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Household eating only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">No reason</button>
+<div class="q-exp" id="exp1_8"><strong>Why:</strong> A grain-type preference maps to a market: food security = short, commerce = long. Same seed category, opposite destinies.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Rice millers and export buyers want:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_9')">Tight specs: dry, clean, correct length, low breakage — and consistency lot to lot</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">Anything harvested yesterday</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">Imperfection cherished</button>
+<div class="q-exp" id="exp1_9"><strong>Why:</strong> Industrial buyers are where margins live for smallholders — because they pay for reliability. Specs written before planting are the field plan.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Hybrid rice versus OPV:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_10')">Hybrids yield more but need fresh seed yearly; OPVs are saveable 2–3 seasons</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Both eternal</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Hybrids are inferior</button>
+<div class="q-exp" id="exp1_10"><strong>Why:</strong> The seed law again: hybrids for yield push; OPVs for the low-cash entry and adaptation. Honest about the economics and the choice is clear.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn1" onclick="markComplete(1)">Mark Month 1 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="2">
+    <div class="module-header" onclick="toggleModule(2)">
+      <div class="module-num">2</div>
+      <div class="module-title">Month 2: Water: The Nursery, Puddling &amp; Transplant</div>
+      <div class="module-status" id="status2">Locked</div>
+    </div>
+    <div class="module-body" id="body2">
+
+      <h3>Lesson 2.1 — Water: the non-negotiable input</h3>
+      <p>Rice in flood is rice; rice in drought is a failed crop. The water calendar:</p>
+      <ul>
+        <li><strong>Seedbed:</strong> well-drained nursery in a protected corner (broadcast or line-seeded into prepared beds), kept moist but not waterlogged for 20–30 days.</li>
+        <li><strong>Land prep:</strong> puddling (ploughing flooded land into a smooth mud) levels the field for even flooding and kills weeds. Labour-intensive but foundational.</li>
+        <li><strong>Transplanting to flood:</strong> seedlings 20–30 days old, 3–5 per hill, 20×20 cm spacing (adjust for local practice), into 5–10 cm standing water.</li>
+        <li><strong>Maintain flood:</strong> 5–10 cm water depth through tillering and panicle initiation; drain for 2–3 weeks before harvest to firm soil and ready grain.</li>
+        <li><strong>Bunding discipline:</strong> field bunds must hold water without leaks — puddling is also bund-sealing and compaction work.</li>
+      </ul>
+      <h3>Lesson 2.2 — The nursery: where yield begins</h3>
+      <p>A strong nursery — robust, weed-free, disease-free seedlings — is worth its small space. Prepare beds (200 kg compost/manure per bed-metre, fine tilth), sow soaked seed at ~50–100 g/m² (high density thins crowding naturally), keep moist, and weed twice before seedlings are ready to pull. <strong>The "finger test":</strong> seedlings are ready to transplant when you can slide your finger between them easily (no root tangle). Too early and transplanting shock; too late and they sprawl. The nursery is an 1 m² patch: treat it like the foundation it is.</p>
+      <h3>Lesson 2.3 — Fertility and the water bond</h3>
+      <p>Flooded rice soils behave differently: reduced (low-oxygen) conditions, iron and manganese mobilise, nitrogen cycling differs. Strategy: <strong>basal manure/compost (2–3 t/ha worked into puddled soil) + urea split</strong> — half at planting, half at tillering/panicle initiation — beats single applications. P, K and micronutrients are less studied in African flooded rice than in maize; where soils are poor, a compound starter helps. The water itself carries fertility: <strong>if your field floods from upstream paddies or manured areas, you are receiving borrowed fertility — don't waste it by bad water management.</strong></p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> The nursery foundation, flooded ploughing and the 20×20 transplant into flood &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 2:</strong> Prepare a nursery (~5 m²): fine tilth, compost worked in, soak rice seed before sowing at ~80 g/m², keep moist 20–30 days, weed twice. At finger test (day 20–30), pull seedlings and assess: roots, tiller emergence, any disease. Prepare your main field: measure bunding, plan puddling, source compost/manure. If water available, execute puddling or at least one deep cultivation; transplant your nursery seedlings at 20×20 cm, 3–5 per hill into 5–10 cm standing water.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 2 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Seedbed preparation for nurseries is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_1')">Well-drained (not flooded) beds with compost/manure mixed in, kept moist but not waterlogged</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">Flooded permanently like paddies</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">Bone dry always</button>
+<div class="q-exp" id="exp2_1"><strong>Why:</strong> The nursery is a training ground: protected, weed-controlled, disease-watched — a foundation too important for field chaos.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Puddling (ploughing flooded land) serves:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_2')">Levelling, compacting bunds (water-holding), and killing weeds — labour-intensive but foundational</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">Nothing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">Decoration</button>
+<div class="q-exp" id="exp2_2"><strong>Why:</strong> Flooded ploughing is the rice farmer's most important field work: it builds the water-holding infrastructure the crop depends on.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Seedlings are ready to transplant when:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_3')">You can slide your finger between them easily (the finger test) — no root tangle</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">They are 2 years old</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">They begin flowering</button>
+<div class="q-exp" id="exp2_3"><strong>Why:</strong> 20–30 days of nursery life hits the sweet spot: rooted enough for transplant shock survival, young enough to recover fast.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Spacing transplanted seedlings is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_4')">~20×20 cm with 3–5 per hill into 5–10 cm standing water</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">1 metre apart</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">Touching one another</button>
+<div class="q-exp" id="exp2_4"><strong>Why:</strong> The spacing balances tiller emergence (wider spacing = more per plant) and total plants (tighter = more hills). Local practice varies; consistency matters more than dogma.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Standing water depth through the season is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_5')">5–10 cm through tillering and panicle initiation, then drained 2–3 weeks before harvest</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">None ever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">2 metres deep</button>
+<div class="q-exp" id="exp2_5"><strong>Why:</strong> The flood depth codes the yield calendar: deep early, shallow late, drained for harvest. The calendar is written on the water surface.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Bunds must be:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_6')">Sealed against leaks and high enough to hold the intended flood depth — puddling does both</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">Thin and crumbly</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">Invisible</button>
+<div class="q-exp" id="exp2_6"><strong>Why:</strong> Every leak is yield leaking out. Bund repair and reinforcement is maintenance that compounds across seasons.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Fertiliser strategy for flooded rice is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_7')">Basal manure/compost + split urea (half at plant, half at tillering) — flooded soils behave differently than dry</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Single broadcast at harvest</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">No fertiliser ever</button>
+<div class="q-exp" id="exp2_7"><strong>Why:</strong> Reduced (low-oxygen) soil chemistry changes how N and other nutrients cycle. Split timing and manure-first strategy match the water environment.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. P and K in African flooded rice are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_8')">Less studied than in maize — compound starters help where soils are poor</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">Always unnecessary</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">Toxic always</button>
+<div class="q-exp" id="exp2_8"><strong>Why:</strong> The research is thinner; on-farm observation plus local soils data beats any blanket rule.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Water carrying fertility from upstream paddies is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_9')">A gift of borrowed nutrients — don't waste it by neglecting water management</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">A problem</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Imaginary</button>
+<div class="q-exp" id="exp2_9"><strong>Why:</strong> Manured or populated upstream fields send their fertility downstream. Farmers who understand water-cycling farming often manage it deliberately.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Nursery density is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_10')">~50–100 g seed/m² — high density, crowded until seedlings self-thin at the finger stage</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">One seed per bed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">1 kg per m²</button>
+<div class="q-exp" id="exp2_10"><strong>Why:</strong> Over-seeding insures emergence and gives you seedlings to discard weaker ones at transplant time — controlled selection.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn2" onclick="markComplete(2)">Mark Month 2 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="3">
+    <div class="module-header" onclick="toggleModule(3)">
+      <div class="module-num">3</div>
+      <div class="module-title">Month 3: Fertility, Flooding &amp; Early Weed War</div>
+      <div class="module-status" id="status3">Locked</div>
+    </div>
+    <div class="module-body" id="body3">
+
+      <h3>Lesson 3.1 — Weeds: a flooded-field challenge</h3>
+      <p>Standing water is a weed magnet: rice-field weeds (especially <strong>sedges and aquatic broadleaves</strong>) compete violently, and the flood itself germinates weed seeds hidden in the soil. The arsenal:</p>
+      <ul>
+        <li><strong>Clean nursery:</strong> the first weed-free generation prevents field seeding later.</li>
+        <li><strong>Puddling + flooding:</strong> the very water management that kills upland weeds (several weeks of flooding, then seedling planted) suppresses many paddies — but never all.</li>
+        <li><strong>Manual weeding:</strong> 3–4 weeks after transplant, hand-pull or hoe sedges and broadleaves while standing in shallow water. A second pass at 6–7 weeks catches the flush of late germinators.</li>
+        <li><strong>Herbicide option (where available/affordable):</strong> rice-safe post-emergent herbicides exist; if used, apply per label and strictly in the window before boot stage (panicle emergence).</li>
+      </ul>
+      <h3>Lesson 3.2 — Pests in flooded rice</h3>
+      <ul>
+        <li><strong>Rice stem borer:</strong> larvae tunnel stems, causing 'dead hearts' (withered tillers). Late planting and early weeding reduce populations; resistant varieties where released; chemical control rarely economic on smallholder scale.</li>
+        <li><strong>Rice leaf folder & defoliators:</strong> larvae roll leaves or chew them. Often tolerable; heavy attacks in successive seasons warrant resistant-variety choice.</li>
+        <li><strong>Brown planthopper & other hoppers:</strong> sap-sucking insects; outbreaks episodic and often controlled by natural enemies. Excessive N pushes populations — balanced feeding helps.</li>
+      </ul>
+      <h3>Lesson 3.3 — Diseases</h3>
+      <ul>
+        <li><strong>Blast (fungal):</strong> grey-centred lesions on leaves and panicles. Worst in cool, wet, high-N conditions. Resistant varieties are the main defence; excess N increases risk.</li>
+        <li><strong>Sheath rot:</strong> rotting of leaf sheaths near panicle emergence. Variety tolerance and balanced fertility (no excess N) help.</li>
+        <li><strong>Brown spot (fungal):</strong> brown circular leaf spots. Seed-borne and soil-borne. Clean seed, rotation, resistant varieties.</li>
+        <li><strong>Bacterial leaf blight:</strong> rare in Africa but worth knowing: yellow-green streaks on leaves. No cure; resistant varieties and rotation only.</li>
+      </ul>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Flooded-soil fertility, the weed-germinating flood, and beating sedges and broadleaves &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 3:</strong> Work basal manure/compost into puddled soil before transplant. Set a schedule for first weeding (3–4 weeks post-transplant) and second (6–7 weeks) — record dates and hours. Do the finger test: can you slide a finger between plants without tearing roots? If yes, your stand is good. Scout for stem borer dead hearts, leaf folder damage and blast disease symptoms; record any findings with photographs if possible. Build your weed species list.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 3 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. The main flooded-field weeds are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_1')">Sedges and aquatic broadleaves, germinated by the flood itself — requiring water-aware control</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Only upland annuals</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Bamboo</button>
+<div class="q-exp" id="exp3_1"><strong>Why:</strong> Standing water is a weed seed germinator. The flood that saves the rice also awakens dormant weeds — water management is weed management.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. A clean nursery prevents:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_2')">Weed seeds from reaching the field in seedlings — the first generation uninfected stays ahead</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Anything actually</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Nothing</button>
+<div class="q-exp" id="exp3_2"><strong>Why:</strong> Weeds spread field-to-field on seedlings. One nursery mistake ripples through the whole season and into next year's soil.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Manual weeding timing is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_3')">3–4 weeks after transplant for the first pass, 6–7 weeks for the late-germinator flush</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">Once only at harvest</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">Never needed</button>
+<div class="q-exp" id="exp3_3"><strong>Why:</strong> The two flushes match the soil's weed-seed germination waves: early-sprouting species at first weed, late-sleepers at second.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Herbicides for rice must be:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_4')">Applied pre-boot (before panicle emergence) per label, and only where affordable and safe training exists</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Sprayed at any time</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Avoided forever</button>
+<div class="q-exp" id="exp3_4"><strong>Why:</strong> Post-boot spray hits the grain — yield and quality loss. The window is real but narrow; economic thresholds rule whether it's worth the cost.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Rice stem borer causes:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_5')">'Dead hearts' — withered tillers from internal larval tunnelling</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Extra yield</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Nothing</button>
+<div class="q-exp" id="exp3_5"><strong>Why:</strong> The internal damage is invisible until the shoot wilts. Prevention (early weeding, late planting, resistant varieties) beats any cure.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Heavy leaf-folder and defoliator attacks:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_6')">Often tolerable in single seasons but warrant resistant-variety choice if successive years show outbreaks</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Always fatal instantly</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Improve yield</button>
+<div class="q-exp" id="exp3_6"><strong>Why:</strong> Rice can recover from substantial defoliation; the economics of treatment often don't justify spraying.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Brown planthopper outbreaks are driven by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_7')">Excess nitrogen, which pushes populations and weakens plant defences — balanced feeding helps</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Lack of nitrogen always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Natural disasters</button>
+<div class="q-exp" id="exp3_7"><strong>Why:</strong> The insect thrives on lush growth. Matching N to yield target is both a pest-management and an efficiency move.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Blast (the fungal disease) worst in:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_8')">Cool, wet, high-N conditions — resistant varieties are the main defence</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">Hot dry weather</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">Maize</button>
+<div class="q-exp" id="exp3_8"><strong>Why:</strong> Weather creates the climate; your feeding choice sets the susceptibility. Variety selection reads the seasons ahead.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Seed-borne brown spot is fought with:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_9')">Clean seed, rotation, resistant varieties — no cure once in the field</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Flooding forever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Prayer</button>
+<div class="q-exp" id="exp3_9"><strong>Why:</strong> The fungus travels on the seed itself. Starting clean is cheaper than trying to cure a whole field.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Bacterial leaf blight in Africa is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_10')">Rare but worth knowing (yellow-green leaf streaks); no cure, only resistant varieties and rotation</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Common everywhere</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Impossible</button>
+<div class="q-exp" id="exp3_10"><strong>Why:</strong> The disease exists on the continent; it's not your problem yet — but a released variety immune to the local strain is insurance.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn3" onclick="markComplete(3)">Mark Month 3 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="4">
+    <div class="module-header" onclick="toggleModule(4)">
+      <div class="module-num">4</div>
+      <div class="module-title">Month 4: Stages, Boot-Stage Drain &amp; Bird Watch</div>
+      <div class="module-status" id="status4">Locked</div>
+    </div>
+    <div class="module-body" id="body4">
+
+      <h3>Lesson 4.1 — Reading the crop stages</h3>
+      <table>
+        <tr><th>Stage</th><th>Days from transplant</th><th>See / Do</th></tr>
+        <tr><td>Tillering (T1–T9)</td><td>0–60 (varies)</td><td>Shoots emerging from base; first manual weeding at 3–4 weeks; tillers = final stem count predictor</td></tr>
+        <tr><td>Panicle initiation / Boot</td><td>~55–80</td><td>Transition from vegetative to reproductive; final N top-dress window closes; drain for 2–3 weeks to start</td></tr>
+        <tr><td>Flowering (R1–R3)</td><td>~80–100</td><td>Panicle emerges from boot, flowers open and close daily; no herbicide spray after boot; water stable but draining underway</td></tr>
+        <tr><td>Grain fill (R4–R8)</td><td>~100–140</td><td>Milky to dough stages; field drained for firm soil; grain weight accumulating; bird and pest watch</td></tr>
+        <tr><td>Maturity (R9)</td><td>~140–150</td><td>Grain hard, straw golden; field dry for harvest</td></tr>
+      </table>
+      <h3>Lesson 4.2 — Managing the mid-season window</h3>
+      <p><strong>Panicle initiation (~55–80 days) is the yield bottleneck:</strong> every tiller initiated is a future panicle and grain count. This is where the first water stress kills yield (water stress now = fewer grains per panicle later). Drain for only 2–3 weeks starting at boot to firm the soil for final N uptake and stable panicle development; flood again lightly and keep stable through flowering and early grain fill. This mid-season drain-refood window is the whole art of rice water management.</p>
+      <h3>Lesson 4.3 — Bird and ripening watch</h3>
+      <p>From boot onward, birds (especially weaver species) notice the crop — soft grain is food. Active scaring in the 2–3 weeks before maturity (platforms, noise, reflective tape) is traditional and often sufficient; in high-bird areas, some fields are netted or guarded overnight. More important: harvest ON TIME. Delaying past maturity (R9, hard grain, golden straw) invites birds, lodging, and quality loss — every extra field day costs margin.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Panicle initiation — the yield bottleneck — and the 2–3 week mid-season drain window &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 4:</strong> Track your crop's calendar: note transplant (T0), first tiller emergence (T1), appearance of more tillers, boot stage (~55 days), panicle emergence (flowering), and daily observation of panicle development. Drain your field at boot for 2–3 weeks (measure water level twice weekly to confirm drain), then reflood lightly for panicle stability. Begin bird watch in final 3 weeks before maturity; build your scaring plan (platforms, noise, labour). Record any disease or pest scout findings weekly.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 4 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Tillering stage predicts:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_1')">Final stem count — more early tillers usually mean more grain, if kept healthy to panicle</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Nothing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Flower colour</button>
+<div class="q-exp" id="exp4_1"><strong>Why:</strong> Tiller emergence is destiny: the architecture laid down in weeks 0–6 decides the grain-bearing structure. Tending tillers is tending yield.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Panicle initiation (~55–80 days) is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_2')">The yield bottleneck — water stress now kills grains-per-panicle that can never be recovered</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">The least important stage</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">After harvest</button>
+<div class="q-exp" id="exp4_2"><strong>Why:</strong> Every panicle count is set at PI; every grain per panicle is decided then. No later management fully compensates for PI stress.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. The mid-season drain-refood window is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_3')">2–3 weeks of drainage starting at boot for soil firming and N uptake, then reflooding for stable panicle development</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Permanent flooding always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Never done</button>
+<div class="q-exp" id="exp4_3"><strong>Why:</strong> The whole rice-water-management art is in that one window: drain for uptake, refood for panicle stability. Get it wrong and yields halve.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Boot stage marks:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_4')">The closure of the N top-dress window (later applications are wasted) and the start of grain-development economics</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">The start of seeding</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">Harvest time</button>
+<div class="q-exp" id="exp4_4"><strong>Why:</strong> At boot, grain-filling economics shift; final N decisions were made at panicle initiation. The crop's purchases are finalized.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Herbicide sprays must stop:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_5')">At boot (before panicle emergence) — post-boot spray damages developing grain</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">After harvest only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Never</button>
+<div class="q-exp" id="exp4_5"><strong>Why:</strong> The young panicle in the boot is armoured against water but vulnerable to spray damage. The window closes fast.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Grain fill (R4–R8) happens with:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_6')">Field drained for firm soil, water stable, bird watch begun; grain accumulating weight daily until hard</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Permanent re-flooding</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">No changes ever</button>
+<div class="q-exp" id="exp4_6"><strong>Why:</strong> The drained firm field is harvest-ready by R9; flooding again stops the harvest calendar. Grain ripens faster in air than in mud.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Field drainage for harvest begins:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_7')">At panicle boot / initiation for the 2–3 week window, then continues through grain fill to hard maturity (R9)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">After harvest</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Never</button>
+<div class="q-exp" id="exp4_7"><strong>Why:</strong> One extended drain from boot to maturity, with a mid-cycle refood window for PI stability. The water story ends at harvest start.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Bird pressure on rice peaks:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_8')">In the 2–3 weeks before maturity as soft grain develops — active scaring is traditional and often sufficient</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">At tillering only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">After threshing</button>
+<div class="q-exp" id="exp4_8"><strong>Why:</strong> Ripening rice and ripening grain are bird magnets. The scaring window is narrow but critical — and on-time harvest is the final defence.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Maturity (R9) is read by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_9')">Hard grain and golden straw — the harvest trigger to beat bird loss and quality decline</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Green grain</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Leaf greenness</button>
+<div class="q-exp" id="exp4_9"><strong>Why:</strong> The plant tells you clearly: hard = done. Every day past this is a tax paid to birds, lodging and spoilage.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Excess nitrogen in mid-season affects rice by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_10')">Promoting blast disease, pushing insect populations, and delaying maturity without yield gain — balanced feeding avoids it</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Guaranteeing perfection</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Being beneficial always</button>
+<div class="q-exp" id="exp4_10"><strong>Why:</strong> The late-N luxury is yield plateau with disease risk. Matching N to panicle count is the whole discipline.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn4" onclick="markComplete(4)">Mark Month 4 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="5">
+    <div class="module-header" onclick="toggleModule(5)">
+      <div class="module-num">5</div>
+      <div class="module-title">Month 5: Harvest, Drying &amp; Storage</div>
+      <div class="module-status" id="status5">Locked</div>
+    </div>
+    <div class="module-body" id="body5">
+
+      <h3>Lesson 5.1 — Harvest at hard maturity</h3>
+      <p>Harvest when grain is hard (thumbnail cannot split it), straw is golden and dry, and the field is dry enough for foot traffic. Delay beyond R9 costs to birds, lodging and grain mould. Methods:</p>
+      <ul>
+        <li><strong>Hand sickle:</strong> traditional, fast, labour-intensive; cut into bundles, shock/stack to dry before threshing.</li>
+        <li><strong>Motorised combine harvester (hire/shared):</strong> increasingly available in rice areas; threshes in field, collects grain in bags.</li>
+        <li><strong>Manual threshing:</strong> beat bundles over a mat or tarp with sticks, or walk on them — traditional and still common.</li>
+      </ul>
+      <h3>Lesson 5.2 — Drying and moisture management</h3>
+      <p>Freshly harvested rice is ~15–20% moisture; <strong>dry to 12–14% for milling and sale</strong> — the oilseed-adjacent law. Sun-dry on tarpaulins or racks (never bare soil, never in high-humidity sealed bags), turning occasionally, until the moisture-meter reading is stable or the bite test shows clean cracks. Over-drying to <10% cracks the grain during milling (reducing head-rice recovery, lowering grade and price). <strong>The target moisture is not a ceiling to beat but a range to hit.</strong></p>
+      <h3>Lesson 5.3 — Storage for grain and seed</h3>
+      <ul>
+        <li><strong>Grain stock for milling:</strong> clean sacks on pallets in a dry ventilated store; weekly checks for moisture and pests. At correct moisture, rice stores reliably for months.</li>
+        <li><strong>Seed stock:</strong> the same as soybean fragility — dry to ~11%, hermetic containers, cool, shaded, never threshed or dropped; germination-test before next season. Hybrid seed declines fast; OPV seed keeps 2–3 seasons.</li>
+      </ul>
+      <h3>Lesson 5.4 — Milling and the quality premium</h3>
+      <p>A sack of rough rice (paddy) becomes ~70% whole grain plus bran, germ, and broken pieces at the mill. Head-rice (intact whole grain) commands the best price; breakage from over-drying, rough threshing or poor storage grade down by 20–30%. <strong>Every quality decision before the mill is a price decision at the mill.</strong> Moisture discipline, gentle threshing, clean storage — and on-time harvest — all compress into that head-rice percentage the miller will pay a premium for.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Hard maturity harvest, the 12–14% moisture law, and head-rice recovery at the mill &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 5:</strong> Harvest at hard-grain, golden-straw maturity (R9): cut, shock to dry, or if combine available, book it for the harvest date. Sun-dry paddy on tarpaulins/racks to 12–14% (moisture meter or bite test: clean cracks, no dents). Store grain on pallets in a dry store, or take to a miller for immediate milling. Keep a seed lot separate (dry to ~11%, hermetic, cool, shaded, germination-tested). Record: harvest date, grain weight, moisture, milling recovery %.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 5 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Hard maturity (R9) is the harvest trigger because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_1')">Delaying past it costs to birds, lodging and grain mould — every extra day is a tax</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Waiting forever is best</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Speed never matters</button>
+<div class="q-exp" id="exp5_1"><strong>Why:</strong> The plant announces its readiness in plain language: hard grain, golden straw, dry field. Listen to it.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Freshly harvested rice moisture is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_2')">~15–20% — dry to 12–14% for milling, never below 10% (over-drying cracks grain)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Already 5%</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">50%</button>
+<div class="q-exp" id="exp5_2"><strong>Why:</strong> The target is a range, not a ceiling. The over-drying mistake costs more than slight dampness — cracked grain at the mill is a permanent loss.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Sun-drying rice happens on:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_3')">Tarpaulins or racks — never bare soil, never sealed bags, turned occasionally until stable moisture</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">In plastic sealed bags immediately</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">Underground</button>
+<div class="q-exp" id="exp5_3"><strong>Why:</strong> The universal off-ground law for food grains: air and sun, control against mould and pests, constant monitoring.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Seed rice is stored:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_4')">Dry to ~11%, hermetic containers, cool, shaded, never dropped — germination-tested before next season</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">Wet</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">In the sun</button>
+<div class="q-exp" id="exp5_4"><strong>Why:</strong> Rice seed fragility (especially hybrids) is hidden: looks fine, germinates at 40%. Testing is not optional; it is a cost of the seed business.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Hybrid rice seed versus OPV keep for:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_5')">Hybrids decline fast (1–2 seasons max); OPV keeps 2–3 seasons if stored right</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">Both forever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">Both expire in days</button>
+<div class="q-exp" id="exp5_5"><strong>Why:</strong> The seed law difference is real: hybrids are genetically unstable in storage. OPVs reward careful keeping with years of use.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Head-rice (intact whole grain) commands:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_6')">The best price; breakage from over-drying, rough threshing or poor storage grades down by 20–30%</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">The worst price</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">No price at all</button>
+<div class="q-exp" id="exp5_6"><strong>Why:</strong> The miller buys breakage at commodity discount. Every grain preserved whole is a price grade higher — the whole harvest journey paid for.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Rough threshing costs rice quality by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_7')">Cracking grains that the miller will grade as breakage — gentle sticks and low speeds preserve heads</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Preventing threshing forever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Nothing</button>
+<div class="q-exp" id="exp5_7"><strong>Why:</strong> Enthusiasm is the enemy: a 5-minute gentle beat over a mat beats an aggressive 2-minute pounding.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Grain storage at correct moisture (~12–14%) is reliable for:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_8')">Months in dry ventilated stores</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Hours only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Years only</button>
+<div class="q-exp" id="exp5_8"><strong>Why:</strong> Rice at target moisture is far more stable than maize — a smallholder's advantage for holding crop and selling at lean-season prices.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Milling recovery of head-rice from quality grain is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_9')">~70% whole grain plus bran and broken pieces — poor-quality paddy mills to 60% or less</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">100% always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">0%</button>
+<div class="q-exp" id="exp5_9"><strong>Why:</strong> Moisture, threshing and storage losses accumulate into the miller's recovery numbers. A clean crop becomes a premium mill output.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Every quality decision before milling (harvest timing, threshing gentleness, storage discipline) is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_10')">A price decision at the mill — head-rice premiums pay for the care</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Invisible to the mill</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Irrelevant</button>
+<div class="q-exp" id="exp5_10"><strong>Why:</strong> The miller grades what arrives. What arrives is entirely your field's and your storage's legacy. Discipline compounds.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn5" onclick="markComplete(5)">Mark Month 5 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="6">
+    <div class="module-header" onclick="toggleModule(6)">
+      <div class="module-num">6</div>
+      <div class="module-title">Month 6: Channels &amp; the Two-Crop Calendar</div>
+      <div class="module-status" id="status6">Locked</div>
+    </div>
+    <div class="module-body" id="body6">
+
+      <h3>Lesson 6.1 — Three sale channels</h3>
+      <table>
+        <tr><th>Channel</th><th>Buyer</th><th>Price / terms</th></tr>
+        <tr><td>Household food + local sale</td><td>Village, market stalls, neighbours</td><td>Milled rice retail; quality premium is real</td></tr>
+        <tr><td>Local trader / aggregator / miller</td><td>Bulk buyers, regional assemblers</td><td>Farm-gate or collection-point price per kg (paddy or milled); volume discounts</td></tr>
+        <tr><td><strong>Export-oriented regional buyer</strong></td><td>Commercial millers, exporters</td><td>Specs tight (grain type, moisture, breakage); contract possible; premium for consistency and grade</td></tr>
+      </table>
+      <h3>Lesson 6.2 — An honest one-hectare irrigated rice budget</h3>
+      <table>
+        <tr><th>Item</th><th>Assumption</th><th>Amount</th></tr>
+        <tr><td>Yield</td><td>Improved hybrid or OPV, nursery done right, two weedings, mature harvest, 12–14% milled at ~70% recovery</td><td>~3–3.5 t paddy → ~2.1–2.45 t milled</td></tr>
+        <tr><td>Gross</td><td>$0.50–0.75/kg milled (higher if premium sale channel)</td><td>~$1,050–1,840</td></tr>
+        <tr><td>Seed (hybrid or OPV) + inoculant (rice rhizobia optional in flooded)</td><td>40–60 kg seed</td><td>$50–150</td></tr>
+        <tr><td>Manure / compost (2–3 t/ha) + starter fertiliser</td><td>carried / carted on farm</td><td>$80–200</td></tr>
+        <tr><td>Labour peaks: puddling, transplanting, weeding ×2, harvesting, threshing, drying</td><td></td><td>$200–400</td></tr>
+        <tr><td>Water (if hand-pumped or gravity-fed)</td><td>minimal; irrigation infrastructure amortised separately</td><td>$30–100</td></tr>
+        <tr><td>Sacks, storage, transport + processing fees (milling)</td><td></td><td>$100–200</td></tr>
+        <tr><td><strong>Indicative margin</strong></td><td>one irrigated cycle; two crops/year double this</td><td><strong>~$500–890/ha per crop; $1,000–1,780/ha/year if two crops</strong></td></tr>
+      </table>
+      <h3>Lesson 6.3 — The two-crop calendar</h3>
+      <p>An irrigated plot with reliable water can run two rice crops per year: dry-season (Oct–Feb in many regions) and wet-season (Jun–Oct). The calendar requires precision — planting dates, seedbed prep in the off-season, and relentless pest and weed management on a 6-month rather than 12-month cycle. Groups running two crops often hire shared threshers and aggregate tonnage, cutting costs and improving market access both.</p>
+      <h3>Lesson 6.4 — Records and the millers' report card</h3>
+      <p>Per plot per season: variety and seed source; nursery date and seedling quality; transplant date and stand count; two weed dates; boot/PI/flowering dates (track them on the water level); harvest date; grain weight, moisture at mill, and milling recovery percentage; price received; buyer channel. <strong>Report card: milling recovery of head-rice, moisture at mill, and price per kg achieved.</strong> These three numbers track whether the whole chain worked: dry well, harvest on time, sell into the right channel. Growth path: year one — one irrigated crop done perfectly; year two — two crops per year running; year three — group aggregation for contract sale to a regional mill with premium specs.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Household to export channels — and running two rice crops a year in irrigated systems &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 6:</strong> Build your one-hectare (one-crop) budget from recorded costs and local prices. Research your three sale channels: household buyers in your market, local traders/millers with bulk prices, and (if it exists) any regional export scheme with grade specs and premium. If water reliable year-round, sketch a two-crop calendar (dry-season + wet-season planting, harvesting, labour). If irrigation possible, cost the infrastructure (bunding, levelling, water source) and assess ROI on year-one costs.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 6 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Export-oriented rice buyers grade on:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_1')">Specs tight: grain type, moisture, breakage %, consistency lot-to-lot — premium for reliability</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">No standards</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">Anything harvested</button>
+<div class="q-exp" id="exp6_1"><strong>Why:</strong> Industrial buyers need predictability. Consistency written into the field plan (same variety, harvest timing, drying protocol) is the whole competitive edge.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. An irrigated hectare can yield:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_2')">~3–3.5 t paddy per crop, ~2.1–2.45 t milled — twice a year if water and labour allow, meaning ~4–5 t milled/year</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">0.1 t</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">50 t</button>
+<div class="q-exp" id="exp6_2"><strong>Why:</strong> Two crops is not fantasy: it is the economics that justify the water infrastructure and the labour. The numbers work if water is reliable.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Milling recovery of quality grain is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_3')">~70% head-rice + bran/germ/brokens; poor-quality paddy mills to 60% or less — quality discipline at harvest and drying pays</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">100% always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Nothing recovers</button>
+<div class="q-exp" id="exp6_3"><strong>Why:</strong> The mill is impartial: clean paddy at right moisture mills to 70%; damaged paddies mill to 60%. The difference is the field's discipline.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Household and local-trade rice prices are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_4')">Higher for milled rice sold retail; quality premium exists and buyers notice</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Flat regardless of quality</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Zero</button>
+<div class="q-exp" id="exp6_4"><strong>Why:</strong> Small-scale milling (hand or motorised) serving households and markets is often the highest-margin channel for the careful farmer.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Two-crop rice calendars require:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_5')">Precision planting, off-season seedbed prep, and relentless pest/weed cycles on 6-month rhythm — labour-intensive but double the gross</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">Laziness</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">No planning ever</button>
+<div class="q-exp" id="exp6_5"><strong>Why:</strong> Two crops means two times everything: two weed-washes, two flowering-watches, two harvests. Shared threshers and group organisation are force multipliers.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Hybrid rice seed keeps for:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_6')">1–2 seasons max if stored right — then lose germination or hybrid vigour</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">Forever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">Never germinates</button>
+<div class="q-exp" id="exp6_6"><strong>Why:</strong> The hybrid's genetic instability is the cost of higher yield. Plan to source fresh seed annually; OPV is the low-input path.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Grain type (short vs long) chose by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_7')">Market: food security = short sticky; commerce = long fluffy premium grade</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Random chance</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Genetics only</button>
+<div class="q-exp" id="exp6_7"><strong>Why:</strong> You (the farmer) choose the destiny: the same 90-day crop becomes either household food or export cargo based on which variety you planted.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. The three report-card numbers for rice are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_8')">Milling head-rice recovery %, moisture at mill, and price/kg achieved — together they tell you if the chain worked</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Rainfall predictions</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Neighbour opinions</button>
+<div class="q-exp" id="exp6_8"><strong>Why:</strong> Recovery tracks harvest quality, moisture tracks drying discipline, price tracks buyer channel. One number hides the others' sins.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Puddling (flooded ploughing) is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_9')">Levelling, compacting for water-holding, and weed-killing in one operation — the most important field work in rice farming</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">A waste of time</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Unnecessary</button>
+<div class="q-exp" id="exp6_9"><strong>Why:</strong> Flooded ploughing is to rice what deep cultivation is to dryland cereals: foundation work that compounds through the season.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. The year-three growth step is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_10')">Group aggregation running two crops, hitting contract specs, and supplying a regional mill — the scale that changes margins</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Quitting rice</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Farming alone at small scale forever</button>
+<div class="q-exp" id="exp6_10"><strong>Why:</strong> Scale is not area, it is organisation: groups, shared mills, consistent supply, premium channels. The coordinates of the system, not the field size.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn6" onclick="markComplete(6)">Mark Month 6 Complete</button>
+    </div>
+  </div>
+
+  <div class="final-section">
+    <h2>&#127942; Final Project: Your Rice Business Plan</h2>
+    <p>The final project is your complete rice enterprise plan — water source and system, the nursery-to-harvest calendar, quality disciplines, and the market channel chosen.</p>
+    <ol><li><strong>Water-system case:</strong> your source (stream, flood, hand pump) and reliability, rainfed vs irrigated choice with reasoning, and two-crop viability if relevant.</li>
+<li><strong>Nursery protocol:</strong> bed prep, seed rate, germination test results, finger-test readiness date, seedling count to transplant.</li>
+<li><strong>Field preparation &amp; transplant:</strong> puddling plan and labour, bunding/levelling specs, manure/fertiliser placement, transplant date/spacing/stand count target.</li>
+<li><strong>Water calendar &amp; stages:</strong> flooding depth through T1–T9 tillering, boot-stage drain timing (2–3 weeks), reflooding for PI stability, final drain for harvest.</li>
+<li><strong>Weed &amp; pest protocol:</strong> weed schedule with dates/hours, species observed, herbicide decision (yes/no and window), blast/stem-borer watch with action thresholds.</li>
+<li><strong>Harvest &amp; quality chain:</strong> R9 harvest trigger, drying method and target (12–14%), milling recovery expectations, head-rice premium strategy.</li>
+<li><strong>Budget &amp; channels:</strong> one-crop and (if applicable) two-crop budgets, three sale channels with real prices, chosen channel and quality targets to hit it.</li>
+<li><strong>Risk page &amp; year-3 vision:</strong> three risks with mitigations, staged growth (perfect one crop, two crops, group aggregation with contract).</li></ol>
+    <p><strong>Submission standard:</strong> A plan you could hand to a savings group, a bank officer, or a family investor without embarrassment. Real local prices, real named buyers, honest risks.</p>
+  </div>
+
+  <div class="budget-section">
+    <h2>&#128176; Startup Budget &mdash; 1 Hectare Irrigated Rice (per Crop; ×2/year if water allows)</h2>
+    <p>Rice's economics turn on water availability and labour timing. Two crops double the annual gross and are standard in reliable-water zones. The milling recovery premium (head-rice vs brokens) is the quality payoff: discipline compounds.</p>
+    <table>
+      <tr><th>Item</th><th>Details</th><th>Typical cost (USD)</th></tr>
+<tr><td>Seed (hybrid or OPV, 40–60 kg)</td><td></td><td>$50–150</td></tr>
+<tr><td>Manure/compost (2–3 t/ha)</td><td></td><td>$80–200</td></tr>
+<tr><td>Starter fertiliser + split urea</td><td></td><td>$60–150</td></tr>
+<tr><td>Land prep: ploughing/puddling labour</td><td></td><td>$80–150</td></tr>
+<tr><td>Nursery prep &amp; seedling care</td><td></td><td>$30–80</td></tr>
+<tr><td>Transplanting labour</td><td></td><td>$60–120</td></tr>
+<tr><td>Weeding labour ×2</td><td></td><td>$60–120</td></tr>
+<tr><td>Harvest &amp; threshing labour (+ equipment if not owned)</td><td></td><td>$100–200</td></tr>
+<tr><td>Drying, storage, sacks</td><td></td><td>$50–100</td></tr>
+<tr><td>Milling &amp; transport to market</td><td></td><td>$80–150</td></tr>
+<tr><td>Contingency (10%)</td><td></td><td>$70–150</td></tr>
+<tr><td><strong>Total per crop</strong></td><td>One cycle</td><td><strong>$670–1,370</strong></td></tr>
+<tr><td><strong>Two crops/year (if possible)</strong></td><td>Dual calendar</td><td><strong>$1,340–2,740</strong></td></tr>
+    </table>
+    <p><em>Prices vary widely by country. Before spending anything, price every line in your own town and rebuild this table — that exercise is part of your final project.</em></p>
+  </div>
+
+  <div class="glossary-section">
+    <h2>&#128218; Glossary</h2>
+    <dl class="glossary">
+<dt>Rainfed lowland / valley bottom</dt><dd>Seasonal waterlogged flats; user-managed water from upstream flooding — not irrigation but water-advantaged.</dd>
+<dt>Irrigated rice</dt><dd>Controlled standing-water depth, 5–10 cm maintained; two crops per year possible.</dd>
+<dt>Puddling</dt><dd>Ploughing flooded land into smooth mud: levels, compacts for water-holding, kills weeds.</dd>
+<dt>Nursery</dt><dd>Protected 20–30 day seedbed where robust, weed-free seedlings are grown for transplanting.</dd>
+<dt>Finger test</dt><dd>Seedlings ready to transplant when you can slide your finger between them easily — no root tangle.</dd>
+<dt>Transplant spacing</dt><dd>~20×20 cm hills with 3–5 seedlings per hill; local practice varies; consistency matters most.</dd>
+<dt>Tillering (T1–T9)</dt><dd>Vegetative stage: shoots emerging from base; tiller count predicts final stem count.</dd>
+<dt>Panicle initiation (PI)</dt><dd>The yield bottleneck (~55–80 days): transition to reproductive; every grain count decided here; water stress now is permanent loss.</dd>
+<dt>Boot stage</dt><dd>Panicle within the leaf sheath, about to emerge; herbicide-spray window closes; drainage for PI support begins.</dd>
+<dt>Flowering (R1–R3)</dt><dd>Panicle emergent; flowers open and close daily; no herbicide; drying field underway.</dd>
+<dt>Grain fill (R4–R8)</dt><dd>Milky to hard-dough stages; field maintained dry for firm soil; grain weight accumulating; bird watch.</dd>
+<dt>Maturity (R9)</dt><dd>Hard grain and golden straw — the harvest trigger.</dd>
+<dt>Head-rice</dt><dd>Intact whole grain milling output — commands premium price; breakage from poor handling grades down 20–30%.</dd>
+<dt>Milling recovery</dt><dd>~70% head-rice + bran/germ/brokens from quality paddy; poor quality mills to 60% or less.</dd>
+<dt>Hybrid rice</dt><dd>High-yield, must be fresh seed each year; tends to lose vigour in storage.</dd>
+<dt>OPV rice</dt><dd>Saveable seed 2–3 seasons; lower yield ceiling than hybrids; low-cash entry.</dd>
+<dt>Short-grain rice</dt><dd>Sticky when cooked; preferred locally for food security.</dd>
+<dt>Long-grain rice</dt><dd>Fluffy dried-grain look; preferred in trade and export channels; price premium.</dd>
+<dt>Blast (fungal disease)</dt><dd>Grey-centred leaf lesions and panicle damage; worse in cool, wet, high-N; resistant varieties are main defence.</dd>
+<dt>Sheath rot</dt><dd>Decay of leaf sheath near panicle emergence; variety tolerance and balanced fertility help.</dd>
+    </dl>
+  </div>
+
+  <div class="resources-section">
+    <h2>&#128279; Further Resources</h2>
+    <ul><li>AfricaRice (CGIAR centre) — African rice varieties, improved farming practices, on-farm trials — multilingual materials.</li>
+<li>Your national rice programme and extension office — released varieties by agroecology, water-management guidance, disease alerts.</li>
+<li>Local rice millers and traders — quality specs, buyer contact (especially regional export schemes if operating), milling fees.</li>
+<li>Farmer groups and community-based organisations running rice — experiential learning and group milling / marketing arrangements.</li>
+<li>Rise Africa Skills companion courses: Beekeeping (rice-field honey), Vegetable Production (off-season nursery irrigation), Solar Drying (rack discipline applied to grain).</li></ul>
+  </div>
+
+  <div class="cert-section">
+    <h2>&#127891; Course Completion</h2>
+    <p>Complete all 6 months and pass the quizzes to unlock your certificate.</p>
+    <a href="certificate.html?course=Rice%20Farming" class="cert-btn" id="certBtn" disabled>Get Certificate</a>
+  </div>
+</div>
+<script>
+  const TOTAL_MODULES = 6;
+  const COURSE_KEY = 'rice-farming';
+  let completed = JSON.parse(localStorage.getItem(COURSE_KEY + '_progress') || '[]');
+
+  function toggleModule(n) {
+    if (n > 1 && !completed.includes(n-1)) { alert('Complete Month ' + (n-1) + ' first.'); return; }
+    document.getElementById('body' + n).classList.toggle('active');
+  }
+  function answerQ(btn, isCorrect, expId) {
+    const parent = btn.parentElement;
+    const buttons = parent.querySelectorAll('.q-opt');
+    if (buttons[0].disabled) return;
+    buttons.forEach(b => { b.disabled = true; });
+    if (isCorrect) { btn.classList.add('correct'); }
+    else {
+      btn.classList.add('wrong');
+      buttons.forEach(b => { if (b.dataset.c === '1') b.classList.add('correct'); });
+    }
+    document.getElementById(expId).classList.add('show');
+    const quiz = btn.closest('.quiz-wrap');
+    quiz.dataset.answered = (parseInt(quiz.dataset.answered||'0') + 1);
+    quiz.dataset.score = (parseInt(quiz.dataset.score||'0') + (isCorrect ? 1 : 0));
+    if (parseInt(quiz.dataset.answered) >= parseInt(quiz.dataset.total)) {
+      const s = quiz.querySelector('.quiz-score');
+      s.textContent = 'Quiz result: ' + quiz.dataset.score + ' / ' + quiz.dataset.total + (parseInt(quiz.dataset.score) >= 7 ? ' — Pass. Well done!' : ' — Below 7/10. Re-read the module, then review your wrong answers.');
+    }
+  }
+  function markComplete(n) {
+    if (!completed.includes(n)) {
+      completed.push(n); completed.sort((a,b)=>a-b);
+      localStorage.setItem(COURSE_KEY + '_progress', JSON.stringify(completed));
+    }
+    updateUI();
+  }
+  function updateUI() {
+    document.getElementById('completedCount').textContent = completed.length;
+    document.getElementById('progressBar').style.width = (completed.length/TOTAL_MODULES*100) + '%';
+    for (let i=1; i<=TOTAL_MODULES; i++) {
+      const st = document.getElementById('status'+i), btn = document.getElementById('btn'+i);
+      if (completed.includes(i)) { st.textContent='Done'; st.classList.add('done'); if(btn){btn.textContent='Completed'; btn.disabled=true;} }
+      else if (i===1 || completed.includes(i-1)) { st.textContent='Start'; }
+      else { st.textContent='Locked'; }
+    }
+    if (completed.length >= TOTAL_MODULES) {
+      const c = document.getElementById('certBtn');
+      c.removeAttribute('disabled'); c.textContent = 'Get Your Certificate!';
+    }
+  }
+  updateUI();
+</script>
+</body>
+</html>

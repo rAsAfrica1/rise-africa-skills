@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Vegetable Production - A complete practical course from Rise Africa Skills. Learn offline, anytime.">
+<title>Vegetable Production | Rise Africa Skills</title>
+<style>
+  :root { --gold:#eab308; --gold-dark:#a16207; --green:#16a34a; --bg:#0f172a; --card:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --line:#334155; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:var(--bg); color:var(--text); line-height:1.65; }
+  header { background:linear-gradient(135deg,var(--gold-dark) 0%,#713f12 100%); padding:44px 20px; text-align:center; }
+  header h1 { font-size:2rem; margin-bottom:8px; }
+  header p { color:rgba(255,255,255,0.88); max-width:640px; margin:0 auto; }
+  .badge { display:inline-block; background:var(--gold); color:#1e293b; padding:4px 14px; border-radius:20px; font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-top:12px; letter-spacing:0.4px; }
+  .container { max-width:920px; margin:0 auto; padding:30px 20px; }
+  .progress-bar { background:var(--card); border-radius:10px; height:10px; margin-bottom:28px; overflow:hidden; }
+  .progress-fill { background:var(--gold); height:100%; width:0%; border-radius:10px; transition:width .4s ease; }
+  .overview { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-bottom:26px; }
+  .overview h2 { color:var(--gold); font-size:1.15rem; margin-bottom:10px; }
+  .overview ul { margin:8px 0 14px 20px; color:var(--muted); }
+  .overview li { margin:5px 0; }
+  .meta-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+  .meta-chip { background:#0b1220; border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:0.85rem; color:var(--muted); }
+  .meta-chip b { color:var(--text); }
+  .module { background:var(--card); border-radius:12px; margin-bottom:16px; overflow:hidden; border:1px solid var(--line); }
+  .module-header { padding:18px 22px; cursor:pointer; display:flex; align-items:center; gap:14px; transition:background .2s; }
+  .module-header:hover { background:#26354a; }
+  .module-num { background:var(--gold); color:#1e293b; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0; }
+  .module-title { flex:1; font-weight:600; }
+  .module-status { font-size:0.75rem; padding:4px 10px; border-radius:12px; background:var(--line); color:var(--muted); white-space:nowrap; }
+  .module-status.done { background:var(--green); color:#fff; }
+  .module-body { display:none; padding:0 22px 24px; border-top:1px solid var(--line); }
+  .module-body.active { display:block; }
+  .module-body p { color:var(--muted); margin:13px 0; }
+  .module-body ul, .module-body ol { margin:10px 0 10px 22px; color:var(--muted); }
+  .module-body li { margin:6px 0; }
+  .module-body strong { color:var(--text); }
+  .module-body h3 { color:var(--gold); font-size:1.05rem; margin:22px 0 4px; }
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.88rem; }
+  th { background:#0b1220; color:var(--gold); text-align:left; padding:9px 10px; border:1px solid var(--line); }
+  td { padding:8px 10px; border:1px solid var(--line); color:var(--muted); vertical-align:top; }
+  tr:nth-child(even) td { background:#1a2537; }
+  .tip-box { background:rgba(234,179,8,0.08); border-left:4px solid var(--gold); padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .tip-box strong { color:var(--gold); }
+  .warn-box { background:rgba(239,68,68,0.08); border-left:4px solid #ef4444; padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .warn-box strong { color:#f87171; }
+  .assign-box { background:#0b1220; border:1px dashed var(--gold-dark); border-radius:10px; padding:16px 18px; margin:16px 0; color:var(--muted); }
+  .assign-box strong { color:var(--gold); }
+  .video-box { background:#0b1220; border:1px solid var(--line); border-radius:10px; padding:14px 18px; margin:16px 0; color:var(--muted); font-size:0.9rem; }
+  .quiz-wrap { background:#0b1220; border:1px solid var(--line); border-radius:12px; padding:20px; margin-top:20px; }
+  .quiz-wrap h3 { margin-top:0 !important; }
+  .q-block { margin:16px 0; padding-bottom:14px; border-bottom:1px solid #1e293b; }
+  .q-block:last-child { border-bottom:none; }
+  .q-text { font-weight:600; color:var(--text); margin-bottom:8px; }
+  .q-opt { display:block; width:100%; text-align:left; padding:9px 13px; margin:5px 0; background:var(--card); border:1px solid #475569; border-radius:8px; color:var(--text); cursor:pointer; transition:all .2s; font-size:0.9rem; }
+  .q-opt:hover { border-color:var(--gold); }
+  .q-opt.correct { background:#14532d; border-color:var(--green); }
+  .q-opt.wrong { background:#7f1d1d; border-color:#ef4444; }
+  .q-exp { display:none; margin-top:8px; padding:10px 13px; background:rgba(234,179,8,0.07); border-left:3px solid var(--gold); border-radius:0 6px 6px 0; color:var(--muted); font-size:0.87rem; }
+  .q-exp.show { display:block; }
+  .quiz-score { margin-top:12px; font-weight:700; color:var(--gold); }
+  .check-btn { background:var(--gold); color:#1e293b; border:none; padding:11px 26px; border-radius:8px; font-weight:700; cursor:pointer; margin-top:16px; transition:background .2s; }
+  .check-btn:hover { background:#facc15; }
+  .check-btn:disabled { opacity:0.5; cursor:not-allowed; }
+  .final-section, .budget-section, .glossary-section, .resources-section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-top:26px; }
+  .final-section h2, .budget-section h2, .glossary-section h2, .resources-section h2 { color:var(--gold); font-size:1.2rem; margin-bottom:10px; }
+  .final-section p, .budget-section p, .resources-section p { color:var(--muted); margin:10px 0; }
+  .final-section ol, .resources-section ul { margin:10px 0 10px 22px; color:var(--muted); }
+  .final-section li, .resources-section li { margin:6px 0; }
+  dl.glossary dt { color:var(--text); font-weight:700; margin-top:12px; }
+  dl.glossary dd { color:var(--muted); margin-left:0; font-size:0.92rem; }
+  .cert-section { text-align:center; padding:40px 20px; background:var(--card); border-radius:16px; margin-top:30px; border:1px solid var(--line); }
+  .cert-section h2 { margin-bottom:10px; }
+  .cert-section p { color:var(--muted); margin-bottom:20px; }
+  .cert-btn { background:var(--gold); color:#1e293b; border:none; padding:14px 36px; border-radius:10px; font-size:1rem; font-weight:800; cursor:pointer; text-decoration:none; display:inline-block; }
+  .cert-btn[disabled] { opacity:0.4; pointer-events:none; }
+  .nav-bar { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:var(--card); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:100; }
+  .nav-bar a { color:var(--text); text-decoration:none; font-weight:600; }
+  .nav-bar a:hover { color:var(--gold); }
+  .completion-count { color:var(--muted); font-size:0.9rem; }
+  @media (max-width:600px){ header h1{font-size:1.5rem;} .module-header{padding:14px 16px;} .module-body{padding:0 16px 18px;} table{font-size:0.8rem;} th,td{padding:6px 7px;} }
+</style>
+</head>
+<body>
+<nav class="nav-bar">
+  <a href="index.html">&#8592; Back to Courses</a>
+  <span class="completion-count"><span id="completedCount">0</span> / 6 months completed</span>
+</nav>
+<header>
+  <div class="badge">Agriculture &middot; 6-Month Program</div>
+  <h1>Vegetable Production</h1>
+  <p>Tomato and leafy greens — the perishability discipline, nursery foundation, drip irrigation against blight, late-blight defence stack, staggered planting for market timing, and the pre-sell relationship that turns a harvest into income.</p>
+</header>
+<div class="container">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+
+  <div class="overview">
+    <h2>Course Overview</h2>
+    <p style="color:var(--muted);">Vegetables are the smallholder's cash accelerator: a tomato crop matures in 60–90 days, a leafy-green bed turns income in 21 days, and the dry-season irrigated crop earns 3–5× the rain-season price. The margin comes with matching risk — perishability measured in hours, price swings of 300–400%, and continuous pest and fertility demands. This course teaches both production and market discipline together, because a well-grown tomato that arrives bruised, or is harvested into a glut market, earns nothing. The course centres on tomato (highest-value, highest-risk, most widely grown) and leafy greens (fastest cash, lowest input barrier, entry business for water-access farmers). The foundations: the 28–35 day nursery (solarised beds, fine compost, hardening off), transplanting at the 4–6 leaf stage, staking immediately, drip irrigation against blight, the late-blight preventive fortnightly copper spray, and the bacterial-wilt 3–4 year rotation from all solanaceous crops. Harvest discipline: mature-green for market transport, hand-handling, grading at harvest, shallow crates and 24-hour market reach. Market discipline: walk the market before planting, stagger plantings for consistent harvest, pre-sell to a regular buyer, and grow the 50 m² leafy-green entry business first.</p>
+    <h2 style="margin-top:16px;">What You Will Learn</h2>
+    <ul><li>Plan water source first — irrigation converts seasonal glut into year-round 3–5× price premium</li>
+<li>Build the tomato nursery: solarised beds, fine compost, shade, fine watering, hardened-off transplants</li>
+<li>Transplant at 4–6 leaf stage, stake immediately, apply drip or furrow irrigation to keep foliage dry</li>
+<li>Manage late blight with preventive copper spray, bacterial wilt with 3–4 year solanaceous rotation, TYLCV with whitefly control and resistance</li>
+<li>Harvest tomato at mature-green, handle gently, grade at harvest, pack shallow, sell within 24 hours</li>
+<li>Start with a 50 m² leafy-green bed — daily water, daily harvest, daily sale — before scaling to tomato</li>
+<li>Walk the market before planting, stagger plantings to escape glut, pre-sell to a regular buyer</li>
+<li>Add value through sun-drying and paste to convert glut-season tomato into lean-season income</li></ul>
+    <div class="meta-row">
+      <div class="meta-chip"><b>Duration:</b> 6 months, one module per month</div>
+      <div class="meta-chip"><b>Level:</b> Beginner &rarr; Job-ready</div>
+      <div class="meta-chip"><b>Units:</b> Metric with imperial where useful</div>
+      <div class="meta-chip"><b>Final project:</b> Your own business plan</div>
+    </div>
+  </div>
+
+  <div class="module" data-module="1">
+    <div class="module-header" onclick="toggleModule(1)">
+      <div class="module-num">1</div>
+      <div class="module-title">Month 1: Vegetables as a Business — Water, Markets &amp; Entry Points</div>
+      <div class="module-status" id="status1">Start</div>
+    </div>
+    <div class="module-body" id="body1">
+
+      <h3>Lesson 1.1 — Vegetables: the smallholder's cash accelerator</h3>
+      <p>Vegetables are the fastest cash-turnover crop in this college: a tomato crop matures in 60–90 days, a leafy-green bed turns over in 21–35 days, and urban Africa's demand for fresh produce grows every month. <strong>But the margin comes with matching risk</strong>: vegetables are perishable (hours after picking can double or zero the price), input-intensive (irrigation, pest control, fertiliser) and market-dependent (price swings 300–400% between glut and shortage). The farmer who masters production AND market timing earns more per square metre than almost any other land use.</p>
+      <ul>
+        <li>This course focuses on <strong>tomato</strong> (the highest-value, highest-risk vegetable most widely grown by African smallholders) and <strong>leafy greens</strong> (kale/sukuma wiki, spinach, amaranth, and African leafy vegetables — the fastest cash with the lowest input barrier).</li>
+        <li>Principles taught here apply across the vegetable family: cabbage, onion, pepper, aubergine, courgette and all the others follow the same production logic.</li>
+        <li>Season: <strong>year-round where irrigation exists</strong>; single rainy-season where only rain-fed.</li>
+      </ul>
+      <h3>Lesson 1.2 — The market is the farm plan</h3>
+      <table>
+        <tr><th>Market channel</th><th>What it wants</th><th>Price potential</th></tr>
+        <tr><td>Urban retail (market stalls, traders)</td><td>Fresh, correct size/colour, delivered consistently</td><td>Medium; volume and consistency matter most</td></tr>
+        <tr><td>Supermarkets / hotels / institutions</td><td>Clean, uniform, packaged, year-round supply, invoiced</td><td>Highest; hardest to enter; group certification often required</td></tr>
+        <tr><td>Processing (tomato paste, sun-dried, juice)</td><td>Volume, ripeness at delivery; specs vary</td><td>Lower per kg but absorption of glut — the buffer</td></tr>
+        <tr><td>Local village / roadside</td><td>Any grade; highest price in lean season</td><td>Variable; lean-season premium real</td></tr>
+      </table>
+      <h3>Lesson 1.3 — Year-round potential with irrigation</h3>
+      <p>Rain-fed vegetable growing is seasonal and glut-prone. <strong>Irrigation — even a hand pump, gravity tank, or treadle pump on a small stream — converts a 90-day season into a 365-day business</strong>. The dry-season crop earns 3–5× the rain-season price for the same vegetable. Planning your water source is the first step of vegetable farm planning, before variety, before seedbed, before anything else.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> From 50 m² leafy-green bed to pre-sold tomato — the perishable cash accelerator &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 1:</strong> Map your water situation: any stream, pond, borehole, rainwater tank or municipal connection near your land? Estimate the daily volume available and distance to the field. Walk your nearest vegetable market: record prices for tomato, kale/sukuma wiki, spinach, and any other common vegetable for three visits across a week (note day-of-week price variation). Write: your water-source plan, your entry crop choice (leafy greens first or tomato), and one regular buyer you could approach before planting.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 1 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Vegetables earn more per square metre than most other crops because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_1')">Fast turnover (21–90 days per cycle), year-round possibility with irrigation, and premium urban prices</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">They are simpler to grow</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">They need less water</button>
+<div class="q-exp" id="exp1_1"><strong>Why:</strong> Five tomato cycles per year on the same plot, each at premium dry-season prices: the compounding of turnover and price is the vegetable arithmetic.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. The main risk vegetables add compared to cereals is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_2')">Perishability (hours matter), price volatility (300–400% swings) and continuous input demand — the margin comes with matching risk</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">Nothing extra</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">Less risk than cereals</button>
+<div class="q-exp" id="exp1_2"><strong>Why:</strong> Vegetables are the high-risk, high-reward end of smallholder farming. The farmers who succeed learn the perishability calendar as carefully as the agronomic calendar.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. The dry-season irrigated vegetable crop earns:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_3')">3–5× the rainy-season price for the same product — water is the price multiplier</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">The same price as rain-season</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">Less than rain-season</button>
+<div class="q-exp" id="exp1_3"><strong>Why:</strong> Price is an inverse function of supply. When every rainfed farmer's crop fails, the irrigated farmer's crop earns the shortage premium.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Leafy greens (kale, sukuma wiki, spinach, amaranth) are the entry point because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_4')">Fastest cash (21–35 days), lowest input barrier, daily harvest, and the most forgiving urban market</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">Highest-value only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">No market exists</button>
+<div class="q-exp" id="exp1_4"><strong>Why:</strong> Sukuma wiki is East Africa's daily protein vegetable. The market is always there; the capital needed to start is the lowest in this course.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Water source planning is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_5')">The first step before variety, seedbed or anything else — irrigation converts seasonal farming into a year-round business</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Optional</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Done after planting</button>
+<div class="q-exp" id="exp1_5"><strong>Why:</strong> The farm plan is a water plan. Every other decision — variety, timing, pest management, market channel — is downstream of whether water is available and how much.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Supermarket and hotel buyers want:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_6')">Clean, uniform, packaged, year-round supply with invoices — the highest price and the hardest entry, usually requiring group certification</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">Any grade of any size</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">Random supply on random days</button>
+<div class="q-exp" id="exp1_6"><strong>Why:</strong> Institutional buyers are reliability buyers: same size, same packaging, every Thursday. The premium pays for the discipline they won't supply themselves.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Tomato is the highest-value vegetable choice because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_7')">Wide market acceptance, high price potential — but also the highest-risk (perishability, disease, post-harvest)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">It is the easiest crop</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">It requires no inputs</button>
+<div class="q-exp" id="exp1_7"><strong>Why:</strong> Tomato is both the prize and the test: success proves a farmer is managing perishability, pest and market together. The margin is real; the failure rate is also high.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Glut (harvest-time oversupply) in vegetables is managed by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_8')">Processing channels (paste, sun-dried, juice) that absorb volume at lower price — the buffer for the production risk</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Producing more always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Doing nothing</button>
+<div class="q-exp" id="exp1_8"><strong>Why:</strong> The processor is the safety valve: when every farmer's tomato ripens in the same week, the paste factory takes surplus at a lower but real price.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Principles taught for tomato and leafy greens apply to:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_9')">Cabbage, onion, pepper, aubergine, courgette — the whole vegetable family follows the same production logic</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">Only tomato and kale forever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">Nothing else</button>
+<div class="q-exp" id="exp1_9"><strong>Why:</strong> Vegetable production is a system: nursery discipline, irrigation timing, scouting, post-harvest speed — all transferable across every vegetable species.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Rain-fed vegetable production is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_10')">Seasonal and glut-prone — the entire harvest hits the market at once and prices collapse; irrigation breaks the seasonal trap</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Ideal for price</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Better than irrigation always</button>
+<div class="q-exp" id="exp1_10"><strong>Why:</strong> The glut calendar is predictable and consistent: every rain-season farmer's crop ripens together; every price collapses together. The irrigated farmer is the one selling to the glut farmer's customers.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn1" onclick="markComplete(1)">Mark Month 1 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="2">
+    <div class="module-header" onclick="toggleModule(2)">
+      <div class="module-num">2</div>
+      <div class="module-title">Month 2: Tomato Nursery, Transplanting &amp; Leafy-Green Beds</div>
+      <div class="module-status" id="status2">Locked</div>
+    </div>
+    <div class="module-body" id="body2">
+
+      <h3>Lesson 2.1 — The tomato nursery: foundation of the season</h3>
+      <p>Tomato is always raised in a nursery before transplanting: <strong>28–35 days in a protected, shaded, well-managed seedbed</strong>. Rules:</p>
+      <ul>
+        <li>Nursery site: sheltered, protected from heavy rain splash (the disease spreader), with access to clean water.</li>
+        <li>Media: fine compost or compost-soil mix in raised beds or trays; soil-borne diseases killed by solarisation (clear plastic over moist soil for 2–3 weeks in sun) before use.</li>
+        <li>Seed rate: ~150–200 g seed sows 1 ha transplant (a small amount goes a long way).</li>
+        <li>Shade: 30–40% shade cloth (or banana leaves) in hot seasons reduces stress and transplant shock.</li>
+        <li>Watering: daily, early morning, by sprinkle or fine rose — heavy irrigation washes seed and splashes disease.</li>
+        <li>Harden off: reduce shade and watering 5–7 days before transplant — prepares seedlings for field conditions.</li>
+      </ul>
+      <h3>Lesson 2.2 — Transplanting tomato</h3>
+      <p><strong>Transplant at 4–6 leaf stage</strong> (28–35 days), in the evening or on a cloudy day to reduce transplant stress. Spacing: rows <strong>60–75 cm, plants 40–50 cm</strong>. Dig a hole larger than the root ball; water the hole before planting; firm soil. Apply P fertiliser in the planting hole (not touching roots). <strong>Stake or trellis immediately</strong> — tomato left to sprawl produces 30–40% less yield, rots heavily and is almost impossible to spray or harvest cleanly.</p>
+      <h3>Lesson 2.3 — Leafy greens: fast, direct, forgiving</h3>
+      <p>Kale (sukuma wiki), spinach, amaranth and African leafy vegetables are <strong>direct-seeded or transplanted from a simple nursery into prepared beds</strong>. Beds: 1 m wide (reachable from both sides without stepping on soil), 10–15 cm raised, with compost incorporated. Broadcast or row-seed; thin to 10–15 cm. First harvest of outer leaves in 21–35 days; plants continue producing for months on cut-and-come-again management. <strong>A 50 m² leafy-green bed generates daily income within one month</strong> — the entry-level business for water-access farmers.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Solarisation, fine compost and the hardened-off transplant — why the nursery is the season &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 2:</strong> Prepare a 2–5 m² nursery bed: fine compost or compost-soil mix, solarised for 2 weeks where possible. Sow tomato seed at 150–200 g/ha equivalent rate; cover lightly, shade 30–40%, water daily with a fine rose or sprinkler. Prepare a 50 m² leafy-green bed (1 m wide, raised 10–15 cm, compost incorporated). Sow kale or amaranth (broadcast or row-sow). At 28–35 days, transplant tomato seedlings in the evening at 60–75 × 40–50 cm; stake immediately with 1.5–2 m stakes. Record dates, stand counts, and nursery observations.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 2 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Tomato nursery duration is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_1')">28–35 days in a sheltered, shaded, fine-compost seedbed — transplanted at 4–6 leaf stage</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">1 day only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">6 months</button>
+<div class="q-exp" id="exp2_1"><strong>Why:</strong> The nursery is where the season is decided: 28 days of disease-free, stress-managed growing produces a transplant that the field can't replicate from direct seed.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Nursery soil solarisation is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_2')">Covering moist nursery soil with clear plastic for 2–3 weeks in sun to kill soil-borne pathogens — the no-chemical seedbed sanitiser</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">Watering with boiling water</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">Using cement</button>
+<div class="q-exp" id="exp2_2"><strong>Why:</strong> Solar energy kills soil pathogens without chemicals: 55–65 °C under clear plastic for 2–3 weeks sterilises the seedbed the transplants will live in.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Tomato is transplanted at:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_3')">4–6 leaf stage (28–35 days), in the evening or cloudy day to reduce stress, into a watered planting hole with P in the base</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">2 days old</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">Flowering stage</button>
+<div class="q-exp" id="exp2_3"><strong>Why:</strong> The 4–6 leaf window is when root-shoot balance allows field establishment. Evening transplanting avoids wilting under peak sun — a transplant saved is a stand gained.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Tomato staking or trellising immediately after transplant:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_4')">Is mandatory — sprawling tomato loses 30–40% yield, rots heavily, and cannot be sprayed or harvested cleanly</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">Is optional</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">Reduces yield always</button>
+<div class="q-exp" id="exp2_4"><strong>Why:</strong> Staking is architecture: vertical plants dry faster, spray coverage reaches all surfaces, and fruit doesn't touch soil where moulds and pests wait.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Tomato spacing is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_5')">Rows 60–75 cm, plants 40–50 cm — allows airflow and spray access while maximising plant count</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">1 cm between all plants</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">10 m between rows</button>
+<div class="q-exp" id="exp2_5"><strong>Why:</strong> The airflow logic: tomato diseases (blight, bacterial) need moisture to spread. Wider spacing dries leaves faster. Too wide wastes expensive bed space.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Leafy green beds are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_6')">1 m wide (reachable from both sides without stepping), raised 10–15 cm, compost incorporated — the physical design that enables daily management without compaction</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">Any shape and size</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">Never raised</button>
+<div class="q-exp" id="exp2_6"><strong>Why:</strong> The 1 m bed is the vegetable farmer's workspace: designed for reach without compaction, for airflow and drainage, and for daily leaf harvest without damage.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. First leafy-green harvest occurs:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_7')">At 21–35 days from planting — outer leaves picked while the plant continues growing on cut-and-come-again management for months</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Only at death of plant</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">After 2 years</button>
+<div class="q-exp" id="exp2_7"><strong>Why:</strong> Cut-and-come-again is the business model: one establishment, months of daily income from the same plant. A 50 m² bed is a daily market presence.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Nursery seedlings are hardened off by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_8')">Reducing shade and watering 5–7 days before transplant — prepares them for field sun and water rhythm without transplant shock</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">Immediate full-sun exposure on transplant day</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">More shade and more water</button>
+<div class="q-exp" id="exp2_8"><strong>Why:</strong> Hardening is acclimatisation: gradually reducing the protection teaches the seedling to function without it. Transplant shock (wilting that delays establishment) is reduced dramatically.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Nursery watering is by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_9')">Fine rose or sprinkle — early morning, daily; heavy irrigation washes seed and splashes disease from soil to seedling</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Flood irrigation always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Never — rely on rain only</button>
+<div class="q-exp" id="exp2_9"><strong>Why:</strong> The rose head controls droplet size: fine mist settles gently. Heavy drops splash soil-borne pathogens onto cotyledons — the first disease entry point.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Amaranth and African leafy vegetables suit smallholders because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_10')">Fast-growing (21–35 days), nutritious, drought-tolerant, culturally preferred in many areas, and near-zero input cost — the lowest barrier entry</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">High input only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">No market exists</button>
+<div class="q-exp" id="exp2_10"><strong>Why:</strong> African leafy vegetables are the subsistence-farming entry to the cash market: culturally valued, growing in poor soil, and commanding real urban prices once consistent supply is established.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn2" onclick="markComplete(2)">Mark Month 2 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="3">
+    <div class="module-header" onclick="toggleModule(3)">
+      <div class="module-num">3</div>
+      <div class="module-title">Month 3: Irrigation, Fertility &amp; the Daily Growing System</div>
+      <div class="module-status" id="status3">Locked</div>
+    </div>
+    <div class="module-body" id="body3">
+
+      <h3>Lesson 3.1 — Tomato water management</h3>
+      <p>Tomato needs consistent soil moisture through the whole season — but waterlogging at any point causes blossom end rot (calcium immobility) and root diseases. Technique:</p>
+      <ul>
+        <li><strong>Drip or furrow irrigation</strong> at the base of plants — wets roots, keeps foliage dry (major disease reducer).</li>
+        <li>Avoid overhead sprinklers where blight is endemic — every water droplet is a disease delivery vehicle for Phytophthora.</li>
+        <li><strong>Mulch around plants</strong> (dry grass, straw, leaves): reduces moisture evaporation, suppresses weeds, prevents rain splash of soil-borne pathogens, and reduces blossom end rot fluctuation.</li>
+        <li>Critical water windows: <strong>establishment (first 2 weeks), flowering, and fruit fill</strong> — stress at any of these translates directly to crop loss.</li>
+      </ul>
+      <h3>Lesson 3.2 — Tomato fertility</h3>
+      <p>Tomato is a heavy feeder — a commercial crop removes 120–200 kg N, 50–80 kg P₂O₅ and 200–300 kg K₂O per hectare. Smallholder strategy:</p>
+      <ul>
+        <li><strong>Compost / well-rotted manure (3–5 t/ha)</strong> worked into beds before transplant: the foundation.</li>
+        <li><strong>Basal compound fertiliser</strong> (placed in hole at transplant, not touching roots).</li>
+        <li><strong>Liquid feeding every 2–3 weeks:</strong> dilute manure tea or soluble NPK applied to moist soil — feeding the heavy feeder continuously rather than in two large doses prevents the nutrient flush-and-famine that causes uneven fruit.</li>
+        <li><strong>Calcium (gypsum or lime) where blossom end rot appears:</strong> BER is not usually a calcium-deficiency but a water-fluctuation-caused calcium immobility — consistent irrigation is the fix; calcium is supplementary.</li>
+      </ul>
+      <h3>Lesson 3.3 — Leafy green fertility and water</h3>
+      <p>Kale, spinach, amaranth and relatives are <strong>leafy and nitrogen-hungry</strong>: they need more N and water per square metre than most crops because you are harvesting leaves, not grain. Practical programme: compost-rich beds, a light urea or liquid manure application every 2–3 weeks, daily watering. <strong>The bed is a factory running every day: input goes in, leaves come out.</strong></p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Drip vs overhead — and the liquid-feed schedule that keeps tomato fruiting all season &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 3:</strong> Install or assess your irrigation system: drip (gravity tank and drip tape), furrow, or sprinkler. Identify whether overhead sprinkler can be replaced by furrow at ground level (blight management). Apply compost-rich beds before transplant; place basal compound fertiliser in the transplant hole. Set up a liquid-feed schedule (manure tea or soluble NPK every 2 weeks) and a mulch ring (dry grass or straw around each plant). Record irrigation frequency and any blossom-end-rot symptoms as evidence of water fluctuation.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 3 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Overhead sprinkler irrigation on tomato:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_1')">Spreads blight (Phytophthora) — every droplet is a disease vehicle; drip or furrow at plant base is far better</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Is ideal for blight control</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Should always be used</button>
+<div class="q-exp" id="exp3_1"><strong>Why:</strong> Late blight spreads by rain and water splash. Overhead irrigation is rain you control — and chose to apply to your disease problem. Drip keeps foliage dry.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Mulching around tomato plants:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_2')">Reduces evaporation, suppresses weeds, prevents rain splash of soil pathogens, and reduces blossom end rot fluctuation — one action, four benefits</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Increases blight</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Is harmful always</button>
+<div class="q-exp" id="exp3_2"><strong>Why:</strong> Mulch is the dryland micro-climate manager: moisture stable, weeds suppressed, soil contact eliminated, and the water regulation that limits BER.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Blossom end rot (BER) in tomato is caused by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_3')">Water fluctuation causing calcium immobility — consistent irrigation is the fix; the problem is water management, not usually calcium deficiency</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">Too much sun</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">Pest attack</button>
+<div class="q-exp" id="exp3_3"><strong>Why:</strong> BER looks like calcium deficiency and is treated as calcium deficiency — but the root cause is irregular irrigation that prevents calcium transport. Fix the water first.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Tomato liquid feeding every 2–3 weeks with manure tea or soluble NPK:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_4')">Provides continuous nutrition to a heavy feeder, preventing the nutrient flush-and-famine that causes uneven fruit development</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Is too much fertiliser</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Is only needed once</button>
+<div class="q-exp" id="exp3_4"><strong>Why:</strong> Continuous small doses match the crop's daily hunger: a heavy feeder running out of N in week 6 will drop flowers and produce green shoulders.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Tomato's critical water windows are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_5')">Establishment (first 2 weeks), flowering, and fruit fill — stress at any of these translates directly to crop loss</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Only at harvest</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">None — tomato is drought-tolerant</button>
+<div class="q-exp" id="exp3_5"><strong>Why:</strong> Map the water calendar against the crop stage: each window is a specific physiological sensitivity. Stress at establishment = poor root; at flowering = blossom drop; at fruit fill = blossom end rot.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Compost at 3–5 t/ha in tomato beds is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_6')">The foundation that all chemical fertiliser performs on — improves water-holding, soil biology and nutrient buffering</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Unnecessary</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Harmful to tomato</button>
+<div class="q-exp" id="exp3_6"><strong>Why:</strong> Commercial tomato growers often forget compost; smallholders who can't afford full chemical programmes replace much of it with compost's buffering power.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Leafy greens need more N per square metre than most crops because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_7')">You are harvesting leaves, not grain — N drives the leaf growth that IS the product; low N = tough, bitter, small leaves</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">N harms leaf crops</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Leaves need no N</button>
+<div class="q-exp" id="exp3_7"><strong>Why:</strong> The crop is the leaf: whatever N goes in comes out as edible fresh weight. Shortchanging N on a leafy green shortchanges the product itself.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Daily watering of leafy greens is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_8')">The factory input — the 50 m² bed is a daily production system; water is the continuous raw material</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">Weekly is sufficient</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">Only once at planting</button>
+<div class="q-exp" id="exp3_8"><strong>Why:</strong> The cut-and-come-again model demands continuous production. Daily water is daily production. Skip water, skip harvest, skip income.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Drip irrigation on tomato vs furrow:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_9')">Both keep foliage dry, which is critical; drip uses less water and delivers to exactly the root zone; furrow is cheaper to install but uses more water</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Drip is always wrong</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Furrow causes blight</button>
+<div class="q-exp" id="exp3_9"><strong>Why:</strong> Either beats overhead for blight management. Drip is more efficient and can be built from local materials (gravity tank, drip tape from barbed wire or simple emitters).</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Basal compound fertiliser at tomato transplant is placed:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_10')">In the planting hole but not touching roots — contact burning delays establishment</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Broadcast over the whole field</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Sprayed on leaves only</button>
+<div class="q-exp" id="exp3_10"><strong>Why:</strong> Root contact with concentrated fertiliser causes osmotic burning. Placement in the hole, 5–10 cm away from roots, gives proximity without contact — the furrow-placement logic applied to transplanted vegetables.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn3" onclick="markComplete(3)">Mark Month 3 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="4">
+    <div class="module-header" onclick="toggleModule(4)">
+      <div class="module-num">4</div>
+      <div class="module-title">Month 4: Blight, Wilt, Whitefly &amp; Tuta — the Tomato Disease-Pest System</div>
+      <div class="module-status" id="status4">Locked</div>
+    </div>
+    <div class="module-body" id="body4">
+
+      <h3>Lesson 4.1 — Tomato's disease triangle: blight, wilt, mosaic</h3>
+      <p>Tomato disease management is the difference between a profitable and a failed season. Three diseases dominate:</p>
+      <ul>
+        <li><strong>Late blight (Phytophthora infestans):</strong> water-soaked brown lesions on leaves and fruit; white mould underside in humid mornings; the fastest-spreading vegetable disease. <strong>Preventive fortnightly copper-based or mancozeb spray from transplant, drip irrigation, mulch, staked wide spacing, resistant varieties</strong> — the entire disease-management system aims at blight first.</li>
+        <li><strong>Bacterial wilt (Ralstonia):</strong> sudden wilting without yellowing; plant dies within days; soil-borne. Pull and burn infected plants immediately. <strong>Rotation (3–4 years off solanaceous crops: tomato, pepper, potato, aubergine)</strong> is the only prevention. Resistant varieties where released.</li>
+        <li><strong>Tomato yellow leaf curl virus (TYLCV):</strong> transmitted by whitefly; cupped yellowing leaves; no cure. <strong>Early planting, whitefly control (sticky traps, reflective mulch, threshold spray), resistant varieties</strong>.</li>
+      </ul>
+      <h3>Lesson 4.2 — Tomato pests</h3>
+      <table>
+        <tr><th>Pest</th><th>Damage</th><th>Response</th></tr>
+        <tr><td><strong>Tomato leaf miner (Tuta absoluta)</strong></td><td>Mines leaf and fruit; explosive spreader</td><td>Pheromone traps for detection; Bt or spinosad at threshold; strict hygiene (buried infested plant parts)</td></tr>
+        <tr><td><strong>Tomato fruitworm (Helicoverpa)</strong></td><td>Larva bores into fruit; entry hole + frass</td><td>Scout fruit for entry holes; Bt or approved insecticide at first appearance; natural enemies help</td></tr>
+        <tr><td><strong>Whitefly</strong></td><td>Honeydew + sooty mould; TYLCV vector</td><td>Yellow sticky traps, reflective mulch, threshold spray</td></tr>
+        <tr><td><strong>Spider mites</strong></td><td>Bronze-silver leaf stippling in hot dry weather; devastating at scale</td><td>Increase humidity (mulch, irrigation); specific acaricide if severe; avoid broad-spectrum sprays that kill predators</td></tr>
+        <tr><td><strong>Aphids</strong></td><td>Curled leaves, honeydew, virus vector</td><td>Natural enemies usually sufficient; treat at threshold</td></tr>
+      </table>
+      <h3>Lesson 4.3 — Leafy greens: fewer problems, some important ones</h3>
+      <ul>
+        <li><strong>Cabbage aphids and caterpillars (cabbage looper, diamondback moth):</strong> threshold-based spray; Bt-based products preferred (kills caterpillars, safe for beneficials).</li>
+        <li><strong>Downy mildew on leafy greens:</strong> white sporulation underside of leaves in cool wet conditions; avoid overhead irrigation; wider spacing; resistant varieties.</li>
+        <li><strong>Alternaria leaf spot:</strong> brown circular lesions; clean seed, rotation, avoid leaf wetting.</li>
+        <li><strong>Nematodes:</strong> root-knot nematode galls cause wilting and poor growth; rotation with non-host crops (cereals), resistant varieties, compost-rich soils.</li>
+      </ul>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Fortnightly copper spray and the rotation map — managing blight and wilt before they start &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 4:</strong> Set up a preventive spray programme: purchase copper-based fungicide or mancozeb; apply to tomato at transplanting + every 10–14 days. Set up yellow sticky traps (1 per 20–30 m²) and record the weekly catch count. Draw your rotation map: which plot will rest from solanaceous crops for 3–4 years after this tomato season? Inspect plants weekly for blight symptoms (start underside), wilt, mosaic, Tuta mines. Record on a scouting sheet with date, symptom description and plant count.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 4 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Late blight (Phytophthora) prevention requires:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_1')">Preventive fortnightly copper/mancozeb spray, drip irrigation, mulch, wide staked spacing, and resistant varieties — the entire system aims at blight first</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">A single spray after infection</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Only drought</button>
+<div class="q-exp" id="exp4_1"><strong>Why:</strong> Blight is managed, not cured: by the time symptoms appear, the infection radius is already wide. Preventive spray is the investment that keeps the system ahead of the pathogen.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Bacterial wilt (Ralstonia) management is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_2')">Pull and burn infected plants; 3–4 year rotation off solanaceous crops (tomato, pepper, potato, aubergine) — no chemical cure exists</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">Weekly spray curative</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">Irrigation adjustment</button>
+<div class="q-exp" id="exp4_2"><strong>Why:</strong> Soil-borne wilt is irreversible once in the plant and the soil. The rotation window (3–4 years without a Solanaceous host) is the only way to drain the soil's bacterial reservoir.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Tomato yellow leaf curl virus (TYLCV) is prevented by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_3')">Early planting to miss peak whitefly, whitefly control (sticky traps, reflective mulch, threshold spray), and resistant varieties — no cure once infected</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">A spray after symptom appears</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Flooding the field</button>
+<div class="q-exp" id="exp4_3"><strong>Why:</strong> TYLCV is irreversible: the virus in the plant stays there. Prevention through whitefly management and resistant varieties is the only viable approach.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Tuta absoluta (tomato leaf miner) requires:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_4')">Pheromone traps for detection, Bt or spinosad at threshold, and strict hygiene (buried infested plant parts) — a new invasive pest now across Africa</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">Ignoring completely</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">Only pruning</button>
+<div class="q-exp" id="exp4_4"><strong>Why:</strong> Tuta is explosive when it arrives: pheromone traps catch adults before populations build. Buried infested parts prevent pupae from completing the cycle.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Spider mites on tomato are managed by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_5')">Increasing humidity with mulch and irrigation, and specific acaricide only if severe — broad-spectrum sprays kill the predators that control mites</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">More spraying of any pesticide</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Nothing effective</button>
+<div class="q-exp" id="exp4_5"><strong>Why:</strong> The classic pesticide-induced mite outbreak: broad sprays kill predatory mites, liberating pest mites to explode. Targeted chemistry plus humidity management is the safe approach.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Whitefly on tomato is managed with:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_6')">Yellow sticky traps, reflective silver mulch (confuses orientation), and threshold-based spray — traps also serve as early-warning monitors</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Nothing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Weekly spray as routine</button>
+<div class="q-exp" id="exp4_6"><strong>Why:</strong> Traps are both control and intelligence: the catch count tells you whether the population is rising toward the economic threshold. The mulch is passive, 24-hour protection.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Caterpillars on leafy greens are controlled best with:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_7')">Bt-based (Bacillus thuringiensis) products — kills lepidopteran larvae specifically, safe for beneficial insects and humans at harvest</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Broad-spectrum spray every week</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Ignoring</button>
+<div class="q-exp" id="exp4_7"><strong>Why:</strong> Bt is the selective insecticide: deadly to caterpillars, harmless to ladybirds, parasitoids, bees and humans at approved rates. The product of choice for leaf crops where residue matters.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Root-knot nematodes on leafy greens cause:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_8')">Wilting and poor growth through galled roots — managed by rotation with non-host cereals, resistant varieties, and compost-rich soils</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">Perfect growth</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">Nothing visible</button>
+<div class="q-exp" id="exp4_8"><strong>Why:</strong> Nematode infestations are often diagnosed late: patchy wilted rows in an otherwise healthy-looking field. Compost-rich soils build antagonist populations that suppress nematode damage.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Solanaceous crops rotation off a bacterial-wilt field must be:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_9')">3–4 years — tomato, pepper, potato, aubergine all share the same wilt bacterium; all must be absent during the rotation window</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">1 week is sufficient</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Permanent — never grow again</button>
+<div class="q-exp" id="exp4_9"><strong>Why:</strong> The host range is wide: replacing tomato with pepper or potato still feeds the soil's bacterial reservoir. The rotation must exclude the entire family.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Downy mildew on leafy greens appears in:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_10')">Cool wet conditions as white sporulation underside of leaves — avoided by drip irrigation, wider spacing, and resistant varieties</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Hot dry weather only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Never on leaves</button>
+<div class="q-exp" id="exp4_10"><strong>Why:</strong> Downy mildew needs humidity and leaf wetness: overhead irrigation and dense canopies are its habitat. Drip irrigation and airflow are architectural solutions.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn4" onclick="markComplete(4)">Mark Month 4 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="5">
+    <div class="module-header" onclick="toggleModule(5)">
+      <div class="module-num">5</div>
+      <div class="module-title">Month 5: Harvest Discipline, Post-Harvest &amp; Value Addition</div>
+      <div class="module-status" id="status5">Locked</div>
+    </div>
+    <div class="module-body" id="body5">
+
+      <h3>Lesson 5.1 — Tomato harvest: the perishability clock</h3>
+      <p>Tomato ripening is a 3–5 day window from mature-green to table-ripe. <strong>Harvest at mature-green (slightly blushed) for transport/market; harvest at breaker stage (first pink visible) for local/next-day sale.</strong> Never harvest over-ripe tomatoes: they bruise in any container and will be priced zero before arrival. Rules:</p>
+      <ul>
+        <li>Harvest in early morning — cooler fruit, less dehydration in transport.</li>
+        <li>Handle by hand only, never throw into containers or pile deeply — one bruised tomato rots the adjacent ones within hours.</li>
+        <li>Grade: separate by size (large/medium/small) and exclude cracked, diseased or blossom-end-rot fruit at picking — they ruin the container they ride in.</li>
+        <li>Pack into crates or shallow baskets (max 2–3 layers) — deep piles self-bruise under weight.</li>
+      </ul>
+      <h3>Lesson 5.2 — Reducing losses: the cold-chain alternative</h3>
+      <p>Tomato without refrigeration in African conditions lasts <strong>2–3 days at ambient temperature</strong>. Where cold storage exists (solar-cooled walk-in units, zero-energy brick coolers): life extends to 7–10 days. Evaporative coolers (clay pot or brick with wet sand, charcoal), <strong>while modest</strong>, can add 24–36 hours — enough for a market cycle. The cheapest loss-reduction tactic is: <strong>harvest at the right stage, grade at harvest, pack in shallow containers, sell within 24 hours.</strong></p>
+      <h3>Lesson 5.3 — Leafy green harvest and shelf life</h3>
+      <p>Harvest leafy greens in the <strong>early morning when they are turgid</strong>; wilted greens sell poorly and often not at all. Bundle into uniform sizes for market presentation — a consistent 250 g or 500 g bundle that buyers recognise creates a quality brand. Shelf life without refrigeration: <strong>12–24 hours in shade</strong>; with evaporative cooling, 24–48 hours. <strong>Harvest only what can be sold within 24 hours</strong> — cutting more than the market can absorb in a day wastes the product and the labour that grew it.</p>
+      <h3>Lesson 5.4 — Value addition options</h3>
+      <ul>
+        <li><strong>Sun-dried tomato:</strong> slice, salt lightly, sun-dry on racks — shelf-stable months, premium price, no electricity needed. Module 5 of the Solar Drying course covers this.</li>
+        <li><strong>Tomato paste (small-batch):</strong> cook and concentrate, fill into clean glass jars or sealed plastic sachets — cottage level; requires hygiene discipline and a reliable fire.</li>
+        <li><strong>Greens drying / blanching-and-freezing:</strong> where urban markets pay for convenience, pre-washed pre-cut greens in small packages are a growing niche.</li>
+      </ul>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Mature-green harvest, shallow crates and sun-dried tomato — converting perishability into premium &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 5:</strong> Harvest your first tomato at mature-green (before full red colour): note the date, time of day, stage, and whether fruit passes the gentle-handle test. Grade at harvest: separate three sizes, remove BER/cracked/diseased. Pack into a shallow basket (2–3 layers max). Record the time from harvest to market and the price received vs adjacent over-ripe fruit in the same market. Attempt a small sun-drying trial: 1 kg tomato sliced on a clean rack in full sun; record days to dry, final weight, and appearance.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 5 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Tomato harvest stage for transport to market is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_1')">Mature-green (slightly blushed) — ripens in transit; breaker stage (first pink visible) for next-day local sale</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Over-ripe is best</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Green unripe is fine for long trips</button>
+<div class="q-exp" id="exp5_1"><strong>Why:</strong> The harvest stage is the transport window: mature-green survives a day's journey and arrives table-ready; over-ripe arrives as bruised paste. Stage = shelf life.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Bruised tomato in a container:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_2')">Rots adjacent fruit within hours — handle by hand only, never throw into containers, never pile more than 2–3 layers</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Is unaffected</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Improves nearby tomatoes</button>
+<div class="q-exp" id="exp5_2"><strong>Why:</strong> One bruise is a contamination event: the rot ethylene and juice propagate to every fruit touching it. The handling rule is not caution — it is the preservation of the entire container.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Tomato shelf life at African ambient temperatures without cooling is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_3')">2–3 days — harvest timing and 24-hour market reach are the primary strategies; cold chain extends to 7–10 days</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">2 weeks always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">Infinite in dry weather</button>
+<div class="q-exp" id="exp5_3"><strong>Why:</strong> The perishability clock is precise: 48 hours from harvest in ambient heat. Every process decision — harvest time, container, market route — is calibrated against this 48-hour window.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Evaporative coolers (clay pot, brick and wet sand) add:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_4')">24–36 hours to tomato shelf life — modest but enough for one additional market cycle</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">Full refrigeration equivalent</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">Nothing measurable</button>
+<div class="q-exp" id="exp5_4"><strong>Why:</strong> Zero-energy cooling is real but limited: it buys a market day, not a week. The real solution is harvest-stage discipline and market proximity — cooling is supplementary.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Leafy greens must be harvested:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_5')">Early morning when turgid — wilted greens sell poorly or not at all; consistent bundle sizes create a quality brand</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">At noon peak heat</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">At sunset only</button>
+<div class="q-exp" id="exp5_5"><strong>Why:</strong> Turgor is the product quality signal for leafy greens: upright, crisp leaves sell; wilted leaves are composted by the buyer. Morning is the window.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Harvest only what can be sold within 24 hours means:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_6')">Cut-and-come-again is calibrated to the daily market — cutting more than the market absorbs wastes product and labour</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">Always cut everything at once</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">Cut nothing ever</button>
+<div class="q-exp" id="exp5_6"><strong>Why:</strong> The production system and the sales system must be synchronised: the 50 m² bed produces in daily rhythms that must match the buyer's daily rhythm.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Sun-dried tomato is an attractive value-addition because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_7')">Shelf-stable months, premium price, no electricity needed — glut-season surplus converted into lean-season income</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Requires electricity always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Never premium</button>
+<div class="q-exp" id="exp5_7"><strong>Why:</strong> Solar drying converts the glut-season price crash into lean-season premium: the same tomato, dried at zero energy cost, earns months later at shortage prices.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Grading tomato at harvest means:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_8')">Separating by size and removing cracked, diseased or BER fruit — each excluded fruit prevents container contamination that zeros the whole box</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Including all fruit to maximise volume</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Never sorting</button>
+<div class="q-exp" id="exp5_8"><strong>Why:</strong> The grade-at-harvest rule is loss prevention: one diseased fruit in a market crate contaminates the buyer's display within hours. Clean crates preserve price.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Tomato paste at cottage scale requires:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_9')">Cook-and-concentrate technique, clean glass jars or sealed sachets, hygiene discipline — a real product but requires a consistent fire and clean water</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">No preparation at all</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Industrial machinery only</button>
+<div class="q-exp" id="exp5_9"><strong>Why:</strong> Cottage paste is achievable and sellable; the constraints are consistency (same taste and density per jar) and hygiene (clean containers, sealed immediately). Both are discipline, not capital.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Consistent bundle sizing for leafy greens creates:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_10')">A quality brand buyers recognise — a 250 g or 500 g bundle that is always the same size is a promise kept, which is the definition of a brand</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Random sizes are preferred</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Nothing valuable</button>
+<div class="q-exp" id="exp5_10"><strong>Why:</strong> Reliability is the brand. Buyers who return to the same stall for the same bundle every morning are the business model. Inconsistency loses them to the next vendor.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn5" onclick="markComplete(5)">Mark Month 5 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="6">
+    <div class="module-header" onclick="toggleModule(6)">
+      <div class="module-num">6</div>
+      <div class="module-title">Month 6: Market Timing, Staggering &amp; the Year-Round Business</div>
+      <div class="module-status" id="status6">Locked</div>
+    </div>
+    <div class="module-body" id="body6">
+
+      <h3>Lesson 6.1 — Marketing discipline: the perishable farmer's advantage</h3>
+      <p>The vegetable farmer's competitive edge is not the crop — it is the <strong>relationship with the buyer before the crop is even planted</strong>. Market discipline means: know who will buy before planting; agree volumes, grades, and delivery days in advance; never harvest for a vague 'I'll sell it somehow.' Rules:</p>
+      <ul>
+        <li><strong>Walk the market first:</strong> note which vegetables are scarce, what buyers say they'd buy more of, and the price differential across a week (which day is lowest and highest).</li>
+        <li><strong>Stagger plantings:</strong> instead of one large planting in one week, stagger the same total area across 3–4 weeks. You get consistent, smaller harvests instead of one unmanageable glut followed by nothing.</li>
+        <li><strong>Pre-sell:</strong> establish a regular buyer (a trader, a restaurant, a market stall) who expects your produce on a fixed day at a fixed price — reducing the price negotiation that happens when you arrive with perishables and no buyer.</li>
+      </ul>
+      <h3>Lesson 6.2 — An honest one-season vegetable budget</h3>
+      <table>
+        <tr><th>Item</th><th>Tomato (0.25 ha, one crop)</th><th>Leafy greens (50 m² beds, one season)</th></tr>
+        <tr><td>Yield</td><td>~12–18 t/ha × 0.25 ha = 3–4.5 t</td><td>~50–80 g fresh leaf/plant/week × 6 months</td></tr>
+        <tr><td>Gross</td><td>$0.30–0.60/kg local; up to $0.80 export</td><td>~$200–500 from 50 m² over 6 months</td></tr>
+        <tr><td>Seed + nursery</td><td>~$20–50</td><td>~$5–15</td></tr>
+        <tr><td>Manure/compost (3–5 t/ha)</td><td>~$80–200</td><td>~$20–60</td></tr>
+        <tr><td>Fertiliser (compound + liquid feeds)</td><td>~$60–150</td><td>~$15–40</td></tr>
+        <tr><td>Stakes/trellis + irrigation setup</td><td>~$100–300</td><td>~$20–60</td></tr>
+        <tr><td>Pesticides (copper, Bt, threshold sprays)</td><td>~$60–150</td><td>~$10–30</td></tr>
+        <tr><td>Labour (planting, staking, weeding, harvest)</td><td>~$150–350</td><td>~$50–100</td></tr>
+        <tr><td><strong>Indicative margin</strong></td><td><strong>~$700–1,800 per 0.25 ha crop</strong></td><td><strong>~$50–300/50 m² per season</strong></td></tr>
+      </table>
+      <h3>Lesson 6.3 — The 50 m² leafy green business plan</h3>
+      <p>A 50 m² kale / sukuma wiki / amaranth bed irrigated daily produces harvestable leaves within 30 days and continues for 4–6 months. <strong>Daily income: 2–4 kg fresh leaves × local price.</strong> At $0.50/kg (conservative), that is $1–2 per day from 50 m² — $180–360 per 6-month season. This is the entry point for every farmer who has water access but not the capital for tomato. It also builds the irrigation habit, the marketing relationship and the discipline that the tomato operation demands.</p>
+      <h3>Lesson 6.4 — Records and the growth path</h3>
+      <p>Per plot per cycle: crop and variety; nursery date and transplant date; stand count; irrigation record (frequency and approximate amount); fertiliser dates and products; pest/disease scouting record (weekly); harvest dates and weights; sales dates, buyers, price received; any post-harvest losses (cause and weight). <strong>Report card: yield (kg/m²), post-harvest loss percentage, and average price/kg achieved.</strong> Growth path: year one — 50 m² leafy-green bed mastered (daily water, daily harvest, daily sale); mid-year — add 0.1–0.25 ha tomato using the staggered-planting discipline; year two — pre-sold tomato and leafy-green beds with a regular buyer; year three — supermarket or institutional supply with group certification.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Pre-selling, staggered planting and the supermarket path — from daily income to institutional supply &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 6:</strong> Build the budget for your tomato plot (actual costs) and your 50 m² leafy-green bed (actual harvest weights × local prices). Compare: harvest-day price vs a pre-agreed sale price with a regular buyer (try to negotiate one before your next planting). Design a staggered planting plan for the next 3 months: same total area, sown in 3 successive weeks. Calculate what consistent smaller weekly harvests earn versus one large glut harvest. Identify the nearest institutional buyer (school canteen, hospital, hotel) and find out what they buy and what proof of supply they require.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 6 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. The vegetable farmer's competitive edge over other farmers is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_1')">The buyer relationship established before planting — knowing who buys what, when and at what price before committing a seed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">The crop genetics</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">The weather</button>
+<div class="q-exp" id="exp6_1"><strong>Why:</strong> Vegetables are perishable; the buyer is the constraint, not the crop. A farmer with pre-sold tomatoes earns more than a farmer with unsold tomatoes no matter what yield both achieve.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Staggered planting over 3–4 weeks instead of one large planting:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_2')">Delivers consistent smaller harvests vs one unmanageable glut — price stability beats maximum one-day volume</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Always reduces income</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Is impossible</button>
+<div class="q-exp" id="exp6_2"><strong>Why:</strong> The glut is the price killer: all competitors ripen the same week. Staggering escapes the glut window — the planting calendar is the pricing tool.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Pre-selling to a regular buyer means:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_3')">A trader, restaurant or stall expects your produce on a fixed day at a negotiated price — removing the perishable-farmer's worst moment (arriving with produce and no buyer)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Selling to unknown buyers daily</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Giving produce away</button>
+<div class="q-exp" id="exp6_3"><strong>Why:</strong> The pre-sale is the business model: certainty on both sides. The buyer gets reliable supply; the farmer gets reliable price. Both reduce the perishable panic.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Walking the market before planting reveals:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_4')">Which vegetables are scarce (what to grow), the weekly price pattern (which day to harvest and sell), and what buyers say they need more of</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Nothing useful</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Only competitor information</button>
+<div class="q-exp" id="exp6_4"><strong>Why:</strong> Market intelligence before the seed goes in is the highest-return action in vegetable farming: 2 hours of observation determines months of harvest-stage and sale-day discipline.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. A 50 m² leafy-green bed daily at $0.50/kg earns roughly:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_5')">$1–2 per day = $180–360 per 6-month season — the entry business for water-access farmers with limited capital</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">Nothing measurable</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">$10,000 per day</button>
+<div class="q-exp" id="exp6_5"><strong>Why:</strong> The numbers are real: 2–4 kg leaf per day × $0.50 = a consistent daily income stream from a plot smaller than a room. The discipline it builds leads directly to the tomato operation.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. The report card for vegetable production is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_6')">Yield (kg/m²), post-harvest loss percentage, and average price/kg — three numbers revealing agronomy, handling and marketing discipline</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">Rainfall only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">Plant height</button>
+<div class="q-exp" id="exp6_6"><strong>Why:</strong> Yield shows the production discipline; loss percentage shows the post-harvest discipline; price achieved shows the marketing discipline. All three must work.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. The 0.25 ha tomato crop margin range is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_7')">~$700–1,800 per crop — very wide because post-harvest loss, disease management and market channel each pull the result strongly</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Always identical</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Loss always</button>
+<div class="q-exp" id="exp6_7"><strong>Why:</strong> The variance is the lesson: same field, same seed, different discipline at disease, harvest and market gives radically different outcomes. The course is about narrowing that variance upward.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Supermarket / institutional supply requires:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_8')">Group certification, year-round supply, consistent sizing, packaging and invoicing — the highest price and the highest barrier</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Individual farmers with random supply</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Any grade at any time</button>
+<div class="q-exp" id="exp6_8"><strong>Why:</strong> Supermarkets buy reliability. Group certification converts farmer discipline into institutional credibility. The year-round requirement drives the irrigation discipline that opens it.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Value addition (sun-dried tomato, paste, pre-washed greens) converts:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_9')">Glut-season price crashes into lean-season premiums and processed-goods margins — turning a loss into a business</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Premium into commodity</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Nothing valuable</button>
+<div class="q-exp" id="exp6_9"><strong>Why:</strong> Processing is the arbitrage between seasons: buy (or grow) at glut price, sell at lean-season price in a preserved form. The added value is time management.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. The year-one focus for vegetable farming is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_10')">50 m² leafy-green bed mastered: daily water, daily harvest, daily sale — building the habits and buyer relationships the tomato operation demands</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Tomato on 5 ha immediately</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">No vegetable practice</button>
+<div class="q-exp" id="exp6_10"><strong>Why:</strong> Leafy greens are the vegetable apprenticeship: daily discipline at small scale teaches the perishability management, irrigation routine, and buyer relationship that tomato operations require.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn6" onclick="markComplete(6)">Mark Month 6 Complete</button>
+    </div>
+  </div>
+
+  <div class="final-section">
+    <h2>&#127942; Final Project: Your Vegetables Business Plan</h2>
+    <p>The final project is your complete vegetable enterprise plan — water source, the nursery protocol, the disease management calendar, and the market relationship established before planting.</p>
+    <ol><li><strong>Water source and irrigation plan:</strong> source identified, daily volume, system type (drip/furrow/sprinkler), and capital cost to install or improve.</li>
+<li><strong>Nursery protocol:</strong> site (shaded, rain-splash protected), bed prep (solarised compost mix), seed rate, watering method, hardening-off schedule, transplant readiness criteria.</li>
+<li><strong>Crop plan:</strong> variety chosen (blight-resistant where available, TYLCV-resistant where available), staking plan, spacing, drip or furrow irrigation, mulching plan.</li>
+<li><strong>Disease and pest calendar:</strong> fortnightly copper/mancozeb spray schedule (blight), solanaceous rotation map (wilt), whitefly sticky-trap network (TYLCV), Tuta pheromone traps, Bt spray programme for caterpillars on greens.</li>
+<li><strong>Harvest and post-harvest discipline:</strong> harvest stage criteria, handling rules, grading at harvest, container choice, time-to-market target, evaporative cooler option.</li>
+<li><strong>Market plan:</strong> pre-sell commitment (regular buyer identified), staggered planting schedule for your total area, weekly harvest-volume estimate, price targets and glut-management backup (sun-drying or paste).</li>
+<li><strong>Budget and growth path:</strong> 50 m² leafy-green budget (year one entry), 0.25 ha tomato budget, and the year-two/three path toward pre-sold, consistently supplied institutional buyers.</li></ol>
+    <p><strong>Submission standard:</strong> A plan you could hand to a savings group, a bank officer, or a family investor without embarrassment. Real local prices, real named buyers, honest risks.</p>
+  </div>
+
+  <div class="budget-section">
+    <h2>&#128176; Startup Budget &mdash; 50 m² Leafy Greens (Entry) + 0.25 ha Tomato (One Crop)</h2>
+    <p>Two budgets together: leafy greens are the learning and cash-flow entry; tomato is the income multiplier once the discipline is established. Both run side by side in a full vegetable enterprise.</p>
+    <table>
+      <tr><th>Item</th><th>Details</th><th>Typical cost (USD)</th></tr>
+<tr><td>Leafy-green seed (kale, spinach, amaranth)</td><td>50 m² bed</td><td>$3–10</td></tr>
+<tr><td>Compost/manure for leafy-green beds</td><td>50 m² × 3 kg/m² compost</td><td>$10–30</td></tr>
+<tr><td>Irrigation setup for leafy greens</td><td>Watering can or simple drip</td><td>$5–30</td></tr>
+<tr><td>Liquid feeds for greens (every 2 weeks)</td><td>Urea or manure tea</td><td>$10–25</td></tr>
+<tr><td>Tomato seed + nursery (0.25 ha)</td><td>Hybrid or OPV</td><td>$20–50</td></tr>
+<tr><td>Compost for tomato (3–5 t/ha × 0.25)</td><td>~1 t/ha effective</td><td>$50–150</td></tr>
+<tr><td>Compound fertiliser + liquid feeds (tomato)</td><td></td><td>$50–120</td></tr>
+<tr><td>Stakes/trellis (tomato, 0.25 ha)</td><td>~1,250 stakes</td><td>$50–150</td></tr>
+<tr><td>Irrigation (drip or furrow setup, 0.25 ha)</td><td></td><td>$80–250</td></tr>
+<tr><td>Copper fungicide + Bt + threshold sprays</td><td>Preventive blight + caterpillar</td><td>$40–100</td></tr>
+<tr><td>Labour: nursery, staking, weeding, harvesting</td><td>Both crops</td><td>$100–250</td></tr>
+<tr><td>Containers (crates, baskets, tarpaulin)</td><td></td><td>$20–60</td></tr>
+<tr><td>Contingency (10%)</td><td></td><td>$50–130</td></tr>
+<tr><td><strong>Total entry budget</strong></td><td>Both crops, one season</td><td><strong>$488–1,355</strong></td></tr>
+<tr><td><strong>Revenue: leafy greens</strong></td><td>50 m² × 6 months</td><td><strong>~$150–400</strong></td></tr>
+<tr><td><strong>Revenue: tomato (local price)</strong></td><td>3–4.5 t × $0.30–0.60/kg</td><td><strong>~$900–2,700</strong></td></tr>
+    </table>
+    <p><em>Prices vary widely by country. Before spending anything, price every line in your own town and rebuild this table — that exercise is part of your final project.</em></p>
+  </div>
+
+  <div class="glossary-section">
+    <h2>&#128218; Glossary</h2>
+    <dl class="glossary">
+<dt>Mature-green harvest</dt><dd>Tomato at full size but before colour break — picked for transport; ripens in transit to table-ready.</dd>
+<dt>Breaker stage</dt><dd>First pink colour showing on tomato surface — harvested for next-day local sale.</dd>
+<dt>Blossom end rot (BER)</dt><dd>Dark sunken patch at the blossom end of tomato fruit — caused by irregular irrigation preventing calcium transport.</dd>
+<dt>Late blight (Phytophthora infestans)</dt><dd>The fastest-spreading vegetable disease; water-soaked brown lesions on leaves and fruit; requires preventive copper or mancozeb spray.</dd>
+<dt>Bacterial wilt (Ralstonia)</dt><dd>Soil-borne disease causing sudden wilting and death; no chemical cure; managed by 3–4 year solanaceous rotation.</dd>
+<dt>TYLCV (Tomato Yellow Leaf Curl Virus)</dt><dd>Whitefly-transmitted virus; cupped yellow leaves; no cure; managed by resistant varieties and whitefly control.</dd>
+<dt>Tuta absoluta</dt><dd>Tomato leaf miner; explosive spreader; managed by pheromone traps, Bt/spinosad at threshold, strict hygiene.</dd>
+<dt>Solanaceous rotation</dt><dd>Rotation that excludes tomato, pepper, potato and aubergine (all share wilt bacterium) for 3–4 years.</dd>
+<dt>Nursery solarisation</dt><dd>Clear plastic over moist nursery soil in sun for 2–3 weeks — kills soil pathogens without chemicals.</dd>
+<dt>Hardening off</dt><dd>Gradually reducing shade and watering 5–7 days before transplant — acclimatises seedlings to field conditions.</dd>
+<dt>Cut-and-come-again</dt><dd>Management system for leafy greens: outer leaves harvested continuously while the plant keeps growing.</dd>
+<dt>Drip irrigation</dt><dd>Delivers water to the root zone via emitters — keeps foliage dry, reducing blight spread significantly.</dd>
+<dt>Evaporative cooler</dt><dd>Zero-energy cooling using wet sand, clay or brick construction — adds 24–36 hours to vegetable shelf life.</dd>
+<dt>Staggered planting</dt><dd>Sowing the same total area in 3–4 weekly instalments — converts one glut harvest into consistent weekly supply.</dd>
+<dt>Pre-sell</dt><dd>Establishing a buyer agreement before harvest — removes the perishable farmer's worst risk: produce with no buyer.</dd>
+<dt>Sun-dried tomato</dt><dd>Sliced, lightly salted, rack-dried tomato — months-stable, premium-priced, zero-energy value addition.</dd>
+<dt>50 m² leafy-green business</dt><dd>Entry-level vegetable enterprise: 50 square metres, daily irrigation, daily leaf harvest, daily market — the vegetable apprenticeship.</dd>
+    </dl>
+  </div>
+
+  <div class="resources-section">
+    <h2>&#128279; Further Resources</h2>
+    <ul><li>Your national horticulture extension service — released tomato varieties (blight and TYLCV resistant), local pest alerts, good agricultural practices for export.</li>
+<li>AVRDC (World Vegetable Centre) — African vegetable research, pest management, value chain resources for smallholders.</li>
+<li>CABI invasive species and pest guides — Tuta absoluta management, whitefly control, Phytophthora blight identification.</li>
+<li>Local market authority and trader networks — who buys what, at what grade, at what price and on what day.</li>
+<li>Rise Africa Skills companion courses: Solar Drying (sun-dried tomato and vegetable drying technique), Poultry (vegetable waste as feed), Irrigation &amp; Water Management (water source development), Groundnut (rotation partner).</li></ul>
+  </div>
+
+  <div class="cert-section">
+    <h2>&#127891; Course Completion</h2>
+    <p>Complete all 6 months and pass the quizzes to unlock your certificate.</p>
+    <a href="certificate.html?course=Vegetable%20Production" class="cert-btn" id="certBtn" disabled>Get Certificate</a>
+  </div>
+</div>
+<script>
+  const TOTAL_MODULES = 6;
+  const COURSE_KEY = 'vegetable-production';
+  let completed = JSON.parse(localStorage.getItem(COURSE_KEY + '_progress') || '[]');
+
+  function toggleModule(n) {
+    if (n > 1 && !completed.includes(n-1)) { alert('Complete Month ' + (n-1) + ' first.'); return; }
+    document.getElementById('body' + n).classList.toggle('active');
+  }
+  function answerQ(btn, isCorrect, expId) {
+    const parent = btn.parentElement;
+    const buttons = parent.querySelectorAll('.q-opt');
+    if (buttons[0].disabled) return;
+    buttons.forEach(b => { b.disabled = true; });
+    if (isCorrect) { btn.classList.add('correct'); }
+    else {
+      btn.classList.add('wrong');
+      buttons.forEach(b => { if (b.dataset.c === '1') b.classList.add('correct'); });
+    }
+    document.getElementById(expId).classList.add('show');
+    const quiz = btn.closest('.quiz-wrap');
+    quiz.dataset.answered = (parseInt(quiz.dataset.answered||'0') + 1);
+    quiz.dataset.score = (parseInt(quiz.dataset.score||'0') + (isCorrect ? 1 : 0));
+    if (parseInt(quiz.dataset.answered) >= parseInt(quiz.dataset.total)) {
+      const s = quiz.querySelector('.quiz-score');
+      s.textContent = 'Quiz result: ' + quiz.dataset.score + ' / ' + quiz.dataset.total + (parseInt(quiz.dataset.score) >= 7 ? ' — Pass. Well done!' : ' — Below 7/10. Re-read the module, then review your wrong answers.');
+    }
+  }
+  function markComplete(n) {
+    if (!completed.includes(n)) {
+      completed.push(n); completed.sort((a,b)=>a-b);
+      localStorage.setItem(COURSE_KEY + '_progress', JSON.stringify(completed));
+    }
+    updateUI();
+  }
+  function updateUI() {
+    document.getElementById('completedCount').textContent = completed.length;
+    document.getElementById('progressBar').style.width = (completed.length/TOTAL_MODULES*100) + '%';
+    for (let i=1; i<=TOTAL_MODULES; i++) {
+      const st = document.getElementById('status'+i), btn = document.getElementById('btn'+i);
+      if (completed.includes(i)) { st.textContent='Done'; st.classList.add('done'); if(btn){btn.textContent='Completed'; btn.disabled=true;} }
+      else if (i===1 || completed.includes(i-1)) { st.textContent='Start'; }
+      else { st.textContent='Locked'; }
+    }
+    if (completed.length >= TOTAL_MODULES) {
+      const c = document.getElementById('certBtn');
+      c.removeAttribute('disabled'); c.textContent = 'Get Your Certificate!';
+    }
+  }
+  updateUI();
+</script>
+</body>
+</html>

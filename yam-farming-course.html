@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Yam Farming - A complete practical course from Rise Africa Skills. Learn offline, anytime.">
+<title>Yam Farming | Rise Africa Skills</title>
+<style>
+  :root { --gold:#eab308; --gold-dark:#a16207; --green:#16a34a; --bg:#0f172a; --card:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --line:#334155; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:var(--bg); color:var(--text); line-height:1.65; }
+  header { background:linear-gradient(135deg,var(--gold-dark) 0%,#713f12 100%); padding:44px 20px; text-align:center; }
+  header h1 { font-size:2rem; margin-bottom:8px; }
+  header p { color:rgba(255,255,255,0.88); max-width:640px; margin:0 auto; }
+  .badge { display:inline-block; background:var(--gold); color:#1e293b; padding:4px 14px; border-radius:20px; font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-top:12px; letter-spacing:0.4px; }
+  .container { max-width:920px; margin:0 auto; padding:30px 20px; }
+  .progress-bar { background:var(--card); border-radius:10px; height:10px; margin-bottom:28px; overflow:hidden; }
+  .progress-fill { background:var(--gold); height:100%; width:0%; border-radius:10px; transition:width .4s ease; }
+  .overview { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-bottom:26px; }
+  .overview h2 { color:var(--gold); font-size:1.15rem; margin-bottom:10px; }
+  .overview ul { margin:8px 0 14px 20px; color:var(--muted); }
+  .overview li { margin:5px 0; }
+  .meta-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+  .meta-chip { background:#0b1220; border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:0.85rem; color:var(--muted); }
+  .meta-chip b { color:var(--text); }
+  .module { background:var(--card); border-radius:12px; margin-bottom:16px; overflow:hidden; border:1px solid var(--line); }
+  .module-header { padding:18px 22px; cursor:pointer; display:flex; align-items:center; gap:14px; transition:background .2s; }
+  .module-header:hover { background:#26354a; }
+  .module-num { background:var(--gold); color:#1e293b; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0; }
+  .module-title { flex:1; font-weight:600; }
+  .module-status { font-size:0.75rem; padding:4px 10px; border-radius:12px; background:var(--line); color:var(--muted); white-space:nowrap; }
+  .module-status.done { background:var(--green); color:#fff; }
+  .module-body { display:none; padding:0 22px 24px; border-top:1px solid var(--line); }
+  .module-body.active { display:block; }
+  .module-body p { color:var(--muted); margin:13px 0; }
+  .module-body ul, .module-body ol { margin:10px 0 10px 22px; color:var(--muted); }
+  .module-body li { margin:6px 0; }
+  .module-body strong { color:var(--text); }
+  .module-body h3 { color:var(--gold); font-size:1.05rem; margin:22px 0 4px; }
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.88rem; }
+  th { background:#0b1220; color:var(--gold); text-align:left; padding:9px 10px; border:1px solid var(--line); }
+  td { padding:8px 10px; border:1px solid var(--line); color:var(--muted); vertical-align:top; }
+  tr:nth-child(even) td { background:#1a2537; }
+  .tip-box { background:rgba(234,179,8,0.08); border-left:4px solid var(--gold); padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .tip-box strong { color:var(--gold); }
+  .warn-box { background:rgba(239,68,68,0.08); border-left:4px solid #ef4444; padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .warn-box strong { color:#f87171; }
+  .assign-box { background:#0b1220; border:1px dashed var(--gold-dark); border-radius:10px; padding:16px 18px; margin:16px 0; color:var(--muted); }
+  .assign-box strong { color:var(--gold); }
+  .video-box { background:#0b1220; border:1px solid var(--line); border-radius:10px; padding:14px 18px; margin:16px 0; color:var(--muted); font-size:0.9rem; }
+  .quiz-wrap { background:#0b1220; border:1px solid var(--line); border-radius:12px; padding:20px; margin-top:20px; }
+  .quiz-wrap h3 { margin-top:0 !important; }
+  .q-block { margin:16px 0; padding-bottom:14px; border-bottom:1px solid #1e293b; }
+  .q-block:last-child { border-bottom:none; }
+  .q-text { font-weight:600; color:var(--text); margin-bottom:8px; }
+  .q-opt { display:block; width:100%; text-align:left; padding:9px 13px; margin:5px 0; background:var(--card); border:1px solid #475569; border-radius:8px; color:var(--text); cursor:pointer; transition:all .2s; font-size:0.9rem; }
+  .q-opt:hover { border-color:var(--gold); }
+  .q-opt.correct { background:#14532d; border-color:var(--green); }
+  .q-opt.wrong { background:#7f1d1d; border-color:#ef4444; }
+  .q-exp { display:none; margin-top:8px; padding:10px 13px; background:rgba(234,179,8,0.07); border-left:3px solid var(--gold); border-radius:0 6px 6px 0; color:var(--muted); font-size:0.87rem; }
+  .q-exp.show { display:block; }
+  .quiz-score { margin-top:12px; font-weight:700; color:var(--gold); }
+  .check-btn { background:var(--gold); color:#1e293b; border:none; padding:11px 26px; border-radius:8px; font-weight:700; cursor:pointer; margin-top:16px; transition:background .2s; }
+  .check-btn:hover { background:#facc15; }
+  .check-btn:disabled { opacity:0.5; cursor:not-allowed; }
+  .final-section, .budget-section, .glossary-section, .resources-section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-top:26px; }
+  .final-section h2, .budget-section h2, .glossary-section h2, .resources-section h2 { color:var(--gold); font-size:1.2rem; margin-bottom:10px; }
+  .final-section p, .budget-section p, .resources-section p { color:var(--muted); margin:10px 0; }
+  .final-section ol, .resources-section ul { margin:10px 0 10px 22px; color:var(--muted); }
+  .final-section li, .resources-section li { margin:6px 0; }
+  dl.glossary dt { color:var(--text); font-weight:700; margin-top:12px; }
+  dl.glossary dd { color:var(--muted); margin-left:0; font-size:0.92rem; }
+  .cert-section { text-align:center; padding:40px 20px; background:var(--card); border-radius:16px; margin-top:30px; border:1px solid var(--line); }
+  .cert-section h2 { margin-bottom:10px; }
+  .cert-section p { color:var(--muted); margin-bottom:20px; }
+  .cert-btn { background:var(--gold); color:#1e293b; border:none; padding:14px 36px; border-radius:10px; font-size:1rem; font-weight:800; cursor:pointer; text-decoration:none; display:inline-block; }
+  .cert-btn[disabled] { opacity:0.4; pointer-events:none; }
+  .nav-bar { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:var(--card); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:100; }
+  .nav-bar a { color:var(--text); text-decoration:none; font-weight:600; }
+  .nav-bar a:hover { color:var(--gold); }
+  .completion-count { color:var(--muted); font-size:0.9rem; }
+  @media (max-width:600px){ header h1{font-size:1.5rem;} .module-header{padding:14px 16px;} .module-body{padding:0 16px 18px;} table{font-size:0.8rem;} th,td{padding:6px 7px;} }
+</style>
+</head>
+<body>
+<nav class="nav-bar">
+  <a href="index.html">&#8592; Back to Courses</a>
+  <span class="completion-count"><span id="completedCount">0</span> / 6 months completed</span>
+</nav>
+<header>
+  <div class="badge">Agriculture &middot; 6-Month Program</div>
+  <h1>Yam Farming</h1>
+  <p>The king of crops — the minisett technique that solves the seed problem, mounds and staking, double harvesting, the yam barn, and selling into the festival price curve.</p>
+</header>
+<div class="container">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+
+  <div class="overview">
+    <h2>Course Overview</h2>
+    <p style="color:var(--muted);">Yam is West Africa's prestige crop — over 90% of world production, prices 2–4 times cassava's, and a cultural calendar of festivals and gift economies that keeps demand deep. It is also the crop with the most expensive planting material in African agriculture: tonnes of edible tuber buried every season, often 30–50% of total cost. This course is therefore built around the minisett technique — the researched method that multiplies clean seed 5–10 times faster than tradition and turns your biggest cost into your best product. Around that core: mound building and the staking menu, the slow-starter weeding calendar, nematode and beetle defence anchored in clean treated setts, the choice between single and double ('milking') harvest, curing and the genuinely excellent traditional yam barn, and a business module that ranks seed production, barn-timed ware and the elubo flour trade honestly by margin.</p>
+    <h2 style="margin-top:16px;">What You Will Learn</h2>
+    <ul><li>Choose species and released varieties by market: rotundata's premium vs alata's ease</li>
+<li>Master minisetts: cutting with peel, treating, healing, nursery sprouting — multiplying seed 5–10×</li>
+<li>Build mounds, plant treated setts with mulch caps, and use the early-yam window</li>
+<li>Stake economically (trellis and live stakes), weed a slow starter, and intercrop the traditional way</li>
+<li>Defend against nematodes (clean seed + hot-water treatment), yam beetles, anthracnose and viruses</li>
+<li>Choose single vs double harvest; dig, cure and barn-store without wounds or rot</li>
+<li>Ride the steepest price curve in root crops — festival and hungry-season timing</li>
+<li>Run the budgets and the three-business growth path from ware plot to district seed supplier</li></ul>
+    <div class="meta-row">
+      <div class="meta-chip"><b>Duration:</b> 6 months, one module per month</div>
+      <div class="meta-chip"><b>Level:</b> Beginner &rarr; Job-ready</div>
+      <div class="meta-chip"><b>Units:</b> Metric with imperial where useful</div>
+      <div class="meta-chip"><b>Final project:</b> Your own business plan</div>
+    </div>
+  </div>
+
+  <div class="module" data-module="1">
+    <div class="module-header" onclick="toggleModule(1)">
+      <div class="module-num">1</div>
+      <div class="module-title">Month 1: The King of Crops — Species, Markets &amp; Economics</div>
+      <div class="module-status" id="status1">Start</div>
+    </div>
+    <div class="module-body" id="body1">
+
+      <h3>Lesson 1.1 — The king of crops</h3>
+      <p>No crop in Africa carries the cultural weight of yam. Across West Africa — which grows over <strong>90% of the world's yams</strong>, with Nigeria alone producing the majority — yam is wealth made visible: new yam festivals open the eating season, bride-price and title-taking are counted in tubers, and a full yam barn is a man's bank statement hanging in the open air. That prestige is also economics: yam consistently sells at <strong>2–4&times; the price of cassava per kilogram</strong>, and premium ware tubers command more still.</p>
+      <ul>
+        <li>A long crop: <strong>7–10 months</strong> from planting to main harvest, demanding land, labour and patience — the opposite end of the root-crop spectrum from sweet potato.</li>
+        <li>Yields: typical 8–12 t/ha; good management reaches 20–30 t/ha. The choke point is not agronomy but <strong>seed yam</strong> — Module 2 is the heart of this course.</li>
+        <li>Needs deep, loose, fertile, well-drained soil and 1,000+ mm of rain over a long season (or the forest-savanna transition zones it loves).</li>
+      </ul>
+      <h3>Lesson 1.2 — Know your yams</h3>
+      <table>
+        <tr><th>Species</th><th>Character</th><th>Market</th></tr>
+        <tr><td><strong>White yam</strong> (<em>D. rotundata</em>)</td><td>The West African classic — firm white flesh, best for pounded yam and boiling; stores well</td><td>The premium; the festival and export yam</td></tr>
+        <tr><td><strong>Water yam</strong> (<em>D. alata</em>)</td><td>Higher yielding, easier to grow, moister flesh; anthracnose-susceptible unless resistant varieties used</td><td>Good staple market; growing processed uses</td></tr>
+        <tr><td>Yellow yam (<em>D. cayenensis</em>)</td><td>Yellow flesh, longer season</td><td>Regional preference markets</td></tr>
+        <tr><td>Aerial/bulbil types (<em>D. bulbifera</em>) &amp; trifoliate yam</td><td>Bulbils on vines; some bitter types need proper preparation</td><td>Niche and food-security roles</td></tr>
+      </table>
+      <p>Improved varieties from national programmes and IITA combine yield with virus and anthracnose resistance — ask extension which released white and water yams suit your zone. Note for buyers of planting material everywhere: the market premium follows <em>D. rotundata</em>, but a beginner's easiest success is often a resistant <em>D. alata</em>.</p>
+      <h3>Lesson 1.3 — The economics in one honest paragraph</h3>
+      <p>Yam's costs are dominated by two lines: <strong>planting material (commonly 30–50% of total cost)</strong> and labour (mounding, staking, harvest). Its revenue is protected by two assets: the price premium, and <strong>months of natural storage in the barn</strong> that let you ride the price curve. The whole business case of this course is: cut the seed cost with minisetts (Module 2), protect the premium with good barns (Module 5), and the king of crops pays like a king.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> The yam belt — rotundata, alata, and where the premium lives &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 1:</strong> Survey your yam market: record species/varieties on sale, price per kg or per size-grade now, and ask two traders to sketch the price calendar — especially festival peaks and the pre-harvest hungry months. Contact extension for released varieties (with anthracnose and virus notes) for your zone. Write one paragraph choosing your species and variety with your market reason.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 1 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. World yam production is concentrated:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">Evenly worldwide</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_1')">Over 90% in West Africa, led by Nigeria</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">Mainly in Europe</button>
+<div class="q-exp" id="exp1_1"><strong>Why:</strong> The 'yam belt' from Côte d'Ivoire to Cameroon is the global heartland — and the culture, festivals and premium prices of the region reflect the crop's deep economic role.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Compared to cassava, yam typically sells at:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">Half the price</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_2')">2–4× the price per kilogram</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">Exactly the same</button>
+<div class="q-exp" id="exp1_2"><strong>Why:</strong> Prestige, taste and pounded-yam demand keep yam at the top of the root-crop price ladder — the premium that justifies its longer season and higher costs.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Yam's growing season is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">6 weeks</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_3')">7–10 months</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">3 years</button>
+<div class="q-exp" id="exp1_3"><strong>Why:</strong> Yam is the patience crop of this college: planted at the start of rains, harvested deep into the dry season, and rewarded with the highest prices and longest storage of any fresh root.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. The premium species for pounded yam and festivals is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_4')">White yam, D. rotundata</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">Water yam, D. alata</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">Irish potato</button>
+<div class="q-exp" id="exp1_4"><strong>Why:</strong> Firm, white, dry-fleshed rotundata is the cultural gold standard. Water yam yields more and grows easier — a fine beginner's yam — but the top prices follow rotundata.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Water yam's main disease weakness is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_5')">Anthracnose, unless resistant varieties are used</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Frost</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Late blight</button>
+<div class="q-exp" id="exp1_5"><strong>Why:</strong> Anthracnose can blacken susceptible alata foliage in wet weather. Released resistant varieties largely solve it — one more reason variety choice starts at the extension office.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Yam demands soil that is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_6')">Deep, loose, fertile and well-drained</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">Shallow and waterlogged</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">Pure beach sand with no organic matter</button>
+<div class="q-exp" id="exp1_6"><strong>Why:</strong> A tuber that can exceed 5 kg needs uncompacted depth to grow straight and drainage to avoid rot — which is exactly what the mound or ridge manufactures.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. The biggest cost lines in yam production are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_7')">Planting material (often 30–50% of cost) and labour</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">Fuel and electricity</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">Marketing fees</button>
+<div class="q-exp" id="exp1_7"><strong>Why:</strong> Seed yam's enormous share of the budget is the crop's central economic problem — and why the minisett technique in Module 2 is the most valuable lesson in this course.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Yam's revenue is protected across the year by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_8')">Months of natural storage life in a proper barn</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Refrigerated trucks only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Nothing</button>
+<div class="q-exp" id="exp1_8"><strong>Why:</strong> Well-cured, well-stored ware yam holds 3–6 months, letting the farmer sell into the lean-season and festival price peaks instead of the harvest glut.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. A typical vs well-managed yam yield is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_9')">8–12 t/ha typical; 20–30 t/ha well-managed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">100 t/ha typical</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">1 t/ha maximum ever</button>
+<div class="q-exp" id="exp1_9"><strong>Why:</strong> The familiar root-crop gap appears again, and again planting material is the choke point: healthy seed yam of improved varieties, properly set in good mounds, drives the difference.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. A full yam barn in the yam belt traditionally signals:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_10')">Wealth and standing — the visible bank account</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Bad luck</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Abandoned land</button>
+<div class="q-exp" id="exp1_10"><strong>Why:</strong> Yam's cultural weight is real market information: festival demand, gift economies and prestige purchases underpin the price premium a commercial grower harvests.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn1" onclick="markComplete(1)">Mark Month 1 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="2">
+    <div class="module-header" onclick="toggleModule(2)">
+      <div class="module-num">2</div>
+      <div class="module-title">Month 2: Minisetts, Mounds &amp; Planting</div>
+      <div class="module-status" id="status2">Locked</div>
+    </div>
+    <div class="module-body" id="body2">
+
+      <h3>Lesson 2.1 — The seed yam problem</h3>
+      <p>Traditionally, yam is planted from <strong>seed yams</strong> — whole small tubers of ~200 g–1 kg — or from cut <strong>setts</strong> of larger tubers. At 10,000 mounds per hectare, that is <strong>2–4 tonnes of edible yam buried in the ground</strong> every season: the reason planting material eats up to half the budget, and the reason yam expansion stalls. Worse, farmers naturally eat and sell their best tubers and plant the leftovers — selecting for smaller, sicker seed every year, with nematodes, viruses and rots riding along.</p>
+      <h3>Lesson 2.2 — The minisett technique: the lesson that pays for this course</h3>
+      <p>Developed for African farmers by research institutes (NRCRI and IITA), the <strong>yam minisett technique</strong> multiplies scarce planting material 5–10&times; faster than tradition:</p>
+      <ol>
+        <li>Select healthy mother seed yams of your chosen variety (400 g–1 kg, clean, firm, no rots or nematode galls).</li>
+        <li>Cut each into <strong>minisetts of 25–100 g</strong> (commonly ~50 g) — small discs then quartered, each piece keeping a portion of skin/peel, because <strong>sprouts arise from the peel</strong>, not the flesh.</li>
+        <li><strong>Treat the cut pieces:</strong> dust or dip in wood ash or a recommended fungicide/insecticide seed dressing; air-dry ('heal') in shade for a few hours to one day until cut faces are dry.</li>
+        <li>Pre-sprout in a shaded nursery bed of moist sawdust/fine soil for 2–4 weeks, OR plant direct into well-prepared beds/ridges at close spacing (~25 cm &times; 1 m).</li>
+        <li>Grow the minisett crop a full season with good weeding and light staking: each minisett yields a <strong>clean seed yam of 300 g–1 kg</strong> — next season's planting material, multiplied on a fraction of the tonnage.</li>
+      </ol>
+      <div class="tip-box"><strong>The arithmetic that changes everything:</strong> one 1 kg mother yam = ~20 minisetts = ~20 seed yams next season, instead of 1–3 setts the traditional way. A farmer who masters minisetts stops buying seed, starts SELLING it — and clean seed yam sells at a premium to ware in every planting season, because everyone else has the seed problem too.</div>
+      <h3>Lesson 2.3 — Land preparation and planting the main crop</h3>
+      <table>
+        <tr><th>Element</th><th>Standard</th><th>Why</th></tr>
+        <tr><td>Mounds or ridges</td><td>Mounds ~1 m apart, 30–60 cm high (or big ridges); ~10,000 stands/ha</td><td>Deep loose soil = large straight tubers; drainage against rot</td></tr>
+        <tr><td>Planting</td><td>One seed yam/sett per mound, 10–15 cm deep, cut face up-slope; at start of rains (or 'early yam' planted late dry season under mulch cap)</td><td>Early planting captures the full season; the mulch cap (grass pad on the mound top) keeps the sett cool and moist until rains</td></tr>
+        <tr><td>Sett treatment</td><td>Ash/seed-dressing every time, for setts as for minisetts</td><td>Cut surfaces are open doors for rots, millipedes and beetles</td></tr>
+        <tr><td>Mulching</td><td>Dry grass on each mound after planting</td><td>Cooler soil, moisture held, crusting prevented — measurably better sprouting</td></tr>
+      </table>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> The minisett technique start to finish — cutting, dressing, healing, nursery &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 2:</strong> Obtain 3–5 healthy mother seed yams of your chosen variety. Cut, ash-dress, heal and nursery-sprout at least 50 minisetts, recording weights and dates. Separately build ten practice mounds (1 m spacing, 30–60 cm high), plant treated setts or sprouted minisetts 10–15 cm deep with grass mulch caps, and record sprouting percentage at six weeks for both direct-planted and nursery-sprouted material — your first multiplication data.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 2 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Traditional yam planting buries per hectare roughly:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_1')">2–4 tonnes of edible tuber as seed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">5 kg of seed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">Nothing — yam grows from true seed only</button>
+<div class="q-exp" id="exp2_1"><strong>Why:</strong> Ten thousand mounds at 200–400 g each is tonnes of food and money underground — the structural cost problem that minisetts exist to solve.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Yam sprouts arise from:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_2')">The peel/skin region — every minisett must keep some</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">The deep white flesh only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">The roots</button>
+<div class="q-exp" id="exp2_2"><strong>Why:</strong> Bud initials sit at the peel. A cut piece of pure flesh rots; a 50 g piece with skin sprouts. This single anatomical fact is the cutting rule of the whole technique.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. A standard minisett weighs about:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_3')">25–100 g, commonly ~50 g</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">2 kg</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">1 g</button>
+<div class="q-exp" id="exp2_3"><strong>Why:</strong> Small enough to multiply the mother tuber twentyfold, large enough to carry reserves for establishment — the researched compromise behind the 5–10× multiplication rate.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Immediately after cutting, minisetts and setts must be:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">Planted wet and untreated</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_4')">Treated (wood ash or seed dressing) and shade-healed until cut faces dry</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">Boiled</button>
+<div class="q-exp" id="exp2_4"><strong>Why:</strong> A moist cut face in soil is an open door for rots, millipedes and beetles. Treatment plus healing seals the door — the step careless growers skip and pay for in empty mounds.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. One 1 kg mother yam via minisetts yields next season approximately:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">1 seed yam</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_5')">About 20 clean seed yams</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">500 seed yams</button>
+<div class="q-exp" id="exp2_5"><strong>Why:</strong> Twenty minisetts, each growing into a 300 g–1 kg seed yam, versus 1–3 traditional setts. The multiplication rate is what turns seed from your biggest cost into a product you sell.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Main-crop yam is planted in:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_6')">Mounds ~1 m apart, 30–60 cm high, one sett 10–15 cm deep, ~10,000/ha</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">Flat unprepared ground</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">Standing water</button>
+<div class="q-exp" id="exp2_6"><strong>Why:</strong> The mound is the yam's factory floor: deep loose soil for big straight tubers, height for drainage. Its size and spacing set the ceiling on tuber size.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. The grass 'cap' mulched onto each planted mound:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_7')">Keeps the sett cool and moist, improving sprouting — especially for early-planted yam</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Attracts termites deliberately</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Is decoration</button>
+<div class="q-exp" id="exp2_7"><strong>Why:</strong> Under tropical sun a bare mound top bakes; the mulch pad buffers heat and moisture so the sett survives to the rains. Early-yam planting depends on it entirely.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Farmers who plant leftover small tubers as seed each year are:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">Improving their stock</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_8')">Selecting for smaller, sicker seed — degeneration by kitchen economics</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">Following research advice</button>
+<div class="q-exp" id="exp2_8"><strong>Why:</strong> Eating and selling the best while planting the worst breeds the herd backwards. Minisett multiplication from selected healthy mothers reverses the selection direction.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Minisett nurseries pre-sprout pieces in:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_9')">Shaded moist sawdust or fine-soil beds for 2–4 weeks</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Ovens</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Plastic bags in full sun</button>
+<div class="q-exp" id="exp2_9"><strong>Why:</strong> The nursery lets you plant only sprouted, viable setts into the field — closing the gaps that direct planting of duds leaves, and getting uniform establishment.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Clean seed yam at planting season sells:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">At a discount to ware</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_10')">At a premium — every yam farmer shares the seed problem</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">Not at all</button>
+<div class="q-exp" id="exp2_10"><strong>Why:</strong> Scarce, health-critical and seasonal: seed yam is the classic premium product. The minisett master becomes the district's supplier — the strongest business in this crop.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn2" onclick="markComplete(2)">Mark Month 2 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="3">
+    <div class="module-header" onclick="toggleModule(3)">
+      <div class="module-num">3</div>
+      <div class="module-title">Month 3: Staking, Weeding &amp; Feeding</div>
+      <div class="module-status" id="status3">Locked</div>
+    </div>
+    <div class="module-body" id="body3">
+
+      <h3>Lesson 3.1 — Staking: renting sunlight</h3>
+      <p>Yam is a climbing vine, and in the forest zone <strong>staking can add 30–50% yield</strong> for white yam by lifting the leaf canopy into full sun and away from soil-splash diseases. The trade-off is real: stakes cost money and cut trees. The honest menu:</p>
+      <ul>
+        <li><strong>Individual staking:</strong> one 2–3 m stake per mound, vine trained clockwise up (follow its natural twining direction) — highest yield, highest cost.</li>
+        <li><strong>Trellis / pyramid staking:</strong> one stake per 2–4 plants joined by rope or rails — most farmers' best compromise.</li>
+        <li><strong>Live stakes:</strong> planted pigeon pea, gliricidia or leucaena rows double as stakes and fertility trees — the agroforestry answer, planned a season ahead.</li>
+        <li><strong>Minimal/no staking:</strong> acceptable in open savanna sun for some varieties (and for minisett seed plots with light sticks); expect lower yields for rotundata in humid zones.</li>
+      </ul>
+      <h3>Lesson 3.2 — Weeding a slow starter</h3>
+      <p>Yam emerges slowly and shades ground late, so it is weeded <strong>3–4 times</strong>: roughly at 4, 8 and 12 weeks, plus as needed until the canopy runs. Work shallow around mounds — new tuber tissue sits high in the mound and a deep hoe cut becomes a rot. Mulch between mounds does double duty against weeds and moisture loss. Intercropping the mound sides and inter-rows with maize, cowpea, egusi melon or vegetables is traditional and sound: melon's ground cover in particular is a living mulch that suppresses weeds through the yam's slow months.</p>
+      <h3>Lesson 3.3 — Feeding</h3>
+      <table>
+        <tr><th>Input</th><th>Practice</th><th>Notes</th></tr>
+        <tr><td>Organic matter</td><td>Compost/old manure worked into the mound at building</td><td>The foundation — yam traditionally follows fallow or well-manured land precisely because it feeds on accumulated fertility</td></tr>
+        <tr><td>Compound fertiliser</td><td>Modest NPK (K-leaning) ring-applied around the stand at 8–12 weeks, worked in shallowly</td><td>Responses are strongest on worn soils; excessive N grows vine at the tuber's expense — the familiar root-crop law</td></tr>
+        <tr><td>Wood ash</td><td>Into mounds and as sett dressing</td><td>K plus some pest deterrence — the free input</td></tr>
+      </table>
+      <h3>Lesson 3.4 — Water and season rhythm</h3>
+      <p>Rain-fed through the wet season, yam's critical months are establishment (moist mounds; the mulch cap) and mid-season bulking. As rains end, the vines yellow and dry naturally — this senescence is the maturity clock, not a disease. Resist the urge to 'save' yellowing late-season vines with water: the crop is closing its books and preparing skins for storage.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Staking systems compared — individual, trellis, and live stakes &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 3:</strong> Cost the staking options for your plot: price individual stakes locally, design a trellis/pyramid layout sharing stakes across 2–4 plants, and identify where you would plant a live-stake row (gliricidia/pigeon pea) for next season. Implement your chosen system on the practice mounds, train vines with their natural twist, and complete weedings at ~4 and 8 weeks with shallow technique — recording dates, hours and any tuber-wounding incidents (target: zero).</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 3 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Staking white yam in humid zones can add:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_1')">30–50% yield</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Nothing ever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Exactly 2%</button>
+<div class="q-exp" id="exp3_1"><strong>Why:</strong> A climbing vine spread on the ground shades itself and catches soil-splash disease; lifted into sun it photosynthesises for the tuber. Staking is buying sunlight with sticks.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. The most cost-effective staking for most farmers is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_2')">Trellis/pyramid systems sharing one stake among 2–4 plants</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Individual 3 m hardwood stakes for every mound regardless of cost</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">No option exists</button>
+<div class="q-exp" id="exp3_2"><strong>Why:</strong> Shared-stake systems capture most of the yield gain at a fraction of the stake bill — and live stakes of gliricidia or pigeon pea make the cost a one-time planting.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Yam vines are trained up stakes:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_3')">Following their natural twining direction</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">Against their twining direction to strengthen them</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">With wire tied tightly around the stem</button>
+<div class="q-exp" id="exp3_3"><strong>Why:</strong> Forcing a vine against its habit breaks growing tips and wastes days. Set it on the stake the way it wants to turn and it climbs itself.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Yam needs 3–4 weedings because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_4')">It emerges slowly and closes canopy late, leaving months of open ground</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Weeds improve tuber flavour</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">One weeding is illegal</button>
+<div class="q-exp" id="exp3_4"><strong>Why:</strong> The slow start is yam's weak flank; timed weedings at ~4, 8 and 12 weeks plus mulch and melon ground-cover carry it to canopy.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Deep hoeing into the mound during weeding risks:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Nothing</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_5')">Cutting the shallow developing tuber — every wound is a future rot</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Improving tuber shape</button>
+<div class="q-exp" id="exp3_5"><strong>Why:</strong> The young tuber sits high in the mound. Shallow scraping around the stand, plus mulch between mounds, does the weed job without wounding the product.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Traditional yam intercrops like egusi melon serve as:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_6')">Living mulch suppressing weeds through yam's slow months</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Competitors that must be removed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Poison</button>
+<div class="q-exp" id="exp3_6"><strong>Why:</strong> Melon's sprawling ground cover is weed control you can eat, and maize/cowpea on mound sides use light the slow yam hasn't claimed — centuries-tested polyculture.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Excess nitrogen on yam produces:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_7')">Lush vines and disappointing tubers — the root-crop law again</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Perfect giant tubers</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Early maturity</button>
+<div class="q-exp" id="exp3_7"><strong>Why:</strong> Like cassava, sweet potato and Irish potato before it: heavy N tips growth into foliage. Organic-matter mounds, modest K-leaning compound, and ash is the yam formula.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Yellowing, drying vines at the end of the season signal:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">A disease emergency needing water and sprays</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_8')">Natural senescence — the maturity clock and skin-preparation phase</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">Nothing</button>
+<div class="q-exp" id="exp3_8"><strong>Why:</strong> Yam closes its books as rains end, hardening tuber skins for storage. Reading senescence correctly tells you harvest is near — and stops you wasting money 'rescuing' a healthy process.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Yam is traditionally the first crop after fallow because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_9')">It feeds heavily on the accumulated fertility fallow builds</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">It hates fertile soil</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Tradition has no logic</button>
+<div class="q-exp" id="exp3_9"><strong>Why:</strong> The mound concentrates the fallow's stored organic wealth around a hungry, long-season feeder. Where fallow is gone, compost-built mounds and rotation must replace it.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Live staking with gliricidia, leucaena or pigeon pea provides:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_10')">Stakes plus nitrogen-fixing fertility and fodder — planned a season ahead</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Only shade problems</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Instant stakes the same week you think of it</button>
+<div class="q-exp" id="exp3_10"><strong>Why:</strong> Agroforestry rows turn the stake bill into an asset that fixes N, feeds livestock and regrows after cutting. The only price is planning: plant the trees before you need them.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn3" onclick="markComplete(3)">Mark Month 3 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="4">
+    <div class="module-header" onclick="toggleModule(4)">
+      <div class="module-num">4</div>
+      <div class="module-title">Month 4: Nematodes, Beetles &amp; Plant Health</div>
+      <div class="module-status" id="status4">Locked</div>
+    </div>
+    <div class="module-body" id="body4">
+
+      <h3>Lesson 4.1 — Nematodes: the invisible tax</h3>
+      <p>The yam nematode and root-knot nematodes are the crop's most economically damaging pests — largely invisible until harvest, when tubers show <strong>dry rot layers under a cracking skin ('scaly' tubers), galls, and distorted shapes</strong> that destroy market value and then rot in the barn. They travel in seed yams. The defence:</p>
+      <ul>
+        <li><strong>Clean seed</strong> — reject any mother yam or seed with cracks, scale or galls; minisett multiplication from inspected mothers is itself nematode control.</li>
+        <li><strong>Hot-water treatment</strong> of seed yams (50–55&deg;C for ~30–40 minutes, tested with a thermometer and a trial batch) sharply reduces nematode load — the same clean-material logic as banana suckers.</li>
+        <li><strong>Rotation</strong> of 2–3 years away from yam (cereals, well-chosen legumes) starves soil populations; avoid following heavily infested fields.</li>
+      </ul>
+      <h3>Lesson 4.2 — Insects of field and store</h3>
+      <table>
+        <tr><th>Pest</th><th>Damage</th><th>Control</th></tr>
+        <tr><td>Yam beetles</td><td>Adults fly in early rains and gouge round holes in developing tubers</td><td>Sett dressing at planting; adjusting planting date where beetle flights are predictable; treated setts suffer far less</td></tr>
+        <tr><td>Mealybugs &amp; scales</td><td>Encrust stored tubers and seed yams, weakening sprouting</td><td>Inspect and cull at barn loading; keep barns clean; treat/discard crusted seed</td></tr>
+        <tr><td>Termites &amp; millipedes</td><td>Attack setts and tubers, especially untreated cuts in dry spells</td><td>Ash/seed dressing, sound mound building, early rains planting with mulch cap</td></tr>
+        <tr><td>Rodents</td><td>Burrow into mounds and barns</td><td>Clean field edges, barn siting and guards, traps</td></tr>
+      </table>
+      <h3>Lesson 4.3 — Diseases</h3>
+      <ul>
+        <li><strong>Anthracnose</strong> (mainly water yam): dark sunken leaf/stem lesions, blackened dieback in wet spells. Answer: resistant varieties first, wide staked airy canopies, field sanitation; fungicide only in severe nursery/seed-plot cases.</li>
+        <li><strong>Yam mosaic and other viruses:</strong> mottled distorted leaves, gradual run-down through recycled seed — the familiar story. Answer: clean planting material, rogue symptomatic plants, source improved virus-cleaned varieties where programmes offer them.</li>
+        <li><strong>Tuber rots (fungal and bacterial):</strong> the barn's enemy — but almost always <em>field-loaded</em>: wounds at harvest, nematode damage, and uncured skins are the entry points. Module 5's harvest-and-curing discipline is the real rot control; in the barn, ventilation and prompt culling finish the job.</li>
+      </ul>
+      <div class="warn-box"><strong>Read the pattern across this college:</strong> for every vegetatively planted crop — cassava, sweet potato, banana, potato, yam — the same three-part defence returns: clean planting material, resistant varieties, field sanitation. Master it once, apply it everywhere. In yam, 'clean seed' simply has the highest price tag and the highest reward.</div>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Reading nematode damage, hot-water treatment, and sett protection &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 4:</strong> Inspect at least ten seed/ware yams from your stock or the market: record cracks, scale, galls or beetle holes, and sort into accept/reject as if loading a barn. If you have a suitable pot and thermometer, run a hot-water treatment trial on 3–5 small seed yams (50–55°C, 30–40 min) and note sprouting afterwards versus untreated controls. Write your three-part clean-seed plan (material source, treatment, rotation) for next season.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 4 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Nematode damage on yam shows at harvest as:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_1')">Dry rot layers under cracking 'scaly' skin, galls and distorted tubers</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Blue leaves in month one</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Louder vines</button>
+<div class="q-exp" id="exp4_1"><strong>Why:</strong> The invisible tax reveals itself only when the tuber is lifted — ruined appearance for the premium market, and rot gateways for the barn. Prevention happens at planting, not at harvest.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Nematodes travel between fields mainly in:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_2')">Seed yams</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">Rainbows</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">Birdsong</button>
+<div class="q-exp" id="exp4_2"><strong>Why:</strong> Infested planting material is the vector — the reason seed inspection, minisett multiplication from clean mothers, and hot-water treatment form the core defence.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Hot-water treatment of seed yams runs at:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_3')">50–55°C for ~30–40 minutes, thermometer-checked, trial batch first</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Boiling for an hour</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Cold water overnight</button>
+<div class="q-exp" id="exp4_3"><strong>Why:</strong> The band that cooks nematodes but not buds — the same precision-bath logic as banana sucker treatment. Too hot kills seed; too cool kills nothing; the thermometer is not optional.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Yam beetle damage is prevented mainly by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_4')">Sett dressing at planting and, where flights are predictable, adjusting planting date</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">Shooting the beetles</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">Nothing</button>
+<div class="q-exp" id="exp4_4"><strong>Why:</strong> The beetle attacks early, underground, where no later spray reaches — so protection is applied to the sett before it ever meets the soil.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Anthracnose management in water yam starts with:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_5')">Resistant released varieties, then airy staked canopies and sanitation</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Daily fungicide from planting forever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Ignoring it</button>
+<div class="q-exp" id="exp4_5"><strong>Why:</strong> Resistance removes most of the problem before it starts; canopy airflow and clean fields suppress the rest. Chemical control is a narrow tool for nurseries, not a field habit.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Yam mosaic virus is managed by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_6')">Clean planting material, roguing, and virus-cleaned improved varieties</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">A curative spray</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Extra watering</button>
+<div class="q-exp" id="exp4_6"><strong>Why:</strong> No spray cures a virus. The defence triangle from cassava returns: clean material in, sick plants out, resistant genetics underneath.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Most barn rot is actually caused in:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_7')">The field — harvest wounds, nematode damage and uncured skins are the entry points</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">The barn's paint</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">The moon</button>
+<div class="q-exp" id="exp4_7"><strong>Why:</strong> Rot organisms need doors, and the doors are cut in the field. Careful lifting, culling damaged tubers, and proper curing close them before storage begins.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Mealybug-crusted seed yams should be:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_8')">Culled or treated before the barn — never loaded as-is</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">Planted immediately as they are</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">Sold as premium</button>
+<div class="q-exp" id="exp4_8"><strong>Why:</strong> Encrusted seed sprouts weakly and seeds the barn with pests. Barn-loading inspection is the checkpoint where the next season's problems are cheapest to stop.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. The three-part defence shared by all vegetatively planted crops is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_9')">Clean planting material, resistant varieties, field sanitation</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Prayers, luck and delay</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Maximum chemicals only</button>
+<div class="q-exp" id="exp4_9"><strong>Why:</strong> Cassava, sweet potato, banana, potato, yam — one pattern. Yam simply prices it highest: its seed costs the most, so clean-seed skills pay the most.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Termite and millipede attack on setts is worst when:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_10')">Setts are planted with untreated moist cut faces in dry spells</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Setts are ash-dressed and healed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Mulch caps are used</button>
+<div class="q-exp" id="exp4_10"><strong>Why:</strong> An open wet cut in hungry dry-season soil is an invitation. Dressing, healing and the moisture-holding mulch cap turn the sett from bait into a survivor.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn4" onclick="markComplete(4)">Mark Month 4 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="5">
+    <div class="module-header" onclick="toggleModule(5)">
+      <div class="module-num">5</div>
+      <div class="module-title">Month 5: Harvest, Curing &amp; the Yam Barn</div>
+      <div class="module-status" id="status5">Locked</div>
+    </div>
+    <div class="module-body" id="body5">
+
+      <h3>Lesson 5.1 — One harvest or two?</h3>
+      <p>Yam offers a choice no other root crop gives:</p>
+      <ul>
+        <li><strong>Single harvest:</strong> lift once at full maturity (vines fully senesced, 7–10 months) — maximum total yield, standard for ware production.</li>
+        <li><strong>Double harvest ('milking'):</strong> around month 4–5, carefully excavate the mound side, cut the tuber free below the head while <strong>leaving the head (crown) attached to the vine and roots</strong>, and re-cover. The plant regrows a second tuber — smaller, rougher, and <strong>the traditional source of seed yams</strong>. First harvest catches the famous 'new yam' early-season premium; second harvest supplies next year's planting. The cost: total tonnage is somewhat lower and skill requirements higher.</li>
+      </ul>
+      <h3>Lesson 5.2 — Digging without wounds</h3>
+      <p>A 3–5 kg tuber grown 40 cm into a mound cannot be yanked. Excavate from the mound side with a wooden digging stick or careful spade, following the tuber down, loosening soil around it, and lifting from beneath. <strong>Every spade cut, snap or deep bruise is a rot doorway that will open in the barn weeks later.</strong> Harvest in the dry season on a dry day; shade tubers immediately (sun-scald ruins skins); carry, never throw — the fired-clay rule: handle every ware yam like the breakable premium object it is.</p>
+      <h3>Lesson 5.3 — Curing and the yam barn</h3>
+      <ul>
+        <li><strong>Cure first:</strong> 1–2 weeks in warm shade (the sweet-potato principle, gentler timeline) — wounds suberise, skins harden, storage life multiplies.</li>
+        <li><strong>The traditional yam barn is genuinely excellent:</strong> a shaded frame of live or cut poles under trees or thatch, with each tuber <strong>tied individually by twine to vertical strings/poles</strong>, hanging in moving air. Ventilation around every tuber, easy inspection, sprouting visible at a glance. Well-run barns hold ware yam <strong>3–6 months</strong>.</li>
+        <li>Alternatives where barns are impractical: single-layer shelving in a ventilated dark shed, or improved pit/clamp stores for shorter holds. Never heaps and never sacks — the middle of a yam heap is a rot incubator.</li>
+        <li>Barn discipline: inspect weekly; remove rots immediately; rub off early sprouts on ware (sprouting drains the tuber); keep seed yams separately and let their sprouts prepare for planting.</li>
+      </ul>
+      <div class="tip-box"><strong>The price curve is steepest in yam.</strong> Between harvest glut and the pre-new-yam hungry months, ware prices commonly double. A sound barn is not storage — it is the highest-interest savings account on the farm.</div>
+      <h3>Lesson 5.4 — Processed forms</h3>
+      <p>Beyond fresh ware: boiled-and-pounded yam (the premium dish), <strong>yam chips/flakes dried for elubo (yam flour for amala)</strong> — a huge West African trade absorbing smaller and blemished grades — and emerging instant-pounded-yam flour brands. Drying discipline mirrors cassava: thin slices, parboil where the tradition requires, fast drying on racks off the ground, dry storage. Poorly dried chips mould — the aflatoxin lesson from the grain courses applies to every dried product on this farm.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Double harvesting ('milking') demonstrated, and building a pole-and-twine barn &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 5:</strong> Practise wound-free excavation on at least five mounds (yours or a cooperating farmer's), recording any damage honestly. Cure the harvest 1–2 weeks in warm shade. Build a small yam barn or barn section — shaded frame, tubers tied individually with airflow — load only inspected sound tubers, and inspect weekly for a month, recording every removal and its cause. If milking is practised in your area, observe or attempt it on two plants and record the result.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 5 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. 'Milking' (double harvest) means:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_1')">Cutting the tuber free at month 4–5 while leaving the head attached to regrow a second tuber</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Adding milk to mounds</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Harvesting at night</button>
+<div class="q-exp" id="exp5_1"><strong>Why:</strong> The regrown second tuber is the traditional seed-yam supply, while the first catches new-yam premium prices. The trade: more skill, somewhat less total tonnage.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. The second (regrown) tuber is traditionally used as:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_2')">Seed yam for next season</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Export premium ware</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Animal bedding</button>
+<div class="q-exp" id="exp5_2"><strong>Why:</strong> Smaller and rougher but alive and whole, second-harvest tubers are purpose-made planting material — the old solution to the seed problem that minisetts now amplify.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Harvest technique for a large mound-grown tuber is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_3')">Excavate from the side, loosen around, lift from beneath — never yank or spear</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">Pull the vine hard</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">Drive over the mound</button>
+<div class="q-exp" id="exp5_3"><strong>Why:</strong> Wounds are barn rot on a delay timer. The digging stick's patience is why experienced harvesters lose 5% in store while rough ones lose half.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. After lifting, tubers are immediately:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_4')">Shaded — sun-scald ruins skins</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">Left in full sun for days</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">Washed and sealed in plastic</button>
+<div class="q-exp" id="exp5_4"><strong>Why:</strong> Tropical sun blisters fresh yam skin, opening the rot door curing is meant to close. Dig, shade, carry gently, cure — the sequence protects the premium.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Curing yam means:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_5')">1–2 weeks in warm shade so wounds suberise and skins harden</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">Freezing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">Soaking in water</button>
+<div class="q-exp" id="exp5_5"><strong>Why:</strong> The same wound-healing physiology as sweet potato: warm shaded rest multiplies storage life before the barn. Uncured yam rots from every scratch.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. In a traditional yam barn, tubers are stored:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_6')">Tied individually to vertical strings/poles, hanging in moving air under shade</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">In sealed plastic sacks</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">In a deep heap</button>
+<div class="q-exp" id="exp5_6"><strong>Why:</strong> Air around every tuber, inspection at a glance, rot removal without unstacking — the barn is sophisticated post-harvest engineering built from poles and twine.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Storing ware yam in heaps or sacks:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_7')">Incubates rot in the airless middle — never do it</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Is the recommended method</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Extends storage to years</button>
+<div class="q-exp" id="exp5_7"><strong>Why:</strong> Yam is alive and respiring; trapped heat and moisture in a heap's core rot the best tubers first. Ventilation is the entire storage principle.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Early sprouts on stored WARE yam should be:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_8')">Rubbed off — sprouting drains the tuber's substance</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Encouraged with water</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Painted</button>
+<div class="q-exp" id="exp5_8"><strong>Why:</strong> Every centimetre of sprout is eaten out of the tuber's weight and quality. Seed yams sprout on purpose; ware yams are de-sprouted to hold their value.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Between harvest glut and the pre-new-yam months, ware prices commonly:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_9')">Double</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Halve</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Never move</button>
+<div class="q-exp" id="exp5_9"><strong>Why:</strong> Yam's price curve is the steepest of the root crops — which converts a well-run barn into the farm's best-paying 'savings account'.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Dried yam chips for elubo flour must be:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_10')">Sliced thin, dried fast on racks off the ground, stored dry — mould means aflatoxin risk</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Dried slowly in damp heaps on soil</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Left in rain</button>
+<div class="q-exp" id="exp5_10"><strong>Why:</strong> The drying laws are universal on this farm: speed, racks, and dry storage. The elubo trade absorbs blemished grades profitably — but only safely when drying is done right.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn5" onclick="markComplete(5)">Mark Month 5 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="6">
+    <div class="module-header" onclick="toggleModule(6)">
+      <div class="module-num">6</div>
+      <div class="module-title">Month 6: Markets, Budgets &amp; the Yam Business</div>
+      <div class="module-status" id="status6">Locked</div>
+    </div>
+    <div class="module-body" id="body6">
+
+      <h3>Lesson 6.1 — Three yam businesses, ranked by margin</h3>
+      <table>
+        <tr><th>Business</th><th>Engine</th><th>Notes</th></tr>
+        <tr><td><strong>1. Seed yam production (minisetts)</strong></td><td>Multiply improved clean varieties 5–10&times;; sell at planting season</td><td>Premium prices, shorter effective cycle, smaller land need, every yam farmer is a customer — the best entry business</td></tr>
+        <tr><td><strong>2. Stored ware for the price rise</strong></td><td>Barn + curing discipline riding the doubling price curve; festival timing</td><td>The classic wealth-builder; capital tied up but interest is high</td></tr>
+        <tr><td><strong>3. Fresh ware at harvest + chips/elubo</strong></td><td>Volume sales, with blemished grades dried into the flour trade</td><td>Cash flow and nothing wasted; margins thinner</td></tr>
+      </table>
+      <h3>Lesson 6.2 — An honest half-hectare budget (ware, single harvest)</h3>
+      <table>
+        <tr><th>Item</th><th>Assumption</th><th>Amount</th></tr>
+        <tr><td>Yield</td><td>~5,000 mounds, improved seed, staked (shared trellis), 3 weedings</td><td>~6–7 t</td></tr>
+        <tr><td>Gross</td><td>blended: part harvest sale, part barn-stored to the rise ($350–600/t range across the curve)</td><td>~$2,400–3,200</td></tr>
+        <tr><td>Seed yams (~1.2 t bought, first season)</td><td>THE line — drops toward zero once your minisett plot supplies you</td><td>$500–800</td></tr>
+        <tr><td>Labour (mounding, planting, weeding, staking, harvest)</td><td>the second big line; family labour reduces cash cost</td><td>$300–550</td></tr>
+        <tr><td>Stakes, mulch, dressings, barn materials, transport</td><td></td><td>$200–400</td></tr>
+        <tr><td><strong>Indicative margin</strong></td><td>season one, bought seed</td><td><strong>~$1,000–1,600 — rising sharply from season two as minisetts replace bought seed</strong></td></tr>
+      </table>
+      <h3>Lesson 6.3 — Selling the king properly</h3>
+      <ul>
+        <li><strong>Grade ruthlessly:</strong> the premium market pays for size, straightness and unblemished skin; one scaly tuber in a display shrinks the price of the pile. Sell blemished grades into pounding/chips channels instead.</li>
+        <li><strong>Time the calendar:</strong> new-yam festival windows, end-of-year festivities, and the pre-harvest hungry months are the three price peaks — the barn exists to reach them.</li>
+        <li><strong>Traders vs direct:</strong> bulk to travelling traders moves tonnage fast at farm-gate prices; a stall relationship or urban buyer contact adds margin for your best grade. Groups filling a truck together beat everyone selling alone.</li>
+        <li><strong>Seed customers:</strong> your minisett seed sells itself once neighbours see your field — keep a variety-labelled demonstration row as the shop window.</li>
+      </ul>
+      <h3>Lesson 6.4 — Records and the growth path</h3>
+      <p>Per season per plot: seed source, variety and tonnage planted; mound count; operations dates; harvest tonnage by grade; barn losses monthly; sales by date, channel, price. Your report card: <strong>seed cost per mound</strong> (watch minisetts drive it down) and <strong>barn loss percentage</strong> (watch curing discipline drive it down). The growth path this course recommends: year one — ware plot plus a serious minisett bed; year two — self-supplied seed, bigger barn, first seed sales; year three — the district seed business plus barn-timed ware, with elubo drying absorbing every blemished kilogram.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> The three yam businesses — seed, barn-timed ware, and the elubo trade &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 6:</strong> Build the half-hectare budget with real local prices (seed yams, stakes, labour rates, transport) two ways: all sold at harvest versus blended barn strategy using your Month-1 price calendar. Then draft the minisett pivot: how many mother yams and what bed size would replace your bought-seed line within two seasons, and what surplus seed you could sell. Conclude with one paragraph choosing your year-one business mix.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 6 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. The best entry business in yam is usually:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_1')">Minisett seed production — premium prices, less land, every farmer a customer</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">Buying a lorry first</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">Only fresh harvest-day sales</button>
+<div class="q-exp" id="exp6_1"><strong>Why:</strong> The seed problem is universal, so its solver gets paid first and best. Minisett skills convert a small clean plot into the district's most wanted product each planting season.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. The biggest first-season budget line — and its trajectory — is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_2')">Seed yams, dropping toward zero once your minisett plot supplies you</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Twine, rising forever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Transport, fixed</button>
+<div class="q-exp" id="exp6_2"><strong>Why:</strong> Season one buys seed; every season after, the minisett bed replaces that $500–800 line with self-supply and then with sales revenue. This pivot IS the yam business plan.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. One scaly or blemished tuber in a premium display:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_3')">Shrinks the price of the whole pile — grade ruthlessly and route blemished stock to chips/elubo</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Raises the price</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Is invisible to buyers</button>
+<div class="q-exp" id="exp6_3"><strong>Why:</strong> Premium buyers price the worst tuber they can see. Ruthless grading protects the top price while the flour trade profitably absorbs the rest — nothing wasted, nothing discounted.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. The three price peaks the barn exists to reach are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_4')">New-yam festival windows, end-of-year festivities, and the pre-harvest hungry months</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Three random Tuesdays</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Harvest week, harvest week, harvest week</button>
+<div class="q-exp" id="exp6_4"><strong>Why:</strong> Yam demand is calendar-driven like no other crop. Curing plus barn discipline is the machine that carries tonnage from the glut to those three paydays.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. The two report-card numbers for a yam enterprise are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_5')">Seed cost per mound and barn loss percentage</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">Vine length and mound colour</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">Number of festivals attended</button>
+<div class="q-exp" id="exp6_5"><strong>Why:</strong> One number measures your minisett mastery, the other your harvest-and-curing discipline — together they are most of the distance between average and excellent margins.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. A variety-labelled demonstration row serves as:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_6')">The shop window that sells your seed yams to neighbours</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">A waste of land</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">A legal requirement</button>
+<div class="q-exp" id="exp6_6"><strong>Why:</strong> Seed customers buy what they can see growing. A clean, labelled, vigorous demo row is cheaper than any advertisement and more convincing than any promise.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Groups filling a truck together achieve:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_7')">Better prices and access to urban buyers no single farmer's tonnage reaches</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Nothing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Automatic disqualification</button>
+<div class="q-exp" id="exp6_7"><strong>Why:</strong> Transport economics rule bulky crops: a full truck to the city out-earns ten farm-gate sales. Aggregation is the smallholder's route to wholesale margins.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. The year-three vision this course recommends is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_8')">District seed business + barn-timed ware + elubo drying for blemished grades</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Abandoning yam for another crop</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Only subsistence</button>
+<div class="q-exp" id="exp6_8"><strong>Why:</strong> Three stacked engines: seed for premium and cash-cycle, the barn for the price curve, drying so no kilogram is wasted — each built on the previous year's proven step.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Family labour in the budget:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_9')">Reduces cash costs but should still be counted when comparing enterprises</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Is infinite and free forever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Is forbidden</button>
+<div class="q-exp" id="exp6_9"><strong>Why:</strong> Mounding and staking are heavy work; costing family labour honestly (even if unpaid) is how you compare yam fairly against lighter crops and decide what to hire at peaks.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Yam's margin logic across this module in one line:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_10')">Cut the seed cost with minisetts, protect the premium with grading and barns, sell into the calendar's peaks</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Spend maximum, sell at glut</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Hope</button>
+<div class="q-exp" id="exp6_10"><strong>Why:</strong> Cost side: the minisett pivot. Revenue side: grade, cure, barn, time. Master both sides and the king of crops pays like a king — the sentence this whole course was built to teach.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn6" onclick="markComplete(6)">Mark Month 6 Complete</button>
+    </div>
+  </div>
+
+  <div class="final-section">
+    <h2>&#127942; Final Project: Your Yam Business Plan</h2>
+    <p>The final project is your complete yam enterprise plan — the document that carries you from first mounds to the district seed business, with the minisett pivot at its centre.</p>
+    <ol><li><strong>Market and variety case:</strong> chosen species and released variety, your trader price calendar with festival peaks, and the grade standards your target market pays for.</li>
+<li><strong>Seed plan — the centrepiece:</strong> mother-yam sourcing, minisett production numbers (setts cut, expected seed yams), treatment and nursery routine, and the season your bought-seed line reaches zero.</li>
+<li><strong>Field plan and calendar:</strong> mound count and layout, planting window (with early-yam mulch-cap option), staking system with costs, weeding and feeding schedule.</li>
+<li><strong>Plant-health page:</strong> your three-part clean-seed defence, sett treatment routine, hot-water protocol, rotation map, and barn-loading inspection rules — written as commitments.</li>
+<li><strong>Harvest and storage plan:</strong> single vs double harvest decision with reasons, curing arrangements, barn design and capacity, weekly inspection schedule, and target barn-loss percentage.</li>
+<li><strong>Budget and cash-flow:</strong> the full budget in local prices for seasons one and two side by side, showing the minisett pivot's effect; blended sales scenario timed to the price calendar.</li>
+<li><strong>Risk page and year-3 vision:</strong> three risks with mitigations, and the staged path to seed supplier + barn-timed ware + elubo drying.</li></ol>
+    <p><strong>Submission standard:</strong> A plan you could hand to a savings group, a bank officer, or a family investor without embarrassment. Real local prices, real named buyers, honest risks.</p>
+  </div>
+
+  <div class="budget-section">
+    <h2>&#128176; Startup Budget &mdash; Half Hectare Ware Crop (~5,000 mounds) + Minisett Bed + Barn</h2>
+    <p>Yam is the heaviest-capital root crop in this college — but uniquely, its biggest line (seed) is designed to disappear: the minisett bed in this budget replaces bought seed from season two and becomes a revenue line by season three. Family labour reduces the cash figures shown.</p>
+    <table>
+      <tr><th>Item</th><th>Details</th><th>Typical cost (USD)</th></tr>
+<tr><td>Seed yams (~1.2 t, season one only)</td><td>Improved variety, inspected — the line minisetts will erase</td><td>$500–800</td></tr>
+<tr><td>Mother yams + minisett bed</td><td>Mothers, dressing materials, nursery bed, light sticks</td><td>$60–150</td></tr>
+<tr><td>Land preparation &amp; mounding</td><td>Clearing, ~5,000 mounds — the big labour item</td><td>$150–300</td></tr>
+<tr><td>Sett treatment &amp; mulch</td><td>Ash/seed dressing, grass caps</td><td>$20–60</td></tr>
+<tr><td>Staking system</td><td>Shared trellis materials/stakes (live-stake row planted for future)</td><td>$80–200</td></tr>
+<tr><td>Weeding &times; 3–4 &amp; field labour</td><td>Hired or family equivalent</td><td>$100–250</td></tr>
+<tr><td>Tools</td><td>Digging sticks/spade, cutlass, knives, baskets, twine</td><td>$40–90</td></tr>
+<tr><td>Barn construction</td><td>Poles, twine, thatch/shade for ~5 t capacity</td><td>$60–150</td></tr>
+<tr><td>Harvest &amp; transport</td><td>Careful-lifting labour, carriage, market transport</td><td>$80–180</td></tr>
+<tr><td>Contingency (10%)</td><td></td><td>$110–220</td></tr>
+<tr><td><strong>Total indicative startup</strong></td><td>Season-one figure; drops ~$500–800 from season two as seed self-supplies</td><td><strong>$1,200–2,400</strong></td></tr>
+    </table>
+    <p><em>Prices vary widely by country. Before spending anything, price every line in your own town and rebuild this table — that exercise is part of your final project.</em></p>
+  </div>
+
+  <div class="glossary-section">
+    <h2>&#128218; Glossary</h2>
+    <dl class="glossary">
+<dt>Seed yam</dt><dd>A small whole tuber (or the tuber a minisett produces) used as planting material — the crop's biggest cost and best business.</dd>
+<dt>Sett</dt><dd>A cut piece of a larger tuber used for planting; always treated and healed before soil.</dd>
+<dt>Minisett</dt><dd>A 25–100 g cut piece retaining peel, used to multiply planting material 5–10× faster than tradition.</dd>
+<dt>Peel-borne sprouting</dt><dd>Yam buds arise from the skin region — the anatomical fact behind the minisett cutting rule.</dd>
+<dt>Healing</dt><dd>Air-drying cut sett faces in shade until dry, closing the door to rots and soil pests.</dd>
+<dt>Mound</dt><dd>The 30–60 cm hill of loose soil in which each yam stand grows — depth, drainage and fertility in one structure.</dd>
+<dt>Mulch cap</dt><dd>The grass pad on a planted mound holding moisture and coolness until rains establish the sett.</dd>
+<dt>Staking</dt><dd>Supporting the climbing vine (individual, trellis, or live stakes) — worth 30–50% yield for white yam in humid zones.</dd>
+<dt>Live stakes</dt><dd>Planted rows of gliricidia, leucaena or pigeon pea serving as stakes plus nitrogen-fixing fertility.</dd>
+<dt>Milking / double harvest</dt><dd>Cutting the first tuber at month 4–5 while leaving the attached head to regrow a second, seed-grade tuber.</dd>
+<dt>Senescence</dt><dd>The natural end-of-season yellowing and drying of vines — the maturity clock, not a disease.</dd>
+<dt>Curing</dt><dd>1–2 weeks of warm shaded rest after harvest during which wounds suberise and skins harden for storage.</dd>
+<dt>Yam barn</dt><dd>The traditional shaded frame storing tubers tied individually in moving air — 3–6 months of ware storage.</dd>
+<dt>Scaly tuber</dt><dd>The cracked, dry-rot-layered skin signature of nematode damage — a reject at barn loading and market.</dd>
+<dt>Elubo</dt><dd>Dried yam chips milled into flour for amala — the trade absorbing blemished grades profitably.</dd>
+<dt>New yam season</dt><dd>The early-harvest festival window commanding the year's premium prices for the first fresh tubers.</dd>
+    </dl>
+  </div>
+
+  <div class="resources-section">
+    <h2>&#128279; Further Resources</h2>
+    <ul><li>IITA (International Institute of Tropical Agriculture) and NRCRI Umudike — the home institutions of the minisett technique; free guides on minisetts, improved varieties and yam seed systems (YIIFSWA project materials).</li>
+<li>Your national root-crops programme and extension office — released rotundata and alata varieties for your zone with anthracnose/virus ratings, and clean seed sources.</li>
+<li>FAO yam post-harvest materials — curing, barn design and loss-reduction guidance.</li>
+<li>Local yam trader associations and festival-market contacts — the price calendar holders; talk to them before you plant, not after you harvest.</li>
+<li>Rise Africa Skills companion courses: Cassava (drying and flour-safety discipline for elubo), Sweet Potato (curing physiology), Agroforestry (live-stake species), Beans &amp; Legumes (rotation partners that starve nematodes).</li></ul>
+  </div>
+
+  <div class="cert-section">
+    <h2>&#127891; Course Completion</h2>
+    <p>Complete all 6 months and pass the quizzes to unlock your certificate.</p>
+    <a href="certificate.html?course=Yam%20Farming" class="cert-btn" id="certBtn" disabled>Get Certificate</a>
+  </div>
+</div>
+<script>
+  const TOTAL_MODULES = 6;
+  const COURSE_KEY = 'yam-farming';
+  let completed = JSON.parse(localStorage.getItem(COURSE_KEY + '_progress') || '[]');
+
+  function toggleModule(n) {
+    if (n > 1 && !completed.includes(n-1)) { alert('Complete Month ' + (n-1) + ' first.'); return; }
+    document.getElementById('body' + n).classList.toggle('active');
+  }
+  function answerQ(btn, isCorrect, expId) {
+    const parent = btn.parentElement;
+    const buttons = parent.querySelectorAll('.q-opt');
+    if (buttons[0].disabled) return;
+    buttons.forEach(b => { b.disabled = true; });
+    if (isCorrect) { btn.classList.add('correct'); }
+    else {
+      btn.classList.add('wrong');
+      buttons.forEach(b => { if (b.dataset.c === '1') b.classList.add('correct'); });
+    }
+    document.getElementById(expId).classList.add('show');
+    const quiz = btn.closest('.quiz-wrap');
+    quiz.dataset.answered = (parseInt(quiz.dataset.answered||'0') + 1);
+    quiz.dataset.score = (parseInt(quiz.dataset.score||'0') + (isCorrect ? 1 : 0));
+    if (parseInt(quiz.dataset.answered) >= parseInt(quiz.dataset.total)) {
+      const s = quiz.querySelector('.quiz-score');
+      s.textContent = 'Quiz result: ' + quiz.dataset.score + ' / ' + quiz.dataset.total + (parseInt(quiz.dataset.score) >= 7 ? ' — Pass. Well done!' : ' — Below 7/10. Re-read the module, then review your wrong answers.');
+    }
+  }
+  function markComplete(n) {
+    if (!completed.includes(n)) {
+      completed.push(n); completed.sort((a,b)=>a-b);
+      localStorage.setItem(COURSE_KEY + '_progress', JSON.stringify(completed));
+    }
+    updateUI();
+  }
+  function updateUI() {
+    document.getElementById('completedCount').textContent = completed.length;
+    document.getElementById('progressBar').style.width = (completed.length/TOTAL_MODULES*100) + '%';
+    for (let i=1; i<=TOTAL_MODULES; i++) {
+      const st = document.getElementById('status'+i), btn = document.getElementById('btn'+i);
+      if (completed.includes(i)) { st.textContent='Done'; st.classList.add('done'); if(btn){btn.textContent='Completed'; btn.disabled=true;} }
+      else if (i===1 || completed.includes(i-1)) { st.textContent='Start'; }
+      else { st.textContent='Locked'; }
+    }
+    if (completed.length >= TOTAL_MODULES) {
+      const c = document.getElementById('certBtn');
+      c.removeAttribute('disabled'); c.textContent = 'Get Your Certificate!';
+    }
+  }
+  updateUI();
+</script>
+</body>
+</html>

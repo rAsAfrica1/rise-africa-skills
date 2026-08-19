@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Sorghum &amp; Millet Farming - A complete practical course from Rise Africa Skills. Learn offline, anytime.">
+<title>Sorghum &amp; Millet Farming | Rise Africa Skills</title>
+<style>
+  :root { --gold:#eab308; --gold-dark:#a16207; --green:#16a34a; --bg:#0f172a; --card:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --line:#334155; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:var(--bg); color:var(--text); line-height:1.65; }
+  header { background:linear-gradient(135deg,var(--gold-dark) 0%,#713f12 100%); padding:44px 20px; text-align:center; }
+  header h1 { font-size:2rem; margin-bottom:8px; }
+  header p { color:rgba(255,255,255,0.88); max-width:640px; margin:0 auto; }
+  .badge { display:inline-block; background:var(--gold); color:#1e293b; padding:4px 14px; border-radius:20px; font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-top:12px; letter-spacing:0.4px; }
+  .container { max-width:920px; margin:0 auto; padding:30px 20px; }
+  .progress-bar { background:var(--card); border-radius:10px; height:10px; margin-bottom:28px; overflow:hidden; }
+  .progress-fill { background:var(--gold); height:100%; width:0%; border-radius:10px; transition:width .4s ease; }
+  .overview { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-bottom:26px; }
+  .overview h2 { color:var(--gold); font-size:1.15rem; margin-bottom:10px; }
+  .overview ul { margin:8px 0 14px 20px; color:var(--muted); }
+  .overview li { margin:5px 0; }
+  .meta-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+  .meta-chip { background:#0b1220; border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:0.85rem; color:var(--muted); }
+  .meta-chip b { color:var(--text); }
+  .module { background:var(--card); border-radius:12px; margin-bottom:16px; overflow:hidden; border:1px solid var(--line); }
+  .module-header { padding:18px 22px; cursor:pointer; display:flex; align-items:center; gap:14px; transition:background .2s; }
+  .module-header:hover { background:#26354a; }
+  .module-num { background:var(--gold); color:#1e293b; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0; }
+  .module-title { flex:1; font-weight:600; }
+  .module-status { font-size:0.75rem; padding:4px 10px; border-radius:12px; background:var(--line); color:var(--muted); white-space:nowrap; }
+  .module-status.done { background:var(--green); color:#fff; }
+  .module-body { display:none; padding:0 22px 24px; border-top:1px solid var(--line); }
+  .module-body.active { display:block; }
+  .module-body p { color:var(--muted); margin:13px 0; }
+  .module-body ul, .module-body ol { margin:10px 0 10px 22px; color:var(--muted); }
+  .module-body li { margin:6px 0; }
+  .module-body strong { color:var(--text); }
+  .module-body h3 { color:var(--gold); font-size:1.05rem; margin:22px 0 4px; }
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.88rem; }
+  th { background:#0b1220; color:var(--gold); text-align:left; padding:9px 10px; border:1px solid var(--line); }
+  td { padding:8px 10px; border:1px solid var(--line); color:var(--muted); vertical-align:top; }
+  tr:nth-child(even) td { background:#1a2537; }
+  .tip-box { background:rgba(234,179,8,0.08); border-left:4px solid var(--gold); padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .tip-box strong { color:var(--gold); }
+  .warn-box { background:rgba(239,68,68,0.08); border-left:4px solid #ef4444; padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .warn-box strong { color:#f87171; }
+  .assign-box { background:#0b1220; border:1px dashed var(--gold-dark); border-radius:10px; padding:16px 18px; margin:16px 0; color:var(--muted); }
+  .assign-box strong { color:var(--gold); }
+  .video-box { background:#0b1220; border:1px solid var(--line); border-radius:10px; padding:14px 18px; margin:16px 0; color:var(--muted); font-size:0.9rem; }
+  .quiz-wrap { background:#0b1220; border:1px solid var(--line); border-radius:12px; padding:20px; margin-top:20px; }
+  .quiz-wrap h3 { margin-top:0 !important; }
+  .q-block { margin:16px 0; padding-bottom:14px; border-bottom:1px solid #1e293b; }
+  .q-block:last-child { border-bottom:none; }
+  .q-text { font-weight:600; color:var(--text); margin-bottom:8px; }
+  .q-opt { display:block; width:100%; text-align:left; padding:9px 13px; margin:5px 0; background:var(--card); border:1px solid #475569; border-radius:8px; color:var(--text); cursor:pointer; transition:all .2s; font-size:0.9rem; }
+  .q-opt:hover { border-color:var(--gold); }
+  .q-opt.correct { background:#14532d; border-color:var(--green); }
+  .q-opt.wrong { background:#7f1d1d; border-color:#ef4444; }
+  .q-exp { display:none; margin-top:8px; padding:10px 13px; background:rgba(234,179,8,0.07); border-left:3px solid var(--gold); border-radius:0 6px 6px 0; color:var(--muted); font-size:0.87rem; }
+  .q-exp.show { display:block; }
+  .quiz-score { margin-top:12px; font-weight:700; color:var(--gold); }
+  .check-btn { background:var(--gold); color:#1e293b; border:none; padding:11px 26px; border-radius:8px; font-weight:700; cursor:pointer; margin-top:16px; transition:background .2s; }
+  .check-btn:hover { background:#facc15; }
+  .check-btn:disabled { opacity:0.5; cursor:not-allowed; }
+  .final-section, .budget-section, .glossary-section, .resources-section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-top:26px; }
+  .final-section h2, .budget-section h2, .glossary-section h2, .resources-section h2 { color:var(--gold); font-size:1.2rem; margin-bottom:10px; }
+  .final-section p, .budget-section p, .resources-section p { color:var(--muted); margin:10px 0; }
+  .final-section ol, .resources-section ul { margin:10px 0 10px 22px; color:var(--muted); }
+  .final-section li, .resources-section li { margin:6px 0; }
+  dl.glossary dt { color:var(--text); font-weight:700; margin-top:12px; }
+  dl.glossary dd { color:var(--muted); margin-left:0; font-size:0.92rem; }
+  .cert-section { text-align:center; padding:40px 20px; background:var(--card); border-radius:16px; margin-top:30px; border:1px solid var(--line); }
+  .cert-section h2 { margin-bottom:10px; }
+  .cert-section p { color:var(--muted); margin-bottom:20px; }
+  .cert-btn { background:var(--gold); color:#1e293b; border:none; padding:14px 36px; border-radius:10px; font-size:1rem; font-weight:800; cursor:pointer; text-decoration:none; display:inline-block; }
+  .cert-btn[disabled] { opacity:0.4; pointer-events:none; }
+  .nav-bar { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:var(--card); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:100; }
+  .nav-bar a { color:var(--text); text-decoration:none; font-weight:600; }
+  .nav-bar a:hover { color:var(--gold); }
+  .completion-count { color:var(--muted); font-size:0.9rem; }
+  @media (max-width:600px){ header h1{font-size:1.5rem;} .module-header{padding:14px 16px;} .module-body{padding:0 16px 18px;} table{font-size:0.8rem;} th,td{padding:6px 7px;} }
+</style>
+</head>
+<body>
+<nav class="nav-bar">
+  <a href="index.html">&#8592; Back to Courses</a>
+  <span class="completion-count"><span id="completedCount">0</span> / 6 months completed</span>
+</nav>
+<header>
+  <div class="badge">Agriculture &middot; 6-Month Program</div>
+  <h1>Sorghum &amp; Millet Farming</h1>
+  <p>Africa's own cereals — drought-proof agronomy, the Striga war, beating the birds, hard-dough harvest and hermetic storage, and the brewery, feed and finger-millet premium markets.</p>
+</header>
+<div class="container">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+
+  <div class="overview">
+    <h2>Course Overview</h2>
+    <p style="color:var(--muted);">Sorghum, pearl millet and finger millet are the cereals Africa domesticated for itself: they finish crops on rainfall that kills maize, store for years, and now feed three growing commercial markets — food, brewery malting and poultry feed. This course teaches them as the sophisticated dryland businesses they are. The agronomy: shallow sowing of small seed, thinning discipline, station-placed manure, tied ridges that harvest storms, and variety choice read from three columns. The two special wars: Striga, the parasitic witchweed beaten by a stack of resistance, fertility, legume rotation and pre-seeding hand-pulling; and birds, beaten mainly by the social technology of village-synchronised planting plus tannin grain and honest scaring labour. Then hard-dough harvest, the stover second harvest, the drying and hermetic storage laws, and a business module built on four buyers, group aggregation onto contracts, and the malting craft that upgrades grain to premium in every brewing town.</p>
+    <h2 style="margin-top:16px;">What You Will Learn</h2>
+    <ul><li>Match sorghum, pearl millet and finger millet to rainfall, soils and markets — the dryland portfolio</li>
+<li>Read variety lists by maturity days, Striga resistance and grain colour/end-use</li>
+<li>Sow small seed shallow into fine firm tilth; thin, gap-fill and transplant for full stands</li>
+<li>Fight Striga with the full stack: resistant varieties, fertility, legume rotation, timely pulling</li>
+<li>Beat birds with synchronised planting, tannin types and organised scaring; manage borers, midge, smuts and ergot</li>
+<li>Harvest at hard dough, capture the stover, and thresh, dry and store to the 12–13% law</li>
+<li>Climb the processing ladder — dehulling, milling, malting for the opaque-beer trade</li>
+<li>Run the budgets, records and group aggregation that win brewery and feed contracts</li></ul>
+    <div class="meta-row">
+      <div class="meta-chip"><b>Duration:</b> 6 months, one module per month</div>
+      <div class="meta-chip"><b>Level:</b> Beginner &rarr; Job-ready</div>
+      <div class="meta-chip"><b>Units:</b> Metric with imperial where useful</div>
+      <div class="meta-chip"><b>Final project:</b> Your own business plan</div>
+    </div>
+  </div>
+
+  <div class="module" data-module="1">
+    <div class="module-header" onclick="toggleModule(1)">
+      <div class="module-num">1</div>
+      <div class="module-title">Month 1: The Drought Champions — Crops &amp; Markets</div>
+      <div class="module-status" id="status1">Start</div>
+    </div>
+    <div class="module-body" id="body1">
+
+      <h3>Lesson 1.1 — The drought champions</h3>
+      <p>Sorghum and the millets are Africa's own cereals — domesticated on this continent, bred by it for millennia, and built for exactly the conditions that break maize: <strong>heat, short erratic rains, and poor light soils</strong>. Where maize needs ~500+ mm of well-spread rain, grain sorghum produces on <strong>400–600 mm</strong> and pearl millet on as little as <strong>250–400 mm</strong>. In a warming, drying climate, these are not 'poor man's crops' — they are the risk managers of dryland farming, and demand for them is climbing on three fronts at once: food (traditional porridges and flatbreads plus a health-food revival), <strong>malting and opaque-beer brewing</strong> (large commercial contracts in Southern and Eastern Africa), and <strong>poultry feed</strong>, where red sorghum increasingly substitutes for maize.</p>
+      <h3>Lesson 1.2 — Meet the family</h3>
+      <table>
+        <tr><th>Crop</th><th>Character</th><th>Best fit &amp; market</th></tr>
+        <tr><td><strong>Grain sorghum</strong></td><td>90–130 days; white, red or brown grain; 1–3 m tall</td><td>White = food premium; red/brown (tannin) = beer, feed, and bird-resistant fields</td></tr>
+        <tr><td><strong>Pearl millet</strong></td><td>75–110 days; the deepest-drought cereal; tall with candle-like heads</td><td>Sahel and semi-arid staple; food and feed</td></tr>
+        <tr><td><strong>Finger millet</strong></td><td>90–120 days; tiny iron-rich grain in finger-shaped heads</td><td>Premium prices: porridge for babies and invalids, brewing; stores for YEARS almost pest-free</td></tr>
+        <tr><td>Sweet-stem sorghum / broomcorn / fodder types</td><td>Juicy stems; brush heads; leafy biomass</td><td>Syrup and chewing canes, brooms, livestock fodder — niche earners</td></tr>
+      </table>
+      <h3>Lesson 1.3 — The honest picture</h3>
+      <ul>
+        <li>Yields: African averages sit near <strong>0.8–1 t/ha</strong>; improved varieties with basic fertility and timely weeding reach <strong>2.5–4 t/ha</strong> for sorghum and 1.5–2.5 t/ha for millets. The gap-closers are familiar: variety, stand, weeding — plus two enemies this course treats as centrepieces: <strong>Striga</strong> (the parasitic witchweed, Module 3) and <strong>birds</strong> (Module 4).</li>
+        <li>These crops are cheap to grow but labour-exposed at weeding and bird-scaring — plan the family calendar honestly.</li>
+        <li>Finger millet's storage superpower (years in a granary, little insect damage) makes it the dryland farmer's food-security vault.</li>
+      </ul>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Sorghum, pearl millet, finger millet — matching Africa's cereals to Africa's rainfall &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 1:</strong> Map your rainfall reality: from local knowledge and any records, estimate your season's reliable rainfall and length, and note the last three seasons' character. Survey your market: prices per kg or per tin for sorghum (by colour), pearl millet and finger millet; ask a brewer (commercial agent or opaque-beer maker) and any feed seller what they buy and pay. Choose your one- or two-crop portfolio with a paragraph of reasons.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 1 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Compared to maize, sorghum and millets need:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_1')">Far less rain — sorghum ~400–600 mm, pearl millet as little as 250–400 mm</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">More rain than rice</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">Irrigation always</button>
+<div class="q-exp" id="exp1_1"><strong>Why:</strong> Bred in Africa for African drylands, these cereals finish crops on rainfall that fails maize — the climate-risk logic behind their revival.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. The three growing demand fronts are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_2')">Food, malting/opaque-beer contracts, and poultry feed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">Timber, fibre, rubber</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">None</button>
+<div class="q-exp" id="exp1_2"><strong>Why:</strong> Traditional food demand is joined by commercial brewery malting contracts and feed mills substituting red sorghum for maize — three buyers for one dryland field.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. White grain sorghum versus red/brown types:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_3')">White earns the food premium; red/brown tannin types suit beer and feed and resist birds better</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">White is for birds only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">No difference exists</button>
+<div class="q-exp" id="exp1_3"><strong>Why:</strong> Tannins make dark grain bitter to birds and fine for brewing/feed, while white grain mills into premium food flour — the colour choice is a market and bird-defence decision at once.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Pearl millet's claim to fame is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_4')">Producing grain on the deepest drought of any cereal — Sahel rainfall of 250–400 mm</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">Needing swamps</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">Being a tree</button>
+<div class="q-exp" id="exp1_4"><strong>Why:</strong> Where nothing else ripens, pearl millet does. It is the last cereal standing on the rainfall gradient — food security engineered by centuries of African selection.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Finger millet's storage superpower is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_5')">Keeping for years in a granary with little insect damage</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Rotting in a week</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Exploding</button>
+<div class="q-exp" id="exp1_5"><strong>Why:</strong> The tiny hard grain is nature's hermetic storage: finger millet is the dryland vault crop, and its baby-porridge and brewing markets pay a premium on top.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Typical vs improved dryland cereal yields are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_6')">~0.8–1 t/ha average; 2.5–4 t/ha for improved sorghum with basic management</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">50 t/ha average</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">Identical always</button>
+<div class="q-exp" id="exp1_6"><strong>Why:</strong> Variety, full stands and timely weeding close most of the gap — plus beating the two special enemies this course headlines: Striga and birds.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. The two centrepiece enemies of this course are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_7')">Striga (witchweed) and birds</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">Frost and snow</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">Elephants and whales</button>
+<div class="q-exp" id="exp1_7"><strong>Why:</strong> A parasitic weed that feeds on the crop's roots, and grain-eating birds led by quelea — the dryland cereals' particular battles, each with its own module treatment.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Sweet-stem sorghum and broomcorn types earn from:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_8')">Syrup/chewing canes, brooms and fodder — niche side markets</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Grain only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Nothing</button>
+<div class="q-exp" id="exp1_8"><strong>Why:</strong> The sorghum family is a toolbox: juicy stems, brush heads and biomass types add small steady income streams around the grain business.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. These crops' main labour exposure is at:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_9')">Weeding and bird-scaring peaks</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">Every single day equally</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">Never</button>
+<div class="q-exp" id="exp1_9"><strong>Why:</strong> Cheap to grow but demanding at two moments: the early weeding window and the grain-filling bird watch. The family calendar must be planned around both.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Calling sorghum and millet 'poor man's crops' misses that they are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_10')">The risk managers of dryland farming with growing commercial demand</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Illegal</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Only decorative</button>
+<div class="q-exp" id="exp1_10"><strong>Why:</strong> In a drying climate, the crop that always finishes is the sophisticated choice — and breweries and feed mills now pay commercial prices for it.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn1" onclick="markComplete(1)">Mark Month 1 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="2">
+    <div class="module-header" onclick="toggleModule(2)">
+      <div class="module-num">2</div>
+      <div class="module-title">Month 2: Varieties, Land &amp; the Full Stand</div>
+      <div class="module-status" id="status2">Locked</div>
+    </div>
+    <div class="module-body" id="body2">
+
+      <h3>Lesson 2.1 — Variety choice: read three columns</h3>
+      <p>From your extension list of released varieties, read: <strong>days to maturity</strong> (match the rain window — the shorter the season, the earlier the variety), <strong>Striga resistance/tolerance</strong> (Module 3 explains why this column can be the harvest), and <strong>grain colour/end-use</strong> (white food premium vs red brewery/feed and bird pressure). Improved open-pollinated varieties let you save seed 2–3 seasons; hybrids (increasingly available in sorghum) yield more but need fresh seed each year. Local landraces carry priceless adaptation — many farmers wisely run improved and landrace side by side.</p>
+      <h3>Lesson 2.2 — Land and planting</h3>
+      <table>
+        <tr><th>Element</th><th>Standard</th><th>Notes</th></tr>
+        <tr><td>Soil</td><td>Light to medium, free-draining; both crops tolerate poor soils but reward manure</td><td>Finger millet prefers slightly better, moister land</td></tr>
+        <tr><td>Land prep</td><td>Fine firm seedbed — the seeds are SMALL</td><td>In dry zones: tied ridges or planting basins harvest every storm</td></tr>
+        <tr><td>Sowing</td><td>At first effective rains; sorghum/pearl millet rows 60–75 cm, stations 20–30 cm, <strong>2–3 cm deep only</strong>; finger millet drilled/row-sown shallowly or transplanted from nurseries</td><td>Deep-sown small seed never surfaces — the classic emergence failure</td></tr>
+        <tr><td>Seed rate</td><td>Sorghum 5–10 kg/ha; pearl millet 3–5 kg/ha; finger millet 2–5 kg/ha drilled</td><td>Cheap seed — never let seed saving thin the stand</td></tr>
+        <tr><td>Seed dressing</td><td>Fungicide dressing against covered smut where available; ash-dust traditionally</td><td>One cheap treatment prevents the black-spore heads of Module 4</td></tr>
+      </table>
+      <h3>Lesson 2.3 — Thinning: the discipline nobody enjoys</h3>
+      <p>Small-seeded cereals are over-sown then <strong>thinned at 2–3 weeks to 1–2 plants per station</strong> (or in-row spacing for drilled millet). Skipping thinning is the region's most common yield thief after weeds: crowded plants make straw and tiny heads. Thinnings feed livestock. Gap-fill by transplanting thinned seedlings on a rainy day — pearl and finger millet transplant surprisingly well, and finger millet is often deliberately nursery-raised and transplanted like a vegetable for the strongest stands.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Shallow sowing, thinning and transplanting — building the stand small seed demands &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 2:</strong> Obtain the released-variety list from extension and copy the maturity, Striga and colour columns; choose and source your variety (with smut seed dressing where available). Prepare a fine firm seedbed — with tied ridges or basins if your zone is dry — and sow at least four 10-metre rows at correct spacing and 2–3 cm depth. At 2–3 weeks, thin to station, transplant thinnings into gaps on a rainy day, and record your stand count.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 2 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. The three variety-list columns to read are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_1')">Days to maturity, Striga resistance, and grain colour/end-use</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">Font, price, packet art</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">Height only</button>
+<div class="q-exp" id="exp2_1"><strong>Why:</strong> Season fit, witchweed defence and market destination — three decisions made in one reading before any money is spent.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Sorghum and millet seed is sown:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_2')">2–3 cm deep only — small seed sown deep never surfaces</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">15 cm deep</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">On the surface unburied in wind</button>
+<div class="q-exp" id="exp2_2"><strong>Why:</strong> The classic dryland emergence failure is burying tiny seed. A fine, firm, shallow seedbed is the whole trick.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Improved OPVs versus hybrids:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_3')">OPV seed can be saved 2–3 seasons; hybrids yield more but need fresh seed yearly</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">Hybrids are saved forever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">No difference</button>
+<div class="q-exp" id="exp2_3"><strong>Why:</strong> The bean-course seed law again: know which type you hold. Many farmers run an improved variety beside a trusted landrace for adaptation insurance.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Tied ridges and planting basins in dry zones:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_4')">Harvest every storm's water for the crop row</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">Drain water away fast</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">Are decoration</button>
+<div class="q-exp" id="exp2_4"><strong>Why:</strong> Micro-catchments turn brief violent storms into stored root-zone moisture — often the difference between a finished crop and a failed one at 400 mm rainfall.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Thinning at 2–3 weeks to 1–2 plants per station:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_5')">Is essential — crowded plants make straw and tiny heads</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">Is harmful</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">Happens at harvest</button>
+<div class="q-exp" id="exp2_5"><strong>Why:</strong> Over-sowing insures emergence; thinning converts the insurance into yield. Skipping it is the second-biggest yield thief in these crops after weeds.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Finger millet is often established by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_6')">Nursery-raising and transplanting like a vegetable for the strongest stands</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">Throwing seed into trees</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">Freezing</button>
+<div class="q-exp" id="exp2_6"><strong>Why:</strong> Its tiny seed and high value justify vegetable-style care: nurseries plus rainy-day transplanting give full, even, weedable rows.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Seed dressing against covered smut:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_7')">Is a cheap treatment preventing black-spore heads later</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Causes smut</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Is impossible</button>
+<div class="q-exp" id="exp2_7"><strong>Why:</strong> Smut spores ride on seed; a fungicide dressing (or traditional ash where that's all there is) stops the disease before the season starts — Module 4 shows what it prevents.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Seed rates for these cereals are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_8')">Low and cheap — e.g. sorghum 5–10 kg/ha — so never let seed-saving thin the stand</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">500 kg/ha</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">One seed per hectare</button>
+<div class="q-exp" id="exp2_8"><strong>Why:</strong> Seed is the cheapest input in the whole budget; a gappy stand to save a kilogram of seed is dryland farming's worst trade.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Thinned seedlings can be:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_9')">Fed to livestock or transplanted into gaps on a rainy day</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Only burned</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Left to fight</button>
+<div class="q-exp" id="exp2_9"><strong>Why:</strong> Both millets transplant well; gap-filling with thinnings on a wet day buys a full stand for free labour.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Landrace varieties deserve respect because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_10')">They carry generations of local adaptation — many farmers run them beside improved lines</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">They are always worthless</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">Law requires them</button>
+<div class="q-exp" id="exp2_10"><strong>Why:</strong> Local landraces survived every local drought that killed everything else. Improved-plus-landrace side by side is adaptation insurance with a yield upside.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn2" onclick="markComplete(2)">Mark Month 2 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="3">
+    <div class="module-header" onclick="toggleModule(3)">
+      <div class="module-num">3</div>
+      <div class="module-title">Month 3: The Striga War, Weeding &amp; Dryland Feeding</div>
+      <div class="module-status" id="status3">Locked</div>
+    </div>
+    <div class="module-body" id="body3">
+
+      <h3>Lesson 3.1 — Striga: the witchweed war</h3>
+      <p><strong>Striga (witchweed)</strong> is a beautiful pink-flowered killer: a <strong>parasitic plant</strong> that fastens onto sorghum, millet and maize ROOTS underground, drinking the crop's water and food for weeks before it even emerges. By the time you see pink flowers, most damage is done — stunted yellowed crops on your most exhausted fields. One plant sheds <strong>tens of thousands of dust-like seeds</strong> that wait in soil up to 15–20 years, germinating only when a host root grows past. Striga is a symptom of tired soil — and it is beaten by a stack, never a single act:</p>
+      <ol>
+        <li><strong>Resistant/tolerant varieties</strong> — released Striga-resistant sorghums exist across the region; this is the column Module 2 flagged.</li>
+        <li><strong>Fertility:</strong> manure, compost and nitrogen visibly suppress Striga — the weed thrives on hungry soil and fades on fed soil.</li>
+        <li><strong>Legume rotation and intercropping:</strong> cowpea, groundnut and especially <strong>desmodium</strong> (in push-pull systems) trigger suicidal Striga germination — the seeds sprout, find no cereal root, and die. Every legume season cleans the soil bank.</li>
+        <li><strong>Hand-pull flowering Striga BEFORE it seeds</strong> — carry a bag, burn or bury deep; each pulled plant is tens of thousands of seeds that never enter your soil.</li>
+        <li>Never accept uncleaned seed or manure from Striga-infested fields — the dust seed travels in both.</li>
+      </ol>
+      <h3>Lesson 3.2 — Ordinary weeds and the feeding programme</h3>
+      <ul>
+        <li>Weed <strong>twice</strong>: at thinning (2–3 weeks) and again 5–6 weeks. Early competition costs these small-seedling crops dearly; after knee height they defend themselves.</li>
+        <li>Feeding, honestly scaled for drylands: <strong>manure/compost carried to the planting stations or basins</strong> beats broadcast anything; where cash allows, a small NPK starter and a light N top-dress at knee height repay well in sorghum. Finger millet responds strongest of the three to fertility.</li>
+        <li>Stover after harvest is valuable fodder — but returning part of it plus manure is the long-game answer to both fertility and Striga.</li>
+      </ul>
+      <h3>Lesson 3.3 — Water discipline without irrigation</h3>
+      <p>These crops ARE the water discipline — deep roots, waxy leaves, and sorghum's party trick of <strong>rolling its leaves and pausing through drought, then resuming</strong> ('staying green'). Your jobs: plant at first effective rains (every lost week is yield), harvest storms with tied ridges/basins, mulch stations where material allows, and match variety length to the season. Pearl millet's speed (75–110 days) is itself a drought escape — the crop finishes before the dry.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Witchweed underground — and the five-part stack that drains its seed bank &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 3:</strong> Walk your plot and two neighbouring cereal fields: record any Striga (count, growth stage) and photograph it if possible. Complete both weedings on schedule, placing manure or compost at stations at the first. Hand-pull, bag and destroy every flowering Striga plant you find anywhere on the farm, recording the count. Write your three-season Striga plan naming your resistant variety, legume rotation partner and fertility commitment.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 3 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Striga damages the crop:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_1')">Underground, fastened to the roots, for weeks before its pink flowers even emerge</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Only after flowering</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">By shading</button>
+<div class="q-exp" id="exp3_1"><strong>Why:</strong> The parasite drinks from the root system unseen; visible flowers mean the theft is mostly complete. This is why prevention and soil-bank management, not late reaction, define the war.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. One Striga plant sheds:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_2')">Tens of thousands of dust-like seeds that persist in soil 15–20 years</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Two seeds</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">No seeds</button>
+<div class="q-exp" id="exp3_2"><strong>Why:</strong> The seed bank is the enemy's fortress: microscopic, long-lived, triggered only by host roots. Every prevented seeding matters for two decades.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Striga is strongly associated with:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_3')">Exhausted, hungry soils — fertility visibly suppresses it</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">Rich soils</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">Water</button>
+<div class="q-exp" id="exp3_3"><strong>Why:</strong> Witchweed is tired soil's symptom. Manure, compost and nitrogen weaken it while feeding the crop — one input, two victories.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Legume rotations and desmodium fight Striga by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_4')">Triggering suicidal germination — seeds sprout, find no cereal root, and die</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Feeding it</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Magic</button>
+<div class="q-exp" id="exp3_4"><strong>Why:</strong> False-host chemistry empties the seed bank season by season. Cowpea, groundnut and push-pull desmodium clean the soil while earning their own keep.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Flowering Striga plants should be:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_5')">Hand-pulled before seeding, bagged, and burned or buried deep</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Admired and left</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Spread to neighbours</button>
+<div class="q-exp" id="exp3_5"><strong>Why:</strong> Each pulled plant is tens of thousands of seeds denied entry to a 20-year bank. The bag matters — dropped plants still ripen seed.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Striga travels between farms in:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_6')">Uncleaned seed lots and manure from infested fields</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Sealed tins only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Radio waves</button>
+<div class="q-exp" id="exp3_6"><strong>Why:</strong> Dust-fine seed rides where soil rides. Sourcing clean seed and clean manure is border control for your fields.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. The weeding calendar for these cereals is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_7')">Twice — at thinning (2–3 weeks) and again at 5–6 weeks</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Daily forever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Never</button>
+<div class="q-exp" id="exp3_7"><strong>Why:</strong> Small seedlings lose badly to early weeds; knee-high crops shade their own rows. Two timely weedings capture nearly all the benefit.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. The most efficient dryland feeding practice is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_8')">Manure/compost placed at planting stations or basins rather than broadcast</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">Broadcasting everything thinly everywhere</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">No feeding ever</button>
+<div class="q-exp" id="exp3_8"><strong>Why:</strong> Precision placement puts scarce fertility where roots are, doubling its effect — the micro-dosing principle that transformed Sahelian yields.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Sorghum survives mid-season drought by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_9')">Rolling leaves and pausing growth, then resuming when rain returns</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Dying immediately</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Uprooting itself</button>
+<div class="q-exp" id="exp3_9"><strong>Why:</strong> The 'stay-green' pause is sorghum's signature resilience — a physiological insurance policy maize does not carry.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Pearl millet's 75–110 day speed acts as:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_10')">A drought escape — the crop finishes before the dry season bites</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">A problem</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">A myth</button>
+<div class="q-exp" id="exp3_10"><strong>Why:</strong> The fastest cereal simply isn't there when terminal drought arrives. Earliness is the cheapest drought technology in the catalogue.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn3" onclick="markComplete(3)">Mark Month 3 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="4">
+    <div class="module-header" onclick="toggleModule(4)">
+      <div class="module-num">4</div>
+      <div class="module-title">Month 4: Birds, Borers, Smuts &amp; Ergot</div>
+      <div class="module-status" id="status4">Locked</div>
+    </div>
+    <div class="module-body" id="body4">
+
+      <h3>Lesson 4.1 — Birds: the grain-filling siege</h3>
+      <p>From milky grain to harvest, birds — above all the <strong>red-billed quelea</strong>, moving in flocks of thousands to millions — can take a dryland cereal field to zero. The defence stack:</p>
+      <ul>
+        <li><strong>Synchronise planting with neighbours:</strong> one lonely early or late field feeds every bird in the district; a whole village ripening together dilutes the pressure. This is the single most effective measure and it is social, not technical.</li>
+        <li><strong>Tannin (red/brown) sorghums</strong> are measurably less attractive — part of their feed/beer market logic.</li>
+        <li>Goose-necked and compact-headed varieties hide grain better than open loose heads.</li>
+        <li><strong>Active scaring</strong> through the 2–4 critical weeks: children's platforms, slings, shiny tape, catapults — budget this labour honestly; it is the crop's school-calendar conflict.</li>
+        <li>Where quelea breeding colonies threaten whole districts, report to extension — control is a government-level operation.</li>
+      </ul>
+      <h3>Lesson 4.2 — Insects</h3>
+      <table>
+        <tr><th>Pest</th><th>Damage</th><th>Response</th></tr>
+        <tr><td>Stem borers</td><td>'Dead hearts' in young plants; tunnelled stems lodge</td><td>Early planting, destroy/feed old stalks after harvest (they overwinter there), push-pull with desmodium+napier where practised; targeted spray only on bad early infestations</td></tr>
+        <tr><td>Sorghum midge</td><td>Tiny fly laying in flowering heads; empty 'blasted' grain</td><td>Synchronised EARLY planting (late fields flower into peak midge), resistant varieties</td></tr>
+        <tr><td>Head bugs &amp; caterpillars</td><td>Shrivelled stained grain in the head</td><td>Compact-head varieties suffer more bugs but fewer birds — a real trade-off; treat only heavy attacks</td></tr>
+        <tr><td>Armoured cricket / armyworm outbreaks</td><td>Episodic defoliation</td><td>Community alerts and extension-guided response</td></tr>
+      </table>
+      <h3>Lesson 4.3 — Diseases</h3>
+      <ul>
+        <li><strong>Covered/loose smuts:</strong> heads replaced by black spore masses — the disease Module 2's cheap seed dressing prevents almost completely.</li>
+        <li><strong>Ergot</strong> (especially in cool wet flowering): sticky 'honeydew' then dark horns in the grain — <strong>toxic to people and livestock</strong>; never eat or feed heavily ergot-contaminated grain; sort it out as with every contaminated fraction in this college.</li>
+        <li>Leaf diseases (anthracnose, blights, downy mildew in pearl millet): resistant varieties, rotation, destroy volunteer plants; downy-mildew-infected millet plants (pale, leafy 'green ear' heads) should be rogued early.</li>
+        <li>Grain moulds on white sorghum in wet harvests: choose harvest-season-appropriate colour (tannin types resist moulds better) and dry fast — the universal drying law.</li>
+      </ul>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Quelea flocks and the synchronised village — plus midge, smut and the ergot warning &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 4:</strong> Interview three neighbouring farmers on planting dates and bird losses; assess how synchronised your area actually is and note what one village meeting could change. Build your bird-watch plan for the grain-filling weeks (who, when, with what). Inspect any available sorghum/millet heads for smut spore masses, midge-blasted grain or ergot horns, recording findings — and check whether your seed source uses fungicide dressing.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 4 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. The single most effective bird defence is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_1')">Village-wide synchronised planting so all fields ripen together</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">One farmer planting alone very early</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Silence</button>
+<div class="q-exp" id="exp4_1"><strong>Why:</strong> Bird pressure divides across every ripening hectare. The lone early field is the district's bird feeder; synchrony is a social technology stronger than any scarecrow.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Red-billed quelea flocks number:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_2')">Thousands to millions — capable of zeroing a field</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">Two birds</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">They don't exist</button>
+<div class="q-exp" id="exp4_2"><strong>Why:</strong> Quelea is the world's most numerous wild bird and dryland Africa's grain nemesis; colony-level control is a government operation worth reporting for.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Tannin (red/brown) sorghums are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_3')">Less attractive to birds and suited to beer/feed markets</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Bird magnets</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Poisonous to people always</button>
+<div class="q-exp" id="exp4_3"><strong>Why:</strong> Bitter tannins deter beaks while breweries and feed mills buy the grain happily — colour choice doubling as pest management.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Stem borers overwinter in:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_4')">Old stalks left standing after harvest — destroy or feed them</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">Clouds</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">Rivers</button>
+<div class="q-exp" id="exp4_4"><strong>Why:</strong> The borer's off-season home is last year's stover. Feeding, burning or composting stalks breaks the cycle before next season's planting.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Sorghum midge is beaten mainly by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_5')">Synchronised early planting so fields don't flower into peak midge</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Night spraying forever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Loud drums</button>
+<div class="q-exp" id="exp4_5"><strong>Why:</strong> Midge builds up through the season; late-flowering fields meet the peak. Earliness and neighbourhood synchrony — the bird strategy again — solve most of it.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Compact-headed sorghum varieties trade:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_6')">Fewer bird losses for more head-bug pressure</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Nothing for nothing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Grain for leaves</button>
+<div class="q-exp" id="exp4_6"><strong>Why:</strong> Tight heads hide grain from beaks but shelter bugs; open heads air out bugs but feed birds. Variety choice is local judgement, not dogma.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Smut diseases are prevented by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_7')">Cheap fungicide seed dressing before sowing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Harvest-day spraying</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Prayer alone</button>
+<div class="q-exp" id="exp4_7"><strong>Why:</strong> Spore-borne on seed, smut is stopped for cents at planting — the highest benefit-cost ratio treatment in dryland cereals.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Ergot in the grain is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_8')">Toxic to people and livestock — sort out dark horns and never use heavily contaminated lots</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">A vitamin</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">Harmless decoration</button>
+<div class="q-exp" id="exp4_8"><strong>Why:</strong> Ergot alkaloids poison food and feed. The sorting table catches it, as it catches aflatoxin in groundnut — the same discipline, another toxin.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. 'Green ear' pale leafy heads in pearl millet indicate:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_9')">Downy mildew — rogue affected plants early</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Extra yield</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Ripeness</button>
+<div class="q-exp" id="exp4_9"><strong>Why:</strong> The classic pearl millet disease converts heads to leafy tissue. Early roguing plus resistant varieties keeps the seed and soil bank clean.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Grain moulds on white sorghum in wet harvest seasons are managed by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_10')">Colour choice (tannin types resist better) and fast drying</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Slow damp heaps</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Ignoring them</button>
+<div class="q-exp" id="exp4_10"><strong>Why:</strong> White food sorghum in a wet harvest window is a mould risk; either match colour to season or enforce the drying law hard — racks, sun, speed.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn4" onclick="markComplete(4)">Mark Month 4 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="5">
+    <div class="module-header" onclick="toggleModule(5)">
+      <div class="module-num">5</div>
+      <div class="module-title">Month 5: Harvest, Storage &amp; the Processing Ladder</div>
+      <div class="module-status" id="status5">Locked</div>
+    </div>
+    <div class="module-body" id="body5">
+
+      <h3>Lesson 5.1 — Harvest at hard dough</h3>
+      <p>Harvest when grain reaches <strong>hard dough</strong> — a thumbnail can dent but not easily split the kernel, plants yellowing, ~20–25% moisture — and don't wait for field-dry perfection while birds, lodging and shattering eat the margin. Cut heads with a knife into baskets (traditional and fast) or cut whole stalks and stook. <strong>Stover is the second harvest:</strong> sorghum and millet straw is dry-season fodder gold — cut, bundle and stack it dry, off the ground, before livestock or termites claim it.</p>
+      <h3>Lesson 5.2 — Dry, thresh, dry again</h3>
+      <ol>
+        <li>Sun-dry heads on mats/racks — never bare soil — until grain rattles loose.</li>
+        <li>Thresh: beat heads in sacks or on tarpaulins with sticks; small motorised threshers increasingly serve villages by the hour. Finger millet threshes hard — rubbing/trampling traditions exist for a reason.</li>
+        <li>Winnow on a breezy afternoon; then <strong>finish drying to storage moisture: 12–13% for sorghum/millet</strong> — the bite test: a dry grain cracks between teeth, never dents.</li>
+      </ol>
+      <h3>Lesson 5.3 — Storage: the dryland advantage</h3>
+      <ul>
+        <li>These grains store better than maize — smaller, harder, and (finger millet especially) barely touched by weevils. Still: clean dry containers, off the floor, in a dry ventilated store.</li>
+        <li><strong>Hermetic bags/drums</strong> (the Beans-course technology) give insect-proof years for seed and food stock without chemicals.</li>
+        <li>Traditional raised granaries, mudded baskets and gourds work — inherit and maintain them; add rodent guards on the legs.</li>
+        <li>Keep seed lots separate, labelled by variety, hermetically if possible — Module 2's stand quality starts here.</li>
+      </ul>
+      <h3>Lesson 5.4 — The processing ladder</h3>
+      <p>Value climbs fast off the raw sack: <strong>threshed clean grain</strong> beats heads; <strong>dehulled/pearled grain</strong> beats raw; <strong>flour</strong> (village hammer mills everywhere) beats grain; and the top rungs — <strong>malted grain for brewing</strong> (sprouted, dried, sold to opaque-beer brewers commercial and informal), finger-millet baby porridge blends, and popped sorghum snacks — are genuine small businesses. Malting is a skill worth learning from a practitioner: soak, sprout 2–3 days, dry, and the enzyme-rich malt earns a standing premium over raw grain in every brewing town.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Hard dough to hermetic drum — threshing, the bite test, and a malting floor at work &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 5:</strong> Harvest your rows (or work a cooperating farmer's harvest) at hard dough: cut heads, dry on mats to threshing, thresh, winnow and finish-dry to the bite test, recording days and weights of grain and bundled stover. Store food grain in a clean dry container off the floor and a seed lot hermetically, labelled. Visit a hammer mill and, if any exists locally, a malt maker or opaque-beer brewer: record the price steps from raw grain to flour and to malt.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 5 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Harvest stage for sorghum and millet is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_1')">Hard dough — thumbnail dents but can't easily split the grain, plants yellowing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Green milk stage</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">After total shattering</button>
+<div class="q-exp" id="exp5_1"><strong>Why:</strong> Hard dough balances maximum fill against the mounting field losses of birds, lodging and shattering. Waiting for field-dry perfection pays the birds, not you.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Stover from these crops is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_2')">Dry-season fodder gold — cut, bundle and stack it dry off the ground</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Worthless</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Toxic to all animals</button>
+<div class="q-exp" id="exp5_2"><strong>Why:</strong> In the dry season, sorghum and millet straw feeds the livestock that manure next year's stations — the second harvest that closes the fertility loop.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Grain is threshed and dried on:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_3')">Mats, tarpaulins or racks — never bare soil</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">Bare damp earth</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">Roads only</button>
+<div class="q-exp" id="exp5_3"><strong>Why:</strong> The universal off-ground law: soil contact means moisture, stones and moulds. Clean surfaces protect grade and safety for the cost of a mat.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Storage moisture for sorghum/millet is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_4')">12–13% — the grain cracks between teeth rather than denting</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">25%</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">50%</button>
+<div class="q-exp" id="exp5_4"><strong>Why:</strong> The bite test is the farmer's moisture meter: crack-dry grain stores for years; dent-soft grain moulds in months.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Compared to maize, these grains in storage are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_5')">Better keepers — harder and smaller, with finger millet nearly weevil-proof</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">Far worse</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">Identical</button>
+<div class="q-exp" id="exp5_5"><strong>Why:</strong> The dryland cereals' post-harvest advantage: finger millet especially is the granary vault crop, holding food value across years, not months.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Hermetic bags or drums provide:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_6')">Insect-proof chemical-free storage for years — ideal for seed and food stock</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">Ventilation</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">Moisture</button>
+<div class="q-exp" id="exp5_6"><strong>Why:</strong> Airtight equals insect-dead: the beans-course technology transfers straight across, protecting seed vigour and food stock without a single chemical.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Traditional raised granaries need one modern addition:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_7')">Rodent guards on the legs</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Demolition</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Windows</button>
+<div class="q-exp" id="exp5_7"><strong>Why:</strong> Generations of design wisdom plus a cheap metal collar per leg: inherit the granary, fix its one gap.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. The processing ladder rises through:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_8')">Clean grain → dehulled/pearled → flour → malt, baby porridge blends and snacks</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Raw heads sold in a heap forever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Nothing</button>
+<div class="q-exp" id="exp5_8"><strong>Why:</strong> Each step is village-scale equipment and real margin. The hammer mill and the malting floor are where dryland grain becomes dryland income.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Malting for opaque beer involves:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_9')">Soaking, sprouting 2–3 days, then drying — enzyme-rich malt earns a standing premium</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Boiling grain to death</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Painting grain</button>
+<div class="q-exp" id="exp5_9"><strong>Why:</strong> Controlled sprouting builds the enzymes brewers need; malt outsells raw grain in every brewing town, commercial or informal — a learnable craft with a permanent market.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Seed lots in storage should be:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_10')">Separate, labelled by variety, hermetic where possible</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Mixed together</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Left damp</button>
+<div class="q-exp" id="exp5_10"><strong>Why:</strong> Next season's stand is only as good as this store: labelled hermetic seed keeps variety identity and germination for the years an OPV can serve.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn5" onclick="markComplete(5)">Mark Month 5 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="6">
+    <div class="module-header" onclick="toggleModule(6)">
+      <div class="module-num">6</div>
+      <div class="module-title">Month 6: Markets, Contracts &amp; the Dryland Business</div>
+      <div class="module-status" id="status6">Locked</div>
+    </div>
+    <div class="module-body" id="body6">
+
+      <h3>Lesson 6.1 — Four buyers for one field</h3>
+      <table>
+        <tr><th>Channel</th><th>What it wants</th><th>Notes</th></tr>
+        <tr><td>Household food + local market</td><td>White sorghum, finger millet, pearl millet — clean, dry</td><td>Food security first; finger millet earns the standing premium (often 2× sorghum price)</td></tr>
+        <tr><td><strong>Brewery/malting contracts</strong></td><td>Specified red/brown sorghum varieties, moisture and cleanliness specs, volume</td><td>Commercial breweries in Southern/Eastern Africa contract farmer groups; informal opaque-beer trade buys malt everywhere</td></tr>
+        <tr><td>Poultry/livestock feed mills</td><td>Red sorghum as maize substitute; consistent supply</td><td>Growing steadily with the poultry boom; your own birds eat it too (Poultry courses)</td></tr>
+        <tr><td>Seed + fodder</td><td>Clean labelled OPV seed to neighbours; baled stover</td><td>Quiet steady side income</td></tr>
+      </table>
+      <h3>Lesson 6.2 — An honest one-hectare sorghum budget (dryland)</h3>
+      <table>
+        <tr><th>Item</th><th>Assumption</th><th>Amount</th></tr>
+        <tr><td>Yield</td><td>Improved Striga-tolerant variety, manure at stations, two weedings, bird watch</td><td>~2 t grain + stover</td></tr>
+        <tr><td>Gross</td><td>blended food/feed/brewery ($0.25–0.45/kg range) + stover value</td><td>~$550–900</td></tr>
+        <tr><td>Seed + dressing</td><td>8 kg improved + smut treatment</td><td>$15–35</td></tr>
+        <tr><td>Manure/starter fertiliser</td><td>carted manure + optional micro-dosed NPK/N</td><td>$40–110</td></tr>
+        <tr><td>Labour peaks + sundries</td><td>weeding ×2, thinning, bird-scaring, harvest/threshing, sacks</td><td>$120–250</td></tr>
+        <tr><td><strong>Indicative margin</strong></td><td>on rainfall maize cannot survive</td><td><strong>~$350–550/ha — the drylands' most reliable cereal money</strong></td></tr>
+      </table>
+      <p>Finger millet on a smaller, better-tended plot commonly beats this per hectare on price; pearl millet wins wherever rainfall drops below sorghum's floor. The portfolio IS the strategy: most successful dryland farms run two of the three plus a legume.</p>
+      <h3>Lesson 6.3 — Contracts and groups</h3>
+      <p>Brewery and feed contracts talk to <strong>groups with tonnage</strong>, not individuals with sacks: aggregation, a clean store, moisture discipline and a weighing scale get a village onto a contract list. Read specs before planting (variety, colour, moisture, admixture); deliver on the date; and treat the contract price as the floor you build on, selling food-grade surplus at retail. Where no formal buyer operates, the informal malt and opaque-beer economy is enormous and pays cash weekly.</p>
+      <h3>Lesson 6.4 — Records and the growth path</h3>
+      <p>Per plot per season: variety and seed source; planting/thinning/weeding dates; Striga counts (pulled plants per plot — watch the number fall over the years as the stack works); bird-scaring days; harvest grain and stover weights; drying days; storage checks; sales by channel and price. <strong>Report card: stand count at 3 weeks, Striga pulled, and price per kg achieved versus harvest-day price.</strong> Growth path: year one — full stands and the weeding/bird calendar mastered; year two — legume rotation running and hermetic seed/food storage; year three — group aggregation onto a brewery/feed contract, plus malting or milling as the value step.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Four buyers, one field — group aggregation and the brewery contract walkthrough &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 6:</strong> Build the one-hectare budget from your recorded costs and local prices in two scenarios: all sold at harvest versus stored sales at lean-season prices plus stover income. Identify the nearest formal buyer (brewery agent, feed mill, aggregator) and obtain or reconstruct their spec; assess honestly what your village group would need (tonnage, store, scale, moisture discipline) to supply it. Conclude with your year-one channel mix and your chosen value step for year three.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 6 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Finger millet typically prices:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_1')">At a standing premium — often around twice sorghum's price</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">Below all grains</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">At zero</button>
+<div class="q-exp" id="exp6_1"><strong>Why:</strong> Baby porridge, health food and brewing demand chase a small supply of a superb keeper: finger millet is the dryland cash premium hiding in plain sight.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Brewery and feed contracts are won by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_2')">Groups with aggregated tonnage, clean stores, moisture discipline and scales</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Individuals with single sacks</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Nobody</button>
+<div class="q-exp" id="exp6_2"><strong>Why:</strong> Commercial buyers need volume and consistency. Village aggregation converts many smallholders into one contract-worthy supplier — the organisational step that changes the price.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Contract specs (variety, colour, moisture, admixture) should be read:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_3')">Before planting — the spec is the farm plan</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Never</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">After rejection</button>
+<div class="q-exp" id="exp6_3"><strong>Why:</strong> The brewery's variety list and moisture ceiling decide your seed and your drying routine months in advance. Growing first and asking later is how loads get rejected.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. The recommended dryland portfolio is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_4')">Two of the three cereals plus a legume rotation</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">One crop only forever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">No crops</button>
+<div class="q-exp" id="exp6_4"><strong>Why:</strong> Sorghum's yield, pearl millet's drought floor, finger millet's price, plus a Striga-cleaning legume: the portfolio spreads risk across rainfall outcomes no forecast can promise.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. The Striga number to track in records is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_5')">Plants pulled per plot per season — watching it fall proves the stack is working</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">Flower prettiness</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">Nothing</button>
+<div class="q-exp" id="exp6_5"><strong>Why:</strong> A falling pulled-count is the seed bank draining: fertility, legumes, resistant varieties and pulling, measured in one honest annual figure.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Red sorghum's role in the poultry boom is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_6')">A maize substitute feed grain with steadily growing mill demand</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">Decoration</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">Unknown</button>
+<div class="q-exp" id="exp6_6"><strong>Why:</strong> Feed mills blend red sorghum as maize prices climb — and your own broilers and layers from the Poultry courses eat the same grain, closing the farm loop.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. The informal opaque-beer economy:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_7')">Is enormous and pays cash weekly for grain and especially malt</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Does not exist</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Buys nothing</button>
+<div class="q-exp" id="exp6_7"><strong>Why:</strong> Where no formal contract operates, brewing towns still buy every week. Malting skill converts that steady demand into a standing premium.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Selling stover as baled fodder:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_8')">Adds a quiet steady income line — or feeds your own livestock through the dry season</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Is impossible</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Reduces income</button>
+<div class="q-exp" id="exp6_8"><strong>Why:</strong> The second harvest again: dry-season feed markets pay real money for what careless harvests leave to termites.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. The three report-card numbers are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_9')">Stand count at 3 weeks, Striga pulled, and price achieved vs harvest-day price</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Cloud shapes</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Neighbour opinions</button>
+<div class="q-exp" id="exp6_9"><strong>Why:</strong> Stand predicts yield, Striga-count predicts the future, and the price ratio measures your storage-and-marketing discipline — the whole course in three figures.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. The year-three step this course recommends is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_10')">Group aggregation onto a contract plus malting or milling value addition</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Quitting</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Buying a brewery first</button>
+<div class="q-exp" id="exp6_10"><strong>Why:</strong> Agronomy, then storage and rotation, then organisation and processing: each year's proven layer makes the next bankable — the staged path of every course in this college.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn6" onclick="markComplete(6)">Mark Month 6 Complete</button>
+    </div>
+  </div>
+
+  <div class="final-section">
+    <h2>&#127942; Final Project: Your Sorghum &amp; Millet Business Plan</h2>
+    <p>The final project is your complete dryland cereal enterprise plan — portfolio, Striga strategy, bird calendar, storage system and market path in one funded, dated document.</p>
+    <ol><li><strong>Rainfall and portfolio case:</strong> your season length and reliability, chosen crop portfolio (with variety names and their three columns), and the market evidence behind each.</li>
+<li><strong>Stand plan:</strong> seedbed and water-harvesting method, sowing depth/spacing/rates, seed dressing, thinning and gap-fill routine, with your target 3-week stand count.</li>
+<li><strong>Striga war plan:</strong> the five-part stack as commitments — variety, station fertility, legume rotation map, pulling protocol with counts, and clean seed/manure sourcing rules.</li>
+<li><strong>Pest and bird calendar:</strong> neighbourhood synchrony assessment, scaring labour plan for grain filling, borer stover-destruction routine, and smut/ergot checkpoints.</li>
+<li><strong>Harvest-to-store chain:</strong> hard-dough criteria, threshing and drying arrangements to 12–13%, stover capture plan, storage setup (granary/hermetic) with inspection schedule.</li>
+<li><strong>Budget and market plan:</strong> full budget in local prices, blended sales scenarios across the price year, contract/aggregation assessment, and the processing step you will add.</li>
+<li><strong>Risk page and year-3 vision:</strong> three risks with mitigations, and the staged path — full stands, then rotation and storage, then contracts and malting/milling.</li></ol>
+    <p><strong>Submission standard:</strong> A plan you could hand to a savings group, a bank officer, or a family investor without embarrassment. Real local prices, real named buyers, honest risks.</p>
+  </div>
+
+  <div class="budget-section">
+    <h2>&#128176; Startup Budget &mdash; 1 Hectare Dryland Sorghum (adaptable to Millets)</h2>
+    <p>The cheapest budget in this college to start and the most weather-proof to run: seed is nearly free, inputs are modest and optional, and the main investments are labour at weeding and bird-watch plus the storage gear that captures the lean-season price. Finger millet runs a smaller, higher-price version of the same sheet.</p>
+    <table>
+      <tr><th>Item</th><th>Details</th><th>Typical cost (USD)</th></tr>
+<tr><td>Seed + smut dressing</td><td>8–10 kg improved OPV</td><td>$15–35</td></tr>
+<tr><td>Land preparation</td><td>Ploughing/digging; tied ridges or basins in dry zones</td><td>$50–120</td></tr>
+<tr><td>Manure carting / starter fertiliser</td><td>Station-placed; optional micro-dose NPK + N top-dress</td><td>$40–110</td></tr>
+<tr><td>Weeding &amp; thinning labour</td><td>Two rounds + thinning/transplanting</td><td>$50–120</td></tr>
+<tr><td>Bird-scaring labour</td><td>The grain-filling watch, 2–4 weeks</td><td>$30–90</td></tr>
+<tr><td>Harvest, threshing &amp; winnowing</td><td>Knives, baskets, mats/tarpaulin, thresher hire where available</td><td>$40–110</td></tr>
+<tr><td>Storage</td><td>Sacks, hermetic bags/drum for seed and food stock, granary repair + rodent guards</td><td>$30–90</td></tr>
+<tr><td>Transport &amp; sundries</td><td></td><td>$20–60</td></tr>
+<tr><td>Contingency (10%)</td><td></td><td>$30–70</td></tr>
+<tr><td><strong>Total indicative startup</strong></td><td>Grain + stover revenue in one season</td><td><strong>$305–805</strong></td></tr>
+    </table>
+    <p><em>Prices vary widely by country. Before spending anything, price every line in your own town and rebuild this table — that exercise is part of your final project.</em></p>
+  </div>
+
+  <div class="glossary-section">
+    <h2>&#128218; Glossary</h2>
+    <dl class="glossary">
+<dt>Dryland farming</dt><dd>Rain-fed cropping in semi-arid zones — the home ground of sorghum and millets.</dd>
+<dt>OPV</dt><dd>Open-pollinated variety — seed saveable 2–3 seasons, unlike hybrids.</dd>
+<dt>Landrace</dt><dd>A locally evolved traditional variety carrying generations of adaptation.</dd>
+<dt>Tied ridges / planting basins</dt><dd>Micro-catchments that trap storm water in the root zone — dryland water harvesting.</dd>
+<dt>Thinning</dt><dd>Reducing over-sown stations to 1–2 plants at 2–3 weeks — the discipline behind full heads.</dd>
+<dt>Striga (witchweed)</dt><dd>A parasitic plant feeding on cereal roots underground; its dust seed persists 15–20 years.</dd>
+<dt>Suicidal germination</dt><dd>Legumes and desmodium triggering Striga seed to sprout without a host — draining the seed bank.</dd>
+<dt>Push-pull</dt><dd>The desmodium + border-grass system controlling both Striga and stem borers.</dd>
+<dt>Micro-dosing</dt><dd>Placing small precise fertiliser amounts at planting stations — maximum effect from minimum input.</dd>
+<dt>Quelea</dt><dd>The red-billed weaver bird whose million-strong flocks are dryland Africa's worst grain pest.</dd>
+<dt>Tannin sorghum</dt><dd>Red/brown bitter-grain types that deter birds and supply brewing and feed markets.</dd>
+<dt>Hard dough</dt><dd>The harvest stage: grain dents under a thumbnail but does not split; ~20–25% moisture.</dd>
+<dt>Ergot</dt><dd>A flowering-stage fungus leaving toxic dark horns in grain — sorted out, never eaten or fed.</dd>
+<dt>Stover</dt><dd>The straw after grain harvest — dry-season fodder and the second harvest.</dd>
+<dt>Malting</dt><dd>Soaking, sprouting and drying grain to build brewing enzymes — the premium processing craft.</dd>
+<dt>Hermetic storage</dt><dd>Airtight bags/drums that kill storage insects without chemicals, keeping grain and seed for years.</dd>
+    </dl>
+  </div>
+
+  <div class="resources-section">
+    <h2>&#128279; Further Resources</h2>
+    <ul><li>ICRISAT — the international institute for the semi-arid tropics: free guides on sorghum/millet varieties, Striga management, micro-dosing and water harvesting.</li>
+<li>Your national dryland-cereals programme and extension office — released varieties with Striga resistance ratings, seed sources, and quelea outbreak reporting.</li>
+<li>icipe push-pull resources — the desmodium system for Striga and stem borer control.</li>
+<li>Brewery outgrower schemes and feed mills in your region — contract specs, variety lists and farmer-group requirements; plus the local hammer mill and opaque-beer trade for the informal price ladder.</li>
+<li>Rise Africa Skills companion courses: Groundnut and Beans &amp; Legumes (the rotation partners), Poultry courses (feeding your own red sorghum), Beekeeping (dryland enterprise pairing), Solar Drying (rack discipline).</li></ul>
+  </div>
+
+  <div class="cert-section">
+    <h2>&#127891; Course Completion</h2>
+    <p>Complete all 6 months and pass the quizzes to unlock your certificate.</p>
+    <a href="certificate.html?course=Sorghum%20%26%20Millet%20Farming" class="cert-btn" id="certBtn" disabled>Get Certificate</a>
+  </div>
+</div>
+<script>
+  const TOTAL_MODULES = 6;
+  const COURSE_KEY = 'sorghum-millet-farming';
+  let completed = JSON.parse(localStorage.getItem(COURSE_KEY + '_progress') || '[]');
+
+  function toggleModule(n) {
+    if (n > 1 && !completed.includes(n-1)) { alert('Complete Month ' + (n-1) + ' first.'); return; }
+    document.getElementById('body' + n).classList.toggle('active');
+  }
+  function answerQ(btn, isCorrect, expId) {
+    const parent = btn.parentElement;
+    const buttons = parent.querySelectorAll('.q-opt');
+    if (buttons[0].disabled) return;
+    buttons.forEach(b => { b.disabled = true; });
+    if (isCorrect) { btn.classList.add('correct'); }
+    else {
+      btn.classList.add('wrong');
+      buttons.forEach(b => { if (b.dataset.c === '1') b.classList.add('correct'); });
+    }
+    document.getElementById(expId).classList.add('show');
+    const quiz = btn.closest('.quiz-wrap');
+    quiz.dataset.answered = (parseInt(quiz.dataset.answered||'0') + 1);
+    quiz.dataset.score = (parseInt(quiz.dataset.score||'0') + (isCorrect ? 1 : 0));
+    if (parseInt(quiz.dataset.answered) >= parseInt(quiz.dataset.total)) {
+      const s = quiz.querySelector('.quiz-score');
+      s.textContent = 'Quiz result: ' + quiz.dataset.score + ' / ' + quiz.dataset.total + (parseInt(quiz.dataset.score) >= 7 ? ' — Pass. Well done!' : ' — Below 7/10. Re-read the module, then review your wrong answers.');
+    }
+  }
+  function markComplete(n) {
+    if (!completed.includes(n)) {
+      completed.push(n); completed.sort((a,b)=>a-b);
+      localStorage.setItem(COURSE_KEY + '_progress', JSON.stringify(completed));
+    }
+    updateUI();
+  }
+  function updateUI() {
+    document.getElementById('completedCount').textContent = completed.length;
+    document.getElementById('progressBar').style.width = (completed.length/TOTAL_MODULES*100) + '%';
+    for (let i=1; i<=TOTAL_MODULES; i++) {
+      const st = document.getElementById('status'+i), btn = document.getElementById('btn'+i);
+      if (completed.includes(i)) { st.textContent='Done'; st.classList.add('done'); if(btn){btn.textContent='Completed'; btn.disabled=true;} }
+      else if (i===1 || completed.includes(i-1)) { st.textContent='Start'; }
+      else { st.textContent='Locked'; }
+    }
+    if (completed.length >= TOTAL_MODULES) {
+      const c = document.getElementById('certBtn');
+      c.removeAttribute('disabled'); c.textContent = 'Get Your Certificate!';
+    }
+  }
+  updateUI();
+</script>
+</body>
+</html>

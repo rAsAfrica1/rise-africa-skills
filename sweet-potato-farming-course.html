@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Sweet Potato Farming - A complete practical course from Rise Africa Skills. Learn offline, anytime.">
+<title>Sweet Potato Farming | Rise Africa Skills</title>
+<style>
+  :root { --gold:#eab308; --gold-dark:#a16207; --green:#16a34a; --bg:#0f172a; --card:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --line:#334155; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:var(--bg); color:var(--text); line-height:1.65; }
+  header { background:linear-gradient(135deg,var(--gold-dark) 0%,#713f12 100%); padding:44px 20px; text-align:center; }
+  header h1 { font-size:2rem; margin-bottom:8px; }
+  header p { color:rgba(255,255,255,0.88); max-width:640px; margin:0 auto; }
+  .badge { display:inline-block; background:var(--gold); color:#1e293b; padding:4px 14px; border-radius:20px; font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-top:12px; letter-spacing:0.4px; }
+  .container { max-width:920px; margin:0 auto; padding:30px 20px; }
+  .progress-bar { background:var(--card); border-radius:10px; height:10px; margin-bottom:28px; overflow:hidden; }
+  .progress-fill { background:var(--gold); height:100%; width:0%; border-radius:10px; transition:width .4s ease; }
+  .overview { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-bottom:26px; }
+  .overview h2 { color:var(--gold); font-size:1.15rem; margin-bottom:10px; }
+  .overview ul { margin:8px 0 14px 20px; color:var(--muted); }
+  .overview li { margin:5px 0; }
+  .meta-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+  .meta-chip { background:#0b1220; border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:0.85rem; color:var(--muted); }
+  .meta-chip b { color:var(--text); }
+  .module { background:var(--card); border-radius:12px; margin-bottom:16px; overflow:hidden; border:1px solid var(--line); }
+  .module-header { padding:18px 22px; cursor:pointer; display:flex; align-items:center; gap:14px; transition:background .2s; }
+  .module-header:hover { background:#26354a; }
+  .module-num { background:var(--gold); color:#1e293b; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0; }
+  .module-title { flex:1; font-weight:600; }
+  .module-status { font-size:0.75rem; padding:4px 10px; border-radius:12px; background:var(--line); color:var(--muted); white-space:nowrap; }
+  .module-status.done { background:var(--green); color:#fff; }
+  .module-body { display:none; padding:0 22px 24px; border-top:1px solid var(--line); }
+  .module-body.active { display:block; }
+  .module-body p { color:var(--muted); margin:13px 0; }
+  .module-body ul, .module-body ol { margin:10px 0 10px 22px; color:var(--muted); }
+  .module-body li { margin:6px 0; }
+  .module-body strong { color:var(--text); }
+  .module-body h3 { color:var(--gold); font-size:1.05rem; margin:22px 0 4px; }
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.88rem; }
+  th { background:#0b1220; color:var(--gold); text-align:left; padding:9px 10px; border:1px solid var(--line); }
+  td { padding:8px 10px; border:1px solid var(--line); color:var(--muted); vertical-align:top; }
+  tr:nth-child(even) td { background:#1a2537; }
+  .tip-box { background:rgba(234,179,8,0.08); border-left:4px solid var(--gold); padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .tip-box strong { color:var(--gold); }
+  .warn-box { background:rgba(239,68,68,0.08); border-left:4px solid #ef4444; padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .warn-box strong { color:#f87171; }
+  .assign-box { background:#0b1220; border:1px dashed var(--gold-dark); border-radius:10px; padding:16px 18px; margin:16px 0; color:var(--muted); }
+  .assign-box strong { color:var(--gold); }
+  .video-box { background:#0b1220; border:1px solid var(--line); border-radius:10px; padding:14px 18px; margin:16px 0; color:var(--muted); font-size:0.9rem; }
+  .quiz-wrap { background:#0b1220; border:1px solid var(--line); border-radius:12px; padding:20px; margin-top:20px; }
+  .quiz-wrap h3 { margin-top:0 !important; }
+  .q-block { margin:16px 0; padding-bottom:14px; border-bottom:1px solid #1e293b; }
+  .q-block:last-child { border-bottom:none; }
+  .q-text { font-weight:600; color:var(--text); margin-bottom:8px; }
+  .q-opt { display:block; width:100%; text-align:left; padding:9px 13px; margin:5px 0; background:var(--card); border:1px solid #475569; border-radius:8px; color:var(--text); cursor:pointer; transition:all .2s; font-size:0.9rem; }
+  .q-opt:hover { border-color:var(--gold); }
+  .q-opt.correct { background:#14532d; border-color:var(--green); }
+  .q-opt.wrong { background:#7f1d1d; border-color:#ef4444; }
+  .q-exp { display:none; margin-top:8px; padding:10px 13px; background:rgba(234,179,8,0.07); border-left:3px solid var(--gold); border-radius:0 6px 6px 0; color:var(--muted); font-size:0.87rem; }
+  .q-exp.show { display:block; }
+  .quiz-score { margin-top:12px; font-weight:700; color:var(--gold); }
+  .check-btn { background:var(--gold); color:#1e293b; border:none; padding:11px 26px; border-radius:8px; font-weight:700; cursor:pointer; margin-top:16px; transition:background .2s; }
+  .check-btn:hover { background:#facc15; }
+  .check-btn:disabled { opacity:0.5; cursor:not-allowed; }
+  .final-section, .budget-section, .glossary-section, .resources-section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-top:26px; }
+  .final-section h2, .budget-section h2, .glossary-section h2, .resources-section h2 { color:var(--gold); font-size:1.2rem; margin-bottom:10px; }
+  .final-section p, .budget-section p, .resources-section p { color:var(--muted); margin:10px 0; }
+  .final-section ol, .resources-section ul { margin:10px 0 10px 22px; color:var(--muted); }
+  .final-section li, .resources-section li { margin:6px 0; }
+  dl.glossary dt { color:var(--text); font-weight:700; margin-top:12px; }
+  dl.glossary dd { color:var(--muted); margin-left:0; font-size:0.92rem; }
+  .cert-section { text-align:center; padding:40px 20px; background:var(--card); border-radius:16px; margin-top:30px; border:1px solid var(--line); }
+  .cert-section h2 { margin-bottom:10px; }
+  .cert-section p { color:var(--muted); margin-bottom:20px; }
+  .cert-btn { background:var(--gold); color:#1e293b; border:none; padding:14px 36px; border-radius:10px; font-size:1rem; font-weight:800; cursor:pointer; text-decoration:none; display:inline-block; }
+  .cert-btn[disabled] { opacity:0.4; pointer-events:none; }
+  .nav-bar { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:var(--card); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:100; }
+  .nav-bar a { color:var(--text); text-decoration:none; font-weight:600; }
+  .nav-bar a:hover { color:var(--gold); }
+  .completion-count { color:var(--muted); font-size:0.9rem; }
+  @media (max-width:600px){ header h1{font-size:1.5rem;} .module-header{padding:14px 16px;} .module-body{padding:0 16px 18px;} table{font-size:0.8rem;} th,td{padding:6px 7px;} }
+</style>
+</head>
+<body>
+<nav class="nav-bar">
+  <a href="index.html">&#8592; Back to Courses</a>
+  <span class="completion-count"><span id="completedCount">0</span> / 6 months completed</span>
+</nav>
+<header>
+  <div class="badge">Agriculture &middot; 6-Month Program</div>
+  <h1>Sweet Potato Farming</h1>
+  <p>The three-month money crop — clean vine multiplication, ridges that keep the weevil out, the curing trick that adds four months of shelf life, and the OFSP nutrition premium.</p>
+</header>
+<div class="container">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+
+  <div class="overview">
+    <h2>Course Overview</h2>
+    <p style="color:var(--muted);">Sweet potato is the quickest route from empty field to income in African farming: 3–5 months, planted from vines you multiply yourself, on ordinary soil. This course is built around the two lessons most training under-teaches. First, the weevil war: the Cylas weevil ruins more sweet potato than every other problem combined, and it is beaten not with chemicals but with clean tips, high sealed ridges, early harvest, sanitation and rotation. Second, curing: four warm humid days after harvest that heal the skin and stretch storage from weeks to 3–5 months — the machine that moves your crop from glut prices to lean-season prices. Add the orange-fleshed (OFSP) vitamin A story and its premium channels, and one ridge feeds the family, the pigs, the market and the plan.</p>
+    <h2 style="margin-top:16px;">What You Will Learn</h2>
+    <ul><li>Match variety to market: high-dry-matter whites vs OFSP and its nutrition premium</li>
+<li>Run a vine multiplication bed — clean planting material forever, and a product to sell</li>
+<li>Build 30 cm ridges, plant tips 2/3 buried, and gap-fill to a full stand</li>
+<li>Two timed weedings with earthing-up, modest K-led feeding, and vines as 16–20% protein fodder</li>
+<li>Defeat the sweet potato weevil with the five-part cultural defence — no insecticide required</li>
+<li>Recognise and rogue SPVD; refresh material every 2–3 seasons</li>
+<li>Harvest without wounds, cure 4–7 days warm and humid, store 3–5 months</li>
+<li>Sell across five income streams and into OFSP programme channels; plan the full business</li></ul>
+    <div class="meta-row">
+      <div class="meta-chip"><b>Duration:</b> 6 months, one module per month</div>
+      <div class="meta-chip"><b>Level:</b> Beginner &rarr; Job-ready</div>
+      <div class="meta-chip"><b>Units:</b> Metric with imperial where useful</div>
+      <div class="meta-chip"><b>Final project:</b> Your own business plan</div>
+    </div>
+  </div>
+
+  <div class="module" data-module="1">
+    <div class="module-header" onclick="toggleModule(1)">
+      <div class="module-num">1</div>
+      <div class="module-title">Month 1: The Crop, OFSP &amp; Choosing Varieties</div>
+      <div class="module-status" id="status1">Start</div>
+    </div>
+    <div class="module-body" id="body1">
+
+      <h3>Lesson 1.1 — The three-month money crop</h3>
+      <p>Sweet potato is the fastest serious food crop in African farming: <strong>3–5 months from planting to harvest</strong>, from vines you multiply yourself for free, on ordinary soils, with modest rain. It fits into gaps — after maize, before the next rains, on the plot too small for anything else — and everything is sellable: roots for food, vines for planting material <em>and</em> livestock fodder, leaves as a vegetable in many regions.</p>
+      <ul>
+        <li>Yields: African average ~5–6 t/ha; good management with clean vines reaches <strong>15–30 t/ha</strong>. Same story as cassava — the gap is management.</li>
+        <li>Drought-tolerant once established, but the first 4–6 weeks need reliable moisture.</li>
+        <li>Sensitive to waterlogging (roots rot) and to too much shade or nitrogen (all vines, no roots).</li>
+      </ul>
+      <h3>Lesson 1.2 — Orange-fleshed sweet potato: the vitamin A crop</h3>
+      <p>The most important sweet potato story of our generation is <strong>OFSP — orange-fleshed sweet potato</strong>. Its orange colour is beta-carotene, which the body turns into vitamin A. Vitamin A deficiency blinds and kills African children at scale; just <strong>100–125 g of boiled OFSP a day covers a young child's full vitamin A need</strong>. Varieties bred and released across Africa (many through the International Potato Center, CIP) combine the orange flesh with good yields and disease resistance.</p>
+      <ul>
+        <li><strong>Business angle:</strong> OFSP carries a nutrition premium in urban markets, school-feeding programmes and NGO procurement, plus growing demand for OFSP puree in bakeries (bread, buns) replacing wheat flour and colourants.</li>
+        <li><strong>Market caution:</strong> many rural markets still prefer the drier, starchier white/cream types they grew up with. OFSP tends to be moister and sweeter. As always: check what your target market eats before you plant a hectare of anything.</li>
+      </ul>
+      <h3>Lesson 1.3 — Choosing varieties</h3>
+      <table>
+        <tr><th>Type</th><th>Character</th><th>Market</th></tr>
+        <tr><td>White/cream-fleshed, high dry matter</td><td>Firm, starchy, 'mealy' — the traditional preference in much of East/Southern Africa</td><td>Rural and staple markets, home consumption</td></tr>
+        <tr><td>Orange-fleshed (OFSP)</td><td>Beta-carotene rich; often moister</td><td>Urban, nutrition programmes, bakery puree, weaning foods</td></tr>
+        <tr><td>Yellow/purple types</td><td>Intermediate; purple = anthocyanins</td><td>Niche urban and processing markets</td></tr>
+      </table>
+      <p>Ask your extension office which <strong>released varieties</strong> — white and orange — are recommended for your district, and specifically which resist <strong>sweet potato virus disease (SPVD)</strong> and perform under local weevil pressure. Those two enemies own Modules 2 and 4.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> White vs orange — dry matter, taste, and the vitamin A story &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 1:</strong> Survey your market: record the sweet potato types on sale (flesh colour, size), prices now, and ask two traders how prices move across the year — write their month-by-month sketch down. Then get your extension office's list of released varieties for your district, noting which are OFSP and which resist SPVD and weevils. Choose your candidate variety (or two) and state your reason in one paragraph.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 1 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Sweet potato typically reaches harvest in:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">6 weeks</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_1')">3–5 months</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">A full year like cassava</button>
+<div class="q-exp" id="exp1_1"><strong>Why:</strong> Three to five months makes it the quickest substantial root crop available — fast enough to fit season gaps and to give a new farmer income within one school term.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. The orange colour of OFSP flesh comes from:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">Food dye added at market</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_2')">Beta-carotene, which the body converts to vitamin A</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">Iron oxide from red soils</button>
+<div class="q-exp" id="exp1_2"><strong>Why:</strong> Beta-carotene is the whole point of OFSP: a small daily serving covers a child's full vitamin A requirement, attacking a deficiency that blinds and kills children across the continent.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. How much boiled OFSP covers a young child's daily vitamin A need?</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_3')">About 100–125 g</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">At least 2 kg</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">OFSP contains no vitamin A</button>
+<div class="q-exp" id="exp1_3"><strong>Why:</strong> Roughly half a small root a day. This is why OFSP anchors school feeding and nutrition programmes — and why it carries a real market premium in those channels.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Many rural African markets still prefer white/cream sweet potato because:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">Orange types are poisonous</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_4')">They value the drier, starchier, 'mealy' texture they grew up with</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">White types store for ten years</button>
+<div class="q-exp" id="exp1_4"><strong>Why:</strong> OFSP is typically moister and sweeter, which some staple-market consumers dislike. Grow OFSP for the channels that want it; grow high-dry-matter whites for markets that pay for tradition.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Too much nitrogen or shade on sweet potato produces:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Giant roots</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_5')">Lush vines with disappointing roots</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Early flowering</button>
+<div class="q-exp" id="exp1_5"><strong>Why:</strong> Sweet potato partitions between vines and roots. Excess N or shade tips the balance to foliage — beautiful field, empty ridge. Moderate fertility and full sun grow the crop you actually sell.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. A realistic managed yield for sweet potato with clean vines is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">1–2 t/ha</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_6')">15–30 t/ha</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">100 t/ha</button>
+<div class="q-exp" id="exp1_6"><strong>Why:</strong> Against a continental average of ~5–6 t/ha, well-managed fields of released varieties routinely triple or quintuple it. As with cassava, the yield gap is management, starting with planting material.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. The two enemies that should shape your variety choice are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_7')">Sweet potato virus disease (SPVD) and the sweet potato weevil</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">Locusts and hail</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">Black Sigatoka and Panama disease</button>
+<div class="q-exp" id="exp1_7"><strong>Why:</strong> SPVD degenerates yields through infected vines; the weevil ruins roots in the ground. Released varieties are screened against both — one more reason the extension list beats the neighbour's field.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Sweet potato's establishment phase (first 4–6 weeks) requires:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Flood irrigation</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_8')">Reliable moisture — after which the crop tolerates dry spells well</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Complete darkness</button>
+<div class="q-exp" id="exp1_8"><strong>Why:</strong> Vine cuttings have no roots when planted; they must grow them in moist soil. Once rooted, sweet potato is genuinely drought-hardy — but a dry first month kills the stand.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Besides roots, sweet potato's saleable products include:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_9')">Vines as planting material and fodder, and leaves as a vegetable</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">Bark and timber</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">Resin</button>
+<div class="q-exp" id="exp1_9"><strong>Why:</strong> Vine bundles sell to other farmers every planting season, vines are excellent pig and dairy fodder, and the leaves are a common vegetable — a three-income plant.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Growing OFSP puree demand comes mainly from:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Steel factories</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_10')">Bakeries substituting it into bread and buns, plus weaning-food makers</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Fuel refineries</button>
+<div class="q-exp" id="exp1_10"><strong>Why:</strong> OFSP puree replaces part of the wheat flour, colour and sugar in baked goods while adding vitamin A — a growing processing channel that buys tonnage on contract in several countries.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn1" onclick="markComplete(1)">Mark Month 1 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="2">
+    <div class="module-header" onclick="toggleModule(2)">
+      <div class="module-num">2</div>
+      <div class="module-title">Month 2: Vines, Multiplication Beds &amp; Planting</div>
+      <div class="module-status" id="status2">Locked</div>
+    </div>
+    <div class="module-body" id="body2">
+
+      <h3>Lesson 2.1 — A crop planted from vines</h3>
+      <p>Like cassava, sweet potato is planted vegetatively — from <strong>vine cuttings</strong>, not seed. And the same law applies: <strong>whatever the mother vine carries, your field inherits.</strong> The main degenerator is sweet potato virus disease (SPVD, spread by whiteflies and aphids); fields planted for years from their own recycled vines slowly run down to the sad continental average.</p>
+      <ul>
+        <li>Best cuttings: <strong>tip (apical) cuttings 25–30 cm long</strong> from healthy, vigorous, symptom-free plants — the tips are usually freest of weevil eggs and virus.</li>
+        <li>Where available, buy from <strong>certified/clean vine multipliers</strong> (many countries now have decentralised vine seed systems, especially for OFSP). Refreshing your planting material every 2–3 seasons is one of the highest-return purchases in this crop.</li>
+        <li>Optional but useful: strip lower leaves and <strong>wilt cuttings in shade for 1–2 days</strong> before planting — they root faster and any weevil eggs desiccate.</li>
+      </ul>
+      <h3>Lesson 2.2 — Your own vine nursery: the multiplication secret</h3>
+      <p>One small irrigated or wet-spot bed turns a handful of clean vines into a field's worth. This is the skill that makes you independent — and can make you a vine seller:</p>
+      <ol>
+        <li>Prepare a fine, fertile, watered bed (e.g. 1 m &times; 5 m) near the house or water source.</li>
+        <li>Plant clean cuttings close together (20 cm &times; 10–20 cm). Water regularly.</li>
+        <li>Every 4–6 weeks, harvest 25–30 cm tips for planting or sale; the bed regrows. Cut, don't uproot.</li>
+        <li>One well-run 10 m&sup2; bed yields <strong>several thousand cuttings per season</strong> — enough for half an acre and more.</li>
+        <li>Replace the bed with fresh clean material every few cycles; rogue any mosaic-stunted plants instantly.</li>
+      </ol>
+      <h3>Lesson 2.3 — Ridges, mounds and planting</h3>
+      <table>
+        <tr><th>Element</th><th>Standard</th><th>Why</th></tr>
+        <tr><td>Land form</td><td><strong>Ridges ~30 cm high</strong>, 75–100 cm apart (or traditional mounds)</td><td>Loose soil for root bulking, drainage, easier harvest — and the ridge is your anti-weevil wall (Module 4)</td></tr>
+        <tr><td>Spacing on ridge</td><td>Cuttings every <strong>30 cm</strong> along the ridge (~33,000–44,000/ha)</td><td>Dense enough for tonnage and quick ground cover</td></tr>
+        <tr><td>Planting</td><td>Bury <strong>2/3 of the cutting</strong> (3–4 nodes underground) at a slant, tip out</td><td>Buried nodes are where storage roots form — shallow planting = few roots</td></tr>
+        <tr><td>Timing</td><td>Early rains, into moist ridges; irrigate the first weeks if erratic</td><td>Rooting needs 4–6 moist weeks; early crops also dodge peak weevil season at harvest</td></tr>
+      </table>
+      <div class="tip-box"><strong>Gap-fill at 2 weeks:</strong> walk the ridges and replant every failed station from nursery tips. Full stands are free yield; gaps grow weeds.</div>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Building a vine multiplication bed and taking tip cuttings correctly &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 2:</strong> Establish a vine multiplication bed of at least 1 m × 3 m from the cleanest material you can obtain, close-planted and watered. Separately, prepare and plant a practice plot of at least two 5-metre ridges (30 cm high, cuttings every 30 cm, 2/3 buried, wilted tips). Record planting dates for both, and gap-fill the ridges at two weeks from the bed.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 2 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. The best planting material for sweet potato is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_1')">Tip cuttings 25–30 cm from healthy symptom-free vines</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">Old woody vine bases</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">Small roots planted whole</button>
+<div class="q-exp" id="exp2_1"><strong>Why:</strong> Apical tips are the youngest tissue — least virus, least weevil eggs — and root fastest. Roots can propagate the crop but carry weevils and disease straight into the new field.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Recycling your own vines season after season leads to:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">Ever-improving yields</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_2')">Slow yield decline as virus (SPVD) accumulates</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">Bigger leaves</button>
+<div class="q-exp" id="exp2_2"><strong>Why:</strong> SPVD builds up silently in recycled material — the main reason average yields sit at a third of potential. Refreshing with clean/certified vines every 2–3 seasons resets the field.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Wilting cuttings in shade for 1–2 days before planting:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">Kills the cuttings</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_3')">Speeds rooting and desiccates weevil eggs</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">Is required by law</button>
+<div class="q-exp" id="exp2_3"><strong>Why:</strong> Slightly wilted cuttings throw roots faster when they meet moist soil, and the drying period kills weevil eggs riding on the vine — two benefits for zero cost.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. A 10 m² vine multiplication bed can supply per season roughly:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">A dozen cuttings</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_4')">Several thousand cuttings — enough for half an acre or more</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">Only enough for pots</button>
+<div class="q-exp" id="exp2_4"><strong>Why:</strong> Close-planted, watered and tip-harvested every 4–6 weeks, a tiny bed becomes a cutting factory. This is also a business: vine bundles sell readily every planting season.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Cuttings are planted with:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_5')">2/3 buried (3–4 nodes underground) at a slant</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">Just the cut tip touching the soil</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">The whole vine coiled underground</button>
+<div class="q-exp" id="exp2_5"><strong>Why:</strong> Storage roots form at buried nodes. Shallow planting gives a leafy plant with almost nothing under it; three to four nodes in moist ridge soil is the standard.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. The standard field layout is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">Flat ground, 1 m × 1 m</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_6')">Ridges ~30 cm high, 75–100 cm apart, cuttings every 30 cm</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">Deep trenches</button>
+<div class="q-exp" id="exp2_6"><strong>Why:</strong> High ridges give loose soil, drainage, easy harvest — and, critically, a thick soil barrier weevils must cross to reach roots. The ridge is agronomy and pest control in one.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Vine nursery beds should be harvested by:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Uprooting whole plants</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_7')">Cutting 25–30 cm tips and letting the bed regrow</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Burning and resowing</button>
+<div class="q-exp" id="exp2_7"><strong>Why:</strong> Cut-and-regrow keeps the bed producing for multiple cycles. Uprooting ends production and risks moving soil pests with the material.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Any plant in the nursery showing mosaic or stunting should be:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">Watered more</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_8')">Rogued out immediately</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">Used first for planting</button>
+<div class="q-exp" id="exp2_8"><strong>Why:</strong> A virused nursery multiplies virus by the thousand. The nursery is where hygiene pays most — one minute of roguing there saves a field later.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Full moisture is most critical for sweet potato during:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">The final month</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_9')">The first 4–6 weeks while cuttings root</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Never</button>
+<div class="q-exp" id="exp2_9"><strong>Why:</strong> Unrooted cuttings die in dry ridges. Plant into moisture at the start of rains, or hand-water establishment — after rooting, the crop shrugs off dry spells.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Gap-filling at two weeks matters because:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">It doubles fertiliser efficiency</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_10')">Every empty station is lost yield and a weed nursery</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">Buyers count plant stands</button>
+<div class="q-exp" id="exp2_10"><strong>Why:</strong> With ~35,000+ plants per hectare, a 10% failure rate is thousands of missing plants. A quick replant walk from the nursery restores the stand for almost nothing.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn2" onclick="markComplete(2)">Mark Month 2 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="3">
+    <div class="module-header" onclick="toggleModule(3)">
+      <div class="module-num">3</div>
+      <div class="module-title">Month 3: Weeding, Feeding &amp; the Fodder Harvest</div>
+      <div class="module-status" id="status3">Locked</div>
+    </div>
+    <div class="module-body" id="body3">
+
+      <h3>Lesson 3.1 — Six weeks of weeding, then the crop takes over</h3>
+      <p>Sweet potato is the rare crop that becomes its own weed control. Vines cover the ground within 5–7 weeks and smother almost everything under them. Your job is the gap before that:</p>
+      <ul>
+        <li><strong>Weed 1:</strong> 2–3 weeks after planting, shallow hoeing between ridges.</li>
+        <li><strong>Weed 2 + earthing up:</strong> 5–6 weeks after planting — the important one. Pull soil from the furrow up onto the ridge, covering weeds and, crucially, <strong>sealing soil cracks</strong> (this is weevil defence — Module 4 explains why cracks are the enemy).</li>
+        <li>After canopy closure, hand-pull only the tall escapes. Do not hoe under closed vines — you will wound shallow storage roots.</li>
+      </ul>
+      <h3>Lesson 3.2 — Feeding: less is more, except potassium</h3>
+      <table>
+        <tr><th>Nutrient</th><th>Role</th><th>Practice</th></tr>
+        <tr><td>Nitrogen</td><td>Leaf growth — easily overdone</td><td>Modest: manure worked into ridges at making, or a light NPK dose at 2–3 weeks. Heavy N = vines, not roots</td></tr>
+        <tr><td><strong>Potassium</strong></td><td>Root bulking and starch — the star, as in all root crops</td><td>K-strong compound or wood ash into the ridge; deficiency shows as bronzed older leaves and thin roots</td></tr>
+        <tr><td>Organic matter</td><td>Loose ridge structure roots can swell in</td><td>Compost/manure at ridging; avoid fresh manure at planting (forks and scabs roots)</td></tr>
+      </table>
+      <p>Sweet potato follows a well-fertilised crop beautifully — planted after maize or vegetables, it often needs little more than the residues and ash you give the ridge. Rotation position is fertiliser strategy.</p>
+      <h3>Lesson 3.3 — The vine-lifting question, answered honestly</h3>
+      <p>In humid areas, vines root at nodes wherever they touch wet soil, forming many pencil-thin secondary roots. Some traditions "lift" (gently disturb) vines to break these roots and force energy back to the main ridge roots. The honest evidence: <strong>routine vine lifting mostly reduces yield</strong> by wounding the plant and disrupting the canopy, and is only worth considering in very wet conditions with long-duration varieties where node-rooting is visibly severe. Default: leave the canopy alone and let it work.</p>
+      <h3>Lesson 3.4 — Vines as fodder: the second harvest</h3>
+      <p>Sweet potato foliage is a genuinely valuable livestock feed — 16–20% protein in dry matter, relished by pigs, dairy cattle, goats and rabbits. Managed cutting of surplus vine growth late in the season (never more than the top third, never before root bulking is well advanced) gives fodder or silage without meaningful root loss, and at final harvest the entire vine mass is feed. For a mixed farmer, this alone can pay the field's costs — a direct link to the Piggery and Rabbit courses.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Earthing up demonstrated — burying weeds and sealing the ridge &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 3:</strong> Carry out weeding 1 (weeks 2–3) and weeding 2 with full earthing-up (weeks 5–6) on your ridges, recording dates and hours. Work wood ash into the ridge at earthing-up and note the amount. If you or a neighbour keep pigs, goats or rabbits, cut a small sample of surplus vine tips, feed them, and record the animals' response — your first fodder data.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 3 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Sweet potato needs intensive weeding for roughly:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">The entire season</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_1')">The first 5–7 weeks, until the vine canopy closes and smothers weeds</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Only after harvest</button>
+<div class="q-exp" id="exp3_1"><strong>Why:</strong> Ground-covering vines are built-in weed control. Two timed weedings before closure do the whole job — one of the reasons sweet potato's labour bill is so low.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. The second weeding is combined with earthing up in order to:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Make the field look tidy</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_2')">Bury weeds AND seal soil cracks against weevil entry</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Expose roots to sunlight</button>
+<div class="q-exp" id="exp3_2"><strong>Why:</strong> Pulling furrow soil onto the ridge kills in-row weeds, deepens the loose root zone, and closes the cracks weevils use as highways down to the roots — three jobs, one hoe pass.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Heavy nitrogen fertiliser on sweet potato results in:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">Record root yields</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_3')">Lush vines and poor roots</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">Purple flesh</button>
+<div class="q-exp" id="exp3_3"><strong>Why:</strong> N drives the vine–root balance toward foliage. Modest N, strong K and good ridge structure is the root-crop formula — the same lesson as cassava.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Bronzed older leaves and thin roots signal:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_4')">Potassium deficiency</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Virus</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Too much water</button>
+<div class="q-exp" id="exp3_4"><strong>Why:</strong> K is the bulking nutrient; the plant strips it from old leaves first. Wood ash into the ridge is the affordable answer where compound fertiliser is out of reach.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Fresh (unrotted) manure applied at planting tends to:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Double yields</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_5')">Cause forked, scabby roots</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Repel weevils</button>
+<div class="q-exp" id="exp3_5"><strong>Why:</strong> Hot fresh manure damages developing storage roots and encourages forking and scab. Compost it first, or apply it to the previous crop and let sweet potato enjoy the residue.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. On routine vine lifting, the evidence says:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">It should be done weekly everywhere</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_6')">It mostly reduces yield and is only worth considering in very wet fields with severe node-rooting</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">It is the main driver of yield</button>
+<div class="q-exp" id="exp3_6"><strong>Why:</strong> Lifting wounds vines and disrupts the working canopy. Except where waterlogged conditions cause heavy secondary rooting, the profitable default is to leave the canopy alone.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Hoeing under a closed sweet potato canopy is avoided because:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">It is too shady to see</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_7')">Shallow storage roots get wounded</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">The vines sting</button>
+<div class="q-exp" id="exp3_7"><strong>Why:</strong> Bulking roots sit just under the ridge surface, wider than you expect. Post-closure weed escapes are hand-pulled; the hoe stays out.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Sweet potato foliage as livestock feed contains roughly:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">2–3% protein</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_8')">16–20% protein in dry matter</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">No nutritional value</button>
+<div class="q-exp" id="exp3_8"><strong>Why:</strong> Vine protein rivals many purchased feeds, which is why pigs, dairy animals and rabbits do so well on it. The final-harvest vine mass is a genuine second crop.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. In-season fodder cutting from a root field should:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Remove all vines monthly</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_9')">Take no more than the top third, and only after root bulking is well advanced</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Happen before the plants root</button>
+<div class="q-exp" id="exp3_9"><strong>Why:</strong> Moderate late cutting sacrifices little root yield; aggressive or early cutting starves the roots you are actually growing. At final harvest, everything goes to the animals.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Planting sweet potato after well-fertilised maize or vegetables means:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Guaranteed crop failure</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_10')">Residual fertility often covers most of its needs — rotation position is fertiliser strategy</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">The field must rest first</button>
+<div class="q-exp" id="exp3_10"><strong>Why:</strong> Sweet potato scavenges residual nutrients efficiently and its modest N needs match what previous crops leave behind. Smart rotation placement replaces purchased fertiliser.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn3" onclick="markComplete(3)">Mark Month 3 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="4">
+    <div class="module-header" onclick="toggleModule(4)">
+      <div class="module-num">4</div>
+      <div class="module-title">Month 4: The Weevil War &amp; Plant Health</div>
+      <div class="module-status" id="status4">Locked</div>
+    </div>
+    <div class="module-body" id="body4">
+
+      <h3>Lesson 4.1 — Meet the enemy: Cylas, the sweet potato weevil</h3>
+      <p>If bruchids are the bean farmer's war, <strong>the sweet potato weevil (<em>Cylas</em> species)</strong> is yours. This ant-like little beetle is the most destructive sweet potato pest on earth. The adult lays eggs in vines and in any root it can reach; larvae tunnel through the roots, and the plant responds by producing bitter, foul-smelling terpenes. The result: roots riddled with dark tunnels that <strong>taste so bitter that even livestock refuse them</strong>. Damage of 60–100% in late-harvested dry-season fields is common. There is no rescue spray once larvae are inside the roots — the entire strategy is denial of access.</p>
+      <h3>Lesson 4.2 — How the weevil reaches your roots</h3>
+      <ol>
+        <li><strong>On planting material</strong> — eggs and larvae in vine bases and in root pieces.</li>
+        <li><strong>Through soil cracks</strong> — the adult cannot dig, but as soil dries and cracks in the late season, cracks become open corridors straight down to the roots.</li>
+        <li><strong>From reservoirs</strong> — old sweet potato fields, volunteer plants, discarded infested roots, and wild relatives keep populations alive between seasons.</li>
+      </ol>
+      <h3>Lesson 4.3 — The integrated defence (each step attacks one route)</h3>
+      <table>
+        <tr><th>Weapon</th><th>What you do</th><th>Which route it blocks</th></tr>
+        <tr><td>Clean tips</td><td>Plant apical tip cuttings, wilted 1–2 days; never plant root pieces or vine bases from infested fields</td><td>Arrival on material</td></tr>
+        <tr><td><strong>Crack sealing / earthing up</strong></td><td>Earth up at weeks 5–6 and again if cracks appear; keep ridges high and unbroken; mulch in dry spells to slow cracking; irrigate if you can</td><td>The soil-crack corridor — the single most powerful cultural control</td></tr>
+        <tr><td><strong>Timely (early) harvest</strong></td><td>Harvest as soon as roots reach market size; every extra dry-season week in the ground multiplies damage</td><td>Exposure time</td></tr>
+        <tr><td>Field sanitation</td><td>After harvest, remove or feed ALL roots and vines promptly (deep-bury infested culls — never leave them lying); uproot volunteer plants</td><td>Between-season reservoirs</td></tr>
+        <tr><td>Rotation &amp; distance</td><td>Never follow sweet potato with sweet potato; plant new fields as far as practical (ideally a few hundred metres) from old ones</td><td>Reservoir spillover — the weevil flies poorly</td></tr>
+        <tr><td>Barrier &amp; extras</td><td>Where available: sex-pheromone traps for monitoring/mass trapping; some released varieties tolerate weevils better — ask extension</td><td>Population knockdown</td></tr>
+      </table>
+      <div class="tip-box"><strong>The one-line weevil strategy:</strong> clean tips in, high sealed ridges through the season, harvest early, leave nothing behind, and don't plant next to last season's field. Farmers doing all five routinely hold weevil damage under 10% with zero insecticide.</div>
+      <h3>Lesson 4.4 — SPVD and the rest</h3>
+      <ul>
+        <li><strong>Sweet potato virus disease (SPVD):</strong> the whitefly/aphid-borne virus complex behind yield run-down — stunted plants with narrow, twisted, pale mosaic leaves. No cure: rogue affected plants, refresh with clean vines every 2–3 seasons, and use resistant released varieties. (This is the same defence triangle you learned in Cassava Module 4.)</li>
+        <li><strong>Alternaria blight &amp; leaf spots:</strong> dark stem/leaf lesions in wet highlands — resistant varieties and rotation.</li>
+        <li><strong>Rodents (mole rats etc.):</strong> serious in some areas — early harvest, clean field edges, traps; damage clusters near bushy margins.</li>
+        <li><strong>Erwinia/soft rots in store:</strong> a curing and handling issue — Module 5 solves it.</li>
+      </ul>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Cylas up close — cracks, tunnels, and the five-part defence in the field &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 4:</strong> Write your five-part weevil plan for your own plot: material source, earthing-up dates, target harvest week, sanitation steps, and next season's field location relative to this one. Then inspect any older sweet potato field nearby: look for soil cracks over ridges, dig one plant, and cut roots open — record whether you find tunnels and estimate damage percentage. Rogue any SPVD-symptomatic plants from your own plot and nursery.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 4 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Weevil-damaged sweet potato roots are worthless because:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">They explode in storage</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_1')">The plant produces bitter terpenes making tunnelled roots inedible even for livestock</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">They turn blue</button>
+<div class="q-exp" id="exp4_1"><strong>Why:</strong> The weevil's tunnels trigger a chemical defence that ruins taste and smell throughout the root — a small larval population destroys the whole root's value, which is why prevention is everything.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Once weevil larvae are inside roots, the effective treatment is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">A systemic spray</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_2')">There is none — the strategy is denying access in the first place</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">Extra irrigation</button>
+<div class="q-exp" id="exp4_2"><strong>Why:</strong> Larvae feed protected inside the root where no economic spray reaches. Every control in this crop is preventive: clean material, sealed soil, early harvest, sanitation, rotation.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. The weevil's main route to roots late in the season is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Flying down through the canopy</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_3')">Soil cracks that open as the ground dries</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Bird transport</button>
+<div class="q-exp" id="exp4_3"><strong>Why:</strong> Adults cannot dig, but drying soil cracks into open corridors leading straight to the roots. This single fact explains why earthing up, mulching and early harvest are the core defences.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Earthing up defends against weevils by:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">Poisoning the soil</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_4')">Sealing cracks and thickening the soil barrier over the roots</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">Attracting predatory birds</button>
+<div class="q-exp" id="exp4_4"><strong>Why:</strong> A high, unbroken ridge is a physical wall the adult weevil cannot cross. Re-earthing whenever cracks appear keeps the wall intact through the dangerous dry weeks.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Delaying harvest into the dry season typically:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Improves flavour with no risk</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_5')">Multiplies weevil damage week by week</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Kills the weevils with heat</button>
+<div class="q-exp" id="exp4_5"><strong>Why:</strong> Exposure time is the multiplier: cracked dry soil plus mature roots is the weevil's feast. Harvesting as soon as roots reach market size is yield protection, not impatience.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. After harvest, leftover roots and vines should be:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Left scattered to enrich the soil</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_6')">Removed promptly — fed to livestock or deep-buried if infested</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Piled at the field edge indefinitely</button>
+<div class="q-exp" id="exp4_6"><strong>Why:</strong> Crop remains and volunteer plants are the weevil's off-season hotel, breeding the population that attacks your next field. Sanitation breaks the cycle.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. New sweet potato fields should be located:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Immediately beside last season's field for convenience</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_7')">As far as practical from old fields — the weevil flies poorly</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Only on hilltops</button>
+<div class="q-exp" id="exp4_7"><strong>Why:</strong> Cylas disperses mainly by walking and weak flight. Distance plus rotation starves the emerging population before it finds your new crop — free control through planning.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. SPVD in the field looks like:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_8')">Stunted plants with narrow, twisted, pale mosaic leaves</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">Orange spots on roots</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">Sudden wilting at noon</button>
+<div class="q-exp" id="exp4_8"><strong>Why:</strong> The virus complex dwarfs and distorts plants, and infected plants yield almost nothing. Rogue them out and refresh planting material — the cassava defence triangle, applied here.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. The reason vine TIPS are the safest planting material against weevils is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_9')">Tips are furthest from the soil where adults lay eggs, so carry fewest eggs</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Tips are bitter</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Tips root more slowly</button>
+<div class="q-exp" id="exp4_9"><strong>Why:</strong> Egg-laying concentrates in vine bases and exposed roots near the soil. Tips, plus 1–2 days of wilting, arrive essentially weevil-free — the clean start every other measure builds on.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Farmers applying all five cultural weevil controls typically hold damage:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">At 50%</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_10')">Under about 10% without insecticide</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">At exactly zero, guaranteed</button>
+<div class="q-exp" id="exp4_10"><strong>Why:</strong> Clean tips, sealed ridges, early harvest, sanitation and rotation stack multiplicatively. None is perfect alone; together they beat any spray programme this pest allows — cheaply.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn4" onclick="markComplete(4)">Mark Month 4 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="5">
+    <div class="module-header" onclick="toggleModule(5)">
+      <div class="module-num">5</div>
+      <div class="module-title">Month 5: Harvest, Curing &amp; Storage</div>
+      <div class="module-status" id="status5">Locked</div>
+    </div>
+    <div class="module-body" id="body5">
+
+      <h3>Lesson 5.1 — Reading harvest time</h3>
+      <p>Most varieties are ready at <strong>3–5 months</strong>. Field signs: leaves yellowing and thinning, and the test dig — open one plant per corner of the field and check root size and skin set. Milky sap from a cut root that dries quickly (rather than staying watery) also signals maturity in many varieties. Then remember Module 4: <strong>when roots are ready, weevils are hungrier every week — dig.</strong></p>
+      <h3>Lesson 5.2 — Harvesting without wounds</h3>
+      <p>Sweet potato skin at harvest is tissue-paper delicate, and <strong>every scrape becomes a rot doorway</strong> in storage. The discipline:</p>
+      <ul>
+        <li>Cut and remove vines first (they are fodder), then loosen the ridge from the side with a fork, stick or careful hoe, lifting roots by hand — never levering against the roots themselves.</li>
+        <li>Harvest in dry weather; wet-dug roots rot faster. Keep roots shaded — an hour of tropical sun scalds skin.</li>
+        <li>Sort in the field: market grade (clean, unwounded, uniform), home grade (minor damage — eat first), and weevil-tunnelled culls (livestock if lightly damaged and palatable, otherwise deep-bury; never leave in the field).</li>
+      </ul>
+      <h3>Lesson 5.3 — Curing: the four-day trick that adds four months</h3>
+      <p>This is the lesson most sweet potato training in Africa skips, and it changes everything about storage. Freshly dug roots held for <strong>4–7 days at around 27–30&deg;C (81–86&deg;F) with high humidity (~85–90%)</strong> perform a small miracle: wounds heal over with new corky skin ('wound periderm'), the whole skin toughens, and flavour actually improves as some starch converts to sugar. Cured roots store <strong>3–5 months</strong>; uncured roots start rotting in weeks.</p>
+      <ul>
+        <li><strong>No equipment needed in the tropics:</strong> stack roots in a warm shaded, ventilated spot — under a grass roof, in a well-aired room — loosely covered (e.g. grass or sacking to hold humidity, never airtight plastic), for 4–7 days. Ambient warm-season conditions in most of Africa are close to ideal.</li>
+        <li>After curing, move to storage: <strong>cool as available, dry, dark, ventilated</strong> — a raised slatted store, a cool room, or the traditional pit store (lined with dry grass, roots layered with ash or sand, capped against rain and rodents) which works well where done carefully.</li>
+        <li>Handle cured roots gently still; check stores fortnightly and remove any rotting root immediately.</li>
+      </ul>
+      <div class="tip-box"><strong>Why curing is money:</strong> the price difference between harvest-glut and lean-season sweet potato is commonly 50–150%. Curing + a decent store is the machine that moves your crop from the cheap month to the expensive one — the same lean-season logic as hermetic grain storage, applied to a root.</div>
+      <h3>Lesson 5.4 — Processing options</h3>
+      <ul>
+        <li><strong>Dried chips/flour:</strong> wash, peel (optional), slice thin, dry on racks to snap-dry, mill — composite flour for porridge and baking. OFSP flour keeps meaningful beta-carotene if dried fast and stored dark.</li>
+        <li><strong>OFSP puree:</strong> steam, mash, pack — the bakery ingredient; needs hygiene and either cold chain or same-day sale/preservative-free contracts, so start with a confirmed buyer.</li>
+        <li><strong>Crisps and snacks:</strong> fried or solar-dried sweet slices for urban retail — small equipment, good margins, competitive market.</li>
+        <li>Boiled-and-mashed for weaning porridges blended with legume flour — a home-market product with genuine nutritional weight.</li>
+      </ul>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> The curing stack — four days that add four months &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 5:</strong> At harvest (your plot or a cooperating farmer's), practise the full chain: vines off to fodder, side-lifting without wounds, field sorting into three grades, and weighing total yield with a weevil-damage count. Cure at least a basket of sound roots for 4–7 days in a warm shaded ventilated stack under grass or sacking, then move them to your chosen store. Inspect after two weeks and record losses.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 5 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Sweet potato harvest readiness is confirmed by:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Calendar date alone</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_1')">Yellowing thinning leaves plus test-digging sample plants</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Waiting for vines to flower</button>
+<div class="q-exp" id="exp5_1"><strong>Why:</strong> Varieties and seasons shift timing, so the field itself is the calendar: leaf decline plus corner test-digs showing sized, skin-set roots. Then dig promptly — the weevil clock is running.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Freshly dug sweet potato skin is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Tough as cassava bark</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_2')">Extremely delicate — every scrape becomes a rot entry in storage</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Waterproof</button>
+<div class="q-exp" id="exp5_2"><strong>Why:</strong> At digging, the skin slips and scrapes at a touch. Loosening from the side, lifting by hand, shading roots and dry-weather harvest are all protections for that fragile surface.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Curing means holding fresh roots for 4–7 days at approximately:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_3')">27–30°C with high humidity</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">5°C in a fridge</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">45°C in direct sun</button>
+<div class="q-exp" id="exp5_3"><strong>Why:</strong> Warm and humid is the healing recipe: wounds seal with new corky skin and the whole surface toughens. In the warm season, a shaded ventilated stack under grass or sacking achieves it with no equipment.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Properly cured roots store for about:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">One week</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_4')">3–5 months</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">Five years</button>
+<div class="q-exp" id="exp5_4"><strong>Why:</strong> Curing plus a cool, dry, dark, ventilated store turns a weeks-perishable root into a months-stable one — the gateway to lean-season prices.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Covering curing roots with airtight plastic sheeting is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">Ideal for humidity</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_5')">Wrong — they need humid but ventilated cover like grass or sacking</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">Required for OFSP</button>
+<div class="q-exp" id="exp5_5"><strong>Why:</strong> Roots are alive and respiring; sealed plastic traps condensation and CO2 and rots them. Loose breathable cover holds humidity while letting the stack breathe.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Curing also improves eating quality because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_6')">Some starch converts to sugar, improving flavour</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">It bleaches the flesh</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">It removes all water</button>
+<div class="q-exp" id="exp5_6"><strong>Why:</strong> The same days that heal the skin sweeten the root — cured sweet potato genuinely tastes better, which markets notice.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. The commercial point of curing + storage is that lean-season prices are commonly:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Identical to harvest prices</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_7')">50–150% above harvest-glut prices</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Lower than harvest prices</button>
+<div class="q-exp" id="exp5_7"><strong>Why:</strong> Everyone sells at harvest; few can sell three months later. Curing and a good store are the machine that moves your tonnage from the cheap month to the expensive one.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. A traditional pit store works well when:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_8')">Lined with dry grass, layered with ash or sand, and capped against rain and rodents</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Dug in a waterlogged spot</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Left open to the sky</button>
+<div class="q-exp" id="exp5_8"><strong>Why:</strong> Done carefully, the pit gives the cool, dark, stable conditions cured roots want — a proven zero-cash storage technology. Fortnightly checks and instant removal of any rotting root keep it healthy.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. OFSP flour keeps its vitamin A value best when:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Dried slowly in full sun for weeks and stored in glass on a windowsill</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_9')">Sliced thin, dried fast, and stored dark</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Boiled before drying for two hours</button>
+<div class="q-exp" id="exp5_9"><strong>Why:</strong> Beta-carotene is destroyed by prolonged heat and light. Fast drying and dark storage preserve the nutrition that justifies OFSP's premium.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. OFSP puree for bakeries should only be started with:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_10')">A confirmed buyer, since it needs hygiene and rapid sale or cold chain</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">A very large field</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Imported machinery only</button>
+<div class="q-exp" id="exp5_10"><strong>Why:</strong> Puree is perishable and specification-driven. The successful sequence is contract first, production second — the opposite order bankrupts small processors.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn5" onclick="markComplete(5)">Mark Month 5 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="6">
+    <div class="module-header" onclick="toggleModule(6)">
+      <div class="module-num">6</div>
+      <div class="module-title">Month 6: Markets, Streams &amp; the Sweet Potato Business</div>
+      <div class="module-status" id="status6">Locked</div>
+    </div>
+    <div class="module-body" id="body6">
+
+      <h3>Lesson 6.1 — Five income streams from one ridge</h3>
+      <table>
+        <tr><th>Stream</th><th>Buyer</th><th>Notes</th></tr>
+        <tr><td>Fresh roots, harvest season</td><td>Local and urban markets, traders</td><td>The base business — volume at glut prices</td></tr>
+        <tr><td>Stored roots, lean season</td><td>Same markets, 2–4 months later</td><td>Curing + storage premium of 50–150%; the margin maker</td></tr>
+        <tr><td>OFSP channels</td><td>Schools, nutrition programmes, bakeries (puree), weaning-food makers</td><td>Premium and contract-friendly; documentation and reliability required</td></tr>
+        <tr><td>Vine bundles</td><td>Neighbouring farmers each planting season</td><td>From your multiplication beds — clean material sells itself once your fields prove it</td></tr>
+        <tr><td>Fodder / processed products</td><td>Pig and dairy farmers; snack retail</td><td>Vines and culls become feed; chips/crisps/flour capture urban margins</td></tr>
+      </table>
+      <h3>Lesson 6.2 — An honest acre budget</h3>
+      <table>
+        <tr><th>Item</th><th>Assumption</th><th>Amount</th></tr>
+        <tr><td>Yield</td><td>Clean vines, ridges, 2 weedings, early harvest</td><td>~6 t/acre (15 t/ha)</td></tr>
+        <tr><td>Gross — sold at harvest @ $150/t</td><td>varies $80–$300/t by market/season</td><td>~$900</td></tr>
+        <tr><td>Gross — 2/3 sold cured in lean season @ $250/t</td><td>curing + store, 10% storage loss</td><td>~$1,200–1,350 total</td></tr>
+        <tr><td>Cash costs</td><td>Vines (first season), labour, modest inputs, sacks, transport</td><td>~$250–400</td></tr>
+        <tr><td><strong>Indicative margin</strong></td><td>with storage strategy</td><td><strong>~$800–1,000/acre in 4–6 months</strong></td></tr>
+      </table>
+      <p>Note what drives the upside: not more hectares — <strong>curing/storage timing, clean vines, and early harvest ahead of the weevil</strong>. All three are knowledge, not capital.</p>
+      <h3>Lesson 6.3 — Selling OFSP into programmes</h3>
+      <p>School feeding, hospital and NGO procurement are real OFSP buyers across Africa, and they buy on paperwork as much as product: consistent variety, agreed volumes and delivery days, basic records. Your five-line notebook plus your extension office's variety certification are usually the entry ticket. Groups again beat individuals — five OFSP growers with staggered plantings can hold a school contract no single acre can.</p>
+      <h3>Lesson 6.4 — Records and the rotation engine</h3>
+      <p>Notebook lines for this crop: planting date and vine source per block; weeding/earthing dates; harvest date, tonnage and weevil-damage percentage per block; curing dates and storage losses; sales by month, form and price. The weevil-damage column is your management report card — watch it fall as your hygiene tightens. Grow by running sweet potato as the fast module inside a rotation (maize/legume/sweet potato), never back-to-back on the same land, with your vine nursery as the constant clean-material engine — and one processing or programme channel added per year.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Five income streams from one ridge — sequencing them across the year &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 6:</strong> Using your trader price-calendar from Month 1 and your own harvest data, build your version of the acre budget two ways: all sold at harvest, and 2/3 stored for lean-season sale. Interview one potential premium buyer (school, programme, bakery, or vine customer) about requirements. Conclude with one paragraph naming the two income streams you will run in year one.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 6 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. The margin-making income stream in sweet potato is usually:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">Selling everything in harvest week</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_1')">Cured, stored roots sold in the lean season at 50–150% higher prices</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">Selling the hoes afterwards</button>
+<div class="q-exp" id="exp6_1"><strong>Why:</strong> Production gets you to average; storage timing gets you to profit. Curing knowledge converts the glut-month crop into lean-month revenue — the crop's single biggest lever.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. The three upside drivers in the acre budget are notable because they are:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">All expensive machinery</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_2')">Knowledge, not capital — curing/storage, clean vines, early harvest</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Impossible for smallholders</button>
+<div class="q-exp" id="exp6_2"><strong>Why:</strong> None of the big levers requires money so much as discipline: a shaded curing stack, refreshed planting material, and digging on time. This is why sweet potato is such a strong first enterprise.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Institutional OFSP buyers (schools, programmes) purchase largely on:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Root colour alone</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_3')">Reliability and paperwork — consistent variety, volumes, delivery days, records</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Lowest price only</button>
+<div class="q-exp" id="exp6_3"><strong>Why:</strong> Programme procurement needs predictability. Your notebook, a certified variety and delivery discipline are the entry ticket — and grower groups with staggered plantings hold contracts individuals cannot.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Selling vine bundles is a genuine business because:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Vines are rare in nature</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_4')">Every farmer needs fresh planting material each season, and clean material proves itself in the field</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Vines are used for roofing</button>
+<div class="q-exp" id="exp6_4"><strong>Why:</strong> A multiplication bed plus visibly healthy fields turns you into the district's seed supplier. As with cassava cuttings, reputation for cleanliness IS the product.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. The weevil-damage percentage column in your records serves as:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">A tax document</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_5')">Your management report card — it falls as hygiene, sealing and timing improve</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">A weather record</button>
+<div class="q-exp" id="exp6_5"><strong>Why:</strong> Weevil damage integrates every Module 4 practice into one number per block. Tracking it turns an invisible enemy into a measured, managed one.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Sweet potato's correct place in rotation is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">Back-to-back on the same land for specialisation</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_6')">As the fast module in rotation (e.g. maize/legume/sweet potato), never following itself</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">Only as a permanent crop</button>
+<div class="q-exp" id="exp6_6"><strong>Why:</strong> Continuous sweet potato breeds weevils and SPVD; rotation starves both and lets the crop scavenge residual fertility. The vine nursery, not the old field, carries material between seasons.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. A ~10% storage loss assumption in the budget reflects:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Inevitable total failure</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_7')">Realistic cured-storage shrinkage — managed by fortnightly checks and removing rots</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Theft only</button>
+<div class="q-exp" id="exp6_7"><strong>Why:</strong> Even good stores lose some roots to rot, sprouting and shrinkage. Budgeting the loss honestly — and inspecting fortnightly — keeps the storage strategy profitable rather than theoretical.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Culled, weevil-tunnelled roots at harvest should be:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Mixed into market sacks</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_8')">Fed to livestock if lightly damaged, otherwise deep-buried — never left in the field</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Stored with the market grade</button>
+<div class="q-exp" id="exp6_8"><strong>Why:</strong> Culls in market sacks destroy your buyer's trust; culls left in the field breed next season's weevils. Feed or bury — the sorting decision protects both reputation and rotation.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. For a farmer with pigs or dairy animals, the sweet potato field additionally provides:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Nothing useful</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_9')">High-protein vine fodder that can offset most of the field's costs</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Bedding only</button>
+<div class="q-exp" id="exp6_9"><strong>Why:</strong> At 16–20% protein, final-harvest vines are a serious feed resource. Mixed farmers effectively grow roots at a discount — a direct bridge to the Piggery course.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Sensible growth for a sweet potato enterprise is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_10')">Add one processing or programme channel per year on top of the rotation engine</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Quadruple the area immediately</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Abandon records once profitable</button>
+<div class="q-exp" id="exp6_10"><strong>Why:</strong> The base rotation plus curing generates cash; each year that cash funds one new channel — vines, OFSP contract, chips — each with its own learning curve. Stepwise, recorded, compounding.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn6" onclick="markComplete(6)">Mark Month 6 Complete</button>
+    </div>
+  </div>
+
+  <div class="final-section">
+    <h2>&#127942; Final Project: Your Sweet Potato Business Plan</h2>
+    <p>The final project assembles everything into a plan for a sweet potato enterprise you could start with the next rains — small in cash, precise in knowledge.</p>
+    <ol><li><strong>Market and variety:</strong> chosen variety (or white + OFSP pair) with your price calendar and buyer evidence.</li>
+<li><strong>Material plan:</strong> clean vine source, your multiplication bed layout and refresh schedule, and nursery hygiene rules.</li>
+<li><strong>Field plan and calendar:</strong> ridge layout, planting date, both weeding/earthing dates, target harvest week, and next season's rotation and field location.</li>
+<li><strong>Weevil defence page:</strong> your five-part plan, written as commitments with dates, plus the damage-percentage target you will record against.</li>
+<li><strong>Curing and storage plan:</strong> where and how you will cure, your store type, inspection schedule, and the share of crop held for lean-season sale.</li>
+<li><strong>Budget and cash-flow:</strong> adapt the startup table with local prices; show the two sales scenarios (harvest-sale vs storage strategy) side by side.</li>
+<li><strong>Risk page and year-3 vision:</strong> three risks with mitigations, and which income streams you add in years two and three.</li></ol>
+    <p><strong>Submission standard:</strong> A plan you could hand to a savings group, a bank officer, or a family investor without embarrassment. Real local prices, real named buyers, honest risks.</p>
+  </div>
+
+  <div class="budget-section">
+    <h2>&#128176; Startup Budget &mdash; 1 Acre (0.4 ha) + Vine Nursery + Curing/Storage Setup</h2>
+    <p>Sweet potato is among the cheapest serious crops to start — the vine nursery makes planting material a one-time purchase, and curing needs shade and grass, not machinery. Budget assumes family labour for routine work.</p>
+    <table>
+      <tr><th>Item</th><th>Details</th><th>Typical cost (USD)</th></tr>
+<tr><td>Land preparation &amp; ridging</td><td>Ploughing/digging, making ~30 cm ridges</td><td>$40–100</td></tr>
+<tr><td>Planting material (first season only)</td><td>Clean/certified vines for 1 acre + nursery stock</td><td>$30–90</td></tr>
+<tr><td>Vine nursery bed</td><td>Bed preparation, watering cans/drum, shade</td><td>$15–40</td></tr>
+<tr><td>Planting labour</td><td>Cutting tips, planting, gap-filling</td><td>$20–50</td></tr>
+<tr><td>Weeding &times; 2 + earthing up</td><td>Hired or family labour equivalent</td><td>$40–100</td></tr>
+<tr><td>Manure/compost + wood ash/K</td><td>Modest K-led programme</td><td>$25–80</td></tr>
+<tr><td>Tools</td><td>Hoes, fork or digging sticks, knife, baskets</td><td>$25–50</td></tr>
+<tr><td>Curing &amp; store setup</td><td>Shaded rack/stack area, grass/sacking, slatted store or lined pit, sacks</td><td>$30–80</td></tr>
+<tr><td>Harvest &amp; transport, first sales</td><td>Sacks, transport to market</td><td>$30–80</td></tr>
+<tr><td>Contingency (10%)</td><td></td><td>$25–65</td></tr>
+<tr><td><strong>Total indicative startup</strong></td><td>First income in 3–5 months; vines self-supplied thereafter</td><td><strong>$280–735</strong></td></tr>
+    </table>
+    <p><em>Prices vary widely by country. Before spending anything, price every line in your own town and rebuild this table — that exercise is part of your final project.</em></p>
+  </div>
+
+  <div class="glossary-section">
+    <h2>&#128218; Glossary</h2>
+    <dl class="glossary">
+<dt>OFSP</dt><dd>Orange-fleshed sweet potato — beta-carotene-rich varieties bred against vitamin A deficiency; premium in nutrition and bakery channels.</dd>
+<dt>Beta-carotene</dt><dd>The orange pigment the body converts to vitamin A; destroyed by prolonged heat and light, hence fast drying and dark storage.</dd>
+<dt>Dry matter</dt><dd>The non-water fraction of the root; high dry matter gives the firm 'mealy' texture traditional markets prefer.</dd>
+<dt>Tip (apical) cutting</dt><dd>A 25–30 cm vine tip — the standard planting material, carrying the least virus and fewest weevil eggs.</dd>
+<dt>Vine multiplication bed</dt><dd>A small watered bed producing thousands of clean tip cuttings per season by cut-and-regrow harvesting.</dd>
+<dt>SPVD</dt><dd>Sweet potato virus disease — the whitefly/aphid-borne complex behind yield run-down in recycled vines; managed by roguing, resistant varieties and material refresh.</dd>
+<dt>Cylas / sweet potato weevil</dt><dd>The crop's most destructive pest; larvae tunnel roots, triggering bitter terpenes that ruin them. Controlled culturally, not chemically.</dd>
+<dt>Earthing up</dt><dd>Pulling furrow soil onto the ridge to bury weeds, deepen the root zone and seal the soil cracks weevils enter through.</dd>
+<dt>Crack sealing</dt><dd>Keeping ridge soil unbroken (earthing, mulch, moisture) so adult weevils cannot reach the roots.</dd>
+<dt>Roguing</dt><dd>Uprooting and destroying virus-symptomatic plants in field and nursery.</dd>
+<dt>Curing</dt><dd>Holding fresh roots 4–7 days warm (27–30°C) and humid so wounds heal and skin toughens — the step that extends storage to 3–5 months.</dd>
+<dt>Wound periderm</dt><dd>The new corky skin that forms over harvest wounds during curing, sealing out rot organisms.</dd>
+<dt>Pit store</dt><dd>A traditional grass-lined, capped storage pit; effective for cured roots when protected from rain and rodents and checked regularly.</dd>
+<dt>Lean season</dt><dd>The months after the harvest glut when supplies shrink and prices rise 50–150% — the target of the curing-and-storage strategy.</dd>
+<dt>Puree</dt><dd>Steamed, mashed OFSP sold as a bakery and weaning-food ingredient; perishable, so produced against confirmed contracts.</dd>
+<dt>Volunteer plants</dt><dd>Self-grown plants from leftover roots/vines that harbour weevils and virus between seasons; removed during sanitation.</dd>
+    </dl>
+  </div>
+
+  <div class="resources-section">
+    <h2>&#128279; Further Resources</h2>
+    <ul><li>International Potato Center (CIP) — the global sweet potato research body; free OFSP variety information, vine multiplication ('Triple S' and rapid multiplication) guides and curing/storage manuals for Africa.</li>
+<li>Your national root-crops programme and extension office — released varieties for your district, SPVD/weevil resistance ratings, and certified vine multiplier contacts.</li>
+<li>FAO and HarvestPlus materials on OFSP and biofortification — the nutrition evidence and programme-market landscape behind the OFSP premium.</li>
+<li>National school-feeding and nutrition programme offices — the actual buyers for OFSP contracts; ask for supplier requirements early.</li>
+<li>Rise Africa Skills companion courses: Piggery and Rabbit Farming (vine fodder link), Solar Drying (chips and OFSP flour), Beans &amp; Legumes (rotation partners and the lean-season storage logic).</li></ul>
+  </div>
+
+  <div class="cert-section">
+    <h2>&#127891; Course Completion</h2>
+    <p>Complete all 6 months and pass the quizzes to unlock your certificate.</p>
+    <a href="certificate.html?course=Sweet%20Potato%20Farming" class="cert-btn" id="certBtn" disabled>Get Certificate</a>
+  </div>
+</div>
+<script>
+  const TOTAL_MODULES = 6;
+  const COURSE_KEY = 'sweet-potato-farming';
+  let completed = JSON.parse(localStorage.getItem(COURSE_KEY + '_progress') || '[]');
+
+  function toggleModule(n) {
+    if (n > 1 && !completed.includes(n-1)) { alert('Complete Month ' + (n-1) + ' first.'); return; }
+    document.getElementById('body' + n).classList.toggle('active');
+  }
+  function answerQ(btn, isCorrect, expId) {
+    const parent = btn.parentElement;
+    const buttons = parent.querySelectorAll('.q-opt');
+    if (buttons[0].disabled) return;
+    buttons.forEach(b => { b.disabled = true; });
+    if (isCorrect) { btn.classList.add('correct'); }
+    else {
+      btn.classList.add('wrong');
+      buttons.forEach(b => { if (b.dataset.c === '1') b.classList.add('correct'); });
+    }
+    document.getElementById(expId).classList.add('show');
+    const quiz = btn.closest('.quiz-wrap');
+    quiz.dataset.answered = (parseInt(quiz.dataset.answered||'0') + 1);
+    quiz.dataset.score = (parseInt(quiz.dataset.score||'0') + (isCorrect ? 1 : 0));
+    if (parseInt(quiz.dataset.answered) >= parseInt(quiz.dataset.total)) {
+      const s = quiz.querySelector('.quiz-score');
+      s.textContent = 'Quiz result: ' + quiz.dataset.score + ' / ' + quiz.dataset.total + (parseInt(quiz.dataset.score) >= 7 ? ' — Pass. Well done!' : ' — Below 7/10. Re-read the module, then review your wrong answers.');
+    }
+  }
+  function markComplete(n) {
+    if (!completed.includes(n)) {
+      completed.push(n); completed.sort((a,b)=>a-b);
+      localStorage.setItem(COURSE_KEY + '_progress', JSON.stringify(completed));
+    }
+    updateUI();
+  }
+  function updateUI() {
+    document.getElementById('completedCount').textContent = completed.length;
+    document.getElementById('progressBar').style.width = (completed.length/TOTAL_MODULES*100) + '%';
+    for (let i=1; i<=TOTAL_MODULES; i++) {
+      const st = document.getElementById('status'+i), btn = document.getElementById('btn'+i);
+      if (completed.includes(i)) { st.textContent='Done'; st.classList.add('done'); if(btn){btn.textContent='Completed'; btn.disabled=true;} }
+      else if (i===1 || completed.includes(i-1)) { st.textContent='Start'; }
+      else { st.textContent='Locked'; }
+    }
+    if (completed.length >= TOTAL_MODULES) {
+      const c = document.getElementById('certBtn');
+      c.removeAttribute('disabled'); c.textContent = 'Get Your Certificate!';
+    }
+  }
+  updateUI();
+</script>
+</body>
+</html>

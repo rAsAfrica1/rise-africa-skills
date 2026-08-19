@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Cotton Farming - A complete practical course from Rise Africa Skills. Learn offline, anytime.">
+<title>Cotton Farming | Rise Africa Skills</title>
+<style>
+  :root { --gold:#eab308; --gold-dark:#a16207; --green:#16a34a; --bg:#0f172a; --card:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --line:#334155; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:var(--bg); color:var(--text); line-height:1.65; }
+  header { background:linear-gradient(135deg,var(--gold-dark) 0%,#713f12 100%); padding:44px 20px; text-align:center; }
+  header h1 { font-size:2rem; margin-bottom:8px; }
+  header p { color:rgba(255,255,255,0.88); max-width:640px; margin:0 auto; }
+  .badge { display:inline-block; background:var(--gold); color:#1e293b; padding:4px 14px; border-radius:20px; font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-top:12px; letter-spacing:0.4px; }
+  .container { max-width:920px; margin:0 auto; padding:30px 20px; }
+  .progress-bar { background:var(--card); border-radius:10px; height:10px; margin-bottom:28px; overflow:hidden; }
+  .progress-fill { background:var(--gold); height:100%; width:0%; border-radius:10px; transition:width .4s ease; }
+  .overview { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-bottom:26px; }
+  .overview h2 { color:var(--gold); font-size:1.15rem; margin-bottom:10px; }
+  .overview ul { margin:8px 0 14px 20px; color:var(--muted); }
+  .overview li { margin:5px 0; }
+  .meta-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+  .meta-chip { background:#0b1220; border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:0.85rem; color:var(--muted); }
+  .meta-chip b { color:var(--text); }
+  .module { background:var(--card); border-radius:12px; margin-bottom:16px; overflow:hidden; border:1px solid var(--line); }
+  .module-header { padding:18px 22px; cursor:pointer; display:flex; align-items:center; gap:14px; transition:background .2s; }
+  .module-header:hover { background:#26354a; }
+  .module-num { background:var(--gold); color:#1e293b; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0; }
+  .module-title { flex:1; font-weight:600; }
+  .module-status { font-size:0.75rem; padding:4px 10px; border-radius:12px; background:var(--line); color:var(--muted); white-space:nowrap; }
+  .module-status.done { background:var(--green); color:#fff; }
+  .module-body { display:none; padding:0 22px 24px; border-top:1px solid var(--line); }
+  .module-body.active { display:block; }
+  .module-body p { color:var(--muted); margin:13px 0; }
+  .module-body ul, .module-body ol { margin:10px 0 10px 22px; color:var(--muted); }
+  .module-body li { margin:6px 0; }
+  .module-body strong { color:var(--text); }
+  .module-body h3 { color:var(--gold); font-size:1.05rem; margin:22px 0 4px; }
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.88rem; }
+  th { background:#0b1220; color:var(--gold); text-align:left; padding:9px 10px; border:1px solid var(--line); }
+  td { padding:8px 10px; border:1px solid var(--line); color:var(--muted); vertical-align:top; }
+  tr:nth-child(even) td { background:#1a2537; }
+  .tip-box { background:rgba(234,179,8,0.08); border-left:4px solid var(--gold); padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .tip-box strong { color:var(--gold); }
+  .warn-box { background:rgba(239,68,68,0.08); border-left:4px solid #ef4444; padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .warn-box strong { color:#f87171; }
+  .assign-box { background:#0b1220; border:1px dashed var(--gold-dark); border-radius:10px; padding:16px 18px; margin:16px 0; color:var(--muted); }
+  .assign-box strong { color:var(--gold); }
+  .video-box { background:#0b1220; border:1px solid var(--line); border-radius:10px; padding:14px 18px; margin:16px 0; color:var(--muted); font-size:0.9rem; }
+  .quiz-wrap { background:#0b1220; border:1px solid var(--line); border-radius:12px; padding:20px; margin-top:20px; }
+  .quiz-wrap h3 { margin-top:0 !important; }
+  .q-block { margin:16px 0; padding-bottom:14px; border-bottom:1px solid #1e293b; }
+  .q-block:last-child { border-bottom:none; }
+  .q-text { font-weight:600; color:var(--text); margin-bottom:8px; }
+  .q-opt { display:block; width:100%; text-align:left; padding:9px 13px; margin:5px 0; background:var(--card); border:1px solid #475569; border-radius:8px; color:var(--text); cursor:pointer; transition:all .2s; font-size:0.9rem; }
+  .q-opt:hover { border-color:var(--gold); }
+  .q-opt.correct { background:#14532d; border-color:var(--green); }
+  .q-opt.wrong { background:#7f1d1d; border-color:#ef4444; }
+  .q-exp { display:none; margin-top:8px; padding:10px 13px; background:rgba(234,179,8,0.07); border-left:3px solid var(--gold); border-radius:0 6px 6px 0; color:var(--muted); font-size:0.87rem; }
+  .q-exp.show { display:block; }
+  .quiz-score { margin-top:12px; font-weight:700; color:var(--gold); }
+  .check-btn { background:var(--gold); color:#1e293b; border:none; padding:11px 26px; border-radius:8px; font-weight:700; cursor:pointer; margin-top:16px; transition:background .2s; }
+  .check-btn:hover { background:#facc15; }
+  .check-btn:disabled { opacity:0.5; cursor:not-allowed; }
+  .final-section, .budget-section, .glossary-section, .resources-section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-top:26px; }
+  .final-section h2, .budget-section h2, .glossary-section h2, .resources-section h2 { color:var(--gold); font-size:1.2rem; margin-bottom:10px; }
+  .final-section p, .budget-section p, .resources-section p { color:var(--muted); margin:10px 0; }
+  .final-section ol, .resources-section ul { margin:10px 0 10px 22px; color:var(--muted); }
+  .final-section li, .resources-section li { margin:6px 0; }
+  dl.glossary dt { color:var(--text); font-weight:700; margin-top:12px; }
+  dl.glossary dd { color:var(--muted); margin-left:0; font-size:0.92rem; }
+  .cert-section { text-align:center; padding:40px 20px; background:var(--card); border-radius:16px; margin-top:30px; border:1px solid var(--line); }
+  .cert-section h2 { margin-bottom:10px; }
+  .cert-section p { color:var(--muted); margin-bottom:20px; }
+  .cert-btn { background:var(--gold); color:#1e293b; border:none; padding:14px 36px; border-radius:10px; font-size:1rem; font-weight:800; cursor:pointer; text-decoration:none; display:inline-block; }
+  .cert-btn[disabled] { opacity:0.4; pointer-events:none; }
+  .nav-bar { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:var(--card); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:100; }
+  .nav-bar a { color:var(--text); text-decoration:none; font-weight:600; }
+  .nav-bar a:hover { color:var(--gold); }
+  .completion-count { color:var(--muted); font-size:0.9rem; }
+  @media (max-width:600px){ header h1{font-size:1.5rem;} .module-header{padding:14px 16px;} .module-body{padding:0 16px 18px;} table{font-size:0.8rem;} th,td{padding:6px 7px;} }
+</style>
+</head>
+<body>
+<nav class="nav-bar">
+  <a href="index.html">&#8592; Back to Courses</a>
+  <span class="completion-count"><span id="completedCount">0</span> / 6 months completed</span>
+</nav>
+<header>
+  <div class="badge">Agriculture &middot; 6-Month Program</div>
+  <h1>Cotton Farming</h1>
+  <p>Africa's most important cash crop — outgrower discipline, scouting and economic thresholds, three-round quality picking, lint protection from field to gin, and navigating scheme credit without the debt spiral.</p>
+</header>
+<div class="container">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+
+  <div class="overview">
+    <h2>Course Overview</h2>
+    <p style="color:var(--muted);">Cotton is Africa's most important non-food cash crop: grown across the Sahel and savanna, it is the primary cash income for millions of smallholder families — school fees, medical bills, farm inputs — delivered through one of the continent's most organised buyer networks. It is also the most pest-demanding crop in this college, and the difference between a 700 kg/ha farmer and a 2 t/ha farmer is almost entirely scouting discipline and threshold-based spray decisions. This course teaches cotton as a systems crop: outgrower or scheme discipline first (read the rules before planting), seed and stand establishment, fertiliser split for boll-not-straw, then the pest management centrepiece — economic thresholds, W-pattern weekly scouting, and knowing the difference between a spray that saves bolls and one that kills natural enemies. Cotton disease and weed management follow: three weedings, boll rot prevention on ridges, virus resistance through early planting, and stalk destruction as mandatory community pest hygiene. Picking discipline — only open dry white bolls, multiple rounds, first picking kept separate, no wet storage — is where all the agronomic work is either captured or lost. The business module covers gin price, quality premiums, scheme credit and the debt-spiral discipline, and the growth path to seed-grower niche or group aggregation for better prices.</p>
+    <h2 style="margin-top:16px;">What You Will Learn</h2>
+    <ul><li>Understand cotton's outgrower model: scheme rules, input credit, prescribed variety, and compliance discipline</li>
+<li>Establish certified treated seed at correct spacing, depth and furrow planting into first effective rains</li>
+<li>Split fertiliser: P at planting in the furrow, N in two applications at thinning and flower bud</li>
+<li>Master scouting: W-pattern weekly, economic thresholds, only spray when justified — the yield gap between farmers</li>
+<li>Manage boll rot, leaf curl virus, angular leaf spot and root rot with variety and drainage, not chemistry</li>
+<li>Weed three times on the right calendar; return stalks and rotate legumes for K and pest breaks</li>
+<li>Pick only open dry clean bolls, three rounds, first separate, no wet storage, deliver promptly</li>
+<li>Read the gin price before planting, manage scheme credit with records, and grow for quality premiums</li></ul>
+    <div class="meta-row">
+      <div class="meta-chip"><b>Duration:</b> 6 months, one module per month</div>
+      <div class="meta-chip"><b>Level:</b> Beginner &rarr; Job-ready</div>
+      <div class="meta-chip"><b>Units:</b> Metric with imperial where useful</div>
+      <div class="meta-chip"><b>Final project:</b> Your own business plan</div>
+    </div>
+  </div>
+
+  <div class="module" data-module="1">
+    <div class="module-header" onclick="toggleModule(1)">
+      <div class="module-num">1</div>
+      <div class="module-title">Month 1: Cotton's Place — Markets, Climate &amp; Outgrower Schemes</div>
+      <div class="module-status" id="status1">Start</div>
+    </div>
+    <div class="module-body" id="body1">
+
+      <h3>Lesson 1.1 — Cotton's place in African smallholder farming</h3>
+      <p>Cotton is Africa's most important non-food cash crop: grown across the Sahel, savanna and east African drylands, it is the primary cash income for millions of smallholder families who depend on its ginned lint price to pay school fees, medical bills and farm inputs. <strong>Organised buyer networks — ginners, outgrower schemes and government purchasing agencies — exist almost everywhere cotton grows</strong>, giving it one of the continent's most reliable (if price-volatile) market structures. The crop is also labour-intensive at picking, making it a community crop where family and hired hands work together at peak.</p>
+      <ul>
+        <li>Season: <strong>150–200 days</strong> — a long-season commitment matched to the main rains.</li>
+        <li>Yields: African smallholder average ~600–800 kg seed cotton/ha; well-managed plots reach <strong>1.5–2.5 t/ha</strong>.</li>
+        <li>Products: <strong>lint</strong> (the white fibre, ~38–42% of seed cotton), <strong>cottonseed</strong> (crushed for oil and cake), and <strong>stalks</strong> (fuel and mulch).</li>
+        <li>Markets: cotton is bought as seed cotton by ginneries — no farm processing required to sell; gin price is the benchmark.</li>
+      </ul>
+      <h3>Lesson 1.2 — Where cotton grows</h3>
+      <table>
+        <tr><th>Requirement</th><th>Standard</th><th>Notes</th></tr>
+        <tr><td>Rainfall</td><td>500–1,200 mm/season, well-distributed through growing season</td><td>Drought at flowering or boll fill = yield collapse; too much rain at harvest = quality loss</td></tr>
+        <tr><td>Temperature</td><td>Day 25–35 °C; night above 15 °C</td><td>Cold nights below 15 °C slow growth; frost kills</td></tr>
+        <tr><td>Soils</td><td>Deep well-drained loams; tolerates clay where drainage good</td><td>Waterlogging is fatal; compacted topsoil limits boll-filling roots</td></tr>
+        <tr><td>Season length</td><td>Frost-free 5–7 months minimum</td><td>Late planting = late harvest = boll rot in rains; early planting = more pests</td></tr>
+      </table>
+      <h3>Lesson 1.3 — The outgrower model</h3>
+      <p>Most African cotton is grown under <strong>outgrower or contract farming schemes</strong>: the ginner or an intermediary supplies seed, inputs (sometimes on credit) and a guaranteed purchase price; the farmer delivers seed cotton at collection points. This model provides market certainty but also discipline — variety, planting date and pesticide use are often prescribed. <strong>Know your scheme's rules before planting; non-compliance often means loss of input credit and price guarantee.</strong></p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> From boll to gin — how cotton is bought and why outgrower schemes dominate &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 1:</strong> Contact your local extension office or ginnery: find this season's announced gin price, the scheme rules (prescribed variety, input package, delivery requirements), and the nearest collection point. Record the climate data for your district: rainfall pattern, any cold nights or frosts below 15 °C, and flood/waterlogging risk. Write one paragraph: is cotton viable for your farm, and which scheme would you join?</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 1 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Cotton is Africa's most important:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_1')">Non-food cash crop — grown across the Sahel and savanna for lint income</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">Food staple</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">Fruit</button>
+<div class="q-exp" id="exp1_1"><strong>Why:</strong> Food crops pay meals; cotton pays school fees. The distinction is why millions of smallholder families grow it despite its complexity — the cash is reliable.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. The three products of seed cotton are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_2')">Lint (~38–42%), cottonseed (oil + cake), and stalks (fuel/mulch)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">Only lint</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">Only oil</button>
+<div class="q-exp" id="exp1_2"><strong>Why:</strong> The ginner processes all three; the farmer sells seed cotton and captures one price — but understanding the value chain explains the price logic.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. African smallholder cotton yields are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_3')">~600–800 kg/ha average; 1.5–2.5 t/ha well-managed — a large gap driven by pest, weed and nutrition management</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">All identical</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">50 t/ha average</button>
+<div class="q-exp" id="exp1_3"><strong>Why:</strong> The yield gap between average and possible is the course's whole subject. Management decisions, not genetics, separate 700 kg farmers from 2 t farmers.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Cotton season length is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_4')">150–200 days — a long-season commitment matched to the main rains</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">30 days</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">500 days</button>
+<div class="q-exp" id="exp1_4"><strong>Why:</strong> A long commitment: planted with the first rains, harvested in the dry season, with every pest and weather event in between to manage.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Cotton requires soils that are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_5')">Deep, well-drained loams or clays with good drainage — waterlogging is fatal</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Waterlogged permanently</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Sandy deserts</button>
+<div class="q-exp" id="exp1_5"><strong>Why:</strong> Cotton's deep roots mine moisture — but only in well-aerated soil. Compaction and waterlogging are yield killers and disease accelerators.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Cotton rainfall needs are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_6')">500–1,200 mm well-distributed; drought at flowering or boll fill collapses yield; too much rain at harvest rots bolls</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">Any amount anywhere</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">Only 50 mm total</button>
+<div class="q-exp" id="exp1_6"><strong>Why:</strong> Cotton is drought-tolerant but not drought-proof. The two critical water windows — flowering and boll fill — are non-negotiable.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. The outgrower model provides:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_7')">Seed, input credit, buying price certainty — and discipline: variety, planting date and spray programme are often prescribed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">Nothing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">Only debt</button>
+<div class="q-exp" id="exp1_7"><strong>Why:</strong> The package deal works both ways: certainty in exchange for compliance. Reading the rules before planting prevents credit loss and contract breach.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Gin price (price of seed cotton at the ginnery) is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_8')">The benchmark the farmer sells to; no farm processing needed — lint extraction is the ginner's work</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">The farmer's job to do</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Never measured</button>
+<div class="q-exp" id="exp1_8"><strong>Why:</strong> Simplicity is cotton's selling point: deliver seed cotton, receive payment. The ginner does the rest. Farmers influence price through quality.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Cold nights below 15 °C affect cotton by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_9')">Slowing growth and delaying maturity; frost kills the plant</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">Accelerating yield</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">No effect</button>
+<div class="q-exp" id="exp1_9"><strong>Why:</strong> Cotton is a warm-season crop. Cold nights are a calendar constraint — altitude above ~1,400 m is often too cold, restricting production to the lowland dryland belt.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Late planting of cotton risks:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_10')">Late harvest coinciding with rains (boll rot) and reduced pest management time</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Earlier harvest</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Nothing</button>
+<div class="q-exp" id="exp1_10"><strong>Why:</strong> The planting calendar is the harvest calendar: late planted = late boll opening = wet-season boll rot. Timing is the first discipline.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn1" onclick="markComplete(1)">Mark Month 1 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="2">
+    <div class="module-header" onclick="toggleModule(2)">
+      <div class="module-num">2</div>
+      <div class="module-title">Month 2: Seed, Spacing, Fertility &amp; the Early Stand</div>
+      <div class="module-status" id="status2">Locked</div>
+    </div>
+    <div class="module-body" id="body2">
+
+      <h3>Lesson 2.1 — Seed and planting</h3>
+      <p>Cotton seed is large (relatively) and delicate: <strong>use only certified, delinted, fungicide-treated seed</strong> from your scheme or agro-dealer — untreated seed germinates poorly and carries soil-borne diseases. Planting rules:</p>
+      <ul>
+        <li><strong>Timing:</strong> first effective rains (enough soil moisture to 30 cm); in most zones, a 1–2 week window exists — don't rush (cold soil = poor germination) and don't delay (late = late harvest).</li>
+        <li><strong>Spacing:</strong> rows <strong>90–100 cm</strong>, stations <strong>25–30 cm</strong>, 2 seeds/station, thinned to 1; population ~33,000–45,000/ha.</li>
+        <li><strong>Depth:</strong> 2–3 cm — cotton emerges from its food reserves, so depth is critical.</li>
+        <li><strong>Furrow planting:</strong> many schemes require furrows to collect rainwater at the row base.</li>
+      </ul>
+      <h3>Lesson 2.2 — Fertility</h3>
+      <table>
+        <tr><th>Input</th><th>Role</th><th>Notes</th></tr>
+        <tr><td><strong>P (phosphorus) at planting</strong></td><td>Root establishment and early boll formation</td><td>Place SSP or compound in the furrow at planting; P is immobile, so placement near roots matters</td></tr>
+        <tr><td><strong>N (nitrogen)</strong></td><td>Vegetative growth and boll fill; too early = rank growth, shade and insects; too late = boll abscission</td><td>Split: half at 3–4 weeks (thinning time), half at flower bud appearance (~8–10 weeks)</td></tr>
+        <tr><td>Manure/compost</td><td>Organic matter; moderates heavy/light soils</td><td>Work in before planting; don't apply late (pushes rank vegetative growth)</td></tr>
+        <tr><td>K and micronutrients</td><td>Boll set and fibre quality on depleted soils</td><td>Where schemes recommend it; K especially on light sandy soils</td></tr>
+      </table>
+      <h3>Lesson 2.3 — Early stand and thinning</h3>
+      <p>Cotton emerges in 5–10 days in warm moist soil. <strong>Thin to one plant per station at 2–3 weeks</strong> — crowded plants produce vegetative competition and small bolls. Gap-fill within 2 weeks using a transplant or overseed from the same batch. Thinned seedlings can be transplanted on a rainy day (cotton takes transplant reasonably well at seedling stage). <strong>Scout for cutworms at emergence</strong> — circular cut seedlings at ground level are the signature; evening hand collection works on small plots.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Certified treated seed, furrow planting and the thinning discipline &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 2:</strong> Source certified, delinted, fungicide-treated seed for your scheme's prescribed variety. Prepare land with furrows at 90–100 cm row spacing. Plant 2 seeds/station at 25–30 cm, 2–3 cm deep, into moist soil at first effective rains. Place P fertiliser in the furrow at planting. At 2–3 weeks, thin to one plant per station (gap-fill within 2 more weeks), and apply first N dose. Record planting date, emergence rate, stand count.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 2 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Cotton seed should be:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_1')">Certified, delinted and fungicide-treated — untreated seed germinates poorly and carries soil-borne diseases</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">Any saved seed from last year always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">Wet and stored in water</button>
+<div class="q-exp" id="exp2_1"><strong>Why:</strong> The seed is the first quality decision: treated certified seed is the ginner's standard because it delivers the stand the contract is built on.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Cotton planting spacing is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_2')">Rows 90–100 cm, stations 25–30 cm, 2 seeds thinned to 1 — ~33,000–45,000 plants/ha</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">1 cm between plants</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">Random scatter</button>
+<div class="q-exp" id="exp2_2"><strong>Why:</strong> Population is architecture: enough plants for canopy, not so many they compete for bolls. The spacing is the ginner's standard and has been refined over decades.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Planting depth for cotton is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_3')">2–3 cm — cotton emerges on its food reserves; too shallow dries, too deep fails</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">30 cm</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">0 cm (surface)</button>
+<div class="q-exp" id="exp2_3"><strong>Why:</strong> Seed-reserve emergence is depth-sensitive. In cool or dry soil, 3 cm is safer; in warm moist, 2 cm gives speed.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Thinning to one plant per station happens:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_4')">At 2–3 weeks — crowded plants produce vegetative competition and small bolls</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">Never thin cotton</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">At harvest</button>
+<div class="q-exp" id="exp2_4"><strong>Why:</strong> Thin early, gap-fill fast. Crowded stands make shade and stems, not bolls.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Phosphorus placement in cotton:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_5')">In the furrow at planting — P is immobile in soil, so root contact at planting is essential</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">Broadcast weeks after planting</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">Not needed</button>
+<div class="q-exp" id="exp2_5"><strong>Why:</strong> P immobility in soil is the whole reason for furrow placement: it stays where you put it, and roots must come to it. Broadcasting P on cotton wastes most of it.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Nitrogen timing in cotton is split:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_6')">Half at thinning (3–4 weeks), half at flower bud appearance (~8–10 weeks) — early-only N creates rank shade and pest-attractive crops</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">All at planting in one shot</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">All at harvest only</button>
+<div class="q-exp" id="exp2_6"><strong>Why:</strong> Early N builds stems and leaves; flower-bud N fills bolls. The split catches both without the rank-growth pest trap.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Cutworm damage at emergence looks like:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_7')">Seedlings cut at ground level in a circle — evening hand collection works on small plots</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Yellowing of old leaves</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">No damage is visible</button>
+<div class="q-exp" id="exp2_7"><strong>Why:</strong> Cutworm hides by day at the base of its crime scene. An evening torch-and-collect patrol is the cheapest control.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Gap-filling after emergence is done:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_8')">Within 2 weeks using transplants or overseed from the same batch — cotton transplants reasonably well at seedling stage</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">Never</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">After 3 months</button>
+<div class="q-exp" id="exp2_8"><strong>Why:</strong> A gappy stand at week three is a gappy harvest in month seven. Two weeks is the window; after that, transplant shock losses exceed the benefit.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Furrow planting collects:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_9')">Rainwater at the row base — concentrating moisture for early growth in dryland systems</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Nothing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Excess water that damages</button>
+<div class="q-exp" id="exp2_9"><strong>Why:</strong> Furrow-collecting rainwater is the dryland efficiency discipline: one storm gives ten storms' worth of root-zone benefit.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Planting timing (first effective rains) balances:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_10')">Avoiding cold soil (too early = poor germination) and avoiding late planting (late = late harvest = boll rot in rains)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">Nothing; plant any time</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">Only rainfall total</button>
+<div class="q-exp" id="exp2_10"><strong>Why:</strong> The narrow window is real: too early and germination fails; too late and the crop finishes in the rains. Scheme recommendations exist for your zone.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn2" onclick="markComplete(2)">Mark Month 2 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="3">
+    <div class="module-header" onclick="toggleModule(3)">
+      <div class="module-num">3</div>
+      <div class="module-title">Month 3: Pest Scouting, Thresholds &amp; the Spray Decision</div>
+      <div class="module-status" id="status3">Locked</div>
+    </div>
+    <div class="module-body" id="body3">
+
+      <h3>Lesson 3.1 — Cotton's pest list: the most demanding crop in this college</h3>
+      <p>Cotton attracts more pest species than any other crop in this curriculum. Scouting is not optional — it is the heart of cotton farming. The critical mental model: <strong>economic thresholds exist for every pest; chemical treatment is justified only when pest numbers cross the threshold</strong>. Below-threshold treatment wastes money, kills natural enemies, and breeds resistance. Above-threshold treatment saves bolls and income. The difference between a 700 kg and a 2 t farmer is often entirely scouting discipline.</p>
+      <h3>Lesson 3.2 — The main pests</h3>
+      <table>
+        <tr><th>Pest</th><th>Damage &amp; timing</th><th>Threshold / Response</th></tr>
+        <tr><td><strong>American bollworm (Helicoverpa)</strong></td><td>Larva bores into bolls; most damaging late in season; boll entry holes with frass</td><td>1–2 larvae per 10 plants (varies by scheme); spray when threshold met, Bt-based or approved product</td></tr>
+        <tr><td><strong>Pink bollworm</strong></td><td>Internal boll feeding; characteristic rosette flower or crossed lint inside boll</td><td>Destroy crop residues (overwinters in stalks); pheromone traps for detection; spray if threshold</td></tr>
+        <tr><td><strong>Spiny bollworm</strong></td><td>Bores into squares (buds) and bolls; early-season damage</td><td>Threshold-based spray; resistant/tolerant varieties where released</td></tr>
+        <tr><td><strong>Cotton aphids</strong></td><td>Honeydew on foliage and lint (staining); vector of viruses</td><td>Natural enemies usually control; treat only heavy infestations; insecticide resistance common</td></tr>
+        <tr><td><strong>Whitefly</strong></td><td>Honeydew + sooty mould staining lint; virus vector</td><td>Monitor; treat heavy infestations; virus spread prevented only by early planting and resistant varieties</td></tr>
+        <tr><td><strong>Jassids (leafhopper)</strong></td><td>Leaf cupping and drying; dense hair (pubescence) on leaf varieties resist them</td><td>Variety resistance is primary; threshold-based spray if varieties susceptible</td></tr>
+        <tr><td><strong>Thrips</strong></td><td>Silver-scarred leaves at seedling stage; usually minor</td><td>Healthy stands outgrow; treat only severe early attacks</td></tr>
+      </table>
+      <h3>Lesson 3.3 — Scouting: the core skill</h3>
+      <p><strong>Weekly scouting from thinning to boll opening:</strong> walk a W-pattern through the field, inspect 10–20 plants per stop, count larvae, adults, eggs, boll entry holes, and estimate percent damage. Record on a simple sheet. Your scheme's threshold table tells you when to spray. <strong>No spray before the threshold; no delay after it.</strong> Scouting is the cheapest pest control in the budget.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> The W-pattern scout and the threshold table — why scouting is the cheapest pest control &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 3:</strong> Obtain your scheme's threshold table (larvae per 10 plants for each pest). Design a scouting record sheet. From thinning onward, scout weekly: walk a W-pattern, inspect 10–20 plants per stop, count pests at each stop, record on your sheet, compare to threshold. Make spray or no-spray decisions and record them with reasoning. Do this for at least 6 consecutive weeks. Price three approved insecticides locally.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 3 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Cotton pest management's central discipline is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_1')">Economic thresholds — spray ONLY when pest numbers cross the threshold, not on a fixed schedule</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Spray every week</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Never spray</button>
+<div class="q-exp" id="exp3_1"><strong>Why:</strong> Below-threshold sprays waste money, kill natural enemies, and build resistance. Above-threshold sprays save bolls. The threshold is the entire pest-management calculus.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. American bollworm damages cotton by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_2')">Larvae boring into bolls — boll entry holes with frass visible inside; threshold 1–2 larvae per 10 plants (varies by scheme)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Eating leaves only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Never attacks cotton</button>
+<div class="q-exp" id="exp3_2"><strong>Why:</strong> The boll is where money is made; a borer inside a boll is a boll that will never open into saleable fibre.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Pink bollworm is recognised by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_3')">Crossed lint inside the boll or rosette flowers; overwinters in old stalks — crop residue destruction is the primary control</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">Green pustules</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">Nothing visible</button>
+<div class="q-exp" id="exp3_3"><strong>Why:</strong> The overwintering habitat is the control lever: destroy stalks, remove the pest's seasonal housing. The field itself is the most effective pesticide.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Cotton aphids are usually controlled by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_4')">Natural enemies (parasitoids, ladybirds) — treat only heavy infestations; insecticide resistance is common in aphids</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Weekly spraying</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Nothing needed ever</button>
+<div class="q-exp" id="exp3_4"><strong>Why:</strong> Aphid natural enemies are among the most effective in agriculture. Killing them with prophylactic sprays is often why aphid outbreaks follow pesticide use.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Jassid (leafhopper) resistance is provided by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_5')">Variety choice — dense leaf-hair (pubescence) on some released varieties makes them jassid-resistant; spray only if susceptible varieties are heavily attacked</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Chemistry only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Magic only</button>
+<div class="q-exp" id="exp3_5"><strong>Why:</strong> The variety is the first pesticide. Released jassid-resistant varieties save sprays and money on fields where jassids are endemic.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Whitefly and aphid staining on lint is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_6')">Quality loss (honeydew + sooty mould) that reduces gin price — heavy infestations warrant treatment; virus spread is prevented only by early planting</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Invisible to buyers</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Cosmetic only</button>
+<div class="q-exp" id="exp3_6"><strong>Why:</strong> The ginner pays for quality; stained lint discounts compound with each honeydew-coated boll. Prevention (early planting, resistance) beats cure.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Weekly scouting follows a:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_7')">W-pattern walk through the field, inspecting 10–20 plants per stop, counting larvae/adults/eggs/boll holes — then comparing to threshold table</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Single plant check</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Guessing from road</button>
+<div class="q-exp" id="exp3_7"><strong>Why:</strong> The W-pattern samples the whole field fairly: edges can differ from centres. One week of missed scouting equals one week's unchecked build-up.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. The difference between 700 kg/ha and 2 t/ha cotton farmers is often:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_8')">Scouting discipline and threshold-based spray decisions — not genetics or the weather</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">Soil chemistry alone</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">Luck</button>
+<div class="q-exp" id="exp3_8"><strong>Why:</strong> The management gap is real and documentable: scouted, threshold-managed plots consistently outperform calendarised or neglected ones in every African trial.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Bollworm spray products used in African cotton are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_9')">Bt-based (biological) or approved synthetic insecticides, applied when threshold crossed — follow scheme approval list</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Any household chemical</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Water only</button>
+<div class="q-exp" id="exp3_9"><strong>Why:</strong> Scheme-approved products have been tested for compatibility with resistance management. Unapproved products may break resistance strategy or your contract.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Scouting is the cheapest pest control because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_10')">It lets natural enemies work below threshold (free pest control) while catching real outbreaks before expensive boll loss — no spray costs below the line</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">It's free in time</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">It never saves money</button>
+<div class="q-exp" id="exp3_10"><strong>Why:</strong> Every below-threshold spray has two costs: the spray itself and the natural-enemy kill that makes the next outbreak worse. Scouting avoids both.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn3" onclick="markComplete(3)">Mark Month 3 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="4">
+    <div class="module-header" onclick="toggleModule(4)">
+      <div class="module-num">4</div>
+      <div class="module-title">Month 4: Weeds, Diseases &amp; Crop Health</div>
+      <div class="module-status" id="status4">Locked</div>
+    </div>
+    <div class="module-body" id="body4">
+
+      <h3>Lesson 4.1 — Weeds: the early war</h3>
+      <p>Cotton's long season and slow early growth make it highly weed-sensitive in the first 6 weeks. <strong>Two or three weedings, starting at thinning (2–3 weeks), are the standard programme:</strong></p>
+      <ol>
+        <li><strong>First weeding at thinning (2–3 weeks):</strong> hand-hoe or inter-row cultivation; remove all weeds before they set seed or compete seriously; thin to one plant per station.</li>
+        <li><strong>Second weeding at 6–8 weeks:</strong> at first flower bud appearance; critical — late weeds at this stage directly reduce boll set by competing for light and nutrients.</li>
+        <li><strong>Third weeding / last cultivation at 10–12 weeks:</strong> final clean-up; also a chance to ridge up soil at the base of plants for support and water concentration.</li>
+      </ol>
+      <h3>Lesson 4.2 — Cotton diseases</h3>
+      <ul>
+        <li><strong>Boll rot (Colletotrichum, Alternaria, bacterial):</strong> Open bolls infected by rain splash or soil contact; late planting, poor drainage and dense canopy are risk factors. Grow on ridges, drain fields, harvest promptly when bolls open.</li>
+        <li><strong>Cotton leaf curl virus (CLCuV):</strong> transmitted by whitefly; cupped, curled, small leaves; stunted plant; no cure. Resistant varieties where available; early planting to miss peak whitefly; control whitefly vigorously where endemic.</li>
+        <li><strong>Angular leaf spot (Xanthomonas):</strong> angular water-soaked lesions, wet season; clean seed, rotation, resistant varieties.</li>
+        <li><strong>Root rot (Pythium, Phytophthora) at emergence:</strong> waterlogged soils kill seedlings; improve drainage, plant on ridges, use treated seed.</li>
+      </ul>
+      <h3>Lesson 4.3 — Crop nutrition through the season</h3>
+      <p>Cotton is a heavy feeder: a 1 t/ha yield removes ~<strong>40–60 kg N, 20–30 kg P₂O₅, 60–100 kg K₂O</strong> from the soil. Where the crop is grown continuously on the same field, potassium depletion and organic matter loss happen quietly and compound. <strong>Return cotton stalks (chopped) to the field after harvest to partially replace K and organic matter; add manure on alternate seasons; and rotate with legumes (cowpea, groundnut) to rebuild N and break pest cycles.</strong></p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Three weedings on the right calendar — and boll rot, virus and root-rot prevention &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 4:</strong> Complete all three weedings on the prescribed calendar (2–3 weeks, 6–8 weeks, 10–12 weeks), recording dates and hours. Third weeding: ridge soil at plant bases. Inspect field at each weeding for disease symptoms: boll rot, angular leaf spot, any viral symptoms (curled cupped leaves). Write your stalk-destruction plan with the target date (from scheme rules or local custom).</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 4 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. The first cotton weeding is at:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_1')">Thinning time (2–3 weeks) — weeds removed before they set seed or compete hard; stations thinned simultaneously</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">After flowering</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Never needed</button>
+<div class="q-exp" id="exp4_1"><strong>Why:</strong> Early competition is exponentially expensive in cotton: each week a weed occupies a row is a week of boll formation pre-empted.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Second weeding at first flower bud appearance (~6–8 weeks) is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_2')">Critical — late weeds at this stage directly reduce boll set by competing for light and nutrients</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">Optional always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">After harvest</button>
+<div class="q-exp" id="exp4_2"><strong>Why:</strong> Boll set is happening while flower buds are forming. Any competition — weed or otherwise — at this exact moment is yield removed before it is formed.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. The third weeding at 10–12 weeks also:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_3')">Ridges soil at the base of plants for support and water concentration</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Removes the crop</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Harms the plant</button>
+<div class="q-exp" id="exp4_3"><strong>Why:</strong> The ridge serves two purposes: stem support against wind lodge and focused root-zone water. One cultivation, two functions.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Boll rot risk factors are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_4')">Late planting, poor drainage, and dense canopy — growing on ridges, draining fields and harvesting promptly are the controls</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">No risk factors</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">Only genetics</button>
+<div class="q-exp" id="exp4_4"><strong>Why:</strong> Boll rot is a management disease: every risk factor is something the farmer decided before the boll opened. Ridges, drainage and timely picking are the remedies.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Cotton leaf curl virus (CLCuV) is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_5')">Transmitted by whitefly; no cure — resistant varieties, early planting, and whitefly control are the only tools</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Soil-borne</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Curable with fungicide</button>
+<div class="q-exp" id="exp4_5"><strong>Why:</strong> The virus is irreversible once in the plant. Prevention (whitefly control + resistance + early planting) is the only approach.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Angular leaf spot (Xanthomonas) in cotton is managed by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_6')">Clean seed, rotation, and resistant varieties — a wet-season bacterial disease</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Nothing can be done</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Irrigation reduction only</button>
+<div class="q-exp" id="exp4_6"><strong>Why:</strong> Bacterial diseases carry the same management philosophy as fungal: seed hygiene and rotation first, genetics second, nowhere for chemistry to reach.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Root rot at emergence is caused by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_7')">Waterlogged soils and poor drainage — plant on ridges, improve drainage, use treated seed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Too much sun</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Cotton age</button>
+<div class="q-exp" id="exp4_7"><strong>Why:</strong> Young roots in anaerobic soil die fast. The ridge is both drainage solution and root-zone aeration tool.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Cotton removes from the soil per tonne of yield:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_8')">~40–60 kg N, 20–30 kg P₂O₅, 60–100 kg K₂O — one of the heaviest cereal/crop extractors</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">Nothing at all</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">Only water</button>
+<div class="q-exp" id="exp4_8"><strong>Why:</strong> Continuous cotton on the same field depletes K silently and fast. The rotation, stalk return and manure plan is the fertility insurance.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. The best K and organic-matter return strategy after harvest is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_9')">Chop and return cotton stalks to the field (partial K replacement + organic matter); add manure every alternate season</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Burn everything</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Remove and sell all stalks</button>
+<div class="q-exp" id="exp4_9"><strong>Why:</strong> The stalk is the K that never left the field — returning it closes part of the loop. Burning it exports K as ash and loses the organic matter.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Legume rotation with cotton benefits:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_10')">N rebuilding (cowpea/groundnut fix nitrogen), pest cycle breaks (cotton pests don't attack legumes), and soil structure improvement</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Only aesthetics</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Nothing useful</button>
+<div class="q-exp" id="exp4_10"><strong>Why:</strong> The maize–soybean logic applied to cotton: legumes earn before they return, and they return more than they cost in N and pest suppression.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn4" onclick="markComplete(4)">Mark Month 4 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="5">
+    <div class="module-header" onclick="toggleModule(5)">
+      <div class="module-num">5</div>
+      <div class="module-title">Month 5: Boll Quality, Picking &amp; Post-Picking Handling</div>
+      <div class="module-status" id="status5">Locked</div>
+    </div>
+    <div class="module-body" id="body5">
+
+      <h3>Lesson 5.1 — Boll development and quality</h3>
+      <p>Cotton lint quality is determined in the field, not the gin. <strong>Three quality enemies:</strong></p>
+      <ul>
+        <li><strong>Staining</strong> from insect honeydew (aphid, whitefly), rain splash on open bolls, and early picking of unripe bolls — all downgrade lint colour.</li>
+        <li><strong>Short fibre</strong> from water stress at boll fill, early-season pests, and poor variety choice.</li>
+        <li><strong>High trash content</strong> from picking leaves, twigs and dirt into the bag — a direct gin-price cut.</li>
+      </ul>
+      <h3>Lesson 5.2 — Picking: the discipline</h3>
+      <p>Pick only <strong>fully open, dry, white-fluffy bolls</strong>. Never pick:</p>
+      <ul>
+        <li>Green or half-open bolls (immature, staining)</li>
+        <li>Wet or dew-covered bolls (mould in the bag)</li>
+        <li>Bolls with leaves, twigs or sand mixed in (trash cut at gin)</li>
+      </ul>
+      <p>Multiple picking rounds: first picking at <strong>50–60% boll opening</strong>, second and third at 2–3 week intervals. <strong>Never mix first and later pickings</strong> (later pickings are more weathered and lower quality); sell separately where the scheme permits. Pick into clean cotton bags or baskets — never off the ground, never into vegetable sacks or fertiliser bags (chemical staining).</p>
+      <h3>Lesson 5.3 — Post-picking handling</h3>
+      <ul>
+        <li><strong>Sun-dry picked cotton same day</strong> on clean tarpaulins if any moisture — never store wet seed cotton in closed bags (heat and fermentation destroy fibre quality within 24 hours).</li>
+        <li>Store in clean open-weave cotton bags (not woven plastic) in a dry, ventilated space — temperature and moisture are the enemies.</li>
+        <li><strong>Deliver to collection point promptly</strong> — same day or next day where possible; the gin price is based on quality at delivery.</li>
+      </ul>
+      <h3>Lesson 5.4 — Stalk destruction after harvest</h3>
+      <p><strong>Destroy cotton stalks promptly after final picking</strong> — chop, pull and either return (partial K/organic matter) or burn (pink bollworm prevention where schemes require). <strong>Late-standing stalks are the overwintering hotel for pink bollworm and other pests</strong>, seeding next season's problem. Many schemes prescribe a mandatory destruction date with penalties for non-compliance — know your scheme rule.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> First picking at 50–60% boll opening — and the 24-hour mould rule for wet cotton &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 5:</strong> At 50–60% boll opening, conduct first picking: pick only fully open, dry, white-fluffy bolls into clean cotton bags; record the date and weight. Dry any damp cotton on tarpaulins same day. Store in open-weave bags in dry, ventilated space. Keep first and subsequent pickings separate. Plan second pick at 2–3 weeks. Record pick date, weight, any quality issues observed (staining, trash), and delivery date and price received.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 5 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. The three cotton lint quality enemies are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_1')">Staining (insects, rain, early picking), short fibre (water stress, pests), and high trash content (leaves/dirt in bag)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Nothing degrades lint</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Colour only</button>
+<div class="q-exp" id="exp5_1"><strong>Why:</strong> Lint quality is field-made: every quality enemy is something the farmer controls. The gin's grader is impartial — it pays for what arrives.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Only fully open, dry, white-fluffy bolls should be picked because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_2')">Green/half-open = immature staining; wet = mould in bag; any leaves/twigs = trash deduction at gin</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Any boll is fine</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Green bolls are premium</button>
+<div class="q-exp" id="exp5_2"><strong>Why:</strong> Each exception costs: the immature boll stains the bag, the wet boll moulds it, the twigs are weighed as fibre and then deducted. One bad rule costs twice.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. First picking should be at:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_3')">50–60% boll opening — then second and third picks at 2–3 week intervals for fully mature cotton</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">100% opening only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">30% opening</button>
+<div class="q-exp" id="exp5_3"><strong>Why:</strong> Waiting for 100% wastes the first-open bolls to weather, insects and falling. Three rounds capture the whole crop at peak quality.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. First and later pickings should:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_4')">Never be mixed — later pickings are more weathered and lower quality; sell separately where scheme permits</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">Always be mixed for easier handling</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">Both be sold wet</button>
+<div class="q-exp" id="exp5_4"><strong>Why:</strong> The ginner pays on grade; mixing grades averages down the whole bag. Separate storage and separate delivery preserves the premium first picking paid for.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Wet or damp seed cotton stored in closed bags:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_5')">Heats and ferments within 24 hours, destroying fibre quality irreversibly</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">Improves with time</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">Stays dry somehow</button>
+<div class="q-exp" id="exp5_5"><strong>Why:</strong> Fermentation is cotton's quality emergency: 24 hours of closed-bag heat turns white fibre to yellowed, weakened trash. Sun-drying same day is the only response.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Cotton must be stored in:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_6')">Clean open-weave cotton bags in dry ventilated space — not woven plastic (moisture trap) or chemical bags (staining)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">Any bag found near the field</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">Sealed plastic always</button>
+<div class="q-exp" id="exp5_6"><strong>Why:</strong> The bag is part of the product: chemical staining from fertiliser bags is a quality fault the gin deducts. The bag choice is a price choice.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Stalk destruction after harvest is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_7')">Mandatory (often scheme-prescribed with a deadline) to destroy pink bollworm overwintering habitat — chop and return or burn</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Optional and unimportant</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Done at convenience</button>
+<div class="q-exp" id="exp5_7"><strong>Why:</strong> Leaving stalks is leaving pest housing for next season. The scheme deadline is not bureaucracy; it is coordinated pest management.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Delivering cotton to the collection point:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_8')">Same day or next day — gin price is based on quality at delivery; delay after picking loses quality</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Any time in the season</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">After 6 months</button>
+<div class="q-exp" id="exp5_8"><strong>Why:</strong> The gin grades what arrives. A week in a wet bag is a quality-grade drop that happens after the work is done but before the payment is fixed.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Picking into fertiliser or vegetable sacks causes:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_9')">Chemical staining of lint — a quality fault deducted at the gin</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Nothing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Extra cleanliness</button>
+<div class="q-exp" id="exp5_9"><strong>Why:</strong> Chemical residues transfer to fibre. Dedicated clean cotton bags are the harvest standard; the gin's UV-grade reader is looking for exactly this contamination.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Rain splash on open bolls causes:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_10')">Lint staining — a quality deduction; harvesting promptly once bolls open avoids this</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Nothing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Extra whiteness</button>
+<div class="q-exp" id="exp5_10"><strong>Why:</strong> Open bolls are vulnerable. Every round of picking is also a protection round: open cotton left on the plant is open to the weather.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn5" onclick="markComplete(5)">Mark Month 5 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="6">
+    <div class="module-header" onclick="toggleModule(6)">
+      <div class="module-num">6</div>
+      <div class="module-title">Month 6: Gin Price, Budget &amp; the Scheme-Credit Discipline</div>
+      <div class="module-status" id="status6">Locked</div>
+    </div>
+    <div class="module-body" id="body6">
+
+      <h3>Lesson 6.1 — Cotton income: the gin price and quality premium</h3>
+      <p>The gin price (seed cotton price) is set by the ginner, scheme or government price board. In many countries, it is announced before planting season — use it to assess the budget's viability before committing labour and inputs. Quality premiums (for clean, unstained, full-boll cotton) exist in some schemes and are worth knowing. <strong>Where no premium is paid for quality, it still pays you in volume: clean cotton picks faster, stores better and wastes less at delivery.</strong></p>
+      <h3>Lesson 6.2 — An honest one-hectare cotton budget</h3>
+      <table>
+        <tr><th>Item</th><th>Assumption</th><th>Amount</th></tr>
+        <tr><td>Yield</td><td>Managed plot: 3 weedings, weekly scouting, threshold spraying, 3 pickings</td><td>~1.5 t seed cotton</td></tr>
+        <tr><td>Gross</td><td>$0.50–0.75/kg (gin price varies by country)</td><td>~$750–1,125</td></tr>
+        <tr><td>Seed (certified, treated, ~10 kg)</td><td></td><td>$15–40</td></tr>
+        <tr><td>Fertiliser (P basal + split N)</td><td>SSP/compound at planting + urea ×2</td><td>$80–180</td></tr>
+        <tr><td>Pesticides (scouted, threshold-based ~3–5 applications)</td><td></td><td>$60–150</td></tr>
+        <tr><td>Weeding labour ×3</td><td></td><td>$90–180</td></tr>
+        <tr><td>Picking labour ×3</td><td>Often family or hired; the biggest single labour cost</td><td>$120–300</td></tr>
+        <tr><td>Bags, storage, transport to collection point</td><td></td><td>$40–100</td></tr>
+        <tr><td>Contingency (10%)</td><td></td><td>$50–100</td></tr>
+        <tr><td><strong>Indicative margin</strong></td><td>If scheme credit repaid, net income arrives post-sale</td><td><strong>~$300–500/ha — reliable cash income where managed well</strong></td></tr>
+      </table>
+      <h3>Lesson 6.3 — Scheme credit and the debt spiral to avoid</h3>
+      <p>Most African cotton schemes supply inputs on credit deducted at delivery. This is convenient but creates a risk: <strong>crop failure or poor yield means debt carried into next season</strong>. Avoid the spiral: grow only what you can manage well; don't over-commit on area when family labour is uncertain; insist on records of input credit received and deducted (your receipt is your audit); and keep 10–20% of your cotton separate as the emergency float for next season's cash needs.</p>
+      <h3>Lesson 6.4 — Records and the growth path</h3>
+      <p>Per plot per season: variety and scheme; planting date; stand count at thinning; weeding dates; scout records (week, pest, count, threshold decision, spray or not); fertiliser applications with dates; picking round dates and weights per round; delivery date and gin price received; credit deducted; net income. <strong>Report card: total yield (kg/ha), scouting rate (weeks scouted/weeks growing), and net income after debt.</strong> Growth path: year one — one hectare managed to scheme standard with scouting discipline; year two — potentially expand area OR invest in own hand-pump or irrigation for a food crop alongside cotton; year three — seed grower for the scheme (clean high-yield seed at premium) or group aggregation for a better gin price.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Pre-season price, three-pick budget, and keeping your receipt from the scheme &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 6:</strong> Build the one-hectare budget using the announced gin price, your local input costs, and realistic labour estimates for three weedings and three picking rounds. Subtract any scheme input credit to estimate your net cash at delivery. Role-play the record-keeping: receipt for seed, receipts for inputs, tally of delivery weight and deductions. Write your year-one/year-two/year-three growth path in cotton.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 6 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. The gin price (seed cotton price) is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_1')">Set by the ginner, scheme or price board — often announced before the season to allow viability assessment</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">Unknown until after planting</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">Constant and never changes</button>
+<div class="q-exp" id="exp6_1"><strong>Why:</strong> Pre-season announcement is the contract farmer's planning input. Running the budget before committing inputs is the discipline of professional farming.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Quality premiums for cotton where they exist pay for:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_2')">Clean, unstained, full-boll cotton — and even where no premium exists, quality picks faster and wastes less</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Nothing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Lower total income</button>
+<div class="q-exp" id="exp6_2"><strong>Why:</strong> Clean cotton is its own reward: faster picking rates, lower trash deductions, and the premium where schemes offer it. Quality discipline always pays.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Picking labour across three rounds is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_3')">The biggest single labour cost in the budget — plan family and hired labour together well in advance</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Minimal</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Not needed</button>
+<div class="q-exp" id="exp6_3"><strong>Why:</strong> Cotton's labour peak is harvest. Under-estimating it means open bolls weathering unpicked for weeks — the worst possible quality decision.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. The scheme-credit debt spiral is avoided by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_4')">Growing only what you can manage well; keeping receipt records; not over-committing area to uncertain family labour</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Taking maximum credit always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Ignoring scheme rules</button>
+<div class="q-exp" id="exp6_4"><strong>Why:</strong> Credit is leverage: on a well-managed plot it amplifies income; on a failed or neglected crop it amplifies debt. Scale is a management decision.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Input credit records (receipts) are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_5')">Your audit — insist on them for every input received and every deduction at delivery</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">Not needed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">Unnecessary paperwork</button>
+<div class="q-exp" id="exp6_5"><strong>Why:</strong> Schemes occasionally err; farmers without receipts cannot contest errors. A paper receipt is worth its weight in the crop it protects.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. The seed-grower niche in year three offers:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_6')">A premium for producing clean, high-yield, correctly harvested seed for the ginner's next season — high-margin, small-volume</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">The same price as commodity cotton</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">Lower price always</button>
+<div class="q-exp" id="exp6_6"><strong>Why:</strong> Seed growers who demonstrably deliver yield and quality are the scheme's most valued farmers — and most schemes pay a premium for seed cotton from trusted producers.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. The report card for cotton is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_7')">Total yield (kg/ha), scouting rate (weeks scouted out of total), and net income after scheme debt</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Rainfall and luck</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Neighbour opinions</button>
+<div class="q-exp" id="exp6_7"><strong>Why:</strong> Yield shows the agronomy; scouting rate shows the management quality; net income shows the business result. One weak number tells you where the farm broke down.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Alongside cotton in year two, a food crop with:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_8')">A hand-pump or irrigation can diversify income — water for a vegetable patch or maize beside cotton is common risk management</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Is impossible</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Reduces cotton yield always</button>
+<div class="q-exp" id="exp6_8"><strong>Why:</strong> Cotton is the cash; food security alongside it is the safety net. Many successful cotton farmers run a small irrigated food-crop patch with the same water infrastructure.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Group aggregation for cotton earns:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_9')">A better collective gin price — groups with consistent quality and volume negotiate from strength</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Nothing extra</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Lower prices</button>
+<div class="q-exp" id="exp6_9"><strong>Why:</strong> The volume logic again: a ginner collecting from a hundred individual farmers has leverage; collecting from a hundred-farmer group at agreed quality reduces that leverage.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Cotton stalks returned to the field (chopped) after harvest:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_10')">Partially replace K and organic matter — the nutrient loop partially closed without any cash cost</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Add nothing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Harm soil always</button>
+<div class="q-exp" id="exp6_10"><strong>Why:</strong> The stalk is the fertiliser you already paid for and can recover for free. Chopping and incorporating it is the cheapest potassium and carbon strategy available.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn6" onclick="markComplete(6)">Mark Month 6 Complete</button>
+    </div>
+  </div>
+
+  <div class="final-section">
+    <h2>&#127942; Final Project: Your Cotton Business Plan</h2>
+    <p>The final project is your complete cotton enterprise plan — scheme choice, the season from seed to gin delivery, and the credit-management discipline.</p>
+    <ol><li><strong>Scheme choice &amp; climate case:</strong> ginnery/scheme selected, gin price, prescribed variety, input package terms, climate and soil suitability, collection point distance.</li>
+<li><strong>Establishment plan:</strong> seed source and treatment status, land prep (furrows at 90–100 cm), planting date tied to first effective rains, spacing, depth, furrow P placement, thinning date and N split schedule.</li>
+<li><strong>Scouting protocol:</strong> your scouting record sheet, weekly W-pattern plan, pest list with scheme thresholds, approved products with their prices, and your spray-decision rules (spray if and only if threshold crossed).</li>
+<li><strong>Disease &amp; weed calendar:</strong> three weedings with dates, boll rot and virus prevention strategies (drainage, early planting, variety), stalk-destruction plan with committed date.</li>
+<li><strong>Picking &amp; quality plan:</strong> first-picking trigger (50–60% boll opening), three-round calendar, quality rules (open, dry, clean, no mixing of rounds), post-picking drying and storage protocol, delivery target (same or next day).</li>
+<li><strong>Budget &amp; credit discipline:</strong> full budget with gin price scenario (at forecast price), labour breakdown (picking as the biggest cost), credit deduction estimate, net income target, and receipt-keeping plan.</li>
+<li><strong>Risk page &amp; year-3 vision:</strong> three risks (crop failure/debt, pest resistance, poor gin price) with mitigations, and the growth path — one managed hectare, then possibly seed-grower niche or group aggregation.</li></ol>
+    <p><strong>Submission standard:</strong> A plan you could hand to a savings group, a bank officer, or a family investor without embarrassment. Real local prices, real named buyers, honest risks.</p>
+  </div>
+
+  <div class="budget-section">
+    <h2>&#128176; Startup Budget &mdash; 1 Hectare Cotton (Outgrower / Scheme-Managed)</h2>
+    <p>Cotton's budget is dominated by picking labour (three rounds) and pesticides (if unmanaged) — scouting-discipline reduces the latter dramatically. Scheme input credit is shown as a budget item but is deducted at delivery, so gross income is reduced before cash arrives. Keep records of every deduction.</p>
+    <table>
+      <tr><th>Item</th><th>Details</th><th>Typical cost (USD)</th></tr>
+<tr><td>Certified treated seed (~10 kg)</td><td>Scheme-prescribed variety</td><td>$15–40</td></tr>
+<tr><td>P fertiliser (SSP/compound at planting)</td><td>Placed in furrow</td><td>$40–90</td></tr>
+<tr><td>N fertiliser ×2 (urea at thinning + flower bud)</td><td>Split application</td><td>$40–90</td></tr>
+<tr><td>Pesticides (scouted, ~3–5 threshold applications)</td><td>Approved products only</td><td>$60–150</td></tr>
+<tr><td>Land prep (ridging + furrow making)</td><td></td><td>$50–100</td></tr>
+<tr><td>Weeding labour ×3</td><td>2–3 weeks, 6–8 weeks, 10–12 weeks</td><td>$90–180</td></tr>
+<tr><td>Picking labour ×3 rounds</td><td>Biggest single cash cost</td><td>$120–300</td></tr>
+<tr><td>Bags, storage, drying tarpaulins</td><td></td><td>$30–80</td></tr>
+<tr><td>Transport to collection point</td><td></td><td>$30–80</td></tr>
+<tr><td>Contingency (10%)</td><td></td><td>$50–100</td></tr>
+<tr><td><strong>Total indicative costs</strong></td><td>Before scheme credit repayment</td><td><strong>$525–1,210</strong></td></tr>
+<tr><td><strong>Net margin</strong></td><td>Revenue 1.5 t × $0.50–0.75/kg minus costs</td><td><strong>~$300–500/ha — solid cash income</strong></td></tr>
+    </table>
+    <p><em>Prices vary widely by country. Before spending anything, price every line in your own town and rebuild this table — that exercise is part of your final project.</em></p>
+  </div>
+
+  <div class="glossary-section">
+    <h2>&#128218; Glossary</h2>
+    <dl class="glossary">
+<dt>Seed cotton</dt><dd>Unginned cotton as harvested — lint fibres still attached to the seed; sold to ginneries.</dd>
+<dt>Lint</dt><dd>The white fibre separated from the seed by the ginnery — the internationally traded commodity (~38–42% of seed cotton weight).</dd>
+<dt>Ginnery</dt><dd>A processing facility that separates lint from seed, bales the lint, and crushes seed for oil and cake.</dd>
+<dt>Gin price</dt><dd>Price per kg of seed cotton paid by the ginnery at collection; set by scheme, market or government board.</dd>
+<dt>Outgrower scheme</dt><dd>A contract arrangement: ginner supplies seed, inputs (on credit) and a purchase price; farmer delivers seed cotton at harvest.</dd>
+<dt>Economic threshold</dt><dd>The pest population level at which the yield loss (if no spray) exceeds the cost of the spray — the spray trigger.</dd>
+<dt>W-pattern scouting</dt><dd>Walking a W-shape through the field, inspecting 10–20 plants per stop — a representative, low-bias sampling method.</dd>
+<dt>Boll</dt><dd>The fruit of the cotton plant; matures from green to brown-and-splitting, revealing the white lint fibre.</dd>
+<dt>Square (flower bud)</dt><dd>The pre-blossom bud stage of cotton — damaged by spiny bollworm; counts of squares vs dropped squares are a field-health metric.</dd>
+<dt>American bollworm (Helicoverpa)</dt><dd>The primary boll pest: larva bores into bolls, leaving entry hole and frass; controlled at the economic threshold.</dd>
+<dt>Pink bollworm</dt><dd>Internal boll pest; recognised by rosette flower or crossed lint; controlled primarily by stalk destruction post-harvest.</dd>
+<dt>Cotton leaf curl virus (CLCuV)</dt><dd>Whitefly-transmitted virus causing cupped, curled, small leaves and stunting; no cure; managed by early planting and whitefly control.</dd>
+<dt>Boll rot</dt><dd>Rain-splash or soil-contact fungal/bacterial infection of open bolls — prevented by ridges, drainage and prompt harvest.</dd>
+<dt>Delinted seed</dt><dd>Seed from which the short fuzzy fibres (linters) have been removed — required for uniform germination and seed-drill planting.</dd>
+<dt>Treated seed</dt><dd>Seed coated with fungicide (and sometimes insecticide) to protect against soil-borne pathogens and early insect attack.</dd>
+<dt>Stalk destruction</dt><dd>Mandatory post-harvest removal or destruction of cotton stalks to eliminate pink bollworm overwintering habitat.</dd>
+<dt>Picking rounds</dt><dd>Sequential harvests every 2–3 weeks to capture bolls as they open — typically 3 rounds per season.</dd>
+<dt>Scheme credit</dt><dd>Inputs supplied on credit by the ginner, deducted from the farm-gate payment at delivery.</dd>
+    </dl>
+  </div>
+
+  <div class="resources-section">
+    <h2>&#128279; Further Resources</h2>
+    <ul><li>Your ginnery or outgrower scheme — scheme rules, approved variety list, input credit package, threshold table and approved pesticide list.</li>
+<li>Your national extension cotton programme — pest and disease alerts, scouting training, and local support for boll quality standards.</li>
+<li>ICAC (International Cotton Advisory Committee) and CFC — global best-practice pest management and IPM resources for African smallholders.</li>
+<li>FAO Cotton Programme for Africa — crop management guides, scouting protocols and integrated pest management manuals.</li>
+<li>Rise Africa Skills companion courses: Groundnut (rotation partner), Sorghum &amp; Millet (dryland rotation cereal), Beekeeping (cotton is a minor honey-flow crop), Solar Drying (lint drying discipline shared with food crops).</li></ul>
+  </div>
+
+  <div class="cert-section">
+    <h2>&#127891; Course Completion</h2>
+    <p>Complete all 6 months and pass the quizzes to unlock your certificate.</p>
+    <a href="certificate.html?course=Cotton%20Farming" class="cert-btn" id="certBtn" disabled>Get Certificate</a>
+  </div>
+</div>
+<script>
+  const TOTAL_MODULES = 6;
+  const COURSE_KEY = 'cotton-farming';
+  let completed = JSON.parse(localStorage.getItem(COURSE_KEY + '_progress') || '[]');
+
+  function toggleModule(n) {
+    if (n > 1 && !completed.includes(n-1)) { alert('Complete Month ' + (n-1) + ' first.'); return; }
+    document.getElementById('body' + n).classList.toggle('active');
+  }
+  function answerQ(btn, isCorrect, expId) {
+    const parent = btn.parentElement;
+    const buttons = parent.querySelectorAll('.q-opt');
+    if (buttons[0].disabled) return;
+    buttons.forEach(b => { b.disabled = true; });
+    if (isCorrect) { btn.classList.add('correct'); }
+    else {
+      btn.classList.add('wrong');
+      buttons.forEach(b => { if (b.dataset.c === '1') b.classList.add('correct'); });
+    }
+    document.getElementById(expId).classList.add('show');
+    const quiz = btn.closest('.quiz-wrap');
+    quiz.dataset.answered = (parseInt(quiz.dataset.answered||'0') + 1);
+    quiz.dataset.score = (parseInt(quiz.dataset.score||'0') + (isCorrect ? 1 : 0));
+    if (parseInt(quiz.dataset.answered) >= parseInt(quiz.dataset.total)) {
+      const s = quiz.querySelector('.quiz-score');
+      s.textContent = 'Quiz result: ' + quiz.dataset.score + ' / ' + quiz.dataset.total + (parseInt(quiz.dataset.score) >= 7 ? ' — Pass. Well done!' : ' — Below 7/10. Re-read the module, then review your wrong answers.');
+    }
+  }
+  function markComplete(n) {
+    if (!completed.includes(n)) {
+      completed.push(n); completed.sort((a,b)=>a-b);
+      localStorage.setItem(COURSE_KEY + '_progress', JSON.stringify(completed));
+    }
+    updateUI();
+  }
+  function updateUI() {
+    document.getElementById('completedCount').textContent = completed.length;
+    document.getElementById('progressBar').style.width = (completed.length/TOTAL_MODULES*100) + '%';
+    for (let i=1; i<=TOTAL_MODULES; i++) {
+      const st = document.getElementById('status'+i), btn = document.getElementById('btn'+i);
+      if (completed.includes(i)) { st.textContent='Done'; st.classList.add('done'); if(btn){btn.textContent='Completed'; btn.disabled=true;} }
+      else if (i===1 || completed.includes(i-1)) { st.textContent='Start'; }
+      else { st.textContent='Locked'; }
+    }
+    if (completed.length >= TOTAL_MODULES) {
+      const c = document.getElementById('certBtn');
+      c.removeAttribute('disabled'); c.textContent = 'Get Your Certificate!';
+    }
+  }
+  updateUI();
+</script>
+</body>
+</html>

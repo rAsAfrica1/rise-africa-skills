@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Irish Potato Farming - A complete practical course from Rise Africa Skills. Learn offline, anytime.">
+<title>Irish Potato Farming | Rise Africa Skills</title>
+<style>
+  :root { --gold:#eab308; --gold-dark:#a16207; --green:#16a34a; --bg:#0f172a; --card:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --line:#334155; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:var(--bg); color:var(--text); line-height:1.65; }
+  header { background:linear-gradient(135deg,var(--gold-dark) 0%,#713f12 100%); padding:44px 20px; text-align:center; }
+  header h1 { font-size:2rem; margin-bottom:8px; }
+  header p { color:rgba(255,255,255,0.88); max-width:640px; margin:0 auto; }
+  .badge { display:inline-block; background:var(--gold); color:#1e293b; padding:4px 14px; border-radius:20px; font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-top:12px; letter-spacing:0.4px; }
+  .container { max-width:920px; margin:0 auto; padding:30px 20px; }
+  .progress-bar { background:var(--card); border-radius:10px; height:10px; margin-bottom:28px; overflow:hidden; }
+  .progress-fill { background:var(--gold); height:100%; width:0%; border-radius:10px; transition:width .4s ease; }
+  .overview { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-bottom:26px; }
+  .overview h2 { color:var(--gold); font-size:1.15rem; margin-bottom:10px; }
+  .overview ul { margin:8px 0 14px 20px; color:var(--muted); }
+  .overview li { margin:5px 0; }
+  .meta-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+  .meta-chip { background:#0b1220; border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:0.85rem; color:var(--muted); }
+  .meta-chip b { color:var(--text); }
+  .module { background:var(--card); border-radius:12px; margin-bottom:16px; overflow:hidden; border:1px solid var(--line); }
+  .module-header { padding:18px 22px; cursor:pointer; display:flex; align-items:center; gap:14px; transition:background .2s; }
+  .module-header:hover { background:#26354a; }
+  .module-num { background:var(--gold); color:#1e293b; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0; }
+  .module-title { flex:1; font-weight:600; }
+  .module-status { font-size:0.75rem; padding:4px 10px; border-radius:12px; background:var(--line); color:var(--muted); white-space:nowrap; }
+  .module-status.done { background:var(--green); color:#fff; }
+  .module-body { display:none; padding:0 22px 24px; border-top:1px solid var(--line); }
+  .module-body.active { display:block; }
+  .module-body p { color:var(--muted); margin:13px 0; }
+  .module-body ul, .module-body ol { margin:10px 0 10px 22px; color:var(--muted); }
+  .module-body li { margin:6px 0; }
+  .module-body strong { color:var(--text); }
+  .module-body h3 { color:var(--gold); font-size:1.05rem; margin:22px 0 4px; }
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.88rem; }
+  th { background:#0b1220; color:var(--gold); text-align:left; padding:9px 10px; border:1px solid var(--line); }
+  td { padding:8px 10px; border:1px solid var(--line); color:var(--muted); vertical-align:top; }
+  tr:nth-child(even) td { background:#1a2537; }
+  .tip-box { background:rgba(234,179,8,0.08); border-left:4px solid var(--gold); padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .tip-box strong { color:var(--gold); }
+  .warn-box { background:rgba(239,68,68,0.08); border-left:4px solid #ef4444; padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .warn-box strong { color:#f87171; }
+  .assign-box { background:#0b1220; border:1px dashed var(--gold-dark); border-radius:10px; padding:16px 18px; margin:16px 0; color:var(--muted); }
+  .assign-box strong { color:var(--gold); }
+  .video-box { background:#0b1220; border:1px solid var(--line); border-radius:10px; padding:14px 18px; margin:16px 0; color:var(--muted); font-size:0.9rem; }
+  .quiz-wrap { background:#0b1220; border:1px solid var(--line); border-radius:12px; padding:20px; margin-top:20px; }
+  .quiz-wrap h3 { margin-top:0 !important; }
+  .q-block { margin:16px 0; padding-bottom:14px; border-bottom:1px solid #1e293b; }
+  .q-block:last-child { border-bottom:none; }
+  .q-text { font-weight:600; color:var(--text); margin-bottom:8px; }
+  .q-opt { display:block; width:100%; text-align:left; padding:9px 13px; margin:5px 0; background:var(--card); border:1px solid #475569; border-radius:8px; color:var(--text); cursor:pointer; transition:all .2s; font-size:0.9rem; }
+  .q-opt:hover { border-color:var(--gold); }
+  .q-opt.correct { background:#14532d; border-color:var(--green); }
+  .q-opt.wrong { background:#7f1d1d; border-color:#ef4444; }
+  .q-exp { display:none; margin-top:8px; padding:10px 13px; background:rgba(234,179,8,0.07); border-left:3px solid var(--gold); border-radius:0 6px 6px 0; color:var(--muted); font-size:0.87rem; }
+  .q-exp.show { display:block; }
+  .quiz-score { margin-top:12px; font-weight:700; color:var(--gold); }
+  .check-btn { background:var(--gold); color:#1e293b; border:none; padding:11px 26px; border-radius:8px; font-weight:700; cursor:pointer; margin-top:16px; transition:background .2s; }
+  .check-btn:hover { background:#facc15; }
+  .check-btn:disabled { opacity:0.5; cursor:not-allowed; }
+  .final-section, .budget-section, .glossary-section, .resources-section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-top:26px; }
+  .final-section h2, .budget-section h2, .glossary-section h2, .resources-section h2 { color:var(--gold); font-size:1.2rem; margin-bottom:10px; }
+  .final-section p, .budget-section p, .resources-section p { color:var(--muted); margin:10px 0; }
+  .final-section ol, .resources-section ul { margin:10px 0 10px 22px; color:var(--muted); }
+  .final-section li, .resources-section li { margin:6px 0; }
+  dl.glossary dt { color:var(--text); font-weight:700; margin-top:12px; }
+  dl.glossary dd { color:var(--muted); margin-left:0; font-size:0.92rem; }
+  .cert-section { text-align:center; padding:40px 20px; background:var(--card); border-radius:16px; margin-top:30px; border:1px solid var(--line); }
+  .cert-section h2 { margin-bottom:10px; }
+  .cert-section p { color:var(--muted); margin-bottom:20px; }
+  .cert-btn { background:var(--gold); color:#1e293b; border:none; padding:14px 36px; border-radius:10px; font-size:1rem; font-weight:800; cursor:pointer; text-decoration:none; display:inline-block; }
+  .cert-btn[disabled] { opacity:0.4; pointer-events:none; }
+  .nav-bar { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:var(--card); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:100; }
+  .nav-bar a { color:var(--text); text-decoration:none; font-weight:600; }
+  .nav-bar a:hover { color:var(--gold); }
+  .completion-count { color:var(--muted); font-size:0.9rem; }
+  @media (max-width:600px){ header h1{font-size:1.5rem;} .module-header{padding:14px 16px;} .module-body{padding:0 16px 18px;} table{font-size:0.8rem;} th,td{padding:6px 7px;} }
+</style>
+</head>
+<body>
+<nav class="nav-bar">
+  <a href="index.html">&#8592; Back to Courses</a>
+  <span class="completion-count"><span id="completedCount">0</span> / 6 months completed</span>
+</nav>
+<header>
+  <div class="badge">Agriculture &middot; 6-Month Program</div>
+  <h1>Irish Potato Farming</h1>
+  <p>The highland cash machine — clean seed strategy, positive selection, the late-blight war, dehaulming and the two-store system, and the seed multiplication business that out-earns ware.</p>
+</header>
+<div class="container">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+
+  <div class="overview">
+    <h2>Course Overview</h2>
+    <p style="color:var(--muted);">Irish potato is the fastest high-value staple in African farming: 90–120 days, two crops a year with water, and city demand growing with every chips shop that opens. But it is a crop where knowledge is the fence between 8 tonnes and 30 tonnes per hectare. This course is organised around the two battles that decide everything. First, seed: degeneration, the seed ladder, positive selection, chitting, and the diffuse light store — because seed is half the budget and most of the yield gap. Second, disease: late blight read and fought in layers, and bacterial wilt understood as the land-loser it is, beaten only by prevention. Then the professional moves — dehaulming, skin set, field grading, the dark ware store versus the DLS — and a business module built on the observation that the best potato business is usually not ware at all, but seed.</p>
+    <h2 style="margin-top:16px;">What You Will Learn</h2>
+    <ul><li>Site the crop by altitude and season, and choose varieties by market and blight rating</li>
+<li>Climb the seed ladder: certified/QDS refresh plus positive selection every season</li>
+<li>Chit seed in diffused light and plant whole egg-sized tubers correctly</li>
+<li>Earth up twice — yield sites, solanine prevention, tuber-moth wall and blight buffer in one pass</li>
+<li>Feed a heavy feeder: K-led base, split N, and steady light watering through bulking</li>
+<li>Run the layered late-blight defence and the prevention-only bacterial wilt strategy</li>
+<li>Dehaulm for skin set and seed sizing; grade, cure, and run both a dark ware store and a DLS</li>
+<li>Build the budgets and the seed multiplication business; sell into ware, restaurant, crisps and seed channels</li></ul>
+    <div class="meta-row">
+      <div class="meta-chip"><b>Duration:</b> 6 months, one module per month</div>
+      <div class="meta-chip"><b>Level:</b> Beginner &rarr; Job-ready</div>
+      <div class="meta-chip"><b>Units:</b> Metric with imperial where useful</div>
+      <div class="meta-chip"><b>Final project:</b> Your own business plan</div>
+    </div>
+  </div>
+
+  <div class="module" data-module="1">
+    <div class="module-header" onclick="toggleModule(1)">
+      <div class="module-num">1</div>
+      <div class="module-title">Month 1: The Crop, Sites &amp; Varieties</div>
+      <div class="module-status" id="status1">Start</div>
+    </div>
+    <div class="module-body" id="body1">
+
+      <h3>Lesson 1.1 — The highland money crop</h3>
+      <p>Irish potato (so called across Africa to distinguish it from sweet potato) is the fastest-turning high-value staple on the continent: <strong>90–120 days from planting to harvest</strong>, two and sometimes three crops a year with irrigation, and demand rising faster than almost any food as cities eat more chips, crisps and fast food. It is a cool-climate crop: it thrives in the African highlands — roughly <strong>1,500–3,000 m altitude</strong>, or cooler seasons at moderate elevation — where night temperatures drop below about 20&deg;C (68&deg;F). Hot lowland nights stop tubers forming.</p>
+      <ul>
+        <li>Yields: African average ~8–10 t/ha; well-managed fields with clean seed reach <strong>25–40 t/ha</strong>. The gap is the same story as every root crop in this college — planting material and disease management.</li>
+        <li>Big consumers of nutrients and water: potato pays best of all staples for fertiliser and pays worst for neglect.</li>
+        <li>Frost-tender: highland growers time plantings between frost windows.</li>
+      </ul>
+      <h3>Lesson 1.2 — Why 'seed' is the whole game</h3>
+      <p>Potatoes are planted from tubers — <strong>seed potatoes</strong> — and every disease the mother tuber carries rides into your field: viruses, bacterial wilt, blackleg. Farm-saved seed recycled year after year <strong>degenerates</strong>: viruses accumulate (spread by aphids), vigour drops, and yields slide 10–20% per season until the field produces marbles. This single fact explains most of the gap between 8 t/ha and 30 t/ha, and it means the potato farmer's first skill is seed strategy, not agronomy.</p>
+      <h3>Lesson 1.3 — Varieties and markets</h3>
+      <table>
+        <tr><th>Market</th><th>What it wants</th><th>Variety traits</th></tr>
+        <tr><td>Fresh table/ware market</td><td>Medium-large clean tubers, shallow eyes, red or white skin per local taste</td><td>Yield, appearance, cooking quality</td></tr>
+        <tr><td>Chips (fries) &amp; restaurants</td><td>Large long tubers, white/cream flesh, high dry matter</td><td>Fry colour, low sugars</td></tr>
+        <tr><td>Crisps processors</td><td>Round mid-size, very high dry matter, low reducing sugars</td><td>Contract varieties — premium prices, strict specs</td></tr>
+        <tr><td>Seed production</td><td>Health, not size — certified or quality-declared seed</td><td>The highest-margin potato business of all (Module 6)</td></tr>
+      </table>
+      <p>Ask extension for the released varieties in your area and specifically their <strong>late blight resistance rating</strong> — Module 4 will show you why that one column matters more than any other.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Highland potato zones — why cool nights make tubers &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 1:</strong> Establish your site's suitability: record your altitude (or coolest growing season), typical night temperatures, and frost risk from local knowledge. Visit your market and one chips shop or restaurant: record varieties on sale, prices per bag now, and what the cook says about the potatoes they prefer. Get the extension list of released varieties with blight ratings and choose your candidate, stating your reason in one paragraph.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 1 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Irish potato performs best in Africa at:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">Hot coastal lowlands</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_1')">Highland altitudes (~1,500–3,000 m) or cool seasons, with nights below ~20°C</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">Deserts</button>
+<div class="q-exp" id="exp1_1"><strong>Why:</strong> Tuber formation is switched on by cool nights. Hot lowland nights keep the plant leafy and tuberless — altitude and season selection are the first yield decision.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Typical time from planting to potato harvest is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_2')">90–120 days</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">10 months</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">Three weeks</button>
+<div class="q-exp" id="exp1_2"><strong>Why:</strong> Three to four months makes potato the fastest high-value staple — two or even three crops a year where water allows, which is why it dominates highland cash farming.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Farm-saved potato seed recycled every season:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">Improves steadily</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_3')">Degenerates as aphid-borne viruses accumulate, sliding yields 10–20% per season</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">Stays identical forever</button>
+<div class="q-exp" id="exp1_3"><strong>Why:</strong> Seed degeneration is the central economics of this crop: it is why average yields sit at a quarter of potential and why seed strategy comes before agronomy.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Diseases travel into a potato field mainly via:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">Wind-blown sand</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_4')">The seed tubers themselves</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">Bird droppings</button>
+<div class="q-exp" id="exp1_4"><strong>Why:</strong> Whatever the mother tuber carries — virus, bacterial wilt, blackleg — the field inherits. Clean seed in is the one decision you cannot correct later.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Crisps processors pay premiums for varieties with:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_5')">High dry matter and low reducing sugars</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Deep purple skin</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Maximum water content</button>
+<div class="q-exp" id="exp1_5"><strong>Why:</strong> Sugars darken in frying and water is dead weight; crisp contracts specify variety, dry matter and fry colour — strict but lucrative.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. A realistic well-managed potato yield with clean seed is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">2 t/ha</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_6')">25–40 t/ha</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">300 t/ha</button>
+<div class="q-exp" id="exp1_6"><strong>Why:</strong> Against an African average of ~8–10 t/ha, clean seed plus blight control routinely triples yields. Potato repays management better than any other staple.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Potato responds to fertiliser:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">Not at all</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_7')">Strongly — it pays best of the staples for feeding and worst for neglect</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">Only in pots</button>
+<div class="q-exp" id="exp1_7"><strong>Why:</strong> A 30 t/ha crop removes large amounts of N, P and especially K. Underfed potato is the most expensive false economy in highland farming.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. The variety trait Module 4 will make decisive is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Flower colour</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_8')">Late blight resistance rating</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Leaf shape</button>
+<div class="q-exp" id="exp1_8"><strong>Why:</strong> Late blight can destroy a susceptible field in under two weeks. A resistant variety halves your spray bill and your risk before you lift a single tool.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. 'Irish potato' in African usage means:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">Potatoes imported from Ireland</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_9')">The tuber crop Solanum tuberosum, distinguished from sweet potato</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">A banana variety</button>
+<div class="q-exp" id="exp1_9"><strong>Why:</strong> The name is a colonial-era label that stuck; the crop itself came from the Andes. It simply distinguishes the cool-climate tuber from sweet potato.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Potato and frost:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Frost improves flavour</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_10')">The crop is frost-tender; highland growers plant between frost windows</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Frost is impossible in Africa</button>
+<div class="q-exp" id="exp1_10"><strong>Why:</strong> High-altitude African nights can frost, blackening haulms overnight. Planting calendars in potato zones are built around the frost-free window.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn1" onclick="markComplete(1)">Mark Month 1 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="2">
+    <div class="module-header" onclick="toggleModule(2)">
+      <div class="module-num">2</div>
+      <div class="module-title">Month 2: Seed Strategy, Chitting &amp; Planting</div>
+      <div class="module-status" id="status2">Locked</div>
+    </div>
+    <div class="module-body" id="body2">
+
+      <h3>Lesson 2.1 — Sourcing seed: the ladder</h3>
+      <table>
+        <tr><th>Seed class</th><th>What it is</th><th>Use</th></tr>
+        <tr><td>Certified seed</td><td>Inspected, virus-tested, from registered multipliers</td><td>Gold standard; buy when available and refresh every 2–3 seasons</td></tr>
+        <tr><td>Quality-declared seed (QDS)</td><td>Locally multiplied under lighter inspection</td><td>Good middle rung in most countries</td></tr>
+        <tr><td>Positive-selection farm seed</td><td>Your own seed, saved ONLY from pegged, healthy, high-yielding plants</td><td>Slows degeneration dramatically — the key skill below</td></tr>
+        <tr><td>Market ware tubers</td><td>Eating potatoes planted as seed</td><td><strong>Never.</strong> Unknown varieties, wilt and virus riding in — the classic way farmers import bacterial wilt onto clean land</td></tr>
+      </table>
+      <h3>Lesson 2.2 — Positive selection: free seed improvement</h3>
+      <p>Where certified seed is scarce or costly, <strong>positive selection</strong> keeps farm seed healthy for years instead of seasons:</p>
+      <ol>
+        <li>While the crop is growing (flowering stage), walk the field and <strong>peg the best plants</strong> — vigorous, true to type, no mosaic/leafroll/wilt symptoms, good stem number.</li>
+        <li>At harvest, dig pegged plants FIRST and separately; keep their medium tubers (egg-sized, 30–60 g) as next season's seed.</li>
+        <li>Never take seed from the general heap — the heap averages in every sick plant. Trials across East Africa show positive selection alone lifts yields <strong>20–30%</strong> over heap-saved seed.</li>
+      </ol>
+      <h3>Lesson 2.3 — Chitting: sprout before you plant</h3>
+      <p>Seed tubers planted dormant sit in the soil for weeks, feeding rots. <strong>Chitting</strong> (pre-sprouting) banks that time above ground: spread seed one layer deep in <strong>diffused light</strong> (bright shade — never dark, never direct sun) for 2–4 weeks until sprouts are <strong>1–2 cm, thick, green-purple and stubby</strong>. Dark storage gives long white fragile sprouts that snap at planting — the sign of a badly kept seed store. Chitted seed emerges 10–14 days faster and more evenly, which in a 100-day crop is pure yield.</p>
+      <h3>Lesson 2.4 — Planting</h3>
+      <ul>
+        <li><strong>Whole seed beats cut seed</strong> for smallholders — cutting spreads bacterial wilt and blackleg on the knife. If you must cut large tubers, disinfect the knife between every tuber and heal cut pieces 2–3 days in shade.</li>
+        <li>Spacing: rows <strong>75 cm apart, seed every 30 cm</strong>, planted <strong>10 cm deep</strong> in furrows, sprouts up, then covered — ~44,000 plants/ha, about <strong>1.5–2 t of seed per hectare</strong> (yes, seed is your biggest single cost; Module 6 turns that fact into a business).</li>
+        <li>Fertiliser in the furrow at planting, banded beside — not touching — the seed. Potato takes the highland standard: well-rotted manure plus a compound strong in P and K.</li>
+      </ul>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Positive selection and chitting demonstrated — from pegging to stubby green sprouts &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 2:</strong> Trace and cost every seed source available to you: certified, QDS, reputable farm-saved. Buy or set aside a batch of at least 20 kg; chit it 2–4 weeks in diffused light and record sprout development weekly. Plant a practice plot of at least four 5-metre rows at 75 × 30 cm, 10 cm deep, sprouts up, with banded fertiliser — record dates, quantities and emergence percentage at three weeks.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 2 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Planting eating potatoes bought at the market as seed is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">A smart saving</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_1')">The classic way to import bacterial wilt and viruses onto clean land — never do it</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">Required for certification</button>
+<div class="q-exp" id="exp2_1"><strong>Why:</strong> Ware tubers are unselected, uninspected and often drawn from wilt-affected regions. One cheap bag can contaminate a field for years — the most expensive 'saving' in potato farming.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Positive selection means saving seed from:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">The general harvest heap</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_2')">Plants pegged during growth as vigorous and symptom-free, dug and kept separately</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">The smallest plants</button>
+<div class="q-exp" id="exp2_2"><strong>Why:</strong> The heap averages in every diseased plant; pegging healthy plants at flowering and harvesting them first isolates your best genetics and health — worth 20–30% yield by itself.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. The ideal seed tuber size is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_3')">Egg-sized, roughly 30–60 g</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">As large as possible</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">Pea-sized</button>
+<div class="q-exp" id="exp2_3"><strong>Why:</strong> Egg-size balances cost against vigour: enough reserves for strong emergence without wasting saleable large tubers as seed.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Properly chitted seed shows sprouts that are:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">Long, white and fragile</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_4')">1–2 cm, thick, green-purple and stubby, grown in diffused light</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">Absent entirely</button>
+<div class="q-exp" id="exp2_4"><strong>Why:</strong> Diffused light gives short tough sprouts that survive planting; darkness gives etiolated white threads that snap off. The sprout tells you how the seed was stored.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Chitting is worth doing because:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">It doubles tuber size directly</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_5')">Emergence comes 10–14 days faster and more evenly — pure gain in a 100-day crop</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">It colours the skin</button>
+<div class="q-exp" id="exp2_5"><strong>Why:</strong> Two banked weeks of growth, faster canopy closure over weeds, and a more uniform crop at harvest — for the cost of spreading trays in bright shade.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. For smallholders, cutting seed tubers is discouraged because:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">Cut pieces grow blue plants</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_6')">The knife spreads bacterial wilt and blackleg tuber to tuber</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">Cutting is illegal</button>
+<div class="q-exp" id="exp2_6"><strong>Why:</strong> Wilt bacteria ride the blade into every subsequent piece. Whole egg-sized seed avoids the risk entirely; if cutting is unavoidable, disinfect between every tuber and heal pieces before planting.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Standard potato spacing and depth is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_7')">Rows 75 cm, seed every 30 cm, 10 cm deep, sprouts up</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Broadcast on the surface</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">2 m × 2 m, 50 cm deep</button>
+<div class="q-exp" id="exp2_7"><strong>Why:</strong> This gives ~44,000 plants/ha — dense enough for tonnage, wide enough for the ridging that Module 3 builds. Deep planting delays emergence; surface planting greens the tubers.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Seed requirement per hectare is roughly:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">50 kg</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_8')">1.5–2 tonnes</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">20 tonnes</button>
+<div class="q-exp" id="exp2_8"><strong>Why:</strong> Seed is potato's biggest single input cost — commonly 40–50% of the budget. This is exactly why seed multiplication is the highest-margin potato business (Module 6).</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Fertiliser at planting is placed:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Touching each seed tuber</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_9')">Banded in the furrow beside, not touching, the seed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">On the leaves</button>
+<div class="q-exp" id="exp2_9"><strong>Why:</strong> Direct contact scorches sprouts and roots; a band a few centimetres away feeds the young plant exactly when its small root system needs concentrated supply.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Certified seed should be refreshed:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">Never once bought</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_10')">Every 2–3 seasons, with positive selection maintaining health in between</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">Twice per week</button>
+<div class="q-exp" id="exp2_10"><strong>Why:</strong> Even good seed degenerates under aphid pressure. The affordable rhythm: certified or QDS refresh every few seasons, positive selection every season in between.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn2" onclick="markComplete(2)">Mark Month 2 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="3">
+    <div class="module-header" onclick="toggleModule(3)">
+      <div class="module-num">3</div>
+      <div class="module-title">Month 3: Earthing Up, Feeding &amp; Water</div>
+      <div class="module-status" id="status3">Locked</div>
+    </div>
+    <div class="module-body" id="body3">
+
+      <h3>Lesson 3.1 — Earthing up: one operation, four jobs</h3>
+      <p>No task defines potato growing like <strong>ridging/earthing up</strong> — drawing soil from the furrows up around the stems, done first at full emergence (~15–20 cm plants) and again 2–3 weeks later, building a broad ridge 20–25 cm high. One hoe pass does four jobs:</p>
+      <ol>
+        <li><strong>More tubers:</strong> tubers form on underground stems (stolons); buried stem length = more stolon sites.</li>
+        <li><strong>No greening:</strong> light turns tubers green and bitter with <strong>solanine, a genuine toxin</strong> — green potatoes are unsellable and unsafe (peel deeply or discard). The ridge is the light-proof blanket.</li>
+        <li><strong>Tuber moth defence:</strong> the potato tuber moth lays eggs down soil cracks onto exposed tubers; a high sealed ridge is the same wall you built for sweet potato weevil.</li>
+        <li><strong>Blight buffer:</strong> late blight spores wash off leaves; a thick soil layer keeps them from reaching tubers.</li>
+      </ol>
+      <div class="warn-box"><strong>Green = solanine = danger.</strong> Never sell, and never casually eat, green or heavily sprouted potatoes; bitterness is the warning taste. Deep peeling removes most of it, but the honest rule for market and home is: keep tubers dark from ridge to plate, and cull green ones to livestock-free disposal — solanine harms pigs too.</div>
+      <h3>Lesson 3.2 — Feeding a heavy feeder</h3>
+      <table>
+        <tr><th>Stage</th><th>Feeding</th><th>Notes</th></tr>
+        <tr><td>Planting</td><td>Manure/compost + P-K-strong compound banded in furrow</td><td>P for roots and tuber set; K for bulking — potato is the biggest K consumer in this college</td></tr>
+        <tr><td>First earthing up</td><td>Top-dress N alongside rows, then ridge it in</td><td>Splitting N avoids the all-leaf-no-tuber trap</td></tr>
+        <tr><td>Bulking</td><td>Nothing new — steady moisture is the 'fertiliser' now</td><td>Water stress during bulking = small, cracked, hollow tubers</td></tr>
+      </table>
+      <h3>Lesson 3.3 — Water: little and often</h3>
+      <p>Potato roots are shallow (most water taken from the top 30 cm) and the crop hates both thirst and waterlogging. The rule is <strong>frequent light watering keeping the ridge moist but never sodden</strong> — critical windows are tuber initiation (around first earthing) and bulking. Irregular watering after drought causes knobbly, cracked, hollow-hearted tubers that grade out at market. Furrow irrigation between ridges suits the crop perfectly; overhead evening watering that leaves leaves wet all night is a late-blight invitation (Module 4).</p>
+      <h3>Lesson 3.4 — Weeds solve themselves — briefly</h3>
+      <p>The two earthing-up passes ARE the weeding programme: each pass buries the young weeds. After canopy closure (~5–6 weeks) the dense potato foliage shades most weeds out. Hand-pull tall escapes only; never hoe deep near rows after bulking starts — shallow tubers wound easily, and every wound is a store rot later.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Building the ridge — the four jobs of earthing up &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 3:</strong> Carry out both earthing-up passes on your plot at the correct stages, top-dressing split N at the first pass; record dates and ridge height achieved. Keep a simple water log (rain days and any irrigation) through tuber initiation and bulking. Deliberately leave two plants un-ridged as a comparison, and at harvest photograph and describe the difference in greening and tuber number — your own evidence.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 3 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Earthing up is done:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Once at planting only</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_1')">At full emergence and again 2–3 weeks later, building a 20–25 cm ridge</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">After harvest</button>
+<div class="q-exp" id="exp3_1"><strong>Why:</strong> Two timed passes build the ridge while plants are small enough to work around — delivering more stolon sites, light-proofing, moth defence and a blight buffer in one operation.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Green colour on a potato tuber signals:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Extra vitamins</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_2')">Solanine — a genuine toxin; green tubers are bitter, unsellable and unsafe</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Ripeness</button>
+<div class="q-exp" id="exp3_2"><strong>Why:</strong> Light exposure triggers chlorophyll (visible) and solanine (toxic) together. The ridge in the field and darkness in the store are the crop's food-safety system.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Tubers form on:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">The taproot</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_3')">Underground stems (stolons) — which is why buried stem length matters</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">The leaves</button>
+<div class="q-exp" id="exp3_3"><strong>Why:</strong> Every centimetre of stem the ridge buries can carry stolons and therefore tubers. Earthing up literally manufactures yield sites.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. The potato tuber moth reaches tubers through:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_4')">Soil cracks over shallow tubers</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Tree branches</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Rainwater</button>
+<div class="q-exp" id="exp3_4"><strong>Why:</strong> Like the sweet potato weevil, the moth exploits cracked, thin cover — and the answer is the same: a high, sealed, unbroken ridge kept moist enough not to crack.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Potato's heaviest nutrient demand is for:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_5')">Potassium — the bulking nutrient</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Table salt</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Boron only</button>
+<div class="q-exp" id="exp3_5"><strong>Why:</strong> A big tuber crop exports more K than any other staple in this college. K-strong feeding at planting plus split N is the standard highland programme.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Water stress during tuber bulking causes:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Sweeter potatoes</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_6')">Small, cracked, knobbly and hollow-hearted tubers that grade out</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Blue flesh</button>
+<div class="q-exp" id="exp3_6"><strong>Why:</strong> Bulking tubers are ~80% water being assembled in real time. Interrupting supply then restoring it makes tubers crack and deform — steady light moisture is the rule.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Evening overhead irrigation that leaves foliage wet all night:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Is ideal</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_7')">Invites late blight, which needs long leaf-wetness to infect</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Prevents all disease</button>
+<div class="q-exp" id="exp3_7"><strong>Why:</strong> Blight spores germinate on wet leaves. Furrow irrigation between ridges waters the roots and keeps the canopy dry — agronomy and disease control aligned.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. The weeding programme in potato is essentially:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">Daily deep hoeing all season</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_8')">The two earthing-up passes plus canopy shading, with hand-pulled escapes after</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">Herbicide only</button>
+<div class="q-exp" id="exp3_8"><strong>Why:</strong> Each ridging pass buries weeds, and closed potato canopy shades out the rest. Deep hoeing after bulking starts only wounds shallow tubers.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Nitrogen for potato is best applied:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">All at planting in one heavy dose</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_9')">Split — some at planting, the rest top-dressed at first earthing up</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Never</button>
+<div class="q-exp" id="exp3_9"><strong>Why:</strong> One big N dose grows a leaf jungle at the expense of tubers and leaches in rain. Splitting matches supply to demand and lets the ridge pass incorporate it.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Green or heavily sprouted cull potatoes should be:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Fed generously to pigs</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_10')">Disposed of away from livestock — solanine harms animals too</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Sold cheaply without comment</button>
+<div class="q-exp" id="exp3_10"><strong>Why:</strong> Solanine is toxic across species. Culls with greening go to disposal, not the feed trough or the market sack — reputation and safety in one rule.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn3" onclick="markComplete(3)">Mark Month 3 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="4">
+    <div class="module-header" onclick="toggleModule(4)">
+      <div class="module-num">4</div>
+      <div class="module-title">Month 4: Late Blight, Bacterial Wilt &amp; Plant Health</div>
+      <div class="module-status" id="status4">Locked</div>
+    </div>
+    <div class="module-body" id="body4">
+
+      <h3>Lesson 4.1 — Late blight: the disease that changed history</h3>
+      <p><strong>Late blight (<em>Phytophthora infestans</em>)</strong> — the pathogen of the Irish famine — remains the most destructive potato disease on earth, and in cool wet highland weather it can turn a green field into black slime in <strong>7–14 days</strong>. Know it on sight: dark water-soaked patches at leaf tips/edges, a pale green halo, and in humid mornings a <strong>white downy mould on the leaf underside</strong>. Brown-purple blotches on stems; infected tubers show reddish-brown dry granular rot under the skin.</p>
+      <p>The defence is layered — no single measure holds it:</p>
+      <ol>
+        <li><strong>Resistant varieties</strong> — the single biggest lever; ask extension for the blight rating before anything else.</li>
+        <li><strong>Preventive spraying in blight weather:</strong> in cool, wet, misty spells, protectant fungicide (e.g. mancozeb-type) BEFORE symptoms, repeated per label (typically 7–10 days while weather holds); switch to/alternate a systemic (e.g. metalaxyl-type mixtures) if blight appears. Always rotate chemistry to slow resistance, follow labels, wear protection, respect pre-harvest intervals.</li>
+        <li><strong>Cultural pressure-reducers:</strong> wide spacing on the contour for airflow, morning-only irrigation, no overhead evening watering, destroy volunteer potatoes and cull piles (blight overwinters in living tuber tissue), and never leave infected haulms lying at harvest.</li>
+        <li><strong>Protect the tubers:</strong> high ridges, and dehaulm (Module 5) before harvest so no living blighted leaf can wash spores onto lifted tubers.</li>
+      </ol>
+      <h3>Lesson 4.2 — Bacterial wilt: the land-loser</h3>
+      <p><strong>Bacterial wilt (<em>Ralstonia solanacearum</em>)</strong> is the quiet catastrophe: plants wilt suddenly on hot afternoons while still green, recover overnight at first, then die; cut a stem, suspend it in clean water, and <strong>milky bacterial threads stream out</strong> — the field diagnostic. Infected tubers ooze grey slime from the eyes. There is <strong>no chemical cure</strong>, and the bacterium survives in soil for years, so this disease is fought entirely with prevention:</p>
+      <ul>
+        <li>Clean seed only — wilt's main highway is infected seed tubers (and market ware planted as seed: Module 2's warning made flesh).</li>
+        <li>Long rotation (3–4+ years) away from potato, tomato, pepper, eggplant — all hosts.</li>
+        <li>Rogue wilted plants WITH their tubers and soil into a bucket, dispose away from fields; wash tools and even boots after working infested land.</li>
+        <li>Never let irrigation water flow from an infested field into a clean one.</li>
+      </ul>
+      <h3>Lesson 4.3 — The rest of the gallery</h3>
+      <table>
+        <tr><th>Problem</th><th>Recognise</th><th>Act</th></tr>
+        <tr><td>Viruses (leafroll, mosaics)</td><td>Rolled brittle leaves, mottling, stunting</td><td>The degeneration engine — clean seed, positive selection, control aphids in seed plots</td></tr>
+        <tr><td>Potato tuber moth</td><td>Leaf mines; tunnels in stored tubers</td><td>High sealed ridges, harvest promptly, store only sound tubers, screen stores; a layer of dried lantana/eucalyptus leaves over stored seed deters moths</td></tr>
+        <tr><td>Aphids</td><td>Colonies under leaves</td><td>Matter most as virus vectors in seed plots — control there first</td></tr>
+        <tr><td>Blackleg/soft rot</td><td>Black slimy stem base, rotting tubers</td><td>Whole (uncut) sound seed, drainage, cull at grading, dry storage</td></tr>
+        <tr><td>Cutworms &amp; white grubs</td><td>Seedlings cut; tubers gouged</td><td>Field hygiene, hand collection at land prep, avoid planting straight after grass</td></tr>
+      </table>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Reading blight on the leaf, and the streaming-stem wilt test &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 4:</strong> Write your blight plan: your variety's rating, your protectant and systemic product options with prices from a local agro-dealer, the weather trigger that starts spraying, and your rotation of chemistry. Perform the bacterial wilt stem-streaming test on any wilting solanaceous plant you can find (potato or tomato) and record the result. Map your rotation for the next three seasons, showing no potato/tomato/pepper repetition on the same land.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 4 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Late blight in humid morning conditions shows:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_1')">White downy mould on leaf undersides beneath dark water-soaked patches</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Orange spots on tubers only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Neat round holes</button>
+<div class="q-exp" id="exp4_1"><strong>Why:</strong> That underside mould is the sporulating pathogen — the confirmation sign. From this stage a susceptible unsprayed field can be black slime within two weeks.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Protectant fungicide against blight is applied:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">Only after the field is half dead</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_2')">Preventively, BEFORE symptoms, whenever cool wet blight weather sets in</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">Once at planting</button>
+<div class="q-exp" id="exp4_2"><strong>Why:</strong> Protectants shield leaves but cannot cure infection. In blight weather you spray ahead of the disease and repeat while conditions hold — waiting for symptoms forfeits the crop.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Rotating/alternating fungicide chemistry matters because:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">It smells better</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_3')">It slows the pathogen developing resistance to any one product</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Labels require pretty colours</button>
+<div class="q-exp" id="exp4_3"><strong>Why:</strong> P. infestans adapts fast; regions that leaned on one systemic alone bred resistant strains. Alternating modes of action keeps every tool working.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. The single biggest late-blight lever is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_4')">A resistant variety</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">Louder scarecrows</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">Night irrigation</button>
+<div class="q-exp" id="exp4_4"><strong>Why:</strong> Resistance cuts infection speed before any spray is bought — halving both risk and fungicide cost. It is why Module 1 told you to read that rating first.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. The field diagnostic for bacterial wilt is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_5')">Milky bacterial threads streaming from a cut stem suspended in clean water</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Purple flowers</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Extra-large tubers</button>
+<div class="q-exp" id="exp4_5"><strong>Why:</strong> Green-wilting plants plus the streaming test confirms Ralstonia. From that moment the strategy is containment: rogue with tubers and soil, and treat the land as infested.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Bacterial wilt is controlled by:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">A weekly copper spray</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_6')">Nothing chemical — clean seed, 3–4 year rotation away from solanaceous crops, roguing and hygiene</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Extra nitrogen</button>
+<div class="q-exp" id="exp4_6"><strong>Why:</strong> No product kills it in soil, where it persists for years. Prevention is the entire defence — and infected seed (including market ware) is its main highway between farms.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Rotation partners to AVOID after wilt-infested potato include:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_7')">Tomato, pepper and eggplant — fellow hosts</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Maize and beans</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Grass pasture</button>
+<div class="q-exp" id="exp4_7"><strong>Why:</strong> Ralstonia attacks the whole solanaceous family. Rotating potato to tomato changes the crop but feeds the same bacterium; cereals and legumes starve it.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Potato viruses matter economically mainly because:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">They kill fields overnight</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_8')">They drive seed degeneration — the slow yield slide in recycled seed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">They only affect flowers</button>
+<div class="q-exp" id="exp4_8"><strong>Why:</strong> Leafroll and mosaics rarely dramatic-kill a crop; they quietly cut next season's seed value. Positive selection and aphid control in seed plots are the counterattack.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Stored seed potatoes can be protected from tuber moth by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_9')">A covering layer of dried lantana or eucalyptus leaves plus screened stores and sound-tuber-only rules</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Leaving the store open at night</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Washing tubers weekly</button>
+<div class="q-exp" id="exp4_9"><strong>Why:</strong> The moth must reach tubers to lay; screens, prompt harvest, culling damaged tubers and a repellent leaf layer break the chain cheaply.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Blighted haulms and cull piles left near fields:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Are harmless decoration</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_10')">Carry living blight and volunteer wilt/virus sources into the next season — destroy them</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Improve soil instantly</button>
+<div class="q-exp" id="exp4_10"><strong>Why:</strong> Blight survives only in living tuber tissue and volunteers; cull piles are its overwintering hotel. Field sanitation is the free spray you apply once.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn4" onclick="markComplete(4)">Mark Month 4 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="5">
+    <div class="module-header" onclick="toggleModule(5)">
+      <div class="module-num">5</div>
+      <div class="module-title">Month 5: Dehaulming, Harvest &amp; the Two Stores</div>
+      <div class="module-status" id="status5">Locked</div>
+    </div>
+    <div class="module-body" id="body5">
+
+      <h3>Lesson 5.1 — Dehaulming: the professional's pre-harvest move</h3>
+      <p>Two to three weeks before harvest, cut or pull the haulms (tops) — <strong>dehaulming</strong>. It looks like vandalism and is pure professionalism:</p>
+      <ul>
+        <li><strong>Skin set:</strong> tubers left in soil after tops die firm their skins; set skins survive digging, transport and storage instead of peeling at a touch.</li>
+        <li><strong>Blight firewall:</strong> with no living leaves, no spores wash down onto tubers at lifting.</li>
+        <li><strong>Size control for seed growers:</strong> dehaulming freezes tuber size — cut when the crop's tubers hit seed grade and you harvest a field of egg-sized gold.</li>
+      </ul>
+      <h3>Lesson 5.2 — Harvest and field grading</h3>
+      <ul>
+        <li>Dig in dry weather with fork or hoe entering the ridge WIDE and from the side; every spear-through tuber is money destroyed. Lift, don't rake.</li>
+        <li>Never leave dug tubers in the sun — an hour scalds and greens them. Shade immediately.</li>
+        <li>Grade in the field: <strong>ware</strong> (large, clean, unwounded — market), <strong>seed</strong> (egg-sized from your best/pegged plants), <strong>home/chatts</strong> (small or blemished — eat soon), <strong>culls</strong> (green, rotten, moth-tunnelled — disposal, never the store).</li>
+        <li>Cure like sweet potato but cooler: 1–2 weeks in a dark, airy shed lets wounds heal and skins finish before long storage or bagging.</li>
+      </ul>
+      <h3>Lesson 5.3 — Two stores for two purposes</h3>
+      <table>
+        <tr><th></th><th>Ware (eating) store</th><th>Seed store — the DLS</th></tr>
+        <tr><td>Goal</td><td>Dormant, dark, firm tubers for sale over 2–4 months</td><td>Short tough green sprouts, ready to plant</td></tr>
+        <tr><td>Light</td><td><strong>Total darkness</strong> (light = green = solanine)</td><td><strong>Diffused light</strong> — the Diffuse Light Store: open-sided shed, thatch/iron roof, tubers 2–3 layers deep on shelves in bright shade</td></tr>
+        <tr><td>Conditions</td><td>Cool as available, ventilated, off the floor</td><td>Ventilated, rodent- and moth-screened</td></tr>
+        <tr><td>Care</td><td>Inspect fortnightly; remove rots; never store washed or wet tubers</td><td>De-sprout is unnecessary — DLS sprouts stay short and strong for months</td></tr>
+      </table>
+      <div class="tip-box"><strong>The DLS is the cheapest yield technology in potato.</strong> A farmer with a diffuse light store holds vigorous seed from one season to the next — escaping the trap of buying dear seed at planting time or planting exhausted dark-store seed with broken sprouts. Build one before you build anything else.</div>
+      <h3>Lesson 5.4 — Selling: the price curve is your friend</h3>
+      <p>Potato prices swing hard: gluts at main-season harvest, sharp rises in the months after. The play mirrors every storage crop in this college — sell part at harvest for cash flow, hold ware in a good dark store for the rise, and (highest margin of all) grow the off-season irrigated crop that lands when everyone else's store is empty. Chips-cut sales to local restaurants and salted boiled-potato street vendors are steady weekly channels worth cultivating alongside the sack trade.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Dehaulming, skin-set testing, and inside a Diffuse Light Store &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 5:</strong> Dehaulm your plot (or a cooperating farmer's rows) 2–3 weeks before digging; test skin set weekly with the thumb-rub test and record when skins hold. Harvest in dry weather, grading into ware/seed/home/culls with weights for each. Cure the seed grade 1–2 weeks, then build or improvise a small DLS (bright-shade shelf, screened) and store your seed there; store ware in darkness. Inspect both after two weeks and record condition.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 5 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Dehaulming means:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_1')">Cutting/pulling the tops 2–3 weeks before harvest</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Washing the leaves</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Planting a hedge</button>
+<div class="q-exp" id="exp5_1"><strong>Why:</strong> Removing the haulms triggers skin set, breaks the blight bridge to tubers, and freezes tuber size — three professional gains from one apparently brutal act.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Skin set matters because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_2')">Set skins survive digging, transport and storage; unset skins peel at a touch</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">It changes flesh colour</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Buyers weigh skins separately</button>
+<div class="q-exp" id="exp5_2"><strong>Why:</strong> A freshly dead-topped crop lifted immediately scuffs and then rots in the sack. The two-week wait between dehaulming and digging is storage life being manufactured underground.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Seed growers use dehaulming additionally to:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_3')">Freeze tuber size at seed grade — harvesting a field of egg-sized seed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">Make tubers gigantic</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">Attract pollinators</button>
+<div class="q-exp" id="exp5_3"><strong>Why:</strong> Since tubers stop growing when tops die, cutting at the right moment converts the whole field to premium 30–60 g seed — the trick behind profitable multiplication.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Freshly dug potatoes left in the sun:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">Cure perfectly</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_4')">Scald and green within about an hour — shade immediately</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">Gain weight</button>
+<div class="q-exp" id="exp5_4"><strong>Why:</strong> Tropical sun both heat-damages and light-greens tubers, stacking solanine on top of scald. Dig, shade, grade — in that rhythm.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Field grading separates:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_5')">Ware, seed, home-use, and culls — with culls never entering any store</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">Only big and small</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">Nothing; all goes in one heap</button>
+<div class="q-exp" id="exp5_5"><strong>Why:</strong> One rotten or moth-tunnelled tuber infects a sack; one green tuber poisons trust. Grading in the field is quality control, food safety and seed strategy in a single pass.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. A ware store must be:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_6')">Brightly lit</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">Totally dark, cool, ventilated — light means green means solanine</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">Heated</button>
+<div class="q-exp" id="exp5_6"><strong>Why:</strong> Eating stock wants dormancy and darkness. The same tuber that belongs in bright shade as seed becomes unsafe stock if light reaches it as food.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. A Diffuse Light Store (DLS) keeps seed potatoes:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">In total darkness</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_7')">In bright shade, 2–3 layers deep on shelves — growing short tough green sprouts for months</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Underwater</button>
+<div class="q-exp" id="exp5_7"><strong>Why:</strong> Diffused light is the chitting principle made into a building: seed emerges from a DLS plant-ready, vigorous and unbroken — the cheapest yield technology in the crop.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Long white fragile sprouts on stored seed indicate:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Ideal storage</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_8')">Dark storage — sprouts will snap at planting and vigour is being wasted</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">A new variety</button>
+<div class="q-exp" id="exp5_8"><strong>Why:</strong> Etiolated sprouts are the signature of a dark seed store: energy burned growing threads that break off. The DLS exists precisely to prevent this.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Washed or wet tubers going into storage:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Store best</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_9')">Rot fastest — store dry, cure first, inspect fortnightly</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Are required by buyers</button>
+<div class="q-exp" id="exp5_9"><strong>Why:</strong> Moisture is the rot accelerant. Dry-brushed, cured, sound tubers plus regular inspection give ware months of shelf life; washing happens at sale, not at storage.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. The highest-margin potato sale of the year is usually:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Main-harvest glut week</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_10')">The off-season irrigated crop landing when stores are empty, plus stored ware sold on the rise</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Giving it away</button>
+<div class="q-exp" id="exp5_10"><strong>Why:</strong> The price curve rewards whoever can deliver outside the glut. Off-season production and dark-store holding are the two machines for doing it.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn5" onclick="markComplete(5)">Mark Month 5 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="6">
+    <div class="module-header" onclick="toggleModule(6)">
+      <div class="module-num">6</div>
+      <div class="module-title">Month 6: Budgets, Markets &amp; the Seed Business</div>
+      <div class="module-status" id="status6">Locked</div>
+    </div>
+    <div class="module-body" id="body6">
+
+      <h3>Lesson 6.1 — The seed multiplication business</h3>
+      <p>Recall two facts: seed is 40–50% of every potato budget, and most farmers plant degenerated seed. Put together, they define the best business in this crop: <strong>becoming your area's seed multiplier</strong>. Start with certified/QDS stock, grow it in your cleanest wilt-free field with aphid control and roguing, dehaulm at seed size, cure, store in your DLS, and sell chitted egg-sized seed at planting time — when demand is desperate and prices are typically <strong>1.5–2&times; ware price per kg</strong>. Registering as a QDS producer (where national systems exist) adds inspection credibility and programme buyers. Your DLS full of green-sprouted seed in planting week is the strongest advertisement in the district.</p>
+      <h3>Lesson 6.2 — An honest half-hectare ware budget</h3>
+      <table>
+        <tr><th>Item</th><th>Assumption</th><th>Amount</th></tr>
+        <tr><td>Yield</td><td>Clean seed, full blight programme, two earthings, irrigation</td><td>~10 t (20 t/ha)</td></tr>
+        <tr><td>Gross @ $250/t blended</td><td>part glut sale, part stored/off-season ($150–400/t range)</td><td>~$2,500</td></tr>
+        <tr><td>Seed (0.9 t)</td><td>the big line — halves once you self-multiply</td><td>$450–650</td></tr>
+        <tr><td>Fertiliser + manure</td><td>K-led compound, split N</td><td>$250–400</td></tr>
+        <tr><td>Fungicide programme + labour + sundries</td><td>6–8 sprays in blight weather, hired peaks, sacks, transport</td><td>$350–550</td></tr>
+        <tr><td><strong>Indicative margin</strong></td><td>in ~4 months</td><td><strong>~$900–1,400 per half-hectare crop</strong></td></tr>
+      </table>
+      <p>Two crops a year with irrigation roughly doubles it; converting the seed line from purchase to self-supply moves $400+ per crop from cost to saving. Potato is a working-capital business — Module 6's discipline is cash planning as much as agronomy.</p>
+      <h3>Lesson 6.3 — Markets beyond the sack</h3>
+      <ul>
+        <li><strong>Restaurants/chips shops:</strong> weekly standing orders for washed, graded, large long tubers — pay for consistency and delivery, not just price.</li>
+        <li><strong>Crisps contracts:</strong> where processors operate, contract varieties at fixed prices — read the spec (dry matter, size band, sugar/fry test) before planting a single row.</li>
+        <li><strong>Seed sales:</strong> the margin king above.</li>
+        <li><strong>Boiled/roast street trade:</strong> buys your medium grade steadily all year in every town.</li>
+      </ul>
+      <h3>Lesson 6.4 — Records and the growth path</h3>
+      <p>Per block per season: seed source and class; planting/earthing/spray dates (with product, to prove rotation of chemistry); rainfall/irrigation notes; harvest tonnage by grade; storage losses; sales by date, channel and price. Your management report card is the <strong>seed line</strong>: track yield of self-multiplied vs bought seed each season — the day your positively-selected DLS seed matches certified, you have become the seed business. Grow the proven system — clean seed engine, blight discipline, two stores — one field at a time, adding the off-season irrigated crop before adding area.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> The seed multiplier's year — from certified stock to planting-week sales &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 6:</strong> Build the half-hectare budget with your real local prices (seed, fertiliser, sprays, labour, sack prices across the year). Model it twice: all ware sold at harvest, versus blended sale with storage and an off-season crop. Interview one potential premium customer (restaurant, crisps agent, or two neighbouring farmers as seed buyers) about requirements. Conclude with one paragraph: your year-one plan and whether ware or seed is your two-year destination.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 6 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Seed potato sold at planting time typically prices at:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">Half ware price</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_1')">1.5–2× ware price per kg</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">The same as stones</button>
+<div class="q-exp" id="exp6_1"><strong>Why:</strong> Desperate seasonal demand plus scarce clean supply sets the premium. The multiplier who stored vigorous chitted seed through a DLS captures it every single season.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. The seed multiplication system in one line is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Buy ware, resell it</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_2')">Certified stock → clean field, aphid control, roguing → dehaulm at seed size → cure → DLS → sell chitted at planting</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Harvest whatever grows</button>
+<div class="q-exp" id="exp6_2"><strong>Why:</strong> Each step protects the next: health in, size frozen at grade, vigour preserved in diffused light, sold exactly when the market begs. Skip one step and you sell ware, not seed.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Potato's biggest single input cost line is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_3')">Seed — commonly 40–50% of the budget</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Sacks</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">String</button>
+<div class="q-exp" id="exp6_3"><strong>Why:</strong> At 1.5–2 t/ha of seed, this line dwarfs the rest — which is why self-multiplication is the fastest margin improvement available to an established grower.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. A blight spray programme in the records should show:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Nothing — memory suffices</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_4')">Every spray's date AND product, proving chemistry rotation</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Only the money spent</button>
+<div class="q-exp" id="exp6_4"><strong>Why:</strong> The written spray log is how you verify alternation of modes of action, respect pre-harvest intervals, and diagnose which programme actually protected which block.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Crisps contracts should be signed:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_5')">After reading the spec — variety, dry matter, size band, fry test — before planting</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">Blind, specs are decorative</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">Only at harvest</button>
+<div class="q-exp" id="exp6_5"><strong>Why:</strong> Processor rejects on spec, not sympathy. The contract variety and its management are chosen at planting; the spec is the farm plan.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Two crops a year become possible with:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_6')">Irrigation for the off-season crop</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">Wishing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">Double-depth planting</button>
+<div class="q-exp" id="exp6_6"><strong>Why:</strong> The 90–120 day cycle plus dry-season water equals the crop that lands when stores are empty and prices peak — the highest-margin planting date on the calendar.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. The management report card this course sets is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_7')">Comparing yields of self-multiplied vs bought seed each season</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Counting clouds</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Neighbours' opinions</button>
+<div class="q-exp" id="exp6_7"><strong>Why:</strong> That comparison measures your whole seed system — selection, roguing, DLS. Parity with certified seed means your seed enterprise is real.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Restaurant and chips-shop customers pay primarily for:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_8')">Consistency of grade and reliable weekly delivery</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Poetry</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">The lowest price only</button>
+<div class="q-exp" id="exp6_8"><strong>Why:</strong> A kitchen cannot run out of chips. The farmer who shows up every week with the same washed grade owns that order for years — service is the moat.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Potato is described as a working-capital business because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_9')">Heavy seed, fertiliser and spray costs are committed months before revenue</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">No money is involved</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Banks farm it directly</button>
+<div class="q-exp" id="exp6_9"><strong>Why:</strong> A half-hectare crop ties up $1,000+ before a single sack sells. Cash planning — and the storage/off-season strategy smoothing income — is as decisive as agronomy.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Sound growth for a potato enterprise is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_10')">Prove the system on one field, add the off-season crop, convert seed to self-supply — then add area</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Triple area on borrowed seed immediately</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Stop keeping records once profitable</button>
+<div class="q-exp" id="exp6_10"><strong>Why:</strong> Intensity before area: each proven layer (clean seed engine, blight discipline, two stores, off-season water) multiplies every future hectare you add.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn6" onclick="markComplete(6)">Mark Month 6 Complete</button>
+    </div>
+  </div>
+
+  <div class="final-section">
+    <h2>&#127942; Final Project: Your Irish Potato Business Plan</h2>
+    <p>The final project is the complete business plan for your potato enterprise — the document that turns the seed strategy, the blight discipline and the storage system into a funded, dated, accountable plan.</p>
+    <ol><li><strong>Site and variety case:</strong> altitude/season suitability, chosen variety with blight rating, and target market evidence with prices.</li>
+<li><strong>Seed strategy page:</strong> source and class for season one, positive-selection routine, chitting plan, and refresh schedule — plus your DLS design.</li>
+<li><strong>Field calendar:</strong> planting date, both earthing dates with feeding, water plan through bulking, dehaulming and harvest windows.</li>
+<li><strong>Disease defence page:</strong> the layered blight plan with products and triggers, and the wilt prevention rules (seed, rotation map, hygiene) written as commitments.</li>
+<li><strong>Harvest and storage plan:</strong> grading standards, curing, ware store and DLS arrangements, inspection schedule, and the share held for price rise.</li>
+<li><strong>Budget and cash-flow:</strong> the full half-hectare (or your scale) budget in local prices, two sales scenarios, and the working-capital timeline showing when money is committed and recovered.</li>
+<li><strong>Risk page and year-3 vision:</strong> three risks with mitigations, and the staged path — off-season crop, seed self-supply, and whether you become the district's seed multiplier.</li></ol>
+    <p><strong>Submission standard:</strong> A plan you could hand to a savings group, a bank officer, or a family investor without embarrassment. Real local prices, real named buyers, honest risks.</p>
+  </div>
+
+  <div class="budget-section">
+    <h2>&#128176; Startup Budget &mdash; Half Hectare Ware Crop + DLS Seed Store</h2>
+    <p>Potato is the working-capital crop of this college: costs are front-loaded and seed dominates. The budget shows the first (bought-seed) season; from season two, self-multiplied seed moves the biggest line from cost to saving. Family labour assumed for routine work.</p>
+    <table>
+      <tr><th>Item</th><th>Details</th><th>Typical cost (USD)</th></tr>
+<tr><td>Seed (0.9–1 t certified/QDS)</td><td>The dominant line — 40–50% of budget</td><td>$450–650</td></tr>
+<tr><td>Land preparation</td><td>Ploughing/digging, furrowing</td><td>$60–120</td></tr>
+<tr><td>Manure + fertiliser</td><td>Compost, P-K compound, split N top-dress</td><td>$250–400</td></tr>
+<tr><td>Fungicide programme</td><td>Protectant + systemic, 6–8 sprays in blight weather, sprayer hire/share</td><td>$120–250</td></tr>
+<tr><td>Labour peaks</td><td>Planting, two earthings, dehaulming, harvest</td><td>$120–250</td></tr>
+<tr><td>Tools &amp; sprayer gear</td><td>Hoes, fork, knapsack access, protective wear</td><td>$60–150</td></tr>
+<tr><td>DLS + ware store setup</td><td>Bright-shade shelving, screens; dark ventilated ware space, sacks</td><td>$50–150</td></tr>
+<tr><td>Transport &amp; market costs</td><td>To market/restaurant deliveries</td><td>$50–120</td></tr>
+<tr><td>Contingency (10%)</td><td></td><td>$115–210</td></tr>
+<tr><td><strong>Total indicative startup</strong></td><td>Revenue in ~4 months; seed line halves from season two</td><td><strong>$1,275–2,300</strong></td></tr>
+    </table>
+    <p><em>Prices vary widely by country. Before spending anything, price every line in your own town and rebuild this table — that exercise is part of your final project.</em></p>
+  </div>
+
+  <div class="glossary-section">
+    <h2>&#128218; Glossary</h2>
+    <dl class="glossary">
+<dt>Ware</dt><dd>Potatoes grown and sold for eating, as opposed to seed.</dd>
+<dt>Seed potato</dt><dd>A tuber planted to grow the next crop; its health determines the field's ceiling.</dd>
+<dt>Seed degeneration</dt><dd>The season-on-season yield slide as aphid-borne viruses accumulate in recycled seed.</dd>
+<dt>Certified / QDS seed</dt><dd>Inspected seed classes — fully certified, or the lighter-touch quality-declared class multiplied locally.</dd>
+<dt>Positive selection</dt><dd>Pegging the best symptom-free plants at flowering and saving seed only from them — worth 20–30% yield.</dd>
+<dt>Chitting</dt><dd>Pre-sprouting seed 2–4 weeks in diffused light to short tough green sprouts before planting.</dd>
+<dt>Stolon</dt><dd>The underground stem on which tubers form; buried stem length creates tuber sites.</dd>
+<dt>Earthing up / ridging</dt><dd>Drawing furrow soil around stems — more stolons, no greening, moth wall, blight buffer.</dd>
+<dt>Solanine</dt><dd>The toxin in green or heavily sprouted tubers; the reason for total darkness in ware storage.</dd>
+<dt>Late blight</dt><dd>Phytophthora infestans — the famine pathogen; fought with resistance, preventive sprays, and hygiene.</dd>
+<dt>Bacterial wilt</dt><dd>Ralstonia solanacearum — incurable, soil-persistent; prevented via clean seed, long rotation and roguing.</dd>
+<dt>Dehaulming</dt><dd>Cutting the tops 2–3 weeks pre-harvest for skin set, blight protection and seed sizing.</dd>
+<dt>Skin set</dt><dd>The firming of tuber skin after haulm death that makes tubers handle- and store-able.</dd>
+<dt>Curing</dt><dd>1–2 weeks dark airy rest after harvest letting wounds heal before storage.</dd>
+<dt>Diffuse Light Store (DLS)</dt><dd>An open-sided bright-shade seed store keeping sprouts short, green and vigorous for months.</dd>
+<dt>Pre-harvest interval</dt><dd>The label-mandated gap between last spray and harvest — a food-safety obligation.</dd>
+    </dl>
+  </div>
+
+  <div class="resources-section">
+    <h2>&#128279; Further Resources</h2>
+    <ul><li>International Potato Center (CIP) — free African guides on positive selection, DLS construction, seed systems and late blight management.</li>
+<li>Your national potato programme and extension office — released varieties with blight ratings, certified/QDS seed sources, and QDS producer registration where available.</li>
+<li>Registered agro-dealers — fungicide options with labels; insist on protectant AND systemic modes of action and read pre-harvest intervals.</li>
+<li>Local restaurants, chips shops and crisps processors — the spec sheets that should shape your variety choice before planting.</li>
+<li>Rise Africa Skills companion courses: Sweet Potato (ridge logic and crack-sealing), Tomato Farming (shared solanaceous diseases and rotation planning), Beans &amp; Legumes (rotation partners that break wilt cycles).</li></ul>
+  </div>
+
+  <div class="cert-section">
+    <h2>&#127891; Course Completion</h2>
+    <p>Complete all 6 months and pass the quizzes to unlock your certificate.</p>
+    <a href="certificate.html?course=Irish%20Potato%20Farming" class="cert-btn" id="certBtn" disabled>Get Certificate</a>
+  </div>
+</div>
+<script>
+  const TOTAL_MODULES = 6;
+  const COURSE_KEY = 'irish-potato-farming';
+  let completed = JSON.parse(localStorage.getItem(COURSE_KEY + '_progress') || '[]');
+
+  function toggleModule(n) {
+    if (n > 1 && !completed.includes(n-1)) { alert('Complete Month ' + (n-1) + ' first.'); return; }
+    document.getElementById('body' + n).classList.toggle('active');
+  }
+  function answerQ(btn, isCorrect, expId) {
+    const parent = btn.parentElement;
+    const buttons = parent.querySelectorAll('.q-opt');
+    if (buttons[0].disabled) return;
+    buttons.forEach(b => { b.disabled = true; });
+    if (isCorrect) { btn.classList.add('correct'); }
+    else {
+      btn.classList.add('wrong');
+      buttons.forEach(b => { if (b.dataset.c === '1') b.classList.add('correct'); });
+    }
+    document.getElementById(expId).classList.add('show');
+    const quiz = btn.closest('.quiz-wrap');
+    quiz.dataset.answered = (parseInt(quiz.dataset.answered||'0') + 1);
+    quiz.dataset.score = (parseInt(quiz.dataset.score||'0') + (isCorrect ? 1 : 0));
+    if (parseInt(quiz.dataset.answered) >= parseInt(quiz.dataset.total)) {
+      const s = quiz.querySelector('.quiz-score');
+      s.textContent = 'Quiz result: ' + quiz.dataset.score + ' / ' + quiz.dataset.total + (parseInt(quiz.dataset.score) >= 7 ? ' — Pass. Well done!' : ' — Below 7/10. Re-read the module, then review your wrong answers.');
+    }
+  }
+  function markComplete(n) {
+    if (!completed.includes(n)) {
+      completed.push(n); completed.sort((a,b)=>a-b);
+      localStorage.setItem(COURSE_KEY + '_progress', JSON.stringify(completed));
+    }
+    updateUI();
+  }
+  function updateUI() {
+    document.getElementById('completedCount').textContent = completed.length;
+    document.getElementById('progressBar').style.width = (completed.length/TOTAL_MODULES*100) + '%';
+    for (let i=1; i<=TOTAL_MODULES; i++) {
+      const st = document.getElementById('status'+i), btn = document.getElementById('btn'+i);
+      if (completed.includes(i)) { st.textContent='Done'; st.classList.add('done'); if(btn){btn.textContent='Completed'; btn.disabled=true;} }
+      else if (i===1 || completed.includes(i-1)) { st.textContent='Start'; }
+      else { st.textContent='Locked'; }
+    }
+    if (completed.length >= TOTAL_MODULES) {
+      const c = document.getElementById('certBtn');
+      c.removeAttribute('disabled'); c.textContent = 'Get Your Certificate!';
+    }
+  }
+  updateUI();
+</script>
+</body>
+</html>

@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Wheat &amp; Barley Farming - A complete practical course from Rise Africa Skills. Learn offline, anytime.">
+<title>Wheat &amp; Barley Farming | Rise Africa Skills</title>
+<style>
+  :root { --gold:#eab308; --gold-dark:#a16207; --green:#16a34a; --bg:#0f172a; --card:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --line:#334155; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:var(--bg); color:var(--text); line-height:1.65; }
+  header { background:linear-gradient(135deg,var(--gold-dark) 0%,#713f12 100%); padding:44px 20px; text-align:center; }
+  header h1 { font-size:2rem; margin-bottom:8px; }
+  header p { color:rgba(255,255,255,0.88); max-width:640px; margin:0 auto; }
+  .badge { display:inline-block; background:var(--gold); color:#1e293b; padding:4px 14px; border-radius:20px; font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-top:12px; letter-spacing:0.4px; }
+  .container { max-width:920px; margin:0 auto; padding:30px 20px; }
+  .progress-bar { background:var(--card); border-radius:10px; height:10px; margin-bottom:28px; overflow:hidden; }
+  .progress-fill { background:var(--gold); height:100%; width:0%; border-radius:10px; transition:width .4s ease; }
+  .overview { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-bottom:26px; }
+  .overview h2 { color:var(--gold); font-size:1.15rem; margin-bottom:10px; }
+  .overview ul { margin:8px 0 14px 20px; color:var(--muted); }
+  .overview li { margin:5px 0; }
+  .meta-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+  .meta-chip { background:#0b1220; border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:0.85rem; color:var(--muted); }
+  .meta-chip b { color:var(--text); }
+  .module { background:var(--card); border-radius:12px; margin-bottom:16px; overflow:hidden; border:1px solid var(--line); }
+  .module-header { padding:18px 22px; cursor:pointer; display:flex; align-items:center; gap:14px; transition:background .2s; }
+  .module-header:hover { background:#26354a; }
+  .module-num { background:var(--gold); color:#1e293b; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0; }
+  .module-title { flex:1; font-weight:600; }
+  .module-status { font-size:0.75rem; padding:4px 10px; border-radius:12px; background:var(--line); color:var(--muted); white-space:nowrap; }
+  .module-status.done { background:var(--green); color:#fff; }
+  .module-body { display:none; padding:0 22px 24px; border-top:1px solid var(--line); }
+  .module-body.active { display:block; }
+  .module-body p { color:var(--muted); margin:13px 0; }
+  .module-body ul, .module-body ol { margin:10px 0 10px 22px; color:var(--muted); }
+  .module-body li { margin:6px 0; }
+  .module-body strong { color:var(--text); }
+  .module-body h3 { color:var(--gold); font-size:1.05rem; margin:22px 0 4px; }
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.88rem; }
+  th { background:#0b1220; color:var(--gold); text-align:left; padding:9px 10px; border:1px solid var(--line); }
+  td { padding:8px 10px; border:1px solid var(--line); color:var(--muted); vertical-align:top; }
+  tr:nth-child(even) td { background:#1a2537; }
+  .tip-box { background:rgba(234,179,8,0.08); border-left:4px solid var(--gold); padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .tip-box strong { color:var(--gold); }
+  .warn-box { background:rgba(239,68,68,0.08); border-left:4px solid #ef4444; padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .warn-box strong { color:#f87171; }
+  .assign-box { background:#0b1220; border:1px dashed var(--gold-dark); border-radius:10px; padding:16px 18px; margin:16px 0; color:var(--muted); }
+  .assign-box strong { color:var(--gold); }
+  .video-box { background:#0b1220; border:1px solid var(--line); border-radius:10px; padding:14px 18px; margin:16px 0; color:var(--muted); font-size:0.9rem; }
+  .quiz-wrap { background:#0b1220; border:1px solid var(--line); border-radius:12px; padding:20px; margin-top:20px; }
+  .quiz-wrap h3 { margin-top:0 !important; }
+  .q-block { margin:16px 0; padding-bottom:14px; border-bottom:1px solid #1e293b; }
+  .q-block:last-child { border-bottom:none; }
+  .q-text { font-weight:600; color:var(--text); margin-bottom:8px; }
+  .q-opt { display:block; width:100%; text-align:left; padding:9px 13px; margin:5px 0; background:var(--card); border:1px solid #475569; border-radius:8px; color:var(--text); cursor:pointer; transition:all .2s; font-size:0.9rem; }
+  .q-opt:hover { border-color:var(--gold); }
+  .q-opt.correct { background:#14532d; border-color:var(--green); }
+  .q-opt.wrong { background:#7f1d1d; border-color:#ef4444; }
+  .q-exp { display:none; margin-top:8px; padding:10px 13px; background:rgba(234,179,8,0.07); border-left:3px solid var(--gold); border-radius:0 6px 6px 0; color:var(--muted); font-size:0.87rem; }
+  .q-exp.show { display:block; }
+  .quiz-score { margin-top:12px; font-weight:700; color:var(--gold); }
+  .check-btn { background:var(--gold); color:#1e293b; border:none; padding:11px 26px; border-radius:8px; font-weight:700; cursor:pointer; margin-top:16px; transition:background .2s; }
+  .check-btn:hover { background:#facc15; }
+  .check-btn:disabled { opacity:0.5; cursor:not-allowed; }
+  .final-section, .budget-section, .glossary-section, .resources-section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-top:26px; }
+  .final-section h2, .budget-section h2, .glossary-section h2, .resources-section h2 { color:var(--gold); font-size:1.2rem; margin-bottom:10px; }
+  .final-section p, .budget-section p, .resources-section p { color:var(--muted); margin:10px 0; }
+  .final-section ol, .resources-section ul { margin:10px 0 10px 22px; color:var(--muted); }
+  .final-section li, .resources-section li { margin:6px 0; }
+  dl.glossary dt { color:var(--text); font-weight:700; margin-top:12px; }
+  dl.glossary dd { color:var(--muted); margin-left:0; font-size:0.92rem; }
+  .cert-section { text-align:center; padding:40px 20px; background:var(--card); border-radius:16px; margin-top:30px; border:1px solid var(--line); }
+  .cert-section h2 { margin-bottom:10px; }
+  .cert-section p { color:var(--muted); margin-bottom:20px; }
+  .cert-btn { background:var(--gold); color:#1e293b; border:none; padding:14px 36px; border-radius:10px; font-size:1rem; font-weight:800; cursor:pointer; text-decoration:none; display:inline-block; }
+  .cert-btn[disabled] { opacity:0.4; pointer-events:none; }
+  .nav-bar { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:var(--card); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:100; }
+  .nav-bar a { color:var(--text); text-decoration:none; font-weight:600; }
+  .nav-bar a:hover { color:var(--gold); }
+  .completion-count { color:var(--muted); font-size:0.9rem; }
+  @media (max-width:600px){ header h1{font-size:1.5rem;} .module-header{padding:14px 16px;} .module-body{padding:0 16px 18px;} table{font-size:0.8rem;} th,td{padding:6px 7px;} }
+</style>
+</head>
+<body>
+<nav class="nav-bar">
+  <a href="index.html">&#8592; Back to Courses</a>
+  <span class="completion-count"><span id="completedCount">0</span> / 6 months completed</span>
+</nav>
+<header>
+  <div class="badge">Agriculture &middot; 6-Month Program</div>
+  <h1>Wheat &amp; Barley Farming</h1>
+  <p>Cool-season cereals in Africa's highlands — altitude-window discipline, rust resistance, frost-safe flowering varieties, dense-stand weed suppression, and institutional buyers waiting for group-aggregated supply.</p>
+</header>
+<div class="container">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+
+  <div class="overview">
+    <h2>Course Overview</h2>
+    <p style="color:var(--muted);">Wheat and barley are Africa's cool-season cereals, grown at altitude (1,500–2,400 metres) where maize fails in cold nights and where real, organised demand waits from flour mills, bakeries, breweries and institutional buyers (schools, hospitals). The crop is not about rainfall: it is about having the right COLD season at the right altitude. This course teaches altitude farming precisely because altitude is where the crop succeeds — and where many smallholders don't yet grow it. The altitude-window rule: optimal wheat 1,800–2,400 metres, optimal barley 1,500–2,200 metres. Above or below, the risks compound. Variety choice is altitude-determined: released-for-your-elevation varieties carry the frost tolerance and maturity needed. Rust (especially leaf rust, the signature highland disease) is genetics-first: resistant varieties are the default defence, with fungicide and hygiene as reinforcement. The harvest logic — hard-dough maturity, quick drying, gentle threshing — is familiar from maize, but altitude's dry climate makes it simpler. Storage is straightforward (wheat stores well at 11–12%) and seed storage is fragile (hermetic, cool, tested). The business module opens doors: institutional buyers run group programmes with published specs and certain prices — far better than trading margins. Group registration and a simple store (often a rented room) are the entry gates.</p>
+    <h2 style="margin-top:16px;">What You Will Learn</h2>
+    <ul><li>Match wheat and barley to altitude — the 1,500–2,400 m window is the crop's hinge</li>
+<li>Understand released varieties: altitude-determined, rust-resistant, frost-tolerant, maturity-matched</li>
+<li>Plant at the season's start (cool-season calendar, not date book) into moist soil at dense rates</li>
+<li>Build balanced fertility (N, P, K, manure) and manage the mid-season crop calendar</li>
+<li>Fight rust with variety resistance (primary), airflow, timely chemistry, and volunteer removal</li>
+<li>Recognise frost risk at flowering, choose late-flowering varieties, and know your frost dates</li>
+<li>Harvest at hard dough, dry to 11–12%, and separate grain from seed stock hermetically</li>
+<li>Access institutional buyers through group registration — certain, reliable channels paying premium</li></ul>
+    <div class="meta-row">
+      <div class="meta-chip"><b>Duration:</b> 6 months, one module per month</div>
+      <div class="meta-chip"><b>Level:</b> Beginner &rarr; Job-ready</div>
+      <div class="meta-chip"><b>Units:</b> Metric with imperial where useful</div>
+      <div class="meta-chip"><b>Final project:</b> Your own business plan</div>
+    </div>
+  </div>
+
+  <div class="module" data-module="1">
+    <div class="module-header" onclick="toggleModule(1)">
+      <div class="module-num">1</div>
+      <div class="module-title">Month 1: Cool-Season Cereals in African Highlands</div>
+      <div class="module-status" id="status1">Start</div>
+    </div>
+    <div class="module-body" id="body1">
+
+      <h3>Lesson 1.1 — Cool-season cereals in Africa's highlands</h3>
+      <p>Wheat and barley are Africa's cool-season cereals — grown at altitude (1,500+ metres) or in dry winters (sub-Saharan south and east) where maize fails or yields poorly in cold nights. East Africa (especially Ethiopia, Kenya highlands) grows ~80% of the continent's wheat; production has climbed as highland farms add winter crops and as bread wheat demand grows in urban markets. <strong>There is real, organised demand:</strong> flour millers, bakeries, breweries (barley), livestock feed mills, and increasingly, smallholder farmer groups selling cleaned grain directly to institutional buyers (schools, hospitals).</p>
+      <ul>
+        <li>Season: <strong>120–180 days</strong> depending on altitude and variety (long at high altitude, shorter at lower elevations).</li>
+        <li>Yields: <strong>1–2 t/ha</strong> rain-fed at altitude; 2–3.5+ t/ha with added fertility and (where water allows) supplemental irrigation at harvest time.</li>
+        <li>Growing in Africa is <strong>often not about drought but about having the right COLD season</strong> at the right altitude — choose your land by elevation and frost timing, not rainfall alone.</li>
+        <li>Key enemies: <strong>rust diseases (leaf rust most common), Septoria blotch,</strong> and late-season frost at boot/flowering.</li>
+      </ul>
+      <h3>Lesson 1.2 — Wheat vs Barley: the crop choice</h3>
+      <table>
+        <tr><th>Crop</th><th>Character</th><th>Best fit</th></tr>
+        <tr><td><strong>Bread wheat</strong></td><td>120–150 days, grows 80–120 cm, hard-grain varieties, high protein</td><td>Flour, bread, noodles — urban market staple; prices relatively stable</td></tr>
+        <tr><td><strong>Durum wheat</strong></td><td>Similar days; harder grain, different gluten; semi-arid niche</td><td>Pasta, premium flour; smaller market but premium price</td></tr>
+        <tr><td><strong>Barley</strong></td><td>90–140 days; shorter plants, fast-maturing, hardy in cold/marginal land</td><td>Brewing (malt), livestock feed, porridge/brewing locally; steady price</td></tr>
+      </table>
+      <h3>Lesson 1.3 — The altitude-window rule</h3>
+      <p>Wheat and barley in Africa thrive in a narrow altitude band: <strong>optimum 1,800–2,400 metres for wheat, 1,500–2,200 for barley</strong>. Above 2,400 m, frost risk at flowering rises; below 1,500 m (except far south in winter rains), warm days don't satisfy the crop's cold requirement for vernalisation (the overwintering cold that triggers flowering). Knowing your altitude and frost dates is as important as knowing rainfall — more so. <strong>The altitude window is your true crop choice.</strong></p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Altitude window, frost calendars, rust weather — why highlands win in Africa &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 1:</strong> Identify your altitude (GPS, map, or local knowledge) and your frost-date window (ask farmers, extension office). Research wheat and barley prices locally (household retail, trader bulk, mill prices, institutional if a programme exists). Note nearby relief: highlands yes/no, frost risk yes/no. Choose: bread wheat, durum, or barley, with a paragraph of reasoning tied to YOUR altitude and market.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 1 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Wheat and barley in Africa are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_1')">Cool-season cereals grown at altitude or in dry winters where maize fails in cold nights</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">Tropical crops requiring heat always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">Unknown on the continent</button>
+<div class="q-exp" id="exp1_1"><strong>Why:</strong> Africa's wheat belt follows highlands: Ethiopia, Kenya, South Africa, Zimbabwe — high ground where cold seasons enable the crop.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. African wheat and barley demand comes from:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_2')">Flour millers, bakeries, breweries, feed mills, and institutional buyers (schools, hospitals) — organised channels</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">Nobody</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">Only decorative interest</button>
+<div class="q-exp" id="exp1_2"><strong>Why:</strong> The market is real and growing. Smallholder groups increasingly sell cleaned grain to these buyers, cutting trading margins and capturing quality premiums.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. East Africa grows roughly:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_3')">~80% of Africa's wheat — Ethiopia, Kenya highlands lead in production</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">Nothing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">All of it</button>
+<div class="q-exp" id="exp1_3"><strong>Why:</strong> The production geography is real: altitude suitable, institutional buyers established, farmer knowledge communities existing.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. The key to growing wheat in Africa is often:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_4')">Having the right COLD season at the right altitude — choose your land by elevation and frost timing, not rainfall alone</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">Lots of rain always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">No elevation matters</button>
+<div class="q-exp" id="exp1_4"><strong>Why:</strong> A rain-abundant lowland without cold does not grow wheat; a cold clear highland grows it on half the rain. Vernalisation (cold) is the crop's master switch.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Optimal altitude for bread wheat is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_5')">~1,800–2,400 metres — above 2,400 m, frost risk at flowering rises; below 1,500 m, insufficient cold for vernalisation</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Sea level always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">10,000 metres</button>
+<div class="q-exp" id="exp1_5"><strong>Why:</strong> The altitude window is narrow and absolute. Knowing your farm's elevation decides whether wheat is viable or a fool's errand.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Barley compared to wheat is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_6')">Shorter plants, faster-maturing (90–140 days), hardier in cold/marginal land — the rougher-ground cereal</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">Identical in every way</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">Taller and slower always</button>
+<div class="q-exp" id="exp1_6"><strong>Why:</strong> The barley advantage is its flexibility: works on marginal land where wheat might fail, and a 90-day cycle catches early harvests or double crops.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Bread wheat uses are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_7')">Flour, bread, noodles — the urban staple; prices relatively stable</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">Animal feed only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">Nothing</button>
+<div class="q-exp" id="exp1_7"><strong>Why:</strong> Urban demand is the wheat market anchor: cities want bread. The price is institutional and stable compared to commodity maize.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Durum wheat is grown for:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_8')">Pasta and premium flour in a semi-arid niche; smaller market but premium price</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Nothing in Africa</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Common everywhere</button>
+<div class="q-exp" id="exp1_8"><strong>Why:</strong> A real but smaller market: durum commands premiums where it is known; hard to sell if the buyer network is maize-oriented.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Frost at flowering is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_9')">A killer event: grain set fails or is severely reduced — timing variety and planting to miss late frosts is essential</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">Beneficial for yield</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">Never a problem</button>
+<div class="q-exp" id="exp1_9"><strong>Why:</strong> A single frost night at R1 can zero the crop's grain. Highland farmers know their frost calendars like maize farmers know their rains.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Barley for brewing (malting) is bought with:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_10')">Tight specs: specific grain type, low protein in some specs (malts will add enzymes), consistent size — premium prices where specs are met</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Random grain</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Anything works</button>
+<div class="q-exp" id="exp1_10"><strong>Why:</strong> Breweries have exacting demands; meet them and the price is stable; miss them and the grain goes to feed. Specs are written before planting.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn1" onclick="markComplete(1)">Mark Month 1 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="2">
+    <div class="module-header" onclick="toggleModule(2)">
+      <div class="module-num">2</div>
+      <div class="module-title">Month 2: Seed, Timing, Fertility &amp; Stand</div>
+      <div class="module-status" id="status2">Locked</div>
+    </div>
+    <div class="module-body" id="body2">
+
+      <h3>Lesson 2.1 — Land and seed bed</h3>
+      <p>Wheat and barley in Africa are planted by the rainfall (or frost) calendar, not a fixed date. <strong>Rules of thumb:</strong></p>
+      <ul>
+        <li><strong>Timing:</strong> plant at the start of reliable cool season (April–June in East highlands, February–April in Southern Africa) into moist soil. Avoid planting too late (crop fails to mature before hot season).</li>
+        <li><strong>Seedbed:</strong> fine firm tilth after 1–2 cultivations; remove old crop residue; rough seedbeds waste seed.</li>
+        <li><strong>Seed rate:</strong> <strong>wheat 80–100 kg/ha, barley 60–80 kg/ha</strong> — dense stands suppress weeds and disease. Thin stands invite both.</li>
+        <li><strong>Variety:</strong> released-for-your-altitude varieties are essential — altitude determines maturity-day requirement and frost risk. Off-altitude seed is a bet against your weather.</li>
+      </ul>
+      <h3>Lesson 2.2 — Fertility: nitrogen and the rest</h3>
+      <table>
+        <tr><th>Input</th><th>Role</th><th>Notes</th></tr>
+        <tr><td><strong>N (nitrogen)</strong></td><td>Straw growth and grain fill; over-N lodges the crop and pushes rust</td><td>Balanced N: 60–100 kg/ha split basal + top-dress at boot; more than this risks disease and lodging</td></tr>
+        <tr><td><strong>P &amp; K</strong></td><td>Root growth, disease resistance, grain quality</td><td>Where soils test low, a starter compound (NPK) at planting helps; K especially on sandy highlands</td></tr>
+        <tr><td><strong>Manure/compost</strong></td><td>Foundation fertility, soil structure</td><td>2–3 t/ha worked into seedbed; reduces (but does not replace) synthetic N need</td></tr>
+      </table>
+      <h3>Lesson 2.3 — Sowing and early stand</h3>
+      <p>Broadcast sown (traditional, fast, wastes some seed) or line-sown (more efficient, better stand, labour-intensive). <strong>Sow into moist soil</strong> — if the rains have started, timing is right. If broadcasting into a dry seedbed expecting rains, the gamble is high; ridge-plant or line-sow to position seed at moisture depth. Germination and emergence are fast in cool season. By 3–4 weeks, tillers are visible and the first weeding opportunity appears. <strong>Dense stands suppress weeds and disease; thin stands invite both.</strong></p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Dense stands suppress weeds and disease — the population rule at altitude &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 2:</strong> Obtain the released-variety list from extension, noting maturity and rust ratings; choose a variety released FOR YOUR ALTITUDE. Prepare land: 1–2 cultivations, fine tilth, old residue removed. Source seed (80–100 kg wheat, 60–80 kg barley per hectare). Prepare manure/compost (2–3 t/ha) and NPK starter. Plant at season start into moist soil. At 3–4 weeks, count tillers on several plants, note tiller count and assess stand fullness.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 2 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Wheat and barley are planted:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_1')">At the start of the cool season (rainfall + frost calendar), into moist soil</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">Fixed calendar date forever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">Random timing</button>
+<div class="q-exp" id="exp2_1"><strong>Why:</strong> The season, not the calendar, is the boss. Highland farmers read weather; they don't consult date books.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Seedbed quality for wheat is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_2')">Fine firm tilth, old residue removed — rough seedbeds waste seed and give weeds the edge</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">Lumpy and rough preferred</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">Underwater always</button>
+<div class="q-exp" id="exp2_2"><strong>Why:</strong> A legible seedbed is the cheapest input: the same field work that preps maize applies here.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Wheat seed rate is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_3')">80–100 kg/ha — dense stands suppress weeds and disease; thin stands invite both</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">10 kg/ha</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">1000 kg/ha</button>
+<div class="q-exp" id="exp2_3"><strong>Why:</strong> Small-grain population logic: enough plants to shade the ground and out-compete weeds is cheaper than weeding a thin stand.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Barley seed rate is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_4')">60–80 kg/ha — slightly lower than wheat because it tillers more aggressively</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">20 kg/ha</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">Everything in one row</button>
+<div class="q-exp" id="exp2_4"><strong>Why:</strong> Barley's tiller responsiveness means less seed gives full stands. Plant confidence, not insurance here.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Variety choice for altitude is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_5')">Essential — altitude determines maturity days and frost risk; off-altitude seed is a bet against your weather</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">Any variety works everywhere</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">No difference</button>
+<div class="q-exp" id="exp2_5"><strong>Why:</strong> A wheat bred for lowland 1,000 m planted at 2,200 m will flower into frost and fail. Your altitude is your variety list.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Nitrogen on wheat is balanced at:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_6')">60–100 kg/ha split basal + top-dress at boot — more risks lodging and rust</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">Any amount is fine</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">None needed ever</button>
+<div class="q-exp" id="exp2_6"><strong>Why:</strong> The over-N trap: lush growth lodges and rusts. Matching N to altitude, variety and yield target prevents both extremes.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Manure/compost at 2–3 t/ha:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_7')">Reduces (but does not replace) synthetic N need and builds soil structure; foundational fertility investment</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Unnecessary</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Harms the crop</button>
+<div class="q-exp" id="exp2_7"><strong>Why:</strong> Highland soils often have thin O horizon and benefit from organic matter more than lowland soils. Manure is a long-term investment there.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Broadcast versus line-sown wheat is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_8')">Broadcast faster but wastes seed; line-sown more efficient, better stand, more labour-intensive — choose by economics</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">Broadcast is always best</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">Line-sowing is impossible</button>
+<div class="q-exp" id="exp2_8"><strong>Why:</strong> The trade-off is seed cost and labour cost. Efficiency varies by geography and market; both work.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Sowing into moist soil is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_9')">Essential for germination and emergence speed — if rains started, timing is right; if sowing into dryness, ridge-plant or line-sow to depth</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Impossible</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Not necessary</button>
+<div class="q-exp" id="exp2_9"><strong>Why:</strong> Moisture is germination's master switch. Sowing dry seed hoping for rains works in the Sahel; in the highlands, soil moisture is checkable and controllable.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Tiller emergence at 3–4 weeks signals:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_10')">First weeding opportunity and the crop's full stand picture — count and assess tiller per plant</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">Harvest time</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">Frost danger</button>
+<div class="q-exp" id="exp2_10"><strong>Why:</strong> Early tiller counts are a predict-ahead tool: many tillers mean full stand, few mean thinning decisions before you're locked in.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn2" onclick="markComplete(2)">Mark Month 2 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="3">
+    <div class="module-header" onclick="toggleModule(3)">
+      <div class="module-num">3</div>
+      <div class="module-title">Month 3: Rust, Disease &amp; Frost Watch</div>
+      <div class="module-status" id="status3">Locked</div>
+    </div>
+    <div class="module-body" id="body3">
+
+      <h3>Lesson 3.1 — Rust: the disease of cool seasons</h3>
+      <p><strong>Leaf rust (yellow/orange pustules on leaves)</strong> is wheat and barley's signature disease in African highlands: <strong>cool, moist, high-altitude conditions are rust weather</strong>. Stripe rust (yellow stripes on leaves) is more localised but aggressive. Stem rust (black pustules on stems) is rare in Africa now due to variety resistances but was historically devastating. The management stack:</p>
+      <ul>
+        <li><strong>Resistant varieties:</strong> released rust-resistant wheat and barley exist for every altitude band. This is THE default defence.</li>
+        <li><strong>Spacing and airflow:</strong> dense stands hold moisture and trap spores — thin where you can (without losing weed suppression) to dry-out leaves faster.</li>
+        <li><strong>Fungicide option:</strong> where rust is endemic and varieties lack full resistance, a timely triazole spray at first pustules (often R2–R4 flowering stage) is high-return; over-season use breeds resistance, so avoid routine spraying.</li>
+        <li><strong>Volunteer removal:</strong> rust oversummers on volunteer plants — hoe them out before the next planting to break the cycle.</li>
+      </ul>
+      <h3>Lesson 3.2 — Septoria and leaf blights</h3>
+      <ul>
+        <li><strong>Septoria tritici:</strong> tan-brown rectangular lesions on leaves, common in warm-wet seasons or lowland altitudes. Resistant varieties, rotation, and residue management help.</li>
+        <li><strong>Other leaf diseases (tan spot, anthracnose, Helminthosporium):</strong> less severe but show up together with rust in high-moisture years. Resistant-variety choice and rotation are the main defences.</li>
+      </ul>
+      <h3>Lesson 3.3 — Frost and the harvest enemy</h3>
+      <p><strong>Late frost at boot or flowering</strong> (which happens at altitude, especially April–May in East African highlands) <strong>can zero grain set</strong>. Some years are safe, some are not — frost risk is varietal (cold-tolerant types exist) and locational (valley floors colder than slopes). <strong>Knowing your frost calendar and choosing late-flowering varieties (that bloom after the frost window) is the only viable defence.</strong> Once frost damage shows (whitened, withered spikelets), the crop is written off — the grain cost is paid but not recovered.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Leaf rust in cool-season weather — and late frost at flowering, the altitude killer &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 3:</strong> Scout for leaf rust (orange pustules on leaves) or Septoria (rectangular lesions) from boot onward; record any findings with counts/photographs. Note your first-flowering date and compare to your local frost-date window: is flowering after the frost risk (safe) or during it (risky)? Write your frost-safety assessment. Price a triazole fungicide locally; decide your spray threshold (first pustules / preventive in known rust areas).</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 3 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Leaf rust in wheat and barley is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_1')">Cool, moist, high-altitude RUST WEATHER — yellow/orange pustules on leaves; worst in ideal disease conditions</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">A desert disease</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Impossible</button>
+<div class="q-exp" id="exp3_1"><strong>Why:</strong> Rust season IS wheat season in the highlands — cool wet nights at altitude are the fungus's perfect forecast. Resistance is the main shield.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. The management stack against rust is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_2')">Resistant varieties (primary), airflow/drying, timely triazole at first pustules (not routine), and volunteer hoe-out to break summer cycle</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Ignoring it completely</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Prayer alone</button>
+<div class="q-exp" id="exp3_2"><strong>Why:</strong> No single tactic beats rust; the stack is: genetics first, environment second, chemistry third, hygiene always.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Resistant wheat and barley varieties for African altitudes:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_3')">Exist for every altitude band (released varieties carry rust ratings) — this is THE default defence</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">Don't exist</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">Are ineffective</button>
+<div class="q-exp" id="exp3_3"><strong>Why:</strong> Decades of breeding has built resistance into the released varieties. Using susceptible landraces in high-rust zones is an unforced error.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Fungicide spray at first rust pustules (R2–R4) is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_4')">High-return when rust is endemic and variety resistance is not full — but routine over-season spraying breeds resistance</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Always necessary</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Never needed</button>
+<div class="q-exp" id="exp3_4"><strong>Why:</strong> Timing beats routine: one well-placed spray beats a season of guessing. And stopping at flowering preserves the fungicide's value for next season.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Volunteer wheat/barley hoed out before next planting breaks:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_5')">The rust-oversummer bridge — the fungus lives on volunteers between seasons; clean fields stop the annual reload</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Nothing important</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Volunteer removal unneeded</button>
+<div class="q-exp" id="exp3_5"><strong>Why:</strong> The soil's rest depends on eliminating the bridge host. Rotation without volunteer control is paper rotation.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Septoria tritici shows as:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_6')">Tan-brown rectangular lesions on leaves — common in warm-wet seasons or lowland altitudes</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Orange circles</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Perfume</button>
+<div class="q-exp" id="exp3_6"><strong>Why:</strong> The lesion shape is Septoria's signature; resistant varieties and rotation (not chemistry) are the main defences.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Stripe rust (yellow stripes on leaves) is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_7')">More localised than leaf rust but aggressive where it appears — resistant varieties are essential</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Common everywhere equally</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Impossible</button>
+<div class="q-exp" id="exp3_7"><strong>Why:</strong> Geography and altitude matter: some areas' signature diseases differ. Knowing YOUR disease pressures before variety choice is smart farming.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Late frost at boot or flowering can:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_8')">Zero grain set (frost-damaged spikelets whitened and withered) — choosing late-flowering varieties that bloom after the frost window is the only viable defence</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">Improve yields</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">Nothing bad</button>
+<div class="q-exp" id="exp3_8"><strong>Why:</strong> Once frost damage shows, the crop is written off. Prevention (frost calendar knowledge + late-maturing variety choice) is the only strategy.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Frost tolerance in variety choice is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_9')">A real genetics difference: cold-tolerant types exist; knowing your frost dates and choosing varieties that bloom safely after them is locational insurance</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Not possible</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Meaningless</button>
+<div class="q-exp" id="exp3_9"><strong>Why:</strong> Highland farmers who plant after knowing their last-frost date and choosing varieties that flower after it almost never lose crops to frost.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. A frost-damaged wheat field's recovery is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_10')">Impossible — the crop is written off; the field cost is paid but not recovered — preventing frost is the entire strategy</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Total yield rebound soon</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Automatic full recovery</button>
+<div class="q-exp" id="exp3_10"><strong>Why:</strong> Frost is binary: freeze-free, or failed. There is no partial recovery from a boot/flower frost. Prevention is the only sensible plan.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn3" onclick="markComplete(3)">Mark Month 3 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="4">
+    <div class="module-header" onclick="toggleModule(4)">
+      <div class="module-num">4</div>
+      <div class="module-title">Month 4: Weeds, Stages &amp; Grain-Fill Watch</div>
+      <div class="module-status" id="status4">Locked</div>
+    </div>
+    <div class="module-body" id="body4">
+
+      <h3>Lesson 4.1 — Weeds and the dense stand</h3>
+      <p>Wheat and barley's dense stands (denser than maize) suppress many weeds on their own. Where weeds are aggressive:</p>
+      <ul>
+        <li><strong>First weeding at 3–4 weeks:</strong> hand-pull or hoe broadleaves and grassy weeds before they compete hard; most damage happens early.</li>
+        <li><strong>Second weeding at 7–8 weeks (optional, if needed):</strong> catches late germinators and any survivors; by boot, the crop shades everything.</li>
+        <li><strong>Herbicide option:</strong> post-emergent cereals herbicides exist for wheat (kill broadleaves, spare the crop) where available; if used, apply early (pre-boot) and strictly per label.</li>
+      </ul>
+      <h3>Lesson 4.2 — Reading the crop calendar</h3>
+      <table>
+        <tr><th>Growth stage</th><th>Days from sowing (approximate)</th><th>See / Do</th></tr>
+        <tr><td>Germination to emergence</td><td>5–10</td><td>Moist soil, protected from birds</td></tr>
+        <tr><td>Leaf emergence (2–3 leaves visible)</td><td>10–20</td><td>First tiller sites appearing at base</td></tr>
+        <tr><td>Tillering (T1–T4+)</td><td>20–60</td><td>Multiple shoots from base; first weeding ~3–4 weeks; dense stand = disease suppression</td></tr>
+        <tr><td>Boot (flag leaf appearing)</td><td>60–90 (varies by altitude)</td><td>Final N top-dress in early boot; disease watch begins; herbicide window closes</td></tr>
+        <tr><td>Flowering (R1–R4)</td><td>90–120</td><td>Spikelet flowering; frost risk highest at R1–R2; if frost occurs, grain set fails</td></tr>
+        <tr><td>Grain fill (R5–R8)</td><td>120–150</td><td>Dough stages; grain weight accumulating; bird watch begins; field dries</td></tr>
+        <tr><td>Maturity (R9)</td><td>150–180</td><td>Grain hard, plant golden; harvest trigger</td></tr>
+      </table>
+      <h3>Lesson 4.3 — Late-season management</h3>
+      <p>Wheat in altitude rarely needs irrigation, but where water is available (stream, pond, hand pump) and timing hits the end of grain fill (R7–R8), a supplemental irrigation can boost final grain weight by 10–20%. More important: <strong>protect the harvest:</strong> birds (weavers especially) notice ripening grain in the 2–3 weeks before maturity; active scaring or early harvest (at hard dough, not over-ripe) is the defence.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Dense stands win the weed war; panicle stage through grain fill is the yield clock &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 4:</strong> Complete first weeding at 3–4 weeks (hand-pull or hoe to control early competition). Track crop stages: boot (flag leaf), flowering (R1 = spikelet opening), grain fill (dough stages). Build a 2–3 week bird-scaring plan for the final weeks before maturity. If stream/pond accessible, assess supplemental irrigation feasibility at R7–R8 (end of grain fill).</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 4 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Wheat and barley weeds are suppressed by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_1')">Dense stands (denser than maize) that shade the ground themselves — first weeding removes early competition, after that the crop wins</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Never suppressed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Extra chemicals always needed</button>
+<div class="q-exp" id="exp4_1"><strong>Why:</strong> The population rule again: enough plants = self-weed-suppression. Thin stands are poverty in every crop; here it means both weeds AND disease win.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. First weeding for wheat is at:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_2')">3–4 weeks (early, before damage compounds) and optional second at 7–8 weeks; by boot the crop shades everything</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">Never weeded</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">After boot is fine</button>
+<div class="q-exp" id="exp4_2"><strong>Why:</strong> Early competition is most expensive. The difference between a 2-week weed-free period and a 6-week period is yield per plant doubled.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Boot stage in wheat marks:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_3')">Final N top-dress window, disease watch beginning, and herbicide-spray closure — decisions made, execution ends</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">The start of major work</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Harvest time</button>
+<div class="q-exp" id="exp4_3"><strong>Why:</strong> By boot, the crop's architecture (tiller count, leaf area, N status) is set. Inputs after this are polish, not structure.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Flowering (R1–R4) brings:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_4')">Frost risk at the top (R1–R2 is the killer window) and the daily spikelet-opening calendar</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">No risk ever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">Guaranteed safety</button>
+<div class="q-exp" id="exp4_4"><strong>Why:</strong> Cold nights at flowering (and worse, a frost night) are the alpine farmer's nightmare. Frost timing is the elevation forecast.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Grain fill (R5–R8) happens with:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_5')">Field drying, grain accumulating weight daily, bird watch beginning — dough stages over 30–50 days</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Continued wet weather always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Nothing happening</button>
+<div class="q-exp" id="exp4_5"><strong>Why:</strong> Grain weight per head is decided daily during fill. Stress (water, heat, pests) during R5–R8 cuts yield per grain no later management recovers.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Supplemental irrigation at R7–R8 (end of grain fill) can boost yield by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_6')">10–20% where water is available and timing hits the window — high-return small-scale investment on altitude farms</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Nothing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Kills the crop</button>
+<div class="q-exp" id="exp4_6"><strong>Why:</strong> The end of grain fill is when every mm of water translates directly to grams of grain. A small-scale drip or bucket method pays back fast.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Bird pressure on wheat ripening is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_7')">Weaver and other grain-eating birds notice soft grain in the 2–3 weeks before maturity — scaring or early harvest is the defence</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Nonexistent</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Beneficial</button>
+<div class="q-exp" id="exp4_7"><strong>Why:</strong> Altitude's birds are fewer than lowland Quelea, but they target ripening grain hard. Early, timely harvest is the most effective defence.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Tillering count at 3–4 weeks predicts:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_8')">Stand density and the crop's full architecture — more early tillers = potentially full stand if kept healthy to boot</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">Nothing important</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">Disaster or success</button>
+<div class="q-exp" id="exp4_8"><strong>Why:</strong> Tiller count is forward-looking: low tiller counts in week 4 mean the final stand will be thin and weed-prone. Thin stands can't be fixed later.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Maturity (R9) is signalled by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_9')">Hard grain and golden plant — the harvest trigger; every extra day after this costs to birds and lodging</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Leaf greenness</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Smell</button>
+<div class="q-exp" id="exp4_9"><strong>Why:</strong> The plant speaks clearly: hard = done. Reading the plant is cheaper and more reliable than any calendar date.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. The frost calendar for altitude wheat means:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_10')">Knowing your last-frost date and choosing varieties that flower AFTER it is insurance against the season's biggest risk — late frosts are not rare</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Frost is never a risk</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Every frost kills permanently</button>
+<div class="q-exp" id="exp4_10"><strong>Why:</strong> Frost is binary: bloom after the frost window, or bet everything on a lucky year. Smart farmers bet on varieties and calendars, not luck.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn4" onclick="markComplete(4)">Mark Month 4 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="5">
+    <div class="module-header" onclick="toggleModule(5)">
+      <div class="module-num">5</div>
+      <div class="module-title">Month 5: Harvest, Drying &amp; Storage</div>
+      <div class="module-status" id="status5">Locked</div>
+    </div>
+    <div class="module-body" id="body5">
+
+      <h3>Lesson 5.1 — Harvest at hard dough</h3>
+      <p><strong>Harvest when grain is hard</strong> (thumbnail cannot dent it), plant is golden, and the field is dry. Delay beyond hard-dough stage (R9) invites lodging, bird loss and grain mould. Methods:</p>
+      <ul>
+        <li><strong>Hand sickle (traditional):</strong> fast, labour-intensive, cut into bundles, shock to dry before threshing.</li>
+        <li><strong>Motorised combine harvester (hire/shared):</strong> increasingly available in wheat zones; threshes in field, bags grain.</li>
+        <li><strong>Manual threshing:</strong> beat bundles with sticks or walk/animal on them — traditional, still common in Africa.</li>
+      </ul>
+      <h3>Lesson 5.2 — Drying and storage</h3>
+      <p><strong>Wheat and barley dry quickly — often harvest-dry or near-dry.</strong> Where fresh grain is >15% moisture, sun-dry on tarpaulins/racks (never bare soil) for 3–7 days until bite test shows clean cracks. <strong>Storage moisture target: 12% for sale, 11% for seed stock.</strong> Over-dried grain (<9%) cracks easily during threshing; under-dried (>13%) moulds or heats in storage.</p>
+      <h3>Lesson 5.3 — Storage for grain and seed</h3>
+      <ul>
+        <li><strong>Grain for sale:</strong> clean sacks on pallets in a dry ventilated store; inspect weekly for moisture and pests.</li>
+        <li><strong>Seed stock:</strong> dry to ~11%, hermetic containers (essential for fragile wheat/barley seeds), cool, shaded, labelled, germination-tested before next season.</li>
+      </ul>
+      <h3>Lesson 5.4 — Threshing and cleaning</h3>
+      <p>Threshed wheat and barley need winnowing to remove chaff and light material (traditional winnowing in the breeze, or motorised fan-winnower where available). A second pass through a gravity table or hand-sieving removes stones and weed seeds — important for flour-mill quality. <strong>Cleaned grain fetches a premium and stores longer.</strong></p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Hard dough harvest, altitude's drying gift, and hermetic seed stock &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 5:</strong> Harvest at hard-dough maturity (R9): grain cannot be dented by thumbnail, plant golden, field dry. Hand-cut or hire combine; thresh gently (sticks, animal walk, or combine at low drum speed). Sun-dry if needed (~3–7 days on tarpaulin), winnow clean. Store grain in clean sacks on a pallet (inspected weekly) or take directly to mill. Separate a seed stock: dry to ~11%, hermetic container (tin drum, plastic bag sealed), cool, labelled with variety and date.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 5 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Harvest timing for wheat is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_1')">Hard dough (R9) — thumb cannot dent grain, plant golden, field dry — every extra day costs to lodging and birds</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Green milk stage is perfect</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Over-ripe only</button>
+<div class="q-exp" id="exp5_1"><strong>Why:</strong> The plant's readiness is absolute. Late harvest on hope is a tax paid to weather and pests.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Freshly harvested wheat moisture is often:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_2')">Already dry or near-dry due to altitude/climate — 10–15% common — drying may need only days or be skipped if grain is already crack-dry</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">50% always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Frozen solid</button>
+<div class="q-exp" id="exp5_2"><strong>Why:</strong> Altitude's low humidity is a harvest gift: grain often dries faster than at sea level. Use that speed.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Storage moisture target for wheat is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_3')">12% for sale, 11% for seed stock — never below 9% (threshing damage) or above 13% (mould/heat)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">5% is best</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">20% is fine</button>
+<div class="q-exp" id="exp5_3"><strong>Why:</strong> The narrow safe window is the whole discipline: over-dry is brittle, under-dry is mouldy. Targeting 11–12% is the skill.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Wheat seed storage needs:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_4')">Dry to ~11%, hermetic containers, cool, shaded, labelled — germination-tested before next season (wheat seeds are fragile)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">Any old bag is fine</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">Sunlight preferred</button>
+<div class="q-exp" id="exp5_4"><strong>Why:</strong> Wheat's reputation for storability is compared to maize; compared to its seed's fragility, it requires careful handling.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Threshing wheat gently is important because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_5')">Rough beating cracks grain and produces breakage graded down at the mill or (for seed) destroys germination</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">More beating = better always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">Threshing cannot crack grain</button>
+<div class="q-exp" id="exp5_5"><strong>Why:</strong> The grain-coat is thin. A 5-minute gentle thresh beats a 2-minute beating for quality every time.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Winnowing wheat removes:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_6')">Chaff and light material (traditional in breeze or motorised fan-winnower) — essential cleaning step</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">Nothing important</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">Water</button>
+<div class="q-exp" id="exp5_6"><strong>Why:</strong> Clean grain fetches premiums from mills and seed buyers alike. The 30 minutes of winnowing in the afternoon breeze is margin-making work.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. A second cleaning pass (gravity table or hand-sieving) removes:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_7')">Stones and weed seeds — important for flour-mill quality and seed storage safety</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Nothing needed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Valuable nutrients</button>
+<div class="q-exp" id="exp5_7"><strong>Why:</strong> Millers grade on cleanliness; seed buyers reject contaminated lots. Two passes = two quality standards met.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Manual threshing methods (sticks, walking, animals) work because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_8')">Altitude wheat is often harvest-dry and threshes easily with light impact — no engine needed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">They never work</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Only machinery works</button>
+<div class="q-exp" id="exp5_8"><strong>Why:</strong> Altitude's drying climate is the African farmer's harvest gift. Manual methods are labour, not technology dependent.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. The bite test for wheat dryness is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_9')">Grain cracks cleanly between teeth, no dent — the whole-grain proof</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Never reliable</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Wasting time</button>
+<div class="q-exp" id="exp5_9"><strong>Why:</strong> The farmer's meter is always available and is honest: crack = dry, dent = damp. The test is faster than a moisture meter and more real.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Grain stored above 13% moisture is at risk of:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_10')">Mould and heating (mycotoxins, germination loss) — the reason 11–12% is the discipline</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Super-preservation forever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">No risk ever</button>
+<div class="q-exp" id="exp5_10"><strong>Why:</strong> Moisture + warmth = spoilage. Cool storage + dry grain = the simple combination that works.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn5" onclick="markComplete(5)">Mark Month 5 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="6">
+    <div class="module-header" onclick="toggleModule(6)">
+      <div class="module-num">6</div>
+      <div class="module-title">Month 6: Institutional Channels &amp; Group Paths</div>
+      <div class="module-status" id="status6">Locked</div>
+    </div>
+    <div class="module-body" id="body6">
+
+      <h3>Lesson 6.1 — Three market channels</h3>
+      <table>
+        <tr><th>Channel</th><th>Buyer</th><th>Price / Terms</th></tr>
+        <tr><td>Household &amp; local market</td><td>Families, local millers, neighbourhood traders</td><td>Often retail at highest price; quality matters (cleanliness, grain type)</td></tr>
+        <tr><td>Flour mill / baker</td><td>Organised millers and bakeries in towns</td><td>Bulk prices per kg; specs: grain type, moisture, cleanliness; can be contract</td></tr>
+        <tr><td><strong>Institutional buyers</strong></td><td>School feeding programmes, hospitals, army; smallholder groups aggregate supply</td><td>Published specs and prices; reliable; group registration usually required</td></tr>
+        <tr><td>Brewery (barley)</td><td>Commercial breweries, some informal brewing</td><td>Malting specs for barley; premium price for spec grain</td></tr>
+      </table>
+      <h3>Lesson 6.2 — An honest one-hectare budget (rain-fed altitude)</h3>
+      <table>
+        <tr><th>Item</th><th>Assumption</th><th>Amount</th></tr>
+        <tr><td>Yield</td><td>Improved variety, released for altitude, two weedings, frost-safe flowering, proper drying/storage</td><td>~1.5–2 t/ha</td></tr>
+        <tr><td>Gross</td><td>$0.60–0.90/kg (varies by channel: local highest, commodity trade lowest)</td><td>~$900–1,800</td></tr>
+        <tr><td>Seed (85 kg wheat, 70 kg barley)</td><td>Improved variety, released for altitude, treated or own careful seed</td><td>$40–90</td></tr>
+        <tr><td>Land prep and planting</td><td>1–2 cultivations, broadcast or line sowing</td><td>$60–120</td></tr>
+        <tr><td>Manure/compost + NPK starter</td><td>~2 t/ha + small compound dose</td><td>$60–150</td></tr>
+        <tr><td>Labour: weeding ×2, harvest, threshing, cleaning, storage</td><td></td><td>$150–300</td></tr>
+        <tr><td>Sacks, storage, cleaning grain, transport, market access</td><td></td><td>$80–150</td></tr>
+        <tr><td><strong>Indicative margin</strong></td><td>one cycle; altitude = no irrigation cost</td><td><strong>~$430–900/ha — solid altitude-farming income</strong></td></tr>
+      </table>
+      <h3>Lesson 6.3 — Contracts and group aggregation</h3>
+      <p>Institutional buyers (schools, hospitals, armed forces) often run programmes purchasing from smallholder groups: <strong>published specs, known prices, reliable markets.</strong> Registration as a farmer group and setting up a small clean store (even a rented storeroom) are the entry costs. The payoff is certainty — far better than selling to traders who take margin every time.</p>
+      <h3>Lesson 6.4 — Records and the growth path</h3>
+      <p>Per plot per season: variety and altitude (recorded for replanting reference); planting date; stand count at 4 weeks; weeding dates; boot and flowering dates (frost watch); harvest date; grain weight, moisture at sale, mill cleaning loss, and final price per kg. <strong>Report card: grain weight, moisture at harvest, and price achieved per kg.</strong> Growth path: year one — one excellent hectare done to release-variety standard; year two — double area or seek group registration with institutional buyer; year three — consistent supply (possibly multi-seasonal if autumn planting possible in your zone) and malting premium for barley.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Schools, hospitals, army, millers — and the group registration that opens doors &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 6:</strong> Map your three sale channels: local (household retail prices), commercial (flour mill and market trader prices), and institutional (if a programme exists). Research whether a farmer group registration scheme exists in your district (schools, health facilities, army contracts). Cost the entry: group registration (usually minimal) and storage option (rented room, cooperative store). Build the one-hectare budget with real local prices. Conclude with your year-one channel and your year-two group-registration timeline if the path appeals.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 6 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Institutional buyers (schools, hospitals, armed forces) buy wheat/barley from:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_1')">Smallholder groups via published specs and known prices — certain and reliable, far better than trading margin-taking</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">Individuals with single sacks</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">Nobody</button>
+<div class="q-exp" id="exp6_1"><strong>Why:</strong> The programmes exist and grow yearly. Registration as a farmer group is the entry gate — inside, certainty replaces haggling.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Flour mill specs for wheat include:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_2')">Grain type (bread vs durum), moisture, cleanliness, bulk density — specs written before harvest, not after rejection</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Any old wheat</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Nothing matters</button>
+<div class="q-exp" id="exp6_2"><strong>Why:</strong> Read specs before planting. A mill's wheat list decides your variety choice and every downstream decision.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. A rain-fed altitude hectare yields roughly:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_3')">~1.5–2 t/ha — solid, reliable, frost-free at proper altitude and timing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">0.1 t</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">50 t</button>
+<div class="q-exp" id="exp6_3"><strong>Why:</strong> Altitude's advantage is no irrigation cost and no heat stress; the climate does the work. Yields are stable and reliable.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. One altitude hectare at $0.70/kg average price earns:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_4')">~$1,050 gross, minus ~$150–300 costs = ~$600–900 margin — solid income</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Nothing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Unlimited wealth</button>
+<div class="q-exp" id="exp6_4"><strong>Why:</strong> Wheat's price is more stable than maize; margins are real and honest. Not rich, but reliable.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Barley for malting commands:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_5')">Premium prices where specs are met; specs include grain type, low protein in some (brewer's choice), consistent size</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">Same price as feed barley</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">No premium</button>
+<div class="q-exp" id="exp6_5"><strong>Why:</strong> A real but niche market: know whether malting breweries or feed mills are your buyers before variety choice.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Malting specs for barley require:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_6')">Specific grain type, consistency, low protein where relevant, and reliable supply — meeting these gets premium price</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">Anything will do</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">Highest protein always</button>
+<div class="q-exp" id="exp6_6"><strong>Why:</strong> Breweries are picky: they specify what they want down to the protein level. Hit the spec, get the price. Miss it, sell as feed.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Group registration for institutional supply means:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_7')">Set up as a smallholder group, open a simple store (rented room often fine), and bid collectively for school/hospital contracts — entry to certain markets</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Illegal somehow</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Pointless</button>
+<div class="q-exp" id="exp6_7"><strong>Why:</strong> The registration is paperwork; the payoff is certainty. Most successful altitude wheat farmers are in these groups by year three.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Cleaned grain (winnowed + sieved) sells for:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_8')">A premium over uncleaned — flour mills pay extra for cleanliness, seed buyers reject contaminated lots</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">The same price always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Less money</button>
+<div class="q-exp" id="exp6_8"><strong>Why:</strong> 30 minutes of winnowing and sieving in the afternoon breeze is margin-making work. Quality discipline pays.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. The three report-card numbers for wheat are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_9')">Grain weight (kg/ha), moisture at harvest, and price achieved ($/kg) — together they tell the whole story</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Rainfall amount</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Neighbour yields</button>
+<div class="q-exp" id="exp6_9"><strong>Why:</strong> Your weight = your agronomy, moisture = your drying discipline, price = your market choice. One reveals the others' quality.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Wheat seed storage in hermetic containers is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_10')">Essential for keeping 2–3 seasons of germination viable and variety identity crisp — open air loses both</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Unnecessary</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Wastes containers</button>
+<div class="q-exp" id="exp6_10"><strong>Why:</strong> Wheat seed declines fast; hermetic is the only way to preserve what takes a season to grow.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn6" onclick="markComplete(6)">Mark Month 6 Complete</button>
+    </div>
+  </div>
+
+  <div class="final-section">
+    <h2>&#127942; Final Project: Your Wheat &amp; Barley Business Plan</h2>
+    <p>The final project is your complete wheat or barley enterprise plan — altitude fit, frost calendar, rust strategy, and institutional-buyer pathway.</p>
+    <ol><li><strong>Altitude &amp; frost case:</strong> your elevation (with reasoning for wheat/barley viability), frost-date window, and late-flowering variety choice for frost safety.</li>
+<li><strong>Variety &amp; fertility plan:</strong> released-for-your-altitude variety with rust ratings, manure/compost sourcing (2–3 t/ha), balanced NPK with N split (basal + boot).</li>
+<li><strong>Stand &amp; density plan:</strong> land prep detail, seed rate (80–100 kg wheat / 60–80 kg barley), broadcast vs line-sown choice, target stand count at 4 weeks.</li>
+<li><strong>Disease &amp; weed protocol:</strong> rust scouting routine (visual, weekly from boot), fungicide trigger and window (if used), weeding schedule with dates, herbicide decision and window (if used).</li>
+<li><strong>Harvest &amp; quality chain:</strong> hard-dough trigger, threshing method and gentleness discipline, drying target (11–12%), winnowing/cleaning for mill grade, grain storage setup.</li>
+<li><strong>Budget &amp; channel choice:</strong> full hectare budget by all channels (household, trader, institutional), institutional-buyer specs if applicable, group registration timeline (if pursuing that path).</li>
+<li><strong>Risk page &amp; year-3 vision:</strong> three risks with mitigations (frost, rust, weed outbreak), and the staged growth — one perfect hectare year one, year two potentially with group registration, year three at institutional supply scale.</li></ol>
+    <p><strong>Submission standard:</strong> A plan you could hand to a savings group, a bank officer, or a family investor without embarrassment. Real local prices, real named buyers, honest risks.</p>
+  </div>
+
+  <div class="budget-section">
+    <h2>&#128176; Startup Budget &mdash; 1 Hectare Rain-Fed Altitude Wheat (Bread or Durum)</h2>
+    <p>Altitude's gift is no irrigation cost and climate-provided rust suppression through altitude (not all places). The margin is solid and reliable — not volatile like maize commodity prices. Institutional channels add certainty and premium.</p>
+    <table>
+      <tr><th>Item</th><th>Details</th><th>Typical cost (USD)</th></tr>
+<tr><td>Seed (85–100 kg, variety released for altitude)</td><td>Treated or own careful stock</td><td>$40–90</td></tr>
+<tr><td>Land prep (1–2 cultivations)</td><td>Fine tilth, residue removal</td><td>$60–120</td></tr>
+<tr><td>Manure/compost (2–3 t/ha)</td><td>Basal fertility</td><td>$60–150</td></tr>
+<tr><td>NPK starter fertiliser</td><td>Planting-time application</td><td>$20–50</td></tr>
+<tr><td>Urea for top-dress (boot stage, optional if manure high)</td><td>~30–50 kg/ha</td><td>$20–60</td></tr>
+<tr><td>Weeding labour ×2</td><td>Early (3–4 weeks) and optional late (7–8 weeks)</td><td>$80–150</td></tr>
+<tr><td>Harvest labour (hand sickle or combine hire)</td><td>Cutting &amp; threshing</td><td>$100–200</td></tr>
+<tr><td>Drying, winnowing, cleaning grain</td><td>Tarpaulins/racks, hand-winnowing or fan</td><td>$50–100</td></tr>
+<tr><td>Sacks, storage, transport, market access</td><td></td><td>$50–100</td></tr>
+<tr><td>Contingency (10%)</td><td></td><td>$50–110</td></tr>
+<tr><td><strong>Total indicative startup</strong></td><td>One season, altitude = no water</td><td><strong>$530–1,130</strong></td></tr>
+    </table>
+    <p><em>Prices vary widely by country. Before spending anything, price every line in your own town and rebuild this table — that exercise is part of your final project.</em></p>
+  </div>
+
+  <div class="glossary-section">
+    <h2>&#128218; Glossary</h2>
+    <dl class="glossary">
+<dt>Altitude window</dt><dd>The narrow optimal elevation for wheat (1,800–2,400 m) or barley (1,500–2,200 m); outside it, frost risk and disease pressure rise.</dd>
+<dt>Vernalisation</dt><dd>The overwintering cold that triggers flowering; wheat/barley require it; low-altitude warm seasons don't provide it.</dd>
+<dt>Leaf rust</dt><dd>Yellow/orange pustules on leaves; the signature wheat/barley disease of cool, moist, high-altitude conditions.</dd>
+<dt>Stripe rust</dt><dd>Yellow striped lesions on leaves; more localised than leaf rust but aggressive where present.</dd>
+<dt>Stem rust</dt><dd>Black pustules on stems; rare in Africa now due to released varieties but historically devastating.</dd>
+<dt>Septoria tritici</dt><dd>Tan-brown rectangular leaf lesions; common in warm-wet seasons or lowland altitudes.</dd>
+<dt>Boot stage</dt><dd>Flag leaf emerging from the sheath; the final N top-dress window and disease-watch beginning.</dd>
+<dt>Flowering (R1–R4)</dt><dd>Spikelet opening and closure daily; frost risk highest at R1–R2; any frost here zeros grain set.</dd>
+<dt>Grain fill (R5–R8)</dt><dd>Milky to hard-dough stages; grain weight accumulating daily; stress now cuts final yield per grain.</dd>
+<dt>Hard dough (R9)</dt><dd>Grain hard and cannot be dented by thumbnail; plant golden straw; the harvest trigger.</dd>
+<dt>Vernalisation failure</dt><dd>When a wheat/barley variety planted below the frost window does not flower properly — the altitude mismatch symptom.</dd>
+<dt>Released variety</dt><dd>A variety bred and tested for a specific altitude zone; release includes rust ratings, maturity days, frost tolerance.</dd>
+<dt>Dense stand</dt><dd>Populations at 80–100 kg/ha wheat or 60–80 kg/ha barley; shades ground and suppresses weeds naturally.</dd>
+<dt>Frost calendar</dt><dd>The dates of first and last expected frosts in your location; used to choose flowering-timing varieties.</dd>
+<dt>Supplemental irrigation (altitude)</dt><dd>Small application at R7–R8 grain fill (if water available) — can boost final grain weight by 10–20%.</dd>
+<dt>Institutional buyer</dt><dd>School/hospital/army feeding programmes; often purchase from smallholder groups with published specs and prices.</dd>
+<dt>Group aggregation</dt><dd>Smallholder farmers collectively register, operate a store, and supply institutional buyers — certain, reliable channel.</dd>
+    </dl>
+  </div>
+
+  <div class="resources-section">
+    <h2>&#128279; Further Resources</h2>
+    <ul><li>Your national wheat/barley programme and extension office — released varieties (altitude-specific), rust ratings, frost tolerance guides, disease alerts.</li>
+<li>ICRISAT and CIMMYT resources on smallholder wheat/barley for Africa — variety recommendations, fungicide guidance, altitude suitability maps.</li>
+<li>Local flour millers and bakeries — quality specs, grain requirements, bulk-purchase terms.</li>
+<li>Institutional buying programmes (schools, hospitals, armed forces in your country) — contact district coordinators for smallholder group registration.</li>
+<li>Rise Africa Skills companion courses: Beekeeping (altitude-farm integration), Vegetable Production (off-season plots on altitude farms).</li></ul>
+  </div>
+
+  <div class="cert-section">
+    <h2>&#127891; Course Completion</h2>
+    <p>Complete all 6 months and pass the quizzes to unlock your certificate.</p>
+    <a href="certificate.html?course=Wheat%20%26%20Barley%20Farming" class="cert-btn" id="certBtn" disabled>Get Certificate</a>
+  </div>
+</div>
+<script>
+  const TOTAL_MODULES = 6;
+  const COURSE_KEY = 'wheat-barley-farming';
+  let completed = JSON.parse(localStorage.getItem(COURSE_KEY + '_progress') || '[]');
+
+  function toggleModule(n) {
+    if (n > 1 && !completed.includes(n-1)) { alert('Complete Month ' + (n-1) + ' first.'); return; }
+    document.getElementById('body' + n).classList.toggle('active');
+  }
+  function answerQ(btn, isCorrect, expId) {
+    const parent = btn.parentElement;
+    const buttons = parent.querySelectorAll('.q-opt');
+    if (buttons[0].disabled) return;
+    buttons.forEach(b => { b.disabled = true; });
+    if (isCorrect) { btn.classList.add('correct'); }
+    else {
+      btn.classList.add('wrong');
+      buttons.forEach(b => { if (b.dataset.c === '1') b.classList.add('correct'); });
+    }
+    document.getElementById(expId).classList.add('show');
+    const quiz = btn.closest('.quiz-wrap');
+    quiz.dataset.answered = (parseInt(quiz.dataset.answered||'0') + 1);
+    quiz.dataset.score = (parseInt(quiz.dataset.score||'0') + (isCorrect ? 1 : 0));
+    if (parseInt(quiz.dataset.answered) >= parseInt(quiz.dataset.total)) {
+      const s = quiz.querySelector('.quiz-score');
+      s.textContent = 'Quiz result: ' + quiz.dataset.score + ' / ' + quiz.dataset.total + (parseInt(quiz.dataset.score) >= 7 ? ' — Pass. Well done!' : ' — Below 7/10. Re-read the module, then review your wrong answers.');
+    }
+  }
+  function markComplete(n) {
+    if (!completed.includes(n)) {
+      completed.push(n); completed.sort((a,b)=>a-b);
+      localStorage.setItem(COURSE_KEY + '_progress', JSON.stringify(completed));
+    }
+    updateUI();
+  }
+  function updateUI() {
+    document.getElementById('completedCount').textContent = completed.length;
+    document.getElementById('progressBar').style.width = (completed.length/TOTAL_MODULES*100) + '%';
+    for (let i=1; i<=TOTAL_MODULES; i++) {
+      const st = document.getElementById('status'+i), btn = document.getElementById('btn'+i);
+      if (completed.includes(i)) { st.textContent='Done'; st.classList.add('done'); if(btn){btn.textContent='Completed'; btn.disabled=true;} }
+      else if (i===1 || completed.includes(i-1)) { st.textContent='Start'; }
+      else { st.textContent='Locked'; }
+    }
+    if (completed.length >= TOTAL_MODULES) {
+      const c = document.getElementById('certBtn');
+      c.removeAttribute('disabled'); c.textContent = 'Get Your Certificate!';
+    }
+  }
+  updateUI();
+</script>
+</body>
+</html>

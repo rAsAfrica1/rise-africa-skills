@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Soybean Farming - A complete practical course from Rise Africa Skills. Learn offline, anytime.">
+<title>Soybean Farming | Rise Africa Skills</title>
+<style>
+  :root { --gold:#eab308; --gold-dark:#a16207; --green:#16a34a; --bg:#0f172a; --card:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --line:#334155; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:var(--bg); color:var(--text); line-height:1.65; }
+  header { background:linear-gradient(135deg,var(--gold-dark) 0%,#713f12 100%); padding:44px 20px; text-align:center; }
+  header h1 { font-size:2rem; margin-bottom:8px; }
+  header p { color:rgba(255,255,255,0.88); max-width:640px; margin:0 auto; }
+  .badge { display:inline-block; background:var(--gold); color:#1e293b; padding:4px 14px; border-radius:20px; font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-top:12px; letter-spacing:0.4px; }
+  .container { max-width:920px; margin:0 auto; padding:30px 20px; }
+  .progress-bar { background:var(--card); border-radius:10px; height:10px; margin-bottom:28px; overflow:hidden; }
+  .progress-fill { background:var(--gold); height:100%; width:0%; border-radius:10px; transition:width .4s ease; }
+  .overview { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-bottom:26px; }
+  .overview h2 { color:var(--gold); font-size:1.15rem; margin-bottom:10px; }
+  .overview ul { margin:8px 0 14px 20px; color:var(--muted); }
+  .overview li { margin:5px 0; }
+  .meta-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+  .meta-chip { background:#0b1220; border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:0.85rem; color:var(--muted); }
+  .meta-chip b { color:var(--text); }
+  .module { background:var(--card); border-radius:12px; margin-bottom:16px; overflow:hidden; border:1px solid var(--line); }
+  .module-header { padding:18px 22px; cursor:pointer; display:flex; align-items:center; gap:14px; transition:background .2s; }
+  .module-header:hover { background:#26354a; }
+  .module-num { background:var(--gold); color:#1e293b; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0; }
+  .module-title { flex:1; font-weight:600; }
+  .module-status { font-size:0.75rem; padding:4px 10px; border-radius:12px; background:var(--line); color:var(--muted); white-space:nowrap; }
+  .module-status.done { background:var(--green); color:#fff; }
+  .module-body { display:none; padding:0 22px 24px; border-top:1px solid var(--line); }
+  .module-body.active { display:block; }
+  .module-body p { color:var(--muted); margin:13px 0; }
+  .module-body ul, .module-body ol { margin:10px 0 10px 22px; color:var(--muted); }
+  .module-body li { margin:6px 0; }
+  .module-body strong { color:var(--text); }
+  .module-body h3 { color:var(--gold); font-size:1.05rem; margin:22px 0 4px; }
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.88rem; }
+  th { background:#0b1220; color:var(--gold); text-align:left; padding:9px 10px; border:1px solid var(--line); }
+  td { padding:8px 10px; border:1px solid var(--line); color:var(--muted); vertical-align:top; }
+  tr:nth-child(even) td { background:#1a2537; }
+  .tip-box { background:rgba(234,179,8,0.08); border-left:4px solid var(--gold); padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .tip-box strong { color:var(--gold); }
+  .warn-box { background:rgba(239,68,68,0.08); border-left:4px solid #ef4444; padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .warn-box strong { color:#f87171; }
+  .assign-box { background:#0b1220; border:1px dashed var(--gold-dark); border-radius:10px; padding:16px 18px; margin:16px 0; color:var(--muted); }
+  .assign-box strong { color:var(--gold); }
+  .video-box { background:#0b1220; border:1px solid var(--line); border-radius:10px; padding:14px 18px; margin:16px 0; color:var(--muted); font-size:0.9rem; }
+  .quiz-wrap { background:#0b1220; border:1px solid var(--line); border-radius:12px; padding:20px; margin-top:20px; }
+  .quiz-wrap h3 { margin-top:0 !important; }
+  .q-block { margin:16px 0; padding-bottom:14px; border-bottom:1px solid #1e293b; }
+  .q-block:last-child { border-bottom:none; }
+  .q-text { font-weight:600; color:var(--text); margin-bottom:8px; }
+  .q-opt { display:block; width:100%; text-align:left; padding:9px 13px; margin:5px 0; background:var(--card); border:1px solid #475569; border-radius:8px; color:var(--text); cursor:pointer; transition:all .2s; font-size:0.9rem; }
+  .q-opt:hover { border-color:var(--gold); }
+  .q-opt.correct { background:#14532d; border-color:var(--green); }
+  .q-opt.wrong { background:#7f1d1d; border-color:#ef4444; }
+  .q-exp { display:none; margin-top:8px; padding:10px 13px; background:rgba(234,179,8,0.07); border-left:3px solid var(--gold); border-radius:0 6px 6px 0; color:var(--muted); font-size:0.87rem; }
+  .q-exp.show { display:block; }
+  .quiz-score { margin-top:12px; font-weight:700; color:var(--gold); }
+  .check-btn { background:var(--gold); color:#1e293b; border:none; padding:11px 26px; border-radius:8px; font-weight:700; cursor:pointer; margin-top:16px; transition:background .2s; }
+  .check-btn:hover { background:#facc15; }
+  .check-btn:disabled { opacity:0.5; cursor:not-allowed; }
+  .final-section, .budget-section, .glossary-section, .resources-section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-top:26px; }
+  .final-section h2, .budget-section h2, .glossary-section h2, .resources-section h2 { color:var(--gold); font-size:1.2rem; margin-bottom:10px; }
+  .final-section p, .budget-section p, .resources-section p { color:var(--muted); margin:10px 0; }
+  .final-section ol, .resources-section ul { margin:10px 0 10px 22px; color:var(--muted); }
+  .final-section li, .resources-section li { margin:6px 0; }
+  dl.glossary dt { color:var(--text); font-weight:700; margin-top:12px; }
+  dl.glossary dd { color:var(--muted); margin-left:0; font-size:0.92rem; }
+  .cert-section { text-align:center; padding:40px 20px; background:var(--card); border-radius:16px; margin-top:30px; border:1px solid var(--line); }
+  .cert-section h2 { margin-bottom:10px; }
+  .cert-section p { color:var(--muted); margin-bottom:20px; }
+  .cert-btn { background:var(--gold); color:#1e293b; border:none; padding:14px 36px; border-radius:10px; font-size:1rem; font-weight:800; cursor:pointer; text-decoration:none; display:inline-block; }
+  .cert-btn[disabled] { opacity:0.4; pointer-events:none; }
+  .nav-bar { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:var(--card); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:100; }
+  .nav-bar a { color:var(--text); text-decoration:none; font-weight:600; }
+  .nav-bar a:hover { color:var(--gold); }
+  .completion-count { color:var(--muted); font-size:0.9rem; }
+  @media (max-width:600px){ header h1{font-size:1.5rem;} .module-header{padding:14px 16px;} .module-body{padding:0 16px 18px;} table{font-size:0.8rem;} th,td{padding:6px 7px;} }
+</style>
+</head>
+<body>
+<nav class="nav-bar">
+  <a href="index.html">&#8592; Back to Courses</a>
+  <span class="completion-count"><span id="completedCount">0</span> / 6 months completed</span>
+</nav>
+<header>
+  <div class="badge">Agriculture &middot; 6-Month Program</div>
+  <h1>Soybean Farming</h1>
+  <p>The protein contract crop — inoculation as the highest-return act in field farming, population stands, the rust watch, beating the shattering clock, and selling into mills, food trade and the maize–soybean system.</p>
+</header>
+<div class="container">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+
+  <div class="overview">
+    <h2>Course Overview</h2>
+    <p style="color:var(--muted);">Soybean rode the poultry boom from curiosity to contract crop across Africa's maize belts: 40% protein, 20% oil, feed mills hungry for tonnage, and free nitrogen left behind for the maize that follows. It is also a crop of specific, learnable tricks — and this course teaches them in order of return. First, inoculation: the few-dollar sachet of specialist rhizobium that most African soils lack, worth 30–50%+ on new land, taught as a ten-minute technique with a pink-nodule test to prove it worked. Then the population stand this crop demands, phosphorus as the purchased key, the daylength rule behind released-variety discipline, the rust scouting habit, and the quality war against splits, greens and moulds. Harvest is a race the course names honestly — the shattering clock — and storage splits into grain stock and the fragile, premium-earning seed stock. The business module sells into contracts, traders, the town food trade (with the absolute cooked-soy heat rule) and your own livestock rations, and writes the final plan for the maize–soybean pair, because the system margin beats either crop alone.</p>
+    <h2 style="margin-top:16px;">What You Will Learn</h2>
+    <ul><li>Understand the specialist-rhizobium trap and master seed inoculation with the pink-nodule proof</li>
+<li>Handle fragile short-lived seed correctly: fresh sourcing, germination tests, gentle storage</li>
+<li>Build 300,000–400,000-plant stands with P as the purchased key and minimal nitrogen</li>
+<li>Respect daylength: released varieties in their windows, planted into warm moist seedbeds</li>
+<li>Win the first six weeks against weeds and protect flowering-to-pod-fill from stress</li>
+<li>Scout and respond to Asian soybean rust; manage pod bugs, borers and the quality enemies</li>
+<li>Beat the shattering clock; thresh gently, dry to target and stop; run grain and seed stocks separately</li>
+<li>Sell into contracts, food trade and home rations (cooked, never raw) — and plan the maize–soybean system</li></ul>
+    <div class="meta-row">
+      <div class="meta-chip"><b>Duration:</b> 6 months, one module per month</div>
+      <div class="meta-chip"><b>Level:</b> Beginner &rarr; Job-ready</div>
+      <div class="meta-chip"><b>Units:</b> Metric with imperial where useful</div>
+      <div class="meta-chip"><b>Final project:</b> Your own business plan</div>
+    </div>
+  </div>
+
+  <div class="module" data-module="1">
+    <div class="module-header" onclick="toggleModule(1)">
+      <div class="module-num">1</div>
+      <div class="module-title">Month 1: The Protein Crop, the Rhizobium Trap &amp; the Markets</div>
+      <div class="module-status" id="status1">Start</div>
+    </div>
+    <div class="module-body" id="body1">
+
+      <h3>Lesson 1.1 — The protein crop the feed mills are hunting</h3>
+      <p>Soybean is the world's protein workhorse — ~<strong>40% protein and 20% oil</strong> in one seed — and Africa's fastest-growing field-crop market. The engine is the <strong>poultry boom</strong>: every broiler and layer ration is built on soybean meal, and most African feed mills import it at painful prices. Add oil pressing, human foods (soy milk, flour, textured 'chunks'), and the crop's nitrogen-fixing gift to the following maize, and soybean has moved from curiosity to contract crop across the continent's maize belts in a decade.</p>
+      <ul>
+        <li>Season: <strong>90–130 days</strong> by variety; a rains-season row crop for the same land and equipment as maize.</li>
+        <li>Yields: African smallholder average ~1 t/ha; good management with inoculated improved seed reaches <strong>2–3.5 t/ha</strong>.</li>
+        <li>Rotation gold: a well-nodulated crop can leave the equivalent of a meaningful nitrogen dressing for next season's maize, plus a clean disease break.</li>
+      </ul>
+      <h3>Lesson 1.2 — The one lesson that towers over the rest</h3>
+      <p>Soybean fixes nitrogen ONLY when its roots carry nodules of the right rhizobium bacteria — and here is the trap: <strong>the soybean rhizobium is a specialist that most African soils do not naturally contain</strong> (unlike cowpea's and groundnut's easy-going partners). An uninoculated soybean crop on new land sits pale, hungry and stunted while its owner blames the seed. The fixes, in order of importance:</p>
+      <ol>
+        <li><strong>Inoculate the seed</strong> with soybean-specific rhizobium inoculant at planting — a sachet costing a few dollars that routinely adds 30–50%+ yield on first-time land (Module 2 teaches the technique).</li>
+        <li><strong>Or plant 'promiscuous' varieties</strong> — African-bred lines (many from IITA) that nodulate with native rhizobia; lower ceiling than inoculated specialist varieties, but forgiving where inoculant is unreachable.</li>
+        <li>Once soybean has grown inoculated on a field for some seasons, the bacteria persist and the response fades — but on NEW land, inoculation is the single highest-return act in this course.</li>
+      </ol>
+      <h3>Lesson 1.3 — Markets at a glance</h3>
+      <table>
+        <tr><th>Buyer</th><th>Wants</th><th>Notes</th></tr>
+        <tr><td>Feed mills / soybean-meal processors</td><td>Tonnage, clean dry grain, low splits</td><td>The anchor market; many run outgrower/contract schemes</td></tr>
+        <tr><td>Oil crushers</td><td>Volume; oil + meal both sold on</td><td>Often the same industrial buyers</td></tr>
+        <tr><td>Human-food processors &amp; households</td><td>Clean white-hilum types for milk/flour where preferred</td><td>Growing town trade: soy milk, flour blends, chunks</td></tr>
+        <tr><td>Seed companies &amp; neighbours</td><td>Certified-quality seed grown carefully</td><td>Soybean seed is fragile and always scarce — a premium niche (Module 2)</td></tr>
+      </table>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Why the feed mills are hunting soybean — and why uninoculated fields sit pale &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 1:</strong> Map your soybean market: find the nearest feed mill, processor or outgrower scheme and record its buying terms and specs (or the trader prices where no scheme operates); price soybean products in town (meal, oil, soy flour/milk if sold). Ask your agro-dealer and extension office about soybean-specific inoculant availability and about released varieties (noting promiscuous types and maturity days). Write one paragraph: your target channel and variety.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 1 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Soybean seed contains roughly:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_1')">40% protein and 20% oil</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">5% protein</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">90% water</button>
+<div class="q-exp" id="exp1_1"><strong>Why:</strong> The densest protein package in field cropping — the reason every poultry ration and feed mill hunts it, and the anchor of its market boom.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. The engine of African soybean demand is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_2')">The poultry boom — soybean meal underpins broiler and layer rations</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">Fashion</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">Timber</button>
+<div class="q-exp" id="exp1_2"><strong>Why:</strong> Feed mills import meal at painful prices; local grain substitutes directly. The Poultry courses' industry is this course's customer.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Soybean's rhizobium partner is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_3')">A specialist most African soils lack — unlike cowpea's and groundnut's native partners</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">Present everywhere</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">Imaginary</button>
+<div class="q-exp" id="exp1_3"><strong>Why:</strong> The central trap of the crop: no native partner means no nodules, no fixed nitrogen, and a pale stunted field. The inoculant sachet exists precisely for this.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. On first-time soybean land, inoculation typically adds:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_4')">30–50%+ yield for a few dollars' sachet</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">Nothing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">1%</button>
+<div class="q-exp" id="exp1_4"><strong>Why:</strong> The highest-return single act in the course: living bacteria applied to seed unlock the nitrogen factory the plant was bred around.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. 'Promiscuous' varieties are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_5')">African-bred lines that nodulate with native rhizobia — forgiving where inoculant is unreachable</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Weeds</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Hybrids of maize</button>
+<div class="q-exp" id="exp1_5"><strong>Why:</strong> IITA's answer to the inoculant-access problem: a lower ceiling than inoculated specialists, but nodules and nitrogen where the sachet cannot reach.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. A well-nodulated soybean crop leaves the next maize:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_6')">A meaningful nitrogen dressing plus a disease break</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">Nothing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">Poison</button>
+<div class="q-exp" id="exp1_6"><strong>Why:</strong> Rotation gold: the legume contract pays the cereal that follows — the farm-system argument that completes soybean's business case.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Good managed African soybean yields reach:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_7')">2–3.5 t/ha versus a ~1 t/ha smallholder average</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">20 t/ha</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">0.1 t/ha</button>
+<div class="q-exp" id="exp1_7"><strong>Why:</strong> Inoculated improved seed, full stands and timely harvest close the gap — the same levers as everywhere in this college, with the sachet added.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. The anchor buyers of soybean tonnage are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_8')">Feed mills and crushers, many running outgrower schemes</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Florists</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Nobody</button>
+<div class="q-exp" id="exp1_8"><strong>Why:</strong> Industrial demand gives soybean something few smallholder crops enjoy: standing contract channels with published specs and collection points.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. White-hilum soybean types matter to:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_9')">Human-food processors making milk and flour where appearance counts</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">Feed mills only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">No one</button>
+<div class="q-exp" id="exp1_9"><strong>Why:</strong> The food trade pays attention to the seed's eye-spot colour; knowing your buyer decides whether that column matters at variety choice.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Once soybean has grown inoculated on a field for seasons:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_10')">The bacteria persist and the inoculation response fades — new land shows the big gains</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Bacteria vanish instantly</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Fields explode</button>
+<div class="q-exp" id="exp1_10"><strong>Why:</strong> Inoculation is establishment technology: the first crops build the soil's population. Budget the sachet for every NEW field and relax on veterans.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn1" onclick="markComplete(1)">Mark Month 1 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="2">
+    <div class="module-header" onclick="toggleModule(2)">
+      <div class="module-num">2</div>
+      <div class="module-title">Month 2: Seed, Inoculation &amp; the Population Stand</div>
+      <div class="module-status" id="status2">Locked</div>
+    </div>
+    <div class="module-body" id="body2">
+
+      <h3>Lesson 2.1 — Seed: fragile, short-lived, handled like eggs</h3>
+      <p>Soybean seed is the most delicate in this college: a thin coat over a living embryo that <strong>cracks when dropped, dies young in storage (viability falls sharply after ~8–12 months in ordinary stores), and drinks moisture from humid air</strong>. Rules: source fresh certified/QDS seed each season or save your own with real care (dry, cool, hermetic, never dropped in sacks); <strong>always germination-test</strong> (50 seeds, damp cloth, 5 days — below 70–75%, raise the rate or reject the lot); never plant last year's leftover bag on hope.</p>
+      <h3>Lesson 2.2 — Inoculation technique: ten minutes that grow the crop</h3>
+      <ol>
+        <li>Buy soybean-specific inoculant (check the expiry date and that it was kept cool — living bacteria die in a hot shop window).</li>
+        <li>In shade, on planting day: moisten seed lightly with water (a sugar or gum-arabic solution sticks better), sprinkle the inoculant powder, mix gently until every seed is dusted grey-black.</li>
+        <li><strong>Plant within hours, into moist soil</strong> — sun and heat kill the bacteria on the seed; never leave inoculated seed baking in an open pan.</li>
+        <li>Check success at 4–6 weeks: dig (don't pull) a few plants — <strong>pink-red insides in root nodules = working nitrogen factories</strong>; white/green nodules or none = the field will need rescue nitrogen and next season a fresh, better-kept inoculant.</li>
+      </ol>
+      <h3>Lesson 2.3 — Planting for the combine you don't own yet</h3>
+      <table>
+        <tr><th>Element</th><th>Standard</th><th>Why</th></tr>
+        <tr><td>Sowing time</td><td>Main rains established; warm soil</td><td>Cold wet seedbeds rot the fragile seed</td></tr>
+        <tr><td>Spacing</td><td>Rows <strong>45–60 cm</strong>, seeds <strong>5 cm apart in-row</strong>, <strong>3–4 cm deep</strong></td><td>~300,000–400,000 plants/ha — soybean yields on POPULATION; dense stands also set pods higher off the ground (easier harvest, less loss)</td></tr>
+        <tr><td>Seed rate</td><td><strong>60–100 kg/ha</strong> adjusted by germination test</td><td>A real budget line — the price of a population crop</td></tr>
+        <tr><td>Fertility</td><td>No (or minimal starter) N — the nodules' job; <strong>P is the purchased key</strong> (SSP/compound at planting); K where soils test low; lime sour soils</td><td>P powers nodulation and pod fill; acid soils cripple rhizobia</td></tr>
+      </table>
+      <div class="tip-box"><strong>The two-sachet insurance:</strong> on new land, serious growers double-inoculate (two sachets' rate) — the cost is small, the downside of failed nodulation is the whole crop's nitrogen. And where phosphorus is skipped, inoculation underperforms: <strong>P + inoculant is a package, not a menu.</strong></div>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> The ten-minute inoculation — and planting for 350,000 plants &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 2:</strong> Source fresh seed and run the 50-seed germination test, recording the result and your seed-rate adjustment. Obtain inoculant (check expiry and storage conditions at purchase); inoculate in shade on planting day and sow at least four 10-metre rows at 45–60 × 5 cm, 3–4 cm deep, with P fertiliser, within hours. Record everything: product, lot, timing, weather. At three weeks, count your stand; at 4–6 weeks, dig five plants and score nodules (pink/white/none) — your proof sheet.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 2 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Soybean seed viability in ordinary storage:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_1')">Falls sharply after ~8–12 months — never plant old seed on hope</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">Lasts decades</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">Improves with age</button>
+<div class="q-exp" id="exp2_1"><strong>Why:</strong> The fragile embryo dies quietly in the sack. Fresh seed plus a germination test every season is the only safe rule for a population crop.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. The germination-test threshold for action is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_2')">Below ~70–75% — raise the seed rate or reject the lot</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">Below 5%</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">No threshold exists</button>
+<div class="q-exp" id="exp2_2"><strong>Why:</strong> Fifty seeds and a damp cloth prevent the classic soybean disaster: a half stand discovered when the rains are already spent.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Inoculated seed must be:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_3')">Planted within hours into moist soil, kept shaded — heat and sun kill the bacteria</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">Dried in full sun for a week first</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">Stored a year</button>
+<div class="q-exp" id="exp2_3"><strong>Why:</strong> You are planting living microbes. Shade, speed and moist soil deliver them alive to the roots they must colonise.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Working nodules at 4–6 weeks show:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_4')">Pink-red insides when cut — active nitrogen factories</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">Blue stripes</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">Nothing visible ever</button>
+<div class="q-exp" id="exp2_4"><strong>Why:</strong> Leghaemoglobin's pink is the crop's health certificate. Dig, don't pull (pulling strips nodules off), and read the colour: pink means the sachet worked.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. White or absent nodules mean:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_5')">Failed inoculation — rescue N this season, fresher better-kept inoculant next</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">Perfect success</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">Harvest time</button>
+<div class="q-exp" id="exp2_5"><strong>Why:</strong> The 4–6 week check exists so failure is caught while rescue nitrogen can still save the season — and the diagnosis (dead inoculant? sour soil? no P?) fixes next year.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Soybean population targets are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_6')">~300,000–400,000 plants/ha — rows 45–60 cm, seeds 5 cm apart, 3–4 cm deep</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">10,000/ha</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">5 plants total</button>
+<div class="q-exp" id="exp2_6"><strong>Why:</strong> Soybean yields on numbers, and dense stands set pods higher — less ground loss at harvest. Population is architecture and economics at once.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Soybean's purchased nutrient key is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_7')">Phosphorus — P plus inoculant is a package, not a menu</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Heavy nitrogen</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Table salt</button>
+<div class="q-exp" id="exp2_7"><strong>Why:</strong> P powers the nodulation the inoculant enables; skipping P starves the very bacteria you paid to apply. N stays minimal — that's the nodules' job.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Acid (sour) soils affect soybean by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_8')">Crippling rhizobia and nodulation — lime where soils are sour</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">Helping bacteria</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">Nothing</button>
+<div class="q-exp" id="exp2_8"><strong>Why:</strong> The nitrogen partnership is pH-sensitive: lime is not cosmetic on sour land, it is the inoculant's life support.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. The two-sachet insurance on new land means:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_9')">Double-rate inoculation — small cost against losing the whole crop's nitrogen</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Two crops per hole</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Nothing</button>
+<div class="q-exp" id="exp2_9"><strong>Why:</strong> First-time fields are where nodulation fails and where it pays most; doubling the living dose is cheap certainty.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Soybean seed rate is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_10')">60–100 kg/ha adjusted by germination test — a real budget line</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">1 kg/ha</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">1,000 kg/ha</button>
+<div class="q-exp" id="exp2_10"><strong>Why:</strong> A population crop costs population seed. Budget it honestly and protect it with the test — thin soybean never recovers.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn2" onclick="markComplete(2)">Mark Month 2 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="3">
+    <div class="module-header" onclick="toggleModule(3)">
+      <div class="module-num">3</div>
+      <div class="module-title">Month 3: Weeds, Water, Stages &amp; the Rotation Seat</div>
+      <div class="module-status" id="status3">Locked</div>
+    </div>
+    <div class="module-body" id="body3">
+
+      <h3>Lesson 3.1 — Weeds: win the first six weeks</h3>
+      <p>Soybean seedlings are slow and low; weeds in the first 4–6 weeks cost more yield than any other management failure after stand and nodulation. Programme: clean seedbed at planting; <strong>first weeding at 2–3 weeks, second at 5–6 weeks</strong>; after canopy closure (helped by your dense stand) the crop shades the rest out. Hoe shallow — soybean roots and nodules ride near the surface. Where herbicides are used locally, follow label and extension guidance exactly; the hand-hoe programme above delivers the same result with timeliness.</p>
+      <h3>Lesson 3.2 — Water and the flowering clock</h3>
+      <ul>
+        <li>Critical windows: establishment, and <strong>flowering through pod fill (~weeks 6–12)</strong> — stress there aborts flowers and shrinks seed. Mid-vegetative dry spells are tolerated far better.</li>
+        <li>Waterlogging suffocates nodules within days — drainage or ridging on heavy land.</li>
+        <li>Soybean is <strong>daylength-sensitive</strong>: varieties are bred for latitude bands, and a variety moved far north/south flowers at the wrong size. Plant RELEASED-for-your-area varieties and respect recommended planting windows — the calendar is part of the genetics.</li>
+      </ul>
+      <h3>Lesson 3.3 — Reading the crop</h3>
+      <table>
+        <tr><th>Stage</th><th>See</th><th>Do</th></tr>
+        <tr><td>V-stages (leaf growth)</td><td>Trifoliate leaves unfolding</td><td>Weedings; nodule check at 4–6 weeks</td></tr>
+        <tr><td>R1–R2 (flowering)</td><td>Small white/purple flowers at nodes</td><td>Water status watch begins; no stress, no deep cultivation</td></tr>
+        <tr><td>R3–R6 (podding &amp; fill)</td><td>Pods lengthen, seeds swell</td><td>The yield window — scout pod pests (Module 4)</td></tr>
+        <tr><td>R7–R8 (maturity)</td><td>Leaves yellow and DROP; pods brown; seeds rattle</td><td>Harvest fast — Module 5's shattering clock starts</td></tr>
+      </table>
+      <h3>Lesson 3.4 — The rotation seat</h3>
+      <p>Soybean's classic seat is <strong>between maize crops</strong>: it returns nitrogen, breaks cereal pest cycles, and its early canopy fits the machinery and labour calendar maize built. Never soybean after soybean repeatedly (rust, nematodes and soil diseases build); groundnut and beans share some diseases — space legumes apart in the cycle. The maize–soybean pair is the backbone of every serious feed-grain area on the continent for a reason: each crop sells to the same feed mill, and each makes the other cheaper to grow.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Two weedings and a closed canopy — reading V and R stages on real plants &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 3:</strong> Complete both shallow weedings on schedule (2–3 and 5–6 weeks), recording dates and hours. Track and date your crop's stages: first trifoliate, R1 flowering, R3 podding, R7 leaf drop. Keep a water log through weeks 6–12 (rain days, any stress signs, any waterlogging). Draw your four-season rotation map placing soybean between maize crops and spacing it from other legumes, with one sentence of reasoning per season.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 3 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Soybean's costliest management failure after stand and nodulation is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_1')">Weeds in the first 4–6 weeks</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Late-season weeds only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Too much weeding</button>
+<div class="q-exp" id="exp3_1"><strong>Why:</strong> Slow low seedlings lose the early race badly. Two timely shallow weedings plus a dense closing canopy is the whole cure.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Hoeing near soybean rows must be:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_2')">Shallow — roots and nodules ride near the surface</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">As deep as possible</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Avoided while weeds flourish</button>
+<div class="q-exp" id="exp3_2"><strong>Why:</strong> Every nodule cut is nitrogen lost. The groundnut lesson echoes: surface-feeding legumes are weeded with a light hand.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. The critical water window is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_3')">Flowering through pod fill (~weeks 6–12)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">Only week one</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">After harvest</button>
+<div class="q-exp" id="exp3_3"><strong>Why:</strong> Stress at flowering aborts pods silently; the same weeks decide seed size. Vegetative dry spells are survivable — R-stage stress is not.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Waterlogging on soybean:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_4')">Suffocates nodules within days — drain or ridge heavy land</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Improves nodulation</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Is impossible</button>
+<div class="q-exp" id="exp3_4"><strong>Why:</strong> The nitrogen factory breathes. Even short flooding turns a pink-nodule crop pale — drainage is nodule protection.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Soybean's daylength sensitivity means:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_5')">Varieties are bred for latitude bands — plant released-for-your-area varieties in their windows</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Any variety fits anywhere</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Daylight is irrelevant</button>
+<div class="q-exp" id="exp3_5"><strong>Why:</strong> A variety moved far from its band flowers tiny or too late: the calendar is inside the genetics. The released list is not bureaucracy, it is physics.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. At R7–R8 maturity, soybean:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_6')">Drops its yellowed leaves, pods brown, seeds rattle — and the shattering clock starts</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Grows new leaves</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Flowers again</button>
+<div class="q-exp" id="exp3_6"><strong>Why:</strong> The self-defoliating finish is the harvest signal — and Module 5's warning: from rattle onward, delay pays the ground, not the grower.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Soybean's classic rotation seat is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_7')">Between maize crops — nitrogen back, pest break, same feed-mill buyer</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">After soybean, repeatedly</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Nowhere</button>
+<div class="q-exp" id="exp3_7"><strong>Why:</strong> The maize–soybean pair is the feed-grain backbone: each makes the other cheaper and both sell to the same mill. Repetition of soybean itself builds rust and nematodes.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Legumes in the rotation cycle should be:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_8')">Spaced apart — soybean, groundnut and beans share some diseases</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">Stacked back to back</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">Banned</button>
+<div class="q-exp" id="exp3_8"><strong>Why:</strong> A legume slot is not interchangeable: shared pathogens ride between legume species. The cycle plans the family, not just the crop.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. The nodule check belongs at:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_9')">4–6 weeks, during the V-stages, by digging plants</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Harvest</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Never</button>
+<div class="q-exp" id="exp3_9"><strong>Why:</strong> Early enough to rescue with N if the sachet failed, late enough for nodules to show their pink — the crop's mid-term exam.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Deep cultivation during flowering:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_10')">Is avoided — stress and root damage in the yield window</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Is essential</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Doubles pods</button>
+<div class="q-exp" id="exp3_10"><strong>Why:</strong> By R1 the field work is done: the crop wants water, scouting and peace through its deciding weeks.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn3" onclick="markComplete(3)">Mark Month 3 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="4">
+    <div class="module-header" onclick="toggleModule(4)">
+      <div class="module-num">4</div>
+      <div class="module-title">Month 4: Rust, Pod Pests &amp; the Quality Enemies</div>
+      <div class="module-status" id="status4">Locked</div>
+    </div>
+    <div class="module-body" id="body4">
+
+      <h3>Lesson 4.1 — Soybean rust: the airborne threat</h3>
+      <p><strong>Asian soybean rust</strong> is the crop's most explosive disease in Africa: tiny tan-brown pustules on lower-leaf undersides that, in warm wet spells, climb the plant and defoliate a field in 2–3 weeks during pod fill — the exact moment yield is being assembled. Management:</p>
+      <ul>
+        <li><strong>Scout from flowering onward:</strong> hand lens or sharp eyes on LOWER leaf undersides, weekly in humid weather.</li>
+        <li><strong>Tolerant/resistant released varieties</strong> where available; early-maturing varieties often escape the worst late-season pressure.</li>
+        <li><strong>Fungicide response where the crop justifies it:</strong> a triazole-type spray at first pustules (or preventively at R1–R3 in known rust areas), repeated per label — timing beats product; a spray after defoliation is money thrown at history.</li>
+        <li>Destroy volunteer soybean between seasons — rust's green bridge.</li>
+      </ul>
+      <h3>Lesson 4.2 — The rest of the gallery</h3>
+      <table>
+        <tr><th>Problem</th><th>Recognise</th><th>Act</th></tr>
+        <tr><td>Pod-sucking bugs (stink/shield bugs)</td><td>Shrivelled, dimpled, stained seed; flat pods</td><td>Scout at podding; treat real infestations (evening, threshold-based); field edges first</td></tr>
+        <tr><td>Pod borers &amp; leaf caterpillars</td><td>Holed pods; windowed leaves</td><td>Healthy crops tolerate much defoliation pre-flowering; protect the R3–R6 window</td></tr>
+        <tr><td>Bacterial blight / wildfire</td><td>Angular water-soaked leaf spots</td><td>Clean seed, rotation; rarely economic alone</td></tr>
+        <tr><td>Frogeye leaf spot &amp; others</td><td>Round grey-brown leaf spots</td><td>Resistant varieties, rotation, residue management</td></tr>
+        <tr><td>Nematodes</td><td>Patchy stunting, galled or stubby roots</td><td>Rotation with cereals; resistant varieties where identified</td></tr>
+        <tr><td>Hares, rodents &amp; birds at emergence</td><td>Grazed seedling rows</td><td>Field presence in week one; gap-fill fast</td></tr>
+      </table>
+      <h3>Lesson 4.3 — The quality enemies: splits, greens and moulds</h3>
+      <div class="warn-box"><strong>Feed mills and food processors buy QUALITY, and soybean's quality is made at the margins of harvest.</strong> Three graders' enemies: <strong>splits</strong> (cracked seed from rough threshing and over-dry handling), <strong>green seed</strong> (harvested immature or drought-forced), and <strong>moulds/heating</strong> (stored damp — with the same mycotoxin stakes as every crop in this college). Module 5's timing and gentleness rules are written against exactly these three.</div>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Pustules on the underside — the rust scout's routine and the splits-greens-moulds triangle &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 4:</strong> From flowering onward, scout weekly: check lower-leaf undersides of ten plants across the plot for rust pustules, and beat five plants over a tray at podding to count pod bugs; record all findings. Price a triazole fungicide option locally and write your spray trigger (first pustules / preventive R1–R3 if your area is known rust country) without necessarily buying. Write your three-enemy quality plan: how you will prevent splits, greens and moulds at harvest and after.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 4 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Asian soybean rust can defoliate a field:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_1')">In 2–3 weeks of warm wet weather during pod fill</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Over five years</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Never</button>
+<div class="q-exp" id="exp4_1"><strong>Why:</strong> The most explosive disease on the crop strikes exactly when yield is being assembled — which is why scouting starts at flowering, not at symptoms' convenience.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Rust scouting looks at:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_2')">LOWER leaf undersides for tan-brown pustules, weekly in humid spells</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">Flower petals</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">The sky</button>
+<div class="q-exp" id="exp4_2"><strong>Why:</strong> Rust climbs from the bottom. The underside habit finds it at the few-pustule stage when a spray still changes the outcome.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. A rust fungicide applied after defoliation is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_3')">Money thrown at history — timing beats product</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Perfectly timed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Illegal</button>
+<div class="q-exp" id="exp4_3"><strong>Why:</strong> Fungicides protect leaves that exist. First-pustule (or preventive R1–R3 in known areas) timing is the entire skill.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Early-maturing varieties relate to rust by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_4')">Often escaping the worst late-season pressure</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">Attracting it</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">No relation</button>
+<div class="q-exp" id="exp4_4"><strong>Why:</strong> A crop that finishes before the epidemic peaks was never in the room — earliness as disease escape, the pearl-millet drought logic transferred.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Volunteer soybean between seasons:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_5')">Is rust's green bridge — destroy it</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Is a free crop to protect</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Prevents rust</button>
+<div class="q-exp" id="exp4_5"><strong>Why:</strong> The pathogen needs living tissue year-round; volunteers provide it. The rotation gap only works when the bridge is down — sunflower's sclerotinia lesson repeated.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Stink bug damage shows as:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_6')">Shrivelled, dimpled, stained seed and flat pods</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Blue leaves</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Louder plants</button>
+<div class="q-exp" id="exp4_6"><strong>Why:</strong> Pod-suckers inject and drain developing seed — invisible on the outside, graded down at the mill. Podding-window scouting with evening threshold sprays protects the R3–R6 yield.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Pre-flowering leaf feeding by caterpillars:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_7')">Is tolerated surprisingly well — protection focuses on the R3–R6 pod window</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Must be sprayed on sight always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Kills instantly</button>
+<div class="q-exp" id="exp4_7"><strong>Why:</strong> Soybean compensates for early defoliation; it cannot compensate for lost pods. Thresholds and timing put chemistry only where it pays.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. The three graders' enemies of soybean quality are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_8')">Splits, green seed and moulds/heating</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">Size, colour, shine</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">Nothing</button>
+<div class="q-exp" id="exp4_8"><strong>Why:</strong> Rough threshing, mistimed harvest and damp storage — every one made or prevented in the farmer's own hands at the season's margins.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Mouldy or heated soybean carries:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_9')">Mycotoxin stakes like every crop in this college — dry storage is a safety duty</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Extra protein</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">No risk</button>
+<div class="q-exp" id="exp4_9"><strong>Why:</strong> The universal law crosses into the protein crop: moisture discipline protects the feed chain, the food chain and the price alike.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Nematode problems in soybean are managed by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_10')">Cereal rotation and resistant varieties where identified</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Deep flooding</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Hope</button>
+<div class="q-exp" id="exp4_10"><strong>Why:</strong> The maize–soybean alternation earns again: cereal seasons starve the legume's nematodes while the legume feeds the cereal's nitrogen.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn4" onclick="markComplete(4)">Mark Month 4 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="5">
+    <div class="module-header" onclick="toggleModule(5)">
+      <div class="module-num">5</div>
+      <div class="module-title">Month 5: The Shattering Clock, Threshing &amp; Two Stocks</div>
+      <div class="module-status" id="status5">Locked</div>
+    </div>
+    <div class="module-body" id="body5">
+
+      <h3>Lesson 5.1 — The shattering clock</h3>
+      <p>Soybean announces harvest honestly — leaves drop, pods brown, seeds rattle at ~<strong>13–15% moisture</strong> — and then punishes delay like no other crop here: dry pods <strong>shatter</strong>, twisting open in afternoon heat and firing seed onto the ground. Field losses of 10–30% from late harvest are common and invisible until you look down. Rules:</p>
+      <ul>
+        <li><strong>Harvest within days of rattle stage</strong> — not weeks. Morning work (pods slightly damp, less shatter) for hand harvest.</li>
+        <li>Hand method: pull or cut plants, stack small heaps/bundles on tarpaulins, move to the threshing floor same day where possible.</li>
+        <li>Where small combines or hired threshers operate, book them AGAINST the rattle date, not after it.</li>
+        <li>Shattering-tolerant released varieties exist — one more column worth reading at seed choice.</li>
+      </ul>
+      <h3>Lesson 5.2 — Threshing gently, drying honestly</h3>
+      <ol>
+        <li>Thresh on tarpaulins: beat bundles LIGHTLY with flexible sticks, or rub through by trampling boards — soybean splits under enthusiasm, and <strong>splits are the number-one grade cut</strong>. Motorised threshers: correct drum speed per the operator's soybean setting.</li>
+        <li>Winnow clean; remove greens, stones and pods.</li>
+        <li>Dry to <strong>11–12% for sale, 10–11% for storage</strong> — thin layers on tarpaulins/racks, never bare soil, turned gently. The bite test: cracks cleanly, no dent. Over-dried seed (sun-baked days at 8%) splits at every later touch — dry enough, then STOP.</li>
+      </ol>
+      <h3>Lesson 5.3 — Storage and the two stocks</h3>
+      <ul>
+        <li><strong>Grain stock (sale):</strong> clean sacks on pallets, dry ventilated store, monthly checks; soybean stores well at correct moisture but heats fast if damp — a warm sack is an alarm.</li>
+        <li><strong>Seed stock (next season + the premium niche):</strong> the fragile-seed rules concentrated — hand-harvested from your best area, gently threshed, dried to ~10–11%, <strong>hermetic containers, cool and shaded, never dropped</strong>; germination-tested before the season. Because everyone's soybean seed dies young, the careful grower's tested fresh seed sells at a strong premium every planting time — the potato/yam seed business logic in its lightest form.</li>
+      </ul>
+      <h3>Lesson 5.4 — Home and town processing</h3>
+      <p>Beyond the mill gate, soybean's food uses are a real cottage industry: <strong>soy milk</strong> (soak, grind, boil WELL, strain), <strong>soy flour</strong> for porridge blends (roast before milling — raw soybean contains anti-nutrition factors that <strong>heat destroys</strong>; never feed raw beans or raw flour to people, poultry or pigs), tofu from milk plus a coagulant, and roasted snack beans. The heat rule is absolute and is the food-safety centrepiece of this module: <strong>properly cooked/roasted soy is excellent food; raw soy is not.</strong></p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Rattle date to threshing floor — gentle sticks, target moisture, and the seed-stock rules &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 5:</strong> Record your rattle date and harvest within days of it (morning work), noting the gap — then estimate ground loss honestly by counting shattered seed in three 1 m² quadrats. Thresh gently on tarpaulins, winnow, and dry to the crack-clean-no-dent standard, recording days and final estimate. Separate a seed stock from your best area into a hermetic container (cool, shaded, labelled) and set a pre-season germination-test reminder. Store grain stock in sacks on a pallet with a monthly check log.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 5 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Soybean punishes late harvest by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_1')">Shattering — pods twist open in heat and fire seed to the ground; 10–30% losses are common</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Growing back</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Nothing</button>
+<div class="q-exp" id="exp5_1"><strong>Why:</strong> The shattering clock starts at rattle stage. Days matter; weeks are a levy paid to the ground — harvest is booked against the rattle date.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Hand harvest is best done:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_2')">In the morning, when slightly damp pods shatter less</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">At blazing midday</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">At midnight only</button>
+<div class="q-exp" id="exp5_2"><strong>Why:</strong> A little dew is the hand-harvester's friend: the same pods that explode at 2 pm open gently at 8 am.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. The number-one grade cut at soybean buying points is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_3')">Splits — cracked seed from rough threshing and over-dry handling</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">Perfume</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">Seed size</button>
+<div class="q-exp" id="exp5_3"><strong>Why:</strong> Gentle flexible-stick threshing on tarpaulins, correct drum speeds, and the dry-enough-then-STOP rule exist because every crack is discounted money.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Target moistures are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_4')">11–12% for sale, 10–11% for storage — cracks cleanly, no dent, and never over-dried</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">20% everywhere</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">5% always</button>
+<div class="q-exp" id="exp5_4"><strong>Why:</strong> The oil-and-protein seed sits between grain and oilseed laws: dry enough to keep, not so baked it splits at every touch thereafter.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. A warm soybean sack in the store is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_5')">An alarm — damp grain heating; act immediately</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">Normal</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">Good insulation</button>
+<div class="q-exp" id="exp5_5"><strong>Why:</strong> Heating is spoilage announcing itself. Monthly checks by hand catch it while re-drying still saves the stock.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. The soybean seed-stock rules are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_6')">Best-area hand harvest, gentle threshing, ~10–11%, hermetic, cool, never dropped, germination-tested</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">Any leftover sack will do</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">Store in sun</button>
+<div class="q-exp" id="exp5_6"><strong>Why:</strong> Fragility concentrated: seed is the one lot where every rule doubles. Its reward is the standing premium fresh tested seed earns each planting season.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Tested fresh soybean seed at planting time:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_7')">Sells at a strong premium — because everyone else's seed dies young</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Is worthless</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Is illegal to sell</button>
+<div class="q-exp" id="exp5_7"><strong>Why:</strong> The lightest version of the seed-business logic running through this college: care plus a germination certificate converts fragility into margin.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Raw soybean fed to people, poultry or pigs:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_8')">Is harmful — anti-nutritional factors that only proper heat destroys</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Is ideal</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Adds protein safely</button>
+<div class="q-exp" id="exp5_8"><strong>Why:</strong> The heat rule is absolute: roast or boil well before any food or feed use. Cooked soy is excellent; raw soy undoes the very protein it carries.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Soy milk production requires:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_9')">Soaking, grinding, BOILING well, and straining</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Cold raw blending only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Fermentation in sun</button>
+<div class="q-exp" id="exp5_9"><strong>Why:</strong> The boil is not optional flavour — it is the heat treatment that makes soy food safe and digestible. Every cottage product in this module passes through proper heat.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Drying soybean happens on:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_10')">Tarpaulins or racks in thin gently turned layers — never bare soil</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Bare wet earth</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Roads under trucks</button>
+<div class="q-exp" id="exp5_10"><strong>Why:</strong> The universal off-ground law, with a gentleness clause added for the crop that splits: thin layers, soft handling, and stop at target moisture.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn5" onclick="markComplete(5)">Mark Month 5 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="6">
+    <div class="module-header" onclick="toggleModule(6)">
+      <div class="module-num">6</div>
+      <div class="module-title">Month 6: Contracts, Rations &amp; the Maize–Soybean Plan</div>
+      <div class="module-status" id="status6">Locked</div>
+    </div>
+    <div class="module-body" id="body6">
+
+      <h3>Lesson 6.1 — Selling into an industrial market</h3>
+      <table>
+        <tr><th>Channel</th><th>How it works</th><th>Your move</th></tr>
+        <tr><td><strong>Feed mill / processor contracts &amp; outgrower schemes</strong></td><td>Registered farmers/groups, published prices or formulas, specs (moisture, splits, foreign matter), collection points</td><td>The anchor: register early, read the spec before planting, deliver on grade — contract soybean is this crop's version of the brewery sorghum deal</td></tr>
+        <tr><td>Traders/aggregators</td><td>Farm-gate cash, price follows the mills minus margin</td><td>The flexible channel; your scale and moisture discipline claw back margin</td></tr>
+        <tr><td>Town food trade</td><td>Soy milk/flour/chunks makers, roasters, households</td><td>Smaller tonnage, better prices; white-hilum clean grain where preferred</td></tr>
+        <tr><td>Seed niche</td><td>Fresh tested seed at planting season</td><td>Module 5's premium — small volumes, best margins</td></tr>
+        <tr><td>Your own livestock</td><td>Roasted/cooked soy + your maize = home-mixed rations</td><td>The Poultry/Piggery courses' feed-cost revolution — never raw</td></tr>
+      </table>
+      <h3>Lesson 6.2 — An honest one-hectare budget</h3>
+      <table>
+        <tr><th>Item</th><th>Assumption</th><th>Amount</th></tr>
+        <tr><td>Yield</td><td>Inoculated improved seed, full stand, two weedings, rattle-date harvest</td><td>~1.8 t</td></tr>
+        <tr><td>Gross</td><td>$0.40–0.60/kg to mills/traders (food/seed niches above this)</td><td>~$720–1,080</td></tr>
+        <tr><td>Seed (70–90 kg) + inoculant (double sachet) </td><td>fresh certified + the few-dollar yield multiplier</td><td>$70–130</td></tr>
+        <tr><td>P fertiliser (+ lime where sour)</td><td>SSP/compound at planting</td><td>$60–140</td></tr>
+        <tr><td>Labour + optional rust spray + sundries</td><td>weedings, harvest ON TIME, threshing gear, sacks, transport</td><td>$140–280</td></tr>
+        <tr><td><strong>Indicative margin</strong></td><td>plus nitrogen left for next maize</td><td><strong>~$450–650/ha — before the rotation bonus is counted</strong></td></tr>
+      </table>
+      <h3>Lesson 6.3 — The rotation bonus, counted</h3>
+      <p>The honest soybean ledger adds a line most budgets forget: the following maize crop's saved nitrogen (often the equivalent of a bag or more of urea) and its measurable yield bump on soybean land. When the pair is planned together — same feed-mill buyer for both grains, machinery and labour shared, legume nitrogen banked — the SYSTEM margin beats either crop alone. This is why the course's business plan is written for the maize–soybean pair, not soybean solo.</p>
+      <h3>Lesson 6.4 — Records and the growth path</h3>
+      <p>Per plot per season: variety, seed source and germination result; inoculation details (product, expiry, storage) and the 4–6 week nodule score (pink/white/none); stand count at 3 weeks; weeding and any spray dates; rattle date vs harvest date (the shattering meter); yield, splits estimate and moisture at sale; price and channel; the following maize's yield on this land. <strong>Report card: nodule score, stand count, and the rattle-to-harvest gap.</strong> Growth path: year one — one inoculated hectare done exactly right; year two — the maize–soybean pair with a contract registration and hermetic seed stock; year three — group tonnage on contract, the seed-sales niche, and home-mixed rations feeding your own poultry or pigs.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> From collection point to home-mixed ration — the pair that beats either crop alone &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 6:</strong> Build the one-hectare budget from your recorded costs and local prices; then extend it to the SYSTEM budget: add next season's maize on this land with its nitrogen saving and expected bump. If a contract scheme exists, obtain its registration requirements and spec sheet; if not, interview two traders on grades and price seasonality. Cost a small home-ration trial (roasted soy + your maize) against bought feed for the livestock you keep or plan. Conclude with your year-one/two/three path in one paragraph.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 6 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Contract/outgrower soybean schemes offer:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_1')">Published prices or formulas, specs and collection points — the crop's anchor channel</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">Nothing in writing ever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">Free money without grades</button>
+<div class="q-exp" id="exp6_1"><strong>Why:</strong> Industrial buyers organise supply like the breweries organise sorghum: register early, read the spec before planting, and deliver on grade.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. The spec lines contracts grade on include:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_2')">Moisture, splits and foreign matter</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Leaf shape</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Farmer's height</button>
+<div class="q-exp" id="exp6_2"><strong>Why:</strong> Module 5's disciplines priced: dry honestly, thresh gently, winnow clean — the three numbers that decide whether the truck accepts your sacks at full price.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Feeding your own soybean to poultry or pigs requires:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_3')">Roasting/cooking first — never raw — then mixing with your maize</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Raw whole beans daily</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Nothing</button>
+<div class="q-exp" id="exp6_3"><strong>Why:</strong> The heat rule follows the bean into the ration. Properly cooked soy plus home maize is the feed-cost revolution the livestock courses point at.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. The rotation bonus in the soybean ledger is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_4')">The following maize's saved nitrogen and yield bump — the pair beats either crop alone</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Imaginary</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">A tax</button>
+<div class="q-exp" id="exp6_4"><strong>Why:</strong> A bag-of-urea equivalent left in the soil plus a measurable maize response: the system margin is the true bottom line, which is why the plan is written for the pair.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. The three report-card numbers are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_5')">Nodule score, stand count, and the rattle-to-harvest gap</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">Rainfall, wind, luck</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">Sack colour</button>
+<div class="q-exp" id="exp6_5"><strong>Why:</strong> Nitrogen working, population achieved, shattering beaten — the season's three decisive acts, each reduced to one honest recorded figure.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. The seed-sales niche rewards:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_6')">Fresh, tested, hermetically kept seed at planting season — small volumes, best margins</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">Old broken seed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">Nothing</button>
+<div class="q-exp" id="exp6_6"><strong>Why:</strong> Soybean seed's fragility is the careful grower's moat: a germination certificate at planting week outsells any sack of hope.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Group tonnage matters to mills because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_7')">Collection economics favour volume — aggregation gets villages onto contract lists</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Mills prefer single sacks</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">It doesn't</button>
+<div class="q-exp" id="exp6_7"><strong>Why:</strong> The sorghum-contract lesson repeats: one clean store, one scale, one moisture discipline, many farmers — and the truck comes to you.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. The year-one goal of this course is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_8')">One inoculated hectare done exactly right — stand, nodules, rattle-date harvest</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Ten hectares done loosely</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">A processing factory first</button>
+<div class="q-exp" id="exp6_8"><strong>Why:</strong> Intensity before area, the college's constant law: the skills proven on one hectare multiply safely onto every hectare that follows.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Soybean's town food trade prefers:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_9')">Clean grain (white-hilum where the market cares) at better-than-mill prices for smaller tonnage</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Mouldy stock</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Only imports</button>
+<div class="q-exp" id="exp6_9"><strong>Why:</strong> Milk, flour and chunk makers pay above commodity for quality they can see — a premium side channel beside the contract anchor.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. This course's business plan is written for:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_10')">The maize–soybean pair as one system</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Soybean grown alone forever</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">No plan</button>
+<div class="q-exp" id="exp6_10"><strong>Why:</strong> Shared buyer, shared calendar, banked nitrogen: the pair is the unit of profit. Planning them together is the module's parting instruction.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn6" onclick="markComplete(6)">Mark Month 6 Complete</button>
+    </div>
+  </div>
+
+  <div class="final-section">
+    <h2>&#127942; Final Project: Your Soybean Business Plan</h2>
+    <p>The final project is your complete soybean enterprise plan — inoculation to contract, written as the maize–soybean system it belongs inside.</p>
+    <ol><li><strong>Market case:</strong> your channel map (mill/contract, traders, food trade, seed niche, own rations) with real terms and specs, and the variety chosen for it with maturity and daylength fit.</li>
+<li><strong>Establishment plan:</strong> seed source and germination protocol, the full inoculation procedure with product handling rules, P (and lime) programme, and the population plan with target stand count.</li>
+<li><strong>Season calendar:</strong> planting window, weeding dates, nodule-check date, water-watch weeks, rust scouting routine with spray trigger, and pod-pest thresholds.</li>
+<li><strong>Quality war plan:</strong> the splits-greens-moulds commitments — harvest trigger, gentle threshing method, drying targets with the stop rule, and store checks.</li>
+<li><strong>Harvest and stocks:</strong> the rattle-date booking system (labour or thresher), ground-loss measurement, and the two-stock separation with the seed stock's hermetic rules and premium sales plan.</li>
+<li><strong>System budget:</strong> the hectare budget plus the following maize's nitrogen saving and yield bump — the pair's margin as one number; cash-flow across both seasons.</li>
+<li><strong>Risk page and year-3 vision:</strong> three risks with mitigations, and the staged path — one perfect hectare, then the pair with contract registration, then group tonnage, seed sales and home-mixed rations.</li></ol>
+    <p><strong>Submission standard:</strong> A plan you could hand to a savings group, a bank officer, or a family investor without embarrassment. Real local prices, real named buyers, honest risks.</p>
+  </div>
+
+  <div class="budget-section">
+    <h2>&#128176; Startup Budget &mdash; 1 Hectare Inoculated Soybean (within the Maize–Soybean Pair)</h2>
+    <p>Soybean's budget turns on three small purchases used exactly right — fresh seed, the inoculant sachet, and phosphorus — plus discipline at the shattering clock. The final line belongs to the system: the nitrogen this hectare banks for next season's maize is real money this sheet credits explicitly.</p>
+    <table>
+      <tr><th>Item</th><th>Details</th><th>Typical cost (USD)</th></tr>
+<tr><td>Fresh certified seed (70–90 kg)</td><td>Germination-tested; released for your latitude band</td><td>$55–100</td></tr>
+<tr><td>Inoculant (double sachet, new land)</td><td>Cool-kept, in-date — the yield multiplier</td><td>$8–25</td></tr>
+<tr><td>P fertiliser (SSP/compound) + lime where sour</td><td>The nodulation package's other half</td><td>$60–140</td></tr>
+<tr><td>Land preparation &amp; planting labour</td><td>Warm moist seedbed, dense drilling</td><td>$70–150</td></tr>
+<tr><td>Weeding labour ×2</td><td>Shallow, on the 2–3 and 5–6 week clock</td><td>$40–100</td></tr>
+<tr><td>Optional rust fungicide + sprayer access</td><td>Triazole at first pustules where justified</td><td>$20–60</td></tr>
+<tr><td>Harvest &amp; threshing on the rattle date</td><td>Morning labour, tarpaulins, flexible sticks / thresher hire</td><td>$60–140</td></tr>
+<tr><td>Drying &amp; storage gear</td><td>Racks/tarpaulins, sacks, pallet, hermetic seed container</td><td>$30–80</td></tr>
+<tr><td>Transport to collection point</td><td></td><td>$25–70</td></tr>
+<tr><td>Contingency (10%)</td><td></td><td>$35–85</td></tr>
+<tr><td><strong>Total indicative startup</strong></td><td>Plus the nitrogen credit banked for next season's maize</td><td><strong>$405–950</strong></td></tr>
+    </table>
+    <p><em>Prices vary widely by country. Before spending anything, price every line in your own town and rebuild this table — that exercise is part of your final project.</em></p>
+  </div>
+
+  <div class="glossary-section">
+    <h2>&#128218; Glossary</h2>
+    <dl class="glossary">
+<dt>Rhizobium (soybean-specific)</dt><dd>The specialist nitrogen-fixing bacterium most African soils lack — supplied on the seed via inoculant.</dd>
+<dt>Inoculation</dt><dd>Coating moistened seed with live rhizobium powder in shade and planting within hours — the course's highest-return act.</dd>
+<dt>Nodule score</dt><dd>The 4–6 week dig-and-cut check: pink-red inside = working; white/none = rescue N and diagnose.</dd>
+<dt>Promiscuous varieties</dt><dd>African-bred soybeans that nodulate with native rhizobia — the no-inoculant fallback.</dd>
+<dt>Population crop</dt><dd>A crop yielding on plant numbers: 300,000–400,000/ha, dense rows, pods set higher.</dd>
+<dt>Daylength sensitivity</dt><dd>Flowering triggered by day length — why varieties are bred for latitude bands and planted in released windows.</dd>
+<dt>V and R stages</dt><dd>The leaf (vegetative) and flowering-to-maturity (reproductive) stage ladder used to time every decision.</dd>
+<dt>Asian soybean rust</dt><dd>The explosive defoliating disease scouted on lower-leaf undersides from flowering; fought with tolerance, earliness and timed triazoles.</dd>
+<dt>Green bridge</dt><dd>Volunteer plants carrying disease between seasons — destroyed to make rotation real.</dd>
+<dt>Shattering</dt><dd>Dry pods twisting open and firing seed to the ground — the reason harvest is booked against the rattle date.</dd>
+<dt>Rattle date</dt><dd>The day seeds rattle in browned pods (~13–15% moisture): the harvest clock's start.</dd>
+<dt>Splits</dt><dd>Cracked seed from rough threshing or over-drying — the number-one grade cut.</dd>
+<dt>Anti-nutritional factors</dt><dd>Compounds in RAW soybean harmful to people and livestock — destroyed by proper roasting or boiling.</dd>
+<dt>Hermetic seed stock</dt><dd>The fragile seed lot kept airtight, cool and untouched — next season's stand and the planting-week premium.</dd>
+<dt>Outgrower scheme</dt><dd>A processor's contracted farmer network with specs, prices and collection points — soybean's anchor channel.</dd>
+<dt>Rotation bonus</dt><dd>The nitrogen and yield bump soybean banks for the following maize — the pair's hidden margin line.</dd>
+    </dl>
+  </div>
+
+  <div class="resources-section">
+    <h2>&#128279; Further Resources</h2>
+    <ul><li>IITA — promiscuous and improved soybean varieties, inoculant guidance and African soybean agronomy (including N2Africa project materials on inoculation technique).</li>
+<li>Your national legumes/oilseeds programme and extension office — released varieties by latitude band with maturity days, inoculant suppliers, and rust alerts for your area.</li>
+<li>Feed mills, processors and outgrower schemes in your region — registration requirements, spec sheets, price formulas and collection calendars.</li>
+<li>Agro-dealers stocking inoculant — verify cold/cool storage and expiry dates before buying; a dead sachet looks identical to a live one.</li>
+<li>Rise Africa Skills companion courses: Maize (the pair partner), Poultry &amp; Piggery (home-mixed rations — cooked soy only), Groundnut and Beans &amp; Legumes (the legume family's shared laws), Sunflower (press-cake economics beside soybean meal).</li></ul>
+  </div>
+
+  <div class="cert-section">
+    <h2>&#127891; Course Completion</h2>
+    <p>Complete all 6 months and pass the quizzes to unlock your certificate.</p>
+    <a href="certificate.html?course=Soybean%20Farming" class="cert-btn" id="certBtn" disabled>Get Certificate</a>
+  </div>
+</div>
+<script>
+  const TOTAL_MODULES = 6;
+  const COURSE_KEY = 'soybean-farming';
+  let completed = JSON.parse(localStorage.getItem(COURSE_KEY + '_progress') || '[]');
+
+  function toggleModule(n) {
+    if (n > 1 && !completed.includes(n-1)) { alert('Complete Month ' + (n-1) + ' first.'); return; }
+    document.getElementById('body' + n).classList.toggle('active');
+  }
+  function answerQ(btn, isCorrect, expId) {
+    const parent = btn.parentElement;
+    const buttons = parent.querySelectorAll('.q-opt');
+    if (buttons[0].disabled) return;
+    buttons.forEach(b => { b.disabled = true; });
+    if (isCorrect) { btn.classList.add('correct'); }
+    else {
+      btn.classList.add('wrong');
+      buttons.forEach(b => { if (b.dataset.c === '1') b.classList.add('correct'); });
+    }
+    document.getElementById(expId).classList.add('show');
+    const quiz = btn.closest('.quiz-wrap');
+    quiz.dataset.answered = (parseInt(quiz.dataset.answered||'0') + 1);
+    quiz.dataset.score = (parseInt(quiz.dataset.score||'0') + (isCorrect ? 1 : 0));
+    if (parseInt(quiz.dataset.answered) >= parseInt(quiz.dataset.total)) {
+      const s = quiz.querySelector('.quiz-score');
+      s.textContent = 'Quiz result: ' + quiz.dataset.score + ' / ' + quiz.dataset.total + (parseInt(quiz.dataset.score) >= 7 ? ' — Pass. Well done!' : ' — Below 7/10. Re-read the module, then review your wrong answers.');
+    }
+  }
+  function markComplete(n) {
+    if (!completed.includes(n)) {
+      completed.push(n); completed.sort((a,b)=>a-b);
+      localStorage.setItem(COURSE_KEY + '_progress', JSON.stringify(completed));
+    }
+    updateUI();
+  }
+  function updateUI() {
+    document.getElementById('completedCount').textContent = completed.length;
+    document.getElementById('progressBar').style.width = (completed.length/TOTAL_MODULES*100) + '%';
+    for (let i=1; i<=TOTAL_MODULES; i++) {
+      const st = document.getElementById('status'+i), btn = document.getElementById('btn'+i);
+      if (completed.includes(i)) { st.textContent='Done'; st.classList.add('done'); if(btn){btn.textContent='Completed'; btn.disabled=true;} }
+      else if (i===1 || completed.includes(i-1)) { st.textContent='Start'; }
+      else { st.textContent='Locked'; }
+    }
+    if (completed.length >= TOTAL_MODULES) {
+      const c = document.getElementById('certBtn');
+      c.removeAttribute('disabled'); c.textContent = 'Get Your Certificate!';
+    }
+  }
+  updateUI();
+</script>
+</body>
+</html>

@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Avocado Farming - A complete practical course from Rise Africa Skills. Learn offline, anytime.">
+<title>Avocado Farming | Rise Africa Skills</title>
+<style>
+  :root { --gold:#eab308; --gold-dark:#a16207; --green:#16a34a; --bg:#0f172a; --card:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --line:#334155; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:var(--bg); color:var(--text); line-height:1.65; }
+  header { background:linear-gradient(135deg,var(--gold-dark) 0%,#713f12 100%); padding:44px 20px; text-align:center; }
+  header h1 { font-size:2rem; margin-bottom:8px; }
+  header p { color:rgba(255,255,255,0.88); max-width:640px; margin:0 auto; }
+  .badge { display:inline-block; background:var(--gold); color:#1e293b; padding:4px 14px; border-radius:20px; font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-top:12px; letter-spacing:0.4px; }
+  .container { max-width:920px; margin:0 auto; padding:30px 20px; }
+  .progress-bar { background:var(--card); border-radius:10px; height:10px; margin-bottom:28px; overflow:hidden; }
+  .progress-fill { background:var(--gold); height:100%; width:0%; border-radius:10px; transition:width .4s ease; }
+  .overview { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-bottom:26px; }
+  .overview h2 { color:var(--gold); font-size:1.15rem; margin-bottom:10px; }
+  .overview ul { margin:8px 0 14px 20px; color:var(--muted); }
+  .overview li { margin:5px 0; }
+  .meta-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+  .meta-chip { background:#0b1220; border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:0.85rem; color:var(--muted); }
+  .meta-chip b { color:var(--text); }
+  .module { background:var(--card); border-radius:12px; margin-bottom:16px; overflow:hidden; border:1px solid var(--line); }
+  .module-header { padding:18px 22px; cursor:pointer; display:flex; align-items:center; gap:14px; transition:background .2s; }
+  .module-header:hover { background:#26354a; }
+  .module-num { background:var(--gold); color:#1e293b; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0; }
+  .module-title { flex:1; font-weight:600; }
+  .module-status { font-size:0.75rem; padding:4px 10px; border-radius:12px; background:var(--line); color:var(--muted); white-space:nowrap; }
+  .module-status.done { background:var(--green); color:#fff; }
+  .module-body { display:none; padding:0 22px 24px; border-top:1px solid var(--line); }
+  .module-body.active { display:block; }
+  .module-body p { color:var(--muted); margin:13px 0; }
+  .module-body ul, .module-body ol { margin:10px 0 10px 22px; color:var(--muted); }
+  .module-body li { margin:6px 0; }
+  .module-body strong { color:var(--text); }
+  .module-body h3 { color:var(--gold); font-size:1.05rem; margin:22px 0 4px; }
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.88rem; }
+  th { background:#0b1220; color:var(--gold); text-align:left; padding:9px 10px; border:1px solid var(--line); }
+  td { padding:8px 10px; border:1px solid var(--line); color:var(--muted); vertical-align:top; }
+  tr:nth-child(even) td { background:#1a2537; }
+  .tip-box { background:rgba(234,179,8,0.08); border-left:4px solid var(--gold); padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .tip-box strong { color:var(--gold); }
+  .warn-box { background:rgba(239,68,68,0.08); border-left:4px solid #ef4444; padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .warn-box strong { color:#f87171; }
+  .assign-box { background:#0b1220; border:1px dashed var(--gold-dark); border-radius:10px; padding:16px 18px; margin:16px 0; color:var(--muted); }
+  .assign-box strong { color:var(--gold); }
+  .video-box { background:#0b1220; border:1px solid var(--line); border-radius:10px; padding:14px 18px; margin:16px 0; color:var(--muted); font-size:0.9rem; }
+  .quiz-wrap { background:#0b1220; border:1px solid var(--line); border-radius:12px; padding:20px; margin-top:20px; }
+  .quiz-wrap h3 { margin-top:0 !important; }
+  .q-block { margin:16px 0; padding-bottom:14px; border-bottom:1px solid #1e293b; }
+  .q-block:last-child { border-bottom:none; }
+  .q-text { font-weight:600; color:var(--text); margin-bottom:8px; }
+  .q-opt { display:block; width:100%; text-align:left; padding:9px 13px; margin:5px 0; background:var(--card); border:1px solid #475569; border-radius:8px; color:var(--text); cursor:pointer; transition:all .2s; font-size:0.9rem; }
+  .q-opt:hover { border-color:var(--gold); }
+  .q-opt.correct { background:#14532d; border-color:var(--green); }
+  .q-opt.wrong { background:#7f1d1d; border-color:#ef4444; }
+  .q-exp { display:none; margin-top:8px; padding:10px 13px; background:rgba(234,179,8,0.07); border-left:3px solid var(--gold); border-radius:0 6px 6px 0; color:var(--muted); font-size:0.87rem; }
+  .q-exp.show { display:block; }
+  .quiz-score { margin-top:12px; font-weight:700; color:var(--gold); }
+  .check-btn { background:var(--gold); color:#1e293b; border:none; padding:11px 26px; border-radius:8px; font-weight:700; cursor:pointer; margin-top:16px; transition:background .2s; }
+  .check-btn:hover { background:#facc15; }
+  .check-btn:disabled { opacity:0.5; cursor:not-allowed; }
+  .final-section, .budget-section, .glossary-section, .resources-section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-top:26px; }
+  .final-section h2, .budget-section h2, .glossary-section h2, .resources-section h2 { color:var(--gold); font-size:1.2rem; margin-bottom:10px; }
+  .final-section p, .budget-section p, .resources-section p { color:var(--muted); margin:10px 0; }
+  .final-section ol, .resources-section ul { margin:10px 0 10px 22px; color:var(--muted); }
+  .final-section li, .resources-section li { margin:6px 0; }
+  dl.glossary dt { color:var(--text); font-weight:700; margin-top:12px; }
+  dl.glossary dd { color:var(--muted); margin-left:0; font-size:0.92rem; }
+  .cert-section { text-align:center; padding:40px 20px; background:var(--card); border-radius:16px; margin-top:30px; border:1px solid var(--line); }
+  .cert-section h2 { margin-bottom:10px; }
+  .cert-section p { color:var(--muted); margin-bottom:20px; }
+  .cert-btn { background:var(--gold); color:#1e293b; border:none; padding:14px 36px; border-radius:10px; font-size:1rem; font-weight:800; cursor:pointer; text-decoration:none; display:inline-block; }
+  .cert-btn[disabled] { opacity:0.4; pointer-events:none; }
+  .nav-bar { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:var(--card); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:100; }
+  .nav-bar a { color:var(--text); text-decoration:none; font-weight:600; }
+  .nav-bar a:hover { color:var(--gold); }
+  .completion-count { color:var(--muted); font-size:0.9rem; }
+  @media (max-width:600px){ header h1{font-size:1.5rem;} .module-header{padding:14px 16px;} .module-body{padding:0 16px 18px;} table{font-size:0.8rem;} th,td{padding:6px 7px;} }
+</style>
+</head>
+<body>
+<nav class="nav-bar">
+  <a href="index.html">&#8592; Back to Courses</a>
+  <span class="completion-count"><span id="completedCount">0</span> / 6 months completed</span>
+</nav>
+<header>
+  <div class="badge">Agriculture &middot; 6-Month Program</div>
+  <h1>Avocado Farming</h1>
+  <p>Africa's fastest-growing export crop — Hass variety on the right altitude, A/B cross-pollination design, Phytophthora prevention with phosphonate, thrips cosmetic protection, dry-matter harvest trigger, and the 50-year return case.</p>
+</header>
+<div class="container">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+
+  <div class="overview">
+    <h2>Course Overview</h2>
+    <p style="color:var(--muted);">Avocado has become one of the fastest-growing agricultural exports in Africa — Kenya is a top-five global exporter, and Tanzania, Ethiopia, Rwanda and others are scaling rapidly. For the smallholder with the right altitude (1,000–2,200 m), soil (deep, well-drained, pH 5.0–7.0), and patience, avocado is the highest-earning tree crop in this college at export prices. The course teaches the altitude-first site decision, Hass as the export standard (plus the A/B cross-pollination design that maximises fruit set), and grafted certified trees as the 50-year investment. Management centres on the Phytophthora root rot threat (the most dangerous avocado disease: even a few hours of waterlogging starts it; phosphonate trunk injection is the best chemical tool), thrips cosmetic protection with kaolin clay, the boron requirement at flowering, and irrigation that never lets the tree drought-stress in flower. Harvest uses dry matter (≥21–23% DM for Hass export) as the maturity trigger — not external colour. Post-harvest is the export chain: clip not pull, shade the field pack point, grade by weight, pre-cool within 12 hours, prochloraz or hot-water dip for anthracnose, cold-chain shipping at 4–7 °C for up to 28 days. The economics case is the most compelling in the college: $22,500–75,000/ha/year at export maturity from a one-time establishment investment amortised over 50 years.</p>
+    <h2 style="margin-top:16px;">What You Will Learn</h2>
+    <ul><li>Select the right altitude zone (1,000–2,200 m) and deep well-drained site before any planting commitment</li>
+<li>Plant grafted Hass with Type B pollinator rows (Fuerte or other) at 7×7 m or 5×5 m high-density</li>
+<li>Establish young trees with consistent watering, 2 m weed-free circles, graft-union protection and formative pruning</li>
+<li>Manage the flower-season nutrition (K, P and boron for fruit set; no N before flower); apply phosphonate 2–3 times/year against Phytophthora</li>
+<li>Control thrips with kaolin clay and spinosad; manage fruit fly with bait stations; prevent sunblotch with certified nursery stock</li>
+<li>Measure dry matter for harvest maturity (≥21–23%), clip with 2–3 cm stem, shade at pack point, pre-cool within 12 hours</li>
+<li>Sell through domestic premium channel first; join an outgrower/aggregator export scheme by year 7–10</li>
+<li>Intercrop in years 1–3 for cash flow; plan the 50-year compounding return case for orchard expansion</li></ul>
+    <div class="meta-row">
+      <div class="meta-chip"><b>Duration:</b> 6 months, one module per month</div>
+      <div class="meta-chip"><b>Level:</b> Beginner &rarr; Job-ready</div>
+      <div class="meta-chip"><b>Units:</b> Metric with imperial where useful</div>
+      <div class="meta-chip"><b>Final project:</b> Your own business plan</div>
+    </div>
+  </div>
+
+  <div class="module" data-module="1">
+    <div class="module-header" onclick="toggleModule(1)">
+      <div class="module-num">1</div>
+      <div class="module-title">Month 1: Africa's Avocado Boom — Varieties, Altitude &amp; the Export Opportunity</div>
+      <div class="module-status" id="status1">Start</div>
+    </div>
+    <div class="module-body" id="body1">
+
+      <h3>Lesson 1.1 — Africa's avocado boom</h3>
+      <p>Avocado has become one of the fastest-growing agricultural exports in Africa — Kenya is now a top-five global exporter, and Tanzania, Ethiopia, Rwanda, South Africa, Cameroon and others are rapidly scaling. The driver is simple: global demand for avocado has grown <strong>300–400% in a decade</strong>, driven by health trends in Europe, North America and the Middle East, and African highland conditions are ideal for the <strong>Hass variety</strong> that commands export premiums. For the smallholder with the right altitude, soil and patience, avocado is among the highest-earning tree crop in this college.</p>
+      <ul>
+        <li>Season: <strong>avocado produces year-round in the tropics</strong> — staggered by variety and altitude; flowering typically in the dry season, harvest 9–15 months after flowering.</li>
+        <li>First commercial harvest: <strong>3–5 years from grafted tree</strong>; yield matures at 7–10 years and continues for 50+ years.</li>
+        <li>Yield: 3–8 t/ha early; 15–25 t/ha mature orchard.</li>
+      </ul>
+      <h3>Lesson 1.2 — Varieties: Hass vs Fuerte and the A/B cross-pollination system</h3>
+      <table>
+        <tr><th>Variety</th><th>Character</th><th>Market</th></tr>
+        <tr><td><strong>Hass</strong></td><td>Purple-black when ripe; pebbly skin; rich flavour; the global export standard; long shelf life (14–21 days post-harvest)</td><td>Europe, Middle East, US export — premium price; the commercial choice</td></tr>
+        <tr><td><strong>Fuerte</strong></td><td>Green when ripe; pear-shaped; excellent flavour; early to market before Hass season peak; thin skin (more delicate in handling)</td><td>Domestic and early-export windows; declining as Hass dominates globally</td></tr>
+        <tr><td>Local varieties (Nabal, G6, Jumbo)</td><td>Large, green; good domestic flavour preference</td><td>Local fresh market; lower post-harvest quality requirements</td></tr>
+      </table>
+      <h3>Lesson 1.3 — The A/B pollination system</h3>
+      <p>Avocado flowers are unusual: each flower opens <strong>twice — once as female (receptive stigma) then closes, then reopens as male (releasing pollen)</strong>. The timing differs between Type A (female in morning, male in afternoon) and Type B (female in afternoon, male in morning) varieties. <strong>Cross-pollination between A and B types dramatically improves fruit set</strong>. The rule: plant <strong>one row Hass (Type A) alternating with Fuerte or another Type B pollinator</strong> in every 4–5 rows; or intersperse pollinators throughout. Bees are essential — maintain hives near the orchard.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> From Kenya's export success to the open highland opportunity — Hass, Fuerte and the A/B pollination system &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 1:</strong> Confirm your altitude (GPS or topographic map): are you in the 1,000–2,200 m window for Hass? Research local avocado prices: domestic fresh market by size, any aggregator/exporter buying prices in your area. Identify the nearest certified Hass nursery and price per tree. Find out: is there a Type B pollinator (Fuerte or other) available from the same nursery? Research: does an outgrower or aggregator programme operate in your county or region? Write your viability assessment: altitude, site, market and planting material.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 1 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Global avocado demand has grown in the last decade by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_1')">300–400% — driven by health trends in Europe, North America and the Middle East; African highlands are ideally positioned to supply</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">5%</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">It has not grown</button>
+<div class="q-exp" id="exp1_1"><strong>Why:</strong> The demand curve is structural: avocado went from a niche fruit to a daily staple in many markets. The growth rate means supply expansion has not yet closed the gap — good news for new producers.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Hass avocado is the export standard because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_2')">It turns purple-black when ripe (easy visual ripeness cue for consumers), has pebbly tough skin (handles transport), and lasts 14–21 days post-harvest</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">It is the cheapest to grow</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">It never ripens</button>
+<div class="q-exp" id="exp1_2"><strong>Why:</strong> Hass's handling qualities are engineered for the export chain: tough skin survives shipping, colour change signals ripeness, and extended shelf life serves distant markets. All three qualities are why it dominates.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Avocado first commercial harvest (grafted trees) is at:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_3')">3–5 years — with full yield maturity at 7–10 years; the tree then produces for 50+ years</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">6 months</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">30 years minimum</button>
+<div class="q-exp" id="exp1_3"><strong>Why:</strong> The patience premium of avocado: longer than mango or citrus to first harvest, but the 50-year productive life and rising prices make it Africa's highest-earning tree investment for the right producer.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Avocado Type A and Type B varieties differ in:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_4')">Flower opening timing — Type A female in morning, male in afternoon; Type B female in afternoon, male in morning; cross-pollination between the two dramatically improves fruit set</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">Everything except market price</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">Nothing relevant to management</button>
+<div class="q-exp" id="exp1_4"><strong>Why:</strong> The A/B system is evolution's cross-pollination insurance: two types with staggered opening times overlap in ways that single-type stands miss. Mixed plantings capture the cross-pollination bonus.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Bees near the avocado orchard are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_5')">Essential — avocado flowers are bee-dependent for cross-pollination; placing hives near the orchard during flowering is the single most important pollination intervention</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Optional cosmetics</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Harmful to the crop</button>
+<div class="q-exp" id="exp1_5"><strong>Why:</strong> Avocado is not wind-pollinated: it needs insect vectors to transfer pollen between A and B type flowers. Bee hives at flowering directly translate to fruit set and bunch weight.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Kenya's position in global avocado export is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_6')">Top-five globally — proof that African highlands can serve export markets at scale; the model other countries are replicating</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">Unknown</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">Kenya doesn't grow avocado</button>
+<div class="q-exp" id="exp1_6"><strong>Why:</strong> Kenya's success is the proof of concept: altitude, variety selection, export certification and cold chain built over two decades have made it a global player. The knowledge is available to replicate.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Fuerte avocado compared to Hass:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_7')">Green when ripe, thinner skin (more delicate), excellent flavour — early to market and domestically popular but declining as Hass dominates export globally</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">Identical to Hass in every way</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">More profitable than Hass everywhere</button>
+<div class="q-exp" id="exp1_7"><strong>Why:</strong> Fuerte's thin green skin is its post-harvest weakness: it doesn't signal ripeness by colour change and bruises more easily. Domestically valuable; globally displaced by Hass's handling qualities.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. The recommended orchard cross-pollination design is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_8')">One row of Type B pollinator (Fuerte or other) for every 4–5 rows of Hass (Type A) — or interspersed throughout; bees do the bridge</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Single variety only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Random planting of any varieties</button>
+<div class="q-exp" id="exp1_8"><strong>Why:</strong> The design is the biology: Type B pollinators staggered through the orchard ensure that when Hass flowers open as female (morning), Type B flowers are releasing pollen nearby. Bees carry the rest.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. The avocado productive lifespan of a well-managed tree is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_9')">50+ years — among the longest of any commercial fruit tree; establishment cost amortised over five decades of harvest</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">5 years</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">100 years without any management</button>
+<div class="q-exp" id="exp1_9"><strong>Why:</strong> The 50-year lifespan changes the ROI calculation: establishment costs divided by 50 years of compounding returns makes avocado one of the most efficient long-term land investments in highland Africa.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Avocado flowering typically occurs:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_10')">In the dry season — water stress (natural or managed) triggers floral initiation; harvest then follows 9–15 months after flowering depending on variety</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">After every rain</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Only once in the tree's life</button>
+<div class="q-exp" id="exp1_10"><strong>Why:</strong> The flowering trigger in avocado is similar to mango: water stress signals the end of vegetative growth and the start of reproduction. In irrigated orchards, a deliberate dry period manages the flowering calendar.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn1" onclick="markComplete(1)">Mark Month 1 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="2">
+    <div class="module-header" onclick="toggleModule(2)">
+      <div class="module-num">2</div>
+      <div class="module-title">Month 2: Site, Grafted Trees, Spacing &amp; Young Tree Establishment</div>
+      <div class="module-status" id="status2">Locked</div>
+    </div>
+    <div class="module-body" id="body2">
+
+      <h3>Lesson 2.1 — Site and altitude requirements</h3>
+      <p>Avocado is an altitude crop for the tropics: <strong>optimal at 1,000–2,200 metres</strong> in East and Central Africa. Below 1,000 m: too hot, too humid, more disease pressure, Hass struggles to colour properly. Above 2,200 m: frost risk at flowering. The altitude window is not negotiable: <strong>do not plant avocado outside your tested altitude band</strong>. Other critical site factors:</p>
+      <ul>
+        <li><strong>Soil:</strong> deep (2+ m), well-drained, loamy or sandy loam; pH 5.0–7.0; avocado is the most waterlogging-sensitive tree in this college — <strong>even a few hours of standing water can start Phytophthora root rot</strong>.</li>
+        <li><strong>Rainfall:</strong> 1,000–1,500 mm well-distributed, or irrigation; avocado cannot tolerate extended drought at fruit fill.</li>
+        <li><strong>Slope:</strong> avocado orchards in East Africa are often on hillslopes — excellent drainage but erosion must be managed (grass contour strips, terraces).</li>
+      </ul>
+      <h3>Lesson 2.2 — Grafted tree sourcing and planting</h3>
+      <p>Always use <strong>grafted Hass seedlings from a certified nursery</strong>. Self-grafting from seeds produces variable results and unknown rootstock adaptation. Rootstock species commonly used: <strong>West Indian (fast-growing, less cold-tolerant), Guatemalan (more cold-tolerant, slower), Drymifolia</strong>. Inspect trees: well-healed graft union, healthy root system, no root girdling, disease-free foliage. <strong>Spacing: 7×7 m (200 trees/ha) to 5×5 m (400 trees/ha high-density)</strong>; high-density requires pruning discipline but achieves earlier yield and higher production in the first 10 years.</p>
+      <h3>Lesson 2.3 — Young tree management (years 1–3)</h3>
+      <p>The investment phase: no income, maximum vulnerability. Management: <strong>watering through every dry spell</strong> (young avocado without water dies or is set back 3+ years — more sensitive than mango or citrus at this stage); weed-free circle of 2 m diameter; <strong>formative pruning</strong> in year two (remove crossing branches, build a clear single trunk to 1.2 m then open canopy above); protect the graft union from sun scald (white paint on the trunk if direct sun exposure); never apply high-N fertiliser in the first year — it promotes soft growth that breaks and invites disease.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Drip-line establishment and formative pruning — building the 50-year tree in its first three years &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 2:</strong> Perform a drainage test on your candidate site: dig 60 cm, fill with water, measure time to drain — less than 2 hours is good; more than 4 hours requires raised beds or alternative site. Source grafted Hass trees: inspect graft union, roots and leaf health. Plant at your chosen spacing; install drip point or bucket-drip per tree; apply white paint to graft union and first 30 cm of trunk on sun-exposed side. Maintain 2 m weed-free circles. At 18 months, execute the first formative prune: remove all crossing and downward branches below 1.2 m.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 2 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Optimal avocado altitude in East/Central Africa is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_1')">1,000–2,200 m — below this, too hot and humid for Hass colour development and disease resistance; above this, frost risk at flowering</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">Any altitude</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">Only sea level</button>
+<div class="q-exp" id="exp2_1"><strong>Why:</strong> Altitude is the first screening question: the right zone delivers the right temperatures for Hass quality. Outside the band, the farm can produce avocado but not premium export-quality Hass.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Avocado's Phytophthora root rot sensitivity means:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_2')">Even a few hours of standing water can start root rot — avocado is the most waterlogging-sensitive tree in this college; drainage is the foundational site requirement</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">Waterlogging improves yields</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">Avocado is water-tolerant always</button>
+<div class="q-exp" id="exp2_2"><strong>Why:</strong> Phytophthora is a water mould: it multiplies in anaerobic soil instantly. Avocado's fatty-acid-rich roots are particularly attractive. Standing water + avocado roots = root rot in hours.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Avocado grafted trees are sourced from:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_3')">A certified nursery with a known rootstock (West Indian, Guatemalan, Drymifolia) — self-grafting from seed produces variable unknowns; inspect for graft union, root health, disease-free foliage</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">Any roadside vendor</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">Self-propagation always</button>
+<div class="q-exp" id="exp2_3"><strong>Why:</strong> Rootstock choice affects cold tolerance, disease resistance and productivity for the 50-year life of the tree. Certified nursery trees are the 50-year investment; unknown sources are 50-year gambles.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Standard Hass orchard spacing is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_4')">7×7 m (200 trees/ha) to 5×5 m (400 trees/ha high-density) — high-density achieves earlier and higher yield in the first 10 years but requires ongoing pruning discipline</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">1 m between trees always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">100 m between trees</button>
+<div class="q-exp" id="exp2_4"><strong>Why:</strong> High-density avocado is the commercial trend: more trees, earlier yield, more income in the critical years before tree maturity — with the tradeoff of annual hedging and pruning to manage canopy.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. The 2 m weed-free circle around young avocado trees:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_5')">Removes the root-zone competition that delays establishment in years 1–3 — the cheapest management investment after watering</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">Is aesthetic only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">Harms the tree</button>
+<div class="q-exp" id="exp2_5"><strong>Why:</strong> Competition in the root zone at year one costs two years of growth: grass and weeds outside the 2 m circle are tolerated; inside it they steal the water and nutrients the young tree needs most.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Young avocado without water in its first dry season:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_6')">Dies or is set back 3+ years — more waterlogging-sensitive than mango or citrus at the seedling stage; a bucket-drip or irrigation point is the minimum investment</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">Recovers quickly</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">Is not affected at all</button>
+<div class="q-exp" id="exp2_6"><strong>Why:</strong> The first dry season is the avocado seedling's most vulnerable moment: the root system is too small to access deep soil moisture. Water at this stage is the single most critical intervention.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. High-N fertiliser in the first year of avocado:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_7')">Promotes soft rapid growth that breaks in wind and invites fungal infection — avoid high-N first year; use compost and low-N compound instead</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Is always beneficial</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Must always be applied</button>
+<div class="q-exp" id="exp2_7"><strong>Why:</strong> The soft-growth trap: N pushes fast lush growth on young trees that snaps at the first wind event and invites fungal entry. Firm, steady growth from compost and low-N feeds is the correct first-year target.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Slope orchards in East Africa require:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_8')">Grass contour strips and terraces to prevent erosion — sloped sites have good drainage but lose topsoil if not stabilised; the erosion costs compound silently over decades</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">Nothing special for erosion</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">Flooding to prevent erosion</button>
+<div class="q-exp" id="exp2_8"><strong>Why:</strong> The highland gift (good drainage, cool temperature) comes with the highland risk (erosion). Contour grass strips and bench terraces are the management that keeps the soil under the trees for the 50-year production life.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Formative pruning in year two of avocado:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_9')">Builds a clear single trunk to 1.2 m then an open canopy structure above — the architecture the 50-year tree will maximise light in</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Is too early for any pruning</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Is done only at maturity</button>
+<div class="q-exp" id="exp2_9"><strong>Why:</strong> Year-two pruning is architectural investment: the crossing branches removed now are the canopy shade and air restrictions the farmer would pay to fix at year 10. Early is cheap and permanent.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. The graft union on young avocado in direct sun is protected by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_10')">White paint on the trunk — prevents sun scald that kills the cambium at the union, which would girdle the whole tree</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">Nothing needed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">Black paint for maximum heat</button>
+<div class="q-exp" id="exp2_10"><strong>Why:</strong> Sun scald is a silent killer: the graft union, once established, is the tree's weakest structural point. Direct sun on the smooth bark generates enough heat to kill the cambium tissue, girdling water flow.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn2" onclick="markComplete(2)">Mark Month 2 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="3">
+    <div class="module-header" onclick="toggleModule(3)">
+      <div class="module-num">3</div>
+      <div class="module-title">Month 3: Nutrition, Irrigation &amp; Canopy Management</div>
+      <div class="module-status" id="status3">Locked</div>
+    </div>
+    <div class="module-body" id="body3">
+
+      <h3>Lesson 3.1 — Nutrition for avocado</h3>
+      <p>Avocado is a moderate-to-heavy feeder. A productive mature tree removes roughly <strong>400–600 g N, 60–100 g P and 600–900 g K per tree per year</strong>. Programme by stage:</p>
+      <ul>
+        <li><strong>Pre-flowering (dry season):</strong> K and P dominant; no high N (N promotes vegetative growth, not flowers); micro-nutrients especially boron (5–10 g borax per tree, foliar or soil — critical for fruit set in avocado as in sunflower).</li>
+        <li><strong>Post-flowering through fruit fill:</strong> N for shoot growth plus K for fruit quality; Ca foliar (prevents stem-end rot); consistent irrigation or rainfall.</li>
+        <li><strong>Post-harvest:</strong> N and P for recovery and root development; manure 10–15 kg per tree per year applied in a ring.</li>
+      </ul>
+      <h3>Lesson 3.2 — Irrigation</h3>
+      <p>Where rainfall is below 1,200 mm or has a distinct dry season over 3 months, <strong>drip or micro-jet irrigation is essential for yield and fruit quality</strong> — especially through fruit fill. Critical windows: <strong>flowering (never drought-stress the avocado in flower — fruit set collapses)</strong> and <strong>cell division in early fruit fill (first 2–3 months after setting)</strong>. After that, water stress at late fill only shrinks the final fruit size.</p>
+      <h3>Lesson 3.3 — Canopy management and pruning</h3>
+      <p>Avocado trees in dense orchards require ongoing pruning: <strong>hedging (trimming the tree-to-tree border between rows) to maintain alley width for picking and spraying</strong>, and <strong>skirt pruning (removing branches that hang to within 50 cm of the soil)</strong> to reduce Phytophthora splash and fruit contact with soil pathogens. Thinning the canopy interior (removing crossing, dead or diseased branches) improves light penetration and airflow — both disease reducers. <strong>Prune after harvest, before flowering begins</strong>; never prune in flower.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Boron at flowering, K during fill, and phosphonate twice a year — the avocado management calendar &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 3:</strong> Set up your fertiliser calendar: record pre-flowering K+P application (include borax at 5–10 g per tree), fruit-fill N+K application, and post-harvest N+P+manure ring application. Apply phosphonate (phosphorous acid) trunk injection or foliar at the pre-flowering and post-harvest periods — record product, rate, date. Monitor canopy for crossing branches and skirt branches; execute post-harvest hedging and skirt pruning. Record irrigation frequency and any visual drought stress during the critical flowering window.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 3 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Avocado pre-flowering nutrition prioritises:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_1')">K and P with micro-nutrients (especially boron for fruit set) and NO high N — nitrogen before flowering promotes vegetative growth instead of flowers</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">High nitrogen only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">No fertiliser before flowering</button>
+<div class="q-exp" id="exp3_1"><strong>Why:</strong> The boron-avocado connection mirrors the sunflower course: boron deficiency at flowering reduces fruit set on avocado. A few grams of borax per tree at the right time is a disproportionate return.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Boron supplementation for avocado at flowering:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_2')">5–10 g borax per tree (foliar or soil) — critical for fruit set; avocado shares sunflower's sensitivity to boron deficiency at the reproductive stage</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Is unnecessary</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Is toxic always in any amount</button>
+<div class="q-exp" id="exp3_2"><strong>Why:</strong> The B-deficiency pattern: avocado aborts set fruit or fails to set at all without adequate boron at flowering. The narrow deficiency-toxicity window applies here too — measured, not guessed.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. The most critical avocado water window is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_3')">Flowering — never drought-stress avocado in flower; fruit set collapses under moisture stress and cannot be rescued by later watering</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">After harvest only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">During dry-season dormancy</button>
+<div class="q-exp" id="exp3_3"><strong>Why:</strong> Flowering stress is permanent yield loss: aborted set at this stage cannot be recovered regardless of subsequent management. Irrigation scheduling must protect the flower window above all.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Canopy hedging in dense avocado orchards:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_4')">Trims the tree-to-tree border to maintain alley width for picking and spraying — both operations become impossible in an unhedged dense orchard</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Only for aesthetics</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Reduces yield always</button>
+<div class="q-exp" id="exp3_4"><strong>Why:</strong> The dense orchard trade-off: more trees = more yield until canopies merge and alleys close. Hedging keeps the rows accessible and the canopy productive — the management fee of the high-density decision.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Skirt pruning removes branches hanging within 50 cm of soil because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_5')">These low branches splash Phytophthora from soil onto the canopy during rain and allow fruit to contact soil pathogens — removal reduces disease entry points</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Skirt is aesthetic</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Low branches produce the best fruit</button>
+<div class="q-exp" id="exp3_5"><strong>Why:</strong> Phytophthora splash is rain-driven: each droplet landing in a puddle under a skirt branch carries spores upward. Raising the skirt breaks this delivery mechanism.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Pruning for avocado should be timed:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_6')">After harvest and before flowering begins — pruning in flower removes developing floral buds and wastes the whole season's fruit set</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">During flowering only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Never needed</button>
+<div class="q-exp" id="exp3_6"><strong>Why:</strong> The pruning window is the non-flowering period: post-harvest recovery, canopy thinning, and hedging done then leave flowering buds undisturbed. Pruning in flower removes the season's income.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Manure (10–15 kg per tree per year) for avocado is applied:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_7')">Post-harvest in a ring around the drip line — the foundation nutrition that buffers chemical fertiliser and supports soil microbiology for 50 years of root-zone health</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Only at planting once</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">In the centre on the trunk</button>
+<div class="q-exp" id="exp3_7"><strong>Why:</strong> The drip-line ring is root-zone precision: the active feeding roots are at the canopy edge, not at the trunk. Placing manure there delivers it to where it can be used.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Post-harvest nutrition for avocado focuses on:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_8')">N and P for shoot recovery and root development — the tree must rebuild its leaf and root system before the next flowering cycle</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">K only for fruit quality</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">Nothing; rest the tree</button>
+<div class="q-exp" id="exp3_8"><strong>Why:</strong> The recovery period is next year's yield: shoot growth after harvest becomes the wood that next season's flowers emerge from. N and P at this stage is investing in the following harvest.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Fruit cell division in early fill (first 2–3 months):</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_9')">Is the water-critical stage determining final fruit size — water stress here reduces cells per fruit permanently; drought at late fill only reduces final cell expansion</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Has no water requirement</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Is not affected by water</button>
+<div class="q-exp" id="exp3_9"><strong>Why:</strong> Cell number is set early; cell size is set late. Both matter but early-fill drought is the permanent yield reduction — you can't add cells you didn't make in the first 8 weeks.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Calcium foliar application during fruit fill prevents:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_10')">Stem-end rot — a post-harvest disorder causing blackening at the stem attachment; calcium strengthens cell walls that slow pathogen entry after harvest</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Nothing identifiable</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Fruit colour only</button>
+<div class="q-exp" id="exp3_10"><strong>Why:</strong> Stem-end rot is the post-harvest loss that happens in the field: calcium supplied during fill builds the cell-wall integrity that resists pathogen entry once the stem is cut at harvest.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn3" onclick="markComplete(3)">Mark Month 3 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="4">
+    <div class="module-header" onclick="toggleModule(4)">
+      <div class="module-num">4</div>
+      <div class="module-title">Month 4: Phytophthora, Thrips, Fruit Fly &amp; Other Pests</div>
+      <div class="module-status" id="status4">Locked</div>
+    </div>
+    <div class="module-body" id="body4">
+
+      <h3>Lesson 4.1 — Phytophthora root rot: avocado's greatest enemy</h3>
+      <p><strong>Phytophthora cinnamomi</strong> is the most devastating avocado disease globally. It colonises roots and collar (stem base), cutting off water and nutrient transport; the first symptom is wilting and yellowing of leaves despite moist soil — the tree is drowning in a full-looking soil. <strong>Management:</strong></p>
+      <ul>
+        <li>Plant only on <strong>well-drained sites</strong> — the disease thrives in waterlogged, oxygen-depleted soil.</li>
+        <li><strong>Phosphonate (phosphorous acid)</strong> trunk injection or foliar: a systemic compound that suppresses Phytophthora and triggers the tree's defence response — the most effective chemical management, applied 2–3 times/year in commercial orchards.</li>
+        <li><strong>Raise planting sites</strong> (mounds or ridges) where drainage is marginal.</li>
+        <li>Avoid moving soil or water from infected areas.</li>
+        <li><strong>Rootstock selection:</strong> Guatemalan rootstocks show moderate resistance compared to West Indian; ongoing breeding for resistance.</li>
+      </ul>
+      <h3>Lesson 4.2 — Avocado thrips, fruit fly, and other pests</h3>
+      <table>
+        <tr><th>Pest</th><th>Damage</th><th>Management</th></tr>
+        <tr><td><strong>Avocado thrips (Scirtothrips)</strong></td><td>Silvery russet scarring on fruit skin — cosmetic damage; does not affect flesh but downgrades export grade drastically</td><td>Kaolin clay spray (physical barrier) or spinosad at threshold during fruit development; natural enemies where present</td></tr>
+        <tr><td><strong>Fruit fly (Bactrocera)</strong></td><td>Larvae in fruit; same export disqualifier as mango; stings on young fruit</td><td>Protein bait stations, mass trapping, post-harvest phytosanitary treatment where required</td></tr>
+        <tr><td><strong>Avocado lace bug</strong></td><td>Bronzing/russeting underside leaves; severe infestations reduce photosynthesis</td><td>Canopy management for airflow; targeted spray at threshold</td></tr>
+        <tr><td><strong>Borers (stemborer)</strong></td><td>Larvae tunnel into branches; frass visible; branch dieback</td><td>Remove affected branches; painting wounds; borers often secondary to stressed or diseased trees</td></tr>
+      </table>
+      <h3>Lesson 4.3 — Post-bloom diseases</h3>
+      <ul>
+        <li><strong>Anthracnose (Colletotrichum):</strong> black sunken spots on ripe fruit — latent infection from field; managed by copper spray during fruit development and post-harvest hot-water dip or prochloraz treatment for export.</li>
+        <li><strong>Cercospora spot / avocado scab:</strong> corky spots on young fruit — resistant varieties and copper spray.</li>
+        <li><strong>Sunblotch viroid (ASBVd):</strong> yellow sunken streaks on fruit and leaves — seed-borne and graft-transmissible; only disease-free certified nursery stock prevents it; no cure.</li>
+      </ul>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Phosphonate trunk injection and kaolin clay — managing avocado's two most costly field threats &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 4:</strong> Inspect root zone: dig carefully under two trees and inspect surface roots for dark-brown discolouration and death (Phytophthora symptoms). Assess your site drainage and note whether raised mounds are needed. Set up 5 kaolin clay spray sessions on developing fruit (from pea-size to 100 g size); record application dates and assess fruit skin quality before and after the window. Install protein bait stations (1 per 5 trees); record catches over 4 weeks. Any suspected sunblotch viroid (yellow streaks on leaves or fruit) — photograph and report to extension immediately.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 4 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Phytophthora root rot first shows as:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_1')">Wilting and yellowing of leaves despite moist soil — the tree is losing water uptake from destroyed roots while the soil is visually wet; a deceptive symptom</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Dry soil always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Only at the fruit stage</button>
+<div class="q-exp" id="exp4_1"><strong>Why:</strong> The diagnostic confusion is the disease's success: the tree wilts like drought while the soil is moist. Knowing this prevents the fatal mistake of adding more water — which feeds Phytophthora further.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Phosphonate (phosphorous acid) trunk injection:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_2')">Is the most effective Phytophthora management — systemic, triggers tree defence response, applied 2–3 times/year in commercial orchards; no soil-drainage requirement waived</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">Cures Phytophthora permanently</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">Is too expensive to consider</button>
+<div class="q-exp" id="exp4_2"><strong>Why:</strong> Phosphonate is the unique tool for Phytophthora: both fungistatic (slows the pathogen) and elicitin (triggers host resistance). But it is a management tool, not a cure — drainage must still be right.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Avocado thrips cosmetic damage is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_3')">Silvery russet scarring on fruit skin — no flesh damage but it downgrades export grade drastically; kaolin clay or spinosad at threshold prevent it</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Internal flesh damage</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Beneficial to the fruit</button>
+<div class="q-exp" id="exp4_3"><strong>Why:</strong> Cosmetic damage is commercial damage: an unblemished Hass earns export price; a scarred Hass is sold locally at a fraction. Preventing a visual flaw is worth real money.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Kaolin clay spray for avocado thrips works by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_4')">Physical barrier on developing fruit surface — thrips cannot land, feed or lay eggs on kaolin-coated fruit; zero residue, zero toxicity</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">Poisoning thrips directly</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">Nothing — thrips ignore it</button>
+<div class="q-exp" id="exp4_4"><strong>Why:</strong> Kaolin is the physical exclusion tactic: a mineral coating that disorients and deters insect feeding without any chemical toxicity. On export crops with residue limits, it is the safe first-line tool.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Avocado sunblotch viroid (ASBVd) is prevented only by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_5')">Certified disease-free nursery stock — it is seed-borne and graft-transmissible; no cure once in the tree; the nursery certificate is the prevention</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Weekly fungicide</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Irrigation adjustment</button>
+<div class="q-exp" id="exp4_5"><strong>Why:</strong> The viroid pattern: no cure, no chemical management, only prevention through planting material quality. Every dollar spent on certified nursery stock pays a lifetime dividend in viroid-free orchard production.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Anthracnose on avocado is a latent infection that:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_6')">Develops on field fruit but explodes at ripening — copper spray during development plus post-harvest prochloraz or hot water reduces post-harvest losses</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Is only present at harvest</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Cannot be managed pre-harvest</button>
+<div class="q-exp" id="exp4_6"><strong>Why:</strong> Latent infection is the hardest to see and the most expensive: the spores infect fruit in the field, lie dormant through ripening, and explode as black rot in the importer's warehouse. Field copper spray is the prevention.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Fruit fly on avocado is managed with:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_7')">Protein bait stations and mass trapping in the field; post-harvest phytosanitary treatment where required by importing countries — the same system as mango</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Ignoring completely</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Only post-harvest treatment</button>
+<div class="q-exp" id="exp4_7"><strong>Why:</strong> The fruit fly system is the same across fruit crops: field management (bait, trap, monitor) combined with post-harvest treatment (where export specs require it). No single measure is sufficient alone.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Avocado borers are often:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_8')">Secondary to stressed or diseased trees — removing affected branches and keeping trees healthy reduces borer incidence; they prefer weakened tissue</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">The primary avocado disease</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">Unrelated to tree health</button>
+<div class="q-exp" id="exp4_8"><strong>Why:</strong> The opportunistic-pest pattern: borers are forest decomposers that attack dying tissue. A healthy, well-watered, well-fertilised tree is much less attacked than a stressed one. Health is the first pest management.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Cercospora spot (avocado scab) is managed by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_9')">Resistant varieties and copper spray — corky spots on young fruit; cosmetic damage that downgrades export grade</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Nothing effective</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Pruning only</button>
+<div class="q-exp" id="exp4_9"><strong>Why:</strong> The copper-plus-resistance combination again: no single tool is sufficient for fungal fruit pathogens, but the two together give commercial control. Resistant varieties reduce the spray programme's frequency.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Moving soil or water from Phytophthora-infected avocado areas:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_10')">Spreads the pathogen to clean areas — biosecurity (tools, boots, water sources) is the disease containment method for an incurable soil pathogen</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Has no effect on disease spread</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Is recommended for soil conditioning</button>
+<div class="q-exp" id="exp4_10"><strong>Why:</strong> Phytophthora travels in water and soil particles: a boot, a tractor tyre, irrigation water from above an infected area all carry spores. The biosecurity protocol treats every entry as a potential vector.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn4" onclick="markComplete(4)">Mark Month 4 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="5">
+    <div class="module-header" onclick="toggleModule(5)">
+      <div class="module-num">5</div>
+      <div class="module-title">Month 5: Dry-Matter Maturity, Post-Harvest Handling &amp; Cold Chain</div>
+      <div class="module-status" id="status5">Locked</div>
+    </div>
+    <div class="module-body" id="body5">
+
+      <h3>Lesson 5.1 — Avocado maturity: the oil-content test</h3>
+      <p>Unlike most fruit, avocado <strong>does not ripen on the tree — it must be harvested</strong> to ripen. The challenge: there is no external colour change to signal maturity in Hass (it changes from green to black as it ripens OFF the tree). <strong>Maturity is measured by oil content and dry matter:</strong></p>
+      <ul>
+        <li><strong>Dry matter test:</strong> cut a sample fruit, weigh a slice, dry at 105 °C for 24 h, reweigh — export maturity for Hass is typically <strong>≥21–23% dry matter</strong> (regional export authority sets the threshold).</li>
+        <li><strong>Penetrometer test:</strong> flesh firmness below a certain threshold indicates maturity; used alongside dry matter.</li>
+        <li><strong>Days from full flower:</strong> variety-specific time from full bloom to commercial maturity (track dates).</li>
+      </ul>
+      <h3>Lesson 5.2 — Post-harvest handling for the export chain</h3>
+      <ol>
+        <li><strong>Harvest carefully:</strong> clip, not pull (stem-pull causes rapid stem-end rot); retain 2–3 cm of stem; handle like eggs — avocado skin is cosmetically delicate at Hass maturity.</li>
+        <li><strong>Field pack shade point:</strong> never leave fruit in direct sun after picking; shade the field pack point with a tarpaulin.</li>
+        <li><strong>Size grading:</strong> by weight (240–400 g range per export-grade fruit; regional specifications vary).</li>
+        <li><strong>Post-harvest treatment:</strong> prochloraz or hot-water dip (50 °C × 10 min) reduces anthracnose; wax coating extends shelf life.</li>
+        <li><strong>Cold chain:</strong> pre-cool to 4–7 °C within 12 hours of harvest; maintain through transport; Hass ships at 4–7 °C for up to 28 days.</li>
+      </ol>
+      <h3>Lesson 5.3 — Ripening for domestic markets</h3>
+      <p>For domestic sale, avocado is ripened naturally (3–5 days at room temperature) or with ethylene (1–2 days). The visual cue for consumers: Hass turns from green to <strong>purple-black when ripe</strong> — this on-shelf ripeness cue is a key market advantage. Fuerte stays green even ripe — the consumer advantage of Hass colour change is part of why it dominates the premium market.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> The 21% dry-matter test, the 12-hour pre-cool window, and prochloraz for anthracnose &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 5:</strong> At expected maturity (count days from full flower): cut and oven-dry 3 sample fruit at 105 °C for 24 h; calculate DM %. Compare to export threshold. Harvest a trial batch (10 fruit): clip with 3 cm stems, carry in padded crates to a shaded field packing point. Apply post-harvest treatment (prochloraz dip where available or hot water 50 °C × 10 min). Store half at room temperature and half at the coolest available point; check ripening quality at 5 and 10 days. Record: DM %, harvest date, treatment applied, ripening quality score.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 5 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Avocado maturity in the field is measured by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_1')">Dry matter content (≥21–23% for Hass export) or penetrometer firmness — not external colour, which only changes after harvest during ripening</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">External green-to-black colour on the tree</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Weight alone</button>
+<div class="q-exp" id="exp5_1"><strong>Why:</strong> The colour change is post-harvest, not pre-harvest. Harvesting by colour doesn't work for avocado: a green Hass on the tree could be immature or fully mature. Dry matter is the scientific harvest trigger.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. The avocado dry matter test requires:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_2')">Cutting a sample, weighing, oven-drying at 105 °C for 24 hours, then reweighing — export standard ≥21–23% dry matter for Hass (regional thresholds vary)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Nothing, just visual check</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Taste testing only</button>
+<div class="q-exp" id="exp5_2"><strong>Why:</strong> The 24-hour oven test is the exact science behind the export harvest decision. Getting this wrong (harvesting too early) produces fruit that never ripens properly — a container of rubber that no buyer accepts.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Avocado must be clipped with 2–3 cm stem because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_3')">Stem-pull causes rapid stem-end rot — the open wound at the stem base is the pathogen entry point that ruins the fruit during the export journey</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">Appearance only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">Stem adds weight for payment</button>
+<div class="q-exp" id="exp5_3"><strong>Why:</strong> The stem end is the pathogen highway: Phytophthora and Colletotrichum enter through the stem wound. A retained 2–3 cm stub seals the attachment point and slows the infection.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Avocado must be shaded at the field packing point because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_4')">Direct sun on harvested avocado causes sunscald (surface cracking and brown patches) within minutes — a tarpaulin over the packing point is the prevention</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">Shade reduces fruit quality</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">Direct sun improves cosmetics</button>
+<div class="q-exp" id="exp5_4"><strong>Why:</strong> The post-harvest sun vulnerability: avocado skin, having been protected by leaf canopy, is thermally stressed by direct exposure within minutes of harvest. Shade is not optional at the packing point.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Pre-cooling avocado to 4–7 °C within 12 hours of harvest:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_5')">Is the cold-chain entry step — Hass ships at 4–7 °C for up to 28 days; without pre-cooling within 12 hours, the cold chain cannot deliver quality at the destination</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">Is harmful to avocado</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">Is done only after 3 days</button>
+<div class="q-exp" id="exp5_5"><strong>Why:</strong> The 12-hour window is physiological: avocado continues ripening (and losing quality) at ambient temperature after harvest. Pre-cooling within 12 hours pauses ripening and preserves the 28-day export window.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Hass avocado's purple-black colour change when ripe is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_6')">A key consumer market advantage — the visual ripeness signal that allows supermarket consumers to self-select ripe fruit; Fuerte stays green even ripe, confusing buyers</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">A quality defect</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">Not observable</button>
+<div class="q-exp" id="exp5_6"><strong>Why:</strong> Hass's colour change is a marketing feature as much as a biological one: consumers know to choose the dark purple one. Fuerte's failure to change confuses consumers — part of why Hass dominates premium retail.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Post-harvest prochloraz or hot-water dip (50 °C × 10 min) serves:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_7')">Reducing anthracnose — the latent field infection that explodes during ripening; treatment at pack-house before cold storage is the standard for export fruit</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Cleaning only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Nothing measurable</button>
+<div class="q-exp" id="exp5_7"><strong>Why:</strong> The pack-house treatment is the last line of defence against latent infection: targeting spores already on the skin before they explode during the ripening journey to the consumer.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Avocado ripening for domestic markets takes:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_8')">3–5 days at room temperature naturally; 1–2 days with ethylene treatment — Hass visual cue (green to purple-black) guides consumer purchase</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">10 weeks always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Only happens on the tree</button>
+<div class="q-exp" id="exp5_8"><strong>Why:</strong> The domestic ripening room is simple: shaded, ambient temperature, 3–5 days. Ethylene treatment (commercial or traditional ethylene-generating material) compresses this to 1–2 days for market-day readiness.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Export-grade Hass avocado size range is typically:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_9')">240–400 g per fruit (regional specifications vary) — sized by weight at the grading table; undersize and oversize fruit sold domestically</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Any weight</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Only 1 kg minimum</button>
+<div class="q-exp" id="exp5_9"><strong>Why:</strong> The size specification is the buyer's specification: they pack by count in a box, so weight consistency is the box-fill predictability. Knowing your buyer's spec determines your harvest size target.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Wax coating on export avocado:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_10')">Extends shelf life by reducing moisture loss and respiration rate — standard finish for premium export fruit alongside the post-harvest treatment</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Is banned on avocado</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Reduces quality always</button>
+<div class="q-exp" id="exp5_10"><strong>Why:</strong> Wax on avocado serves the same function as on citrus: replacing natural surface waxes removed by washing, slowing water loss and extending the shelf life inside the cold chain.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn5" onclick="markComplete(5)">Mark Month 5 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="6">
+    <div class="module-header" onclick="toggleModule(6)">
+      <div class="module-num">6</div>
+      <div class="module-title">Month 6: Export Chain, Orchard Economics &amp; the 50-Year Business Plan</div>
+      <div class="module-status" id="status6">Locked</div>
+    </div>
+    <div class="module-body" id="body6">
+
+      <h3>Lesson 6.1 — The avocado export chain</h3>
+      <p>Exporting avocado requires a chain of systems: <strong>orchard registration → phytosanitary inspection → pack-house certification → cold chain → importer relationship</strong>. For smallholders, the practical entry is through an <strong>aggregator or outgrower scheme</strong>: the exporter provides technical support and collection; the farmer provides consistent quality. Building toward direct export is a year 7–10 ambition after consistent quality is proven at local and domestic channels.</p>
+      <h3>Lesson 6.2 — An honest avocado economics case</h3>
+      <table>
+        <tr><th>Item</th><th>Amount</th></tr>
+        <tr><td>Establishment (1 ha, 200 trees @ 7×7 m)</td><td>Trees + holes + irrigation + windbreaks: $2,000–6,000</td></tr>
+        <tr><td>Annual maintenance (mature, years 7+)</td><td>Fertiliser, spray, pruning, labour: $1,500–4,000/year</td></tr>
+        <tr><td>Mature yield (200 trees, 15–25 t/ha)</td><td>3,000–5,000 kg/tree-season at mature; earlier yields 3–8 t/ha</td></tr>
+        <tr><td>Gross (domestic market, $0.50–1.00/kg)</td><td>~$7,500–25,000/ha/year at maturity</td></tr>
+        <tr><td>Gross (export, $1.50–3.00/kg)</td><td>~$22,500–75,000/ha/year at maturity</td></tr>
+        <tr><td><strong>Net margin (domestic, mature)</strong></td><td><strong>~$3,500–20,000/ha/year</strong></td></tr>
+        <tr><td><strong>Net margin (export, mature)</strong></td><td><strong>~$18,000–70,000/ha/year (highest in this college)</strong></td></tr>
+      </table>
+      <h3>Lesson 6.3 — Records and the growth path</h3>
+      <p>Per tree per season: planting date and rootstock; flowering date (track A/B; note any poor fruit set); irrigation events and estimated water received; fertiliser applications (product, rate, date); Phytophthora spray dates (phosphonate); thrips and fruit fly scouting record; harvest date; dry-matter sample result; yield (kg); post-harvest loss (reason and weight); sale channel and price. <strong>Report card: yield per tree (kg), dry-matter at harvest (%DM), and price/kg achieved.</strong> Growth path: year 1–3 — establishment with intercrop income; year 4–6 — first harvests, domestic premium channel; year 7–10 — consistent supply for outgrower/exporter scheme; year 10+ — direct export certification if scale and quality allow.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> From outgrower scheme to direct export — and the compounding return of a 50-year Hass orchard &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 6:</strong> Build the one-hectare economics case: year 1–3 costs (trees, establishment, irrigation, intercrop income), year 4–6 early harvest income, year 7–10 consistent domestic premium, year 10+ export maturity. Contact the nearest aggregator or outgrower scheme: record their requirements (minimum volume, quality specs, collection point). Build the DM-yield-price trio record for your trial batch. Write your 10-year growth plan: year-by-year income targets, the channel progression and the certification milestones required for export.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 6 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Mature avocado export earnings at $1.50–3.00/kg reach:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_1')">~$22,500–75,000/ha/year at maturity — the highest per-hectare earning in this college; establishment cost is amortised over 50 years</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">$100/year total</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">Same as maize</button>
+<div class="q-exp" id="exp6_1"><strong>Why:</strong> The avocado export case is the most compelling in the college: a 50-year tree investment at current global prices earns more per hectare than any other crop taught here. The patience buys the premium.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. The smallholder's practical entry into avocado export is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_2')">Aggregator or outgrower scheme — the exporter provides technical support and collection; the farmer provides consistent quality; direct export is year 7–10 ambition</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Starting export directly from year one</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">No path exists for smallholders</button>
+<div class="q-exp" id="exp6_2"><strong>Why:</strong> The aggregator model is the bridge: the exporter has the cold chain, the importer relationship and the certification; the farmer has the fruit. Joining a scheme with proven quality is the accessible export entry.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Year 1–3 avocado income strategy is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_3')">Intercrop vegetables, beans or other short crops in the inter-row — generates cash while trees grow; the same logic as mango and citrus young orchard</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Wait and earn nothing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Plant only avocado in every space</button>
+<div class="q-exp" id="exp6_3"><strong>Why:</strong> The inter-row is productive land during the patience period: open-canopy sun in years 1–3 is as good for a vegetable bed as it is for nothing. The intercrop funds the tree investment.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. The three report-card numbers for avocado are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_4')">Yield per tree (kg), dry-matter percentage at harvest, and price/kg achieved — production, quality and marketing measured together</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Rainfall and luck</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Number of flowers counted</button>
+<div class="q-exp" id="exp6_4"><strong>Why:</strong> Yield shows production management; dry matter shows harvest-timing discipline; price shows channel discipline. Low dry matter (harvested too early) produces rubber that neither channel wants at any price.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. The 50-year avocado tree's financial logic is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_5')">Establishment cost ($2,000–6,000/ha) divided by 50 years of compounding harvests makes it the lowest cost-per-harvest-year investment in this college</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">Too long to be worthwhile</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">Only sensible for commercial farms</button>
+<div class="q-exp" id="exp6_5"><strong>Why:</strong> The cost-per-year calculation reverses the patience barrier: $4,000 establishment over 50 years = $80/ha/year of establishment cost against thousands in annual returns. The longer the tree lives, the better the investment.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Orchard registration for export phytosanitary compliance requires:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_6')">Documented trapping records, spray programme records, and official farm inspection — the same system as mango and citrus export certification</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">No documentation</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">Only the word of the farmer</button>
+<div class="q-exp" id="exp6_6"><strong>Why:</strong> Export compliance is a documentation system: the phytosanitary certificate is only as valid as the records that support it. Building the system from year one means the paperwork is ready when the export relationship is.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. The A/B cross-pollination planting design earns a return by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_7')">Improving fruit set and bunch weight by ensuring both pollen types are available throughout the flowering period — bees carry the benefit to every tree</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Only looking balanced</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Nothing measurable</button>
+<div class="q-exp" id="exp6_7"><strong>Why:</strong> The A/B design is a yield engineering decision: same trees, same management, but with cross-pollination available, fruit set improves measurably. The row pattern is the orchard design that captures this free gain.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Bees during avocado flowering should be:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_8')">In hives at the orchard edge — avocado flowers are bee-pollinated; active bee colonies during flowering directly increase fruit set and therefore yield</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Removed from the area</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Only present after harvest</button>
+<div class="q-exp" id="exp6_8"><strong>Why:</strong> Bees are the pollination workforce: avocado cannot be wind-pollinated, and hand pollination at orchard scale is impractical. Hive placement at the orchard before flowering is the management step that earns all the A/B cross-pollination benefit.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Avocado domestic market price compared to export:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_9')">$0.50–1.00/kg domestic vs $1.50–3.00/kg export — domestic is the stepping stone; consistent domestic quality demonstrates the ability to graduate to export specs</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Export pays less than domestic</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Both identical</button>
+<div class="q-exp" id="exp6_9"><strong>Why:</strong> The channel progression has both income and proof value: domestic buyers teach the farmer what consistent quality means; export buyers verify it with stricter specs and higher prices.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Year 10+ direct export for avocado requires:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_10')">Scale and quality consistency proven through outgrower/aggregator years, plus orchard registration, pack-house access and cold chain — earned over the first decade, not available from day one</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Starting from scratch in year 10</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">No documentation system</button>
+<div class="q-exp" id="exp6_10"><strong>Why:</strong> The decade of learning is not wasted waiting: it builds the crop history, quality record, pest management discipline and post-harvest skills that export buyers require before writing a contract.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn6" onclick="markComplete(6)">Mark Month 6 Complete</button>
+    </div>
+  </div>
+
+  <div class="final-section">
+    <h2>&#127942; Final Project: Your Avocado Business Plan</h2>
+    <p>The final project is your complete avocado enterprise plan — altitude verification, site drainage assessment, 50-year orchard economics, and the export pathway through outgrower scheme to direct export certification.</p>
+    <ol><li><strong>Site viability case:</strong> altitude confirmed (1,000–2,200 m), drainage test result, rainfall or irrigation availability, frost-risk assessment.</li>
+<li><strong>Variety and pollinator plan:</strong> Hass as primary variety, Type B pollinator rows design (1 row per 4–5 rows Hass), nursery sourcing with rootstock identified, bee hive arrangement at flowering.</li>
+<li><strong>Establishment protocol:</strong> pit preparation, planting procedure, first-year watering system, graft union protection, weed-free circle maintenance, 18-month formative pruning schedule.</li>
+<li><strong>Nutrition and Phytophthora calendar:</strong> pre-flowering K+P+boron, fruit-fill N+K+Ca foliar, post-harvest N+P+manure; phosphonate trunk injection 2–3×/year dates.</li>
+<li><strong>Pest and disease management:</strong> kaolin clay window (pea-size to 100 g fruit), fruit fly bait station network, sunblotch nursery verification, thrips and lace bug scouting.</li>
+<li><strong>Harvest and post-harvest chain:</strong> DM% maturity test protocol, clip-with-stem rule, shade packing point, grading by weight, prochloraz/HWT protocol, pre-cool within 12 hours, cold-chain specification.</li>
+<li><strong>50-year economics and export path:</strong> year-by-year cash flow from intercrop through domestic to export maturity; outgrower scheme identified and contacted; year 10 direct-export requirements listed.</li></ol>
+    <p><strong>Submission standard:</strong> A plan you could hand to a savings group, a bank officer, or a family investor without embarrassment. Real local prices, real named buyers, honest risks.</p>
+  </div>
+
+  <div class="budget-section">
+    <h2>&#128176; Startup Budget &mdash; 1 ha Hass Avocado — 50-Year Investment Case (200 Trees @ 7×7 m)</h2>
+    <p>The 50-year economics case divides by 50: a $4,000 establishment cost averages $80/ha/year over the tree's life against thousands in annual returns. The export scenario at maturity is the highest per-hectare return in this college.</p>
+    <table>
+      <tr><th>Item</th><th>Details</th><th>Typical cost (USD)</th></tr>
+<tr><td>Grafted Hass trees (200/ha) + Type B pollinators</td><td>Certified nursery, correct rootstock</td><td>$800–2,000</td></tr>
+<tr><td>Pit preparation + compost (200 pits)</td><td>60×60×60 cm each</td><td>$400–1,000</td></tr>
+<tr><td>Drip irrigation or bucket-drip installation</td><td>First-year system</td><td>$500–2,000</td></tr>
+<tr><td>Windbreaks (napier grass or tree stakes)</td><td>Perimeter planting</td><td>$100–300</td></tr>
+<tr><td>Annual fertiliser (K, P, N, manure, boron)</td><td>Mature tree programme</td><td>$800–2,000/year</td></tr>
+<tr><td>Annual Phytophthora phosphonate</td><td>2–3 applications/year</td><td>$200–600/year</td></tr>
+<tr><td>Annual kaolin clay + fungicide programme</td><td>Thrips + anthracnose control</td><td>$300–800/year</td></tr>
+<tr><td>Annual labour (pruning, spraying, harvest)</td><td></td><td>$600–1,500/year</td></tr>
+<tr><td>Post-harvest: dip treatment, cartons, grading</td><td></td><td>$200–600/year</td></tr>
+<tr><td><strong>Annual gross (domestic, 15–25 t × $0.50–1.00/kg)</strong></td><td></td><td><strong>$7,500–25,000/year</strong></td></tr>
+<tr><td><strong>Annual gross (export, 15–25 t × $1.50–3.00/kg)</strong></td><td></td><td><strong>$22,500–75,000/year</strong></td></tr>
+<tr><td><strong>Net margin (domestic, mature)</strong></td><td></td><td><strong>~$3,500–20,000/year</strong></td></tr>
+<tr><td><strong>Net margin (export, mature — highest in college)</strong></td><td></td><td><strong>~$18,000–70,000/year</strong></td></tr>
+    </table>
+    <p><em>Prices vary widely by country. Before spending anything, price every line in your own town and rebuild this table — that exercise is part of your final project.</em></p>
+  </div>
+
+  <div class="glossary-section">
+    <h2>&#128218; Glossary</h2>
+    <dl class="glossary">
+<dt>Hass</dt><dd>The globally dominant export avocado variety — pebbly purple-black when ripe, rich flavour, 14–21 day post-harvest shelf life; the commercial choice for highland Africa.</dd>
+<dt>Fuerte</dt><dd>Green-skinned avocado; excellent flavour; the Type B pollinator for Hass; thin skin requires careful handling.</dd>
+<dt>Type A / Type B varieties</dt><dd>Avocado flower timing categories; Type A female in morning/male in afternoon; Type B female in afternoon/male in morning; cross-pollination between them improves fruit set.</dd>
+<dt>Phytophthora cinnamomi</dt><dd>The most devastating avocado root-rot pathogen; thrives in waterlogged soil; managed by drainage, phosphonate and Guatemalan rootstock.</dd>
+<dt>Phosphonate (phosphorous acid)</dt><dd>A systemic compound suppressing Phytophthora and triggering tree defence; the most effective chemical management for avocado root rot.</dd>
+<dt>Avocado thrips (Scirtothrips)</dt><dd>Pest causing cosmetic russet scarring on fruit skin — downgrades export grade; controlled with kaolin clay barrier or spinosad.</dd>
+<dt>Kaolin clay</dt><dd>A mineral physical-barrier spray that deters thrips feeding on developing fruit — zero residue, zero toxicity; preferred for export fruit.</dd>
+<dt>Dry matter test</dt><dd>Oven-drying a fruit sample at 105 °C for 24 h; ≥21–23% DM indicates Hass export maturity; the scientific harvest trigger.</dd>
+<dt>Anthracnose (Colletotrichum)</dt><dd>Latent fungal infection from field that explodes at ripening; controlled by pre-harvest copper spray and post-harvest prochloraz or HWT.</dd>
+<dt>Sunblotch viroid (ASBVd)</dt><dd>Seed- and graft-transmitted viroid causing yellow fruit streaks; no cure; prevented only by certified disease-free nursery stock.</dd>
+<dt>Pre-cooling</dt><dd>Reducing avocado temperature to 4–7 °C within 12 hours of harvest — the entry step into the cold chain that enables 28-day sea shipment.</dd>
+<dt>Stem-end rot</dt><dd>Post-harvest disorder at the cut stem base — prevented by retaining 2–3 cm stem and calcium foliar spray during fill.</dd>
+<dt>Aggregator / outgrower scheme</dt><dd>An exporter's contracted smallholder network providing technical support, collection and pack-house access in exchange for consistent quality supply.</dd>
+<dt>Skirt pruning</dt><dd>Removing avocado branches hanging within 50 cm of soil — reduces Phytophthora splash and fruit ground contact.</dd>
+<dt>Hedging</dt><dd>Trimming tree-to-tree canopy border in dense orchards — maintains alley access for picking and spraying.</dd>
+<dt>A/B pollinator row design</dt><dd>Planting one row of Type B variety (Fuerte) per 4–5 rows of Hass — ensures cross-pollination for maximum fruit set.</dd>
+    </dl>
+  </div>
+
+  <div class="resources-section">
+    <h2>&#128279; Further Resources</h2>
+    <ul><li>Your national horticultural authority — registered Hass nurseries, altitude and variety suitability maps, export registration and phytosanitary requirements.</li>
+<li>Export horticulture associations (FPEAK Kenya, NAEB Rwanda, etc.) — outgrower scheme contacts, export certification pathways, post-harvest training.</li>
+<li>Westfalia Fruit and South African avocado research — Phytophthora management, phosphonate protocols, dry-matter maturity standards.</li>
+<li>FAO avocado value chain guides — smallholder access to export channels, pack-house certification, cold chain for East Africa.</li>
+<li>Rise Africa Skills companion courses: Mango &amp; Citrus (companion orchard system and shared post-harvest tools), Beekeeping (essential pollinator for avocado flowering), Vegetable Production (intercrop income in years 1–3).</li></ul>
+  </div>
+
+  <div class="cert-section">
+    <h2>&#127891; Course Completion</h2>
+    <p>Complete all 6 months and pass the quizzes to unlock your certificate.</p>
+    <a href="certificate.html?course=Avocado%20Farming" class="cert-btn" id="certBtn" disabled>Get Certificate</a>
+  </div>
+</div>
+<script>
+  const TOTAL_MODULES = 6;
+  const COURSE_KEY = 'avocado-farming';
+  let completed = JSON.parse(localStorage.getItem(COURSE_KEY + '_progress') || '[]');
+
+  function toggleModule(n) {
+    if (n > 1 && !completed.includes(n-1)) { alert('Complete Month ' + (n-1) + ' first.'); return; }
+    document.getElementById('body' + n).classList.toggle('active');
+  }
+  function answerQ(btn, isCorrect, expId) {
+    const parent = btn.parentElement;
+    const buttons = parent.querySelectorAll('.q-opt');
+    if (buttons[0].disabled) return;
+    buttons.forEach(b => { b.disabled = true; });
+    if (isCorrect) { btn.classList.add('correct'); }
+    else {
+      btn.classList.add('wrong');
+      buttons.forEach(b => { if (b.dataset.c === '1') b.classList.add('correct'); });
+    }
+    document.getElementById(expId).classList.add('show');
+    const quiz = btn.closest('.quiz-wrap');
+    quiz.dataset.answered = (parseInt(quiz.dataset.answered||'0') + 1);
+    quiz.dataset.score = (parseInt(quiz.dataset.score||'0') + (isCorrect ? 1 : 0));
+    if (parseInt(quiz.dataset.answered) >= parseInt(quiz.dataset.total)) {
+      const s = quiz.querySelector('.quiz-score');
+      s.textContent = 'Quiz result: ' + quiz.dataset.score + ' / ' + quiz.dataset.total + (parseInt(quiz.dataset.score) >= 7 ? ' — Pass. Well done!' : ' — Below 7/10. Re-read the module, then review your wrong answers.');
+    }
+  }
+  function markComplete(n) {
+    if (!completed.includes(n)) {
+      completed.push(n); completed.sort((a,b)=>a-b);
+      localStorage.setItem(COURSE_KEY + '_progress', JSON.stringify(completed));
+    }
+    updateUI();
+  }
+  function updateUI() {
+    document.getElementById('completedCount').textContent = completed.length;
+    document.getElementById('progressBar').style.width = (completed.length/TOTAL_MODULES*100) + '%';
+    for (let i=1; i<=TOTAL_MODULES; i++) {
+      const st = document.getElementById('status'+i), btn = document.getElementById('btn'+i);
+      if (completed.includes(i)) { st.textContent='Done'; st.classList.add('done'); if(btn){btn.textContent='Completed'; btn.disabled=true;} }
+      else if (i===1 || completed.includes(i-1)) { st.textContent='Start'; }
+      else { st.textContent='Locked'; }
+    }
+    if (completed.length >= TOTAL_MODULES) {
+      const c = document.getElementById('certBtn');
+      c.removeAttribute('disabled'); c.textContent = 'Get Your Certificate!';
+    }
+  }
+  updateUI();
+</script>
+</body>
+</html>

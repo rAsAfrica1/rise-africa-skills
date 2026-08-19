@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Mango &amp; Citrus Farming - A complete practical course from Rise Africa Skills. Learn offline, anytime.">
+<title>Mango &amp; Citrus Farming | Rise Africa Skills</title>
+<style>
+  :root { --gold:#eab308; --gold-dark:#a16207; --green:#16a34a; --bg:#0f172a; --card:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --line:#334155; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:var(--bg); color:var(--text); line-height:1.65; }
+  header { background:linear-gradient(135deg,var(--gold-dark) 0%,#713f12 100%); padding:44px 20px; text-align:center; }
+  header h1 { font-size:2rem; margin-bottom:8px; }
+  header p { color:rgba(255,255,255,0.88); max-width:640px; margin:0 auto; }
+  .badge { display:inline-block; background:var(--gold); color:#1e293b; padding:4px 14px; border-radius:20px; font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-top:12px; letter-spacing:0.4px; }
+  .container { max-width:920px; margin:0 auto; padding:30px 20px; }
+  .progress-bar { background:var(--card); border-radius:10px; height:10px; margin-bottom:28px; overflow:hidden; }
+  .progress-fill { background:var(--gold); height:100%; width:0%; border-radius:10px; transition:width .4s ease; }
+  .overview { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-bottom:26px; }
+  .overview h2 { color:var(--gold); font-size:1.15rem; margin-bottom:10px; }
+  .overview ul { margin:8px 0 14px 20px; color:var(--muted); }
+  .overview li { margin:5px 0; }
+  .meta-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+  .meta-chip { background:#0b1220; border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:0.85rem; color:var(--muted); }
+  .meta-chip b { color:var(--text); }
+  .module { background:var(--card); border-radius:12px; margin-bottom:16px; overflow:hidden; border:1px solid var(--line); }
+  .module-header { padding:18px 22px; cursor:pointer; display:flex; align-items:center; gap:14px; transition:background .2s; }
+  .module-header:hover { background:#26354a; }
+  .module-num { background:var(--gold); color:#1e293b; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0; }
+  .module-title { flex:1; font-weight:600; }
+  .module-status { font-size:0.75rem; padding:4px 10px; border-radius:12px; background:var(--line); color:var(--muted); white-space:nowrap; }
+  .module-status.done { background:var(--green); color:#fff; }
+  .module-body { display:none; padding:0 22px 24px; border-top:1px solid var(--line); }
+  .module-body.active { display:block; }
+  .module-body p { color:var(--muted); margin:13px 0; }
+  .module-body ul, .module-body ol { margin:10px 0 10px 22px; color:var(--muted); }
+  .module-body li { margin:6px 0; }
+  .module-body strong { color:var(--text); }
+  .module-body h3 { color:var(--gold); font-size:1.05rem; margin:22px 0 4px; }
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.88rem; }
+  th { background:#0b1220; color:var(--gold); text-align:left; padding:9px 10px; border:1px solid var(--line); }
+  td { padding:8px 10px; border:1px solid var(--line); color:var(--muted); vertical-align:top; }
+  tr:nth-child(even) td { background:#1a2537; }
+  .tip-box { background:rgba(234,179,8,0.08); border-left:4px solid var(--gold); padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .tip-box strong { color:var(--gold); }
+  .warn-box { background:rgba(239,68,68,0.08); border-left:4px solid #ef4444; padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .warn-box strong { color:#f87171; }
+  .assign-box { background:#0b1220; border:1px dashed var(--gold-dark); border-radius:10px; padding:16px 18px; margin:16px 0; color:var(--muted); }
+  .assign-box strong { color:var(--gold); }
+  .video-box { background:#0b1220; border:1px solid var(--line); border-radius:10px; padding:14px 18px; margin:16px 0; color:var(--muted); font-size:0.9rem; }
+  .quiz-wrap { background:#0b1220; border:1px solid var(--line); border-radius:12px; padding:20px; margin-top:20px; }
+  .quiz-wrap h3 { margin-top:0 !important; }
+  .q-block { margin:16px 0; padding-bottom:14px; border-bottom:1px solid #1e293b; }
+  .q-block:last-child { border-bottom:none; }
+  .q-text { font-weight:600; color:var(--text); margin-bottom:8px; }
+  .q-opt { display:block; width:100%; text-align:left; padding:9px 13px; margin:5px 0; background:var(--card); border:1px solid #475569; border-radius:8px; color:var(--text); cursor:pointer; transition:all .2s; font-size:0.9rem; }
+  .q-opt:hover { border-color:var(--gold); }
+  .q-opt.correct { background:#14532d; border-color:var(--green); }
+  .q-opt.wrong { background:#7f1d1d; border-color:#ef4444; }
+  .q-exp { display:none; margin-top:8px; padding:10px 13px; background:rgba(234,179,8,0.07); border-left:3px solid var(--gold); border-radius:0 6px 6px 0; color:var(--muted); font-size:0.87rem; }
+  .q-exp.show { display:block; }
+  .quiz-score { margin-top:12px; font-weight:700; color:var(--gold); }
+  .check-btn { background:var(--gold); color:#1e293b; border:none; padding:11px 26px; border-radius:8px; font-weight:700; cursor:pointer; margin-top:16px; transition:background .2s; }
+  .check-btn:hover { background:#facc15; }
+  .check-btn:disabled { opacity:0.5; cursor:not-allowed; }
+  .final-section, .budget-section, .glossary-section, .resources-section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-top:26px; }
+  .final-section h2, .budget-section h2, .glossary-section h2, .resources-section h2 { color:var(--gold); font-size:1.2rem; margin-bottom:10px; }
+  .final-section p, .budget-section p, .resources-section p { color:var(--muted); margin:10px 0; }
+  .final-section ol, .resources-section ul { margin:10px 0 10px 22px; color:var(--muted); }
+  .final-section li, .resources-section li { margin:6px 0; }
+  dl.glossary dt { color:var(--text); font-weight:700; margin-top:12px; }
+  dl.glossary dd { color:var(--muted); margin-left:0; font-size:0.92rem; }
+  .cert-section { text-align:center; padding:40px 20px; background:var(--card); border-radius:16px; margin-top:30px; border:1px solid var(--line); }
+  .cert-section h2 { margin-bottom:10px; }
+  .cert-section p { color:var(--muted); margin-bottom:20px; }
+  .cert-btn { background:var(--gold); color:#1e293b; border:none; padding:14px 36px; border-radius:10px; font-size:1rem; font-weight:800; cursor:pointer; text-decoration:none; display:inline-block; }
+  .cert-btn[disabled] { opacity:0.4; pointer-events:none; }
+  .nav-bar { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:var(--card); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:100; }
+  .nav-bar a { color:var(--text); text-decoration:none; font-weight:600; }
+  .nav-bar a:hover { color:var(--gold); }
+  .completion-count { color:var(--muted); font-size:0.9rem; }
+  @media (max-width:600px){ header h1{font-size:1.5rem;} .module-header{padding:14px 16px;} .module-body{padding:0 16px 18px;} table{font-size:0.8rem;} th,td{padding:6px 7px;} }
+</style>
+</head>
+<body>
+<nav class="nav-bar">
+  <a href="index.html">&#8592; Back to Courses</a>
+  <span class="completion-count"><span id="completedCount">0</span> / 6 months completed</span>
+</nav>
+<header>
+  <div class="badge">Agriculture &middot; 6-Month Program</div>
+  <h1>Mango &amp; Citrus Farming</h1>
+  <p>Africa's most widely grown tropical fruits — the 20-year return from grafted trees, flowering management, fruit-fly and HLB defence, hot-water export treatment, and the orchard economics case for the patient investor.</p>
+</header>
+<div class="container">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+
+  <div class="overview">
+    <h2>Course Overview</h2>
+    <p style="color:var(--muted);">Mango and citrus are Africa's most widely grown tropical fruits and among the highest-earning permanent land uses — once established. The course teaches both the patience and the discipline those returns require. Grafted trees from certified nurseries produce 3–4 years earlier than seedlings, with known variety genetics and rootstock disease tolerance; site selection before planting is the irreversible founding decision (deep well-drained soil, a dry season for mango, frost-free conditions for both). Mango management centres on the flowering cycle: the 2–3 month dry period that triggers it, paclobutrazol as a regulated inducer, nutrition phased by stage (no N at pre-flowering, K and Ca during fill), and the pre-harvest irrigation stop to concentrate sugars. Pest and disease management covers fruit fly (the export disqualifier), mango seed weevil (the quarantine hidden pest), powdery mildew and anthracnose for mango; citrus greening (HLB — the incurable disease), canker, Phytophthora and scale for citrus. Post-harvest discipline determines the channel: hot-water treatment, gentle handling and cold chain for export at 3–5× local price; graded consistent supply for supermarkets at 2–3×; processing for the glut floor. The economics case is built on a 15-year compounding return with inter-crops generating income in years 1–3.</p>
+    <h2 style="margin-top:16px;">What You Will Learn</h2>
+    <ul><li>Choose grafted trees of the right variety for your market channel (local, supermarket, export)</li>
+<li>Select the site correctly before any planting — drainage, soil depth, frost risk, dry season for mango</li>
+<li>Establish holes, plant at rain-season start, keep a weed-free circle, form the canopy by year three</li>
+<li>Manage mango's flowering cycle: dry rest, paclobutrazol option, nutrition by stage, pre-harvest irrigation stop</li>
+<li>Scout and manage fruit fly, seed weevil, powdery mildew and anthracnose in mango; HLB psyllid, canker and Phytophthora in citrus</li>
+<li>Harvest at correct maturity stage (float test for mango, Brix ratio for citrus), handle gently, apply HWT for export</li>
+<li>Intercrop vegetables or beans in years 1–3 to generate income during the establishment patience period</li>
+<li>Plan the three channels (local, supermarket, export) and build toward the certification that opens each</li></ul>
+    <div class="meta-row">
+      <div class="meta-chip"><b>Duration:</b> 6 months, one module per month</div>
+      <div class="meta-chip"><b>Level:</b> Beginner &rarr; Job-ready</div>
+      <div class="meta-chip"><b>Units:</b> Metric with imperial where useful</div>
+      <div class="meta-chip"><b>Final project:</b> Your own business plan</div>
+    </div>
+  </div>
+
+  <div class="module" data-module="1">
+    <div class="module-header" onclick="toggleModule(1)">
+      <div class="module-num">1</div>
+      <div class="module-title">Month 1: Tropical Fruit Markets, Varieties &amp; Site Selection</div>
+      <div class="module-status" id="status1">Start</div>
+    </div>
+    <div class="module-body" id="body1">
+
+      <h3>Lesson 1.1 — Tree crops: the patient investor's cash engine</h3>
+      <p>Mango and citrus are Africa's most widely grown tropical fruits — and among the highest-earning land uses once an orchard is established. The patience premium is real: mango takes <strong>3–7 years to first commercial harvest</strong> (grafted trees: 3–4 years; seedling trees: 5–7 years), citrus <strong>3–5 years</strong>. But the payoff compounds: a well-managed mango tree yields for <strong>20–40 years</strong>, a citrus grove for 15–25 years. The capital is planted once; the labour returns annually. <strong>Africa currently exports less than 2% of its potential mango and citrus surplus</strong> — the market door is wide open for quality-consistent producers.</p>
+      <ul>
+        <li>Mango: Africa's most produced tropical fruit; consumed fresh, dried, juiced and pickled; local markets enormous, export growing rapidly.</li>
+        <li>Citrus (orange, lemon, lime, grapefruit, mandarin): urban juice demand; export for orange and mandarin; lemon and lime in cooking and processing year-round.</li>
+      </ul>
+      <h3>Lesson 1.2 — Varieties: the decision that lasts decades</h3>
+      <table>
+        <tr><th>Crop</th><th>Key varieties</th><th>Market fit</th></tr>
+        <tr><td><strong>Mango</strong></td><td>Kent, Keitt, Tommy Atkins (export); local landraces (domestic); Alphonso, Sensation, Apple (regional premium)</td><td>Export: disease-free, post-harvest treated, airline-grade; domestic: any quality sells</td></tr>
+        <tr><td><strong>Orange</strong></td><td>Valencia (juice), Navel (fresh table), Washington Navel</td><td>Juice processing vs table; Valencia later season; Navel early</td></tr>
+        <tr><td><strong>Lemon / Lime</strong></td><td>Eureka lemon, Lisbon, Tahiti lime, Key lime</td><td>Year-round cooking and processing; reliable stable price</td></tr>
+        <tr><td>Mandarin / tangerine</td><td>Clementine, Satsuma, Ponkan</td><td>Peel-easy fresh market premium; premium seasonal price</td></tr>
+        <tr><td>Grapefruit</td><td>Marsh Seedless, Ruby Red</td><td>Export premium where health-food markets buy; domestic niche</td></tr>
+      </table>
+      <h3>Lesson 1.3 — Site selection: the decision before planting</h3>
+      <p>Tree crops are a decades-long commitment: a poorly selected site cannot be fixed after planting. <strong>Key requirements:</strong> mango tolerates a wide range of soils (well-drained loams to sandy loams; pH 5.5–7.5) but needs a <strong>distinct dry season</strong> to trigger flowering (2–3 months dry). Citrus needs <strong>1,000–1,500 mm rainfall or irrigation</strong>, excellent drainage (waterlogging kills within days), and frost-free temperatures (below -2 °C damages; below -4 °C kills). Both require <strong>deep soils without hardpan</strong> (roots run 2–4 m in mature trees).</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> From 2% export share to Africa's fruit opportunity — mango and citrus in global markets &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 1:</strong> Research your local market: record fresh mango prices across the season (peak and off-peak), dried mango prices, orange and lemon prices monthly. Visit the nearest supermarket buyer or trader: ask what volume, what variety, what quality they currently buy and what they can't get enough of. Survey your candidate site: record soil depth (dig to 1 m), drainage test (fill a hole with water; should drain in 2–4 hours for citrus), slope, frost history. Write your crop and variety choice with market and site reasoning.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 1 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Grafted mango trees produce first commercial harvest at:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_1')">3–4 years — vs 5–7 years for seedling trees; grafted is the commercial standard</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">30 years</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">1 year</button>
+<div class="q-exp" id="exp1_1"><strong>Why:</strong> The patience premium of grafting: 2–3 years saved on first harvest, plus variety certainty. Seedling trees are genetics roulette.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. A well-managed mango orchard yields commercially for:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_2')">20–40 years — the capital is planted once, the labour returns annually for decades</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">2 years only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">500 years</button>
+<div class="q-exp" id="exp1_2"><strong>Why:</strong> The compounding return is the orchard's business logic: establishment cost amortised over 20+ years of annual harvests.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Africa currently exports what fraction of its mango and citrus potential:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_3')">Less than 2% — the market door is wide open for quality-consistent producers</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">100%</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">50%</button>
+<div class="q-exp" id="exp1_3"><strong>Why:</strong> The opportunity is structural: production exists but quality systems (disease-free, post-harvest treated, graded) don't. Building them is the market entry.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Mango requires a dry season for flowering because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_4')">2–3 dry months trigger floral initiation — without them the tree grows vegetatively but never flowers</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">It hates rain</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">Dry soil kills it</button>
+<div class="q-exp" id="exp1_4"><strong>Why:</strong> Flowering is drought-triggered: water stress tells the tree the vegetative season is over and reproduction must begin. Irrigated trees need a deliberate dry spell.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Citrus waterlogging is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_5')">Fatal within days — roots suffocate and Phytophthora root rot explodes; drainage is non-negotiable</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Beneficial</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Tolerated for months</button>
+<div class="q-exp" id="exp1_5"><strong>Why:</strong> The citrus root is an oxygen breather. Poor drainage combines the mechanical suffocation with the pathogen that exploits it — both are fatal together.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Site selection for tree crops must happen before planting because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_6')">A poorly selected site cannot be fixed after 20+ years of trees are in the ground — soil, drainage, frost risk, and access are irreversible</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">It can easily be changed later</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">Only variety matters</button>
+<div class="q-exp" id="exp1_6"><strong>Why:</strong> Tree crop site selection is the founding decision: every management technique in subsequent modules assumes the site is right. A wrong site compounds every problem.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Export mango varieties (Kent, Keitt, Tommy Atkins) are chosen for:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_7')">Disease tolerance, post-harvest handling quality, and airline-grade appearance — not necessarily for local taste preference</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">Local taste only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">The cheapest seed available</button>
+<div class="q-exp" id="exp1_7"><strong>Why:</strong> Export buying specs define the variety list: the market, not the farmer's preference or local custom, decides which mango is planted for the export path.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Valencia orange is best suited for:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_8')">Juice processing — the late-season variety with high juice content; Navel is better for fresh table market</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Fresh table only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Nothing edible</button>
+<div class="q-exp" id="exp1_8"><strong>Why:</strong> Variety and market are inseparable in citrus: Valencia's high juice, late season and re-greening (cosmetic only) make it the processor's choice; Navel's seedlessness and early season make it the fresh-market standard.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Lemon and lime markets are attractive because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_9')">Year-round cooking and processing demand; stable reliable price without the seasonality peaks of other citrus</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">Only seasonal</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">Never popular in Africa</button>
+<div class="q-exp" id="exp1_9"><strong>Why:</strong> The kitchen is open every day. Lemon and lime serve sauces, beverages, preservation and export fragrance markets without the glut-window that fresh orange faces.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Deep soils without hardpan are needed for tree fruits because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_10')">Roots of mature trees run 2–4 m deep; hardpan stops them, limiting water access, nutrient mining and anchorage</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Roots are shallow always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Only vegetables need deep soil</button>
+<div class="q-exp" id="exp1_10"><strong>Why:</strong> A hardpan is a ceiling on a tree crop: it stops roots at 40–60 cm, limiting every year's fruit set for the tree's entire life. Deep cultivation before planting removes this ceiling.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn1" onclick="markComplete(1)">Mark Month 1 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="2">
+    <div class="module-header" onclick="toggleModule(2)">
+      <div class="module-num">2</div>
+      <div class="module-title">Month 2: Grafted Trees, Hole Preparation &amp; Orchard Establishment</div>
+      <div class="module-status" id="status2">Locked</div>
+    </div>
+    <div class="module-body" id="body2">
+
+      <h3>Lesson 2.1 — Propagation: always graft, never seed (for commercial production)</h3>
+      <p><strong>Grafted trees from a certified nursery are the foundation of every commercial orchard</strong>: they carry known variety genetics, begin producing 3–4 years earlier than seedlings, and root systems from rootstock can be selected for soil and disease tolerance. Seedling trees are unpredictable (mango is highly heterozygous — seedlings are rarely true to parent). Rules:</p>
+      <ul>
+        <li>Source grafted trees from a <strong>certified or reputable nursery</strong> — ask for rootstock species, graft variety, and any virus or disease free certification.</li>
+        <li>Inspect before purchase: healthy green leaves, no root girdling in the pot, graft union well-healed, no leaf spots or viral symptoms.</li>
+        <li>Plant <strong>at the start of the rain season</strong> so roots establish in moist soil; if irrigation available, timing is flexible.</li>
+        <li><strong>Hole preparation:</strong> 60×60×60 cm minimum; fill base with compost + topsoil mix; P fertiliser in the base (not touching roots).</li>
+      </ul>
+      <h3>Lesson 2.2 — Spacing and orchard layout</h3>
+      <table>
+        <tr><th>Crop</th><th>Traditional spacing</th><th>High-density</th><th>Notes</th></tr>
+        <tr><td>Mango</td><td>10×10 m (100 trees/ha)</td><td>5×5 m or 4×8 m, pruned hard</td><td>High-density with pruning doubles yield; more labour</td></tr>
+        <tr><td>Citrus</td><td>5×6 m (333 trees/ha)</td><td>4×5 m or 3×5 m, hedgerow</td><td>Higher density = earlier yield and better canopy management; needs pruning discipline</td></tr>
+      </table>
+      <h3>Lesson 2.3 — Establishing the orchard in years one and two</h3>
+      <p>Young trees (years 1–3) are the most vulnerable: investment so far but no return yet. Priority management: <strong>regular watering</strong> through the first dry season (a young tree without water in its first dry season may die or be set back 2–3 years in growth); <strong>weed control</strong> (a 1-metre circle kept clear of weeds around each trunk); <strong>formative pruning</strong> (removing crossing and inward-facing branches to build an open vase or modified central-leader structure that maximises light penetration and airflow for the 20-year canopy ahead); and <strong>training support</strong> for young trunks in windy sites.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Certified nursery trees and formative pruning — building the 20-year canopy in year one &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 2:</strong> Visit at least two nurseries: inspect grafted trees for root condition, graft union, leaf health, and variety labelling. Record costs. Prepare at least 5 planting holes (60×60×60 cm), fill with compost + topsoil. Plant at rain-season start or under irrigation. Install weed-free circles (mulch or bare earth 1 m diameter). After 3 months, assess establishment: leaf flush, new growth, any stress signs. Execute the first formative pruning: remove crossing and inward branches.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 2 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Grafted trees vs seedling trees in commercial orchards:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_1')">Grafted: known variety, fruits 3–4 years vs 5–7 for seedlings, rootstock selected for soil/disease — always preferred commercially</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">Seedling always better</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">Both identical</button>
+<div class="q-exp" id="exp2_1"><strong>Why:</strong> Grafted is the commercial standard: two to three years of production advance, certain variety genetics, and rootstock disease tolerance — versus seedling roulette.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Mango seedlings from seed are unpredictable because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_2')">Mango is highly heterozygous — seedlings rarely match the parent variety's taste or yield</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">Seeds always produce clones</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">All mango varieties are identical</button>
+<div class="q-exp" id="exp2_2"><strong>Why:</strong> The genetic variability that makes mango breeding exciting makes seedling propagation commercially unreliable. A grafted scion ensures you grow the variety you chose.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Orchard hole preparation (60×60×60 cm) filled with:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_3')">Compost + topsoil mix with P fertiliser at the base (not touching roots) — the tree's first-years nutrition and root-channel investment</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">Cement</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">Nothing — soil alone</button>
+<div class="q-exp" id="exp2_3"><strong>Why:</strong> The hole is an investment in the 20-year tree: large enough to break compaction, filled with fertility the tap root will find as it grows — one effort for decades.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Planting timing for non-irrigated orchards is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_4')">Start of the rain season — roots establish in moist soil before the first dry season arrives</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">Anytime randomly</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">Middle of dry season</button>
+<div class="q-exp" id="exp2_4"><strong>Why:</strong> First-year root establishment is everything: a young tree that enters its first dry season unrooted dies or is set back years. Rain-season planting banks the soil moisture those roots need.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Traditional mango spacing (10×10 m) gives:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_5')">~100 trees/ha; high-density (5×5 m) with pruning gives 400/ha and doubles yield — at the cost of pruning labour</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">One tree per hectare</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">Only 5 trees/ha</button>
+<div class="q-exp" id="exp2_5"><strong>Why:</strong> High-density mangos run like a commercial orchard: more trees, smaller canopies, more fruit per hectare — but demanding annual pruning discipline.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. A 1-metre weed-free circle around each young trunk:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_6')">Eliminates competition for the tree's early root zone — the cheapest first-year investment after watering</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">Harms the tree</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">Is aesthetics only</button>
+<div class="q-exp" id="exp2_6"><strong>Why:</strong> The young tree's thin root system can't out-compete established grass or weeds. One meter of clear ground doubles establishment-year growth in many trials.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Formative pruning in years 1–3:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_7')">Builds the open vase or central-leader structure the 20-year canopy depends on — crossing/inward branches removed early are free</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Only done at maturity</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Never done on trees</button>
+<div class="q-exp" id="exp2_7"><strong>Why:</strong> The formative cut is the architecture investment: the canopy you build in year two is the canopy that maximises light and airflow for twenty years. Neglected early means patched forever.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Inspecting nursery trees before purchase includes:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_8')">Healthy green leaves, no root girdling in pot, well-healed graft union, no leaf spots or viral symptoms — a bad nursery tree plants trouble</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">Only price</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">Only size</button>
+<div class="q-exp" id="exp2_8"><strong>Why:</strong> Nursery quality is orchard quality: a virus-infected, root-bound or mislabelled seedling plants a problem that grows for 20 years. Five minutes of inspection prevents it.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Citrus hedgerow (high-density) spacing gives:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_9')">Earlier yield from more trees per hectare and better canopy management through regular hedging — at the cost of ongoing pruning</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Lower yield always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">No difference from wide spacing</button>
+<div class="q-exp" id="exp2_9"><strong>Why:</strong> The hedgerow logic: intercepting more light early in the tree's life drives earlier yields; mechanical hedging keeps canopies productive without the labour of individual tree pruning.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Young tree watering in the first dry season is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_10')">Critical — a tree that dries out in its first dry season may die or be set back 2–3 years; the investment to this point requires this protection</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">Optional</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">Harmful</button>
+<div class="q-exp" id="exp2_10"><strong>Why:</strong> The establishment investment (tree cost, hole preparation, planting labour) is at maximum risk in the first dry season. A watering point or bucket-drip system protects it.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn2" onclick="markComplete(2)">Mark Month 2 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="3">
+    <div class="module-header" onclick="toggleModule(3)">
+      <div class="module-num">3</div>
+      <div class="module-title">Month 3: Flowering Management, Nutrition &amp; Irrigation</div>
+      <div class="module-status" id="status3">Locked</div>
+    </div>
+    <div class="module-body" id="body3">
+
+      <h3>Lesson 3.1 — Mango flowering management</h3>
+      <p>Mango flowers on the current season's wood after a <strong>dry-cool rest period (2–3 months)</strong>. In irrigated orchards or areas without a reliable dry season, <strong>flowering can be induced</strong> by withholding irrigation for 6–8 weeks until slight leaf stress is visible, then restarting. <strong>Paclobutrazol</strong> (a commercial flowering regulator) is widely used in Southeast Asian and increasing African mangos: applied to the soil or foliage, it halts vegetative growth and triggers floral initiation. It is a real tool but requires training: wrong rates or timing can suppress flowering for 2+ years.</p>
+      <h3>Lesson 3.2 — Nutrition for bearing trees</h3>
+      <table>
+        <tr><th>Stage</th><th>Key need</th><th>Input</th></tr>
+        <tr><td>Post-harvest (recovery)</td><td>N for shoot growth</td><td>Urea or compound; manure</td></tr>
+        <tr><td>Pre-flowering dry rest</td><td>P and K for flower quality and boll development</td><td>K-heavy compound; no N (delays flowering)</td></tr>
+        <tr><td>Fruit set and fill</td><td>Ca, Mg, K — fruit quality minerals</td><td>Calcium-K foliar, micronutrient blend; consistent irrigation</td></tr>
+        <tr><td>Year-round foundation</td><td>Organic matter and soil biology</td><td>10–20 kg compost/manure per tree per year, drip-irrigated or ring-applied</td></tr>
+      </table>
+      <h3>Lesson 3.3 — Irrigation discipline</h3>
+      <p><strong>Mango:</strong> withhold irrigation 6–8 weeks before desired flowering; resume at panicle emergence and irrigate through fruit fill and until 4 weeks before harvest (stop to concentrate sugars and improve post-harvest life). <strong>Citrus:</strong> no dry period needed — maintain consistent soil moisture year-round; drip or micro-jet irrigation at 30–60 L per tree per day in hot dry weather. <strong>Both:</strong> waterlogging even for 24–48 hours can kill or severely stress a tree in peak growing season — field drainage must work before any irrigation is added.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Withholding irrigation to trigger mango flowering — and the nutrition calendar by stage &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 3:</strong> On your mango trees (mature or observe a neighbour's), track the flowering event: record when irrigation is withheld or rains stop, when the panicle emerges, and when fruits set. Observe the nutrition calendar: apply K-heavy feed at pre-flowering and record, apply N after harvest and record. Set up your irrigation system (drip, micro-jet, bucket-drip) and record tree water per week. On citrus: record irrigation schedule and any signs of water stress or waterlogging.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 3 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Mango flowers after:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_1')">A 2–3 month dry-cool rest period — in irrigated orchards, irrigation is withheld 6–8 weeks to simulate this</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Continuous heavy watering</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Transplanting only</button>
+<div class="q-exp" id="exp3_1"><strong>Why:</strong> The dry period is the trigger: the tree interprets drought as the end of the growing season and shifts from vegetative to reproductive mode. Managing this deliberately is the core orchard skill.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Paclobutrazol (flowering regulator) on mango:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_2')">Halts vegetative growth and triggers floral initiation — effective but requires trained rates/timing; wrong use suppresses flowering for 2+ years</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Is a fertiliser</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Has no effect</button>
+<div class="q-exp" id="exp3_2"><strong>Why:</strong> The regulation tool is real but precise: paclobutrazol at the right rate at the right stage is the commercial standard in Asian and increasing African orchards. Under-trained use is costly.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Nitrogen before mango flowering should be:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_3')">Withheld — N delays flowering by promoting vegetative growth; K and P are the pre-flowering nutrients</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">Applied heavily to force flowering</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">Irrelevant to flowering</button>
+<div class="q-exp" id="exp3_3"><strong>Why:</strong> The N rule reverses at the dry period: nitrogen promotes shoots, not flowers. K and P at the right time fill the role of flowering support — then N resumes post-harvest.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Compost or manure (10–20 kg per tree per year) is applied:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_4')">Year-round as the organic foundation — applied in a ring or by drip to support soil biology and buffer nutrition</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Only once at planting</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Never for fruit trees</button>
+<div class="q-exp" id="exp3_4"><strong>Why:</strong> The tree draws from the soil for decades: organic matter builds the microbiology that mobilises nutrients each season. Annual application is maintenance of the factory.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Mango irrigation stop 4 weeks before harvest is done to:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_5')">Concentrate sugars and improve post-harvest shelf life — wet fruit at harvest bruises faster and rots quicker</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Kill the tree</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Nothing special</button>
+<div class="q-exp" id="exp3_5"><strong>Why:</strong> The pre-harvest dry-down is a quality step: sugars concentrate, skin firms, and shelf life extends. Watery fruit at harvest is the picker's visible failure.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Citrus irrigation, unlike mango, requires:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_6')">Consistent year-round soil moisture with no deliberate dry period — 30–60 L per tree per day in peak heat</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">A 3-month dry period every year</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Only rain</button>
+<div class="q-exp" id="exp3_6"><strong>Why:</strong> Citrus is a continuous drinker: no rest period, no flowering trigger. Stopping irrigation causes fruit drop and predisposes to disease — the opposite of mango management.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Waterlogging for 24–48 hours in peak growing season:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_7')">Can kill or severely stress a tree — field drainage must work BEFORE irrigation is added</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Has no effect</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Improves yield</button>
+<div class="q-exp" id="exp3_7"><strong>Why:</strong> The drainage-first rule: irrigation without drainage is a flood delivery system. Check and fix drainage before adding any water management infrastructure.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Calcium and magnesium during fruit fill serve:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_8')">Fruit quality — calcium prevents bitter pit and other disorders; magnesium improves colour and sugar development; applied as foliar during fill</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">Nothing relevant</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">They are not needed in fruit crops</button>
+<div class="q-exp" id="exp3_8"><strong>Why:</strong> The fruit quality minerals are the premium producers' differentiators: clean, firm, high-sugar fruit starts with Ca-Mg-K discipline in the fill period.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Post-harvest feeding (after picking) is for:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_9')">N-driven shoot growth that builds the canopy for next season's flowers — recovery feeding is the investment in next year's yield</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">No purpose</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Only ornamental trees</button>
+<div class="q-exp" id="exp3_9"><strong>Why:</strong> The yield cycle in tree crops: harvest removes the crop and signals recovery. The shoot flush after harvest is next year's flowering wood — it needs nitrogen now.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Mango flowering can be induced in irrigated orchards by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_10')">Withholding irrigation 6–8 weeks until slight leaf stress, then restarting — simulating the natural dry-season trigger</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Adding more water</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Pruning only</button>
+<div class="q-exp" id="exp3_10"><strong>Why:</strong> The simulated dry period is the irrigated mango farmer's most important management tool: same trees, same season, but you decide when the flower clock starts.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn3" onclick="markComplete(3)">Mark Month 3 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="4">
+    <div class="module-header" onclick="toggleModule(4)">
+      <div class="module-num">4</div>
+      <div class="module-title">Month 4: Pests, Diseases &amp; Orchard Health</div>
+      <div class="module-status" id="status4">Locked</div>
+    </div>
+    <div class="module-body" id="body4">
+
+      <h3>Lesson 4.1 — Mango pests and diseases</h3>
+      <table>
+        <tr><th>Problem</th><th>Recognise</th><th>Manage</th></tr>
+        <tr><td><strong>Fruit fly (Bactrocera, Ceratitis)</strong></td><td>Female stings developing fruit; larval tunnels inside; premature drop; maggots at ripening</td><td>Protein bait stations (Malathion + protein attractant), mass trapping, post-harvest dipping (hot water or methyl eugenol traps), harvest promptly; export requires fruit-fly-free certification</td></tr>
+        <tr><td><strong>Mango seed weevil (Sternochetus)</strong></td><td>Invisible externally; adult lays in young fruit; larva eats seed — export-disqualifying quarantine pest</td><td>Pesticide spray at pea-size fruit stage; hot-water treatment (48 °C × 60 min) for export; no infected seeds planted</td></tr>
+        <tr><td><strong>Powdery mildew (Oidium)</strong></td><td>White powder on flower panicles and young fruit — destroys flowering crop in susceptible varieties</td><td>Wettable sulphur or systemic fungicide at bud swell; resistant varieties</td></tr>
+        <tr><td><strong>Anthracnose (Colletotrichum)</strong></td><td>Black lesions on leaves and fruit; explodes in wet harvest season</td><td>Copper-based spray during fruit development; post-harvest hot-water dip for export</td></tr>
+        <tr><td>Mealybugs</td><td>White cottony colonies on shoot tips; honeydew + sooty mould</td><td>Ant control (ants protect mealybugs); contact insecticide if severe</td></tr>
+      </table>
+      <h3>Lesson 4.2 — Citrus pests and diseases</h3>
+      <ul>
+        <li><strong>Citrus greening (Huanglongbing / HLB):</strong> the most devastating citrus disease globally; transmitted by the <em>Diaphorina citri</em> psyllid; blotchy mottle leaves, lopsided bitter green fruit, tree decline and death over 3–5 years; <strong>NO CURE; only removal of affected trees, psyllid control, and certified disease-free nursery stock</strong> prevent spread.</li>
+        <li><strong>Citrus canker (Xanthomonas):</strong> raised corky lesions on leaves, fruit and stems; bacterial; spreads by rain splash and pruning tools; copper spray, resistant varieties, tool sterilisation.</li>
+        <li><strong>Phytophthora root rot and foot rot:</strong> the drainage disease — well-drained sites plus copper-based soil drench where disease occurs.</li>
+        <li><strong>Scale insects and mites:</strong> sucking pests causing yellowing and sooty mould; natural enemies (parasitoids) usually control them; spray only at threshold.</li>
+        <li><strong>Fruit fly on citrus:</strong> same management as mango.</li>
+      </ul>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Fruit fly bait stations, HLB psyllid trapping, and the export-disqualifier pests &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 4:</strong> Install protein bait stations (Malathion + molasses or commercial bait) in your mango trees; record weekly catch counts over 4 weeks. Inspect mango panicles for powdery mildew at bud swell; inspect fruit for anthracnose lesions. For citrus: inspect new growth for Diaphorina psyllid (yellow adult, waxy tubular secretion on new flush); photograph and report any HLB-looking symptoms (blotchy mottle leaves) to extension immediately. Price copper fungicide and wettable sulphur locally; record your spray programme.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 4 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Fruit fly (Bactrocera, Ceratitis) on mango is managed by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_1')">Protein bait stations (Malathion + attractant), mass trapping, hot-water or methyl eugenol post-harvest treatment, and prompt harvest — export requires fruit-fly-free certification</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Ignoring completely</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Only fungicide</button>
+<div class="q-exp" id="exp4_1"><strong>Why:</strong> Fruit fly is the export disqualifier: a single maggot in a consignment closes the market. The management system is multi-point — field, harvest and post-harvest — because no single step is sufficient.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Mango seed weevil is an export quarantine pest because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_2')">It is invisible externally — infested fruit passes visual inspection but carries the pest that importing countries prohibit</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">It causes visible external damage</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">It only affects the tree</button>
+<div class="q-exp" id="exp4_2"><strong>Why:</strong> The hidden quarantine pest: perfectly clean-looking fruit with a larva inside. Hot-water treatment (48 °C × 60 min) is the export-standard kill step that renders it safe for shipping.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Powdery mildew on mango flower panicles is managed by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_3')">Wettable sulphur or systemic fungicide at bud swell — timing before the flower opens is essential; infection after open destroys the whole crop</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Nothing; it's cosmetic</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Only irrigation</button>
+<div class="q-exp" id="exp4_3"><strong>Why:</strong> The bud-swell timing is the window: wettable sulphur before the flower opens is preventive insurance; after open, the fungus is already in the flower tissue where spray can't reach.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Citrus greening (HLB) is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_4')">The most devastating citrus disease globally — no cure; remove affected trees, control the psyllid vector, and plant only certified disease-free nursery stock</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">Curable with fungicide</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">A minor cosmetic issue</button>
+<div class="q-exp" id="exp4_4"><strong>Why:</strong> HLB is the tree crop equivalent of an uncurable virus: once a tree has it, it declines. The only strategies are prevention (psyllid control, certified stock) and removal to slow spread.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Citrus canker (Xanthomonas) spreads by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_5')">Rain splash and pruning tools — copper spray, resistant varieties, and tool sterilisation are the management stack</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Air alone</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Only insects</button>
+<div class="q-exp" id="exp4_5"><strong>Why:</strong> The rain-splash mechanism means wet-season spray is the protection window; the pruning tool is the farm's own spread mechanism — sterilising between trees stops transmission on the worst days.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Phytophthora root rot in citrus is a disease of:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_6')">Poorly drained sites — well-drained planting plus copper-based soil drench where disease occurs; drainage is the first medicine</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Healthy, well-drained sites</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Only older trees</button>
+<div class="q-exp" id="exp4_6"><strong>Why:</strong> Phytophthora is the waterlogging pathogen: it flourishes where oxygen is absent. Good drainage removes its habitat before the tree is planted.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Scale insects on citrus are controlled by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_7')">Natural enemies (parasitoids, predatory beetles) usually; spray only at economic threshold to preserve the biological control workforce</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Weekly preventive spray</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Nothing effective</button>
+<div class="q-exp" id="exp4_7"><strong>Why:</strong> The scale-insect system runs itself when natural enemies are present. Broad sprays kill those enemies and liberate the scale to outbreak. Threshold-based, targeted chemistry preserves the system.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Mango anthracnose (Colletotrichum) explodes in:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_8')">Wet harvest seasons — copper-based spray during fruit development plus post-harvest hot-water dip for export-grade fruit</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">Dry weather only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">Never on fruit</button>
+<div class="q-exp" id="exp4_8"><strong>Why:</strong> Rain at harvest is the anthracnose trigger: wet fruit in a warm orchard is the disease's perfect habitat. Copper before rain provides the barrier; hot-water dip after harvest removes the inoculum.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Ant control in mango orchards matters because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_9')">Ants protect mealybugs and soft scales from predators, enabling pest build-up — sticky bands on trunks or ant bait breaks the ant-pest alliance</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Ants are beneficial always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Ants don't affect tree pests</button>
+<div class="q-exp" id="exp4_9"><strong>Why:</strong> The ant-mealybug mutualism: ants 'farm' the honeydew-producing pests and actively chase away predators. Breaking the alliance (sticky trunk bands) restores natural enemy access.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. The export fruit-fly-free certification requires:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_10')">A documented management system (trapping records, bait station logs, post-harvest treatment records) proving the orchard is managed as a pest-free production area</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Only one spray</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">No documentation</button>
+<div class="q-exp" id="exp4_10"><strong>Why:</strong> Certification is a system, not a test: importing countries want evidence of continuous management, not a single inspection result. Records are the export credential.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn4" onclick="markComplete(4)">Mark Month 4 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="5">
+    <div class="module-header" onclick="toggleModule(5)">
+      <div class="module-num">5</div>
+      <div class="module-title">Month 5: Harvest, Post-Harvest &amp; Value Addition</div>
+      <div class="module-status" id="status5">Locked</div>
+    </div>
+    <div class="module-body" id="body5">
+
+      <h3>Lesson 5.1 — Mango harvest maturity</h3>
+      <p>Mango is climacteric: it ripens after harvest if picked at the right stage. <strong>Harvest indicators:</strong> shoulders fill above the stem; internal flesh colour (cut test) shows yellow-orange; skin begins to yellow at the nose in some varieties; fruit floats in water (mature) vs sinks (immature). <strong>Never pick green unripe mango for home markets</strong> — it shrinks and tastes poor. For export, harvest at mature-green under protocol. Post-harvest:</p>
+      <ul>
+        <li><strong>Handle with extreme care:</strong> mango bruises invisibly (bruises show hours after picking as dark blotches); latex from the stem burn scald skin — cut stems long and away from the fruit; wear gloves.</li>
+        <li><strong>Hot-water treatment (HWT):</strong> 48 °C for 60–90 minutes (variety-specific) kills fruit fly and anthracnose — the international export standard.</li>
+        <li><strong>Cooling and cold chain:</strong> mango stored at 10–13 °C extends life to 2–4 weeks; ambient temperatures give 5–7 days.</li>
+      </ul>
+      <h3>Lesson 5.2 — Citrus harvest</h3>
+      <p>Citrus is <strong>non-climacteric</strong>: it does not ripen after harvest and must be picked when mature on the tree. Maturity index: <strong>internal sugar:acid ratio</strong> (the Brix:acid ratio; extension offices have refractometers); external colour is unreliable (Valencia oranges can re-green when temperatures rise — fully ripe but green skinned). Clip rather than pull — stem pull wounds admit post-harvest rots. Post-harvest: <strong>wax coating</strong> (extends life, improves appearance), fungicide dip (thiabendazole or imazalil), cold storage at 4–8 °C for 4–8 weeks.</p>
+      <h3>Lesson 5.3 — Value addition and processing</h3>
+      <ul>
+        <li><strong>Dried mango:</strong> solar or mechanical drying of ripe slices — premium price in urban and export markets; extension of glut-season surplus.</li>
+        <li><strong>Mango juice / pulp:</strong> small-scale press or blender; pasteurised and bottled; longer shelf-life than fresh fruit.</li>
+        <li><strong>Citrus juice, lemon zest and pickled citrus:</strong> local processing niches with steady urban demand.</li>
+      </ul>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Hot-water treatment, the float test and dried mango — from orchard to market &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 5:</strong> Practice the mango float test on 10 fruit: record which float (mature) and which sink (immature); cut the sinkers and floaters and compare internal colour. Harvest mature mango with long stems, invert immediately to drain latex. Grade into three sizes, remove any bruised or diseased fruit. Attempt a small HWT trial (if hot water achievable): 48 °C × 60 min; record any visible difference in shelf life vs untreated control over 5 days. Slice and solar-dry 2 kg of ripe mango on clean racks; record days and final weight.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 5 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Mango harvest maturity is confirmed by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_1')">Shoulder fill above stem, flesh colour (cut test), floating in water (mature = floats) — never pick hard unripe for home markets</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Only external colour</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Weight alone</button>
+<div class="q-exp" id="exp5_1"><strong>Why:</strong> The float test is the quick field check: mature mango has air space in the seed cavity and floats; immature sinks. No equipment needed; result in seconds.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Latex from the mango stem at picking:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_2')">Burns the skin, causing dark scald — stems cut long, away from fruit, and gloves worn at picking prevent this cosmetic loss</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Is harmless</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Is the fruit's flavour</button>
+<div class="q-exp" id="exp5_2"><strong>Why:</strong> Latex scald is the post-harvest damage that happens at the picking moment: stem cut close to the fruit, latex runs down and burns. Long-stemmed picking plus inversion removes the risk.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Hot-water treatment (48 °C × 60–90 min) for export mango:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_3')">Kills fruit fly larvae and anthracnose inoculum — the international export standard for quarantine compliance and disease reduction</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">Is just for taste</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">Is optional for export</button>
+<div class="q-exp" id="exp5_3"><strong>Why:</strong> HWT is the export key: fruit-fly-free status and reduced disease inoculum in one step, documented for import-country phytosanitary requirements.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Mango shelf life at cold storage (10–13 °C) vs ambient is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_4')">2–4 weeks cold vs 5–7 days ambient — cold chain extends the marketing window from a few days to a month</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">Identical</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">Shorter in cold</button>
+<div class="q-exp" id="exp5_4"><strong>Why:</strong> The cold-chain multiplier: the same mango that must sell in 5 days at ambient temperature can reach distant markets in two weeks of cold storage — the investment that enables export.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Valencia orange re-greening means:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_5')">Ripe fruit turning green again as temperatures rise — internal quality is fine; colour is unreliable as citrus maturity indicator</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">The fruit is unripe</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">The fruit is diseased</button>
+<div class="q-exp" id="exp5_5"><strong>Why:</strong> External colour lies in citrus: the Brix:acid ratio (refractometer measurement) is the honest maturity indicator. Colour-based harvest cuts internal quality in both directions.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Citrus must be clipped, not pulled, because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_6')">Stem-pull wounds admit post-harvest rot fungi at the point of separation — clipping leaves a short clean stem with no wound</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">Pulling is faster only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">No difference exists</button>
+<div class="q-exp" id="exp5_6"><strong>Why:</strong> The harvest wound is the post-harvest infection entry point. A clean clip heals fast; a pull wound is an open invitation to Penicillium and other rots.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Wax coating on citrus after harvest:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_7')">Extends shelf life and improves appearance — the commercial post-harvest standard for graded fresh-market citrus</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Is harmful to fruit</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Is only cosmetic with no function</button>
+<div class="q-exp" id="exp5_7"><strong>Why:</strong> Wax replaces the natural cuticle removed by washing: it slows moisture loss (which causes shrivelling), reduces respiration, and extends shelf life while improving appearance.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Dried mango value addition is attractive because:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_8')">Premium price in urban and export markets, conversion of glut-season surplus into a shelf-stable product, and zero-electricity solar option available</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Always lower value than fresh</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Impossible without machinery</button>
+<div class="q-exp" id="exp5_8"><strong>Why:</strong> The glut-season conversion: fresh mango at flood prices becomes shelf-stable dried mango at lean-season prices. Solar drying requires racks, not electricity.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Citrus cold storage at 4–8 °C extends shelf life to:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_9')">4–8 weeks — enabling export and lean-season sales at premium prices</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">2 hours</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Infinite time</button>
+<div class="q-exp" id="exp5_9"><strong>Why:</strong> The cold-chain math for citrus: 8 weeks of storage window converts a perishable regional crop into a potential export commodity that travels by sea, not air.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Mango bruises after picking appear:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_10')">Hours later as dark blotches — bruising is invisible at the moment it happens, making gentle handling a discipline, not a response to visible damage</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Immediately and visibly</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Never on ripe mango</button>
+<div class="q-exp" id="exp5_10"><strong>Why:</strong> The hidden-damage problem: the packer doesn't see the bruise; the market buyer does. Gentle handling is a quality discipline without immediate feedback — which is why it requires training, not just instinct.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn5" onclick="markComplete(5)">Mark Month 5 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="6">
+    <div class="module-header" onclick="toggleModule(6)">
+      <div class="module-num">6</div>
+      <div class="module-title">Month 6: Market Channels, Economics &amp; the Orchard Business Plan</div>
+      <div class="module-status" id="status6">Locked</div>
+    </div>
+    <div class="module-body" id="body6">
+
+      <h3>Lesson 6.1 — Three channels for orchard fruit</h3>
+      <table>
+        <tr><th>Channel</th><th>Requirements</th><th>Price</th></tr>
+        <tr><td>Local fresh market</td><td>Ripe, clean, consistent supply during season</td><td>Lowest but no entry barrier; the base market</td></tr>
+        <tr><td>Urban supermarket / hotel</td><td>Graded, uniform size, waxed (citrus), consistent weekly supply; invoiced</td><td>2–3× local price; requires group certification or consistent quality</td></tr>
+        <tr><td><strong>Export</strong></td><td>Disease-free certification, HWT for mango, phytosanitary certificate, cold chain, variety spec, grading; group lots or packing facility</td><td>3–5× local price; highest risk and investment</td></tr>
+        <tr><td>Processing</td><td>Volume; ripe to overripe acceptable; juice/pulp/dried spec</td><td>Lower per kg but absorbs the glut; price floor</td></tr>
+      </table>
+      <h3>Lesson 6.2 — An honest orchard economics case</h3>
+      <table>
+        <tr><th>Item</th><th>Mango (1 ha, 100 trees @ 10×10 m)</th><th>Citrus (1 ha, 333 trees @ 5×6 m)</th></tr>
+        <tr><td>First commercial harvest</td><td>Year 4–5 (grafted)</td><td>Year 3–4 (grafted)</td></tr>
+        <tr><td>Mature yield</td><td>~50–80 kg/tree = 5–8 t/ha at 15–20 years</td><td>~80–120 kg/tree = 27–40 t/ha at 10+ years</td></tr>
+        <tr><td>Establishment cost (year 1)</td><td>$1,500–4,000 (trees, holes, irrigation)</td><td>$2,000–5,000</td></tr>
+        <tr><td>Annual maintenance (mature)</td><td>$800–2,000/ha/year (fertiliser, spray, labour)</td><td>$1,200–3,000/ha/year</td></tr>
+        <tr><td>Annual gross (local fresh)</td><td>$2,500–6,000/ha</td><td>$5,000–15,000/ha</td></tr>
+        <tr><td><strong>Annual margin (local fresh, mature)</strong></td><td><strong>~$1,500–4,000/ha</strong></td><td><strong>~$3,000–12,000/ha</strong></td></tr>
+      </table>
+      <h3>Lesson 6.3 — The orchard growth path</h3>
+      <p>Year 1–3: establishment and zero income — the patience investment; plant inter-crops (vegetables, beans) in the inter-row to generate cash while trees grow. Year 4–6: first harvests, local market, learning post-harvest discipline. Year 7–10: mature yields, quality certified for supermarkets or group export programme. Year 15+: the full return — the compounded annual reward of a well-managed tree crop. <strong>The inter-crop in young orchards is the business that keeps the farm alive while the tree investment matures.</strong></p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Local to export — building the certification system that unlocks 3–5× mango price &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 6:</strong> Build the one-hectare economic case: year 1–3 costs (trees, holes, irrigation, annual maintenance), year 4–6 first-harvest income, year 10+ mature income. Include intercrop income in years 1–3 (vegetables or beans between rows). Research: which export buyer or certification scheme operates in your region? What are their requirements (variety, HWT documentation, phytosanitary certificate)? Contact one and record their response. Write your 10-year orchard business plan with the intercrop strategy, first-harvest channel, and year 10 target channel.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 6 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Export mango earns compared to local fresh price:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_1')">3–5× local price — with disease-free certification, HWT, cold chain, variety spec and phytosanitary documentation as the barriers</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">The same price</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">Less than local</button>
+<div class="q-exp" id="exp6_1"><strong>Why:</strong> The export premium exists precisely because the barriers are real. Certification, hot-water treatment and cold chain are the investment that 5× the price justifies.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Processing (juice, pulp, dried) channels for fruit earn:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_2')">Lower per kg but absorb the glut — the price floor that prevents total harvest-season loss</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">More than export</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Nothing</button>
+<div class="q-exp" id="exp6_2"><strong>Why:</strong> The processor is the safety valve again: below-fresh-market prices, but real income for surplus that would otherwise rot. Planning for processing capacity alongside fresh-market sales is risk management.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Intercropping vegetables or beans in young orchard rows in years 1–3:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_3')">Generates cash while trees mature — the inter-crop is the business that keeps the farm alive during the patience investment</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Harms tree roots always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Is not possible</button>
+<div class="q-exp" id="exp6_3"><strong>Why:</strong> Young orchards have open inter-rows with full sun: the same light that will be captured by tree canopy in year 5 grows vegetables and beans in years 1–3 — income from land already committed.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. A mature mango orchard (15+ years) at local fresh market prices earns:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_4')">~$1,500–4,000/ha/year annually — compounding over 20+ years of production from one establishment cost</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Nothing after year 10</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">$100,000/year every year</button>
+<div class="q-exp" id="exp6_4"><strong>Why:</strong> The compounding return is the orchard's investment case: the same capital established once, maintained annually, earns that margin every year for two decades.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Mango trees take how long to first commercial harvest (grafted):</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_5')">3–4 years — vs 5–7 for seedlings; the establishment period where zero income is produced</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">1 season</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">30 years</button>
+<div class="q-exp" id="exp6_5"><strong>Why:</strong> The establishment patience is priced in the grafted-vs-seedling choice: 2–3 years of production advance is years of compounding returns. Seedling trees are a gamble on patience AND variety.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Citrus grove annual gross at mature yield reaches:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_6')">~$5,000–15,000/ha at local fresh prices — some of the highest per-hectare income in this college's crop catalogue</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">$50/ha</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">$1,000,000/ha</button>
+<div class="q-exp" id="exp6_6"><strong>Why:</strong> Citrus at full density and yield is among the highest-earning permanent crop systems in tropical Africa. The establishment cost and 3–4 year wait are investments in this annual return.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Urban supermarket / hotel channel for fruit requires:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_7')">Graded, uniform size, consistent weekly supply, invoiced — 2–3× local price; group certification often needed for access</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Any grade, random delivery</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Export-level documentation only</button>
+<div class="q-exp" id="exp6_7"><strong>Why:</strong> The institutional buyer's premium pays for reliability: same size, same day, same invoice. Group certification or a consistent individual supply chain earns the 2–3× price.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. The orchard growth path lesson for years 1–6 is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_8')">Establish, intercrop, and learn post-harvest discipline; the first income comes in year 4–6 at local market — patience and parallel income streams are the business</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Full returns from day one</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">No income ever from trees</button>
+<div class="q-exp" id="exp6_8"><strong>Why:</strong> Year 1 through 4 is establishment capital: the trees are growing, the inter-crop is the income, and the skills (post-harvest, market relationship, disease scouting) are being built for the bigger harvests ahead.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. The phytosanitary certificate for export mango documents:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_9')">That the fruit has been inspected, treated (HWT) and is free of regulated pests — the importing country's entry requirement</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Only weight</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Only variety name</button>
+<div class="q-exp" id="exp6_9"><strong>Why:</strong> Phytosanitary documentation is the export passport: without it, the best mango in Africa stops at the border. Building the system (trapping, treatment, inspection) is building the document.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. The three report-card numbers for an orchard are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_10')">Yield per tree (kg), post-harvest loss percentage, and price channel achieved (local/supermarket/export)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Rainfall and luck</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Number of trees counted</button>
+<div class="q-exp" id="exp6_10"><strong>Why:</strong> Yield measures agronomy, loss measures post-harvest discipline, and channel measures marketing skill. All three must score for the orchard's patient investment to compound.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn6" onclick="markComplete(6)">Mark Month 6 Complete</button>
+    </div>
+  </div>
+
+  <div class="final-section">
+    <h2>&#127942; Final Project: Your Mango &amp; Citrus Business Plan</h2>
+    <p>The final project is your complete orchard enterprise plan — site evaluation, variety and tree sourcing, establishment timeline, disease and pest management calendar, and the 10-year economics case with channel progression.</p>
+    <ol><li><strong>Site evaluation:</strong> soil depth and drainage test results, frost-risk assessment, dry-season duration (for mango), irrigation source identified.</li>
+<li><strong>Variety and nursery plan:</strong> chosen variety and rootstock for your market and climate, nursery inspected and approved, planting date tied to rain season.</li>
+<li><strong>Establishment protocol:</strong> hole preparation specs, planting procedure, first-year watering plan (bucket-drip or drip system), weed-free circle maintenance, formative pruning schedule by year.</li>
+<li><strong>Flowering and nutrition calendar:</strong> for mango — dry-rest trigger, panicle watch, K+P pre-flowering, N post-harvest, pre-harvest irrigation stop; for citrus — year-round irrigation schedule, nutrition by stage.</li>
+<li><strong>Pest and disease calendar:</strong> fruit fly bait station network, mango seed weevil spray protocol, powdery mildew timing, HLB psyllid inspection routine, copper spray schedule for anthracnose/canker.</li>
+<li><strong>Post-harvest and channel plan:</strong> harvest maturity criteria, handling rules, HWT setup (if export target), storage/cold chain option, channel by year (local → supermarket → export).</li>
+<li><strong>10-year economics:</strong> year-by-year costs and income (with intercrop income in years 1–3), establishment ROI calculation, year-10 target channel and certification requirement.</li></ol>
+    <p><strong>Submission standard:</strong> A plan you could hand to a savings group, a bank officer, or a family investor without embarrassment. Real local prices, real named buyers, honest risks.</p>
+  </div>
+
+  <div class="budget-section">
+    <h2>&#128176; Startup Budget &mdash; 1 ha Mango Orchard — 20-Year Investment Case (100 Trees @ 10×10 m)</h2>
+    <p>The budget spans three phases: establishment (years 1–3, costs only), early production (years 4–6, growing income), and mature production (years 7–20, full return). Intercrop income in years 1–3 offsets establishment costs.</p>
+    <table>
+      <tr><th>Item</th><th>Details</th><th>Typical cost (USD)</th></tr>
+<tr><td>Grafted trees (100 trees/ha)</td><td>Certified, correct variety</td><td>$300–800</td></tr>
+<tr><td>Hole preparation + compost (100 holes)</td><td>60×60×60 cm, filled with compost + topsoil</td><td>$200–500</td></tr>
+<tr><td>Irrigation system (drip or micro-jet)</td><td>Year-one installation</td><td>$500–2,000</td></tr>
+<tr><td>Fertiliser year 1–3 (establishment)</td><td>Compost + compound</td><td>$200–500</td></tr>
+<tr><td>Pesticide programme year 1–3</td><td>Copper, wettable sulphur, fruit fly bait</td><td>$100–300</td></tr>
+<tr><td>Labour year 1–3 (planting, pruning, weeding, spraying)</td><td></td><td>$400–1,000</td></tr>
+<tr><td>Intercrop income (vegetables/beans, years 1–3)</td><td>Revenue offsetting costs</td><td>$600–1,800</td></tr>
+<tr><td><strong>Net establishment cost (years 1–3)</strong></td><td>After intercrop offset</td><td><strong>$900–3,300</strong></td></tr>
+<tr><td>Annual maintenance (mature, years 7+)</td><td>Fertiliser, spray, harvest, pruning labour</td><td>$800–2,000/year</td></tr>
+<tr><td><strong>Annual gross (local fresh, mature 100 trees)</strong></td><td>50–80 kg/tree × $0.50–1.00/kg</td><td><strong>$2,500–8,000/year</strong></td></tr>
+<tr><td><strong>Annual margin (mature, local fresh)</strong></td><td></td><td><strong>~$1,500–6,000/year</strong></td></tr>
+    </table>
+    <p><em>Prices vary widely by country. Before spending anything, price every line in your own town and rebuild this table — that exercise is part of your final project.</em></p>
+  </div>
+
+  <div class="glossary-section">
+    <h2>&#128218; Glossary</h2>
+    <dl class="glossary">
+<dt>Grafted tree</dt><dd>A tree produced by joining a desired fruiting variety (scion) to a disease-tolerant rootstock — commercial orchard standard.</dd>
+<dt>Rootstock</dt><dd>The root and lower trunk of a grafted tree, selected for soil adaptation, disease resistance and dwarfing.</dd>
+<dt>Graft union</dt><dd>The healed join between scion and rootstock — inspected at nursery for soundness.</dd>
+<dt>Formative pruning</dt><dd>Pruning in years 1–3 to build the open vase or central-leader canopy structure the mature tree will carry.</dd>
+<dt>Paclobutrazol</dt><dd>A plant growth regulator applied to soil or foliage to halt vegetative growth and trigger mango floral initiation.</dd>
+<dt>Floral initiation</dt><dd>The physiological shift from vegetative to reproductive growth triggered by drought-cool stress in mango.</dd>
+<dt>Panicle</dt><dd>The flower cluster of mango that emerges after the dry-rest period; site of powdery mildew attack.</dd>
+<dt>Hot-water treatment (HWT)</dt><dd>Immersing harvested mango in 48 °C water for 60–90 minutes to kill fruit fly larvae and reduce anthracnose inoculum.</dd>
+<dt>Climacteric fruit</dt><dd>Fruit that continues ripening after harvest (mango, banana, avocado) — can be harvested mature-green.</dd>
+<dt>Non-climacteric fruit</dt><dd>Fruit that must ripen fully on the tree before harvest (citrus) — picking green = permanent underquality.</dd>
+<dt>Fruit fly (Bactrocera / Ceratitis)</dt><dd>Flies whose females sting ripening fruit, laying eggs that hatch into maggots — the export disqualifier.</dd>
+<dt>Mango seed weevil</dt><dd>Invisible quarantine pest inside mango fruit — killed by HWT; export-disqualifying if detected.</dd>
+<dt>Citrus greening (HLB)</dt><dd>Incurable bacterial disease spread by Diaphorina psyllid — the most devastating citrus threat globally.</dd>
+<dt>Phytophthora root rot</dt><dd>Water-mould disease in poorly drained soils — killed by drainage; managed with copper drench.</dd>
+<dt>Brix:acid ratio</dt><dd>Citrus internal maturity index: sugar content (Brix, measured by refractometer) divided by acidity.</dd>
+<dt>Float test</dt><dd>Mango maturity test: mature fruit floats in water (air space in seed cavity); immature sinks.</dd>
+<dt>Phytosanitary certificate</dt><dd>Export document certifying a consignment is free of regulated pests — required by importing countries.</dd>
+    </dl>
+  </div>
+
+  <div class="resources-section">
+    <h2>&#128279; Further Resources</h2>
+    <ul><li>Your national horticulture research station — released mango and citrus varieties for your agro-ecology, post-harvest protocols, and export certification contacts.</li>
+<li>FAO and World Bank fruit value chain programmes — export certification guides, HWT setup for smallholder groups.</li>
+<li>CABI crop protection resources — Bactrocera fruit fly management, HLB psyllid identification and monitoring.</li>
+<li>Export horticulture associations (e.g. FPEAK in Kenya, NAEB in Rwanda) — for buyers, certification pathways and cold-chain access.</li>
+<li>Rise Africa Skills companion courses: Beekeeping (pollination of orchard flowers), Solar Drying (dried mango value addition), Vegetable Production (intercrop income in young orchards).</li></ul>
+  </div>
+
+  <div class="cert-section">
+    <h2>&#127891; Course Completion</h2>
+    <p>Complete all 6 months and pass the quizzes to unlock your certificate.</p>
+    <a href="certificate.html?course=Mango%20%26%20Citrus%20Farming" class="cert-btn" id="certBtn" disabled>Get Certificate</a>
+  </div>
+</div>
+<script>
+  const TOTAL_MODULES = 6;
+  const COURSE_KEY = 'mango-citrus-farming';
+  let completed = JSON.parse(localStorage.getItem(COURSE_KEY + '_progress') || '[]');
+
+  function toggleModule(n) {
+    if (n > 1 && !completed.includes(n-1)) { alert('Complete Month ' + (n-1) + ' first.'); return; }
+    document.getElementById('body' + n).classList.toggle('active');
+  }
+  function answerQ(btn, isCorrect, expId) {
+    const parent = btn.parentElement;
+    const buttons = parent.querySelectorAll('.q-opt');
+    if (buttons[0].disabled) return;
+    buttons.forEach(b => { b.disabled = true; });
+    if (isCorrect) { btn.classList.add('correct'); }
+    else {
+      btn.classList.add('wrong');
+      buttons.forEach(b => { if (b.dataset.c === '1') b.classList.add('correct'); });
+    }
+    document.getElementById(expId).classList.add('show');
+    const quiz = btn.closest('.quiz-wrap');
+    quiz.dataset.answered = (parseInt(quiz.dataset.answered||'0') + 1);
+    quiz.dataset.score = (parseInt(quiz.dataset.score||'0') + (isCorrect ? 1 : 0));
+    if (parseInt(quiz.dataset.answered) >= parseInt(quiz.dataset.total)) {
+      const s = quiz.querySelector('.quiz-score');
+      s.textContent = 'Quiz result: ' + quiz.dataset.score + ' / ' + quiz.dataset.total + (parseInt(quiz.dataset.score) >= 7 ? ' — Pass. Well done!' : ' — Below 7/10. Re-read the module, then review your wrong answers.');
+    }
+  }
+  function markComplete(n) {
+    if (!completed.includes(n)) {
+      completed.push(n); completed.sort((a,b)=>a-b);
+      localStorage.setItem(COURSE_KEY + '_progress', JSON.stringify(completed));
+    }
+    updateUI();
+  }
+  function updateUI() {
+    document.getElementById('completedCount').textContent = completed.length;
+    document.getElementById('progressBar').style.width = (completed.length/TOTAL_MODULES*100) + '%';
+    for (let i=1; i<=TOTAL_MODULES; i++) {
+      const st = document.getElementById('status'+i), btn = document.getElementById('btn'+i);
+      if (completed.includes(i)) { st.textContent='Done'; st.classList.add('done'); if(btn){btn.textContent='Completed'; btn.disabled=true;} }
+      else if (i===1 || completed.includes(i-1)) { st.textContent='Start'; }
+      else { st.textContent='Locked'; }
+    }
+    if (completed.length >= TOTAL_MODULES) {
+      const c = document.getElementById('certBtn');
+      c.removeAttribute('disabled'); c.textContent = 'Get Your Certificate!';
+    }
+  }
+  updateUI();
+</script>
+</body>
+</html>

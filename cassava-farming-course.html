@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Cassava Farming - A complete practical course from Rise Africa Skills. Learn offline, anytime.">
+<title>Cassava Farming | Rise Africa Skills</title>
+<style>
+  :root { --gold:#eab308; --gold-dark:#a16207; --green:#16a34a; --bg:#0f172a; --card:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --line:#334155; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:var(--bg); color:var(--text); line-height:1.65; }
+  header { background:linear-gradient(135deg,var(--gold-dark) 0%,#713f12 100%); padding:44px 20px; text-align:center; }
+  header h1 { font-size:2rem; margin-bottom:8px; }
+  header p { color:rgba(255,255,255,0.88); max-width:640px; margin:0 auto; }
+  .badge { display:inline-block; background:var(--gold); color:#1e293b; padding:4px 14px; border-radius:20px; font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-top:12px; letter-spacing:0.4px; }
+  .container { max-width:920px; margin:0 auto; padding:30px 20px; }
+  .progress-bar { background:var(--card); border-radius:10px; height:10px; margin-bottom:28px; overflow:hidden; }
+  .progress-fill { background:var(--gold); height:100%; width:0%; border-radius:10px; transition:width .4s ease; }
+  .overview { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-bottom:26px; }
+  .overview h2 { color:var(--gold); font-size:1.15rem; margin-bottom:10px; }
+  .overview ul { margin:8px 0 14px 20px; color:var(--muted); }
+  .overview li { margin:5px 0; }
+  .meta-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+  .meta-chip { background:#0b1220; border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:0.85rem; color:var(--muted); }
+  .meta-chip b { color:var(--text); }
+  .module { background:var(--card); border-radius:12px; margin-bottom:16px; overflow:hidden; border:1px solid var(--line); }
+  .module-header { padding:18px 22px; cursor:pointer; display:flex; align-items:center; gap:14px; transition:background .2s; }
+  .module-header:hover { background:#26354a; }
+  .module-num { background:var(--gold); color:#1e293b; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0; }
+  .module-title { flex:1; font-weight:600; }
+  .module-status { font-size:0.75rem; padding:4px 10px; border-radius:12px; background:var(--line); color:var(--muted); white-space:nowrap; }
+  .module-status.done { background:var(--green); color:#fff; }
+  .module-body { display:none; padding:0 22px 24px; border-top:1px solid var(--line); }
+  .module-body.active { display:block; }
+  .module-body p { color:var(--muted); margin:13px 0; }
+  .module-body ul, .module-body ol { margin:10px 0 10px 22px; color:var(--muted); }
+  .module-body li { margin:6px 0; }
+  .module-body strong { color:var(--text); }
+  .module-body h3 { color:var(--gold); font-size:1.05rem; margin:22px 0 4px; }
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.88rem; }
+  th { background:#0b1220; color:var(--gold); text-align:left; padding:9px 10px; border:1px solid var(--line); }
+  td { padding:8px 10px; border:1px solid var(--line); color:var(--muted); vertical-align:top; }
+  tr:nth-child(even) td { background:#1a2537; }
+  .tip-box { background:rgba(234,179,8,0.08); border-left:4px solid var(--gold); padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .tip-box strong { color:var(--gold); }
+  .warn-box { background:rgba(239,68,68,0.08); border-left:4px solid #ef4444; padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .warn-box strong { color:#f87171; }
+  .assign-box { background:#0b1220; border:1px dashed var(--gold-dark); border-radius:10px; padding:16px 18px; margin:16px 0; color:var(--muted); }
+  .assign-box strong { color:var(--gold); }
+  .video-box { background:#0b1220; border:1px solid var(--line); border-radius:10px; padding:14px 18px; margin:16px 0; color:var(--muted); font-size:0.9rem; }
+  .quiz-wrap { background:#0b1220; border:1px solid var(--line); border-radius:12px; padding:20px; margin-top:20px; }
+  .quiz-wrap h3 { margin-top:0 !important; }
+  .q-block { margin:16px 0; padding-bottom:14px; border-bottom:1px solid #1e293b; }
+  .q-block:last-child { border-bottom:none; }
+  .q-text { font-weight:600; color:var(--text); margin-bottom:8px; }
+  .q-opt { display:block; width:100%; text-align:left; padding:9px 13px; margin:5px 0; background:var(--card); border:1px solid #475569; border-radius:8px; color:var(--text); cursor:pointer; transition:all .2s; font-size:0.9rem; }
+  .q-opt:hover { border-color:var(--gold); }
+  .q-opt.correct { background:#14532d; border-color:var(--green); }
+  .q-opt.wrong { background:#7f1d1d; border-color:#ef4444; }
+  .q-exp { display:none; margin-top:8px; padding:10px 13px; background:rgba(234,179,8,0.07); border-left:3px solid var(--gold); border-radius:0 6px 6px 0; color:var(--muted); font-size:0.87rem; }
+  .q-exp.show { display:block; }
+  .quiz-score { margin-top:12px; font-weight:700; color:var(--gold); }
+  .check-btn { background:var(--gold); color:#1e293b; border:none; padding:11px 26px; border-radius:8px; font-weight:700; cursor:pointer; margin-top:16px; transition:background .2s; }
+  .check-btn:hover { background:#facc15; }
+  .check-btn:disabled { opacity:0.5; cursor:not-allowed; }
+  .final-section, .budget-section, .glossary-section, .resources-section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-top:26px; }
+  .final-section h2, .budget-section h2, .glossary-section h2, .resources-section h2 { color:var(--gold); font-size:1.2rem; margin-bottom:10px; }
+  .final-section p, .budget-section p, .resources-section p { color:var(--muted); margin:10px 0; }
+  .final-section ol, .resources-section ul { margin:10px 0 10px 22px; color:var(--muted); }
+  .final-section li, .resources-section li { margin:6px 0; }
+  dl.glossary dt { color:var(--text); font-weight:700; margin-top:12px; }
+  dl.glossary dd { color:var(--muted); margin-left:0; font-size:0.92rem; }
+  .cert-section { text-align:center; padding:40px 20px; background:var(--card); border-radius:16px; margin-top:30px; border:1px solid var(--line); }
+  .cert-section h2 { margin-bottom:10px; }
+  .cert-section p { color:var(--muted); margin-bottom:20px; }
+  .cert-btn { background:var(--gold); color:#1e293b; border:none; padding:14px 36px; border-radius:10px; font-size:1rem; font-weight:800; cursor:pointer; text-decoration:none; display:inline-block; }
+  .cert-btn[disabled] { opacity:0.4; pointer-events:none; }
+  .nav-bar { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:var(--card); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:100; }
+  .nav-bar a { color:var(--text); text-decoration:none; font-weight:600; }
+  .nav-bar a:hover { color:var(--gold); }
+  .completion-count { color:var(--muted); font-size:0.9rem; }
+  @media (max-width:600px){ header h1{font-size:1.5rem;} .module-header{padding:14px 16px;} .module-body{padding:0 16px 18px;} table{font-size:0.8rem;} th,td{padding:6px 7px;} }
+</style>
+</head>
+<body>
+<nav class="nav-bar">
+  <a href="index.html">&#8592; Back to Courses</a>
+  <span class="completion-count"><span id="completedCount">0</span> / 6 months completed</span>
+</nav>
+<header>
+  <div class="badge">Agriculture &middot; 6-Month Program</div>
+  <h1>Cassava Farming</h1>
+  <p>Africa's insurance crop, done properly — clean cuttings, the weed window, the virus defence triangle, the 48-hour harvest clock, and safe processing that turns roots into gari, flour and real margins.</p>
+</header>
+<div class="container">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+
+  <div class="overview">
+    <h2>Course Overview</h2>
+    <p style="color:var(--muted);">Cassava feeds half a billion Africans precisely because it forgives drought, poor soil and neglect — but forgiveness is not profit. The gap between the continental average of 8–10 tonnes per hectare and the 20–35 tonnes good farmers achieve comes down to four learnable disciplines: clean cuttings of resistant varieties, winning the 3–4 month weed window, roguing out virus, and respecting the 48-hour clock that starts the moment a root is dug. This course teaches all four, then goes where the money is: safe processing into gari, fufu, flour and chips — including the cyanide safety knowledge that protects your family and your customers, taught bluntly because it matters.</p>
+    <h2 style="margin-top:16px;">What You Will Learn</h2>
+    <ul><li>Sweet vs bitter varieties, cyanide safety, and choosing disease-resistant released varieties</li>
+<li>Select, store and plant stem cuttings correctly — the biggest yield decision in the crop</li>
+<li>Ridging, 1 m spacing, orientation and gap-filling for a full stand</li>
+<li>Win the 3–4 month weed window that decides half your harvest</li>
+<li>Feed the potassium machine and intercrop the open early field profitably</li>
+<li>Defend against CMD and CBSD with the resistant-variety + clean-cutting + roguing triangle</li>
+<li>Harvest against the 48-hour clock; process safely into gari, fufu, HQCF and chips</li>
+<li>Understand konzo and the non-negotiable processing rules that prevent it</li>
+<li>Choose your business model — fresh, outgrower, processor or seed entrepreneur — and plan it</li></ul>
+    <div class="meta-row">
+      <div class="meta-chip"><b>Duration:</b> 6 months, one module per month</div>
+      <div class="meta-chip"><b>Level:</b> Beginner &rarr; Job-ready</div>
+      <div class="meta-chip"><b>Units:</b> Metric with imperial where useful</div>
+      <div class="meta-chip"><b>Final project:</b> Your own business plan</div>
+    </div>
+  </div>
+
+  <div class="module" data-module="1">
+    <div class="module-header" onclick="toggleModule(1)">
+      <div class="module-num">1</div>
+      <div class="module-title">Month 1: Why Cassava, Varieties &amp; Cyanide Safety</div>
+      <div class="module-status" id="status1">Start</div>
+    </div>
+    <div class="module-body" id="body1">
+
+      <h3>Lesson 1.1 — Why cassava is Africa's insurance policy</h3>
+      <p>Cassava feeds more than 500 million Africans. It grows where maize fails: it tolerates drought that would kill most crops, produces on tired sandy soils, and — uniquely — <strong>stores itself in the ground</strong>. Roots can be left unharvested for months and dug when you need food or cash. That is why farmers call it the famine reserve. But cassava is also a serious cash crop: gari, fufu, high-quality cassava flour (HQCF), industrial starch and livestock feed chips are all growth markets across the continent.</p>
+      <ul>
+        <li>Maturity: most varieties <strong>9–12 months</strong>; some improved types from 8 months; roots can wait in the soil to ~18 months (older = woodier).</li>
+        <li>Yields: African average is a sad 8–10 t/ha; well-managed fields with improved varieties routinely reach <strong>20–35 t/ha</strong>. The gap is management, and this course is about closing it.</li>
+        <li>Everything above ground is useful too: tender leaves are a protein-rich vegetable in much of Central Africa (must be properly pounded and boiled — see Lesson 1.3), and stems are next season's planting material.</li>
+      </ul>
+      <h3>Lesson 1.2 — Sweet vs bitter: know what you are growing</h3>
+      <p>All cassava contains cyanogenic compounds (mainly linamarin) that release <strong>hydrogen cyanide (HCN)</strong> when the root is damaged. Varieties differ enormously:</p>
+      <table>
+        <tr><th>Type</th><th>Cyanogen level</th><th>Use</th></tr>
+        <tr><td><strong>Sweet varieties</strong></td><td>Low</td><td>Can be eaten boiled/roasted after normal peeling and cooking</td></tr>
+        <tr><td><strong>Bitter varieties</strong></td><td>High</td><td>MUST be processed (fermented, grated &amp; pressed, or soaked and dried) before eating; often higher yielding and less stolen/browsed</td></tr>
+      </table>
+      <div class="warn-box"><strong>Safety rule you never break:</strong> never eat bitter cassava — or feed it to children or animals — that has only been boiled. Peeling removes much of the cyanogen (it concentrates in the peel) but bitter varieties need full processing: fermentation, grating-and-pressing, or prolonged soaking plus thorough drying. Module 5 teaches the safe methods in detail. Know which type every plant in your field is, and label planting material accordingly.</div>
+      <h3>Lesson 1.3 — Choosing varieties: three questions</h3>
+      <ol>
+        <li><strong>Is it disease-resistant?</strong> Cassava mosaic disease (CMD) and cassava brown streak disease (CBSD) are the two yield destroyers (Module 4). Modern released varieties — e.g. the TME 419 and TMS lines in West Africa, NASE and MM series in East Africa, and national releases elsewhere — carry resistance. Ask your extension office which released varieties are recommended for your district this year.</li>
+        <li><strong>What does your market want?</strong> Fresh-eating markets want sweet, early, good-tasting roots. Gari and fufu processors want high dry matter. Starch and HQCF factories specify dry matter and root size. Feed chip buyers mostly want cheap tonnage.</li>
+        <li><strong>Does it fit your season?</strong> Match maturity length to your rainfall pattern and your cash-flow needs.</li>
+      </ol>
+      <p>Cassava leaves for the pot: use tender top leaves, pound them and <strong>boil thoroughly (15+ minutes, lid off)</strong> — the pounding and long boiling drive off the cyanide. Never eat raw or lightly cooked cassava leaves.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Sweet vs bitter cassava — how to tell, and why it matters for safety &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 1:</strong> Visit your extension office or nearest agro-dealer and write down: the released cassava varieties currently recommended for your district, which are CMD/CBSD-resistant, whether each is sweet or bitter, and where clean cuttings can be bought. Then visit your local market and record what cassava products are sold (fresh roots, gari, flour, leaves) and their prices. These two lists anchor your business plan.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 1 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Cassava's most unusual advantage as a food-security crop is that:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">It grows in standing water</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_1')">Roots can be stored unharvested in the ground for months</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">It matures in six weeks</button>
+<div class="q-exp" id="exp1_1"><strong>Why:</strong> The living root is its own store. Farmers dig only what they need, when they need it — a built-in famine reserve no granary can match. The trade-off is that once dug, roots spoil within days (Module 5).</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. The compound that makes cassava potentially dangerous is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">Aflatoxin</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_2')">Cyanogens that release hydrogen cyanide when the root is damaged</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">Oxalic acid</button>
+<div class="q-exp" id="exp1_2"><strong>Why:</strong> Linamarin in the root breaks down into HCN. Sweet varieties carry little; bitter varieties carry a lot and are only safe after proper processing — fermentation, grating-and-pressing, or soaking plus thorough drying.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Bitter cassava that has only been peeled and boiled is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">Perfectly safe</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_3')">Still unsafe — bitter types require full processing before eating</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">Safe for adults but not children</button>
+<div class="q-exp" id="exp1_3"><strong>Why:</strong> Boiling alone does not remove enough cyanogen from high-HCN varieties. This mistake causes real poisoning cases every year. Bitter cassava must be fermented, grated and pressed, or soaked and dried first.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. The typical yield gap in African cassava is between:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_4')">8–10 t/ha average vs 20–35 t/ha achievable with improved varieties and management</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">50 t/ha average vs 55 t/ha achievable</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">There is no yield gap</button>
+<div class="q-exp" id="exp1_4"><strong>Why:</strong> The continental average is roughly a third of what demonstration-level management achieves with the same land. Clean cuttings of resistant varieties plus early weeding close most of the gap — that is this whole course.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. The two diseases that should dominate your variety choice are:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Rust and smut</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_5')">Cassava mosaic disease (CMD) and cassava brown streak disease (CBSD)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Panama disease and Sigatoka</button>
+<div class="q-exp" id="exp1_5"><strong>Why:</strong> CMD wrecks yields and CBSD rots the roots themselves. Resistant released varieties (TME/TMS, NASE/MM lines and national equivalents) are the single most powerful input you can buy.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Cassava leaves are safe to eat when:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">Picked young and eaten raw in salads</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_6')">Pounded and boiled thoroughly, 15+ minutes with the lid off</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">Dried in the sun for one hour</button>
+<div class="q-exp" id="exp1_6"><strong>Why:</strong> Pounding ruptures cells and long open-lid boiling drives off the liberated cyanide. Properly prepared, cassava leaves are an excellent protein-rich vegetable; raw or lightly cooked they are unsafe.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Most cassava varieties reach harvest maturity at:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">3–4 months</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_7')">9–12 months</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">3 years</button>
+<div class="q-exp" id="exp1_7"><strong>Why:</strong> Plan on roughly a year in the ground, with some improved types ready from 8 months. Roots can wait to about 18 months but become increasingly woody and fibrous.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. A gari or HQCF processor buying your roots will care most about:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Leaf colour</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_8')">High dry matter content</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Stem height</button>
+<div class="q-exp" id="exp1_8"><strong>Why:</strong> Processors pay for the starch, not the water. High-dry-matter varieties yield more product per tonne of roots, so factories and gari makers specify and sometimes premium-price it.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Bitter varieties are often preferred by farmers despite the processing burden because:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">They taste better boiled</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_9')">They frequently yield more and suffer less theft and animal browsing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">They need no weeding</button>
+<div class="q-exp" id="exp1_9"><strong>Why:</strong> The bitterness that makes them unsafe raw also deters thieves, monkeys and livestock, and many bitter lines are strong yielders — a real advantage where field theft is a business risk.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. The right first stop when choosing a variety is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">The most vigorous plants in any neighbour's field</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_10')">Your extension office's current list of released, disease-resistant varieties for your district</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Whatever the market sells as food roots</button>
+<div class="q-exp" id="exp1_10"><strong>Why:</strong> Districts differ in which diseases and strains circulate. National programmes release varieties matched to local pressure — starting there beats guessing, and food-market roots tell you nothing about disease resistance.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn1" onclick="markComplete(1)">Mark Month 1 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="2">
+    <div class="module-header" onclick="toggleModule(2)">
+      <div class="module-num">2</div>
+      <div class="module-title">Month 2: Cuttings, Land Preparation &amp; Planting</div>
+      <div class="module-status" id="status2">Locked</div>
+    </div>
+    <div class="module-body" id="body2">
+
+      <h3>Lesson 2.1 — Cassava is planted from stems, and that changes everything</h3>
+      <p>Cassava has no true seed in normal farming — you plant <strong>stem cuttings</strong> from last season's plants. Every virus and pest in the mother plant rides into your new field inside the cutting. So, exactly as with banana, the health of your planting material is the single biggest yield decision you make:</p>
+      <ul>
+        <li>Take cuttings only from <strong>healthy, vigorous plants 8–18 months old</strong> that showed no mosaic-patterned leaves or brown-streak symptoms all season.</li>
+        <li>Use the <strong>middle portion of the stem</strong> — the woody brown section. The green top is too soft and dries out; the oldest base is too woody and sprouts poorly.</li>
+        <li>Cut pieces <strong>20–25 cm (8–10 in) long with 5–8 nodes</strong>, using a sharp clean blade (crushing the stem with a blunt machete kills buds).</li>
+        <li>Buy certified clean cuttings of resistant varieties where seed-system programmes exist — the premium repays itself in the first season.</li>
+      </ul>
+      <div class="tip-box"><strong>Storing stems:</strong> if planting is weeks away, store whole 1–1.5 m stems (not cut pieces) upright under tree shade, bases pushed a few centimetres into moist soil. They stay viable for up to 2 months. Cut into planting pieces only on planting day.</div>
+      <h3>Lesson 2.2 — Land preparation and planting geometry</h3>
+      <table>
+        <tr><th>Decision</th><th>Standard practice</th><th>Why</th></tr>
+        <tr><td>Tillage</td><td>Plough/dig to 20–30 cm; make <strong>ridges or mounds</strong> on heavy or wet soils, flat on deep light soils</td><td>Roots need loose soil to bulk; ridges prevent waterlogging and make harvest far easier</td></tr>
+        <tr><td>Spacing</td><td><strong>1 m &times; 1 m = 10,000 plants/ha</strong> (~4,000/acre) for sole crop</td><td>The standard that balances root size and total tonnage; widen to 1 m &times; 1.5 m when intercropping</td></tr>
+        <tr><td>Cutting position</td><td>Plant at an angle (~45&deg;) or vertically with <strong>2/3 of the cutting buried</strong>, buds pointing up; flat and 5–10 cm deep works in moist loose soil</td><td>Angled/vertical planting gives fast, uniform sprouting and roots clustered for easy harvest</td></tr>
+        <tr><td>Timing</td><td>Early in the main rains</td><td>Cuttings need 2–3 moist months to establish; early planting also beats weeds and whitefly build-up</td></tr>
+      </table>
+      <h3>Lesson 2.3 — Orientation matters</h3>
+      <p>Look at a cutting: the buds sit above old leaf scars and all point one way — toward what was the top of the plant. <strong>Plant that end up.</strong> Upside-down cuttings sprout late and weak or not at all. When planting at speed with hired labour, this is the error to police.</p>
+      <p>Gap-fill at 3–4 weeks: walk the field, and wherever a cutting failed, plant a fresh one from your reserve bundle. A 95% stand at month one is the cheapest yield insurance there is.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Preparing and planting cuttings — the middle-stem, buds-up demonstration &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 2:</strong> Prepare a bundle of at least 50 cuttings following the full standard: symptom-free mother plants 8–18 months old, middle stem, 20–25 cm, 5–8 nodes, sharp clean cuts. Plant a practice plot of at least 5 × 5 plants at 1 m × 1 m on ridges or mounds, buds up, 2/3 buried. Keep 10 reserve cuttings shaded for gap-filling and record your planting date.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 2 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. The best section of stem for planting material is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">The soft green top</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_1')">The middle woody brown portion</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">The oldest thick base only</button>
+<div class="q-exp" id="exp2_1"><strong>Why:</strong> The middle of the stem has mature buds and enough stored reserves without being over-woody. Green tops desiccate and die; very old basal wood sprouts poorly and unevenly.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Standard cutting size is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">5 cm with 1 node</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_2')">20–25 cm with 5–8 nodes</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">1 metre with 30 nodes</button>
+<div class="q-exp" id="exp2_2"><strong>Why:</strong> 20–25 cm gives enough nodes for reliable sprouting and enough reserves to push roots and shoots through establishment. Cut with a sharp blade — crushed stems mean dead buds.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Cuttings should come only from mother plants that:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_3')">Were 8–18 months old and showed no disease symptoms all season</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">Are the tallest, regardless of leaf symptoms</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">Grew nearest the road</button>
+<div class="q-exp" id="exp2_3"><strong>Why:</strong> Whatever infects the mother travels inside the cutting. Selecting symptom-free plants of the right age — and better still, certified clean material — is the biggest single yield decision in cassava.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. The standard sole-crop spacing for cassava is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">30 cm × 30 cm</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_4')">1 m × 1 m (10,000 plants/ha)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">3 m × 3 m</button>
+<div class="q-exp" id="exp2_4"><strong>Why:</strong> One metre each way is the continental standard: enough room for roots to bulk, enough plants for tonnage. Widen the rows when intercropping so the companion crop gets light.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Cuttings are planted with:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">Buds pointing downward for anchorage</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_5')">About 2/3 buried, buds pointing up, angled or vertical</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">The whole cutting on the soil surface</button>
+<div class="q-exp" id="exp2_5"><strong>Why:</strong> Buds all point toward the old top of the plant and must face up; burying two-thirds anchors the plant and clusters the roots. Upside-down planting is the classic hired-labour error to police.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Ridges or mounds are especially important on:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">Deep dry sands</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_6')">Heavy or seasonally wet soils</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">Rocky hillsides only</button>
+<div class="q-exp" id="exp2_6"><strong>Why:</strong> Cassava roots rot in waterlogged soil and cannot bulk in compacted ground. Ridging lifts the root zone above water, loosens soil for bulking, and makes harvest dramatically easier.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Whole stems awaiting planting are best stored:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Cut into pieces and bagged</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_7')">Upright in shade with bases in moist soil, for up to ~2 months</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Under black plastic in full sun</button>
+<div class="q-exp" id="exp2_7"><strong>Why:</strong> Whole stems shaded and 'planted' shallowly stay alive for weeks; pre-cut pieces dry out fast. Cut into 20–25 cm pieces only on the day you plant.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Planting early in the main rains matters because:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">Cuttings photosynthesise immediately</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_8')">Establishment needs 2–3 moist months, and early crops outpace weeds and whitefly</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">Late planting attracts elephants</button>
+<div class="q-exp" id="exp2_8"><strong>Why:</strong> An early-established canopy shades out weeds and grows past the worst whitefly (virus-vector) pressure. Late-planted cassava fights both handicaps all season.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Gap-filling at 3–4 weeks means:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Digging drainage gaps</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_9')">Replacing failed cuttings from a reserve bundle to restore a full stand</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Removing every second plant</button>
+<div class="q-exp" id="exp2_9"><strong>Why:</strong> Every empty station is a full year of lost production on that square metre. A quick walk-through with spare cuttings at week 3–4 is the cheapest yield insurance in the crop.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. A blunt machete is a bad tool for preparing cuttings because:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">It is too slow</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_10')">Crushing the stem kills the buds that must sprout</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">It spreads soil fungi</button>
+<div class="q-exp" id="exp2_10"><strong>Why:</strong> The buds are the whole point of the cutting. A clean sharp cut preserves them; a crushing blow bruises the nodes and the piece rots or sprouts weakly.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn2" onclick="markComplete(2)">Mark Month 2 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="3">
+    <div class="module-header" onclick="toggleModule(3)">
+      <div class="module-num">3</div>
+      <div class="module-title">Month 3: Weeds, Feeding &amp; Intercropping</div>
+      <div class="module-status" id="status3">Locked</div>
+    </div>
+    <div class="module-body" id="body3">
+
+      <h3>Lesson 3.1 — The 3–4 month weed window decides your harvest</h3>
+      <p>Cassava starts life slowly. For its first <strong>3–4 months</strong> it is a small plant losing every fight with weeds — and trials across Africa show uncontrolled weeds in this window cut final root yield by <strong>50% or more</strong>. After canopy closure (month 4–5), cassava shades weeds out and largely defends itself.</p>
+      <ul>
+        <li>Plan <strong>2–3 thorough weedings</strong>: around weeks 3–4, weeks 8–9, and if needed week 12–14. Early planting into a clean seedbed makes each one lighter.</li>
+        <li>Shallow hoeing only near plants — deep hoeing wounds the young storage roots and every wound is a rot entry.</li>
+        <li>Re-ridge/earth-up during the second weeding: it buries in-row weeds and loosens soil for root bulking.</li>
+      </ul>
+      <h3>Lesson 3.2 — Feeding a crop famous for needing nothing</h3>
+      <p>Cassava's reputation for growing on poor soil is true — and misleading. It <em>survives</em> poverty; it <em>pays</em> on fertility. A 25 t/ha root harvest removes large amounts of potassium especially. The honest feeding picture:</p>
+      <table>
+        <tr><th>Situation</th><th>Recommendation</th></tr>
+        <tr><td>Fresh land or after good fallow</td><td>Often little fertiliser needed in year one; manure at planting still pays</td></tr>
+        <tr><td>Continuous cropping</td><td>Manure/compost in the planting hole or ridge + a K-strong NPK (e.g. ~200 kg/ha of a balanced compound, split at 1 and 3 months) lifts yields sharply</td></tr>
+        <tr><td>Any situation</td><td><strong>Potassium is cassava's number-one mineral</strong> — starch is built on K. Wood ash (a free K source) worked into ridges is valuable where fertiliser is unaffordable</td></tr>
+      </table>
+      <p>Too much nitrogen alone grows a jungle of stems and leaves with disappointing roots — balance is the word.</p>
+      <h3>Lesson 3.3 — Intercropping: cassava's best habit</h3>
+      <p>That slow first three months is an opportunity: the space between young cassava rows grows a full short-season crop before the canopy needs it.</p>
+      <ul>
+        <li>Classic partners: <strong>maize, beans, cowpea, groundnuts, melons/pumpkins</strong> — planted between widened cassava rows (1 m &times; 1.5 m).</li>
+        <li>The legumes fix nitrogen and their residues feed the cassava; the intercrop income pays for the weedings; and a covered soil surface is itself weed control.</li>
+        <li>Rule: the intercrop must be <strong>short-season and out of the field by month 3–4</strong>, before cassava needs full light and water.</li>
+      </ul>
+      <h3>Lesson 3.4 — What cassava cannot forgive</h3>
+      <ul>
+        <li><strong>Waterlogging</strong> — even a few days of standing water rots roots. Ridges and drains, always, on suspect land.</li>
+        <li><strong>Deep cultivation after month 4</strong> — bulking roots spread wider than you think; late deep hoeing wounds them.</li>
+        <li><strong>Continuous cassava on the same land</strong> without manure or rotation — yields slide and pests build. Rotate with legumes or cereals every 2–3 crops.</li>
+      </ul>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> The weed window — what three timed weedings look like in practice &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 3:</strong> Write your weeding calendar (weeks 3–4, 8–9, 12–14 from your planting date) into your notebook, then complete the first weeding plus earthing-up on your practice plot and record hours worked. Plant a legume intercrop between rows if the season allows. Collect wood ash for a week and work it into your ridges, noting the quantity.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 3 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Uncontrolled weeds in cassava's first 3–4 months typically cost:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Around 5% of yield</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_1')">50% or more of final root yield</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Nothing — cassava always outgrows weeds</button>
+<div class="q-exp" id="exp3_1"><strong>Why:</strong> Young cassava is a slow, weak competitor. Trials consistently show early weed neglect halves the harvest. After canopy closure the crop defends itself — so all the fighting is in the window.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. The sensible weeding schedule is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">One weeding at harvest</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_2')">2–3 weedings around weeks 3–4, 8–9 and if needed 12–14</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Weekly weeding for 12 months</button>
+<div class="q-exp" id="exp3_2"><strong>Why:</strong> Three timed interventions during the vulnerable window do the whole job. Post-closure weeding is rarely needed, which is why cassava's total labour bill is lower than most crops — if you weed early.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Hoeing near cassava plants should be shallow because:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">Deep hoeing wastes energy</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_3')">Young storage roots spread near the surface and every wound invites rot</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">The soil is harder at depth</button>
+<div class="q-exp" id="exp3_3"><strong>Why:</strong> The roots you will harvest are already forming and reach wider than the canopy suggests. Wounded roots rot in the ground or spoil faster after harvest — cultivate shallow, and stop deep work after month 4.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. The mineral nutrient that matters most for cassava root bulking is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Nitrogen</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_4')">Potassium</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Calcium</button>
+<div class="q-exp" id="exp3_4"><strong>Why:</strong> Starch synthesis and transport run on K, and a big root harvest exports it by the sack. Wood ash is a free potassium source worth working into ridges when fertiliser is out of reach.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Heavy nitrogen alone on cassava produces:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Record root yields</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_5')">Lush stems and leaves with disappointing roots</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Earlier maturity</button>
+<div class="q-exp" id="exp3_5"><strong>Why:</strong> Unbalanced N pushes top growth at the expense of bulking. Balanced feeding — modest N, strong K, organic matter — is what fills the ridge with roots.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. A good cassava intercrop must:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Stay in the field all year for maximum income</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_6')">Be short-season and cleared by month 3–4 when cassava needs full light</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Be another root crop like sweet potato</button>
+<div class="q-exp" id="exp3_6"><strong>Why:</strong> The intercrop borrows space cassava isn't using yet. Beans, cowpea, groundnuts or maize fit the window; anything lingering past month 4 starts taxing the main crop.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Earthing-up (re-ridging) during the second weeding:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_7')">Buries in-row weeds and loosens soil for root bulking</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Is only decorative</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Should be done with a plough after month 6</button>
+<div class="q-exp" id="exp3_7"><strong>Why:</strong> One operation does three jobs: kills weeds the hoe missed in the row, rebuilds the loose ridge roots bulk into, and improves drainage. After month 4, though, deep implements wound roots.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Cassava on continuously cropped land responds best to:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">Nothing — fertiliser is wasted on cassava</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_8')">Manure at planting plus a K-strong compound split at 1 and 3 months</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">Lime only</button>
+<div class="q-exp" id="exp3_8"><strong>Why:</strong> 'Grows on poor soil' means survives, not thrives. On tired land, organic matter plus balanced NPK routinely adds tonnes per hectare — among the best fertiliser returns in African cropping.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Standing water in a cassava field for a few days causes:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Faster bulking</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_9')">Root rot</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">No effect</button>
+<div class="q-exp" id="exp3_9"><strong>Why:</strong> Cassava is drought-proof, not flood-proof. Waterlogged roots rot quickly, which is why heavy or low-lying land is always ridged and drained — or planted to something else.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Growing cassava on the same land crop after crop without rotation leads to:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Steadily improving yields</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_10')">Sliding yields and building pest/disease pressure</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">No change</button>
+<div class="q-exp" id="exp3_10"><strong>Why:</strong> Continuous cassava mines K, multiplies whitefly and soil pests, and lets disease inoculum accumulate. Rotating with legumes or cereals every 2–3 crops resets the field.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn3" onclick="markComplete(3)">Mark Month 3 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="4">
+    <div class="module-header" onclick="toggleModule(4)">
+      <div class="module-num">4</div>
+      <div class="module-title">Month 4: Pests, Viruses &amp; the Defence Triangle</div>
+      <div class="module-status" id="status4">Locked</div>
+    </div>
+    <div class="module-body" id="body4">
+
+      <h3>Lesson 4.1 — The two viruses that decide cassava's fate</h3>
+      <p>Two viral diseases, both spread by the <strong>whitefly</strong> (<em>Bemisia tabaci</em>) and — far more importantly — by <strong>infected cuttings</strong>, dominate cassava production in Africa:</p>
+      <table>
+        <tr><th></th><th>Cassava Mosaic Disease (CMD)</th><th>Cassava Brown Streak Disease (CBSD)</th></tr>
+        <tr><td>Leaf symptoms</td><td>Yellow-green mosaic patches, twisted, shrunken leaves</td><td>Feathery yellowing along veins of lower leaves; brown streaks on green stems</td></tr>
+        <tr><td>The real damage</td><td>Stunted plants, yield losses up to total in sensitive varieties</td><td><strong>Dry brown corky rot inside the roots</strong> — plants can look almost normal until harvest reveals ruined roots</td></tr>
+        <tr><td>Region of greatest threat</td><td>Continent-wide</td><td>East, Central and spreading — the most feared cassava disease in Africa today</td></tr>
+      </table>
+      <p>Neither can be cured in the field. The defence triangle:</p>
+      <ol>
+        <li><strong>Resistant released varieties</strong> — the foundation. This is why Module 1 sent you to the extension office.</li>
+        <li><strong>Clean cuttings</strong> — never take planting material from a field that showed symptoms, however healthy an individual plant looks. CBSD especially hides.</li>
+        <li><strong>Roguing</strong> — from month 1, walk the field monthly; uproot and destroy (burn or bury) any plant with mosaic or brown-streak leaves. One infected plant is a whitefly-served buffet infecting its neighbours all season.</li>
+      </ol>
+      <h3>Lesson 4.2 — Cassava mealybug and green mite: the biological-control success story</h3>
+      <p>In the 1980s the cassava mealybug devastated the continent until scientists introduced a tiny parasitic wasp (<em>Anagyrus lopezi</em>) that now controls it almost everywhere — one of history's greatest biological control victories. The practical lessons for you:</p>
+      <ul>
+        <li>Mealybug (white waxy clusters on shoot tips, 'bunchy top' distortion) and cassava green mite (speckled, mottled leaves from the underside, candle-stick bare tips in dry season) flare mainly in <strong>long dry seasons and on stressed plants</strong>.</li>
+        <li><strong>Do not spray broad insecticides</strong> at the first sign — you will kill the wasps and predatory mites doing your pest control for free, and usually make the outbreak worse.</li>
+        <li>Real defences: healthy well-fed plants, early planting, clean cuttings (mealybug travels on stems), and patience — natural enemies usually catch up.</li>
+      </ul>
+      <h3>Lesson 4.3 — Other troubles worth recognising</h3>
+      <ul>
+        <li><strong>Cassava bacterial blight:</strong> angular water-soaked leaf spots, blighted dying shoots, gum on stems — worst in wet seasons. Managed by clean cuttings, rotation, and removing infected debris.</li>
+        <li><strong>Termites and rodents:</strong> attack cuttings and roots on dry sandy land; early planting into moist soil and field sanitation reduce losses.</li>
+        <li><strong>Root rots:</strong> almost always a drainage message — ridge higher, drain better, rotate.</li>
+      </ul>
+      <div class="tip-box"><strong>The one-sentence plant-health plan:</strong> resistant variety + certified or carefully selected clean cuttings + monthly roguing walks + no panic spraying. Farmers doing these four things routinely double the district average yield with no other change.</div>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Recognising CMD and CBSD leaves in the field — and what roguing looks like &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 4:</strong> Conduct a formal roguing walk of your plot and any nearby cassava field (with permission): row by row, record how many plants show mosaic or brown-streak symptoms, and uproot and destroy any on your own plot. Photograph or sketch one healthy and one symptomatic leaf for your records. Write the defence triangle in your notebook in your own words.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 4 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. CMD and CBSD spread between fields mainly through:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Wind-blown spores</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_1')">Infected stem cuttings (and whiteflies locally)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Contaminated fertiliser</button>
+<div class="q-exp" id="exp4_1"><strong>Why:</strong> The vector whitefly moves virus locally, but the long-distance vehicle is the farmer, carrying infected cuttings to new fields. Control what you plant and you control most of the disease.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. The especially cruel feature of CBSD is that:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">It kills plants in a week</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_2')">Plants can look near-normal while the roots rot brown and corky inside</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">It only attacks leaves</button>
+<div class="q-exp" id="exp4_2"><strong>Why:</strong> CBSD's root necrosis is often invisible until harvest day reveals ruined, unsaleable roots — a whole year's work lost. That hidden damage is why clean material and resistant varieties matter so much.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Roguing means:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Applying fungicide rows</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_3')">Uprooting and destroying symptomatic plants during monthly field walks</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">Trimming lower leaves</button>
+<div class="q-exp" id="exp4_3"><strong>Why:</strong> Each infected plant is a virus reservoir that whiteflies serve to its neighbours all season. Removing it — roots, stems and all, burned or buried — protects the rest of the stand.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. The cassava mealybug catastrophe of the 1980s was solved by:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">A new insecticide</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_4')">Introducing a parasitic wasp — a landmark biological control success</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">Abandoning cassava for a decade</button>
+<div class="q-exp" id="exp4_4"><strong>Why:</strong> Anagyrus lopezi, released across the continent, brought mealybug under permanent, free control. It is why panic-spraying today is counterproductive — you would be shooting your own soldiers.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Spraying broad-spectrum insecticide at the first sign of mealybug or green mite usually:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Solves the outbreak permanently</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_5')">Kills the natural enemies controlling them and worsens the outbreak</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Improves root flavour</button>
+<div class="q-exp" id="exp4_5"><strong>Why:</strong> Both pests are held down by resident wasps and predatory mites. Broad sprays remove the predators faster than the pests, flipping a minor flare into a real infestation.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Mealybug and green mite outbreaks are worst:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">In cold wet weather</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_6')">In long dry seasons on stressed plants</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Immediately after harvest</button>
+<div class="q-exp" id="exp4_6"><strong>Why:</strong> Drought stress weakens the plant and suppresses natural-enemy activity. Early planting, mulched moisture and decent nutrition are pest control by another name.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Feathery yellowing along leaf veins plus brown streaks on green stems points to:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Potassium deficiency</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_7')">Cassava brown streak disease</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Normal ripening</button>
+<div class="q-exp" id="exp4_7"><strong>Why:</strong> Those are CBSD's field signatures. Mark the plant, check roots of a sample, rogue infected plants, and never take cuttings from that field.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Cassava bacterial blight is encouraged by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_8')">Wet seasons and infected debris/cuttings</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">Sandy dry soils</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">High potassium</button>
+<div class="q-exp" id="exp4_8"><strong>Why:</strong> The bacterium loves rain-splash and survives in crop debris and cuttings. Clean material, rotation and removing infected residues are the management levers.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. The 'defence triangle' against cassava viruses is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Spraying, pruning, burning</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_9')">Resistant varieties + clean cuttings + monthly roguing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Irrigation, fencing, mulching</button>
+<div class="q-exp" id="exp4_9"><strong>Why:</strong> No cure exists in the field, so everything rests on prevention: genetics, material hygiene, and removing infection as it appears. Together they routinely double district-average yields.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Repeated root rot in part of a field is usually telling you:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">The variety is fake</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_10')">That area has a drainage problem — ridge higher, drain, or rotate</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Rodents are urinating there</button>
+<div class="q-exp" id="exp4_10"><strong>Why:</strong> Root rots follow water. Before blaming seed or disease, look at where water stands after rain — the rot map and the water map almost always match.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn4" onclick="markComplete(4)">Mark Month 4 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="5">
+    <div class="module-header" onclick="toggleModule(5)">
+      <div class="module-num">5</div>
+      <div class="module-title">Month 5: Harvest, the 48-Hour Clock &amp; Safe Processing</div>
+      <div class="module-status" id="status5">Locked</div>
+    </div>
+    <div class="module-body" id="body5">
+
+      <h3>Lesson 5.1 — Harvest: the clock starts when the root leaves the ground</h3>
+      <p>Here is cassava's great paradox: a root that stores <em>itself</em> perfectly in the soil becomes one of the world's most perishable commodities the moment you dig it. <strong>Postharvest physiological deterioration (PPD)</strong> begins within 24 hours: blue-black streaks spread through the flesh, and within <strong>2–3 days</strong> fresh roots are unsaleable. Every cassava marketing plan is built around this 48-to-72-hour clock.</p>
+      <ul>
+        <li><strong>Piecemeal harvesting:</strong> for home use, dig only the roots needed today and leave the plant living — the rest keep perfectly.</li>
+        <li><strong>Commercial harvesting:</strong> never dig until transport and the buyer are confirmed. Harvest in the cool morning, handle gently (wounds accelerate PPD), keep roots shaded and covered.</li>
+        <li>Ease of harvest is decided months earlier: ridged loose soil and angled planting = roots that lift with a stick; compacted flat land = broken roots and hard labour.</li>
+        <li>Save the best stems at harvest, bundle and shade-store them — that is next season's planting material, selected while you can still see which plants performed.</li>
+      </ul>
+      <h3>Lesson 5.2 — Processing: how cassava becomes money and becomes safe</h3>
+      <p>Processing solves both cassava problems at once: it stops the spoilage clock <em>and</em> removes the cyanogens. The main product routes:</p>
+      <table>
+        <tr><th>Product</th><th>Process (simplified)</th><th>Notes</th></tr>
+        <tr><td><strong>Gari</strong></td><td>Peel &rarr; wash &rarr; grate &rarr; ferment in sacks under press 2–4 days &rarr; sieve &rarr; roast ('garify') in a pan to dry crisp grains</td><td>West Africa's everyday staple; shelf-stable for months; fermentation + roasting removes cyanogens</td></tr>
+        <tr><td><strong>Fufu / fermented pastes</strong></td><td>Peel &rarr; soak roots in water 3–5 days to ferment soft &rarr; sieve/pound &rarr; cook</td><td>Fermentation detoxifies; sold wet or dried as flour</td></tr>
+        <tr><td><strong>High-quality cassava flour (HQCF)</strong></td><td>Peel &rarr; wash &rarr; grate &rarr; press out water &rarr; <strong>dry the same day</strong> &rarr; mill fine</td><td>Unfermented, white, neutral flour for bakeries and industry; demands speed and hygiene — the whole process ideally within 24 hours</td></tr>
+        <tr><td><strong>Dried chips</strong></td><td>Peel (for food grade) &rarr; chip &rarr; sun-dry hard on racks 2–4 days</td><td>Livestock feed and milling; simplest entry-level processing</td></tr>
+        <tr><td><strong>Starch</strong></td><td>Industrial extraction from fresh roots</td><td>Factory route — you supply roots on contract, dry matter specified</td></tr>
+      </table>
+      <div class="warn-box"><strong>The konzo warning — read this twice.</strong> When drought or hunger pushes people to shortcut the processing of <em>bitter</em> cassava — soaking for hours instead of days, drying briefly, skipping fermentation — chronic cyanide exposure can cause <strong>konzo</strong>, a sudden, permanent paralysis of the legs, striking mostly children and young mothers. Outbreaks happen in exactly the seasons when the temptation to shortcut is strongest. The rules that prevent it: give fermentation and soaking their <em>full time</em>; dry thoroughly; where possible mix cassava flour with other foods; and prefer sweet varieties for any fresh eating. Processing time is not tradition — it is the safety mechanism.</div>
+      <h3>Lesson 5.3 — Drying done properly</h3>
+      <p>For chips and flours, drying is the quality step: dry on raised racks or clean sheets (never bare earth), in thin layers, turned several times daily, protected from rain and animals, down to hard, snap-dry pieces. Slow damp drying grows moulds — including aflatoxin producers — and undermines everything the processing achieved. (The Solar Drying course covers dryer construction that cuts drying time and dust.)</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> From root to gari — grating, pressed fermentation and roasting, start to finish &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 5:</strong> Practise piecemeal harvesting on a mature plant (yours or a cooperating farmer's): lift roots with minimal wounding, weigh the yield of one plant, and select and bundle its best stems for storage. Then process a small batch by one safe route — chips dried on a rack to snap-dryness, or participate in a local gari-making session — and write down every step and its timing, especially fermentation/soaking durations.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 5 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Fresh cassava roots after harvest remain saleable for about:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_1')">2–3 days before deterioration ruins them</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Three weeks</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Six months</button>
+<div class="q-exp" id="exp5_1"><strong>Why:</strong> Postharvest physiological deterioration begins within 24 hours — blue-black streaking through the flesh — and finishes the roots in 2–3 days. Every commercial harvest is scheduled backwards from this clock.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. 'Piecemeal harvesting' means:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Digging the whole field over one week</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_2')">Digging only today's needs and leaving the rest of the plants growing as living storage</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Harvesting only small roots</button>
+<div class="q-exp" id="exp5_2"><strong>Why:</strong> In-ground roots keep for months; dug roots keep for days. For household food security, the field itself is the store — dig meal by meal.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. A commercial cassava harvest should begin:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">Whenever labour is free</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_3')">Only after transport and buyer are confirmed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">On the first day of rain</button>
+<div class="q-exp" id="exp5_3"><strong>Why:</strong> Because the 48–72 hour clock starts at digging, roots dug 'on speculation' routinely spoil while the farmer searches for a buyer. Confirm the sale, then dig — never the reverse.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Gari production removes cyanogens through:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">Boiling whole roots</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_4')">Grating, pressed fermentation for 2–4 days, then roasting</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">Freezing</button>
+<div class="q-exp" id="exp5_4"><strong>Why:</strong> Grating ruptures cells so the cyanogen-degrading reaction runs, the pressed fermentation completes detoxification, and roasting drives off residues while drying the grains shelf-stable.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. The defining requirement of high-quality cassava flour (HQCF) is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">Long fermentation for flavour</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_5')">Speed and hygiene — grate, press and dry ideally within 24 hours</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">Red-fleshed varieties</button>
+<div class="q-exp" id="exp5_5"><strong>Why:</strong> HQCF is unfermented, so its whiteness and neutral taste depend on racing the spoilage clock: same-day processing and clean, fast drying. That discipline is exactly what bakeries pay for.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Konzo is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">A cassava leaf recipe</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_6')">A permanent paralysis caused by chronic cyanide exposure from inadequately processed bitter cassava</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">A root storage pest</button>
+<div class="q-exp" id="exp5_6"><strong>Why:</strong> Konzo strikes when hunger or drought pushes people to shortcut soaking, fermentation or drying of bitter cassava. Full processing time is the safety mechanism — it must never be traded for speed.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Konzo outbreaks concentrate in drought and hunger seasons because:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Cyanide levels fall in drought</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_7')">People shortcut processing exactly when bitter cassava dominates the diet</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Whiteflies spread konzo</button>
+<div class="q-exp" id="exp5_7"><strong>Why:</strong> Drought raises root cyanogen levels, makes bitter cassava the main food, and pressures households to rush processing — three risks stacking together. The defence is knowledge plus full processing time.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Cassava chips and flour must be dried:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">On bare earth for mineral flavour</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_8')">On racks or clean sheets, in thin turned layers, to hard snap-dryness</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">In sealed plastic bags</button>
+<div class="q-exp" id="exp5_8"><strong>Why:</strong> Ground-drying adds soil, animals and moisture; slow damp drying grows moulds including aflatoxin producers. Raised, thin, turned, protected and thoroughly dry is the whole recipe.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. The best time to select and store next season's planting stems is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_9')">At harvest, from plants you can see performed well</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Two months after harvest from regrowth</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Bought fresh each planting day</button>
+<div class="q-exp" id="exp5_9"><strong>Why:</strong> Harvest is the only moment you see roots and plant together — select stems from healthy, high-yielding plants, bundle, and store upright in shade. Selection at harvest is free crop improvement.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Handling roots roughly at harvest matters because:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">It bruises the flavour</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_10')">Wounds accelerate the deterioration that ruins fresh roots</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Buyers weigh damaged roots twice</button>
+<div class="q-exp" id="exp5_10"><strong>Why:</strong> PPD spreads from wounds. Gentle digging, shade, and cushioned transport measurably extend the short fresh-market window — often the difference between sold and dumped.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn5" onclick="markComplete(5)">Mark Month 5 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="6">
+    <div class="module-header" onclick="toggleModule(6)">
+      <div class="module-num">6</div>
+      <div class="module-title">Month 6: Markets, Models &amp; the Cassava Business</div>
+      <div class="module-status" id="status6">Locked</div>
+    </div>
+    <div class="module-body" id="body6">
+
+      <h3>Lesson 6.1 — Choose your cassava business model</h3>
+      <p>Cassava supports four distinct business models. Pick deliberately — they need different varieties, scales and skills:</p>
+      <table>
+        <tr><th>Model</th><th>You sell</th><th>Key success factor</th></tr>
+        <tr><td>Fresh-root supplier</td><td>Roots to urban food markets</td><td>Sweet varieties, the 48-hour logistics chain, morning market relationships</td></tr>
+        <tr><td>Processor's outgrower</td><td>Roots on contract to gari/HQCF/starch factories</td><td>Tonnage per hectare, dry matter, delivery reliability — contracts smooth your price</td></tr>
+        <tr><td>Farmer-processor</td><td>Gari, fufu, flour, chips you make yourself</td><td>Processing skill and hygiene; captures the biggest margin per tonne</td></tr>
+        <tr><td>Seed entrepreneur</td><td>Certified/clean cuttings of released varieties</td><td>Disease-free fields, inspection standards, reputation — bundles sell before roots do</td></tr>
+      </table>
+      <p>Margins per tonne rise as you move down the table; so do skill and working-capital demands. Many strong cassava businesses combine two: e.g. outgrower contract for volume + gari processing for the family's premium income.</p>
+      <h3>Lesson 6.2 — An honest hectare budget (rain-fed, improved variety)</h3>
+      <table>
+        <tr><th>Item</th><th>Assumption</th><th>Amount</th></tr>
+        <tr><td>Yield</td><td>Improved variety, clean cuttings, 2–3 weedings</td><td>20 t/ha fresh roots</td></tr>
+        <tr><td>Gross — fresh roots @ $50/t farm-gate</td><td>varies $30–$90/t by market and season</td><td>~$1,000</td></tr>
+        <tr><td>Costs (cuttings, labour, modest fertiliser, transport)</td><td>typical smallholder</td><td>~$350–500</td></tr>
+        <tr><td><strong>Margin as roots</strong></td><td></td><td><strong>~$500–650/ha</strong></td></tr>
+        <tr><td>Alternative: process 20 t into gari</td><td>~4:1 conversion &rarr; ~5 t gari @ $400–700/t</td><td>gross $2,000–3,500 minus processing costs — typically <strong>1.5–2.5&times; the root margin</strong>, for real work</td></tr>
+      </table>
+      <p>The pattern across Africa is consistent: <strong>the money in cassava is downstream</strong>. Even simple sun-dried chips roughly double the value per tonne over gluts of fresh roots.</p>
+      <h3>Lesson 6.3 — Selling into strength</h3>
+      <ul>
+        <li><strong>Gluts are self-inflicted:</strong> because roots wait in the ground, you choose your harvest week. Track your local price calendar for a year (your notebook) and dig into the high months, not with the crowd.</li>
+        <li><strong>Contracts beat spot markets</strong> for outgrowers: a slightly lower fixed price with guaranteed offtake usually out-earns gambling on spot prices with perishable roots.</li>
+        <li><strong>Processed products store</strong> — gari and dry chips let you hold stock for lean-season prices, exactly the hermetic-storage logic from the Beans &amp; Legumes course. Store dry products in sealed containers off the floor.</li>
+      </ul>
+      <h3>Lesson 6.4 — Records and growth</h3>
+      <p>Keep the five-line notebook: planting dates and variety per block; weeding dates and labour costs; roguing counts; harvest tonnage per block; sales (kg, form, buyer, price). Within two seasons you will know your cost per tonne, your best variety, and whether processing pays you better than volume — the three numbers on which every expansion decision rests. Grow by adding blocks in rotation with legumes, and by climbing one step down the value table per year, not three.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Four cassava business models — choosing where you play &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 6:</strong> Interview one buyer from two different channels (e.g. a fresh-root trader and a gari seller or processor): record prices per kg/tonne, quality demands, volumes and payment terms. Build your own version of the hectare budget with local numbers for both the fresh-root and one processed route, and state in one paragraph which business model you choose and why.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 6 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Across Africa, the largest cassava margins per tonne are made by:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">Fresh-root sellers in glut season</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_1')">Farmer-processors selling gari, flour or chips</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">Whoever plants the most hectares</button>
+<div class="q-exp" id="exp6_1"><strong>Why:</strong> Processing multiplies value 1.5–2.5× or more over fresh roots and creates storable products. The money in cassava is consistently downstream of the farm gate.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. An outgrower contract with a processor mainly offers:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">The highest possible price every week</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_2')">Guaranteed offtake at a fixed price — smoothing income on a perishable crop</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Free fertiliser forever</button>
+<div class="q-exp" id="exp6_2"><strong>Why:</strong> With a 48–72 hour spoilage clock, a guaranteed buyer is worth a price discount. Contracts convert a perishability risk into a planning advantage.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Cassava gluts are described as 'self-inflicted' because:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Farmers plant too little</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_3')">Roots store in the ground, so farmers can choose to harvest in high-price months instead of with the crowd</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Traders create them deliberately</button>
+<div class="q-exp" id="exp6_3"><strong>Why:</strong> Unlike grain, cassava's harvest date is flexible by months. A price notebook plus the discipline to dig into strength is free money most farmers leave on the table.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. At a ~4:1 conversion, 20 tonnes of roots yields about how much gari?</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">1 tonne</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_4')">5 tonnes</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">15 tonnes</button>
+<div class="q-exp" id="exp6_4"><strong>Why:</strong> Four tonnes of fresh roots make roughly one tonne of gari. At $400–700/t for gari versus $30–90/t for roots, the arithmetic explains the whole value-addition argument.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. A cassava seed entrepreneur's core asset is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">A large truck</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_5')">Disease-free fields of released varieties and a clean reputation</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">Cheap labour</button>
+<div class="q-exp" id="exp6_5"><strong>Why:</strong> Cuttings are trust products — buyers cannot see viruses. Certified clean fields, inspection standards and reputation are the business; one diseased bundle sold destroys all three.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Gari and dried chips connect to the lean-season pricing lesson because:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">They spoil faster than roots</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_6')">They are storable, letting you sell months later at higher prices</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">They cannot be transported</button>
+<div class="q-exp" id="exp6_6"><strong>Why:</strong> Processing converts a 3-day root into a months-stable product. Stored dry and sealed, it rides the same seasonal price curve that hermetic grain storage exploits.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. The five-line notebook exists to answer, above all:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Which block gossip started in</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_7')">Your cost per tonne, best variety, and whether processing beats volume</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">How many weeds were pulled</button>
+<div class="q-exp" id="exp6_7"><strong>Why:</strong> Those three numbers drive every rational expansion decision. Farmers without them expand on hope; farmers with them expand on arithmetic.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. A sensible way to grow a cassava enterprise is:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Triple the area and buy a starch factory in year one</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_8')">Add blocks in rotation and move one step down the value chain per year</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Switch varieties every season based on rumour</button>
+<div class="q-exp" id="exp6_8"><strong>Why:</strong> Each value-chain step (roots → chips → gari/flour) demands new skills and working capital. Stepwise growth funded by the previous step's profits is how lasting cassava businesses are built.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. A fresh-root supplier's decisive capability is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_9')">Owning the sweetest varieties and a reliable 48-hour field-to-market chain</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Processing hygiene</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Very large land area</button>
+<div class="q-exp" id="exp6_9"><strong>Why:</strong> The fresh market pays for taste and freshness. Sweet varieties plus confirmed buyers, morning harvests and fast transport are the whole model — miss the clock and the product is gone.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Combining an outgrower contract with family gari processing is attractive because:</div>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">It doubles the land needed</button>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_10')">Contract volume gives stable base income while processing captures premium margin</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Factories require it</button>
+<div class="q-exp" id="exp6_10"><strong>Why:</strong> The contract underwrites the season; the gari line converts surplus and reject roots into the highest-margin product. Two models, one field, complementary risks.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn6" onclick="markComplete(6)">Mark Month 6 Complete</button>
+    </div>
+  </div>
+
+  <div class="final-section">
+    <h2>&#127942; Final Project: Your Cassava Business Plan</h2>
+    <p>Your final project is the complete plan for a cassava enterprise built on the numbers you have gathered all course — not on hope.</p>
+    <ol><li><strong>Model and market:</strong> your chosen business model with evidence from your buyer interviews — prices, volumes, terms.</li>
+<li><strong>Variety and seed plan:</strong> named released variety, sweet/bitter status, cutting source and cost, and your clean-material rules.</li>
+<li><strong>Field plan:</strong> area, ridging/spacing layout, intercrop, and the dated calendar of planting, three weedings, roguing walks and harvest window.</li>
+<li><strong>Safety page:</strong> if bitter varieties or processing are involved, write your household processing rules — full fermentation/soaking times, drying standards — as they will be practised.</li>
+<li><strong>Budget and cash-flow:</strong> adapt the startup table below with your local prices; show month-by-month cash out and in for 18 months, including the processing route if chosen.</li>
+<li><strong>Risk page:</strong> three biggest risks (e.g. CBSD arrival, price glut, drought at establishment) with one mitigation each.</li>
+<li><strong>Year-3 vision:</strong> blocks in rotation, tonnage, product mix and the one value-chain step you will add.</li></ol>
+    <p><strong>Submission standard:</strong> A plan you could hand to a savings group, a bank officer, or a family investor without embarrassment. Real local prices, real named buyers, honest risks.</p>
+  </div>
+
+  <div class="budget-section">
+    <h2>&#128176; Startup Budget &mdash; 1 Acre (0.4 ha) Improved Cassava + Entry-Level Processing</h2>
+    <p>One acre at 1 m × 1 m is ~4,000 plants — a serious but manageable start. The processing line here is the simplest (drying racks for chips); a grater and press for gari is a natural second-season investment from crop income.</p>
+    <table>
+      <tr><th>Item</th><th>Details</th><th>Typical cost (USD)</th></tr>
+<tr><td>Land preparation</td><td>Clearing, ploughing/digging, ridging</td><td>$50–120</td></tr>
+<tr><td>Planting material</td><td>~4,000 cuttings: certified clean, resistant variety (or own-selected)</td><td>$40–160</td></tr>
+<tr><td>Planting labour</td><td>Cutting preparation and planting</td><td>$25–60</td></tr>
+<tr><td>Weeding &times; 3 + earthing up</td><td>Hired or family labour equivalent</td><td>$60–150</td></tr>
+<tr><td>Manure / fertiliser / ash</td><td>Modest K-focused programme on continuous land</td><td>$40–120</td></tr>
+<tr><td>Intercrop seed</td><td>Beans or cowpea between rows</td><td>$15–40</td></tr>
+<tr><td>Tools</td><td>Hoes, sharp cutting knife/secateurs, digging stick</td><td>$25–50</td></tr>
+<tr><td>Drying racks &amp; sheets</td><td>Raised racks, clean tarpaulins, storage drums/bags</td><td>$40–100</td></tr>
+<tr><td>Harvest &amp; transport, first sales</td><td>Sacks, hired transport to buyer</td><td>$40–100</td></tr>
+<tr><td>Contingency (10%)</td><td></td><td>$35–90</td></tr>
+<tr><td><strong>Total indicative startup</strong></td><td>Harvest from ~month 9–12; income earlier from intercrop</td><td><strong>$370–990</strong></td></tr>
+    </table>
+    <p><em>Prices vary widely by country. Before spending anything, price every line in your own town and rebuild this table — that exercise is part of your final project.</em></p>
+  </div>
+
+  <div class="glossary-section">
+    <h2>&#128218; Glossary</h2>
+    <dl class="glossary">
+<dt>Cyanogens / linamarin</dt><dd>Compounds in cassava that release hydrogen cyanide (HCN) when tissue is damaged; low in sweet, high in bitter varieties.</dd>
+<dt>Sweet / bitter cassava</dt><dd>Market terms for low- vs high-cyanogen varieties. Bitter types must be fully processed before eating.</dd>
+<dt>Konzo</dt><dd>An irreversible paralysis caused by chronic cyanide exposure from inadequately processed bitter cassava, typically during drought/hunger seasons.</dd>
+<dt>Stem cutting</dt><dd>A 20–25 cm piece of mature stem with 5–8 nodes — cassava's planting material, and the main carrier of its diseases.</dd>
+<dt>CMD</dt><dd>Cassava mosaic disease — whitefly- and cutting-borne virus causing mosaic leaves and severe stunting.</dd>
+<dt>CBSD</dt><dd>Cassava brown streak disease — virus causing corky brown root rot, often with mild leaf symptoms; Africa's most feared cassava disease.</dd>
+<dt>Roguing</dt><dd>Uprooting and destroying symptomatic plants during regular field walks to remove virus sources.</dd>
+<dt>Whitefly (Bemisia tabaci)</dt><dd>The tiny insect vector spreading CMD and CBSD between plants.</dd>
+<dt>Weed window</dt><dd>The first 3–4 months, when uncontrolled weeds can halve final yield; closed by canopy closure.</dd>
+<dt>Earthing up</dt><dd>Rebuilding ridges over the row during weeding — burying weeds and loosening soil for root bulking.</dd>
+<dt>PPD</dt><dd>Postharvest physiological deterioration — the blue-black spoilage that ruins fresh roots within 2–3 days of digging.</dd>
+<dt>Piecemeal harvest</dt><dd>Digging only what is needed while the plant lives on as in-ground storage.</dd>
+<dt>Gari</dt><dd>Roasted fermented cassava grains — West Africa's shelf-stable staple; the classic value-addition product.</dd>
+<dt>HQCF</dt><dd>High-quality cassava flour — unfermented white flour requiring same-day processing and fast, clean drying.</dd>
+<dt>Dry matter</dt><dd>The non-water fraction of the root; what processors and starch factories actually pay for.</dd>
+<dt>Outgrower</dt><dd>A farmer producing under contract to a processor at agreed volumes, quality and price.</dd>
+    </dl>
+  </div>
+
+  <div class="resources-section">
+    <h2>&#128279; Further Resources</h2>
+    <ul><li>Your national root-crops research programme and extension office — the authoritative source for released resistant varieties and clean-cutting schemes in your district.</li>
+<li>IITA (International Institute of Tropical Agriculture) — the continent's leading cassava research body; free production, disease-identification and processing guides.</li>
+<li>FAO cassava production and processing manuals, including 'Save and Grow: Cassava' — free downloads covering everything from agronomy to gari lines.</li>
+<li>WHO/FAO guidance on cassava cyanide and konzo prevention — short, clear, and worth sharing with every processing household.</li>
+<li>Rise Africa Skills companion courses: Solar Drying (better chips and flour), Beans &amp; Legumes (rotation partners and the storage-for-lean-season pricing logic).</li></ul>
+  </div>
+
+  <div class="cert-section">
+    <h2>&#127891; Course Completion</h2>
+    <p>Complete all 6 months and pass the quizzes to unlock your certificate.</p>
+    <a href="certificate.html?course=Cassava%20Farming" class="cert-btn" id="certBtn" disabled>Get Certificate</a>
+  </div>
+</div>
+<script>
+  const TOTAL_MODULES = 6;
+  const COURSE_KEY = 'cassava-farming';
+  let completed = JSON.parse(localStorage.getItem(COURSE_KEY + '_progress') || '[]');
+
+  function toggleModule(n) {
+    if (n > 1 && !completed.includes(n-1)) { alert('Complete Month ' + (n-1) + ' first.'); return; }
+    document.getElementById('body' + n).classList.toggle('active');
+  }
+  function answerQ(btn, isCorrect, expId) {
+    const parent = btn.parentElement;
+    const buttons = parent.querySelectorAll('.q-opt');
+    if (buttons[0].disabled) return;
+    buttons.forEach(b => { b.disabled = true; });
+    if (isCorrect) { btn.classList.add('correct'); }
+    else {
+      btn.classList.add('wrong');
+      buttons.forEach(b => { if (b.dataset.c === '1') b.classList.add('correct'); });
+    }
+    document.getElementById(expId).classList.add('show');
+    const quiz = btn.closest('.quiz-wrap');
+    quiz.dataset.answered = (parseInt(quiz.dataset.answered||'0') + 1);
+    quiz.dataset.score = (parseInt(quiz.dataset.score||'0') + (isCorrect ? 1 : 0));
+    if (parseInt(quiz.dataset.answered) >= parseInt(quiz.dataset.total)) {
+      const s = quiz.querySelector('.quiz-score');
+      s.textContent = 'Quiz result: ' + quiz.dataset.score + ' / ' + quiz.dataset.total + (parseInt(quiz.dataset.score) >= 7 ? ' — Pass. Well done!' : ' — Below 7/10. Re-read the module, then review your wrong answers.');
+    }
+  }
+  function markComplete(n) {
+    if (!completed.includes(n)) {
+      completed.push(n); completed.sort((a,b)=>a-b);
+      localStorage.setItem(COURSE_KEY + '_progress', JSON.stringify(completed));
+    }
+    updateUI();
+  }
+  function updateUI() {
+    document.getElementById('completedCount').textContent = completed.length;
+    document.getElementById('progressBar').style.width = (completed.length/TOTAL_MODULES*100) + '%';
+    for (let i=1; i<=TOTAL_MODULES; i++) {
+      const st = document.getElementById('status'+i), btn = document.getElementById('btn'+i);
+      if (completed.includes(i)) { st.textContent='Done'; st.classList.add('done'); if(btn){btn.textContent='Completed'; btn.disabled=true;} }
+      else if (i===1 || completed.includes(i-1)) { st.textContent='Start'; }
+      else { st.textContent='Locked'; }
+    }
+    if (completed.length >= TOTAL_MODULES) {
+      const c = document.getElementById('certBtn');
+      c.removeAttribute('disabled'); c.textContent = 'Get Your Certificate!';
+    }
+  }
+  updateUI();
+</script>
+</body>
+</html>

@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Maize Farming - A complete practical course from Rise Africa Skills. Learn offline, anytime.">
+<title>Maize Farming | Rise Africa Skills</title>
+<style>
+  :root { --gold:#eab308; --gold-dark:#a16207; --green:#16a34a; --bg:#0f172a; --card:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --line:#334155; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:var(--bg); color:var(--text); line-height:1.65; }
+  header { background:linear-gradient(135deg,var(--gold-dark) 0%,#713f12 100%); padding:44px 20px; text-align:center; }
+  header h1 { font-size:2rem; margin-bottom:8px; }
+  header p { color:rgba(255,255,255,0.88); max-width:640px; margin:0 auto; }
+  .badge { display:inline-block; background:var(--gold); color:#1e293b; padding:4px 14px; border-radius:20px; font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-top:12px; letter-spacing:0.4px; }
+  .container { max-width:920px; margin:0 auto; padding:30px 20px; }
+  .progress-bar { background:var(--card); border-radius:10px; height:10px; margin-bottom:28px; overflow:hidden; }
+  .progress-fill { background:var(--gold); height:100%; width:0%; border-radius:10px; transition:width .4s ease; }
+  .overview { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-bottom:26px; }
+  .overview h2 { color:var(--gold); font-size:1.15rem; margin-bottom:10px; }
+  .overview ul { margin:8px 0 14px 20px; color:var(--muted); }
+  .overview li { margin:5px 0; }
+  .meta-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+  .meta-chip { background:#0b1220; border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:0.85rem; color:var(--muted); }
+  .meta-chip b { color:var(--text); }
+  .module { background:var(--card); border-radius:12px; margin-bottom:16px; overflow:hidden; border:1px solid var(--line); }
+  .module-header { padding:18px 22px; cursor:pointer; display:flex; align-items:center; gap:14px; transition:background .2s; }
+  .module-header:hover { background:#26354a; }
+  .module-num { background:var(--gold); color:#1e293b; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0; }
+  .module-title { flex:1; font-weight:600; }
+  .module-status { font-size:0.75rem; padding:4px 10px; border-radius:12px; background:var(--line); color:var(--muted); white-space:nowrap; }
+  .module-status.done { background:var(--green); color:#fff; }
+  .module-body { display:none; padding:0 22px 24px; border-top:1px solid var(--line); }
+  .module-body.active { display:block; }
+  .module-body p { color:var(--muted); margin:13px 0; }
+  .module-body ul, .module-body ol { margin:10px 0 10px 22px; color:var(--muted); }
+  .module-body li { margin:6px 0; }
+  .module-body strong { color:var(--text); }
+  .module-body h3 { color:var(--gold); font-size:1.05rem; margin:22px 0 4px; }
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.88rem; }
+  th { background:#0b1220; color:var(--gold); text-align:left; padding:9px 10px; border:1px solid var(--line); }
+  td { padding:8px 10px; border:1px solid var(--line); color:var(--muted); vertical-align:top; }
+  tr:nth-child(even) td { background:#1a2537; }
+  .tip-box { background:rgba(234,179,8,0.08); border-left:4px solid var(--gold); padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .tip-box strong { color:var(--gold); }
+  .warn-box { background:rgba(239,68,68,0.08); border-left:4px solid #ef4444; padding:13px 17px; border-radius:0 8px 8px 0; margin:14px 0; color:var(--muted); }
+  .warn-box strong { color:#f87171; }
+  .assign-box { background:#0b1220; border:1px dashed var(--gold-dark); border-radius:10px; padding:16px 18px; margin:16px 0; color:var(--muted); }
+  .assign-box strong { color:var(--gold); }
+  .video-box { background:#0b1220; border:1px solid var(--line); border-radius:10px; padding:14px 18px; margin:16px 0; color:var(--muted); font-size:0.9rem; }
+  .quiz-wrap { background:#0b1220; border:1px solid var(--line); border-radius:12px; padding:20px; margin-top:20px; }
+  .quiz-wrap h3 { margin-top:0 !important; }
+  .q-block { margin:16px 0; padding-bottom:14px; border-bottom:1px solid #1e293b; }
+  .q-block:last-child { border-bottom:none; }
+  .q-text { font-weight:600; color:var(--text); margin-bottom:8px; }
+  .q-opt { display:block; width:100%; text-align:left; padding:9px 13px; margin:5px 0; background:var(--card); border:1px solid #475569; border-radius:8px; color:var(--text); cursor:pointer; transition:all .2s; font-size:0.9rem; }
+  .q-opt:hover { border-color:var(--gold); }
+  .q-opt.correct { background:#14532d; border-color:var(--green); }
+  .q-opt.wrong { background:#7f1d1d; border-color:#ef4444; }
+  .q-exp { display:none; margin-top:8px; padding:10px 13px; background:rgba(234,179,8,0.07); border-left:3px solid var(--gold); border-radius:0 6px 6px 0; color:var(--muted); font-size:0.87rem; }
+  .q-exp.show { display:block; }
+  .quiz-score { margin-top:12px; font-weight:700; color:var(--gold); }
+  .check-btn { background:var(--gold); color:#1e293b; border:none; padding:11px 26px; border-radius:8px; font-weight:700; cursor:pointer; margin-top:16px; transition:background .2s; }
+  .check-btn:hover { background:#facc15; }
+  .check-btn:disabled { opacity:0.5; cursor:not-allowed; }
+  .final-section, .budget-section, .glossary-section, .resources-section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; margin-top:26px; }
+  .final-section h2, .budget-section h2, .glossary-section h2, .resources-section h2 { color:var(--gold); font-size:1.2rem; margin-bottom:10px; }
+  .final-section p, .budget-section p, .resources-section p { color:var(--muted); margin:10px 0; }
+  .final-section ol, .resources-section ul { margin:10px 0 10px 22px; color:var(--muted); }
+  .final-section li, .resources-section li { margin:6px 0; }
+  dl.glossary dt { color:var(--text); font-weight:700; margin-top:12px; }
+  dl.glossary dd { color:var(--muted); margin-left:0; font-size:0.92rem; }
+  .cert-section { text-align:center; padding:40px 20px; background:var(--card); border-radius:16px; margin-top:30px; border:1px solid var(--line); }
+  .cert-section h2 { margin-bottom:10px; }
+  .cert-section p { color:var(--muted); margin-bottom:20px; }
+  .cert-btn { background:var(--gold); color:#1e293b; border:none; padding:14px 36px; border-radius:10px; font-size:1rem; font-weight:800; cursor:pointer; text-decoration:none; display:inline-block; }
+  .cert-btn[disabled] { opacity:0.4; pointer-events:none; }
+  .nav-bar { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:var(--card); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:100; }
+  .nav-bar a { color:var(--text); text-decoration:none; font-weight:600; }
+  .nav-bar a:hover { color:var(--gold); }
+  .completion-count { color:var(--muted); font-size:0.9rem; }
+  @media (max-width:600px){ header h1{font-size:1.5rem;} .module-header{padding:14px 16px;} .module-body{padding:0 16px 18px;} table{font-size:0.8rem;} th,td{padding:6px 7px;} }
+</style>
+</head>
+<body>
+<nav class="nav-bar">
+  <a href="index.html">&#8592; Back to Courses</a>
+  <span class="completion-count"><span id="completedCount">0</span> / 6 months completed</span>
+</nav>
+<header>
+  <div class="badge">Agriculture &middot; 6-Month Program</div>
+  <h1>Maize Farming</h1>
+  <p>Africa's staple grain — closing the 1.8-to-5 t/ha yield gap with correct population, split nitrogen, Fall Armyworm scouting, aflatoxin prevention, hermetic storage and the lean-season hold strategy.</p>
+</header>
+<div class="container">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+
+  <div class="overview">
+    <h2>Course Overview</h2>
+    <p style="color:var(--muted);">Maize feeds more Africans than any other crop — and produces, on the same soils with the same seed, roughly 1.8 t/ha on average and 5–8 t/ha on well-managed plots. The yield gap is management, not genetics. This course teaches every management lever in sequence. Seed choice: hybrids for the commercial push (fresh each season), OPVs for food security and cash-constrained years. Population: rows 75 cm, stations 25–30 cm, thinned to one — the architecture of maximum cobs per hectare. Fertility: P in the furrow at planting, N split between basal and knee-height top-dress into moist soil, manure as the foundation. Pests: the push-pull system for stem borers and Striga, Fall Armyworm scouted from leaf whorls at 2–3 weeks (sand/ash into the whorl for small larvae), and MLN-tolerant varieties for East Africa. Harvest: black-layer maturity trigger, the aflatoxin prevention chain (prompt harvest, off-ground drying, 13–14% storage moisture, hermetic bags), and the critical insight that the season's financial outcome is decided not at planting but at storage — the lean-season hold strategy that converts a $3 PICS bag into a 30–100% price premium on the same grain.</p>
+    <h2 style="margin-top:16px;">What You Will Learn</h2>
+    <ul><li>Choose hybrid vs OPV by production goal; plan density at 44,000–67,000 plants/ha for the yield target</li>
+<li>Plant at first reliable rains; cultivate deep; place P in the furrow and split N for maximum uptake</li>
+<li>Scout Fall Armyworm from week 2–3; deploy push-pull for borers and Striga; identify MLN and streak</li>
+<li>Weed twice in the critical 10–40 day window; manage water around silking as the highest-return irrigation</li>
+<li>Harvest at black-layer maturity; run the aflatoxin prevention chain to hermetic storage at 13–14%</li>
+<li>Choose grain channel (trader, mill, feed, cob) and deploy the lean-season hold strategy for 30–100% premium</li></ul>
+    <div class="meta-row">
+      <div class="meta-chip"><b>Duration:</b> 6 months, one module per month</div>
+      <div class="meta-chip"><b>Level:</b> Beginner &rarr; Job-ready</div>
+      <div class="meta-chip"><b>Units:</b> Metric with imperial where useful</div>
+      <div class="meta-chip"><b>Final project:</b> Your own business plan</div>
+    </div>
+  </div>
+
+  <div class="module" data-module="1">
+    <div class="module-header" onclick="toggleModule(1)">
+      <div class="module-num">1</div>
+      <div class="module-title">Month 1: Africa's Staple &amp; the Yield Gap</div>
+      <div class="module-status" id="status1">Start</div>
+    </div>
+    <div class="module-body" id="body1">
+
+      <h3>Lesson 1.1 — Maize: Africa's staple and its paradox</h3>
+      <p>Maize feeds more Africans than any other crop — the staple grain of sub-Saharan Africa's maize belt from West Africa through East Africa to Southern Africa — yet <strong>average yields across the continent hover near 1.8–2 t/ha</strong> when the crop is demonstrably capable of <strong>5–8 t/ha</strong> under good management on the same soils. This gap is not genetics: it is management. The yield-gap closers — hybrid seed, correct population, timely weeding, balanced fertility, and pest and disease management — are known, accessible and teachable. This course teaches all of them.</p>
+      <ul>
+        <li>Season: <strong>90–150 days</strong> by variety (early maturity for short rain-belts, long-season for higher-yield zones).</li>
+        <li>Markets: grain (household food, commodity trading, flour milling, animal feed) and fresh cobs (urban markets, roadside — premium per unit).</li>
+        <li>Climate: needs <strong>500–800 mm well-distributed</strong>; drought at silking (tasselling-to-cob) is the single most damaging event.</li>
+      </ul>
+      <h3>Lesson 1.2 — Hybrid vs OPV: the most important field decision</h3>
+      <table>
+        <tr><th>Seed type</th><th>Yield ceiling</th><th>Seed cost</th><th>Best use</th></tr>
+        <tr><td><strong>Hybrid</strong></td><td>5–8 t/ha with inputs</td><td>Higher; must buy fresh each season</td><td>Commercial farms with full input package; market supply</td></tr>
+        <tr><td><strong>OPV</strong></td><td>3–4 t/ha with inputs</td><td>Lower; saveable 2–3 seasons</td><td>Food security; limited cash for inputs; drought-prone areas</td></tr>
+        <tr><td>Landrace</td><td>1–1.5 t/ha</td><td>Own saved; cheap</td><td>Cultural preference, niche use; not the yield play</td></tr>
+      </table>
+      <h3>Lesson 1.3 — Maize systems</h3>
+      <p>Most African smallholder maize is <strong>intercropped</strong> (with beans, cowpea, pumpkin, or groundnut). Intercropping reduces risk, adds income and is often better total land productivity than monoculture — but <strong>population density must be maintained for both crops</strong>; cutting maize density "for the beans" is how intercropping underperforms. The push-pull system (maize + desmodium + napier grass border) controls stem borers and Striga simultaneously — the most effective integrated system in this college.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> From 1.8 to 5 t/ha — the five management levers that close the maize yield gap &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 1:</strong> Survey your district: record hybrid seed prices vs OPV prices, their maturity days and any MLN or FAW ratings on the released list. Walk three neighbouring maize farms and estimate their stands (plants per row, row width) — is the population at or below the optimal? Research local grain prices in two windows: at harvest and in 3–4 months' time. Write one paragraph: your variety choice and one reason for each of the five yield-gap levers applied to your situation.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 1 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. African maize average yields versus achievable yields are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_1')">~1.8–2 t/ha average vs 5–8 t/ha achievable — the gap is management, not genetics</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">Equal everywhere</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_1')">50 t/ha average</button>
+<div class="q-exp" id="exp1_1"><strong>Why:</strong> The gap-close proof is in every managed trial: hybrid seed, correct population, timely weeding and balanced fertility routinely triple smallholder average yields.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Drought at silking (tasselling-to-cob) is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_2')">The single most damaging maize event — stress then prevents pollination and fills cobs with blank rows</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">Minor concern</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_2')">Beneficial</button>
+<div class="q-exp" id="exp1_2"><strong>Why:</strong> Silking is the two-week window when pollen must reach the silk for every grain. Drought here zeroes the cob — no recovery is possible.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Hybrid maize vs OPV:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_3')">Hybrids yield 5–8 t/ha with full inputs but need fresh seed yearly; OPVs are saveable and reliable at 3–4 t/ha</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">OPVs always out-yield hybrids</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_3')">Both are identical</button>
+<div class="q-exp" id="exp1_3"><strong>Why:</strong> The seed decision is the first economics decision: buy hybrid for the commercial push, keep OPV for the food-security base or cash-constrained season.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Maize rainfall requirement is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_4')">500–800 mm well-distributed — especially critical at silking, not just total rainfall</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">Only 50 mm total</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_4')">2,000 mm minimum</button>
+<div class="q-exp" id="exp1_4"><strong>Why:</strong> Total rainfall misleads; distribution is the variable that decides the cob. A 700 mm season with a dry silking week is a failed crop.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Intercropping maize with beans or cowpea:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_5')">Reduces risk, adds income and is often better total land productivity — but maize population must be maintained at full density</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Always reduces maize yield fatally</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_5')">Is forbidden</button>
+<div class="q-exp" id="exp1_5"><strong>Why:</strong> The intercrop trap is cutting maize density 'for the beans.' Full density both crops is the productive system; reduced maize is just lost yield.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Push-pull (maize + desmodium + napier grass) controls:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_6')">Stem borers AND Striga simultaneously — the most effective integrated system in this college</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">Nothing useful</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_6')">Only one pest</button>
+<div class="q-exp" id="exp1_6"><strong>Why:</strong> Two problems, one agronomic design: desmodium repels the stem borer moth, attracts its parasites, and triggers suicidal Striga germination — all at once.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Early-maturity vs long-season maize varieties:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_7')">Early (90–100 days) for short-rain zones or double crops; long-season (120–150 days) for higher-yield potential in reliable rains</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">Both identical always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_7')">Long only everywhere</button>
+<div class="q-exp" id="exp1_7"><strong>Why:</strong> Season-length matching is the yield architecture: an early variety in a long-rain zone leaves weeks of productive growing season unused.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Maize markets include:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_8')">Household food, commodity trading, flour milling, animal feed AND fresh cobs (urban premium per unit)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Only household consumption</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_8')">Only export</button>
+<div class="q-exp" id="exp1_8"><strong>Why:</strong> Fresh cob marketing is underused by smallholders: urban and roadside markets pay premium per cob that grain price never matches.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Landrace maize varieties yield:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_9')">~1–1.5 t/ha — cultural preference or niche use, not the yield play</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">8 t/ha always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_9')">More than hybrids</button>
+<div class="q-exp" id="exp1_9"><strong>Why:</strong> Landraces carry local adaptation value but not commercial yield. Running a small landrace plot alongside an improved variety is balanced risk management.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. The yield-gap closers for maize are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp1_10')">Hybrid seed, correct population, timely weeding, balanced fertility and pest/disease management — all accessible and teachable</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Only rain</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp1_10')">Only irrigation</button>
+<div class="q-exp" id="exp1_10"><strong>Why:</strong> The course's central promise: every factor in the yield gap is a management decision. The agronomist who applies all five closers is the 5 t/ha farmer.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn1" onclick="markComplete(1)">Mark Month 1 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="2">
+    <div class="module-header" onclick="toggleModule(2)">
+      <div class="module-num">2</div>
+      <div class="module-title">Month 2: Population, Fertility &amp; Stand Establishment</div>
+      <div class="module-status" id="status2">Locked</div>
+    </div>
+    <div class="module-body" id="body2">
+
+      <h3>Lesson 2.1 — Land preparation and planting</h3>
+      <p>Deep cultivation (30–35 cm) before rains breaks hardpan and channels root growth. On steep land, <strong>tied ridges or planting basins</strong> harvest runoff; on flat land, simple furrows concentrate moisture. Sow at <strong>first reliable rains</strong> — every week's delay after optimal window costs roughly 100–150 kg/ha in yield potential (stem elongation in stress, tasselling before cob ready, less season for grain fill).</p>
+      <h3>Lesson 2.2 — Population: the architecture of yield</h3>
+      <table>
+        <tr><th>Setting</th><th>Spacing</th><th>Population</th></tr>
+        <tr><td>Standard rain-fed</td><td>Rows 75 cm, stations 25–30 cm, 1 plant after thinning</td><td>~44,000–53,000/ha</td></tr>
+        <tr><td>Hybrid high-input</td><td>Rows 75 cm, stations 20–25 cm, 1 plant</td><td>~53,000–67,000/ha</td></tr>
+        <tr><td>Intercropped with beans</td><td>Rows 90 cm, beans in row or between</td><td>Maize full density in maize rows; beans additional</td></tr>
+      </table>
+      <p>Two seeds per station thinned to one at 2–3 weeks. Gap-fill within 2 weeks. A gappy stand is the second biggest yield thief after late planting.</p>
+      <h3>Lesson 2.3 — Fertility: the four-way balance</h3>
+      <ul>
+        <li><strong>Nitrogen (N):</strong> the primary yield driver; split: half basal at planting (compound), half top-dress at knee height (~5–6 weeks). Rule: top-dress when green grass is at knee, crop is knee-high, and <em>soil is moist</em> (urea in dry soil burns and volatilises).</li>
+        <li><strong>Phosphorus (P):</strong> root and early cob development; placed in the furrow or hole at planting; immobile so placement matters most.</li>
+        <li><strong>Potassium (K):</strong> stalk strength, disease resistance, grain quality; included in compound basal; additional K on light sandy soils.</li>
+        <li><strong>Organic matter (manure/compost):</strong> the foundation all chemical fertilisers perform on; 2–3 t/ha ploughed in builds the soil that makes N, P and K work.</li>
+      </ul>
+      <div class="tip-box"><strong>Micro-dose technique:</strong> on very low cash, place 1 bottle-cap of compound + 1 of urea per planting station — results in 30–50% yield gain over nothing at 5–10% of a full rate's cost.</div>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> P in the furrow, N at the knee — the split-application discipline &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 2:</strong> Prepare a fine-tilth plot with deep cultivation (30–35 cm); incorporate manure if available. Sow at first reliable rain: 2 seeds/station at your target spacing, P fertiliser placed in the hole at planting. At 2–3 weeks, thin to one plant per station and apply first N dose (to moist soil). Count your stand, record the thinning date and note any gaps for filling within 2 more weeks. At knee height (~5–6 weeks), apply the second N dose — only if soil is moist; record moisture conditions at the time.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 2 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Every week of delayed planting past the optimal window costs roughly:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_1')">100–150 kg/ha in yield potential — late planting compresses season, misaligns tasselling and cob development</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">Nothing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_1')">50 t/ha</button>
+<div class="q-exp" id="exp2_1"><strong>Why:</strong> The calendar is a yield schedule. First reliable rains is the precision moment; later planting means a shorter grain-fill season and stress mismatches.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Standard rain-fed maize spacing is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_2')">Rows 75 cm, stations 25–30 cm, thinned to 1 plant — ~44,000–53,000/ha</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">1 plant per hectare</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_2')">5 cm between plants everywhere</button>
+<div class="q-exp" id="exp2_2"><strong>Why:</strong> Population density is cob-count architecture: enough to maximise ears per hectare without self-shading and competition.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Thinning to one plant per station happens at:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_3')">2–3 weeks — gap-fill within 2 more weeks; a gappy stand is the second biggest yield thief after late planting</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">Harvest time</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_3')">Never thin maize</button>
+<div class="q-exp" id="exp2_3"><strong>Why:</strong> Two seeds insure germination; one plant per station delivers yield. Crowded plants compete; gappy stands lose canopy efficiency — both are failure modes.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Nitrogen top-dressing rule is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_4')">Apply at knee height (~5–6 weeks) into MOIST soil — urea in dry soil burns roots and volatilises into nothing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">Apply at any time</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_4')">Apply only at harvest</button>
+<div class="q-exp" id="exp2_4"><strong>Why:</strong> The moist-soil rule doubles urea efficiency: the same kilogram split between 'after rain' and 'into dry soil' delivers half the yield response in dry soil.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Phosphorus is placed:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_5')">In the furrow or hole at planting — P is immobile in soil so root-zone placement at planting is the whole efficiency</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">Broadcast after canopy closes</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_5')">Only in irrigated systems</button>
+<div class="q-exp" id="exp2_5"><strong>Why:</strong> P mobility in soil is near-zero: it stays where it lands. Furrow or hole placement at planting puts it where roots will find it at the most sensitive stage.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Manure/compost at 2–3 t/ha is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_6')">The foundation all chemical fertilisers work on — builds soil structure and microbiology that unlocks purchased inputs</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">A luxury only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_6')">Harmful to yield</button>
+<div class="q-exp" id="exp2_6"><strong>Why:</strong> Chemical fertiliser on degraded organic-matter-depleted soil underperforms consistently. Manure is not an alternative to N and P; it is what makes N and P work.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Micro-dose technique (1 bottle-cap compound + 1 urea per station) gives:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_7')">30–50% yield gain at 5–10% of full-rate cost — the cash-constrained farmer's highest return single input</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">No benefit</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_7')">Full-rate yield always</button>
+<div class="q-exp" id="exp2_7"><strong>Why:</strong> Placement efficiency compensates for small quantity: placing a small amount in the planting hole concentrates it at roots where it acts.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Potassium in maize provides:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_8')">Stalk strength, disease resistance and grain quality — especially important on light sandy soils prone to depletion</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">Nothing measurable</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_8')">Only colour</button>
+<div class="q-exp" id="exp2_8"><strong>Why:</strong> K-deficiency shows as stalk rot, lodging and poor filling after mid-season. Sandy soils lose K fastest; compound basal is the delivery vehicle.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Tied ridges or planting basins on sloped land:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_9')">Harvest runoff and concentrate it at the root zone — converting a 600 mm rain year into an effective 800 mm year</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Drain water away</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_9')">Are harmful</button>
+<div class="q-exp" id="exp2_9"><strong>Why:</strong> Water harvesting is the dryland amplifier: the same rainfall, more of it staying in the root zone, the same crop at higher effective moisture.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Deep cultivation (30–35 cm) before planting:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp2_10')">Breaks hardpan and channels root growth — the foundation that makes all the above inputs perform</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">Is too deep for any benefit</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp2_10')">Harms soil always</button>
+<div class="q-exp" id="exp2_10"><strong>Why:</strong> A compacted hardpan is a ceiling on every input: roots stop, water pools, yield plateaus. One deep cultivation opens the soil for seasons.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn2" onclick="markComplete(2)">Mark Month 2 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="3">
+    <div class="module-header" onclick="toggleModule(3)">
+      <div class="module-num">3</div>
+      <div class="module-title">Month 3: Stem Borers, Fall Armyworm &amp; Maize Diseases</div>
+      <div class="module-status" id="status3">Locked</div>
+    </div>
+    <div class="module-body" id="body3">
+
+      <h3>Lesson 3.1 — Stem borers: Africa's most damaging maize pest</h3>
+      <p>The <strong>African stem borer (Busseola fusca)</strong> and the <strong>spotted stem borer (Chilo partellus)</strong> are larvae that tunnel into maize stems, causing 'dead hearts' in young plants and entry holes + frass in stems later. The 2016-onwards arrival of the <strong>Fall Armyworm (Spodoptera frugiperda)</strong> — a new invasive from the Americas now across sub-Saharan Africa — added a second devastating foliar and stem pest that feeds from leaf whorls and is now often the primary yield threat. Management:</p>
+      <ul>
+        <li><strong>Push-pull system:</strong> desmodium in rows, napier grass on borders — the integrated biological system that consistently delivers 80–90% borer reduction.</li>
+        <li><strong>Timely early planting:</strong> synchronising with rain onset reduces peak borer populations.</li>
+        <li><strong>Fall Armyworm:</strong> scout leaf whorls from 2–3 weeks; sand/ash into the whorl kills young larvae; where chemical control justified, apply into the whorl at threshold (1–2 larvae per plant); Bt-based products or approved insecticides.</li>
+        <li>Early-season destruction of crop residues (where feasible) removes overwintering habitat.</li>
+      </ul>
+      <h3>Lesson 3.2 — Maize lethal necrosis (MLN) and other diseases</h3>
+      <ul>
+        <li><strong>Maize lethal necrosis (MLN):</strong> a virus complex causing total leaf yellowing and death; devastating in East Africa since 2012. Use MLN-tolerant released varieties (tested and labelled), clean seed, and rogue infected plants early.</li>
+        <li><strong>Maize streak virus:</strong> pale stripes on leaves, spread by leafhoppers; use resistant varieties (almost all released hybrid varieties carry streak tolerance).</li>
+        <li><strong>Grey leaf spot / northern leaf blight / anthracnose:</strong> foliar fungal diseases; resistant varieties, wider spacing for airflow, rotation.</li>
+        <li><strong>Ear rots (Fusarium, Aspergillus):</strong> grain mould producing mycotoxins, especially in stressed crops with insect damage. Early harvest, rapid drying and hermetic storage are the prevention chain.</li>
+      </ul>
+      <h3>Lesson 3.3 — Striga in maize</h3>
+      <p>Striga (the Module 3 enemy of sorghum/millet) is equally devastating in maize on tired soils. The same stack applies: Striga-resistant varieties, fertility improvement, desmodium rotation, and hand-pulling before seeding.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> FAW in the whorl — and why push-pull beats spray programmes &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 3:</strong> From 2–3 weeks, scout maize whorls weekly: pull back the youngest leaves in the whorl and look for FAW larvae (green-brown caterpillars with Y-shaped pattern on head capsule); count infested plants per 20 inspected. Record on a scouting sheet. Price sand, wood ash, and two approved insecticides locally. Where push-pull is possible, identify desmodium seed sources and napier grass locally. Note any disease symptoms (viral streaking, leaf spot lesions) with photographs where possible.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 3 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Fall Armyworm (Spodoptera frugiperda) arrived in Africa:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_1')">From the Americas post-2016, spreading across sub-Saharan Africa and now often the primary maize pest</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Was always present</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_1')">Not real</button>
+<div class="q-exp" id="exp3_1"><strong>Why:</strong> A new invasive pest on top of native stem borers changed the pest calculus. FAW scouts from leaf whorls at 2–3 weeks; the response is exactly as for borers but faster-moving.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Push-pull system (desmodium + napier grass) reduces stem borers by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_2')">80–90% consistently — the integrated biological benchmark; also controls Striga</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">5%</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_2')">Nothing</button>
+<div class="q-exp" id="exp3_2"><strong>Why:</strong> A designed ecosystem: desmodium repels adult borer moths and attracts their parasitoids; napier grass is a trap crop. Together they beat any spray programme on small farms.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Fall Armyworm control in the leaf whorl uses:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_3')">Sand or ash applied into the whorl kills young larvae cheaply; where justified, Bt-based or approved insecticides into the whorl at threshold</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">Ignoring it always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_3')">Only ploughing</button>
+<div class="q-exp" id="exp3_3"><strong>Why:</strong> The whorl is FAW's workshop and the control point: juvenile larvae in the tight whorl are easy to kill; adults feeding on leaves are much harder to reach.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Maize lethal necrosis (MLN) is managed by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_4')">MLN-tolerant released varieties (labelled), clean seed, and early roguing of infected plants — no cure once infected</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">A spray programme</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_4')">Irrigation</button>
+<div class="q-exp" id="exp3_4"><strong>Why:</strong> A virus complex needs genetic resistance. East African released hybrid lists now carry MLN tolerance ratings — the column to check before buying.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Maize streak virus resistance is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_5')">Carried by almost all released hybrid varieties — streak tolerance is a standard breeding target</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Impossible</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_5')">Very rare</button>
+<div class="q-exp" id="exp3_5"><strong>Why:</strong> Streak is so common that breeders packaged resistance into most released hybrids by default. Buying released seed is buying that resistance.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Ear rot mycotoxins (Fusarium, Aspergillus) are prevented by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_6')">Early harvest, rapid drying and hermetic storage — the three-step chain; insect damage opens grain to infection</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Chemical spray at flowering</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_6')">Waiting months to harvest</button>
+<div class="q-exp" id="exp3_6"><strong>Why:</strong> Borer damage creates entry wounds; Aspergillus follows. Speed from the field to a dry sealed store closes the infection window.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Striga in maize is managed with:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_7')">The same stack as sorghum: resistant varieties, fertility, desmodium rotation, hand-pulling before seeding</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">A different unique approach</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_7')">Permanent flooding</button>
+<div class="q-exp" id="exp3_7"><strong>Why:</strong> Striga is a cross-crop enemy. The soil-bank-draining logic works for maize, sorghum and millet: the pest, the solution and the discipline are identical.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Grey leaf spot and northern leaf blight are managed by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_8')">Resistant varieties, wider spacing for airflow, and crop rotation — fungal diseases favoured by dense damp canopies</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">Irrigation always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_8')">Nothing possible</button>
+<div class="q-exp" id="exp3_8"><strong>Why:</strong> Canopy management plus resistance plus rotation removes the three favourable conditions: susceptible host, moisture trap and continuous host.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. The classic 'dead heart' symptom in young maize is caused by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_9')">Stem borer larvae tunnelling the central growing point — the plant's crown is dead while outer leaves stay green</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Water excess</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_9')">Fertiliser burn</button>
+<div class="q-exp" id="exp3_9"><strong>Why:</strong> The borer tunnel is hidden; the dead central shoot is visible. Splitting stems from dead-heart plants reveals the larva and guides control decisions.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Maize crop residue destruction after harvest:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp3_10')">Removes borer overwintering habitat — stem borers pupate in stalks; where feasible, chopping or feeding stalks reduces next season's population</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Is harmful</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp3_10')">Is unnecessary</button>
+<div class="q-exp" id="exp3_10"><strong>Why:</strong> The stalk is the pest hotel. Ploughing stalks in or feeding them to livestock closes the overwintering hotel for stem borers — the same principle as cotton stalk destruction.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn3" onclick="markComplete(3)">Mark Month 3 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="4">
+    <div class="module-header" onclick="toggleModule(4)">
+      <div class="module-num">4</div>
+      <div class="module-title">Month 4: Weeds, Water &amp; Intercrop Management</div>
+      <div class="module-status" id="status4">Locked</div>
+    </div>
+    <div class="module-body" id="body4">
+
+      <h3>Lesson 4.1 — Weeds: the early window</h3>
+      <p>Maize is competitive but slow in the first 3 weeks. The critical weeding window is <strong>days 10–40</strong>: weeds before the crop canopy closes compete destructively for light, water and nutrients. Programme:</p>
+      <ul>
+        <li><strong>First weeding at 2–3 weeks</strong> (with thinning): the most important single field operation after planting.</li>
+        <li><strong>Second weeding at 5–6 weeks:</strong> catches the late-germinator flush and completes the job before canopy close.</li>
+        <li>After knee height, maize shades weeds effectively — further weeding rarely pays.</li>
+        <li>Herbicide option: pre-emergent herbicides (applied to bare soil before emergence) or post-emergent selective (applied early, pre-canopy) where available and affordable; follow labels exactly.</li>
+      </ul>
+      <h3>Lesson 4.2 — Water management and drought strategy</h3>
+      <ul>
+        <li><strong>Silking is the drought bull's-eye:</strong> 10–14 days before and after silk emergence, water stress causes pollen failure and blank rows — irrigation or supplemental water at this exact stage is the highest-return water investment in any crop.</li>
+        <li>Planting basins and tied ridges concentrate every rain event at the root zone — the dryland maize farmer's best tool.</li>
+        <li>Early-maturing varieties can be chosen to match the reliable rain window; or double-cropped in areas with two rain seasons.</li>
+      </ul>
+      <h3>Lesson 4.3 — Intercrop management in detail</h3>
+      <p>The most productive intercrops keep maize at full density in maize rows (never reduce maize plant count for companion crops) and choose companions whose canopy, root depth and harvest season avoid direct competition: beans and cowpea finish before maize canopy closes them out; pumpkins and sweet potato sprawl between rows; groundnut fixes nitrogen while producing. <strong>The intercrop is the second crop — not a reason to thin the first.</strong></p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Silking drought — the 10-day window that decides the cob &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 4:</strong> Complete both weedings on schedule (2–3 weeks and 5–6 weeks), recording dates, hours and weed species. Note whether the first weeding was before or after the competitive window closed. Observe your local rainfall pattern around silking: did the crop get water during tasselling and silk emergence? If not, note the blank-row pattern in harvested cobs (evidence of stress at silking). If an intercrop exists, count both crops' densities and assess whether maize density was maintained.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 4 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. The critical maize weeding window is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_1')">Days 10–40 — first weeding at 2–3 weeks is the most important field operation after planting</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">After harvest</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_1')">Never in a season</button>
+<div class="q-exp" id="exp4_1"><strong>Why:</strong> Weeds in the first 40 days compete at exactly the stage maize is weakest. After knee height the crop wins the light war; before that, weeds do.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Second weeding at 5–6 weeks:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_2')">Catches the late-germinator flush before canopy closes — after knee height, further weeding rarely pays</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">Is optional and never useful</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_2')">Must be done 10 times</button>
+<div class="q-exp" id="exp4_2"><strong>Why:</strong> Two timely passes capture nearly all the competitive damage. The crop's canopy close is self-weeding after that.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Pre-emergent herbicides are applied:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_3')">To bare soil BEFORE crop emergence — timing is everything; post-application rain activates them</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">After the canopy closes</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_3')">At harvest</button>
+<div class="q-exp" id="exp4_3"><strong>Why:</strong> The mode is soil barrier before any weed germinates. Missing the pre-emergent window means waiting for a different herbicide type.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Irrigation or supplemental water at silking is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_4')">The highest-return water investment — silking 10–14 days before and after silk emergence is where drought zeros the cob</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">Not useful</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_4')">After harvest only</button>
+<div class="q-exp" id="exp4_4"><strong>Why:</strong> Every grain requires a pollen grain + a working silk. Water stress collapses the silk's receptivity and the pollen viability simultaneously — no water = no grain.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Planting basins and tied ridges help maize by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_5')">Concentrating every rain event at the root zone — the dryland water-harvesting tool</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Draining water away</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_5')">Being purely decorative</button>
+<div class="q-exp" id="exp4_5"><strong>Why:</strong> Micro-catchments convert scattered rainfall into reliable root-zone moisture. A 600 mm season with basins can outperform a 750 mm season on bare flat ground.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Intercrop companion selection prioritises:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_6')">Canopy, root depth and harvest timing that avoid direct competition: beans finish before canopy closes, pumpkins sprawl between rows</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Whatever is cheapest regardless of competition</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_6')">Single-species only allowed</button>
+<div class="q-exp" id="exp4_6"><strong>Why:</strong> The biological logic of intercropping: companions that fit the temporal and spatial gaps of maize's growing cycle earn without competing with it.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Maize density in intercrops must be:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_7')">Maintained at full density in maize rows — the intercrop is the second crop, not a reason to thin the first</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Halved always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_7')">Tripled</button>
+<div class="q-exp" id="exp4_7"><strong>Why:</strong> The intercrop trap: reducing maize to make room loses more maize yield than the companion is worth. Full density both crops is the productive system.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. Double-cropping maize (two seasons per year) is possible where:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_8')">Reliable rain falls in two distinct seasons, or supplemental irrigation is available — early varieties complete each cycle</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">Never possible</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_8')">Only with irrigation in any case</button>
+<div class="q-exp" id="exp4_8"><strong>Why:</strong> Many African smallholders in bimodal rainfall areas already run two maize crops. Early varieties (90–100 day) are the tool; second crop is the bonus.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Maize's competitive window closes at:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_9')">Knee height (5–6 weeks) — after canopy close, shading suppresses most weeds without further intervention</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Planting day</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_9')">Never</button>
+<div class="q-exp" id="exp4_9"><strong>Why:</strong> Two weedings capture the gain; the third (after canopy) is rarely economic. The crop earns its own weed suppression after week six.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. The nutritional role of cowpea or groundnut in a maize intercrop is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp4_10')">Nitrogen fixation from the legume that benefits the following season's maize — the built-in rotation benefit</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">They add pests only</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp4_10')">Negative always</button>
+<div class="q-exp" id="exp4_10"><strong>Why:</strong> The legume earns twice: income from its own harvest and nitrogen left in the soil for next season's maize — the system bonus captured within the same season.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn4" onclick="markComplete(4)">Mark Month 4 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="5">
+    <div class="module-header" onclick="toggleModule(5)">
+      <div class="module-num">5</div>
+      <div class="module-title">Month 5: Harvest, Aflatoxin Prevention &amp; Hermetic Storage</div>
+      <div class="module-status" id="status5">Locked</div>
+    </div>
+    <div class="module-body" id="body5">
+
+      <h3>Lesson 5.1 — Harvest timing: hard dough is the signal</h3>
+      <p>Harvest when the grain is at <strong>physiological maturity: the black layer has formed at the grain base (visible when cracked open), husk is dry and white-bleached, grain thumbnail-hard</strong>. At this stage, moisture is ~25–35% — too high for storage but right for harvest. Don't wait for field-dry: birds and moulds take over after maturity. De-husk in the field; leave husks on if cob is to be hung-stored.</p>
+      <h3>Lesson 5.2 — Drying: the aflatoxin prevention chain</h3>
+      <p><strong>Aflatoxin</strong> — a potent liver carcinogen produced by Aspergillus moulds — is maize's most dangerous post-harvest threat. The chain: insect damage + drought stress opens grain; Aspergillus invades; damp storage at >14% moisture amplifies the toxin. Prevention chain:</p>
+      <ol>
+        <li>Harvest promptly at maturity — no waiting for field-dry.</li>
+        <li><strong>Dry on racks or tarpaulins, not bare soil, not in piles</strong> — 3–7 days in good sun.</li>
+        <li>Shell and finish-dry shelled grain to <strong>13–14%</strong> (bite test: crack, no dent).</li>
+        <li><strong>Store in hermetic bags or drums</strong> (PurPlus, PICS, metal drums) — zero oxygen kills storage insects AND suppresses aflatoxin mould.</li>
+        <li>Test before selling into formal food channels where mycotoxin limits apply.</li>
+      </ol>
+      <h3>Lesson 5.3 — Storage and seed stock</h3>
+      <ul>
+        <li>Grain stock at 13–14%: clean sacks on pallets in dry store, or hermetic; check monthly.</li>
+        <li>Seed stock: hybrid seed from agro-dealer only (saved hybrid seed doesn't reproduce well); OPV seed saved from disease-free, early-maturing, well-filled cobs; dried to 12%, hermetic, cool, germination-tested before next season.</li>
+      </ul>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> Black layer to hermetic bag — the aflatoxin prevention chain &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 5:</strong> Identify black-layer maturity by cracking 5 cobs and checking grain bases. Harvest promptly; de-husk in the field. Sun-dry on tarpaulins or racks (not soil) for 3–7 days. Shell a sample, do the bite test for 13–14% moisture, and record drying time. Store shelled grain in a PICS bag (if accessible) or clean sacks on a pallet. Seed: select 5 of the best cobs from the cleanest, earliest, most-filled rows; dry separately to 12% and seal in a tin or hermetic bag with the variety label and date.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 5 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. The black layer at the grain base signals:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_1')">Physiological maturity — harvest immediately; don't wait for field-drying (birds and moulds follow maturity)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Unripe grain</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_1')">Over-ripeness only</button>
+<div class="q-exp" id="exp5_1"><strong>Why:</strong> The black layer is the plant's seal on a finished grain. It appears at ~25–35% moisture — too high for storage, correct for harvest. Speed to the drying floor counts.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. Aflatoxin is produced by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_2')">Aspergillus moulds growing in damaged, stressed or improperly stored maize — a potent liver carcinogen</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Fertiliser excess</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_2')">Irrigation water</button>
+<div class="q-exp" id="exp5_2"><strong>Why:</strong> The toxin is invisible, tasteless and odourless — and dangerous. The prevention chain (harvest, dry fast, hermetic storage) is the only defence.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. The aflatoxin prevention chain starts with:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_3')">Prompt harvest at maturity — every day of field-standing after maturity is moisture loss that opens stressed grain to mould</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">Spraying at harvest</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_3')">Waiting for sun to dry in the field</button>
+<div class="q-exp" id="exp5_3"><strong>Why:</strong> Speed is the chain's first link. Aflatoxin risk builds from maturity onward; the harvest is the starting gate of the food-safety race.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. Maize is dried on:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_4')">Racks or tarpaulins in sun — never bare soil (contamination), never in piles (airless = mould)</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">Bare wet soil</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_4')">In sealed plastic bags</button>
+<div class="q-exp" id="exp5_4"><strong>Why:</strong> Off-ground, airflow, sun: the three conditions that dry maize safely. Each 'wrong' condition adds an aflatoxin risk step.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Target storage moisture for maize is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_5')">13–14% (bite test: crack, no dent) — both hermetic and standard sack storage</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">25% always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_5')">5% (over-dried)</button>
+<div class="q-exp" id="exp5_5"><strong>Why:</strong> The 13–14% window is safe for months in either storage type. Over-dried maize cracks during shelling; under-dried produces aflatoxin.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Hermetic storage (PICS bags, PurPlus, metal drums) works by:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_6')">Removing oxygen — killing storage insects AND suppressing Aspergillus mould — chemical-free for years</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">Chemical fumigation</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_6')">Refrigeration</button>
+<div class="q-exp" id="exp5_6"><strong>Why:</strong> Zero oxygen is the universal kill switch for storage pests and the mycotoxin fungus simultaneously. The investment pays back in grain quality and food safety across seasons.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Saved hybrid maize seed is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_7')">Unreliable — hybrid seed doesn't reproduce true to parent; buy fresh hybrid seed each season</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Fine to save</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_7')">Better than agro-dealer seed</button>
+<div class="q-exp" id="exp5_7"><strong>Why:</strong> F1 hybrid vigour doesn't pass to saved seed: the second generation is segregated, uneven and much lower-yielding. Fresh certified seed annually is the hybrid contract.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. OPV maize seed saving requires:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_8')">Disease-free, early-maturing, well-filled cobs; dried to 12%, hermetic, cool, germination-tested before planting</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Any cob will do</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_8')">Saving wet grain in a sack</button>
+<div class="q-exp" id="exp5_8"><strong>Why:</strong> OPV seed improvement is the farmer's breeding programme. Selecting the best cobs, every season, compounds into a better-adapted variety.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Shelling grain for storage is done:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_9')">After initial cob-drying to remove husks and reduce bulk — easier storage and better drying continuation than whole cobs</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">Before any drying</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_9')">After selling</button>
+<div class="q-exp" id="exp5_9"><strong>Why:</strong> Cobs shed moisture faster than whole heads; shelled grain dries uniformly. Storage of shelled grain also eliminates the borer habitat inside cob husks.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Hanging whole husked cobs for traditional storage:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp5_10')">Allows airflow drying over the dry season — valid traditional method where hermetic bags not affordable</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Is always inferior to nothing</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp5_10')">Creates aflatoxin always</button>
+<div class="q-exp" id="exp5_10"><strong>Why:</strong> Traditional hung-cob stores (granaries, rafters) work in dry regions by keeping grain in natural cold-dry conditions. In humid areas, hermetic is always better.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn5" onclick="markComplete(5)">Mark Month 5 Complete</button>
+    </div>
+  </div>
+  <div class="module" data-module="6">
+    <div class="module-header" onclick="toggleModule(6)">
+      <div class="module-num">6</div>
+      <div class="module-title">Month 6: Markets, the Hold Strategy &amp; the Business Plan</div>
+      <div class="module-status" id="status6">Locked</div>
+    </div>
+    <div class="module-body" id="body6">
+
+      <h3>Lesson 6.1 — Markets: beyond the farm gate</h3>
+      <table>
+        <tr><th>Channel</th><th>Buyer</th><th>Price / advantage</th></tr>
+        <tr><td>Household food security</td><td>Own family</td><td>The base — never sell before food is secured</td></tr>
+        <tr><td>Local trader / village market</td><td>Grain traders, town market</td><td>Immediate cash; lowest price; best for limited storage</td></tr>
+        <tr><td>Flour mill / processor</td><td>Milling companies, hammer-mill owners</td><td>Quality premium (dry, clean, graded); consistent volume opens doors</td></tr>
+        <tr><td>Animal feed mills</td><td>Poultry, livestock feed manufacturers</td><td>Volume buyers; steady market especially with poultry boom</td></tr>
+        <tr><td><strong>Lean-season hold (3–6 months post-harvest)</strong></td><td>All of the above at 30–80% higher prices</td><td>Hermetic storage is the enabler; the single highest-return financial decision in maize farming</td></tr>
+        <tr><td>Fresh cob (urban/roadside)</td><td>Urban consumers, roadside buyers</td><td>Highest $ per kg equivalent; small volume, high frequency</td></tr>
+      </table>
+      <h3>Lesson 6.2 — An honest one-hectare maize budget</h3>
+      <table>
+        <tr><th>Item</th><th>Assumption</th><th>Amount</th></tr>
+        <tr><td>Yield</td><td>Hybrid, full density, two weedings, split N, balanced P+K</td><td>~3.5–4.5 t/ha</td></tr>
+        <tr><td>Gross (harvest price)</td><td>$0.20–0.35/kg at harvest</td><td>~$700–1,575</td></tr>
+        <tr><td>Gross (lean-season price)</td><td>$0.35–0.55/kg, 3–6 months stored</td><td>~$1,225–2,475</td></tr>
+        <tr><td>Hybrid seed (25 kg)</td><td></td><td>$30–70</td></tr>
+        <tr><td>Compound basal + urea top-dress</td><td>150–200 kg compound + 100 kg urea</td><td>$100–250</td></tr>
+        <tr><td>Weeding labour ×2</td><td></td><td>$60–120</td></tr>
+        <tr><td>Harvest, shelling, drying, bags</td><td></td><td>$80–180</td></tr>
+        <tr><td>Hermetic storage (amortised)</td><td>PICS bag ~$3–5, lasts 3+ seasons</td><td>$5–15</td></tr>
+        <tr><td><strong>Indicative margin</strong></td><td>Lean-season sale scenario</td><td><strong>~$900–1,700/ha — the hold strategy doubles income on the same crop</strong></td></tr>
+      </table>
+      <h3>Lesson 6.3 — The hold strategy: hermetic storage as a financial tool</h3>
+      <p><strong>Selling immediately after harvest is the most common and most costly decision in African maize farming.</strong> Harvest-price to lean-season-price differentials of 50–100% are documented across the continent, every year. Hermetic storage converts the 3-dollar PICS bag into a financial instrument: same grain, same field, 3–6 months later, at a price 50–100% higher. The constraint is food security — the family must eat first, and the rest is the financial crop.</p>
+      <h3>Lesson 6.4 — Records and the growth path</h3>
+      <p>Per plot per season: variety and seed source; planting date (against first reliable rain); stand count at thinning; weed dates; fertiliser applications (product, rate, timing, soil moisture at top-dress); pest scout records (including FAW and MLN watch); harvest date and yield; drying days and moisture; sale date and price. <strong>Report card: stand count, yield kg/ha, and sale price vs harvest-day price (the storage premium captured).</strong> Growth path: year one — one hectare hybrid at full management; year two — add hermetic storage and lean-season sales; year three — group aggregation for mill/processor contracts and consistent premium channel.</p>
+
+      <div class="video-box">&#128250; <strong>Video:</strong> The $3 bag vs the 80% price premium — why hermetic storage is the highest-return maize investment &mdash; video lesson coming soon. The written lesson above is complete on its own.</div>
+      <div class="assign-box"><strong>Practical Assignment &mdash; Month 6:</strong> Record this season's harvest-day price per kg. Research the same-grain price in your district 3 months later (ask traders, check markets). Calculate the premium percentage. Build the one-hectare budget from your recorded costs and local prices in two scenarios: sell at harvest vs sell at lean season (hermetic storage cost included). Identify your year-one channel (trader, mill, feed, cob). Research group aggregation options (cooperative, outgrower, processor relationship) for year-two or year-three entry.</div>
+<div class="quiz-wrap" data-total="10" data-answered="0" data-score="0">
+<h3>Month 6 Quiz — 10 Questions</h3>
+<p>Answer every question. Aim for at least 7/10 before marking this month complete. Each answer comes with an explanation — read them even when you are right.</p>
+<div class="q-block">
+<div class="q-text">1. Lean-season maize prices compared to harvest prices are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_1')">30–80% higher, every year, documented across Africa — hermetic storage converts a cheap bag into a financial instrument</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">Identical always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_1')">Lower in lean season</button>
+<div class="q-exp" id="exp6_1"><strong>Why:</strong> The price calendar is as reliable as the rain calendar. Harvest-day selling is the most common and most costly decision in smallholder maize farming.</div>
+</div>
+<div class="q-block">
+<div class="q-text">2. The PICS hermetic bag (~$3–5) amortised over 3+ seasons:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_2')">Is the highest-return single investment in maize — enables lean-season prices on same grain, same field</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Is too expensive</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_2')">Only useful once</button>
+<div class="q-exp" id="exp6_2"><strong>Why:</strong> Three dollars paid once, three years of premiums earned: the PICS bag is the course's clearest return-on-investment story.</div>
+</div>
+<div class="q-block">
+<div class="q-text">3. Selling immediately after harvest is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_3')">The most common AND the most costly decision — harvest-time prices are the season's lowest</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">The only right approach</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_3')">Better than storing</button>
+<div class="q-exp" id="exp6_3"><strong>Why:</strong> The price minimum happens precisely at harvest when every farmer sells at once. Holding even 2 months captures most of the annual differential.</div>
+</div>
+<div class="q-block">
+<div class="q-text">4. The hold strategy rule is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_4')">Family food secured first — the rest is the financial crop to hold in hermetic storage</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Hold everything including food</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_4')">Never hold grain</button>
+<div class="q-exp" id="exp6_4"><strong>Why:</strong> Food security is the constraint, not a choice: hold what exceeds the family's food year, sell the rest at lean-season premium. The budget is only for surplus grain.</div>
+</div>
+<div class="q-block">
+<div class="q-text">5. Flour mill / processor buyers reward:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_5')">Quality: dry, clean, graded grain — and consistent volume opens long-term doors</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">Nothing — they buy any grain</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_5')">Random supply</button>
+<div class="q-exp" id="exp6_5"><strong>Why:</strong> Industrial buyers pay for reliability. A farmer who delivers 3 t of 13% moisture clean grain every year earns relationship premium.</div>
+</div>
+<div class="q-block">
+<div class="q-text">6. Animal feed mills are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_6')">Volume buyers growing with the poultry boom — a steady market for maize in many African cities</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">Rare and shrinking</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_6')">Uninterested in smallholders</button>
+<div class="q-exp" id="exp6_6"><strong>Why:</strong> The poultry course's feed demand is this course's market: the same continental boom that drives soybean demand drives maize-to-feed demand.</div>
+</div>
+<div class="q-block">
+<div class="q-text">7. Fresh cob sales earn:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_7')">Highest $ per kg equivalent — urban and roadside markets pay premium per cob compared to grain</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Less than grain always</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_7')">Nothing</button>
+<div class="q-exp" id="exp6_7"><strong>Why:</strong> A cob is a high-value food item. The street price per cob, converted to per-kg equivalent, often beats grain by 3–5×.</div>
+</div>
+<div class="q-block">
+<div class="q-text">8. The three report-card numbers for maize are:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_8')">Stand count, yield (kg/ha), and sale price vs harvest-day price</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Rainfall and luck</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_8')">Farm size in acres</button>
+<div class="q-exp" id="exp6_8"><strong>Why:</strong> Stand shows the architecture, yield shows the management, and the price ratio shows the financial discipline. One weak number reveals where the farm broke down.</div>
+</div>
+<div class="q-block">
+<div class="q-text">9. Group aggregation into mill contracts by year three:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_9')">Converts consistent quality + volume into a premium channel — the same logic as sorghum brewery and soybean outgrower schemes</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Is impossible</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_9')">Reduces price</button>
+<div class="q-exp" id="exp6_9"><strong>Why:</strong> The aggregation lesson runs through the whole college: individual sacks trade at commodity price; group tonnes trade at relationship price.</div>
+</div>
+<div class="q-block">
+<div class="q-text">10. Year-one focus in maize is:</div>
+<button class="q-opt" data-c="1" onclick="answerQ(this,true,'exp6_10')">One hectare managed at full standard: hybrid, correct population, split N, two weedings, hermetic storage</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">Maximum area loosely managed</button>
+<button class="q-opt" data-c="0" onclick="answerQ(this,false,'exp6_10')">No inputs at all</button>
+<div class="q-exp" id="exp6_10"><strong>Why:</strong> Intensity before area: one perfect hectare teaches every skill; 10 average hectares teach only how to average. The discipline compounds.</div>
+</div>
+<div class="quiz-score"></div></div>
+      <button class="check-btn" id="btn6" onclick="markComplete(6)">Mark Month 6 Complete</button>
+    </div>
+  </div>
+
+  <div class="final-section">
+    <h2>&#127942; Final Project: Your Maize Business Plan</h2>
+    <p>The final project is your complete maize enterprise plan — variety choice, population plan, five yield-gap levers applied to your land, the aflatoxin prevention chain, and the hold strategy budget showing harvest vs lean-season income.</p>
+    <ol><li><strong>Variety &amp; system case:</strong> hybrid vs OPV choice with evidence, maturity match to your rain window, MLN/FAW rating if relevant, and intercrop design if applicable.</li>
+<li><strong>Establishment plan:</strong> deep cultivation, planting date (first reliable rain), spacing at target population, P in the furrow, thinning schedule, gap-fill deadline, manure/compost availability.</li>
+<li><strong>Fertility schedule:</strong> N split (product, rate, timing, moist-soil rule), manure as foundation, K assessment for your soil type, micro-dose fallback if input-constrained.</li>
+<li><strong>Pest and disease calendar:</strong> FAW scouting routine (2–3 weeks onward, whorl inspection, record sheet), push-pull feasibility, MLN and streak watch, borer stover-management plan.</li>
+<li><strong>Harvest and aflatoxin chain:</strong> black-layer trigger, de-husking, drying schedule (racks, days, bite test), target moisture (13–14%), hermetic storage type and cost.</li>
+<li><strong>Budget &amp; hold strategy:</strong> full hectare budget at two price scenarios (harvest vs lean season), the storage premium calculation, and your year-one sell decision with reasoning.</li>
+<li><strong>Risk page &amp; year-3 vision:</strong> three risks (drought at silking, FAW outbreak, aflatoxin) with mitigations, and the staged path — one managed hectare, then hermetic hold, then group aggregation into mill/feed contract.</li></ol>
+    <p><strong>Submission standard:</strong> A plan you could hand to a savings group, a bank officer, or a family investor without embarrassment. Real local prices, real named buyers, honest risks.</p>
+  </div>
+
+  <div class="budget-section">
+    <h2>&#128176; Startup Budget &mdash; 1 Hectare Hybrid Maize — Sell-at-Harvest vs Lean-Season Hold</h2>
+    <p>The two-column budget is the course's business argument: same field, same crop, same costs, radically different income depending on the storage decision. The hermetic bag investment amortised over 3 seasons adds $1–5/ha — and captures $200–600/ha in seasonal price premium.</p>
+    <table>
+      <tr><th>Item</th><th>Details</th><th>Typical cost (USD)</th></tr>
+<tr><td>Hybrid seed (25 kg, fresh certified)</td><td>Released variety for your zone</td><td>$30–70</td></tr>
+<tr><td>Compound basal fertiliser (150–200 kg)</td><td>P + N + K at planting</td><td>$70–160</td></tr>
+<tr><td>Urea top-dress (100 kg at knee height)</td><td>Into moist soil only</td><td>$30–90</td></tr>
+<tr><td>Manure/compost (2–3 t/ha)</td><td>Foundation fertility, ploughed in</td><td>$60–150</td></tr>
+<tr><td>Land preparation (deep cultivation)</td><td></td><td>$60–120</td></tr>
+<tr><td>Planting labour</td><td></td><td>$30–60</td></tr>
+<tr><td>Weeding labour ×2</td><td></td><td>$60–120</td></tr>
+<tr><td>Harvest, shelling &amp; drying labour/equipment</td><td></td><td>$80–180</td></tr>
+<tr><td>Hermetic storage bag (PICS, PurPlus)</td><td>~$3–5 each, amortised over 3 seasons</td><td>$5–15</td></tr>
+<tr><td>Sacks, transport, market fees</td><td></td><td>$40–100</td></tr>
+<tr><td>Contingency (10%)</td><td></td><td>$50–110</td></tr>
+<tr><td><strong>Total costs</strong></td><td></td><td><strong>$515–1,175</strong></td></tr>
+<tr><td><strong>Harvest-day margin</strong></td><td>3.5–4.5 t × $0.20–0.35/kg</td><td><strong>~$350–900/ha</strong></td></tr>
+<tr><td><strong>Lean-season margin</strong></td><td>Same grain at $0.35–0.55/kg (3–6 months)</td><td><strong>~$900–1,700/ha</strong></td></tr>
+    </table>
+    <p><em>Prices vary widely by country. Before spending anything, price every line in your own town and rebuild this table — that exercise is part of your final project.</em></p>
+  </div>
+
+  <div class="glossary-section">
+    <h2>&#128218; Glossary</h2>
+    <dl class="glossary">
+<dt>Physiological maturity</dt><dd>When the black layer forms at the grain base — the plant seals a completed grain; ~25–35% moisture.</dd>
+<dt>Black layer</dt><dd>The dark layer at the grain tip-cap base signalling maturity — the harvest trigger.</dd>
+<dt>Silking</dt><dd>The period when silk strands emerge from the cob tip and must receive pollen — the 10–14 day drought bull's-eye.</dd>
+<dt>Fall Armyworm (FAW)</dt><dd>Spodoptera frugiperda — an invasive pest from the Americas, now the primary maize pest across sub-Saharan Africa; scouted in leaf whorls.</dd>
+<dt>African stem borer</dt><dd>Busseola fusca — native larval pest tunnelling into stems, causing dead hearts in young plants.</dd>
+<dt>Push-pull system</dt><dd>Maize + desmodium companion + napier grass border — controls stem borers and Striga simultaneously through biological and chemical ecology.</dd>
+<dt>Maize lethal necrosis (MLN)</dt><dd>A virus complex causing total leaf yellowing; devastating in East Africa; managed by MLN-tolerant released varieties.</dd>
+<dt>Aflatoxin</dt><dd>A potent liver carcinogen produced by Aspergillus moulds in damaged, stressed or improperly stored maize.</dd>
+<dt>Hermetic storage</dt><dd>Airtight bags (PICS, PurPlus) or drums eliminating oxygen — kills storage insects AND suppresses aflatoxin mould; zero-chemical.</dd>
+<dt>PICS bag</dt><dd>Purdue Improved Cowpea Storage bag — a three-layer hermetic grain storage bag for smallholders.</dd>
+<dt>Split nitrogen</dt><dd>Applying N fertiliser in two instalments (basal + knee-height top-dress) to match crop uptake and reduce loss.</dd>
+<dt>Micro-dose</dt><dd>Placing a small precise amount of fertiliser at the planting station — 30–50% yield gain at 5–10% of full-rate cost.</dd>
+<dt>Lean-season price</dt><dd>The higher grain price (30–100% above harvest price) occurring 3–6 months after harvest when supply tightens.</dd>
+<dt>Hold strategy</dt><dd>Storing grain in hermetic containers post-harvest and selling in the lean season — the course's highest-return financial decision.</dd>
+<dt>Intercrop density</dt><dd>Maintaining both crops at full density in their respective rows — the productive rule intercrops violate when maize is thinned 'for the companion.'</dd>
+<dt>OPV (Open-Pollinated Variety)</dt><dd>A non-hybrid variety whose seed is saveable for 2–3 seasons without significant performance loss.</dd>
+    </dl>
+  </div>
+
+  <div class="resources-section">
+    <h2>&#128279; Further Resources</h2>
+    <ul><li>CIMMYT (International Maize and Wheat Improvement Centre) — African maize variety releases, FAW management guides, hermetic storage resources.</li>
+<li>Your national maize programme and extension office — released hybrids with MLN/FAW ratings, fertiliser guidance for your soils, scout-and-spray schedules.</li>
+<li>icipe push-pull resources — desmodium and napier grass sources, implementation guides.</li>
+<li>PICS bag suppliers and hermetic storage programmes in your country — find the nearest supplier and compare prices.</li>
+<li>Rise Africa Skills companion courses: Soybean (the nitrogen-rotation pair), Beans &amp; Legumes (intercrop partners), Poultry &amp; Piggery (feed grain customers), Groundnut (rotation and intercrop).</li></ul>
+  </div>
+
+  <div class="cert-section">
+    <h2>&#127891; Course Completion</h2>
+    <p>Complete all 6 months and pass the quizzes to unlock your certificate.</p>
+    <a href="certificate.html?course=Maize%20Farming" class="cert-btn" id="certBtn" disabled>Get Certificate</a>
+  </div>
+</div>
+<script>
+  const TOTAL_MODULES = 6;
+  const COURSE_KEY = 'maize-farming';
+  let completed = JSON.parse(localStorage.getItem(COURSE_KEY + '_progress') || '[]');
+
+  function toggleModule(n) {
+    if (n > 1 && !completed.includes(n-1)) { alert('Complete Month ' + (n-1) + ' first.'); return; }
+    document.getElementById('body' + n).classList.toggle('active');
+  }
+  function answerQ(btn, isCorrect, expId) {
+    const parent = btn.parentElement;
+    const buttons = parent.querySelectorAll('.q-opt');
+    if (buttons[0].disabled) return;
+    buttons.forEach(b => { b.disabled = true; });
+    if (isCorrect) { btn.classList.add('correct'); }
+    else {
+      btn.classList.add('wrong');
+      buttons.forEach(b => { if (b.dataset.c === '1') b.classList.add('correct'); });
+    }
+    document.getElementById(expId).classList.add('show');
+    const quiz = btn.closest('.quiz-wrap');
+    quiz.dataset.answered = (parseInt(quiz.dataset.answered||'0') + 1);
+    quiz.dataset.score = (parseInt(quiz.dataset.score||'0') + (isCorrect ? 1 : 0));
+    if (parseInt(quiz.dataset.answered) >= parseInt(quiz.dataset.total)) {
+      const s = quiz.querySelector('.quiz-score');
+      s.textContent = 'Quiz result: ' + quiz.dataset.score + ' / ' + quiz.dataset.total + (parseInt(quiz.dataset.score) >= 7 ? ' — Pass. Well done!' : ' — Below 7/10. Re-read the module, then review your wrong answers.');
+    }
+  }
+  function markComplete(n) {
+    if (!completed.includes(n)) {
+      completed.push(n); completed.sort((a,b)=>a-b);
+      localStorage.setItem(COURSE_KEY + '_progress', JSON.stringify(completed));
+    }
+    updateUI();
+  }
+  function updateUI() {
+    document.getElementById('completedCount').textContent = completed.length;
+    document.getElementById('progressBar').style.width = (completed.length/TOTAL_MODULES*100) + '%';
+    for (let i=1; i<=TOTAL_MODULES; i++) {
+      const st = document.getElementById('status'+i), btn = document.getElementById('btn'+i);
+      if (completed.includes(i)) { st.textContent='Done'; st.classList.add('done'); if(btn){btn.textContent='Completed'; btn.disabled=true;} }
+      else if (i===1 || completed.includes(i-1)) { st.textContent='Start'; }
+      else { st.textContent='Locked'; }
+    }
+    if (completed.length >= TOTAL_MODULES) {
+      const c = document.getElementById('certBtn');
+      c.removeAttribute('disabled'); c.textContent = 'Get Your Certificate!';
+    }
+  }
+  updateUI();
+</script>
+</body>
+</html>
