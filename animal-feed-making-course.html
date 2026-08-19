@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animal Feed Making — rise AFRICA skills</title>
+<style>
+:root{--gold:#c9a227;--dark:#1a1a2e;--darker:#0f0f1a;--card:#1e1e32;--muted:#9a9ab0;--red:#e94560;--green:#27ae60}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--darker);color:#fff;line-height:1.65}
+a{color:var(--gold)}
+header{position:sticky;top:0;background:rgba(15,15,26,0.95);backdrop-filter:blur(8px);border-bottom:1px solid rgba(201,162,39,0.2);padding:0.7rem 1rem;display:flex;align-items:center;gap:0.6rem;z-index:100}
+.logo-icon{width:34px;height:34px;border-radius:8px;background:var(--gold);color:var(--darker);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.8rem}
+header .brand{font-weight:700;font-size:0.95rem}
+header a.back{margin-left:auto;text-decoration:none;font-size:0.85rem;border:1px solid var(--gold);padding:0.35rem 0.8rem;border-radius:20px}
+.hero{max-width:960px;margin:0 auto;padding:2.5rem 1rem 1.2rem;text-align:center}
+.cat-tag{display:inline-block;background:rgba(201,162,39,0.15);color:var(--gold);border:1px solid var(--gold);border-radius:20px;padding:0.25rem 0.9rem;font-size:0.75rem;font-weight:700;letter-spacing:1px}
+.hero h1{font-size:1.9rem;margin:0.8rem 0 0.4rem;color:var(--gold)}
+.hero p.tag{color:var(--muted);max-width:720px;margin:0 auto}
+.badges{display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;margin-top:1rem}
+.badge{background:var(--card);border:1px solid rgba(201,162,39,0.25);border-radius:8px;padding:0.4rem 0.8rem;font-size:0.75rem}
+main{max-width:960px;margin:0 auto;padding:0 1rem 3rem}
+h2{color:var(--gold);font-size:1.3rem;margin:2rem 0 0.8rem}
+h3{color:#fff;font-size:1.02rem;margin:1rem 0 0.4rem}
+p,li{font-size:0.92rem;color:#ddd}
+ul{margin:0.3rem 0 0.8rem 1.3rem}
+li{margin-bottom:0.3rem}
+.box{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:1.2rem;margin-bottom:0.8rem}
+table{width:100%;border-collapse:collapse;font-size:0.85rem;margin:0.6rem 0 1rem}
+th,td{border:1px solid rgba(255,255,255,0.14);padding:0.5rem 0.6rem;text-align:left;vertical-align:top}
+th{color:var(--gold);background:rgba(201,162,39,0.07)}
+details.month{background:var(--card);border:1px solid rgba(201,162,39,0.2);border-radius:14px;margin-bottom:1rem;overflow:hidden}
+details.month>summary{cursor:pointer;padding:1.1rem 1.3rem;font-weight:800;font-size:1.05rem;color:var(--gold);list-style:none;display:flex;justify-content:space-between;gap:1rem}
+details.month>summary::-webkit-details-marker{display:none}
+details.month[open]>summary{border-bottom:1px solid rgba(201,162,39,0.2)}
+.month-body{padding:1.1rem 1.3rem}
+.lesson{margin-bottom:1.1rem}
+.lesson h4{color:var(--gold);font-size:0.95rem;margin-bottom:0.3rem}
+.practical{background:rgba(201,162,39,0.08);border-left:3px solid var(--gold);padding:0.7rem 0.9rem;border-radius:0 8px 8px 0;font-size:0.88rem;margin:0.8rem 0}
+.practical strong{color:var(--gold)}
+.video{background:rgba(255,255,255,0.04);border:1px dashed rgba(201,162,39,0.4);border-radius:10px;padding:0.7rem 0.9rem;font-size:0.85rem;margin:0.8rem 0;color:var(--muted)}
+.quiz{background:rgba(39,174,96,0.06);border:1px solid rgba(39,174,96,0.35);border-radius:12px;padding:1rem 1.2rem;margin-top:1rem}
+.quiz h4{color:var(--green);margin-bottom:0.6rem}
+.quiz .q{margin-bottom:0.8rem;font-size:0.9rem}
+.quiz details{margin-top:0.25rem}
+.quiz summary{cursor:pointer;color:var(--gold);font-size:0.83rem}
+.quiz .ans{margin-top:0.3rem;font-size:0.86rem;color:#cfe8d8}
+.safety{background:rgba(233,69,96,0.08);border:1px solid rgba(233,69,96,0.4);border-radius:12px;padding:1.1rem 1.2rem;margin:1rem 0}
+.safety h3{color:#ff8fa3;margin-top:0}
+.pricecheck{background:rgba(39,174,96,0.08);border:1px solid rgba(39,174,96,0.45);border-radius:12px;padding:0.9rem 1.1rem;font-size:0.9rem;margin:0.8rem 0}
+.infographic{background:#0b1220;border:1px solid rgba(201,162,39,0.25);border-radius:14px;padding:1rem;margin:1rem 0;overflow-x:auto}
+.infographic svg{display:block;margin:0 auto;max-width:100%;height:auto}
+.cta{text-align:center;margin-top:2.5rem}
+.cta a{display:inline-block;background:var(--gold);color:var(--darker);font-weight:800;padding:0.9rem 2rem;border-radius:10px;text-decoration:none}
+footer{border-top:1px solid rgba(201,162,39,0.15);text-align:center;padding:1.5rem 1rem;color:var(--muted);font-size:0.8rem;margin-top:3rem}
+@media print{header,.cta,footer{display:none}body{background:#fff;color:#000}.box,details.month,.quiz{border:1px solid #ccc;background:#fff}h1,h2,h3,h4,summary{color:#000!important}details{display:block}.month-body{display:block!important}p,li{color:#000}}
+</style>
+</head>
+<body>
+<header>
+<div class="logo-icon">rAs</div><span class="brand">rise AFRICA skills</span>
+<a class="back" href="index.html">← All Courses</a>
+</header>
+<div class="hero">
+<span class="cat-tag">AGRICULTURE · CROSS-CUTTING · FLAGSHIP</span>
+<h1>Animal Feed Making</h1>
+<p class="tag">A complete 10-module program covering the science of feed formulation and then going animal by animal — cattle, goats &amp; sheep, pigs, broilers, layers, horses, dogs &amp; cats, and fish — plus milling, mixing, quality control, storage and the business of selling feed to a market that buys every single day.</p>
+<div class="badges"><span class="badge">⏱️ 8 Months</span><span class="badge">📊 Beginner → Business-ready</span><span class="badge">🌍 Hybrid: Online + Offline</span><span class="badge">🎓 Certificate on completion</span></div>
+</div>
+<main>
+
+<h2>Course Overview</h2>
+<div class="box">
+<p><strong>Why feed making, in depth?</strong> Feed is 60–75% of the total cost of producing any farmed animal. But "balanced feed" means something completely different for a lactating dairy cow, a growing broiler, a gestating sow, a working horse, a house cat, and a pond of tilapia — each has a different gut, a different growth curve, and a different set of nutrients it can and cannot digest. A feed maker who understands these differences can formulate correctly for every customer on the farm and every customer in the village, instead of selling one generic "animal feed" that under-serves most of them.</p>
+<p><strong>Structure:</strong> 10 modules → lessons → practical assignments → a 10-question quiz each module → final business project.</p>
+<p><strong>How to study (hybrid):</strong> Online — modules on your phone, sessions in the <a href="index.html#study-diary">Study Diary</a>, questions to the rAs AI assistant. Offline — save this page (Print → Save as PDF); the practicals happen at the feed table, the mixer and the scale.</p>
+</div>
+
+<div class="safety">
+<h3>⚠️ Read first: the three rules that protect your investment</h3>
+<ul>
+<li><strong>A ration is only as good as its weakest ingredient.</strong> Mouldy maize, rancid fish meal or aflatoxin-contaminated groundnut cake will sicken or kill animals no matter how correct the formula looks on paper. Inspect every bag before it goes into the mix.</li>
+<li><strong>Weigh, don't guess — and never assume one species' feed suits another.</strong> Cattle, pigs, poultry, dogs, cats and fish all have different digestive systems and different nutrient tolerances. A ration correct for one species can injure or kill another (see the species notes in each module).</li>
+<li><strong>Some ingredients are outright dangerous to specific species.</strong> Chocolate, onion, grapes/raisins and xylitol are toxic to dogs; raw soybean is toxic to pigs and poultry unless heat-treated; ruminants fed excess urea or poultry litter can die of ammonia toxicity; cats fed a diet without taurine and without pre-formed vitamin A will develop severe, sometimes fatal, deficiency disease. These species-specific dangers are covered in full in their own modules below.</li>
+</ul>
+</div>
+
+<!-- MODULE 1 -->
+<details class="month" open>
+<summary>MODULE 1 — Nutrition Science Foundations <span>▾</span></summary>
+<div class="month-body">
+
+<div class="lesson"><h4>Lesson 1.1 — Why formulate your own feed</h4>
+<ul>
+<li>Commercial feed carries the cost of the miller's ingredients, milling, packaging, transport and profit margin — often 20–40% above the raw ingredient cost of an equivalent home-mixed ration.</li>
+<li>Home formulation lets you substitute whatever local ingredient is cheapest that week while keeping nutrient targets the same, and lets you formulate correctly for species commercial feed shops in your area may not stock at all (dog/cat, fish, horse).</li>
+<li>A feed-making business that can correctly serve multiple species — not just poultry — reaches every kind of livestock keeper in a community, not just one segment of it.</li>
+</ul></div>
+
+<div class="lesson"><h4>Lesson 1.2 — The five nutrients every ration must balance</h4>
+<table>
+<tr><th>Nutrient</th><th>Function</th><th>Common sources</th></tr>
+<tr><td>Energy</td><td>Growth, movement, body heat, milk/egg production</td><td>Maize, cassava, broken rice, millers' bran, molasses, fats/oils</td></tr>
+<tr><td>Protein</td><td>Muscle, feathers, milk, eggs — the most expensive nutrient, and the one that differs most sharply between species</td><td>Soybean meal, fish meal, groundnut cake, sunflower cake, cotton seed cake, blood meal, meat &amp; bone meal</td></tr>
+<tr><td>Fibre</td><td>Gut health and digestion — essential in bulk for ruminants and horses, tolerated in moderation for pigs/poultry, minimal for cats/dogs and fish</td><td>Bran, hulls, forage, hay, crop residues</td></tr>
+<tr><td>Minerals</td><td>Bone, eggshell, blood, enzyme function</td><td>Limestone/oyster shell (calcium), bone meal or dicalcium phosphate (MCP, phosphorus), salt, trace mineral premix</td></tr>
+<tr><td>Vitamins</td><td>Immunity, reproduction, preventing deficiency disease</td><td>Commercial vitamin premix — species-specific formulations exist and matter (see cat nutrition in Module 7)</td></tr>
+</table></div>
+
+<div class="lesson"><h4>Lesson 1.3 — Gut types: why one ration cannot fit every species</h4>
+<ul>
+<li><strong>Ruminants</strong> (cattle, goats, sheep) have a four-chamber stomach with a rumen that ferments fibre using microbes, letting them extract energy from grass and crop residue that no other farmed species can use efficiently.</li>
+<li><strong>Monogastric omnivores</strong> (pigs, poultry) have a single simple stomach — they need denser, lower-fibre diets with all essential amino acids supplied directly, since they cannot ferment fibre for meaningful energy.</li>
+<li><strong>Hindgut fermenters</strong> (horses) ferment fibre in an enlarged caecum/colon after the stomach — they need continuous access to forage and are highly sensitive to sudden concentrate overload (a major cause of colic).</li>
+<li><strong>Obligate/strict carnivores</strong> (cats especially, and to a lesser extent dogs) have short digestive tracts built around meat-based nutrients and specific amino acids/vitamins that only come from animal tissue in usable form.</li>
+<li><strong>Fish</strong> are cold-blooded and use feed energy far more efficiently than land animals (no body heat to generate), but need floating or slow-sinking feed matched to feeding behaviour and much higher dietary protein than most land animals.</li>
+</ul></div>
+
+<div class="lesson"><h4>Lesson 1.4 — The Pearson Square and least-cost formulation, recapped</h4>
+<ul>
+<li>The Pearson Square cross-multiplies two ingredients (one energy-rich, one protein-rich) to hit a target CP% — write the target in the centre of an X, subtract diagonally, and the results give the parts of each ingredient needed.</li>
+<li>Least-cost formulation means finding the cheapest combination of ingredients that still meets every nutrient target for that specific species and stage — compare cost per unit of protein delivered (price ÷ CP%), not just price per kg.</li>
+<li>Every species module below gives you the target nutrient levels; the Pearson Square and least-cost method from this lesson is the tool you apply to hit them with whatever local ingredients you have.</li>
+</ul></div>
+
+<h3>📊 The facts behind a real ration: broiler starter cost breakdown</h3>
+<div class="infographic">
+<svg viewBox="0 0 1000 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ingredient cost share infographic for a broiler starter ration">
+<rect x="0" y="0" width="1000" height="560" fill="#0b1220"/>
+<text x="500" y="34" text-anchor="middle" font-size="22" font-weight="800" fill="#c9a227" font-family="Segoe UI, sans-serif">THE FACTS BEHIND BROILER STARTER FEED</text>
+<text x="500" y="58" text-anchor="middle" font-size="15" font-weight="700" fill="#eaeaf5" font-family="Segoe UI, sans-serif">INGREDIENT COST SHARE (%) FOR A MAIZE-SOYBEAN STARTER RATION</text>
+<text x="500" y="78" text-anchor="middle" font-size="11" fill="#9a9ab0" font-family="Segoe UI, sans-serif">rAs Feed Cost Reference — illustrative smallholder pricing, verify locally (Iron-Clad Price Check)</text>
+
+<g>
+<path d="M400 160 L600 160 L615 480 L385 480 Z" fill="#c9a227" opacity="0.92"/>
+<path d="M415 160 Q400 130 430 120 L570 120 Q600 130 585 160 Z" fill="#a97f1e"/>
+<circle cx="500" cy="230" r="46" fill="#0b1220"/>
+<circle cx="500" cy="230" r="40" fill="#fff" opacity="0.06"/>
+<path d="M472 250 q28 34 56 0 q-8 26 -28 26 q-20 0 -28 -26 Z" fill="#fff"/>
+<path d="M494 208 q6 -14 12 0 q6 -14 10 2 l-6 14 l-14 0 Z" fill="#e94560"/>
+<circle cx="486" cy="228" r="5" fill="#1a1a2e"/>
+<text x="500" y="330" text-anchor="middle" font-size="16" font-weight="800" fill="#1a1a2e" font-family="Segoe UI, sans-serif">BROILER</text>
+<text x="500" y="350" text-anchor="middle" font-size="16" font-weight="800" fill="#1a1a2e" font-family="Segoe UI, sans-serif">STARTER</text>
+<rect x="430" y="400" width="140" height="30" rx="4" fill="#1a1a2e" opacity="0.85"/>
+<text x="500" y="420" text-anchor="middle" font-size="11" font-weight="700" fill="#c9a227" font-family="Segoe UI, sans-serif">rAs PROFITABLE FEED MILL</text>
+<text x="500" y="505" text-anchor="middle" font-size="12" fill="#eaeaf5" font-family="Segoe UI, sans-serif">MOISTURE TARGET: 12%</text>
+</g>
+
+<g font-family="Segoe UI, sans-serif">
+<line x1="385" y1="185" x2="230" y2="140" stroke="#4a4a6a" stroke-width="1.5"/>
+<circle cx="230" cy="140" r="3" fill="#4a4a6a"/>
+<text x="215" y="136" text-anchor="end" font-size="13" font-weight="700" fill="#eaeaf5">MCP (PHOSPHATE)</text>
+<text x="70" y="145" text-anchor="end" font-size="20" font-weight="800" fill="#e94560">2.0%</text>
+
+<line x1="385" y1="230" x2="230" y2="205" stroke="#4a4a6a" stroke-width="1.5"/>
+<circle cx="230" cy="205" r="3" fill="#4a4a6a"/>
+<text x="215" y="201" text-anchor="end" font-size="13" font-weight="700" fill="#eaeaf5">LIMESTONE (CALCIUM)</text>
+<text x="70" y="210" text-anchor="end" font-size="20" font-weight="800" fill="#e94560">1.5%</text>
+
+<line x1="385" y1="275" x2="230" y2="270" stroke="#4a4a6a" stroke-width="1.5"/>
+<circle cx="230" cy="270" r="3" fill="#4a4a6a"/>
+<text x="215" y="266" text-anchor="end" font-size="13" font-weight="700" fill="#eaeaf5">SALT</text>
+<text x="70" y="275" text-anchor="end" font-size="20" font-weight="800" fill="#e94560">0.5%</text>
+
+<line x1="385" y1="320" x2="230" y2="335" stroke="#4a4a6a" stroke-width="1.5"/>
+<circle cx="230" cy="335" r="3" fill="#4a4a6a"/>
+<text x="215" y="331" text-anchor="end" font-size="13" font-weight="700" fill="#eaeaf5">LYSINE</text>
+<text x="70" y="340" text-anchor="end" font-size="20" font-weight="800" fill="#e94560">1.5%</text>
+
+<line x1="385" y1="365" x2="230" y2="400" stroke="#4a4a6a" stroke-width="1.5"/>
+<circle cx="230" cy="400" r="3" fill="#4a4a6a"/>
+<text x="215" y="396" text-anchor="end" font-size="13" font-weight="700" fill="#eaeaf5">METHIONINE</text>
+<text x="70" y="405" text-anchor="end" font-size="20" font-weight="800" fill="#e94560">1.5%</text>
+
+<line x1="385" y1="410" x2="230" y2="460" stroke="#4a4a6a" stroke-width="1.5"/>
+<circle cx="230" cy="460" r="3" fill="#4a4a6a"/>
+<text x="215" y="456" text-anchor="end" font-size="13" font-weight="700" fill="#eaeaf5">PREMIX VIT-MIN*</text>
+<text x="70" y="465" text-anchor="end" font-size="20" font-weight="800" fill="#e94560">4.0%</text>
+</g>
+
+<g font-family="Segoe UI, sans-serif">
+<line x1="615" y1="180" x2="770" y2="130" stroke="#4a4a6a" stroke-width="1.5"/>
+<circle cx="770" cy="130" r="3" fill="#4a4a6a"/>
+<text x="785" y="126" text-anchor="start" font-size="13" font-weight="700" fill="#eaeaf5">SOYBEAN MEAL</text>
+<rect x="900" y="112" width="70" height="26" fill="#f5d76e" opacity="0.9"/>
+<text x="935" y="130" text-anchor="middle" font-size="20" font-weight="800" fill="#1a1a2e">38%</text>
+
+<line x1="615" y1="225" x2="770" y2="200" stroke="#4a4a6a" stroke-width="1.5"/>
+<circle cx="770" cy="200" r="3" fill="#4a4a6a"/>
+<text x="785" y="196" text-anchor="start" font-size="13" font-weight="700" fill="#eaeaf5">MAIZE</text>
+<text x="935" y="205" text-anchor="middle" font-size="20" font-weight="800" fill="#e94560">42%</text>
+
+<line x1="615" y1="270" x2="770" y2="270" stroke="#4a4a6a" stroke-width="1.5"/>
+<circle cx="770" cy="270" r="3" fill="#4a4a6a"/>
+<text x="785" y="266" text-anchor="start" font-size="13" font-weight="700" fill="#eaeaf5">VEGETABLE OIL</text>
+<text x="935" y="275" text-anchor="middle" font-size="20" font-weight="800" fill="#e94560">5.0%</text>
+
+<line x1="615" y1="320" x2="770" y2="340" stroke="#4a4a6a" stroke-width="1.5"/>
+<circle cx="770" cy="340" r="3" fill="#4a4a6a"/>
+<text x="785" y="336" text-anchor="start" font-size="13" font-weight="700" fill="#eaeaf5">FISH MEAL</text>
+<text x="935" y="345" text-anchor="middle" font-size="20" font-weight="800" fill="#e94560">4.0%</text>
+</g>
+
+<text x="500" y="540" text-anchor="middle" font-size="11" fill="#9a9ab0" font-family="Segoe UI, sans-serif">* Premix figure includes coccidiostat where used. Percentages shown are illustrative cost-share, not the feeding rate.</text>
+</svg>
+</div>
+
+<div class="practical"><strong>🛠️ Practical assignments (Module 1):</strong> (1) Build your local ingredient list with prices and estimated CP% for at least 8 ingredients. (2) Use the Pearson Square to formulate one 18% CP two-ingredient mix. (3) Study the infographic above and redraw the same percentages as a simple pie chart or bar chart by hand.</div>
+<div class="video">📹 VIDEO 1: "Why every farm should mix its own feed" (14 min) — the five nutrients, gut types across species, the Pearson Square, reading a cost-share breakdown.</div>
+
+<div class="quiz"><h4>QUIZ 1 — Nutrition foundations</h4>
+<div class="q">Q1. What share of livestock production cost is typically feed?<details><summary>Show answer</summary><div class="ans">60–75% of total cost.</div></details></div>
+<div class="q">Q2. Name the five nutrient groups a ration must balance.<details><summary>Show answer</summary><div class="ans">Energy, protein, fibre, minerals and vitamins.</div></details></div>
+<div class="q">Q3. What makes ruminants able to use grass and crop residue for energy?<details><summary>Show answer</summary><div class="ans">A rumen that ferments fibre using microbes, extracting energy no other farmed species can access as efficiently.</div></details></div>
+<div class="q">Q4. Why do monogastric animals (pigs, poultry) need denser, lower-fibre diets?<details><summary>Show answer</summary><div class="ans">They have a single simple stomach and cannot ferment fibre for meaningful energy.</div></details></div>
+<div class="q">Q5. What is a hindgut fermenter, and which farmed species is one?<details><summary>Show answer</summary><div class="ans">An animal that ferments fibre in an enlarged caecum/colon after the stomach — the horse.</div></details></div>
+<div class="q">Q6. Why are cats described as obligate/strict carnivores in a feed context?<details><summary>Show answer</summary><div class="ans">Their digestive tract needs specific amino acids/vitamins available only from animal tissue in usable form.</div></details></div>
+<div class="q">Q7. Why do fish use feed energy more efficiently than land animals?<details><summary>Show answer</summary><div class="ans">Being cold-blooded, they don't need to generate body heat from feed energy.</div></details></div>
+<div class="q">Q8. What does the Pearson Square calculate?<details><summary>Show answer</summary><div class="ans">The proportions of two ingredients needed to hit a target CP%, via diagonal subtraction.</div></details></div>
+<div class="q">Q9. What does "least-cost formulation" mean?<details><summary>Show answer</summary><div class="ans">Finding the cheapest ingredient combination that still meets nutrient targets.</div></details></div>
+<div class="q">Q10. In the broiler starter infographic, which two ingredients together make up over three-quarters of ingredient cost?<details><summary>Show answer</summary><div class="ans">Maize (42%) and soybean meal (38%).</div></details></div>
+</div>
+</div>
+</details>
+
+<!-- MODULE 2 -->
+<details class="month">
+<summary>MODULE 2 — Cattle: Dairy, Beef &amp; Fattening Rations <span>▾</span></summary>
+<div class="month-body">
+
+<div class="lesson"><h4>Lesson 2.1 — The rumen and forage-first feeding</h4>
+<ul>
+<li>Forage (pasture, hay, silage, crop residue) should always form the base of a cattle diet — the rumen needs adequate fibre length and bulk to function correctly; a concentrate-heavy diet without enough forage causes acidosis (rumen acid build-up), a serious and sometimes fatal condition.</li>
+<li>Introduce any concentrate ration gradually over 7–10 days, never suddenly — the rumen's microbial population needs time to adapt to a change in diet composition.</li>
+<li>Clean water access (a lactating dairy cow can drink 60–100+ litres/day) is as important as any formulated ingredient — water shortage drops both milk yield and feed intake fast.</li>
+</ul></div>
+
+<div class="lesson"><h4>Lesson 2.2 — Dairy cattle rations by lactation stage</h4>
+<table>
+<tr><th>Stage</th><th>Target CP%</th><th>Concentrate guide</th></tr>
+<tr><td>Dry cow (pre-calving)</td><td>12–14%</td><td>Minimal concentrate; forage-based, avoid over-conditioning</td></tr>
+<tr><td>Early lactation (peak yield)</td><td>16–18%</td><td>Highest concentrate feeding of the cycle — roughly 0.3–0.4 kg concentrate per litre above maintenance</td></tr>
+<tr><td>Mid–late lactation</td><td>14–16%</td><td>Concentrate tapers as yield naturally declines</td></tr>
+<tr><td>Calf starter (weaning)</td><td>18–20%</td><td>Introduced from about 3 weeks alongside milk, to develop rumen function early</td></tr>
+</table></div>
+
+<div class="lesson"><h4>Lesson 2.3 — Beef cattle: growing and finishing/fattening rations</h4>
+<ul>
+<li>Growing beef cattle (weaner to yearling) need a moderate-protein, moderate-energy ration (roughly 12–14% CP) built mainly on good pasture or hay plus modest concentrate to support steady frame growth without excess fat.</li>
+<li>The finishing/fattening phase (final 60–120 days before slaughter) shifts to a higher-energy ration (increased maize/grain, reduced fibre proportion) to deposit fat and marbling that the market pays for — CP can actually drop slightly (10–13%) as energy density rises.</li>
+<li>Fattening rations must still be introduced gradually from the growing ration — a sudden jump to high-grain feeding is a leading cause of acidosis and bloat in feedlot cattle.</li>
+</ul></div>
+
+<div class="lesson"><h4>Lesson 2.4 — Total Mixed Ration (TMR) and silage basics</h4>
+<ul>
+<li>A Total Mixed Ration combines all forage, concentrate, minerals and additives into one uniform mix fed together — this prevents cattle from sorting out and over-eating the tastiest concentrate portion while leaving fibre behind.</li>
+<li>Silage (fermented, high-moisture forage stored airtight) extends forage availability through the dry season and, correctly made, retains more nutritional value than hay — but poorly sealed or spoiled silage can be toxic and must never be fed if mouldy or foul-smelling.</li>
+<li>Mineral supplementation (calcium, phosphorus, salt, trace minerals) is essential year-round for cattle — deficiency symptoms (poor fertility, weak bones, reduced appetite) often appear only after weeks of shortage, making prevention far cheaper than correction.</li>
+</ul></div>
+
+<div class="practical"><strong>🛠️ Practical assignments (Module 2):</strong> (1) Formulate a lactating dairy cow concentrate ration for a target daily litre yield. (2) Formulate a beef finishing ration and compare its CP%/energy to a growing ration. (3) Design a simple TMR mix combining forage, concentrate and minerals for one group of cattle on your farm.</div>
+<div class="video">📹 VIDEO 2: "Feeding cattle: dairy, growing and finishing" (16 min) — rumen basics, dairy lactation-stage feeding, beef growing vs fattening rations, TMR and silage.</div>
+
+<div class="quiz"><h4>QUIZ 2 — Cattle</h4>
+<div class="q">Q1. Why must forage always form the base of a cattle diet?<details><summary>Show answer</summary><div class="ans">The rumen needs adequate fibre length/bulk to function; too little causes acidosis.</div></details></div>
+<div class="q">Q2. Why introduce concentrate gradually over 7–10 days?<details><summary>Show answer</summary><div class="ans">The rumen's microbial population needs time to adapt to a diet change.</div></details></div>
+<div class="q">Q3. When does a dairy cow need the highest concentrate feeding?<details><summary>Show answer</summary><div class="ans">Early lactation, at peak milk yield.</div></details></div>
+<div class="q">Q4. Roughly how much concentrate per litre above maintenance is a common guide?<details><summary>Show answer</summary><div class="ans">About 0.3–0.4 kg concentrate per litre.</div></details></div>
+<div class="q">Q5. Why is concentrate minimised for dry cows pre-calving?<details><summary>Show answer</summary><div class="ans">To avoid over-conditioning while the cow isn't producing milk.</div></details></div>
+<div class="q">Q6. What changes in a beef finishing/fattening ration compared to a growing ration?<details><summary>Show answer</summary><div class="ans">Energy density rises (more grain, less fibre) to deposit fat/marbling; CP can drop slightly.</div></details></div>
+<div class="q">Q7. Why must fattening rations still be introduced gradually?<details><summary>Show answer</summary><div class="ans">A sudden jump to high-grain feeding is a leading cause of acidosis and bloat.</div></details></div>
+<div class="q">Q8. What is a Total Mixed Ration (TMR) and why is it used?<details><summary>Show answer</summary><div class="ans">All forage, concentrate, minerals and additives mixed into one uniform feed, preventing cattle from sorting out the tastiest portion.</div></details></div>
+<div class="q">Q9. Why must mouldy or foul-smelling silage never be fed?<details><summary>Show answer</summary><div class="ans">Poorly sealed or spoiled silage can be toxic to cattle.</div></details></div>
+<div class="q">Q10. Why is mineral supplementation needed year-round even though deficiency isn't immediately visible?<details><summary>Show answer</summary><div class="ans">Deficiency symptoms (poor fertility, weak bones) often only appear after weeks of shortage — prevention is cheaper than correction.</div></details></div>
+</div>
+</div>
+</details>
+
+<!-- MODULE 3 -->
+<details class="month">
+<summary>MODULE 3 — Goats &amp; Sheep: Small Ruminant Feeding &amp; Fattening <span>▾</span></summary>
+<div class="month-body">
+
+<div class="lesson"><h4>Lesson 3.1 — How goats and sheep differ from cattle</h4>
+<ul>
+<li>Both are ruminants with the same basic four-chamber digestive system as cattle, but at much smaller body size — rations are formulated per kg of body weight and total daily intake is far smaller, so small formulation errors have proportionally bigger effects.</li>
+<li>Goats are natural browsers (preferring leaves, shrubs, twigs over ground-level grass) while sheep are natural grazers (preferring grass) — this affects pasture management and supplementary feeding strategy even though nutrient targets are similar.</li>
+<li>Sheep are particularly sensitive to copper toxicity — mineral premix and mineral licks formulated for cattle or goats can contain copper levels that are dangerous for sheep; always use a sheep-appropriate or sheep-safe mineral product.</li>
+</ul></div>
+
+<div class="lesson"><h4>Lesson 3.2 — Maintenance and growth rations</h4>
+<table>
+<tr><th>Class</th><th>Target CP%</th><th>Notes</th></tr>
+<tr><td>Maintenance (dry, non-productive adult)</td><td>8–10%</td><td>Good pasture/browse alone often sufficient</td></tr>
+<tr><td>Growing kid/lamb</td><td>14–16%</td><td>Concentrate supplementation supports frame growth</td></tr>
+<tr><td>Late pregnancy</td><td>12–14%</td><td>Nutrient demand rises sharply in the final 6 weeks (most fetal growth happens here)</td></tr>
+<tr><td>Lactating doe/ewe</td><td>14–16%</td><td>Highest demand period; twin/multiple births raise requirement further</td></tr>
+</table></div>
+
+<div class="lesson"><h4>Lesson 3.3 — Fattening goats and sheep for market</h4>
+<ul>
+<li>The fattening/finishing period (typically the final 6–10 weeks before sale) shifts from a maintenance/growth ration to a higher-energy concentrate-supplemented ration to add market-desired weight and finish quickly.</li>
+<li>Introduce fattening concentrate gradually, exactly as with cattle — small ruminants are equally vulnerable to acidosis and bloat from sudden high-grain feeding, arguably more so given their smaller rumen volume.</li>
+<li>Flushing (increasing nutrition in the 2–3 weeks before mating) improves conception rates and litter size in does/ewes — a low-cost, high-return practice often skipped by smallholders.</li>
+</ul></div>
+
+<div class="lesson"><h4>Lesson 3.4 — Creep feeding and weaning</h4>
+<ul>
+<li>Creep feeding offers young kids/lambs access to a separate, high-quality starter ration (16–18% CP) that the mother cannot reach — this reduces weaning stress and improves post-weaning growth rates.</li>
+<li>Wean gradually where possible rather than abruptly, and ensure the creep ration is already familiar to the young animal before full separation from the mother.</li>
+<li>Provide clean water and free-choice mineral/salt lick at all life stages — small ruminants are highly susceptible to internal parasites, and good nutrition supports natural resistance alongside a proper deworming programme.</li>
+</ul></div>
+
+<div class="pricecheck">✅ <strong>Iron-Clad Price Check:</strong> concentrate ingredients, sheep-safe mineral premix, and fattening-stage feed — 3 quotes each.</div>
+
+<div class="practical"><strong>🛠️ Practical assignments (Module 3):</strong> (1) Formulate a lactating doe/ewe ration and compare it to a maintenance ration. (2) Design a 6–8 week fattening programme with gradual concentrate introduction. (3) Set up a creep feeding area accessible to young stock but not adults.</div>
+<div class="video">📹 VIDEO 3: "Small ruminants: goats and sheep" (14 min) — browsers vs grazers, life-stage rations, fattening safely, creep feeding.</div>
+
+<div class="quiz"><h4>QUIZ 3 — Goats &amp; sheep</h4>
+<div class="q">Q1. Why do small formulation errors matter proportionally more for goats/sheep than cattle?<details><summary>Show answer</summary><div class="ans">Their much smaller body size and total daily intake mean errors have a bigger proportional effect.</div></details></div>
+<div class="q">Q2. What is the difference between goats and sheep in feeding behaviour?<details><summary>Show answer</summary><div class="ans">Goats are natural browsers (leaves/shrubs); sheep are natural grazers (grass).</div></details></div>
+<div class="q">Q3. Why must sheep-specific mineral products be used rather than cattle/goat mineral mixes?<details><summary>Show answer</summary><div class="ans">Sheep are particularly sensitive to copper toxicity, which cattle/goat mineral products may contain at unsafe levels for sheep.</div></details></div>
+<div class="q">Q4. When does nutrient demand rise sharply during pregnancy?<details><summary>Show answer</summary><div class="ans">The final 6 weeks, when most fetal growth occurs.</div></details></div>
+<div class="q">Q5. What is the typical duration of a fattening/finishing period for goats/sheep?<details><summary>Show answer</summary><div class="ans">Typically the final 6–10 weeks before sale.</div></details></div>
+<div class="q">Q6. Why introduce fattening concentrate gradually in small ruminants?<details><summary>Show answer</summary><div class="ans">They are vulnerable to acidosis and bloat from sudden high-grain feeding, given their smaller rumen volume.</div></details></div>
+<div class="q">Q7. What is flushing and what does it improve?<details><summary>Show answer</summary><div class="ans">Increasing nutrition 2–3 weeks before mating — it improves conception rates and litter size.</div></details></div>
+<div class="q">Q8. What is creep feeding?<details><summary>Show answer</summary><div class="ans">Offering young kids/lambs access to a separate high-quality starter ration the mother cannot reach.</div></details></div>
+<div class="q">Q9. What CP% is typical for a creep/starter ration?<details><summary>Show answer</summary><div class="ans">16–18%.</div></details></div>
+<div class="q">Q10. Why is good nutrition alongside deworming important for small ruminants?<details><summary>Show answer</summary><div class="ans">They are highly susceptible to internal parasites; nutrition supports natural resistance alongside a proper deworming programme.</div></details></div>
+</div>
+</div>
+</details>
+
+<!-- MODULE 4 -->
+<details class="month">
+<summary>MODULE 4 — Pigs: Starter to Finisher, Gestation to Lactation <span>▾</span></summary>
+<div class="month-body">
+
+<div class="lesson"><h4>Lesson 4.1 — The pig's digestive profile</h4>
+<ul>
+<li>Pigs are monogastric omnivores with a digestive system closer to a human's than to a ruminant's — they need dense, well-balanced diets and cannot extract meaningful energy from high-fibre feed the way cattle can.</li>
+<li>Amino acid balance (particularly lysine, the first-limiting amino acid in most maize-based pig diets) matters as much as total CP% — a ration can hit the right CP% on paper and still underperform if lysine is short.</li>
+<li>Raw soybean must never be fed to pigs — it contains a trypsin inhibitor that blocks protein digestion; soybean must be heat-treated (roasted or extruded) before inclusion.</li>
+</ul></div>
+
+<div class="lesson"><h4>Lesson 4.2 — Growth-stage rations</h4>
+<table>
+<tr><th>Stage</th><th>Target CP%</th><th>Notes</th></tr>
+<tr><td>Creep/starter (weaning to ~15 kg)</td><td>20–22%</td><td>Highly digestible ingredients; young pigs have limited digestive capacity</td></tr>
+<tr><td>Grower (15–60 kg)</td><td>16–18%</td><td>Lysine level is the key formulation checkpoint at this stage</td></tr>
+<tr><td>Finisher (60 kg to market)</td><td>14–16%</td><td>Energy increases as protein need eases, building muscle and finishing fat</td></tr>
+</table></div>
+
+<div class="lesson"><h4>Lesson 4.3 — Gestating and lactating sows, and the boar</h4>
+<ul>
+<li>Gestating sows need a moderate ration (roughly 13–14% CP) with controlled energy — overfeeding during gestation causes excess fat that harms farrowing ease and subsequent milk production.</li>
+<li>Lactating sows have the highest nutrient demand of any pig class — roughly 16–18% CP with high energy density, since milk production for a large litter draws heavily on the sow's own body reserves if the ration falls short.</li>
+<li>Boars (breeding males) need a moderate-protein maintenance ration (roughly 14% CP) with attention to avoiding both under- and over-conditioning, both of which reduce fertility.</li>
+</ul></div>
+
+<div class="lesson"><h4>Lesson 4.4 — Common pig feeding mistakes</h4>
+<ul>
+<li>Overfeeding cotton seed cake — gossypol toxicity is a real risk for pigs at high inclusion levels; keep cotton seed cake to a small proportion of the ration or avoid it for young/breeding stock.</li>
+<li>Feeding spoiled or mouldy feed — pigs are notably susceptible to mycotoxin-related reproductive problems (reduced litter size, early farrowing) from contaminated grain, making ingredient inspection especially important for breeding stock.</li>
+<li>Skipping the transition between growth stages — an abrupt ration change (especially at weaning) causes digestive upset; blend the old and new ration gradually over several days at every stage transition.</li>
+</ul></div>
+
+<div class="practical"><strong>🛠️ Practical assignments (Module 4):</strong> (1) Formulate a grower ration (15–60 kg) checking both CP% and an estimated lysine adequacy. (2) Formulate a lactating sow ration and compare its energy density to the gestation ration. (3) Confirm your soybean source is heat-treated before including it in any pig ration.</div>
+<div class="video">📹 VIDEO 4: "Feeding pigs from birth to market" (15 min) — monogastric digestion, growth-stage rations, sow and boar feeding, common mistakes.</div>
+
+<div class="quiz"><h4>QUIZ 4 — Pigs</h4>
+<div class="q">Q1. Why can't pigs extract meaningful energy from high-fibre feed like cattle can?<details><summary>Show answer</summary><div class="ans">They are monogastric and cannot ferment fibre the way ruminants do.</div></details></div>
+<div class="q">Q2. What is the first-limiting amino acid in most maize-based pig diets?<details><summary>Show answer</summary><div class="ans">Lysine.</div></details></div>
+<div class="q">Q3. Why must raw soybean never be fed to pigs?<details><summary>Show answer</summary><div class="ans">It contains a trypsin inhibitor that blocks protein digestion; it must be heat-treated first.</div></details></div>
+<div class="q">Q4. Roughly what CP% does a starter/creep pig ration need?<details><summary>Show answer</summary><div class="ans">20–22%.</div></details></div>
+<div class="q">Q5. What is the key formulation checkpoint for a grower pig ration?<details><summary>Show answer</summary><div class="ans">Lysine level.</div></details></div>
+<div class="q">Q6. Why is gestating sow energy intake controlled rather than maximised?<details><summary>Show answer</summary><div class="ans">Overfeeding causes excess fat, which harms farrowing ease and subsequent milk production.</div></details></div>
+<div class="q">Q7. Which pig class has the highest nutrient demand?<details><summary>Show answer</summary><div class="ans">Lactating sows.</div></details></div>
+<div class="q">Q8. What toxicity risk limits cotton seed cake in pig diets?<details><summary>Show answer</summary><div class="ans">Gossypol toxicity, especially at high inclusion for young/breeding stock.</div></details></div>
+<div class="q">Q9. Why are pigs especially vulnerable to mycotoxins from mouldy grain?<details><summary>Show answer</summary><div class="ans">Mycotoxins are linked to reproductive problems in pigs — reduced litter size, early farrowing.</div></details></div>
+<div class="q">Q10. Why blend old and new rations gradually at stage transitions?<details><summary>Show answer</summary><div class="ans">An abrupt ration change, especially at weaning, causes digestive upset.</div></details></div>
+</div>
+</div>
+</details>
+
+<!-- MODULE 5 -->
+<details class="month">
+<summary>MODULE 5 — Poultry: Broilers, Layers &amp; Growers <span>▾</span></summary>
+<div class="month-body">
+
+<div class="lesson"><h4>Lesson 5.1 — Why broilers and layers need completely different feed</h4>
+<ul>
+<li>A broiler is bred and fed for maximum growth rate over a short 5–8 week life — its ration is high-energy, high-protein throughout, phased to match its rapid growth curve.</li>
+<li>A layer is fed for a long productive life (12+ months of laying) — its ration prioritises steady body maintenance and calcium supply for eggshell over maximum growth, since a layer that grows too fast or too fat lays fewer eggs.</li>
+<li>Feeding a broiler ration to layers causes excess fat and reduced laying; feeding a layer ration to broilers stunts growth and wastes the genetic potential paid for in the chicks.</li>
+</ul></div>
+
+<div class="lesson"><h4>Lesson 5.2 — Broiler phase feeding</h4>
+<table>
+<tr><th>Phase</th><th>Age</th><th>Target CP%</th></tr>
+<tr><td>Starter</td><td>0–2 weeks</td><td>22–23%</td></tr>
+<tr><td>Grower</td><td>2–4 weeks</td><td>20–21%</td></tr>
+<tr><td>Finisher</td><td>4 weeks to slaughter</td><td>18–19%</td></tr>
+</table>
+<p>Energy density rises through the phases as protein need eases slightly — finisher rations are built for rapid weight gain in the final weeks, when feed conversion efficiency matters most to the farmer's margin.</p></div>
+
+<div class="lesson"><h4>Lesson 5.3 — Layer and pullet-grower feeding</h4>
+<table>
+<tr><th>Phase</th><th>Age/stage</th><th>Target CP%</th><th>Notes</th></tr>
+<tr><td>Chick starter</td><td>0–6 weeks</td><td>20–22%</td><td>Similar to broiler starter</td></tr>
+<tr><td>Pullet grower</td><td>6–18 weeks</td><td>15–16%</td><td>Deliberately lower energy — controls growth rate and body fat ahead of lay</td></tr>
+<tr><td>Pre-lay</td><td>16–18 weeks (approaching point of lay)</td><td>17–18%</td><td>Calcium begins rising ahead of first egg</td></tr>
+<tr><td>Layer mash</td><td>Point of lay onward</td><td>16–18%</td><td>Calcium raised to 3.5–4% for eggshell strength — this is the single biggest formulation difference from any other poultry ration</td></tr>
+</table></div>
+
+<div class="lesson"><h4>Lesson 5.4 — Common poultry feeding mistakes</h4>
+<ul>
+<li>Underfeeding calcium to layers — produces thin-shelled or shell-less eggs, and over time draws calcium from the hen's own skeleton, weakening bones.</li>
+<li>Overfeeding calcium to growing broilers or pullets before point of lay — excess calcium in young growing birds can damage developing kidneys; calcium levels must be matched to the correct phase, never applied as a flat rate across all poultry.</li>
+<li>Switching feed phases too early or too late — following age/weight benchmarks rather than "the bag is empty so we'll buy whatever's available" keeps growth and laying performance on target.</li>
+</ul></div>
+
+<div class="practical"><strong>🛠️ Practical assignments (Module 5):</strong> (1) Formulate a broiler starter and a broiler finisher ration and compare their CP%/energy. (2) Formulate a layer mash with correctly raised calcium and compare it to a pullet grower ration. (3) Build a phase-feeding calendar by bird age for one poultry enterprise (broiler or layer).</div>
+<div class="video">📹 VIDEO 5: "Broilers vs layers: two completely different diets" (16 min) — why growth-focused and lay-focused rations differ, phase feeding for each, calcium timing.</div>
+
+<div class="quiz"><h4>QUIZ 5 — Poultry: broilers &amp; layers</h4>
+<div class="q">Q1. Why is a broiler ration high-energy, high-protein throughout its short life?<details><summary>Show answer</summary><div class="ans">Broilers are bred and fed for maximum growth rate over a short 5–8 week life.</div></details></div>
+<div class="q">Q2. Why does a layer ration prioritise maintenance over maximum growth?<details><summary>Show answer</summary><div class="ans">A layer that grows too fast or too fat lays fewer eggs over its long productive life.</div></details></div>
+<div class="q">Q3. What happens if layers are fed a broiler ration?<details><summary>Show answer</summary><div class="ans">Excess fat and reduced laying.</div></details></div>
+<div class="q">Q4. Roughly what CP% does a broiler starter need?<details><summary>Show answer</summary><div class="ans">22–23%.</div></details></div>
+<div class="q">Q5. Why is pullet grower ration deliberately lower in energy than chick starter?<details><summary>Show answer</summary><div class="ans">To control growth rate and body fat ahead of point of lay.</div></details></div>
+<div class="q">Q6. What is the single biggest formulation difference in layer mash versus other poultry rations?<details><summary>Show answer</summary><div class="ans">Calcium raised to 3.5–4% for eggshell strength.</div></details></div>
+<div class="q">Q7. What happens if layers are underfed calcium?<details><summary>Show answer</summary><div class="ans">Thin-shelled/shell-less eggs, and over time calcium is drawn from the hen's skeleton, weakening bones.</div></details></div>
+<div class="q">Q8. Why is excess calcium dangerous for growing broilers/pullets?<details><summary>Show answer</summary><div class="ans">It can damage developing kidneys in young growing birds.</div></details></div>
+<div class="q">Q9. What should determine feed phase switching — the bag being empty, or something else?<details><summary>Show answer</summary><div class="ans">Bird age/weight benchmarks, not simply what feed happens to be available.</div></details></div>
+<div class="q">Q10. What CP% is typical for finisher-phase broiler feed?<details><summary>Show answer</summary><div class="ans">18–19%.</div></details></div>
+</div>
+</div>
+</details>
+
+<!-- MODULE 6 -->
+<details class="month">
+<summary>MODULE 6 — Horses: Forage-First Feeding <span>▾</span></summary>
+<div class="month-body">
+
+<div class="lesson"><h4>Lesson 6.1 — The horse as a hindgut fermenter</h4>
+<ul>
+<li>Horses ferment fibre in an enlarged caecum and colon after a relatively small stomach — they are built to eat small amounts of forage almost continuously, not two or three large meals a day.</li>
+<li>Forage (pasture or hay) should make up at least 1.5–2% of a horse's body weight per day as a baseline, with concentrate added only to meet energy needs forage alone can't supply for the animal's workload.</li>
+<li>Sudden access to a large amount of grain/concentrate, or to lush spring pasture, is a leading cause of colic and laminitis — both serious, sometimes fatal, conditions in horses that a careful feeding routine largely prevents.</li>
+</ul></div>
+
+<div class="lesson"><h4>Lesson 6.2 — Matching ration to workload</h4>
+<table>
+<tr><th>Work level</th><th>Target CP%</th><th>Notes</th></tr>
+<tr><td>Maintenance/idle</td><td>8–10%</td><td>Good forage alone is often sufficient</td></tr>
+<tr><td>Light work</td><td>10–12%</td><td>Small concentrate addition</td></tr>
+<tr><td>Moderate–heavy work</td><td>12–14%</td><td>Concentrate rises with energy demand, not just protein</td></tr>
+<tr><td>Broodmare (late pregnancy/lactation)</td><td>12–14%</td><td>Energy and calcium demand rise sharply in late pregnancy and through lactation</td></tr>
+<tr><td>Growing foal</td><td>14–16%</td><td>Carefully controlled growth rate — overfeeding young horses causes developmental bone problems</td></tr>
+</table></div>
+
+<div class="lesson"><h4>Lesson 6.3 — Feeding practices that prevent problems</h4>
+<ul>
+<li>Feed concentrate in small, multiple portions rather than one large meal — a horse's stomach is relatively small for its body size, and large single meals overwhelm digestion.</li>
+<li>Introduce any new feed (new hay batch, new concentrate, new pasture access) gradually over 7–10 days — the hindgut microbial population needs time to adjust, exactly as with a ruminant's rumen.</li>
+<li>Never feed mouldy hay or grain — horses are highly sensitive to certain moulds and mycotoxins, with respiratory and digestive consequences that can be severe.</li>
+</ul></div>
+
+<div class="lesson"><h4>Lesson 6.4 — Water, salt and minerals</h4>
+<ul>
+<li>Clean water must be available at all times — a horse can drink 20–40+ litres per day, more with hard work or hot weather, and water restriction directly increases colic risk.</li>
+<li>Provide a salt lick or loose salt year-round — horses in work sweat out significant sodium and won't necessarily compensate through diet alone.</li>
+<li>Balance calcium and phosphorus carefully (roughly 1.5–2:1 calcium to phosphorus is a common target) — an inverted ratio over time causes serious bone problems, particularly in growing and working horses.</li>
+</ul></div>
+
+<div class="practical"><strong>🛠️ Practical assignments (Module 6):</strong> (1) Estimate forage requirement (1.5–2% body weight) for a horse on your farm or in your area. (2) Formulate a light-work concentrate ration and compare it to a maintenance ration. (3) Set up or review a feeding schedule that avoids single large concentrate meals.</div>
+<div class="video">📹 VIDEO 6: "Feeding the horse: forage first" (13 min) — hindgut fermentation, workload-based rationing, avoiding colic and laminitis, minerals.</div>
+
+<div class="quiz"><h4>QUIZ 6 — Horses</h4>
+<div class="q">Q1. What is a hindgut fermenter?<details><summary>Show answer</summary><div class="ans">An animal (like the horse) that ferments fibre in an enlarged caecum/colon after a relatively small stomach.</div></details></div>
+<div class="q">Q2. How much forage should form the baseline of a horse's daily diet?<details><summary>Show answer</summary><div class="ans">At least 1.5–2% of body weight per day.</div></details></div>
+<div class="q">Q3. What two serious conditions can sudden grain/lush pasture access trigger?<details><summary>Show answer</summary><div class="ans">Colic and laminitis.</div></details></div>
+<div class="q">Q4. Why is concentrate CP% low (8–10%) for a maintenance/idle horse?<details><summary>Show answer</summary><div class="ans">Good forage alone is often sufficient at this workload.</div></details></div>
+<div class="q">Q5. Why must young growing horses not be overfed?<details><summary>Show answer</summary><div class="ans">Overfeeding causes developmental bone problems in foals.</div></details></div>
+<div class="q">Q6. Why feed concentrate in small, multiple portions?<details><summary>Show answer</summary><div class="ans">A horse's stomach is relatively small for its body size and large single meals overwhelm digestion.</div></details></div>
+<div class="q">Q7. Why introduce new feed gradually over 7–10 days?<details><summary>Show answer</summary><div class="ans">The hindgut microbial population needs time to adjust.</div></details></div>
+<div class="q">Q8. Why is mouldy hay or grain especially dangerous for horses?<details><summary>Show answer</summary><div class="ans">Horses are highly sensitive to certain moulds/mycotoxins, with severe respiratory and digestive consequences.</div></details></div>
+<div class="q">Q9. How much water can a horse drink per day?<details><summary>Show answer</summary><div class="ans">20–40+ litres, more with work or hot weather.</div></details></div>
+<div class="q">Q10. What calcium-to-phosphorus ratio is a common target for horses?<details><summary>Show answer</summary><div class="ans">Roughly 1.5–2:1 calcium to phosphorus.</div></details></div>
+</div>
+</div>
+</details>
+
+<!-- MODULE 7 -->
+<details class="month">
+<summary>MODULE 7 — Dogs &amp; Cats: Companion Animal Nutrition <span>▾</span></summary>
+<div class="month-body">
+
+<div class="lesson"><h4>Lesson 7.1 — Dogs: omnivores with real protein needs</h4>
+<ul>
+<li>Dogs are omnivores that thrive on a mixed diet, but still need a meaningfully higher protein level than most people assume — roughly 18–25% CP for an adult, higher (25–30%) for puppies, pregnant/lactating females, and working dogs.</li>
+<li>Good quality protein sources (meat meal, fish meal, eggs) matter more than raw protein percentage alone — poor-quality protein sources may hit a CP% target on paper while still leaving the dog short of essential amino acids.</li>
+<li>Fat provides concentrated energy and supports coat/skin health — roughly 8–15% fat is typical for adult maintenance, higher for working or lactating dogs.</li>
+</ul></div>
+
+<div class="lesson"><h4>Lesson 7.2 — Cats: obligate carnivores with unique requirements</h4>
+<ul>
+<li>Cats are obligate (strict) carnivores — unlike dogs, they cannot thrive on a plant-based or low-meat diet and have specific nutrient needs that only reliably come from animal tissue.</li>
+<li>Taurine (an amino acid found almost exclusively in animal tissue) is essential for cats — deficiency causes serious heart disease and blindness over time; a cat fed a dog-food-style or plant-heavy diet will become taurine deficient.</li>
+<li>Cats also need pre-formed vitamin A (they cannot convert plant beta-carotene to vitamin A the way dogs and many other species can) and arachidonic acid (an essential fatty acid found in animal fat) — both must come from animal-source ingredients in the diet.</li>
+<li>Target roughly 26–30% CP for adult cat maintenance, higher for kittens — cat rations should never be formulated using a dog or generic livestock formula as the base.</li>
+</ul></div>
+
+<div class="lesson"><h4>Lesson 7.3 — Life-stage feeding for dogs and cats</h4>
+<table>
+<tr><th>Life stage</th><th>Dog target CP%</th><th>Cat target CP%</th></tr>
+<tr><td>Puppy/kitten (growth)</td><td>25–30%</td><td>30–35%</td></tr>
+<tr><td>Adult maintenance</td><td>18–25%</td><td>26–30%</td></tr>
+<tr><td>Pregnant/lactating</td><td>28–32%</td><td>32–36%</td></tr>
+<tr><td>Senior/less active</td><td>16–20%</td><td>26–28%</td></tr>
+</table></div>
+
+<div class="lesson"><h4>Lesson 7.4 — Foods and ingredients to avoid entirely</h4>
+<ul>
+<li>Toxic to dogs and cats: chocolate/cocoa, onions and garlic (in meaningful quantity), grapes and raisins, xylitol (an artificial sweetener), and alcohol — these should never appear in any homemade or commercial ration for either species.</li>
+<li>Cooked bones (especially poultry) can splinter and cause serious internal injury — raw bones are generally safer than cooked, but bone feeding in general should follow careful, size-appropriate guidance rather than assumption.</li>
+<li>Excess raw fat trimmings and spoiled/rancid meat scraps commonly cause digestive upset or pancreatitis — kitchen scraps intended for pet feed must be assessed with the same food-safety standard as feed for any other species, not treated as "waste that's fine for the dog."</li>
+</ul></div>
+
+<div class="practical"><strong>🛠️ Practical assignments (Module 7):</strong> (1) Formulate or source an adult dog ration and confirm it meets the 18–25% CP target with good-quality protein sources. (2) Formulate or source an adult cat ration and confirm it includes an animal-source ingredient supplying taurine. (3) Create a written list of toxic foods to display for staff/family, covering chocolate, onion/garlic, grapes/raisins and xylitol.</div>
+<div class="video">📹 VIDEO 7: "Dogs, cats and the meat requirement" (15 min) — dog vs cat protein needs, why cats are obligate carnivores, taurine and vitamin A, foods to avoid.</div>
+
+<div class="quiz"><h4>QUIZ 7 — Dogs &amp; cats</h4>
+<div class="q">Q1. Roughly what CP% does an adult dog need?<details><summary>Show answer</summary><div class="ans">18–25%.</div></details></div>
+<div class="q">Q2. Why does protein quality matter as much as CP% for dogs?<details><summary>Show answer</summary><div class="ans">Poor-quality protein sources can hit a CP% target on paper while leaving the dog short of essential amino acids.</div></details></div>
+<div class="q">Q3. What does "obligate carnivore" mean, and which species is one?<details><summary>Show answer</summary><div class="ans">An animal that cannot thrive on a plant-based/low-meat diet — the cat.</div></details></div>
+<div class="q">Q4. What is taurine and why is it essential for cats?<details><summary>Show answer</summary><div class="ans">An amino acid found almost exclusively in animal tissue; deficiency causes heart disease and blindness in cats.</div></details></div>
+<div class="q">Q5. Why can't cats rely on plant beta-carotene for vitamin A?<details><summary>Show answer</summary><div class="ans">Unlike dogs, cats cannot convert plant beta-carotene to vitamin A — they need pre-formed vitamin A from animal sources.</div></details></div>
+<div class="q">Q6. Roughly what CP% does an adult cat need?<details><summary>Show answer</summary><div class="ans">26–30%.</div></details></div>
+<div class="q">Q7. Why should cat rations never be based on a dog or generic livestock formula?<details><summary>Show answer</summary><div class="ans">Cats have unique requirements (taurine, pre-formed vitamin A, arachidonic acid) that generic formulas don't reliably meet.</div></details></div>
+<div class="q">Q8. Name three foods toxic to dogs and cats.<details><summary>Show answer</summary><div class="ans">Any three of: chocolate/cocoa, onions/garlic, grapes/raisins, xylitol, alcohol.</div></details></div>
+<div class="q">Q9. Why are cooked bones (especially poultry) risky to feed?<details><summary>Show answer</summary><div class="ans">They can splinter and cause serious internal injury.</div></details></div>
+<div class="q">Q10. Why should kitchen scraps for pets meet the same food-safety standard as feed for any other species?<details><summary>Show answer</summary><div class="ans">Spoiled or rancid scraps commonly cause digestive upset or pancreatitis — "waste" isn't automatically safe.</div></details></div>
+</div>
+</div>
+</details>
+
+<!-- MODULE 8 -->
+<details class="month">
+<summary>MODULE 8 — Fish &amp; Aquaculture Feeding <span>▾</span></summary>
+<div class="month-body">
+
+<div class="lesson"><h4>Lesson 8.1 — Why fish feed differs from land-animal feed</h4>
+<ul>
+<li>Fish are cold-blooded (ectothermic) and don't spend energy maintaining body temperature — this makes them among the most feed-efficient farmed animals, converting feed to body weight better than most land livestock.</li>
+<li>Fish need much higher dietary protein than land animals at equivalent life stage — a tilapia grower ration commonly targets 28–32% CP, and carnivorous species (catfish, especially at fry stage) need even more.</li>
+<li>Feed must be formulated to float or sink at the correct rate for the target species' feeding behaviour — tilapia generally feed at or near the surface, while catfish often feed lower in the water column; a mismatched feed form is wasted feed that pollutes the water instead of being eaten.</li>
+</ul></div>
+
+<div class="lesson"><h4>Lesson 8.2 — Life-stage feeding for tilapia and catfish</h4>
+<table>
+<tr><th>Stage</th><th>Target CP%</th><th>Notes</th></tr>
+<tr><td>Fry (first weeks)</td><td>35–40%</td><td>Highest protein requirement of any stage; small, easily ingested particle size essential</td></tr>
+<tr><td>Fingerling</td><td>30–35%</td><td>Transition toward grower ration as fish size increases</td></tr>
+<tr><td>Grower</td><td>28–32%</td><td>Bulk of the growth period</td></tr>
+<tr><td>Broodstock</td><td>30–35%</td><td>Higher protein/energy supports reproduction and egg quality</td></tr>
+</table></div>
+
+<div class="lesson"><h4>Lesson 8.3 — Feeding rate and water quality</h4>
+<ul>
+<li>Feed is typically dosed as a percentage of estimated total pond/tank body weight per day (commonly 3–5% for growing fish, tapering as fish approach market size) rather than a fixed daily amount — this requires periodically estimating fish biomass.</li>
+<li>Overfeeding is a major and common mistake in fish farming — uneaten feed decomposes in the water, consuming oxygen and degrading water quality, which can cause a mass mortality event far more damaging than any single feed cost saved by underfeeding would be worth avoiding.</li>
+<li>Feed multiple small portions per day rather than one large feeding where practical — this improves feed conversion and reduces the amount of any single feeding that goes uneaten.</li>
+</ul></div>
+
+<div class="lesson"><h4>Lesson 8.4 — Local ingredients and pellet-making basics</h4>
+<ul>
+<li>Fish meal, blood meal, and locally available protein sources (silverfish/small dried fish, insect meal where accessible, soybean meal) supply the high protein fish feed demands — fish meal is often the single largest cost item in a fish ration and the one most worth price-shopping.</li>
+<li>A simple pellet mill or extruder is needed to produce a stable, water-durable pellet — loose mash disintegrates in water before fish can eat it, wasting most of the nutritional value and fouling the water.</li>
+<li>Dry and store finished fish feed carefully — fish feed with its high protein and often some oil content is particularly prone to spoilage and rancidity if stored damp or too long.</li>
+</ul></div>
+
+<div class="practical"><strong>🛠️ Practical assignments (Module 8):</strong> (1) Formulate a grower-stage tilapia or catfish ration hitting the 28–32% CP target. (2) Estimate pond/tank biomass and calculate a correct daily feeding rate (3–5% of biomass). (3) Investigate local fish meal or alternative protein sources and get 3 price quotes.</div>
+<div class="video">📹 VIDEO 8: "Feeding fish for growth and water quality" (14 min) — protein needs by stage, feeding rate as % of biomass, avoiding overfeeding, pellet basics.</div>
+
+<div class="quiz"><h4>QUIZ 8 — Fish</h4>
+<div class="q">Q1. Why are fish among the most feed-efficient farmed animals?<details><summary>Show answer</summary><div class="ans">Being cold-blooded, they don't spend feed energy maintaining body temperature.</div></details></div>
+<div class="q">Q2. Roughly what CP% does a tilapia grower ration target?<details><summary>Show answer</summary><div class="ans">28–32%.</div></details></div>
+<div class="q">Q3. Why must feed be formulated to float or sink correctly for the target species?<details><summary>Show answer</summary><div class="ans">Mismatched feed form goes uneaten and pollutes the water instead of being consumed.</div></details></div>
+<div class="q">Q4. What is the highest-protein life stage for farmed fish?<details><summary>Show answer</summary><div class="ans">Fry (first weeks), at 35–40% CP.</div></details></div>
+<div class="q">Q5. How is fish feed typically dosed?<details><summary>Show answer</summary><div class="ans">As a percentage (commonly 3–5%) of estimated total pond/tank body weight per day.</div></details></div>
+<div class="q">Q6. Why is overfeeding especially dangerous in fish farming?<details><summary>Show answer</summary><div class="ans">Uneaten feed decomposes, consuming oxygen and degrading water quality, risking mass mortality.</div></details></div>
+<div class="q">Q7. Why feed multiple small portions rather than one large feeding?<details><summary>Show answer</summary><div class="ans">It improves feed conversion and reduces uneaten feed per feeding.</div></details></div>
+<div class="q">Q8. What is often the single largest cost item in a fish ration?<details><summary>Show answer</summary><div class="ans">Fish meal.</div></details></div>
+<div class="q">Q9. Why is a pellet mill or extruder needed rather than feeding loose mash?<details><summary>Show answer</summary><div class="ans">Loose mash disintegrates in water before fish can eat it, wasting nutrition and fouling water.</div></details></div>
+<div class="q">Q10. Why is fish feed particularly prone to spoilage in storage?<details><summary>Show answer</summary><div class="ans">Its high protein and oil content make it prone to rancidity if stored damp or too long.</div></details></div>
+</div>
+</div>
+</details>
+
+<!-- MODULE 9 -->
+<details class="month">
+<summary>MODULE 9 — Milling, Mixing &amp; Quality Control <span>▾</span></summary>
+<div class="month-body">
+
+<div class="lesson"><h4>Lesson 9.1 — Milling ingredients</h4>
+<ul>
+<li>Whole grains must be milled before mixing — animals cannot digest whole maize efficiently, and uneven particle size causes uneven nutrient intake within the same batch.</li>
+<li>Target particle size varies by species: coarser for pigs and cattle, finer for poultry mash, fine crumble for young quail/fish fry, and pelleted for fish and some pet food to prevent water disintegration or ensure complete nutrition per bite.</li>
+<li>A shared community hammer mill is often the most practical entry point — full mill ownership only pays for itself at real volume across multiple species/customers.</li>
+</ul></div>
+
+<div class="lesson"><h4>Lesson 9.2 — Mixing correctly</h4>
+<ul>
+<li>Mixing order matters: largest-volume ingredient first, progressively smaller ones after, ending with the smallest (premix, medication) — this "dilution" approach avoids clumping and uneven distribution.</li>
+<li>Premix must first be pre-mixed into a small batch of the base ingredient (a "carrier") before being added to the full batch — sprinkling a tiny quantity directly into a large mix gives some animals none and others too much.</li>
+<li>Mix for the full recommended time (a drum or paddle mixer typically 8–15 minutes) — under-mixing leaves pockets of unbalanced feed, which matters even more for species-specific batches where cross-contamination between species runs (e.g. cattle mineral into a cat batch) must also be avoided.</li>
+</ul></div>
+
+<div class="lesson"><h4>Lesson 9.3 — Species cross-contamination and dedicated equipment</h4>
+<ul>
+<li>Running multiple species' feed through the same equipment risks cross-contamination — cattle mineral/medicated feed residue in a pet or fish batch, or ruminant-derived meat and bone meal residue in cattle feed (a known disease transmission risk in some countries), are real hazards, not theoretical ones.</li>
+<li>Where possible, dedicate a cleaning step (full sweep-out and wash) between different species' batches, and sequence production species-appropriately — clean, low-risk batches (e.g. plain grain-based rations) before medicated or animal-protein-heavy batches where cross-contamination risk is highest.</li>
+<li>Label and store finished batches by species clearly and separately — a mix-up at the storage stage is as costly as a mix-up during mixing itself.</li>
+</ul></div>
+
+<div class="lesson"><h4>Lesson 9.4 — Quality control checks</h4>
+<ul>
+<li>Smell every batch of protein ingredients before use — rancid or musty smell means spoilage or fungal growth; discard rather than risk aflatoxin poisoning, which affects every species covered in this course.</li>
+<li>Check moisture: ingredients should feel dry, not damp — mix moisture above about 12–13% risks mould growth in storage.</li>
+<li>Keep a simple batch record per species: date, ingredients, quantities, and buyer — this protects you if an animal health problem is ever traced back and builds trust with repeat customers across every species you serve.</li>
+</ul></div>
+
+<div class="practical"><strong>🛠️ Practical assignments (Module 9):</strong> (1) Mill a batch and check for even particle size appropriate to one target species. (2) Mix a full ration in correct order, pre-mixing premix into a carrier first. (3) Design a simple cleaning/sequencing plan to prevent cross-contamination between two different species' batches.</div>
+<div class="video">📹 VIDEO 9: "Mixing without mistakes, across species" (16 min) — correct mixing order, premix carrier technique, cross-contamination risk, quality checks.</div>
+
+<div class="quiz"><h4>QUIZ 9 — Milling, mixing &amp; QC</h4>
+<div class="q">Q1. Why must whole grains be milled before mixing?<details><summary>Show answer</summary><div class="ans">Animals cannot digest whole grain efficiently and uneven particle size causes uneven nutrient intake.</div></details></div>
+<div class="q">Q2. Why does fish feed typically need to be pelleted rather than left as mash?<details><summary>Show answer</summary><div class="ans">To prevent water disintegration before fish can eat it.</div></details></div>
+<div class="q">Q3. What is the correct mixing order?<details><summary>Show answer</summary><div class="ans">Largest-volume ingredient first, progressively smaller ones after, smallest (premix) added last via a carrier.</div></details></div>
+<div class="q">Q4. Why must premix be pre-mixed into a carrier first?<details><summary>Show answer</summary><div class="ans">Sprinkling a tiny quantity directly into a large batch gives uneven distribution.</div></details></div>
+<div class="q">Q5. Name a real cross-contamination risk between species' feed batches.<details><summary>Show answer</summary><div class="ans">Cattle mineral/medicated residue in a pet or fish batch, or ruminant-derived meat and bone meal residue in cattle feed.</div></details></div>
+<div class="q">Q6. Why sequence low-risk batches before medicated/animal-protein-heavy batches?<details><summary>Show answer</summary><div class="ans">It reduces the risk of cross-contamination carrying into cleaner batches.</div></details></div>
+<div class="q">Q7. Why label and store finished batches by species separately?<details><summary>Show answer</summary><div class="ans">A mix-up at storage is as costly as a mix-up during mixing.</div></details></div>
+<div class="q">Q8. What does rancid or musty smell in a protein ingredient signal?<details><summary>Show answer</summary><div class="ans">Spoilage or fungal growth — discard rather than risk aflatoxin poisoning.</div></details></div>
+<div class="q">Q9. What moisture level in stored feed risks mould growth?<details><summary>Show answer</summary><div class="ans">Above about 12–13%.</div></details></div>
+<div class="q">Q10. Why keep a batch record per species?<details><summary>Show answer</summary><div class="ans">It protects you if a health issue is traced back and builds trust across every species served.</div></details></div>
+</div>
+</div>
+</details>
+
+<!-- MODULE 10 -->
+<details class="month">
+<summary>MODULE 10 — Storage, Costing &amp; the Multi-Species Feed Business <span>▾</span></summary>
+<div class="month-body">
+
+<div class="lesson"><h4>Lesson 10.1 — Storing finished feed by species</h4>
+<ul>
+<li>Store bagged feed off the ground on pallets, away from walls, in a dry, ventilated, rodent-proof store — damp floors and walls wick moisture into bags regardless of which species the feed is for.</li>
+<li>High-fat feeds (fish feed, some pet food) go rancid faster than plain grain-based livestock feed — aim to sell or use within 2–4 weeks of mixing, especially in hot climates, and communicate this shelf life clearly to customers.</li>
+<li>Label every bag with species, life stage, and mix date — feed bought without a clear species/stage label is a common source of costly misuse and customer disputes.</li>
+</ul></div>
+
+<div class="lesson"><h4>Lesson 10.2 — Costing across species</h4>
+<ul>
+<li>Cost = sum of (ingredient weight × price/kg) for every ingredient, plus milling cost, plus your labour and a margin — factor in the extra care (cleaning, dedicated batches) that multi-species production requires, since it's real cost even without an extra ingredient.</li>
+<li>Compare true cost per kg against local commercial feed price for each species you serve — pet food and fish feed often command a bigger margin over ingredient cost than commodity livestock feed, since fewer local competitors formulate them correctly.</li>
+<li>Track cost per kg per species over time as ingredient prices move — protein sources (soybean meal, fish meal) tend to be the most volatile cost line across every species ration in this course.</li>
+</ul></div>
+
+<div class="lesson"><h4>Lesson 10.3 — Building a multi-species feed business</h4>
+<ul>
+<li>Start with the species you know best or have the readiest market for, build confidence and a track record, then expand into adjacent species — a customer buying poultry feed from you is a natural prospect for pig, cattle or pet feed if you can formulate it correctly.</li>
+<li>Offer a few standard formulations per species (e.g. broiler starter, layer mash, pig grower, adult dog) rather than infinite custom recipes — standard products are faster to mix, cost, and market, while still covering the range this course teaches.</li>
+<li>Differentiation from generic feed sellers is exactly the depth this course provides — most informal feed sellers in many markets only really understand poultry feed; correctly serving cattle, small ruminants, pigs, horses, pets and fish as well is a genuine competitive advantage.</li>
+</ul></div>
+
+<div class="lesson"><h4>Lesson 10.4 — Final project: your bankable multi-species business plan</h4>
+<ul>
+<li>Assemble: your local ingredient price list, costed standard formulations for at least 4 different species/classes covered in this course (with CP%, cost/kg, target stage), your milling/mixing equipment and cross-contamination prevention plan, storage plan by species, quality-control checklist, target customer list by species with expected volumes, and a 3-month growth path.</li>
+<li>Submit with your batch records and photos for your rAs certificate — multi-species feed businesses that document formulation accuracy and contamination prevention across species are exactly what serious commercial buyers, veterinary services and lenders look for.</li>
+</ul></div>
+
+<div class="pricecheck">✅ <strong>Iron-Clad Price Check:</strong> maize/bran, soybean meal or groundnut cake, fish meal, and premix (livestock and, if offered, pet-specific) — 3 quotes each, re-checked monthly.</div>
+
+<div class="practical"><strong>🛠️ Practical assignments (Module 10):</strong> (1) Cost one full batch precisely for each of two different species, including your own labour. (2) Offer a custom mix to one new species customer and record the outcome. (3) Complete and submit the bankable multi-species business plan.</div>
+<div class="video">📹 VIDEO 10: "From backyard mix to multi-species feed business" (15 min) — species-specific storage, true costing, building a broader customer base.</div>
+
+<div class="quiz"><h4>QUIZ 10 — Storage, costing &amp; business</h4>
+<div class="q">Q1. Why store feed off the ground on pallets regardless of species?<details><summary>Show answer</summary><div class="ans">Damp floors and walls wick moisture into bags, encouraging mould in any species' feed.</div></details></div>
+<div class="q">Q2. Why does high-fat feed (fish, some pet food) need to be used faster?<details><summary>Show answer</summary><div class="ans">It goes rancid faster than plain grain-based livestock feed, especially in hot climates.</div></details></div>
+<div class="q">Q3. What should every bag be labelled with?<details><summary>Show answer</summary><div class="ans">Species, life stage, and mix date.</div></details></div>
+<div class="q">Q4. What extra real cost does multi-species production carry beyond ingredients?<details><summary>Show answer</summary><div class="ans">The extra care of cleaning and dedicated batches to prevent cross-contamination.</div></details></div>
+<div class="q">Q5. Why might pet food and fish feed command a bigger margin than commodity livestock feed?<details><summary>Show answer</summary><div class="ans">Fewer local competitors formulate them correctly, reducing price competition.</div></details></div>
+<div class="q">Q6. Which cost line tends to be the most volatile across species rations?<details><summary>Show answer</summary><div class="ans">Protein sources such as soybean meal and fish meal.</div></details></div>
+<div class="q">Q7. Why is an existing poultry-feed customer a natural prospect for other species' feed?<details><summary>Show answer</summary><div class="ans">A trusted supplier relationship extends naturally if the feed maker can formulate correctly for adjacent species.</div></details></div>
+<div class="q">Q8. Why offer a few standard formulations per species rather than infinite custom recipes?<details><summary>Show answer</summary><div class="ans">Standard products are faster to mix, cost and market.</div></details></div>
+<div class="q">Q9. What is the competitive advantage this course's multi-species depth provides?<details><summary>Show answer</summary><div class="ans">Most informal feed sellers only understand poultry feed well; correctly serving cattle, small ruminants, pigs, horses, pets and fish is a genuine differentiator.</div></details></div>
+<div class="q">Q10. What should a bankable multi-species business plan document?<details><summary>Show answer</summary><div class="ans">Formulation accuracy and contamination prevention across at least 4 species/classes.</div></details></div>
+</div>
+</div>
+</details>
+
+<h2>💰 Startup budget (small-scale, 2–3 species mixing)</h2>
+<div class="box">
+<table>
+<tr><th>Item</th><th>Typical range (USD)</th></tr>
+<tr><td>Bathroom/platform scale (up to 150 kg)</td><td>$25–80</td></tr>
+<tr><td>Small precision scale (for premix/additives)</td><td>$15–40</td></tr>
+<tr><td>Mixing drum or paddle mixer (manual or motorised)</td><td>$80–400</td></tr>
+<tr><td>Hammer mill access (own or shared/hire per session)</td><td>$150–1,500 (own) or $2–5/50kg (hire)</td></tr>
+<tr><td>Pellet mill/extruder (only if serving fish/pet market at scale)</td><td>$300–2,000</td></tr>
+<tr><td>Initial ingredient stock across species (1 tonne combined)</td><td>$300–650</td></tr>
+<tr><td>Bags, sealer, species-specific labels</td><td>$40–120</td></tr>
+<tr><td>Vitamin/mineral premix — livestock and pet-specific stock</td><td>$60–180</td></tr>
+<tr><td><strong>Total (without pellet mill)</strong></td><td><strong>$670–2,970</strong></td></tr>
+</table>
+</div>
+
+<h2>📖 Glossary</h2>
+<div class="box"><ul>
+<li><strong>CP% (crude protein)</strong> — the standard label measure of protein content, estimated from nitrogen.</li>
+<li><strong>Pearson Square</strong> — a diagonal-subtraction method for mixing two ingredients to hit a target CP%.</li>
+<li><strong>Ruminant</strong> — an animal (cattle, goat, sheep) with a multi-chamber stomach that ferments fibre via a rumen.</li>
+<li><strong>Monogastric</strong> — an animal (pig, poultry) with a single simple stomach, unable to ferment fibre for meaningful energy.</li>
+<li><strong>Hindgut fermenter</strong> — an animal (horse) that ferments fibre after the stomach, in an enlarged caecum/colon.</li>
+<li><strong>Obligate carnivore</strong> — an animal (cat) that cannot thrive without animal-source nutrients such as taurine.</li>
+<li><strong>Taurine</strong> — an amino acid essential for cats, found almost exclusively in animal tissue.</li>
+<li><strong>Lysine</strong> — the first-limiting amino acid in most maize-based pig and poultry diets.</li>
+<li><strong>TMR (Total Mixed Ration)</strong> — all forage, concentrate and additives combined into one uniform cattle feed.</li>
+<li><strong>Flushing</strong> — increasing nutrition before mating to improve conception rate and litter size.</li>
+<li><strong>Creep feeding</strong> — offering young animals access to starter feed the mother cannot reach.</li>
+<li><strong>Acidosis</strong> — dangerous rumen/hindgut acid build-up from too much concentrate too fast.</li>
+<li><strong>Aflatoxin</strong> — a mould toxin on grains/oilseed cake, dangerous across every species in this course.</li>
+</ul></div>
+
+<h2>📚 Resources</h2>
+<div class="box"><ul>
+<li>FAO Animal Feed Resources Information System; national livestock, equine and companion-animal feed manuals</li>
+<li>Your local extension office, veterinary service and feed supply shop — premix products, formulation worksheets, local ingredient testing</li>
+<li>rAs companion courses: Poultry Farming · Pig Farming · Cattle Farming · Dairy Production · Goat &amp; Sheep Rearing · Fishing &amp; Fish Farming · Bookkeeping</li>
+</ul></div>
+
+<div class="cta">
+<a href="index.html#courses">🎓 Enroll &amp; earn your Animal Feed Making certificate</a>
+<p style="color:var(--muted);font-size:0.8rem;margin-top:0.6rem">Certificate ($10) issued on completion of all module quizzes + the final project.</p>
+</div>
+</main>
+<footer>© 2026 Rise Africa Skills · riseafricaskills.com · Learn Practical Skills. Start Your Business.<br>Educational guidance — always follow your national regulations. Figures are planning guides; verify local prices (Iron-Clad Price Check).</footer>
+</body>
+</html>
