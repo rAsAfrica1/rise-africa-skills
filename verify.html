@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verify Certificate | Rise Africa Skills</title>
+    <title>Verify a Business Seed Record | rise AFRICA skills</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
@@ -362,13 +362,13 @@
 
     <main class="main">
         <div class="hero">
-            <h1>Certificate Verification</h1>
-            <p>Enter a certificate ID to verify its authenticity</p>
+            <h1>Business Seed Record Verification</h1>
+            <p>Enter a record number to check it. <strong>Note:</strong> rise AFRICA skills is not a school, college or university. A Business Seed Record is not a diploma, degree or accredited qualification and has no academic or regulatory standing.</p>
         </div>
 
         <div class="verify-box">
             <div class="input-group">
-                <label for="certInput">Certificate ID</label>
+                <label for="certInput">Record Number</label>
                 <div class="input-wrapper">
                     <input 
                         type="text" 
@@ -394,7 +394,7 @@
         const SUPABASE_URL = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc';
 
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // Allow Enter key to trigger verification
         document.getElementById('certInput').addEventListener('keypress', function(e) {
@@ -417,7 +417,7 @@
             resultBox.style.display = 'none';
 
             try {
-                const { data, error } = await supabase
+                const { data, error } = await sb
                     .from('certificates')
                     .select('*')
                     .eq('unique_id', certId)
