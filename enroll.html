@@ -40,23 +40,19 @@ footer{border-top:1px solid rgba(201,162,39,0.15);text-align:center;padding:1.5r
 </style>
 </head>
 <body>
-
 <header>
   <div class="logo-icon">rAs</div>
   <span class="brand">rise AFRICA skills</span>
   <a class="back" href="index.html">← All Courses</a>
 </header>
-
 <main>
   <div class="hero">
     <h1 id="courseTitle">Course Enrollment</h1>
     <p id="courseDesc">Choose your learning path and enroll today</p>
   </div>
-
   <div class="info-box">
     <strong>✓ Secure Payment:</strong> All payments processed securely through Stripe. Your payment information is never stored on our servers.
   </div>
-
   <div class="pricing-grid">
     <!-- FULL COURSE -->
     <div class="price-card featured">
@@ -73,7 +69,6 @@ footer{border-top:1px solid rgba(201,162,39,0.15);text-align:center;padding:1.5r
       </ul>
       <button class="btn btn-primary" onclick="enrollCourse('course', 8.00)">Enroll Now</button>
     </div>
-
     <!-- CERTIFICATE OPTION -->
     <div class="price-card">
       <div class="price-tag">Premium</div>
@@ -90,7 +85,6 @@ footer{border-top:1px solid rgba(201,162,39,0.15);text-align:center;padding:1.5r
       <button class="btn btn-primary" onclick="enrollCourse('cert', 10.00)">Enroll Now</button>
       <p style="font-size:0.75rem;color:var(--muted);margin-top:0.5rem">*Certificate after completion</p>
     </div>
-
     <!-- PRINT OPTION -->
     <div class="price-card">
       <div class="price-tag">Offline</div>
@@ -107,72 +101,58 @@ footer{border-top:1px solid rgba(201,162,39,0.15);text-align:center;padding:1.5r
       <button class="btn btn-primary" onclick="enrollCourse('print', 3.50)">Enroll Now</button>
     </div>
   </div>
-
   <div class="back-btn">
     <a href="index.html#courses">← Browse other courses</a>
   </div>
 </main>
-
 <footer>
 © 2026 Rise Africa Skills · riseafricaskills.com · We seed businesses, not graduates.<br>
 Money-back guarantee if you don't complete the course within 30 days.
 </footer>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="auth-system.js"></script>
 <script src="enrollment-system.js"></script>
-
 <script>
 // ============ GET COURSE NAME FROM URL ============
 function getCourseName() {
   const params = new URLSearchParams(window.location.search);
   return params.get('course') || 'Unknown Course';
 }
-
 // ============ CHECK LOGIN STATUS AND INITIALIZE ============
 async function checkLoginAndInit() {
   // Check if user is logged in
   const isLoggedIn = await window.AuthSystem.isLoggedIn();
-
   if (!isLoggedIn) {
     // Redirect to login with redirect parameter to return to enrollment page
     window.location.href = `/login.html?redirect=${encodeURIComponent(window.location.href)}`;
     return;
   }
-
   // User is logged in, initialize the page normally
   initializePage();
 }
-
 // ============ UPDATE PAGE WITH COURSE INFO ============
 function initializePage() {
   const courseName = getCourseName();
   document.getElementById('courseTitle').textContent = courseName;
   document.getElementById('courseDesc').textContent = `Enroll in ${courseName} and start learning today.`;
 }
-
 // ============ ENROLL AND REDIRECT TO STRIPE ============
 async function enrollCourse(tier, price) {
   // Check if user is logged in
   const isLoggedIn = await window.AuthSystem.isLoggedIn();
-
   if (!isLoggedIn) {
     // Redirect to login
     window.location.href = `/login.html?redirect=${encodeURIComponent(window.location.href)}`;
     return;
   }
-
   const courseName = getCourseName();
   const userId = await window.AuthSystem.getUserId();
   const user = await window.AuthSystem.getCurrentUser();
-
   // Create a pending enrollment record
   // This will be marked as "completed" after successful Stripe payment
-
   // Redirect to Stripe checkout
   // You need to set up a backend endpoint that creates a Stripe checkout session
   const checkoutUrl = `/api/create-checkout-session`;
-
   try {
     const response = await fetch(checkoutUrl, {
       method: 'POST',
@@ -185,9 +165,7 @@ async function enrollCourse(tier, price) {
         email: user.email
       })
     });
-
     const data = await response.json();
-
     if (data.success && data.checkoutUrl) {
       // Redirect to Stripe checkout
       window.location.href = data.checkoutUrl;
@@ -199,10 +177,8 @@ async function enrollCourse(tier, price) {
     alert('Error processing enrollment. Please try again.');
   }
 }
-
 // Initialize when page loads - checks login status first
 document.addEventListener('DOMContentLoaded', checkLoginAndInit);
 </script>
-
 </body>
 </html>
