@@ -4768,34 +4768,23 @@ if(!card) return;
 var h3 = card.querySelector('h3');
 var courseTitle = h3 ? h3.textContent.trim() : '';
 var tier = btn.dataset.tier || 'course';
-populateRegCourses();
-if(regCourseSel && courseTitle) regCourseSel.value = courseTitle;
-if(regTierSel) regTierSel.value = tier;
-var sub = document.getElementById('regSubTitle');
-var tierNames = {course:'Full Course Access', cert:'Course + Certificate', print:'Print/Download', bundle:'3-Course Bundle', gift:'Gift Enrollment'};
-if(sub) sub.textContent = courseTitle + ' — ' + (tierNames[tier] || '');
-if(giftField) giftField.style.display = tier === 'gift' ? 'block' : 'none';
-if(giftEmailField) giftEmailField.style.display = tier === 'gift' ? 'block' : 'none';
-regFormWrap.style.display = 'block';
-regSuccess.classList.remove('on');
-regModalBg.classList.add('on');
+if(courseTitle){
+window.location.href = 'enroll.html?course=' + encodeURIComponent(courseTitle);
+}
 };
 var btnRegister = document.getElementById('btnRegister');
 if(btnRegister){
 btnRegister.addEventListener('click', function(){
-populateRegCourses();
-if(regTierSel) regTierSel.value = 'course';
-if(giftField) giftField.style.display = 'none';
-if(giftEmailField) giftEmailField.style.display = 'none';
-var sub = document.getElementById('regSubTitle');
-if(sub) sub.textContent = 'Choose your course and payment option below';
-regFormWrap.style.display = 'block';
-regSuccess.classList.remove('on');
-regModalBg.classList.add('on');
+window.location.href = 'enroll.html';
 });
 }
-document.getElementById('btnRegModalX').addEventListener('click', function(){ regModalBg.classList.remove('on'); });
+var btnRegModalX = document.getElementById('btnRegModalX');
+if(btnRegModalX && regModalBg){
+btnRegModalX.addEventListener('click', function(){ regModalBg.classList.remove('on'); });
+}
+if(regModalBg){
 regModalBg.addEventListener('click', function(e){ if(e.target === this) this.classList.remove('on'); });
+}
 if(regTierSel){
 regTierSel.addEventListener('change', function(){
 var isGift = this.value === 'gift';
@@ -4811,9 +4800,11 @@ var regFormEl = document.querySelector('#regFormWrap .reg-form');
 if(regFormEl) regFormEl.insertBefore(guestNotice, regFormEl.firstChild);
 document.addEventListener('click', function(e){
 var link = e.target.closest('#linkCreateAccount');
-if(link){ e.preventDefault(); regModalBg.classList.remove('on'); openAuthModal('signup'); }
+if(link && regModalBg){ e.preventDefault(); regModalBg.classList.remove('on'); openAuthModal('signup'); }
 });
-document.getElementById('btnRegSubmit').addEventListener('click', function(){
+var btnRegSubmit = document.getElementById('btnRegSubmit');
+if(btnRegSubmit){
+btnRegSubmit.addEventListener('click', function(){
 var btn = this;
 btn.disabled = true; btn.textContent = 'Processing...'; btn.style.opacity = '0.7';
 try {
@@ -4884,14 +4875,18 @@ alert('Something went wrong. Please try again. (Check console for details)');
 }
 resetBtn();
 });
+}
 function resetBtn(){
 var btn = document.getElementById('btnRegSubmit');
 if(btn){ btn.disabled = false; btn.textContent = 'Complete Enrollment'; btn.style.opacity = '1'; }
 }
-document.getElementById('btnStartLearning').addEventListener('click', function(){
+var btnStartLearning = document.getElementById('btnStartLearning');
+if(btnStartLearning && regModalBg){
+btnStartLearning.addEventListener('click', function(){
 regModalBg.classList.remove('on');
 scrollToId('enrolled');
 });
+}
 // ===== STRIPE PAYMENT LINKS (live) =====
 var STRIPE_LINKS = {
 course: 'https://buy.stripe.com/14AaEXgus0cRg8PcHW2sM03',
@@ -4968,6 +4963,7 @@ var userAvatar = document.getElementById('userAvatar');
 var currentUser = null;
 var isLoginMode = false;
 function openAuthModal(mode){
+if(!authModalBg || !authFormWrap || !authSuccess) return;
 isLoginMode = mode === 'login';
 authModalBg.classList.toggle('login-mode', isLoginMode);
 if(authTitle) authTitle.textContent = isLoginMode ? '🔐 Log In to rAs' : '📝 Create Your rAs Account';
@@ -4979,19 +4975,28 @@ authFormWrap.style.display = 'block';
 authSuccess.classList.remove('on');
 authModalBg.classList.add('on');
 }
-function closeAuthModal(){ authModalBg.classList.remove('on'); }
-document.getElementById('btnAuthModalX').addEventListener('click', closeAuthModal);
+function closeAuthModal(){ if(authModalBg) authModalBg.classList.remove('on'); }
+var btnAuthModalX = document.getElementById('btnAuthModalX');
+if(btnAuthModalX){
+btnAuthModalX.addEventListener('click', closeAuthModal);
+}
+if(authModalBg){
 authModalBg.addEventListener('click', function(e){ if(e.target === this) closeAuthModal(); });
+}
 if(btnAuthToggle){
 btnAuthToggle.addEventListener('click', function(e){ e.preventDefault(); openAuthModal(isLoginMode ? 'signup' : 'login'); });
 }
+try {
+if(typeof supabaseClient !== 'undefined' && supabaseClient && supabaseClient.auth){
 supabaseClient.auth.getSession().then(function(res){
-if(res.data && res.data.session){ currentUser = res.data.session.user; updateUserUI(); }
-});
+if(res && res.data && res.data.session){ currentUser = res.data.session.user; updateUserUI(); }
+}).catch(function(e){ console.error('Supabase getSession error:', e); });
 supabaseClient.auth.onAuthStateChange(function(event, session){
 if(event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED'){ currentUser = session ? session.user : null; updateUserUI(); }
 else if(event === 'SIGNED_OUT'){ currentUser = null; updateUserUI(); }
 });
+}
+} catch(e){ console.error('Auth initialization error:', e); }
 function updateUserUI(){
 if(!userBadge || !userName || !userAvatar) return;
 var guestNotice = document.getElementById('guestNotice');
@@ -5001,7 +5006,7 @@ var initial = name.charAt(0).toUpperCase();
 userName.textContent = name;
 userAvatar.textContent = initial;
 userBadge.style.display = 'flex';
-userBadge.onclick = function(){ if(confirm('Log out of rAs?')){ supabaseClient.auth.signOut(); } };
+userBadge.onclick = function(){ if(confirm('Log out of rAs?')){ if(typeof supabaseClient !== 'undefined' && supabaseClient && supabaseClient.auth) supabaseClient.auth.signOut(); } };
 var regName = document.getElementById('regName');
 var regEmail = document.getElementById('regEmail');
 var regPhone = document.getElementById('regPhone');
@@ -5019,18 +5024,23 @@ userBadge.onclick = null;
 }
 if(btnAuthSubmit){
 btnAuthSubmit.addEventListener('click', function(){
+if(!authFormWrap || !authSuccess) return;
 var email = document.getElementById('authEmail').value.trim();
 var password = document.getElementById('authPassword').value;
 if(!email || !password){ alert('Please enter email and password.'); return; }
 if(password.length < 6){ alert('Password must be at least 6 characters.'); return; }
 if(isLoginMode){
+if(typeof supabaseClient !== 'undefined' && supabaseClient && supabaseClient.auth){
 supabaseClient.auth.signInWithPassword({email:email, password:password}).then(function(res){
 if(res.error){ alert('Login failed: ' + res.error.message); return; }
 currentUser = res.data.user;
 authFormWrap.style.display = 'none';
 authSuccess.classList.add('on');
 updateUserUI();
-});
+}).catch(function(e){ alert('Login error: ' + e.message); });
+} else {
+alert('Authentication system not available. Please try again later.');
+}
 } else {
 var name = document.getElementById('authName').value.trim();
 var phone = document.getElementById('authPhone').value.trim();
@@ -5038,6 +5048,7 @@ var country = document.getElementById('authCountry').value;
 var confirmPass = document.getElementById('authConfirm').value;
 if(!name){ alert('Please enter your full name.'); return; }
 if(password !== confirmPass){ alert('Passwords do not match.'); return; }
+if(typeof supabaseClient !== 'undefined' && supabaseClient && supabaseClient.auth){
 supabaseClient.auth.signUp({
 email: email, password: password,
 options: { data: { full_name: name, phone: phone, country: country } }
@@ -5047,11 +5058,17 @@ currentUser = res.data.user;
 authFormWrap.style.display = 'none';
 authSuccess.classList.add('on');
 updateUserUI();
-});
+}).catch(function(e){ alert('Sign up error: ' + e.message); });
+} else {
+alert('Authentication system not available. Please try again later.');
+}
 }
 });
 }
-document.getElementById('btnAuthStart').addEventListener('click', function(){ closeAuthModal(); scrollToId('courses'); });
+var btnAuthStart = document.getElementById('btnAuthStart');
+if(btnAuthStart){
+btnAuthStart.addEventListener('click', function(){ closeAuthModal(); scrollToId('courses'); });
+}
 
 // ===== EXPLORE / START FREE BUTTONS =====
 var btnExplore = document.getElementById('btnExplore');
@@ -5487,67 +5504,418 @@ setTimeout(() => toast.classList.remove('show'), 2000);
 </script>
 
 <script>
-// ===== FLAGSHIP COURSE PAGE LINKS =====
+// ===== ALL COURSE PAGE LINKS (407 courses) =====
 var COURSE_PAGES = {
-"Pig Farming":"pig-farming-course.html",
-"Poultry Farming":"poultry-farming-course.html",
-"Rabbit Farming":"rabbit-farming-course.html",
-"Goat & Sheep Rearing":"goat-sheep-rearing-course.html",
-"Ostrich Farming":"ostrich-farming-course.html",
-"Bee Farming":"bee-farming-course.html",
-"Mushroom Farming":"mushroom-farming-course.html",
-"Fishing & Fish Farming":"fishing-fish-farming-course.html",
-"Cattle Farming":"cattle-farming-course.html",
-"Beef Farming":"beef-farming-course.html",
-"Cassava Farming":"cassava-farming-course.html",
-"Yam Farming":"yam-farming-course.html",
-"Maize Farming":"maize-farming-course.html",
-"Rice Farming":"rice-farming-course.html",
-"Soybean Farming":"soybean-farming-course.html",
-"Groundnut Farming":"groundnut-farming-course.html",
-"Cotton Farming":"cotton-farming-course.html",
-"Solar Drying":"solar-drying-course.html",
-"Tomato Farming":"tomato-farming-course.html",
-"Onion Farming":"onion-farming-course.html",
-"Potato Farming":"potato-farming-course.html",
-"Irish Potato Farming":"irish-potato-farming-course.html",
-"Sweet Potato Farming":"sweet-potato-farming-course.html",
-"Banana Farming":"banana-farming-course.html",
-"Avocado Farming":"avocado-farming-course.html",
-"Mango & Citrus Farming":"mango-citrus-farming-course.html",
-"Beans & Legumes Farming":"beans-legumes-farming-course.html",
-"Sorghum & Millet Farming":"sorghum-millet-farming-course.html",
-"Wheat & Barley Farming":"wheat-barley-farming-course.html",
-"Sunflower Farming":"sunflower-farming-course.html",
-"Vegetable Production":"vegetable-production-course.html",
+"3D Printing":"3d-printing-course.html",
+"AR/VR Development":"arandvr-development-course.html",
+"Adult Literacy":"adult-literacy-course.html",
+"Agribusiness":"agribusiness-course.html",
+"Agricultural Extension":"agricultural-extension-course.html",
+"Agroforestry":"agroforestry-course.html",
+"Air Conditioning":"air-conditioning-course.html",
+"Algaculture":"algaculture-course.html",
+"Aluminum Fabrication":"aluminum-fabrication-course.html",
+"Amharic Language":"amharic-language-course.html",
 "Animal Feed Making":"animal-feed-making-course.html",
-"Dairy Production":"dairy-production-course.html",
-"Snail Farming":"snail-farming-course.html",
-"Grasscutter Farming":"grasscutter-farming-course.html",
-"Quail Farming":"quail-farming-course.html",
-"Turkey Farming":"turkey-farming-course.html",
-"Duck Farming":"duck-farming-course.html",
-"Guinea Fowl Farming":"guinea-fowl-farming-course.html",
-"Crocodile Farming":"crocodile-farming-course.html",
-"Grafting, Budding & Orchards":"grafting-budding-orchards-course.html",
-"Forestry & Tree Planting":"forestry-tree-planting-course.html",
-"General Agriculture":"general-agriculture-course.html",
-"Silkworm Farming":"silkworm-farming-course.html",
-"Earthworm Farming":"earthworm-farming-course.html",
-"Cocoa Farming":"cocoa-farming-course.html",
-"Coffee Farming":"coffee-farming-course.html",
-"Tea Farming":"tea-farming-course.html",
-"Sugarcane Farming":"sugarcane-farming-course.html",
-"Palm Oil Production":"palm-oil-production-course.html",
-"Coconut Farming":"coconut-farming-course.html",
-"Shea Butter Production":"shea-butter-production-course.html",
-
-"Artificial Intelligence Basics":"basic-ai-course.html",
+"Animation":"animation-course.html",
+"Aquaponics":"aquaponics-course.html",
 "Arabic Language":"arabic-language-course.html",
-"Chinese Language (Mandarin)":"chinese-language-course.html",
-"Personal Branding":"personal-branding-course.html",
-"Russian Language":"russian-language-course.html"
-  };
+"Artificial Intelligence Basics":"artificial-intelligence-basics-course.html",
+"Auto Electrical":"auto-electrical-course.html",
+"Auto Mechanics":"auto-mechanics-course.html",
+"Avocado Farming":"avocado-farming-course.html",
+"Baby Food Production":"baby-food-production-course.html",
+"Bag Making":"bag-making-course.html",
+"Baking":"baking-course.html",
+"Banana Farming":"banana-farming-course.html",
+"Basket Weaving":"basket-weaving-course.html",
+"Battery Storage & Inverters":"battery-storage-and-inverters-course.html",
+"Bead Making":"bead-making-course.html",
+"Beans & Legumes Farming":"beans-and-legumes-farming-course.html",
+"Beauty Business":"beauty-business-course.html",
+"Bee Farming":"bee-farming-course.html",
+"Beer Brewing":"beer-brewing-course.html",
+"Beverage Production":"beverage-production-course.html",
+"Bicycle Repair":"bicycle-repair-course.html",
+"Biogas Technology":"biogas-technology-course.html",
+"Biopesticide Production":"biopesticide-production-course.html",
+"Blacksmithing":"blacksmithing-course.html",
+"Block Making":"block-making-course.html",
+"Blockchain Development":"blockchain-development-course.html",
+"Book Binding":"book-binding-course.html",
+"Bookkeeping":"bookkeeping-course.html",
+"Broom Making":"broom-making-course.html",
+"Brush Making":"brush-making-course.html",
+"Business English":"business-english-course.html",
+"Business Plan Writing":"business-plan-writing-course.html",
+"Business Registration":"business-registration-course.html",
+"CCTV Installation":"cctv-installation-course.html",
+"CNC Machining":"cnc-machining-course.html",
+"Cabinet Making":"cabinet-making-course.html",
+"Candle Making":"candle-making-course.html",
+"Canning & Bottling":"canning-and-bottling-course.html",
+"Carpentry":"carpentry-course.html",
+"Cassava Farming":"cassava-farming-course.html",
+"Cassava Processing":"cassava-processing-course.html",
+"Cattle Farming":"cattle-farming-course.html",
+"Change Management":"change-management-course.html",
+"Charcoal Briquette Making":"charcoal-briquette-making-course.html",
+"Childcare":"childcare-course.html",
+"Chinese Language (Mandarin)":"chinese-language-mandarin-course.html",
+"Chocolate Making":"chocolate-making-course.html",
+"Cleaning Services":"cleaning-services-course.html",
+"Climate-Smart Agriculture":"climatesmart-agriculture-course.html",
+"Cloud Computing":"cloud-computing-course.html",
+"Cocoa Farming":"cocoa-farming-course.html",
+"Coconut Farming":"coconut-farming-course.html",
+"Coconut Oil Production":"coconut-oil-production-course.html",
+"Coffee Farming":"coffee-farming-course.html",
+"Coffee Roasting":"coffee-roasting-course.html",
+"Cold Chain Transport":"cold-chain-transport-course.html",
+"Cold Storage Design":"cold-storage-design-course.html",
+"Community Health":"community-health-course.html",
+"Composting & Organic Fertilizer":"composting-and-organic-fertilizer-course.html",
+"Computer Assembly":"computer-assembly-course.html",
+"Confectionery":"confectionery-course.html",
+"Construction Basics":"construction-basics-course.html",
+"Consulting":"consulting-course.html",
+"Content Creation":"content-creation-course.html",
+"Contract Management":"contract-management-course.html",
+"Cooking":"cooking-course.html",
+"Cooperative Management":"cooperative-management-course.html",
+"Coppersmithing":"coppersmithing-course.html",
+"Copywriting":"copywriting-course.html",
+"Corporate Governance":"corporate-governance-course.html",
+"Cosmetics Making":"cosmetics-making-course.html",
+"Cottage Industry Setup":"cottage-industry-setup-course.html",
+"Cotton Farming":"cotton-farming-course.html",
+"Crane Operation":"crane-operation-course.html",
+"Creative Writing":"creative-writing-course.html",
+"Crocodile Farming":"crocodile-farming-course.html",
+"Crowdfunding":"crowdfunding-course.html",
+"Cryptocurrency Trading":"cryptocurrency-trading-course.html",
+"Customer Service":"customer-service-course.html",
+"Cybersecurity":"cybersecurity-course.html",
+"DIY Home Repairs":"diy-home-repairs-course.html",
+"Dairy Processing":"dairy-processing-course.html",
+"Dairy Production":"dairy-production-course.html",
+"Dance & Choreography":"dance-and-choreography-course.html",
+"Data Science":"data-science-course.html",
+"Database Management":"database-management-course.html",
+"Dehydration":"dehydration-course.html",
+"Dental Assistant":"dental-assistant-course.html",
+"Detergent Production":"detergent-production-course.html",
+"Diesel Mechanics":"diesel-mechanics-course.html",
+"Digital Marketing":"digital-marketing-course.html",
+"Door & Window Making":"door-and-window-making-course.html",
+"Drainage":"drainage-course.html",
+"Driving School Management":"driving-school-management-course.html",
+"Driving":"driving-course.html",
+"Drone Piloting":"drone-piloting-course.html",
+"Duck Farming":"duck-farming-course.html",
+"E-commerce Development":"ecommerce-development-course.html",
+"E-commerce":"ecommerce-course.html",
+"Early Childhood Education":"early-childhood-education-course.html",
+"Earthworm Farming":"earthworm-farming-course.html",
+"Egg Powder Production":"egg-powder-production-course.html",
+"Elderly Care":"elderly-care-course.html",
+"Electrical Installation":"electrical-installation-course.html",
+"Electronics Repair":"electronics-repair-course.html",
+"Elevator Maintenance":"elevator-maintenance-course.html",
+"Embroidery":"embroidery-course.html",
+"Engraving":"engraving-course.html",
+"Entrepreneurship":"entrepreneurship-course.html",
+"Event Planning":"event-planning-course.html",
+"Exam Preparation":"exam-preparation-course.html",
+"Excavation":"excavation-course.html",
+"Farm Mechanization":"farm-mechanization-course.html",
+"Fashion Business":"fashion-business-course.html",
+"Fashion Design":"fashion-design-course.html",
+"Fencing":"fencing-course.html",
+"Fermentation":"fermentation-course.html",
+"Fiber Optic Installation":"fiber-optic-installation-course.html",
+"Financial Analysis":"financial-analysis-course.html",
+"Fire Alarm Systems":"fire-alarm-systems-course.html",
+"First Aid":"first-aid-course.html",
+"Fish Smoking":"fish-smoking-course.html",
+"Fishing & Fish Farming":"fishing-and-fish-farming-course.html",
+"Fitness Business":"fitness-business-course.html",
+"Fleet Management":"fleet-management-course.html",
+"Flour Milling":"flour-milling-course.html",
+"Food Fortification":"food-fortification-course.html",
+"Food Preservation Methods":"food-preservation-methods-course.html",
+"Forestry & Tree Planting":"forestry-and-tree-planting-course.html",
+"Forex Trading":"forex-trading-course.html",
+"Forklift Operation":"forklift-operation-course.html",
+"Franchising":"franchising-course.html",
+"Freezing Techniques":"freezing-techniques-course.html",
+"French Language":"french-language-course.html",
+"Frozen Food Production":"frozen-food-production-course.html",
+"Fruit Drying":"fruit-drying-course.html",
+"Furniture Making":"furniture-making-course.html",
+"Furniture Upholstery":"furniture-upholstery-course.html",
+"GIS & Mapping":"gis-and-mapping-course.html",
+"Game Development":"game-development-course.html",
+"Gardening":"gardening-course.html",
+"General Agriculture":"general-agriculture-course.html",
+"Generator Repair & Servicing":"generator-repair-and-servicing-course.html",
+"Generator Repair":"generator-repair-course.html",
+"German Language":"german-language-course.html",
+"Gin Distillation":"gin-distillation-course.html",
+"Glass Blowing":"glass-blowing-course.html",
+"Glazing":"glazing-course.html",
+"Glue Making":"glue-making-course.html",
+"Goat & Sheep Rearing":"goat-and-sheep-rearing-course.html",
+"Goldsmithing":"goldsmithing-course.html",
+"Grafting, Budding & Orchards":"grafting-budding-and-orchards-course.html",
+"Grain Storage":"grain-storage-course.html",
+"Grant Writing":"grant-writing-course.html",
+"Graphic Design":"graphic-design-course.html",
+"Grasscutter Farming":"grasscutter-farming-course.html",
+"Greenhouse Farming":"greenhouse-farming-course.html",
+"Groundnut Farming":"groundnut-farming-course.html",
+"Guinea Fowl Farming":"guinea-fowl-farming-course.html",
+"HACCP Implementation":"haccp-implementation-course.html",
+"Hair Braiding & Styling":"hair-braiding-and-styling-course.html",
+"Hausa Language":"hausa-language-course.html",
+"Hay Making":"hay-making-course.html",
+"Heavy Equipment":"heavy-equipment-course.html",
+"Herbal Medicine":"herbal-medicine-course.html",
+"Hindi Language":"hindi-language-course.html",
+"Home Baking":"home-baking-course.html",
+"Home Energy Efficiency":"home-energy-efficiency-course.html",
+"Home Security":"home-security-course.html",
+"Honey Processing":"honey-processing-course.html",
+"Hospitality Management":"hospitality-management-course.html",
+"Human Resources":"human-resources-course.html",
+"Hydro Power":"hydro-power-course.html",
+"Hydroponics":"hydroponics-course.html",
+"Ice Cream Making":"ice-cream-making-course.html",
+"Igbo Language":"igbo-language-course.html",
+"Import & Export":"import-and-export-course.html",
+"Improved Cookstove Making":"improved-cookstove-making-course.html",
+"Incense Making":"incense-making-course.html",
+"Innovation Management":"innovation-management-course.html",
+"Instrument Making":"instrument-making-course.html",
+"Insulation":"insulation-course.html",
+"Intellectual Property":"intellectual-property-course.html",
+"Interior Decorating":"interior-decorating-course.html",
+"Interior Design":"interior-design-course.html",
+"Investment & Stocks":"investment-and-stocks-course.html",
+"IoT Development":"iot-development-course.html",
+"Irish Potato Farming":"irish-potato-farming-course.html",
+"Irradiation Basics":"irradiation-basics-course.html",
+"Irrigation Systems":"irrigation-systems-course.html",
+"Jam & Jelly Production":"jam-and-jelly-production-course.html",
+"Japanese Language":"japanese-language-course.html",
+"Jewelry Making":"jewelry-making-course.html",
+"Knitting & Crochet":"knitting-and-crochet-course.html",
+"Korean Language":"korean-language-course.html",
+"Laboratory Techniques":"laboratory-techniques-course.html",
+"Lac Cultivation":"lac-cultivation-course.html",
+"Land Surveying":"land-surveying-course.html",
+"Language Teaching":"language-teaching-course.html",
+"Laser Cutting":"laser-cutting-course.html",
+"Laundry Business":"laundry-business-course.html",
+"Leadership":"leadership-course.html",
+"Leather Making":"leather-making-course.html",
+"Legal Language":"legal-language-course.html",
+"Library Management":"library-management-course.html",
+"Logistics & Transport":"logistics-and-transport-course.html",
+"Logistics Management":"logistics-management-course.html",
+"Maize Farming":"maize-farming-course.html",
+"Makeup Artistry":"makeup-artistry-course.html",
+"Mango & Citrus Farming":"mango-and-citrus-farming-course.html",
+"Mat Making":"mat-making-course.html",
+"Meat Aging":"meat-aging-course.html",
+"Meat Curing":"meat-curing-course.html",
+"Meat Processing":"meat-processing-course.html",
+"Medical Terminology":"medical-terminology-course.html",
+"Mental Health Support":"mental-health-support-course.html",
+"Microfinance":"microfinance-course.html",
+"Midwifery":"midwifery-course.html",
+"Mini-Grid Setup & Management":"minigrid-setup-and-management-course.html",
+"Mirror Making":"mirror-making-course.html",
+"Mobile App Development":"mobile-app-development-course.html",
+"Modified Atmosphere Packaging":"modified-atmosphere-packaging-course.html",
+"Moringa Farming":"moringa-farming-course.html",
+"Motorcycle Courier":"motorcycle-courier-course.html",
+"Motorcycle Repair":"motorcycle-repair-course.html",
+"Mural Painting":"mural-painting-course.html",
+"Mushroom Farming":"mushroom-farming-course.html",
+"Music Production":"music-production-course.html",
+"Negotiation Skills":"negotiation-skills-course.html",
+"Network Administration":"network-administration-course.html",
+"Noodle Production":"noodle-production-course.html",
+"Nursery Management":"nursery-management-course.html",
+"Nutrition & Diet":"nutrition-and-diet-course.html",
+"Oil Extraction":"oil-extraction-course.html",
+"Oil Preservation":"oil-preservation-course.html",
+"Onion Farming":"onion-farming-course.html",
+"Online Course Creation":"online-course-creation-course.html",
+"Optical Technician":"optical-technician-course.html",
+"Ostrich Farming":"ostrich-farming-course.html",
+"POS System Setup":"pos-system-setup-course.html",
+"Paint Making":"paint-making-course.html",
+"Painting":"painting-course.html",
+"Palm Oil Production":"palm-oil-production-course.html",
+"Palm Wine Tapping":"palm-wine-tapping-course.html",
+"Paper Making":"paper-making-course.html",
+"Pasta Making":"pasta-making-course.html",
+"Pasture Management":"pasture-management-course.html",
+"Peanut Butter Making":"peanut-butter-making-course.html",
+"Perfume Making":"perfume-making-course.html",
+"Permaculture Design":"permaculture-design-course.html",
+"Pest Control":"pest-control-course.html",
+"Pet Food Making":"pet-food-making-course.html",
+"Pet Grooming":"pet-grooming-course.html",
+"Pharmacy Assistant":"pharmacy-assistant-course.html",
+"Photocopier Repair":"photocopier-repair-course.html",
+"Photography":"photography-course.html",
+"Physiotherapy Basics":"physiotherapy-basics-course.html",
+"Pickle Making":"pickle-making-course.html",
+"Pickling Vegetables":"pickling-vegetables-course.html",
+"Pig Farming":"pig-farming-course.html",
+"Pipe Fitting":"pipe-fitting-course.html",
+"Pipeline Maintenance":"pipeline-maintenance-course.html",
+"Pitch Deck Creation":"pitch-deck-creation-course.html",
+"Plastering":"plastering-course.html",
+"Plastic Recycling":"plastic-recycling-course.html",
+"Plumbing":"plumbing-course.html",
+"Portuguese Language":"portuguese-language-course.html",
+"Post-Harvest Handling":"postharvest-handling-course.html",
+"Potato Farming":"potato-farming-course.html",
+"Pottery & Ceramics":"pottery-and-ceramics-course.html",
+"Poultry Farming":"poultry-farming-course.html",
+"Poultry Processing":"poultry-processing-course.html",
+"Printer Repair":"printer-repair-course.html",
+"Printing":"printing-course.html",
+"Project Management":"project-management-course.html",
+"Public Speaking":"public-speaking-course.html",
+"Public Transport Operations":"public-transport-operations-course.html",
+"Pump Repair":"pump-repair-course.html",
+"Quail Farming":"quail-farming-course.html",
+"Quality Management":"quality-management-course.html",
+"Rabbit Farming":"rabbit-farming-course.html",
+"Real Estate":"real-estate-course.html",
+"Refrigeration":"refrigeration-course.html",
+"Remote Sensing":"remote-sensing-course.html",
+"Retail Management":"retail-management-course.html",
+"Rice Farming":"rice-farming-course.html",
+"Ride-Hailing Business":"ridehailing-business-course.html",
+"Risk Management":"risk-management-course.html",
+"Road Construction":"road-construction-course.html",
+"Robotics & Drone Technology":"robotics-and-drone-technology-course.html",
+"Roofing Sheet Making":"roofing-sheet-making-course.html",
+"Roofing":"roofing-course.html",
+"Root Cellaring":"root-cellaring-course.html",
+"Rope Making":"rope-making-course.html",
+"Rubber Processing":"rubber-processing-course.html",
+"Russian Language":"russian-language-course.html",
+"STEM Education":"stem-education-course.html",
+"Sales Techniques":"sales-techniques-course.html",
+"Salting & Brining":"salting-and-brining-course.html",
+"Sanitation Engineering":"sanitation-engineering-course.html",
+"Satellite Installation":"satellite-installation-course.html",
+"Sauce Making":"sauce-making-course.html",
+"Scaffolding":"scaffolding-course.html",
+"School Administration":"school-administration-course.html",
+"Sculpture":"sculpture-course.html",
+"Seed Production":"seed-production-course.html",
+"Sericulture":"sericulture-course.html",
+"Sesame Farming":"sesame-farming-course.html",
+"Sewage Treatment":"sewage-treatment-course.html",
+"Sewing & Alterations":"sewing-and-alterations-course.html",
+"Shea Butter Production":"shea-butter-production-course.html",
+"Shea Butter Refining":"shea-butter-refining-course.html",
+"Shipping & Freight":"shipping-and-freight-course.html",
+"Shoe Making":"shoe-making-course.html",
+"Sign Language":"sign-language-course.html",
+"Sign Making":"sign-making-course.html",
+"Silage Making":"silage-making-course.html",
+"Silkworm Farming":"silkworm-farming-course.html",
+"Smoking Fish & Meat":"smoking-fish-and-meat-course.html",
+"Snack Production":"snack-production-course.html",
+"Snail Farming":"snail-farming-course.html",
+"Soap & Washing Powder":"soap-and-washing-powder-course.html",
+"Soap Making":"soap-making-course.html",
+"Social Media Management":"social-media-management-course.html",
+"Solar Cold Storage & Fridges":"solar-cold-storage-and-fridges-course.html",
+"Solar Dam Pump & Borehole":"solar-dam-pump-and-borehole-course.html",
+"Solar Drying":"solar-drying-course.html",
+"Solar Home System Installation":"solar-home-system-installation-course.html",
+"Solar Installation":"solar-installation-course.html",
+"Solar Phone Charging Business":"solar-phone-charging-business-course.html",
+"Solar Technology":"solar-technology-course.html",
+"Solar Water Heating":"solar-water-heating-course.html",
+"Somali Language":"somali-language-course.html",
+"Sorghum & Millet Farming":"sorghum-and-millet-farming-course.html",
+"Soy Milk Production":"soy-milk-production-course.html",
+"Soybean Farming":"soybean-farming-course.html",
+"Spanish Language":"spanish-language-course.html",
+"Special Needs Education":"special-needs-education-course.html",
+"Spice Production":"spice-production-course.html",
+"Spirulina Farming":"spirulina-farming-course.html",
+"Steel Fixing":"steel-fixing-course.html",
+"Strategic Planning":"strategic-planning-course.html",
+"Sugar Preservation":"sugar-preservation-course.html",
+"Sugarcane Farming":"sugarcane-farming-course.html",
+"Sunflower Farming":"sunflower-farming-course.html",
+"Supply Chain Management":"supply-chain-management-course.html",
+"Swahili Language":"swahili-language-course.html",
+"Sweet Potato Farming":"sweet-potato-farming-course.html",
+"Tailoring":"tailoring-course.html",
+"Tax Compliance":"tax-compliance-course.html",
+"Tea Blending":"tea-blending-course.html",
+"Tea Farming":"tea-farming-course.html",
+"Teaching Skills":"teaching-skills-course.html",
+"Technical English":"technical-english-course.html",
+"Telecom Tower Maintenance":"telecom-tower-maintenance-course.html",
+"Textile Dyeing":"textile-dyeing-course.html",
+"Theater & Acting":"theater-and-acting-course.html",
+"Tile Making":"tile-making-course.html",
+"Tiling":"tiling-course.html",
+"Tire Repair & Vulcanizing":"tire-repair-and-vulcanizing-course.html",
+"Tomato Farming":"tomato-farming-course.html",
+"Tourism Business":"tourism-business-course.html",
+"Translation Skills":"translation-skills-course.html",
+"Truck Driving":"truck-driving-course.html",
+"Turkey Farming":"turkey-farming-course.html",
+"Turkish Language":"turkish-language-course.html",
+"Tutoring Business":"tutoring-business-course.html",
+"UI/UX Design":"uiandux-design-course.html",
+"Urban Farming":"urban-farming-course.html",
+"Vacuum Sealing":"vacuum-sealing-course.html",
+"Varnish Making":"varnish-making-course.html",
+"Vegetable Canning":"vegetable-canning-course.html",
+"Vegetable Production":"vegetable-production-course.html",
+"Vehicle Maintenance":"vehicle-maintenance-course.html",
+"Vertical Farming":"vertical-farming-course.html",
+"Video Production":"video-production-course.html",
+"Videography":"videography-course.html",
+"Vinegar Production":"vinegar-production-course.html",
+"Vocational Training":"vocational-training-course.html",
+"Warehouse Logistics":"warehouse-logistics-course.html",
+"Warehouse Management":"warehouse-management-course.html",
+"Waste Management":"waste-management-course.html",
+"Waste-to-Energy":"wastetoenergy-course.html",
+"Water Harvesting":"water-harvesting-course.html",
+"Water Purification":"water-purification-course.html",
+"Waxing Fruits":"waxing-fruits-course.html",
+"Weaving":"weaving-course.html",
+"Web Development":"web-development-course.html",
+"Welding & Metalwork":"welding-and-metalwork-course.html",
+"Welding":"welding-course.html",
+"Wheat & Barley Farming":"wheat-and-barley-farming-course.html",
+"Wind Energy":"wind-energy-course.html",
+"Wine Making":"wine-making-course.html",
+"Wolof Language":"wolof-language-course.html",
+"Yam Farming":"yam-farming-course.html",
+"Yoruba Language":"yoruba-language-course.html",
+"Zulu Language":"zulu-language-course.html"
+};
+// Store course list in localStorage for enrollment page
+localStorage.setItem('COURSE_LIST', JSON.stringify(Object.keys(COURSE_PAGES)));
 document.querySelectorAll('.course-card').forEach(function(cardEl){
   var h3 = cardEl.querySelector('h3');
   if(!h3) return;
@@ -5555,11 +5923,16 @@ document.querySelectorAll('.course-card').forEach(function(cardEl){
   if(!page) return;
   var actions = cardEl.querySelector('.card-actions');
   if(!actions || actions.querySelector('.open-course')) return;
-  var a = document.createElement('a');
-  a.className = 'card-btn open-course';
-  a.href = page;
-  a.textContent = '\uD83D\uDCD6 Open Course';
-  actions.appendChild(a);
+  var btn = document.createElement('button');
+  btn.className = 'card-btn open-course';
+  btn.textContent = '\uD83D\uDCD6 Open Course';
+  btn.style.textDecoration = 'none';
+  btn.onclick = function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    window.location.href = page;
+  };
+  actions.appendChild(btn);
 });
 (function(){
   var grid = document.getElementById('gridEnrolled');
@@ -5609,4 +5982,3 @@ document.querySelectorAll('.course-card').forEach(function(cardEl){
 </script>
 </body>
 </html>
-
