@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rise Africa Skills - Module Integration Guide</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        h2 {
+            color: #667eea;
+            margin-top: 30px;
+        }
+
+        h3 {
+            color: #555;
+        }
+
+        .code-block {
+            background: #f9f9f9;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #856404;
+        }
+
+        .success {
+            background: #d4edda;
+            border: 1px solid #28a745;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #155724;
+        }
+
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #0c5460;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #0c5460;
+        }
+
+        .steps {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .step {
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-left: 3px solid #667eea;
+        }
+
+        .step strong {
+            color: #667eea;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        .file-structure {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            margin: 15px 0;
+        }
+
+        .button {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            margin: 10px 5px 10px 0;
+        }
+
+        .button:hover {
+            background: #5568d3;
+        }
+
+        .checklist {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .checklist label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+
+        .checklist input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        .toc {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+
+        .toc ul {
+            margin: 0;
+        }
+
+        .toc a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rise Africa Skills Platform - Module Integration Guide</h1>
+
+        <div class="toc">
+            <h3>Table of Contents</h3>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#architecture">Architecture & File Structure</a></li>
+                <li><a href="#setup">Setup Instructions</a></li>
+                <li><a href="#integration">Integration with Existing System</a></li>
+                <li><a href="#api">API Reference</a></li>
+                <li><a href="#customization">Customization Guide</a></li>
+                <li><a href="#deployment">Deployment & Scaling</a></li>
+                <li><a href="#troubleshooting">Troubleshooting</a></li>
+            </ul>
+        </div>
+
+        <h2 id="overview">Overview</h2>
+        <p>
+            The Rise Africa Skills Learning Module System is a comprehensive platform designed to deliver video-based education with hands-on implementation exercises and assessments. It supports both online and offline modes with automatic synchronization.
+        </p>
+
+        <div class="success">
+            <strong>Key Features:</strong>
+            <ul>
+                <li>Reusable HTML module template with responsive design</li>
+                <li>JavaScript progress tracker with offline-first architecture</li>
+                <li>Local storage using browser localStorage API</li>
+                <li>Automatic sync when device comes online</li>
+                <li>Assessment and project submission system</li>
+                <li>Points and badge system for gamification</li>
+                <li>Fully mobile-responsive</li>
+            </ul>
+        </div>
+
+        <h2 id="architecture">Architecture & File Structure</h2>
+
+        <h3>Core Components</h3>
+        <table>
+            <tr>
+                <th>Component</th>
+                <th>Purpose</th>
+                <th>Technology</th>
+            </tr>
+            <tr>
+                <td>module-template.html</td>
+                <td>Reusable module structure with videos, implementation, assessment</td>
+                <td>HTML5, CSS3, JavaScript</td>
+            </tr>
+            <tr>
+                <td>progress-tracker.js</td>
+                <td>Client-side progress tracking and offline sync</td>
+                <td>JavaScript (vanilla, no dependencies)</td>
+            </tr>
+            <tr>
+                <td>enrollment-system.js</td>
+                <td>Integration with course enrollment (existing system)</td>
+                <td>JavaScript</td>
+            </tr>
+            <tr>
+                <td>Backend API</td>
+                <td>Sync endpoint for cloud storage</td>
+                <td>REST API (Node.js, Python, etc.)</td>
+            </tr>
+        </table>
+
+        <h3>File Structure for 56 Courses</h3>
+        <div class="file-structure">
+courses/
+├── farming/
+│   ├── module-1-intro.html
+│   ├── module-2-land-prep.html
+│   ├── module-3-planting.html
+│   ├── module-4-pest-control.html
+│   ├── module-5-harvesting.html
+│   └── module-6-marketing.html
+├── language/
+│   ├── module-1-basics.html
+│   ├── module-2-conversation.html
+│   └── ...
+├── tech/
+│   ├── module-1-intro.html
+│   └── ...
+├── shared/
+│   ├── progress-tracker.js
+│   ├── enrollment-system.js
+│   └── common-styles.css
+└── api/
+    └── progress-sync.js (backend)
+        </div>
+
+        <h2 id="setup">Setup Instructions</h2>
+
+        <h3>Step 1: Prepare Your Environment</h3>
+        <div class="steps">
+            <div class="step">
+                <strong>1.1 Set Up Web Server</strong>
+                <p>Use any web server (Apache, Nginx, Node.js Express) to serve the HTML files. For local development:</p>
+                <div class="code-block">
+# Python 3
+python -m http.server 8000
+
+# Node.js
+npx http-server .
+
+# Or use VS Code Live Server extension
+                </div>
+            </div>
+
+            <div class="step">
+                <strong>1.2 Configure Backend Sync Endpoint</strong>
+                <p>Create an API endpoint to receive sync data. Example structure:</p>
+                <div class="code-block">
+POST /api/progress/sync
+{
+  "userId": "user123",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "updates": [
+    {
+      "moduleId": "module-1",
+      "videosWatched": 3,
+      "stepsCompleted": 4,
+      ...
+    }
+  ]
+}
+                </div>
+            </div>
+
+            <div class="step">
+                <strong>1.3 Create Database Schema</strong>
+                <p>Store synced progress in your database:</p>
+                <div class="code-block">
+CREATE TABLE module_progress (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  user_id VARCHAR(255),
+  module_id VARCHAR(255),
+  course_id VARCHAR(255),
+  videos_watched JSON,
+  steps_completed INT,
+  quiz_score INT,
+  project_submitted BOOLEAN,
+  completed_at TIMESTAMP,
+  synced_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX(user_id, module_id)
+);
+                </div>
+            </div>
+        </div>
+
+        <h3>Step 2: Configure Module Template</h3>
+        <div class="steps">
+            <div class="step">
+                <strong>2.1 Customize Module Data</strong>
+                <p>Edit the `moduleData` object in each module HTML file to include your course-specific content:</p>
+                <div class="code-block">
+const moduleData = {
+  moduleId: 'farming-module-1',
+  courseName: 'Sustainable Pig Farming',
+  moduleNumber: 1,
+  totalModules: 6,
+  title: 'Introduction to Pig Farming',
+  // ... add your videos, materials, steps, etc.
+};
+                </div>
+            </div>
+
+            <div class="step">
+                <strong>2.2 Add Course-Specific Videos</strong>
+                <p>Replace placeholder YouTube embed URLs with your actual video sources (see Video Curation Guide)</p>
+                <div class="code-block">
+videos: [
+  {
+    id: 'vid-1-1',
+    title: 'Your Video Title',
+    duration: '8:45',
+    embedUrl: 'https://www.youtube.com/embed/VIDEO_ID',
+    source: 'Video Provider'
+  },
+  // ... more videos
+]
+                </div>
+            </div>
+
+            <div class="step">
+                <strong>2.3 Customize Branding</strong>
+                <p>Update CSS variables and colors in module-template.html to match your brand:</p>
+                <div class="code-block">
+/* In module-template.html */
+.module-header {
+  background: linear-gradient(135deg, YOUR_COLOR_1 0%, YOUR_COLOR_2 100%);
+}
+                </div>
+            </div>
+        </div>
+
+        <h3>Step 3: Integrate with Enrollment System</h3>
+        <div class="steps">
+            <div class="step">
+                <strong>3.1 Link Module from Course Page</strong>
+                <p>In your course listing, link to modules:</p>
+                <div class="code-block">
+&lt;div class="module-link"&gt;
+  &lt;a href="/courses/farming/module-1-intro.html?userId=USER_ID&courseId=farming"&gt;
+    Module 1: Introduction to Pig Farming
+  &lt;/a&gt;
+&lt;/div&gt;
+                </div>
+            </div>
+
+            <div class="step">
+                <strong>3.2 Pass User Context to Module</strong>
+                <p>Extract user ID and course ID from URL query parameters:</p>
+                <div class="code-block">
+// Add to module-template.html before moduleData definition
+const urlParams = new URLSearchParams(window.location.search);
+const userId = urlParams.get('userId') || 'anonymous';
+const courseId = urlParams.get('courseId');
+
+// Save current user for progress tracking
+localStorage.setItem('currentUserId', userId);
+localStorage.setItem('currentCourseId', courseId);
+                </div>
+            </div>
+
+            <div class="step">
+                <strong>3.3 Sync Progress Back to Enrollment</strong>
+                <p>After module completion, update enrollment system:</p>
+                <div class="code-block">
+function completeModule() {
+  // ... existing completion logic
+
+  // Notify enrollment system
+  fetch('/api/enrollment/module-complete', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      userId: userId,
+      moduleId: moduleData.moduleId,
+      completedAt: new Date().toISOString(),
+      score: calculateModuleScore()
+    })
+  });
+}
+                </div>
+            </div>
+        </div>
+
+        <h2 id="integration">Integration with Existing System</h2>
+
+        <h3>Connecting to Your Backend</h3>
+        <p>Modify the sync endpoint in progress-tracker.js:</p>
+        <div class="code-block">
+// In progress-tracker.js
+const SYNC_ENDPOINT = 'https://your-api.example.com/api/progress/sync';
+
+// Also update the auth token retrieval:
+function getAuthToken() {
+  // Get from your existing auth system
+  return sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
+}
+        </div>
+
+        <h3>Integration Checklist</h3>
+        <div class="checklist">
+            <label><input type="checkbox"> Create database tables for progress tracking</label>
+            <label><input type="checkbox"> Build /api/progress/sync endpoint</label>
+            <label><input type="checkbox"> Build /api/enrollment/module-complete endpoint</label>
+            <label><input type="checkbox"> Setup authentication middleware</label>
+            <label><input type="checkbox"> Configure CORS for sync requests</label>
+            <label><input type="checkbox"> Test offline/online transitions</label>
+            <label><input type="checkbox"> Setup error logging</label>
+            <label><input type="checkbox"> Configure backup strategy for student data</label>
+        </div>
+
+        <h2 id="api">API Reference</h2>
+
+        <h3>Client-Side API (progress-tracker.js)</h3>
+        <table>
+            <tr>
+                <th>Method</th>
+                <th>Description</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td>progressTracker.updateProgress(moduleId, data)</td>
+                <td>Update module progress</td>
+                <td>progressTracker.updateProgress('mod-1', { videosWatched: 3 })</td>
+            </tr>
+            <tr>
+                <td>progressTracker.completeModule(moduleId)</td>
+                <td>Mark module as complete</td>
+                <td>progressTracker.completeModule('mod-1')</td>
+            </tr>
+            <tr>
+                <td>progressTracker.recordVideoWatched(moduleId, videoId)</td>
+                <td>Track video viewing</td>
+                <td>progressTracker.recordVideoWatched('mod-1', 'vid-1')</td>
+            </tr>
+            <tr>
+                <td>progressTracker.recordQuizSubmission(moduleId, answers, score)</td>
+                <td>Save quiz results</td>
+                <td>progressTracker.recordQuizSubmission('mod-1', answers, 85)</td>
+            </tr>
+            <tr>
+                <td>progressTracker.syncProgress(userId)</td>
+                <td>Manual sync with server</td>
+                <td>progressTracker.syncProgress('user123')</td>
+            </tr>
+            <tr>
+                <td>progressTracker.getModuleProgress(moduleId)</td>
+                <td>Retrieve saved progress</td>
+                <td>const progress = progressTracker.getModuleProgress('mod-1')</td>
+            </tr>
+            <tr>
+                <td>progressTracker.getCourseProgress(courseId)</td>
+                <td>Get all module progress</td>
+                <td>const course = progressTracker.getCourseProgress('farming')</td>
+            </tr>
+            <tr>
+                <td>progressTracker.awardBadge(userId, badgeId, name)</td>
+                <td>Award achievement badge</td>
+                <td>progressTracker.awardBadge('user123', 'master', 'Master Farmer')</td>
+            </tr>
+        </table>
+
+        <h3>Server-Side API Requirements</h3>
+        <div class="info">
+            <strong>POST /api/progress/sync</strong>
+            <p>Receives progress updates from clients</p>
+            <p><strong>Request Body:</strong></p>
+            <div class="code-block">
+{
+  "userId": "user123",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "updates": [ /* module progress objects */ ],
+  "clientVersion": "1.0.0"
+}
+            </div>
+            <p><strong>Response:</strong></p>
+            <div class="code-block">
+{
+  "success": true,
+  "synced": 3,
+  "timestamp": "2024-01-15T10:30:05Z"
+}
+            </div>
+        </div>
+
+        <h2 id="customization">Customization Guide</h2>
+
+        <h3>Adding Custom Assessment Types</h3>
+        <div class="code-block">
+// Add new quiz types
+const assessmentTypes = {
+  MULTIPLE_CHOICE: 'multiple_choice',
+  TRUE_FALSE: 'true_false',
+  FILL_BLANK: 'fill_blank',
+  PRACTICAL: 'practical_demonstration',
+  PROJECT: 'project_submission'
+};
+
+// In module data:
+quiz: [
+  {
+    id: 'q1',
+    type: 'MULTIPLE_CHOICE',
+    question: '...',
+    options: [...]
+  }
+]
+        </div>
+
+        <h3>Customizing Success Criteria</h3>
+        <p>Modify success criteria for different difficulty levels:</p>
+        <div class="code-block">
+const successCriteria = {
+  BEGINNER: [
+    'Watch all 5 videos',
+    'Complete 3 out of 6 steps',
+    'Score 70% on quiz'
+  ],
+  INTERMEDIATE: [
+    'Watch all 5 videos',
+    'Complete all 6 steps',
+    'Score 85% on quiz',
+    'Submit project'
+  ],
+  ADVANCED: [
+    'Watch all 5 videos',
+    'Complete all 6 steps with extensions',
+    'Score 95% on quiz',
+    'Submit advanced project'
+  ]
+};
+        </div>
+
+        <h3>Adding Language Localization</h3>
+        <div class="code-block">
+// Create language files
+const translations = {
+  en: {
+    MODULE_TITLE: 'Module {number}: {title}',
+    LEARNING_OBJECTIVES: 'Learning Objectives',
+    COMPLETE_MODULE: 'Complete Module'
+  },
+  sw: {
+    MODULE_TITLE: 'Moduli {number}: {title}',
+    LEARNING_OBJECTIVES: 'Lengo la Kujifunza',
+    COMPLETE_MODULE: 'Kamata Moduli'
+  },
+  fr: { /* French translations */ }
+};
+
+function getTranslation(key, lang = 'en') {
+  return translations[lang][key] || translations.en[key];
+}
+        </div>
+
+        <h2 id="deployment">Deployment & Scaling</h2>
+
+        <h3>For 56 Courses (336 modules total)</h3>
+
+        <h3>File Organization Strategy</h3>
+        <div class="code-block">
+courses/
+├── index.html (course listing)
+├── shared/
+│   ├── progress-tracker.js (1 file, loaded by all)
+│   ├── enrollment-system.js
+│   ├── common-styles.css
+│   └── utils.js
+├── [course-name]/
+│   ├── index.html (course overview)
+│   ├── module-1.html
+│   ├── module-2.html
+│   └── module-[N].html
+└── api/ (backend)
+    ├── sync.js
+    ├── auth.js
+    └── database.js
+        </div>
+
+        <h3>Performance Optimization</h3>
+        <div class="warning">
+            <strong>Best Practices:</strong>
+            <ul>
+                <li><strong>Lazy Load Videos:</strong> Don't autoplay all 5 videos at once</li>
+                <li><strong>Compress Media:</strong> Use modern video formats (MP4 with H.264)</li>
+                <li><strong>Cache Strategy:</strong> Use Service Workers for offline access</li>
+                <li><strong>Database Indexing:</strong> Index on (user_id, module_id) for fast lookups</li>
+                <li><strong>CDN Delivery:</strong> Serve videos from CDN (Cloudflare, AWS CloudFront)</li>
+                <li><strong>Pagination:</strong> Load modules on-demand, not all at once</li>
+            </ul>
+        </div>
+
+        <h3>Scaling to 10,000+ Users</h3>
+        <table>
+            <tr>
+                <th>Component</th>
+                <th>Solution</th>
+            </tr>
+            <tr>
+                <td>Local Storage Limit (5-10MB)</td>
+                <td>Use IndexedDB for larger datasets (up to 50MB+)</td>
+            </tr>
+            <tr>
+                <td>Sync Bottleneck</td>
+                <td>Implement queue and batch syncing</td>
+            </tr>
+            <tr>
+                <td>Database Writes</td>
+                <td>Use write-through cache and message queues</td>
+            </tr>
+            <tr>
+                <td>Video Streaming</td>
+                <td>Use adaptive bitrate (HLS/DASH)</td>
+            </tr>
+        </table>
+
+        <h2 id="troubleshooting">Troubleshooting</h2>
+
+        <h3>Common Issues</h3>
+
+        <h4>Issue: Progress not syncing offline</h4>
+        <div class="code-block">
+// Check localStorage
+progressTracker.getPendingSyncs()
+
+// Check browser storage quota
+navigator.storage.estimate().then(estimate => {
+  console.log('Storage used:', estimate.usage, 'bytes');
+  console.log('Storage available:', estimate.quota, 'bytes');
+});
+        </div>
+
+        <h4>Issue: Videos not loading</h4>
+        <p>Verify YouTube embed URLs are correct and video is public. Check browser console for CORS errors.</p>
+
+        <h4>Issue: Quiz answers not saved</h4>
+        <p>Ensure JavaScript is enabled and localStorage is available. Check:</p>
+        <div class="code-block">
+// Test localStorage
+try {
+  localStorage.setItem('test', 'value');
+  localStorage.removeItem('test');
+  console.log('localStorage available');
+} catch(e) {
+  console.error('localStorage not available:', e);
+}
+        </div>
+
+        <h3>Debugging Commands</h3>
+        <div class="code-block">
+// In browser console:
+
+// View all stored progress
+progressTracker.exportUserData('user123')
+
+// Check storage usage
+progressTracker.getStorageStats()
+
+// Clear corrupted data
+progressTracker.clearAllData(true)
+
+// Force sync
+progressTracker.syncProgress()
+
+// Get specific module progress
+progressTracker.getModuleProgress('module-1')
+        </div>
+
+        <h2>Next Steps</h2>
+        <ol>
+            <li>Create the 56 course directories</li>
+            <li>Populate each with 6 module HTML files using the template</li>
+            <li>Build the sync API endpoint in your backend</li>
+            <li>Test offline/online functionality</li>
+            <li>Deploy to production</li>
+            <li>Monitor sync success rates and errors</li>
+            <li>Iterate based on user feedback</li>
+        </ol>
+
+        <div class="success">
+            <strong>You're ready to launch!</strong> The system is designed to scale from 1 user to 100,000+ with minimal infrastructure changes. Start with one course and gradually expand.
+        </div>
+    </div>
+</body>
+</html>

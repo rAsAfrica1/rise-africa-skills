@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rise Africa Skills - Learning Module Template</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .module-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .module-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+
+        .module-progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            width: 100%;
+        }
+
+        .module-progress-bar-fill {
+            height: 100%;
+            background: #4CAF50;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .module-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .module-meta {
+            display: flex;
+            gap: 30px;
+            margin-top: 15px;
+            font-size: 0.95em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .meta-icon {
+            font-size: 1.2em;
+        }
+
+        .module-content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 40px;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #667eea;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            font-size: 1.2em;
+        }
+
+        .learning-objectives {
+            background: #e3f2fd;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .learning-objectives h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .learning-objectives ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        .learning-objectives li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .learning-objectives li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .video-card {
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            background: #000;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-info {
+            padding: 15px;
+        }
+
+        .video-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .video-description {
+            font-size: 0.85em;
+            color: #666;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8em;
+            color: #999;
+        }
+
+        .video-watched {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .video-watched input[type="checkbox"] {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: #4CAF50;
+        }
+
+        .video-duration {
+            background: #667eea;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75em;
+        }
+
+        .implementation-section {
+            background: #f5f5f5;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .implementation-steps {
+            margin-top: 20px;
+        }
+
+        .step {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: #333;
+            flex-grow: 1;
+        }
+
+        .step-description {
+            margin-left: 51px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .step-details {
+            margin-left: 51px;
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        .materials-checklist {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .materials-checklist h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #4CAF50;
+        }
+
+        .checklist-label {
+            flex-grow: 1;
+            cursor: pointer;
+        }
+
+        .checklist-label:hover {
+            color: #667eea;
+        }
+
+        .success-criteria {
+            background: #c8e6c9;
+            border-left: 4px solid #4CAF50;
+            padding: 20px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+
+        .success-criteria h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        .success-criteria ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        .success-criteria li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .success-criteria li::before {
+            content: '★';
+            position: absolute;
+            left: 0;
+            color: #ffc107;
+        }
+
+        .assessment-section {
+            background: #fff3cd;
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .quiz-question {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #ff9800;
+        }
+
+        .question-number {
+            font-weight: 600;
+            color: #ff9800;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option:hover {
+            border-color: #ff9800;
+            background: #fafafa;
+        }
+
+        .option input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #ff9800;
+        }
+
+        .option label {
+            flex-grow: 1;
+            cursor: pointer;
+        }
+
+        .project-brief {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 20px;
+            border: 2px dashed #ff9800;
+        }
+
+        .project-brief h4 {
+            color: #ff9800;
+            margin-bottom: 10px;
+        }
+
+        .project-brief p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .submission-box {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+
+        .submission-box textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: Arial, sans-serif;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+
+        .btn-success {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #45a049;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+        }
+
+        .offline-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .offline-indicator.online {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .offline-indicator.offline {
+            background: #ff9800;
+            color: white;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .status-not-started {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .status-in-progress {
+            background: #fff9c4;
+            color: #f57f17;
+        }
+
+        .status-completed {
+            background: #c8e6c9;
+            color: #2e7d32;
+        }
+
+        @media (max-width: 768px) {
+            .module-header h1 {
+                font-size: 1.8em;
+            }
+
+            .module-meta {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .videos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .module-content {
+                padding: 20px;
+            }
+
+            .offline-indicator {
+                bottom: 10px;
+                right: 10px;
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+        }
+
+        .toast-notification {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background: #333;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            display: none;
+            z-index: 999;
+            animation: slideIn 0.3s ease;
+        }
+
+        .toast-notification.show {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="module-container">
+        <!-- MODULE HEADER -->
+        <div class="module-header">
+            <div class="module-progress-bar">
+                <div class="module-progress-bar-fill" id="progressBar"></div>
+            </div>
+            <h1 id="moduleTitle">Module 1: Course Introduction</h1>
+            <div class="module-meta">
+                <div class="meta-item">
+                    <span class="meta-icon">📊</span>
+                    <span><strong>Progress:</strong> <span id="progressPercent">0</span>%</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-icon">⏱</span>
+                    <span><strong>Est. Time:</strong> <span id="estTime">2.5</span> hours</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-icon">🎯</span>
+                    <span><strong>Status:</strong> <span id="statusBadge" class="status-badge status-not-started">Not Started</span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE CONTENT -->
+        <div class="module-content">
+            <!-- LEARNING OBJECTIVES SECTION -->
+            <section class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">🎓</span>
+                    Learning Objectives
+                </h2>
+                <div class="learning-objectives">
+                    <h3>By the end of this module, you will be able to:</h3>
+                    <ul id="learningObjectives">
+                        <li>Understand the fundamentals of the subject matter</li>
+                        <li>Apply practical skills in real-world scenarios</li>
+                        <li>Evaluate your own performance</li>
+                        <li>Design solutions to common challenges</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- VIDEOS SECTION -->
+            <section class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">📹</span>
+                    Video Lessons (5 Videos)
+                </h2>
+                <div class="videos-grid" id="videosGrid">
+                    <!-- Videos will be inserted here by JavaScript -->
+                </div>
+            </section>
+
+            <!-- IMPLEMENTATION SECTION -->
+            <section class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">🛠</span>
+                    Hands-On Implementation
+                </h2>
+
+                <div class="implementation-section">
+                    <h3>Materials & Tools Needed</h3>
+                    <div class="materials-checklist" id="materialsList">
+                        <!-- Materials will be inserted here -->
+                    </div>
+
+                    <h3 style="margin-top: 25px;">Step-by-Step Instructions</h3>
+                    <div class="implementation-steps" id="implementationSteps">
+                        <!-- Steps will be inserted here -->
+                    </div>
+
+                    <div class="success-criteria" id="successCriteria">
+                        <!-- Success criteria will be inserted here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- ASSESSMENT SECTION -->
+            <section class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">✅</span>
+                    Assessment & Projects
+                </h2>
+
+                <div class="assessment-section">
+                    <h3 style="color: #ff9800; margin-bottom: 20px;">Module Quiz</h3>
+                    <div id="quizContainer">
+                        <!-- Quiz questions will be inserted here -->
+                    </div>
+
+                    <h3 style="color: #ff9800; margin-top: 30px; margin-bottom: 20px;">Real-World Application Project</h3>
+                    <div class="project-brief" id="projectBrief">
+                        <!-- Project brief will be inserted here -->
+                    </div>
+
+                    <div class="submission-box">
+                        <label for="projectSubmission" style="font-weight: 600; color: #333; display: block; margin-bottom: 10px;">
+                            📤 Submit Your Work
+                        </label>
+                        <textarea id="projectSubmission" placeholder="Describe your implementation, challenges faced, and what you learned..."></textarea>
+                        <div class="action-buttons">
+                            <button class="btn-primary" onclick="submitProject()">Submit Project</button>
+                            <button class="btn-secondary" onclick="saveProjectDraft()">Save as Draft</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ACTION BUTTONS -->
+            <section style="text-align: center; padding: 20px; border-top: 2px solid #f0f0f0;">
+                <div class="action-buttons" style="justify-content: center; gap: 15px;">
+                    <button class="btn-primary" onclick="completeModule()">✓ Mark Module as Complete</button>
+                    <button class="btn-secondary" onclick="downloadCertificate()">📄 Download Certificate</button>
+                    <button class="btn-secondary" onclick="goToNextModule()">Next Module →</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- OFFLINE INDICATOR -->
+    <div class="offline-indicator online" id="offlineIndicator">
+        <span id="statusIndicator">●</span>
+        <span id="statusText">Online</span>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast-notification" id="toast"></div>
+
+    <script src="progress-tracker.js"></script>
+    <script>
+        // Module Data Structure
+        const moduleData = {
+            moduleId: 'module-1',
+            courseName: 'Sustainable Pig Farming',
+            moduleNumber: 1,
+            totalModules: 6,
+            title: 'Introduction to Pig Farming',
+            estimatedTime: 2.5,
+            learningObjectives: [
+                'Understand the fundamentals of sustainable pig farming',
+                'Apply practical skills in pig management',
+                'Evaluate farm conditions and animal health',
+                'Design sustainable farming practices'
+            ],
+            videos: [
+                {
+                    id: 'vid-1-1',
+                    title: 'What is Sustainable Pig Farming?',
+                    duration: '8:45',
+                    description: 'Introduction to sustainable farming practices and benefits',
+                    embedUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                    source: 'Educational Channel'
+                },
+                {
+                    id: 'vid-1-2',
+                    title: 'Basic Pig Breeds and Selection',
+                    duration: '12:30',
+                    description: 'Learn about different pig breeds suitable for African climate',
+                    embedUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                    source: 'Agriculture Institute'
+                },
+                {
+                    id: 'vid-1-3',
+                    title: 'Building Your First Pigsty',
+                    duration: '15:20',
+                    description: 'Step-by-step guide to constructing a simple, cost-effective pigsty',
+                    embedUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                    source: 'Farming Basics'
+                },
+                {
+                    id: 'vid-1-4',
+                    title: 'Feed and Nutrition Basics',
+                    duration: '10:15',
+                    description: 'Understanding pig nutritional requirements and local feed options',
+                    embedUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                    source: 'Veterinary Guide'
+                },
+                {
+                    id: 'vid-1-5',
+                    title: 'Health Monitoring and Disease Prevention',
+                    duration: '14:50',
+                    description: 'How to keep your pigs healthy and prevent common diseases',
+                    embedUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                    source: 'Animal Health'
+                }
+            ],
+            materials: [
+                { id: 'mat-1', name: 'Notebook and pen for taking notes', category: 'documentation' },
+                { id: 'mat-2', name: 'Measuring tape (at least 10 meters)', category: 'tools' },
+                { id: 'mat-3', name: 'Basic farm layout diagram', category: 'reference' },
+                { id: 'mat-4', name: 'Access to local market for feed prices', category: 'research' },
+                { id: 'mat-5', name: 'Contact information for nearest veterinarian', category: 'resources' }
+            ],
+            implementationSteps: [
+                {
+                    number: 1,
+                    title: 'Assess Your Current Situation',
+                    description: 'Evaluate your available land, climate, and resources',
+                    details: 'Walk around your property and identify: available space (minimum 10 m² per pig), water source proximity, shelter from sun, and drainage patterns. Note soil type and climate characteristics for your region.'
+                },
+                {
+                    number: 2,
+                    title: 'Plan Your Pigsty Layout',
+                    description: 'Design the layout based on sustainable principles',
+                    details: 'Sketch a simple layout including: sleeping area, feeding area, water trough, waste management section. Ensure good ventilation and natural drainage. Research local building regulations.'
+                },
+                {
+                    number: 3,
+                    title: 'Gather Building Materials',
+                    description: 'Collect local, affordable materials',
+                    details: 'Use available local materials: bamboo, timber, mud bricks, or concrete blocks. Ensure materials are suitable for local climate. Calculate total costs for your planned structure.'
+                },
+                {
+                    number: 4,
+                    title: 'Construct the Basic Pigsty',
+                    description: 'Build the shelter following your plan',
+                    details: 'Follow step-by-step construction: foundation → walls → roof → ventilation → drainage. Work with community members if needed. Ensure animal welfare standards are met.'
+                },
+                {
+                    number: 5,
+                    title: 'Research Local Feed Options',
+                    description: 'Identify affordable, nutritious feed sources',
+                    details: 'Create a list of locally available feeds: grains, vegetables, kitchen scraps, commercial feed options. Calculate costs per kg. Visit local markets and farms for pricing.'
+                },
+                {
+                    number: 6,
+                    title: 'Connect with Local Resources',
+                    description: 'Establish relationships with support services',
+                    details: 'Find and contact: local veterinarian, agricultural extension officer, farmers\' group, feed suppliers. Join online farmer communities. Build your support network.'
+                }
+            ],
+            successCriteria: [
+                'Identify and document your farm\'s characteristics',
+                'Create a detailed pigsty layout diagram',
+                'Calculate construction costs with quotes',
+                'Build a simple prototype or demonstrate building technique',
+                'Compile a local feed options list with prices',
+                'Establish contact with at least 2 support resources'
+            ],
+            quiz: [
+                {
+                    id: 'q1',
+                    question: 'What is the minimum space requirement per pig in a sustainable farm?',
+                    options: [
+                        'A) 5 square meters',
+                        'B) 10 square meters',
+                        'C) 15 square meters',
+                        'D) 20 square meters'
+                    ],
+                    correctAnswer: 'B'
+                },
+                {
+                    id: 'q2',
+                    question: 'Which of the following is NOT an important factor for pigsty location?',
+                    options: [
+                        'A) Proximity to water source',
+                        'B) Good drainage',
+                        'C) Proximity to your house',
+                        'D) Natural ventilation'
+                    ],
+                    correctAnswer: 'C'
+                },
+                {
+                    id: 'q3',
+                    question: 'What is the primary benefit of using local materials for construction?',
+                    options: [
+                        'A) Better aesthetics',
+                        'B) Cost-effectiveness and sustainability',
+                        'C) Longer lifespan',
+                        'D) Easier construction'
+                    ],
+                    correctAnswer: 'B'
+                }
+            ],
+            projectBrief: {
+                title: 'Design Your Farm Plan',
+                description: 'Create a comprehensive plan for starting your pig farm based on your local context.',
+                deliverables: [
+                    'A hand-drawn or digital farm layout diagram (include pigsty, water source, feed storage, waste management)',
+                    'A list of 5-10 local feed options with approximate prices per kg',
+                    'A cost estimate for constructing a basic pigsty to house 3-5 pigs',
+                    'A description of 3-5 local support resources you\'ll use (veterinarian, extension officer, suppliers)',
+                    'A reflection on potential challenges and how you\'ll address them'
+                ]
+            }
+        };
+
+        // Initialize module on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeModule();
+            setupOfflineSync();
+            setupEventListeners();
+        });
+
+        function initializeModule() {
+            // Set header
+            document.getElementById('moduleTitle').textContent =
+                `Module ${moduleData.moduleNumber} of ${moduleData.totalModules}: ${moduleData.title}`;
+            document.getElementById('estTime').textContent = moduleData.estimatedTime;
+
+            // Set learning objectives
+            const objectivesList = document.getElementById('learningObjectives');
+            objectivesList.innerHTML = moduleData.learningObjectives
+                .map(obj => `<li>${obj}</li>`)
+                .join('');
+
+            // Populate videos
+            populateVideos();
+
+            // Populate materials
+            populateMaterials();
+
+            // Populate implementation steps
+            populateImplementationSteps();
+
+            // Populate success criteria
+            populateSuccessCriteria();
+
+            // Populate quiz
+            populateQuiz();
+
+            // Populate project brief
+            populateProjectBrief();
+
+            // Load progress from localStorage
+            loadModuleProgress();
+
+            // Update progress bar
+            updateProgress();
+        }
+
+        function populateVideos() {
+            const grid = document.getElementById('videosGrid');
+            grid.innerHTML = moduleData.videos.map(video => `
+                <div class="video-card">
+                    <div class="video-container">
+                        <iframe src="${video.embedUrl}"
+                                title="${video.title}"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-info">
+                        <div class="video-title">${video.title}</div>
+                        <div class="video-description">${video.description}</div>
+                        <div class="video-meta">
+                            <div class="video-watched">
+                                <input type="checkbox" id="watch-${video.id}"
+                                       onchange="markVideoWatched('${video.id}')">
+                                <label for="watch-${video.id}" style="cursor: pointer; font-size: 0.8em;">Watched</label>
+                            </div>
+                            <div class="video-duration">${video.duration}</div>
+                        </div>
+                        <small style="color: #999;">${video.source}</small>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function populateMaterials() {
+            const list = document.getElementById('materialsList');
+            const grouped = {};
+
+            moduleData.materials.forEach(mat => {
+                if (!grouped[mat.category]) grouped[mat.category] = [];
+                grouped[mat.category].push(mat);
+            });
+
+            let html = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">';
+
+            Object.entries(grouped).forEach(([category, items]) => {
+                html += `
+                    <div>
+                        <h4 style="color: #667eea; text-transform: capitalize; margin-bottom: 10px;">${category}</h4>
+                        <div class="checklist-item" style="border: none; padding: 0; margin-bottom: 15px;">
+                `;
+                items.forEach(item => {
+                    html += `
+                        <div class="checklist-item" style="display: flex;">
+                            <input type="checkbox" id="mat-${item.id}"
+                                   onchange="saveProgress()">
+                            <label for="mat-${item.id}" class="checklist-label">${item.name}</label>
+                        </div>
+                    `;
+                });
+                html += '</div></div>';
+            });
+            html += '</div>';
+
+            list.innerHTML = html;
+        }
+
+        function populateImplementationSteps() {
+            const container = document.getElementById('implementationSteps');
+            container.innerHTML = moduleData.implementationSteps.map(step => `
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">${step.number}</div>
+                        <div class="step-title">${step.title}</div>
+                    </div>
+                    <div class="step-description">${step.description}</div>
+                    <div class="step-details">
+                        <strong>How to do it:</strong><br>
+                        ${step.details}
+                    </div>
+                    <div style="margin-left: 51px; margin-top: 10px;">
+                        <input type="checkbox" id="step-${step.number}"
+                               onchange="saveProgress()">
+                        <label for="step-${step.number}" style="cursor: pointer; color: #666;">
+                            Mark step complete
+                        </label>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function populateSuccessCriteria() {
+            const container = document.getElementById('successCriteria');
+            const html = `
+                <h4>Success Criteria</h4>
+                <p style="color: #666; margin-bottom: 15px;">You'll know you've succeeded when you can:</p>
+                <ul>
+                    ${moduleData.successCriteria.map(criterion =>
+                        `<li>${criterion}</li>`
+                    ).join('')}
+                </ul>
+            `;
+            container.innerHTML = html;
+        }
+
+        function populateQuiz() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = moduleData.quiz.map((q, idx) => `
+                <div class="quiz-question">
+                    <div class="question-number">Question ${idx + 1}</div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options">
+                        ${q.options.map((option, optIdx) => {
+                            const optionValue = String.fromCharCode(65 + optIdx);
+                            return `
+                                <div class="option">
+                                    <input type="radio" name="q-${q.id}"
+                                           id="option-${q.id}-${optionValue}"
+                                           value="${optionValue}"
+                                           onchange="saveProgress()">
+                                    <label for="option-${q.id}-${optionValue}">${option}</label>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function populateProjectBrief() {
+            const brief = moduleData.projectBrief;
+            const container = document.getElementById('projectBrief');
+            const html = `
+                <h4>${brief.title}</h4>
+                <p>${brief.description}</p>
+                <h5 style="color: #555; margin-top: 15px; margin-bottom: 10px;">What you need to submit:</h5>
+                <ul style="color: #666;">
+                    ${brief.deliverables.map(d => `<li>${d}</li>`).join('')}
+                </ul>
+            `;
+            container.innerHTML = html;
+        }
+
+        function markVideoWatched(videoId) {
+            saveProgress();
+            updateProgress();
+        }
+
+        function completeModule() {
+            const progress = progressTracker.getModuleProgress(moduleData.moduleId);
+            if (progress.videosWatched === moduleData.videos.length &&
+                progress.quizCompleted &&
+                progress.projectSubmitted) {
+                progressTracker.completeModule(moduleData.moduleId);
+                showToast('✓ Module completed! Generating certificate...');
+                updateProgress();
+            } else {
+                showToast('⚠ Complete all sections before marking module as done');
+            }
+        }
+
+        function downloadCertificate() {
+            const progress = progressTracker.getModuleProgress(moduleData.moduleId);
+            if (progress.completed) {
+                showToast('📄 Certificate downloaded!');
+                // In production, this would generate a PDF certificate
+            } else {
+                showToast('⚠ Complete the module first');
+            }
+        }
+
+        function submitProject() {
+            const text = document.getElementById('projectSubmission').value;
+            if (text.length < 50) {
+                showToast('⚠ Please provide more detailed submission (at least 50 characters)');
+                return;
+            }
+
+            progressTracker.recordProjectSubmission(moduleData.moduleId, text);
+            showToast('✓ Project submitted successfully!');
+            saveProgress();
+            updateProgress();
+        }
+
+        function saveProjectDraft() {
+            const text = document.getElementById('projectSubmission').value;
+            progressTracker.saveProjectDraft(moduleData.moduleId, text);
+            showToast('💾 Draft saved locally');
+        }
+
+        function goToNextModule() {
+            showToast('→ Navigating to next module...');
+            // In production, navigate to next module
+        }
+
+        function saveProgress() {
+            const videoChecks = document.querySelectorAll('input[id^="watch-"]');
+            const videosWatched = Array.from(videoChecks).filter(cb => cb.checked).length;
+
+            const stepChecks = document.querySelectorAll('input[id^="step-"]');
+            const stepsCompleted = Array.from(stepChecks).filter(cb => cb.checked).length;
+
+            const quizAnswers = document.querySelectorAll('input[type="radio"]:checked');
+            const quizCompleted = quizAnswers.length === moduleData.quiz.length;
+
+            progressTracker.updateProgress(moduleData.moduleId, {
+                videosWatched,
+                stepsCompleted,
+                quizCompleted,
+                quizAnswers: Array.from(quizAnswers).map(a => a.value)
+            });
+        }
+
+        function loadModuleProgress() {
+            const progress = progressTracker.getModuleProgress(moduleData.moduleId);
+
+            // Restore video watched checkboxes
+            progress.videosWatched?.forEach((videoId, idx) => {
+                const checkbox = document.getElementById(`watch-${moduleData.videos[idx].id}`);
+                if (checkbox) checkbox.checked = true;
+            });
+
+            // Restore step completion
+            for (let i = 0; i < progress.stepsCompleted; i++) {
+                const checkbox = document.getElementById(`step-${i + 1}`);
+                if (checkbox) checkbox.checked = true;
+            }
+
+            // Restore quiz answers
+            if (progress.quizAnswers) {
+                progress.quizAnswers.forEach((answer, idx) => {
+                    const radio = document.getElementById(`option-${moduleData.quiz[idx].id}-${answer}`);
+                    if (radio) radio.checked = true;
+                });
+            }
+
+            // Restore project submission
+            if (progress.projectSubmission) {
+                document.getElementById('projectSubmission').value = progress.projectSubmission;
+            }
+        }
+
+        function updateProgress() {
+            const progress = progressTracker.getModuleProgress(moduleData.moduleId);
+            const total = moduleData.videos.length + moduleData.implementationSteps.length +
+                         moduleData.quiz.length + 1; // +1 for project
+
+            const completed = (progress.videosWatched || 0) +
+                            (progress.stepsCompleted || 0) +
+                            (progress.quizCompleted ? moduleData.quiz.length : 0) +
+                            (progress.projectSubmitted ? 1 : 0);
+
+            const percentage = Math.round((completed / total) * 100);
+
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('progressPercent').textContent = percentage;
+
+            // Update status badge
+            const badge = document.getElementById('statusBadge');
+            if (progress.completed) {
+                badge.className = 'status-badge status-completed';
+                badge.textContent = '✓ Completed';
+            } else if (percentage > 0) {
+                badge.className = 'status-badge status-in-progress';
+                badge.textContent = `${percentage}% Complete`;
+            } else {
+                badge.className = 'status-badge status-not-started';
+                badge.textContent = 'Not Started';
+            }
+        }
+
+        function setupOfflineSync() {
+            window.addEventListener('online', () => {
+                document.getElementById('offlineIndicator').className = 'offline-indicator online';
+                document.getElementById('statusIndicator').textContent = '●';
+                document.getElementById('statusText').textContent = 'Online';
+                progressTracker.syncProgress();
+                showToast('✓ Back online - progress synced');
+            });
+
+            window.addEventListener('offline', () => {
+                document.getElementById('offlineIndicator').className = 'offline-indicator offline';
+                document.getElementById('statusIndicator').textContent = '●';
+                document.getElementById('statusText').textContent = 'Offline (Local Save)';
+                showToast('⚠ Offline mode - changes saved locally');
+            });
+
+            // Set initial status
+            if (!navigator.onLine) {
+                document.getElementById('offlineIndicator').className = 'offline-indicator offline';
+                document.getElementById('statusIndicator').textContent = '●';
+                document.getElementById('statusText').textContent = 'Offline (Local Save)';
+            }
+        }
+
+        function setupEventListeners() {
+            // Auto-save on any input change
+            document.addEventListener('change', saveProgress);
+            document.addEventListener('input', () => {
+                clearTimeout(window.saveTimeout);
+                window.saveTimeout = setTimeout(saveProgress, 2000);
+            });
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+    </script>
+</body>
+</html>
