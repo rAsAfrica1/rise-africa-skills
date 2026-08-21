@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Certificates — Rise Africa Skills</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #c9a227;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #c9a227;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #bbb;
+            font-size: 1.1rem;
+        }
+
+        .certificates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .certificate-card {
+            background: rgba(201, 162, 39, 0.08);
+            border: 2px solid #c9a227;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .certificate-card:hover {
+            background: rgba(201, 162, 39, 0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(201, 162, 39, 0.2);
+        }
+
+        .certificate-card h3 {
+            color: #c9a227;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-name {
+            color: #bbb;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .completion-date {
+            font-size: 0.85rem;
+            color: #999;
+            margin-bottom: 1rem;
+        }
+
+        .cert-id {
+            font-size: 0.75rem;
+            color: #777;
+            word-break: break-all;
+            margin-bottom: 1.5rem;
+            padding: 0.75rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+
+        .cert-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-view {
+            background: #c9a227;
+            color: #1a1a2e;
+        }
+
+        .btn-view:hover {
+            background: #e6b840;
+        }
+
+        .btn-download {
+            background: transparent;
+            color: #c9a227;
+            border: 1px solid #c9a227;
+        }
+
+        .btn-download:hover {
+            background: rgba(201, 162, 39, 0.1);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #999;
+        }
+
+        .empty-state h2 {
+            color: #c9a227;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-dashboard {
+            background: #c9a227;
+            color: #1a1a2e;
+            padding: 0.75rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn-dashboard:hover {
+            background: #e6b840;
+        }
+
+        .header-action {
+            float: right;
+            margin-top: 1rem;
+        }
+
+        header::after {
+            content: '';
+            display: table;
+            clear: both;
+        }
+
+        @media (max-width: 768px) {
+            .certificates-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎓 My Certificates</h1>
+            <p class="subtitle">Your earned achievements from Rise Africa Skills courses</p>
+            <div class="header-action">
+                <a href="dashboard.html" class="btn-dashboard">← Back to Courses</a>
+            </div>
+        </header>
+
+        <div id="certificates-container" class="certificates-grid">
+            <!-- Certificates will load here -->
+        </div>
+
+        <div id="empty-container" class="empty-state" style="display: none;">
+            <h2>No Certificates Yet</h2>
+            <p>Complete courses to earn certificates!</p>
+            <a href="dashboard.html" class="btn-dashboard">View Enrolled Courses</a>
+        </div>
+    </div>
+
+    <script>
+        // Load certificates from localStorage
+        function loadCertificates() {
+            try {
+                const studentEmail = localStorage.getItem('enrolledUserEmail');
+                const certs = JSON.parse(localStorage.getItem('certificates') || '[]');
+
+                if (certs.length === 0) {
+                    document.getElementById('empty-container').style.display = 'block';
+                    document.getElementById('certificates-container').style.display = 'none';
+                    return;
+                }
+
+                const container = document.getElementById('certificates-container');
+                container.innerHTML = '';
+
+                certs.forEach(cert => {
+                    const dateStr = new Date(cert.completionDate).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+
+                    const card = document.createElement('div');
+                    card.className = 'certificate-card';
+                    card.innerHTML = `
+                        <h3>🏆 ${cert.courseName}</h3>
+                        <p class="course-name">Certificate of Completion</p>
+                        <p class="completion-date">Completed: ${dateStr}</p>
+                        <div class="cert-id">ID: ${cert.id}</div>
+                        <div class="cert-actions">
+                            <a href="certificate.html?id=${encodeURIComponent(cert.id)}" class="btn btn-view">View</a>
+                            <button class="btn btn-download" onclick="downloadCertificate('${cert.id}')">Download PDF</button>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+
+                document.getElementById('empty-container').style.display = 'none';
+            } catch (e) {
+                console.error('Error loading certificates:', e);
+                document.getElementById('empty-container').style.display = 'block';
+            }
+        }
+
+        // Download certificate as PDF
+        function downloadCertificate(certId) {
+            try {
+                const certs = JSON.parse(localStorage.getItem('certificates') || '[]');
+                const cert = certs.find(c => c.id === certId);
+
+                if (!cert) {
+                    alert('Certificate not found');
+                    return;
+                }
+
+                // Check if jsPDF is available
+                if (typeof jsPDF === 'undefined') {
+                    alert('PDF library not available. Please try viewing the certificate instead.');
+                    return;
+                }
+
+                // Trigger download via certificate generator
+                if (typeof CertificateGenerator !== 'undefined') {
+                    const generator = new CertificateGenerator();
+                    generator.generateCertificate(
+                        cert.studentName,
+                        cert.courseName,
+                        cert.completionDate
+                    );
+                } else {
+                    alert('Certificate generator not available');
+                }
+            } catch (e) {
+                console.error('Error downloading certificate:', e);
+                alert('Error generating PDF');
+            }
+        }
+
+        // Load on page load
+        document.addEventListener('DOMContentLoaded', loadCertificates);
+    </script>
+
+    <!-- Certificate generator script -->
+    <script src="certificate-generator.js"></script>
+</body>
+</html>
