@@ -323,13 +323,20 @@ const STRIPE_LINKS = {
 };
 
 // ============ PAYMENT METHOD LINKS ============
-const PAYMENT_METHOD_LINKS = {
-  stripe: STRIPE_LINKS,
-  ecocash: 'https://ecocash.example.com/pay',
-  mpesa: 'https://mpesa.example.com/pay',
-  bank: 'https://bank-transfer.example.com/pay',
-  paypal: 'https://paypal.example.com/pay'
-};
+const RAS_WHATSAPP = '263773001353';
+const PAYMENT_METHOD_LINKS = { stripe: STRIPE_LINKS };
+
+// Mobile money and bank transfer are completed over WhatsApp with a live agent,
+// who sends the merchant code / account details and confirms payment within 2 hours.
+function waPay(course, tier, method, email) {
+  var label = { ecocash: 'EcoCash', mpesa: 'M-Pesa', bank: 'Bank Transfer' }[method] || method;
+  var msg = 'Hi rAs, I want to enroll and pay by ' + label + '.'
+    + '\nCourse: ' + (course || 'to be confirmed')
+    + '\nTier: ' + tier + ' (US$' + getTierPrice(tier) + ')'
+    + '\nEmail: ' + (email || 'to be confirmed')
+    + '\nPlease send me the payment details.';
+  window.open('https://wa.me/' + RAS_WHATSAPP + '?text=' + encodeURIComponent(msg), '_blank');
+}
 
 // ============ COURSE LIST (loaded from parent) ============
 let allCourses = [];
@@ -479,15 +486,9 @@ function routeToPayment(course, tier, paymentMethod, email) {
       paymentUrl += '?prefilled_email=' + encodeURIComponent(email);
     }
     window.open(paymentUrl, '_blank');
-  } else if (paymentMethod === 'ecocash') {
-    // EcoCash payment (implement as needed)
-    alert('EcoCash payment method coming soon. Please use Card or other payment method.');
-  } else if (paymentMethod === 'mpesa') {
-    // M-Pesa payment (implement as needed)
-    alert('M-Pesa payment method coming soon. Please use Card or other payment method.');
-  } else if (paymentMethod === 'bank') {
-    // Bank transfer instructions
-    alert('Bank Transfer Details:\n\nPlease contact our support team for bank account details.\nEmail: support@riseafricaskills.com');
+  } else if (paymentMethod === 'ecocash' || paymentMethod === 'mpesa' || paymentMethod === 'bank') {
+    // Mobile money / bank transfer completed with a live agent on WhatsApp
+    waPay(course, tier, paymentMethod, email);
   } else if (paymentMethod === 'paypal') {
     // PayPal payment
     const paypalUrl = 'https://paypal.com/checkout?amount=' + getTierPrice(tier);

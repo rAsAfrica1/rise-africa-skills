@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Fundamentals - Module 4: NLP & Large Language Models</title>
+    <style>* { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: #f9f9f9; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%); color: white; padding: 30px; border-radius: 10px; margin-bottom: 30px; }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .content { background: white; padding: 30px; border-radius: 10px; }
+        .section { margin-bottom: 40px; }
+        .section h2 { color: #1a1a2e; font-size: 1.8em; margin-bottom: 20px; border-bottom: 3px solid #0f3460; padding-bottom: 10px; }
+        .learning-objectives { background: #e8f4f8; padding: 20px; border-left: 5px solid #0f3460; border-radius: 5px; }
+        .learning-objectives li { margin-bottom: 8px; }
+        .video-container { background: #f5f5f5; padding: 15px; margin-bottom: 15px; border-radius: 5px; border-left: 4px solid #0f3460; }
+        .video-container h3 { color: #1a1a2e; margin-bottom: 10px; }
+        iframe { width: 100%; height: 400px; border-radius: 5px; border: none; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th { background: #1a1a2e; color: white; padding: 15px; text-align: left; }
+        td { padding: 12px; border-bottom: 1px solid #ddd; }
+        .implementation-step { background: #fafafa; padding: 15px; margin-bottom: 15px; border-radius: 5px; border-left: 4px solid #0f3460; }
+        .quiz-section { background: #e8f4f8; padding: 20px; border-radius: 5px; border: 2px solid #0f3460; }
+        .quiz-question { margin-bottom: 20px; background: white; padding: 15px; border-radius: 5px; }
+        .quiz-option { margin-left: 20px; margin-bottom: 8px; }
+        .feedback { margin-top: 10px; padding: 10px; border-radius: 5px; display: none; }
+        .feedback.show { display: block; }
+        .feedback.correct { background: #c8e6c9; border-left: 4px solid #0f3460; }
+        .feedback.incorrect { background: #ffcdd2; border-left: 4px solid #c62828; }
+        .project-section { background: #e8f4f8; padding: 20px; border-radius: 5px; }
+        .project-item { background: white; padding: 15px; margin: 15px 0; border-radius: 5px; border-left: 4px solid #0f3460; }
+        .progress-bar { background: #e0e0e0; height: 10px; border-radius: 5px; overflow: hidden; margin-bottom: 20px; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #1a1a2e, #0f3460); width: 0%; }
+        .next-module { padding: 20px; background: #e8f4f8; border-radius: 5px; text-align: center; margin-top: 30px; }
+        .next-module a { display: inline-block; background: #1a1a2e; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 AI Fundamentals</h1>
+            <p>Module 4: Natural Language Processing & Large Language Models</p>
+        </div>
+        <div class="content">
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+            <div class="section">
+                <div class="learning-objectives">
+                    <h2>📚 Learning Objectives</h2>
+                    <ul>
+                        <li>Understand how computers process human language (NLP)</li>
+                        <li>Learn tokenization, embeddings, and semantic meaning</li>
+                        <li>Understand Large Language Models (LLMs) like ChatGPT, GPT-4</li>
+                        <li>Learn training process: pretraining, fine-tuning, RLHF</li>
+                        <li>Recognize capabilities and limitations of LLMs</li>
+                        <li>Understand prompt engineering and AI safety concerns</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="section">
+                <h2>🎥 Learning Videos</h2>
+                <div class="video-container"><h3>1. Natural Language Processing Basics</h3><iframe src="https://www.youtube.com/embed/fZshnKuNVv4?rel=0" allowfullscreen></iframe></div>
+                <div class="video-container"><h3>2. Word Embeddings & Semantic Meaning</h3><iframe src="https://www.youtube.com/embed/D0eDLnWbMfI?rel=0" allowfullscreen></iframe></div>
+                <div class="video-container"><h3>3. How ChatGPT and Large Language Models Work</h3><iframe src="https://www.youtube.com/embed/u6s0nXIL5Qo?rel=0" allowfullscreen></iframe></div>
+                <div class="video-container"><h3>4. Training Large Language Models: Pretraining to Deployment</h3><iframe src="https://www.youtube.com/embed/6niqTuYvDik?rel=0" allowfullscreen></iframe></div>
+                <div class="video-container"><h3>5. Prompt Engineering & Effective AI Use</h3><iframe src="https://www.youtube.com/embed/dOxUroR57xs?rel=0" allowfullscreen></iframe></div>
+            </div>
+            <div class="section">
+                <h2>📊 NLP Techniques & LLM Evolution</h2>
+                <table><thead><tr><th>Technique</th><th>What It Does</th><th>Breakthrough</th><th>Modern Example</th></tr></thead><tbody>
+                        <tr><td>Tokenization</td><td>Break text into words/subwords</td><td>BPE (Byte-Pair Encoding) handles unknowns</td><td>ChatGPT tokenizes prompts</td></tr>
+                        <tr><td>Word Embeddings</td><td>Convert words to numbers capturing meaning</td><td>Word2Vec: "king"-"man"="queen"</td><td>Semantic search</td></tr>
+                        <tr><td>Sequence Models</td><td>Process text in order (RNN → Transformer)</td><td>Attention = parallelization breakthrough</td><td>BERT, GPT</td></tr>
+                        <tr><td>Pretraining</td><td>Train on massive unlabeled text data</td><td>Emerges knowledge without labels</td><td>GPT-4 trained on web-scale data</td></tr>
+                        <tr><td>Fine-tuning</td><td>Adapt pretrained model to specific task</td><td>Reduces data/compute needed</td><td>ChatGPT fine-tuned for conversation</td></tr>
+                        <tr><td>RLHF</td><td>Use human feedback to align behavior</td><td>Makes AI "safe" and "helpful"</td><td>ChatGPT uses RLHF</td></tr>
+                    </tbody></table>
+            </div>
+            <div class="section">
+                <h2>📋 6 NLP & LLM Concepts</h2>
+                <div class="implementation-step"><h3>Concept 1: Tokenization & Vocabulary</h3><p>Language is continuous strings. Tokenization breaks into manageable units (words, subwords, characters). Vocabulary size: typical LLM has 50K tokens. Unknown words handled by subword tokenization (splitting to smaller pieces). Token efficiency matters: fewer tokens = cheaper to run.</p></div>
+                <div class="implementation-step"><h3>Concept 2: Word Embeddings & Semantic Space</h3><p>Words represented as vectors in high-dimensional space (300D typical). Related words cluster together. Arithmetic works: vector("king") - vector("man") + vector("woman") ≈ vector("queen"). This captures semantic relationships learned from data.</p></div>
+                <div class="implementation-step"><h3>Concept 3: Language Modeling & Next-Token Prediction</h3><p>LLM training task: "Given previous tokens, predict next token." ChatGPT trained on billions of examples of this. After training, it can generate coherent text by repeatedly predicting next token. Stochastic process: same prompt can generate different outputs (temperature parameter controls randomness).</p></div>
+                <div class="implementation-step"><h3>Concept 4: Pretraining vs Fine-tuning</h3><p>PRETRAINING: Train on massive text corpus (billions of tokens). Learns general language, facts, reasoning. Requires enormous compute (GPT-4: trillions of tokens, millions of GPU hours). FINE-TUNING: Take pretrained model, train on specific data (conversation, coding, medical). Cheaper, faster, task-specific. Most practical approach today.</p></div>
+                <div class="implementation-step"><h3>Concept 5: RLHF - Reinforcement Learning from Human Feedback</h3><p>Raw LLM outputs can be inaccurate, toxic, biased. RLHF: humans rate outputs, train reward model, use RL to optimize for high-scored outputs. Makes AI "helpful, harmless, honest." Trade-off: sometimes less creative/informative to be "safe." Example: ChatGPT trained this way.</p></div>
+                <div class="implementation-step"><h3>Concept 6: Prompt Engineering & Context Window</h3><p>Prompt quality dramatically affects outputs. Techniques: few-shot examples, clear instructions, role-playing ("you are expert..."). Context window: max tokens the model can attend to (ChatGPT-4: 8K or 32K, Claudee: 100K+). Longer context = better for complex tasks but slower/more expensive. Hallucinations: LLM confidently generates false information (serious risk).</p></div>
+            </div>
+            <div class="section">
+                <div class="quiz-section"><h3>🎯 Module 4 Quiz</h3>
+                    <div class="quiz-question"><p>1. What does RLHF do in large language models?</p>
+                        <div class="quiz-option"><input type="radio" name="q1" value="a" id="q1a"><label for="q1a">a) Uses human feedback to align model with human values</label></div>
+                        <div class="quiz-option"><input type="radio" name="q1" value="b" id="q1b"><label for="q1b">b) Increases model size</label></div>
+                        <div class="quiz-option"><input type="radio" name="q1" value="c" id="q1c"><label for="q1c">c) Reduces inference time</label></div>
+                        <button onclick="checkAnswer('q1', 'a', 'Correct! RLHF makes models safer and more aligned with human preferences.')">Check Answer</button>
+                        <div id="feedback-q1" class="feedback"></div>
+                    </div>
+                    <div class="quiz-question"><p>2. What is hallucination in LLMs?</p>
+                        <div class="quiz-option"><input type="radio" name="q2" value="a" id="q2a"><label for="q2a">a) Model confidently generates false information</label></div>
+                        <div class="quiz-option"><input type="radio" name="q2" value="b" id="q2b"><label for="q2b">b) Model crashes with an error</label></div>
+                        <div class="quiz-option"><input type="radio" name="q2" value="c" id="q2c"><label for="q2c">c) Mode forgets previous context</label></div>
+                        <button onclick="checkAnswer('q2', 'a', 'Correct! Hallucinations are a critical LLM limitation - always verify outputs.')">Check Answer</button>
+                        <div id="feedback-q2" class="feedback"></div>
+                    </div>
+                    <div class="quiz-question"><p>3. What is the advantage of fine-tuning over training from scratch?</p>
+                        <div class="quiz-option"><input type="radio" name="q3" value="a" id="q3a"><label for="q3a">a) Faster, cheaper, needs less data</label></div>
+                        <div class="quiz-option"><input type="radio" name="q3" value="b" id="q3b"><label for="q3b">b) Always produces better results</label></div>
+                        <div class="quiz-option"><input type="radio" name="q3" value="c" id="q3c"><label for="q3c">c) No real advantage</label></div>
+                        <button onclick="checkAnswer('q3', 'a', 'Correct! Fine-tuning leverages pretrained knowledge efficiently.')">Check Answer</button>
+                        <div id="feedback-q3" class="feedback"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <div class="project-section"><h2>🚀 Real-World Project: LLM Exploration & Ethics</h2>
+                    <div class="project-item"><h4>Part 1: Prompt Engineering Experiment</h4><p>Test ChatGPT/Claude with 5 different prompts on same question. How much does prompt quality matter? Document: best prompt, why it works, worst prompt and why.</p></div>
+                    <div class="project-item"><h4>Part 2: Hallucination Detection</h4><p>Ask LLM about recent events, specific facts requiring up-to-date knowledge. Verify: how many hallucinations? How confident does it sound even when wrong?</p></div>
+                    <div class="project-item"><h4>Part 3: Bias & Fairness Analysis</h4><p>Test LLM responses on sensitive topics. Does it show bias? How? Propose solutions.</p></div>
+                    <div class="project-item"><h4>Part 4: Use Case Design</h4><p>Propose LLM application for your field. What works well? What are risks?</p></div>
+                    <div class="project-item"><h4>Part 5: Context Window Limits</h4><p>Experiment: how much context before quality degrades? Where's the breaking point?</p></div>
+                    <div class="project-item"><h4>Part 6: Cost-Benefit Analysis</h4><p>Using LLMs vs alternatives: compute cost, accuracy, human time saved. When justified?</p></div>
+                    <div class="project-item"><h4>Part 7: Responsible AI Implementation</h4><p>If deploying LLM: what safeguards? Human oversight? Audit trails? Limits?</p></div>
+                    <div class="project-item"><h4>Part 8: Future Predictions</h4><p>Where will LLMs be in 2-5 years? Capabilities? Risks? How prepare?</p></div>
+                </div>
+            </div>
+            <div class="next-module"><p>Ready to continue? Move to Module 5: Computer Vision & Image AI</p><a href="ai-fundamentals-module-5.html">→ Next Module</a></div>
+        </div>
+    </div>
+    <script>
+        function checkAnswer(q, a, f) { const s = document.querySelector(`input[name="${q}"]:checked`); const e = document.getElementById(`feedback-${q}`); if (!s) { alert('Select answer'); return; } e.className = 'feedback show ' + (s.value === a ? 'correct' : 'incorrect'); e.textContent = (s.value === a ? '✓ ' : '✗ Incorrect. ') + f; updateProgress(); }
+        function updateProgress() { const c = document.querySelectorAll('input[type="radio"]:checked').length; const t = document.querySelectorAll('input[type="radio"]').length / 3; const p = (c / t) * 100; document.getElementById('progressFill').style.width = p + '%'; localStorage.setItem('ai4', p); }
+        window.addEventListener('load', () => { const s = localStorage.getItem('ai4'); if (s) document.getElementById('progressFill').style.width = s + '%'; });
+    </script>
+</body>
+</html>

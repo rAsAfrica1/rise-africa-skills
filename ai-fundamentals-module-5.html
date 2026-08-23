@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Fundamentals - Module 5: Computer Vision & Image AI</title><style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: #f9f9f9; }
+.container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+.header { background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%); color: white; padding: 30px; border-radius: 10px; margin-bottom: 30px; }
+.header h1 { font-size: 2.5em; margin-bottom: 10px; }
+.content { background: white; padding: 30px; border-radius: 10px; }
+.section { margin-bottom: 40px; }
+.section h2 { color: #1a1a2e; font-size: 1.8em; margin-bottom: 20px; border-bottom: 3px solid #0f3460; padding-bottom: 10px; }
+.learning-objectives { background: #e8f4f8; padding: 20px; border-left: 5px solid #0f3460; border-radius: 5px; }
+.video-container { background: #f5f5f5; padding: 15px; margin-bottom: 15px; border-radius: 5px; border-left: 4px solid #0f3460; }
+.video-container h3 { color: #1a1a2e; margin-bottom: 10px; font-size: 1em; }
+iframe { width: 100%; height: 400px; border-radius: 5px; border: none; }
+table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+th { background: #1a1a2e; color: white; padding: 12px; text-align: left; font-size: 0.95em; }
+td { padding: 10px; border-bottom: 1px solid #ddd; font-size: 0.95em; }
+.implementation-step { background: #fafafa; padding: 15px; margin-bottom: 15px; border-radius: 5px; border-left: 4px solid #0f3460; }
+.implementation-step h3 { color: #1a1a2e; margin-bottom: 8px; font-size: 1.1em; }
+.implementation-step p { font-size: 0.95em; }
+.quiz-section { background: #e8f4f8; padding: 20px; border-radius: 5px; }
+.quiz-question { margin-bottom: 20px; background: white; padding: 15px; border-radius: 5px; }
+.quiz-option { margin-left: 20px; margin-bottom: 6px; font-size: 0.95em; }
+.feedback { margin-top: 10px; padding: 10px; border-radius: 5px; display: none; font-size: 0.9em; }
+.feedback.show { display: block; }
+.feedback.correct { background: #c8e6c9; border-left: 4px solid #0f3460; }
+.feedback.incorrect { background: #ffcdd2; border-left: 4px solid #c62828; }
+.project-section { background: #e8f4f8; padding: 20px; border-radius: 5px; }
+.project-item { background: white; padding: 12px; margin: 10px 0; border-radius: 5px; border-left: 4px solid #0f3460; font-size: 0.95em; }
+.progress-bar { background: #e0e0e0; height: 10px; border-radius: 5px; overflow: hidden; margin-bottom: 20px; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, #1a1a2e, #0f3460); width: 0%; }
+.next-module { padding: 20px; background: #e8f4f8; border-radius: 5px; text-align: center; margin-top: 30px; }
+.next-module a { background: #1a1a2e; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; }
+@media (max-width: 768px) { .header h1 { font-size: 1.8em; } iframe { height: 300px; } }
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header"><h1>🤖 AI Fundamentals</h1><p>Module 5: Computer Vision & Image AI</p></div>
+<div class="content">
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="section">
+<div class="learning-objectives">
+<h2>📚 Learning Objectives</h2>
+<ul><li>Understand how computers interpret images</li><li>Learn object detection, image classification, semantic segmentation</li><li>Understand facial recognition and ethical concerns</li><li>Learn generative models: GANs, diffusion models, image generation</li><li>Recognize computer vision applications and limitations</li><li>Understand bias in vision systems</li></ul>
+</div>
+</div>
+<div class="section"><h2>🎥 Learning Videos</h2>
+<div class="video-container"><h3>1. Computer Vision & Image Processing Basics</h3><iframe src="https://www.youtube.com/embed/jaMY1cqV4gw?rel=0" allowfullscreen></iframe></div>
+<div class="video-container"><h3>2. Object Detection & Image Localization</h3><iframe src="https://www.youtube.com/embed/K_L9l-2WrKc?rel=0" allowfullscreen></iframe></div>
+<div class="video-container"><h3>3. Facial Recognition Technology & Ethics</h3><iframe src="https://www.youtube.com/embed/wr0hAu9jjQg?rel=0" allowfullscreen></iframe></div>
+<div class="video-container"><h3>4. Image Generation: GANs & Diffusion Models</h3><iframe src="https://www.youtube.com/embed/t68JrzSuJ2g?rel=0" allowfullscreen></iframe></div>
+<div class="video-container"><h3>5. Real-World Vision Applications & Deployment</h3><iframe src="https://www.youtube.com/embed/EBZXVcXLSPc?rel=0" allowfullscreen></iframe></div>
+</div>
+<div class="section">
+<h2>📋 6 Computer Vision Concepts</h2>
+<div class="implementation-step"><h3>Concept 1: Image as Data (Pixel Values)</h3><p>Image = 2D grid of pixels. Each pixel has RGB values (0-255). Computer processes raw numbers, not visual content like humans. CNN features automatically extract patterns: first layer edges, second layer shapes, deeper layers objects. This hierarchical feature learning is key to vision AI.</p></div>
+<div class="implementation-step"><h3>Concept 2: Image Classification vs Detection vs Segmentation</h3><p>CLASSIFICATION: "Is this a cat?" (yes/no, single label). DETECTION: "Where are cats?" (bounding boxes + labels). SEGMENTATION: "Which pixels are cat?" (pixel-level classification). Different tasks require different architectures. Segmentation hardest and most compute-intensive.</p></div>
+<div class="implementation-step"><h3>Concept 3: Facial Recognition & Bias</h3><p>Facial recognition converts face to embedding (numbers capturing face characteristics). Compare to database. Accuracy varies by race: historically failed on dark-skinned people (training data bias). Ethical concerns: surveillance, privacy, discriminatory use. Solution: diverse training data, transparency, opt-in consent.</p></div>
+<div class="implementation-step"><h3>Concept 4: GANs (Generative Adversarial Networks)</h3><p>Two networks battle: GENERATOR creates fake images, DISCRIMINATOR tries to detect fakes. Feedback loop improves both. Result: can generate photorealistic faces, art, etc. Risks: deepfakes, misinformation. Can't distinguish from real without forensics.</p></div>
+<div class="implementation-step"><h3>Concept 5: Diffusion Models & Text-to-Image</h3><p>Start with random noise, gradually denoise following text guidance. DALL-E, Midjourney, Stable Diffusion use this. More stable than GANs. Can generate high-quality images from text. Limitation: still struggles with specific details, hands, text. IP concerns: trained on internet images without permission.</p></div>
+<div class="implementation-step"><h3>Concept 6: 3D Vision & Autonomous Systems</h3><p>LiDAR, stereo vision, depth estimation enable 3D understanding. Autonomous vehicles need: object detection, tracking, motion prediction, path planning. Highly regulated due to safety. Also robotics, medical imaging (3D reconstruction from 2D scans).</p></div>
+</div>
+<div class="section"><div class="quiz-section"><h3>🎯 Module 5 Quiz</h3>
+<div class="quiz-question"><p>1. What is the difference between image classification and object detection?</p>
+<div class="quiz-option"><input type="radio" name="q1" value="a" id="q1a"><label for="q1a">a) Classification: labels image, Detection: locates multiple objects with boxes</label></div>
+<div class="quiz-option"><input type="radio" name="q1" value="b" id="q1b"><label for="q1b">b) They are identical tasks</label></div>
+<div class="quiz-option"><input type="radio" name="q1" value="c" id="q1c"><label for="q1c">c) Detection works, classification doesn't</label></div>
+<button onclick="checkAnswer('q1', 'a', 'Correct! Classification labels entire image; detection finds locations of objects.')">Check Answer</button>
+<div id="feedback-q1" class="feedback"></div></div>
+<div class="quiz-question"><p>2. What is a key problem with facial recognition systems?</p>
+<div class="quiz-option"><input type="radio" name="q2" value="a" id="q2a"><label for="q2a">a) Bias: lower accuracy on darker-skinned faces due to training data</label></div>
+<div class="quiz-option"><input type="radio" name="q2" value="b" id="q2b"><label for="q2b">b) It doesn't work at all</label></div>
+<div class="quiz-option"><input type="radio" name="q2" value="c" id="q2c"><label for="q2c">c) No real problems, works perfectly</label></div>
+<button onclick="checkAnswer('q2', 'a', 'Correct! Bias in facial recognition is a well-documented serious concern.')">Check Answer</button>
+<div id="feedback-q2" class="feedback"></div></div>
+<div class="quiz-question"><p>3. What can diffusion models do?</p>
+<div class="quiz-option"><input type="radio" name="q3" value="a" id="q3a"><label for="q3a">a) Generate images from text descriptions</label></div>
+<div class="quiz-option"><input type="radio" name="q3" value="b" id="q3b"><label for="q3b">b) Only view/classify images, not create</label></div>
+<div class="quiz-option"><input type="radio" name="q3" value="c" id="q3c"><label for="q3c">c) Compress images only</label></div>
+<button onclick="checkAnswer('q3', 'a', 'Correct! Text-to-image diffusion models generate photorealistic images from text.')">Check Answer</button>
+<div id="feedback-q3" class="feedback"></div></div>
+</div></div>
+<div class="section"><div class="project-section"><h2>🚀 Real-World Project: Vision AI Analysis</h2>
+<div class="project-item"><h4>Part 1: Test Vision Model</h4><p>Use open-source model (YOLO for detection, ResNet for classification). Test on images from your domain. How accurate? Where does it fail?</p></div>
+<div class="project-item"><h4>Part 2: Bias Investigation</h4><p>Test facial recognition on diverse faces. Document accuracy by demographics. Does bias exist?</p></div>
+<div class="project-item"><h4>Part 3: Image Generation Experiment</h4><p>Use text-to-image model (DALL-E, Midjourney, Stable Diffusion). Generate 10 images for same prompt. Quality? Consistency? Failures?</p></div>
+<div class="project-item"><h4>Part 4: Deepfake Analysis</h4><p>Research deepfake detection. Can you spot AI-generated faces? What gives them away?</p></div>
+<div class="project-item"><h4>Part 5: Use Case Design</h4><p>Propose computer vision app for your field. What's possible? What's risky?</p></div>
+<div class="project-item"><h4>Part 6: Privacy Impact</h4><p>If deploying facial recognition: consent, data storage, misuse risks, regulations (GDPR, etc.)</p></div>
+<div class="project-item"><h4>Part 7: Ethical Implementation</h4><p>Design safeguards for vision AI system to prevent harm and bias</p></div>
+<div class="project-item"><h4>Part 8: Future Vision</h4><p>Where will vision AI be in 5 years? What new capabilities? What risks?</p></div>
+</div>
+</div>
+<div class="next-module"><p><a href="ai-fundamentals-module-6.html">→ Next Module: AI Ethics, Safety & Future</a></p></div>
+</div>
+</div>
+<script>
+function checkAnswer(q, a, f) { const s = document.querySelector(`input[name="${q}"]:checked`); const e = document.getElementById(`feedback-${q}`); if (!s) { alert('Select answer'); return; } e.className = 'feedback show ' + (s.value === a ? 'correct' : 'incorrect'); e.textContent = (s.value === a ? '✓ ' : '✗ Incorrect. ') + f; updateProgress(); }
+function updateProgress() { const c = document.querySelectorAll('input[type="radio"]:checked').length; const t = document.querySelectorAll('input[type="radio"]').length / 3; const p = (c / t) * 100; document.getElementById('progressFill').style.width = p + '%'; localStorage.setItem('ai5', p); }
+window.addEventListener('load', () => { const s = localStorage.getItem('ai5'); if (s) document.getElementById('progressFill').style.width = s + '%'; });
+</script>
+</body>
+</html>
