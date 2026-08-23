@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Fundamentals - Module 3: Neural Networks & Deep Learning</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: #f9f9f9; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: white; padding: 30px; border-radius: 10px; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.2em; opacity: 0.9; }
+        .content { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .section { margin-bottom: 40px; }
+        .section h2 { color: #1a1a2e; font-size: 1.8em; margin-bottom: 20px; border-bottom: 3px solid #0f3460; padding-bottom: 10px; }
+        .learning-objectives { background: #e8f4f8; padding: 20px; border-left: 5px solid #0f3460; margin-bottom: 20px; border-radius: 5px; }
+        .learning-objectives ul { list-style-position: inside; }
+        .learning-objectives li { margin-bottom: 8px; }
+        .video-container { background: #f5f5f5; padding: 15px; margin-bottom: 15px; border-radius: 5px; border-left: 4px solid #0f3460; }
+        .video-container h3 { color: #1a1a2e; margin-bottom: 10px; }
+        iframe { width: 100%; height: 400px; border-radius: 5px; border: none; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th { background: #1a1a2e; color: white; padding: 15px; text-align: left; }
+        td { padding: 12px; border-bottom: 1px solid #ddd; }
+        tr:hover { background: #f5f5f5; }
+        .implementation-step { background: #fafafa; padding: 15px; margin-bottom: 15px; border-radius: 5px; border-left: 4px solid #0f3460; }
+        .implementation-step h3 { color: #1a1a2e; margin-bottom: 8px; }
+        .quiz-section { background: #e8f4f8; padding: 20px; border-radius: 5px; border: 2px solid #0f3460; }
+        .quiz-section h3 { color: #1a1a2e; margin-bottom: 20px; }
+        .quiz-question { margin-bottom: 20px; background: white; padding: 15px; border-radius: 5px; }
+        .quiz-question p { font-weight: bold; margin-bottom: 10px; }
+        .quiz-option { margin-left: 20px; margin-bottom: 8px; }
+        .quiz-option input[type="radio"] { margin-right: 8px; }
+        .feedback { margin-top: 10px; padding: 10px; border-radius: 5px; display: none; }
+        .feedback.show { display: block; }
+        .feedback.correct { background: #c8e6c9; color: #1a4d7a; border-left: 4px solid #0f3460; }
+        .feedback.incorrect { background: #ffcdd2; color: #c62828; border-left: 4px solid #c62828; }
+        .project-section { background: #e8f4f8; padding: 20px; border-radius: 5px; border: 2px solid #0f3460; }
+        .project-section h2 { color: #1a1a2e; }
+        .project-item { background: white; padding: 15px; margin: 15px 0; border-radius: 5px; border-left: 4px solid #0f3460; }
+        .project-item h4 { color: #1a1a2e; margin-bottom: 8px; }
+        .progress-bar { background: #e0e0e0; height: 10px; border-radius: 5px; overflow: hidden; margin-bottom: 20px; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #1a1a2e, #0f3460); width: 0%; transition: width 0.3s; }
+        .next-module { margin-top: 30px; padding: 20px; background: #e8f4f8; border-radius: 5px; text-align: center; }
+        .next-module a { display: inline-block; background: #1a1a2e; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background 0.3s; }
+        .next-module a:hover { background: #0f3460; }
+        @media (max-width: 768px) { .header h1 { font-size: 1.8em; } iframe { height: 300px; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 AI Fundamentals</h1>
+            <p>Module 3: Neural Networks & Deep Learning</p>
+        </div>
+        <div class="content">
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+            <div class="section">
+                <div class="learning-objectives">
+                    <h2>📚 Learning Objectives</h2>
+                    <ul>
+                        <li>Understand how artificial neural networks mimic the human brain</li>
+                        <li>Learn the structure: neurons, layers, weights, biases, activation functions</li>
+                        <li>Understand backpropagation and how networks learn</li>
+                        <li>Explore different neural network architectures: CNN, RNN, transformers</li>
+                        <li>Learn applications: image recognition, NLP, speech recognition</li>
+                        <li>Understand computational requirements and training challenges</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="section">
+                <h2>🎥 Learning Videos</h2>
+                <div class="video-container"><h3>1. Neural Networks Explained - How They Work</h3><iframe src="https://www.youtube.com/embed/6niqTuYvDik?rel=0" allowfullscreen></iframe></div>
+                <div class="video-container"><h3>2. Backpropagation: How Neural Networks Learn</h3><iframe src="https://www.youtube.com/embed/tIeHLnYvIQg?rel=0" allowfullscreen></iframe></div>
+                <div class="video-container"><h3>3. Convolutional Neural Networks (CNN) for Images</h3><iframe src="https://www.youtube.com/embed/jaMY1cqV4gw?rel=0" allowfullscreen></iframe></div>
+                <div class="video-container"><h3>4. Recurrent Neural Networks (RNN) for Sequences</h3><iframe src="https://www.youtube.com/embed/FJfqLKqL4Ow?rel=0" allowfullscreen></iframe></div>
+                <div class="video-container"><h3>5. Transformers & Attention Mechanism - Modern Deep Learning</h3><iframe src="https://www.youtube.com/embed/yGTxQ2l_8x8?rel=0" allowfullscreen></iframe></div>
+            </div>
+            <div class="section">
+                <h2>📊 Neural Network Architectures & Applications</h2>
+                <table><thead><tr><th>Architecture</th><th>Structure</th><th>Best For</th><th>Key Example</th><th>Computational Cost</th></tr></thead><tbody>
+                        <tr><td>Feedforward NN</td><td>Input → Hidden Layers → Output</td><td>Basic classification/regression</td><td>Spam detection, credit scoring</td><td>Low-Medium</td></tr>
+                        <tr><td>CNN (Convolutional)</td><td>Convolutional layers find patterns in images</td><td>Image recognition, computer vision</td><td>Facial recognition, medical imaging</td><td>Medium-High</td></tr>
+                        <tr><td>RNN (Recurrent)</td><td>Loops allow processing sequences</td><td>Text, time series, language</td><td>Machine translation, speech recognition</td><td>Medium-High</td></tr>
+                        <tr><td>LSTM/GRU</td><td>RNN variant that remembers long-term context</td><td>Long sequences, dependency learning</td><td>Language models, stock prediction</td><td>Medium-High</td></tr>
+                        <tr><td>Transformer</td><td>Attention mechanism processes all positions simultaneously</td><td>Language (most efficient)</td><td>ChatGPT, BERT, GPT-4</td><td>Very High (billions of parameters)</td></tr>
+                    </tbody></table>
+            </div>
+            <div class="section">
+                <h2>📋 6 Neural Network Concepts</h2>
+                <div class="implementation-step"><h3>Concept 1: Neurons & Activation Functions</h3><p>NEURON: receives multiple inputs, multiplies each by a weight, sums them, applies activation function, produces output. Activation function adds NON-LINEARITY (sigmoid, ReLU, tanh). Without it, deep networks collapse to single linear layer (useless). ReLU (Rectified Linear Unit) most popular: returns max(0, x). Allows network to learn complex patterns.</p></div>
+                <div class="implementation-step"><h3>Concept 2: Layers & Network Depth</h3><p>INPUT LAYER: raw data (e.g., pixel values). HIDDEN LAYERS: learn intermediate representations. OUTPUT LAYER: final prediction. "Deep" learning = many hidden layers (10+, sometimes 100+). Deeper networks can learn more complex patterns BUT require more data and training time. Trade-off: depth vs. generalization.</p></div>
+                <div class="implementation-step"><h3>Concept 3: Backpropagation & Gradient Descent</h3><p>BACKPROPAGATION: algorithm that calculates how much each weight contributed to error. Then adjusts weights to reduce error. Repeated thousands of times (epochs). GRADIENT DESCENT: direction to adjust weights. Think: walk downhill to find valley (minimum error). Learning rate: size of steps (too big = overshoot, too small = slow).</p></div>
+                <div class="implementation-step"><h3>Concept 4: CNNs - Convolutional Layers & Filters</h3><p>CONVOLUTIONAL LAYER: small "filter" scans image looking for patterns (edges, shapes, textures). First layer finds simple edges, second finds shapes, third finds objects. POOLING: reduces image size, keeps important features. Example: 224x224 image → multiple layers → 1000 output classes (ImageNet). Conv layers are FEATURE EXTRACTORS, final layer is CLASSIFIER.</p></div>
+                <div class="implementation-step"><h3>Concept 5: RNNs - Recurrent Connections & Memory</h3><p>RECURRENT: output feeds back as input (has memory of previous steps). Good for sequences where order matters. Problem: VANISHING GRADIENT - gradients get too small, network forgets long-term context. Solution: LSTM (Long Short-Term Memory) and GRU - special cells with gates that control information flow. Modern RNNs can remember 100+ steps.</p></div>
+                <div class="implementation-step"><h3>Concept 6: Transformers & Attention Mechanism</h3><p>ATTENTION: each word attends to all other words, learns relationships. PARALLELIZABLE: unlike RNNs (must process sequentially), transformers process all positions simultaneously = MUCH FASTER training. Key innovation: scaled dot-product attention. This is what powers ChatGPT - transformer architecture with billions of parameters trained on internet-scale data.</p></div>
+            </div>
+            <div class="section">
+                <div class="quiz-section"><h3>🎯 Module 3 Quiz</h3>
+                    <div class="quiz-question"><p>1. What is the purpose of activation functions in neural networks?</p>
+                        <div class="quiz-option"><input type="radio" name="q1" value="a" id="q1a"><label for="q1a">a) Add non-linearity so network can learn complex patterns</label></div>
+                        <div class="quiz-option"><input type="radio" name="q1" value="b" id="q1b"><label for="q1b">b) Make the network faster</label></div>
+                        <div class="quiz-option"><input type="radio" name="q1" value="c" id="q1c"><label for="q1c">c) Prevent overfitting</label></div>
+                        <button onclick="checkAnswer('q1', 'a', 'Correct! Activation functions enable non-linear transformations essential for deep learning.')">Check Answer</button>
+                        <div id="feedback-q1" class="feedback"></div>
+                    </div>
+                    <div class="quiz-question"><p>2. What is backpropagation?</p>
+                        <div class="quiz-option"><input type="radio" name="q2" value="a" id="q2a"><label for="q2a">a) Algorithm that calculates how each weight contributed to error, then adjusts them</label></div>
+                        <div class="quiz-option"><input type="radio" name="q2" value="b" id="q2b"><label for="q2b">b) Going back to check data quality</label></div>
+                        <div class="quiz-option"><input type="radio" name="q2" value="c" id="q2c"><label for="q2c">c) Running the network backwards</label></div>
+                        <button onclick="checkAnswer('q2', 'a', 'Correct! Backpropagation is the core learning algorithm for neural networks.')">Check Answer</button>
+                        <div id="feedback-q2" class="feedback"></div>
+                    </div>
+                    <div class="quiz-question"><p>3. What advantage do transformers have over RNNs?</p>
+                        <div class="quiz-option"><input type="radio" name="q3" value="a" id="q3a"><label for="q3a">a) Parallelizable (faster training) and better long-range dependencies</label></div>
+                        <div class="quiz-option"><input type="radio" name="q3" value="b" id="q3b"><label for="q3b">b) Simpler to understand</label></div>
+                        <div class="quiz-option"><input type="radio" name="q3" value="c" id="q3c"><label for="q3c">c) Use less memory</label></div>
+                        <button onclick="checkAnswer('q3', 'a', 'Correct! Transformers are faster and handle longer sequences better (powers ChatGPT).')">Check Answer</button>
+                        <div id="feedback-q3" class="feedback"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <div class="project-section"><h2>🚀 Real-World Project: Understanding Neural Network Architectures</h2>
+                    <div class="project-item"><h4>Part 1: Image Recognition with CNNs</h4><p>Study a pretrained CNN (ImageNet model). Document: layer-by-layer transformations, what patterns each layer detects, final classification. Test with different images: does it work? Where does it fail?</p></div>
+                    <div class="project-item"><h4>Part 2: NLP with Transformers</h4><p>Explore how transformers process text (ChatGPT architecture). Document: how attention mechanism works, why it's better than RNNs, what this enables. Test with prompts: how good is generation? What limitations?</p></div>
+                    <div class="project-item"><h4>Part 3: Computational Requirements Analysis</h4><p>Research compute needed for different models: ResNet-50 (images) vs GPT-3 (language). Compare: parameters, training time, GPU memory, inference cost. Why do large models require massive compute? Carbon footprint implications?</p></div>
+                    <div class="project-item"><h4>Part 4: From Theory to Practice</h4><p>If you were training a neural network for your problem: what architecture? Why? Estimated parameters? GPU requirements? Training time? This forces you to think practically about deep learning deployment.</p></div>
+                    <div class="project-item"><h4>Part 5: Model Interpretability Challenge</h4><p>"Black box" problem: deep networks are hard to interpret. Research explainability methods: saliency maps, attention visualization, LIME. Demonstrate on image: which pixels matter for classification? Can you understand the model's reasoning?</p></div>
+                    <div class="project-item"><h4>Part 6: Ethics of Foundation Models</h4><p>ChatGPT, GPT-4 etc. trained on internet data. Research: what biases exist? Plagiarism/copyright concerns? Environmental cost? Create report: if you were deploying this, what safeguards needed?</p></div>
+                    <div class="project-item"><h4>Part 7: Practical Implementation</h4><p>Use PyTorch or TensorFlow to implement simple feedforward network. Train on MNIST (handwritten digits). Code task: 3-4 layers, ReLU activation, Adam optimizer. Achieve 95%+ accuracy. Document learning process.</p></div>
+                    <div class="project-item"><h4>Part 8: Scaling & Transfer Learning</h4><p>Research transfer learning: why take pretrained ImageNet model and fine-tune? How does it save time/data? When would you use vs. training from scratch? Create decision tree: your problem → recommend architecture + training approach.</p></div>
+                </div>
+            </div>
+            <div class="next-module"><p>Ready to continue? Move to Module 4: Natural Language Processing & Large Language Models</p><a href="ai-fundamentals-module-4.html">→ Next Module</a></div>
+        </div>
+    </div>
+    <script>
+        function checkAnswer(q, a, f) { const s = document.querySelector(`input[name="${q}"]:checked`); const e = document.getElementById(`feedback-${q}`); if (!s) { alert('Select answer'); return; } e.className = 'feedback show ' + (s.value === a ? 'correct' : 'incorrect'); e.textContent = (s.value === a ? '✓ ' : '✗ Incorrect. ') + f; updateProgress(); }
+        function updateProgress() { const c = document.querySelectorAll('input[type="radio"]:checked').length; const t = document.querySelectorAll('input[type="radio"]').length / 3; const p = (c / t) * 100; document.getElementById('progressFill').style.width = p + '%'; localStorage.setItem('ai3', p); }
+        window.addEventListener('load', () => { const s = localStorage.getItem('ai3'); if (s) document.getElementById('progressFill').style.width = s + '%'; });
+    </script>
+</body>
+</html>
