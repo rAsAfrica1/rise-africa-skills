@@ -5,379 +5,54 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Grasscutter Farming — rise AFRICA skills</title>
 <style>
-:root{--gold:#c9a227;--dark:#1a1a2e;--darker:#0f0f1a;--card:#1e1e32;--muted:#9a9ab0;--red:#e94560;--green:#27ae60}
+:root{--gold:#c9a227;--dark:#1a1a2e;--darker:#0f0f1a;--card:#1e1e32;--muted:#9a9ab0}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--darker);color:#fff;line-height:1.65}
-a{color:var(--gold)}
-header{position:sticky;top:0;background:rgba(15,15,26,0.95);backdrop-filter:blur(8px);border-bottom:1px solid rgba(201,162,39,0.2);padding:0.7rem 1rem;display:flex;align-items:center;gap:0.6rem;z-index:100}
-.logo-icon{width:34px;height:34px;border-radius:8px;background:var(--gold);color:var(--darker);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.8rem}
+header{position:sticky;top:0;background:rgba(15,15,26,0.95);padding:0.7rem 1rem;border-bottom:1px solid rgba(201,162,39,0.2);display:flex;align-items:center;gap:0.6rem;z-index:100}
+.logo-icon{width:34px;height:34px;border-radius:8px;background:var(--gold);color:var(--darker);display:flex;align-items:center;justify-content:center;font-weight:800}
 header .brand{font-weight:700;font-size:0.95rem}
-header a.back{margin-left:auto;text-decoration:none;font-size:0.85rem;border:1px solid var(--gold);padding:0.35rem 0.8rem;border-radius:20px}
+header a.back{margin-left:auto;text-decoration:none;color:var(--gold);border:1px solid var(--gold);padding:0.35rem 0.8rem;border-radius:20px;font-size:0.85rem}
 .hero{max-width:920px;margin:0 auto;padding:2.5rem 1rem 1.2rem;text-align:center}
-.cat-tag{display:inline-block;background:rgba(201,162,39,0.15);color:var(--gold);border:1px solid var(--gold);border-radius:20px;padding:0.25rem 0.9rem;font-size:0.75rem;font-weight:700;letter-spacing:1px}
+.cat-tag{display:inline-block;background:rgba(201,162,39,0.15);color:var(--gold);border:1px solid var(--gold);border-radius:20px;padding:0.25rem 0.9rem;font-size:0.75rem;font-weight:700}
 .hero h1{font-size:1.9rem;margin:0.8rem 0 0.4rem;color:var(--gold)}
 .hero p.tag{color:var(--muted);max-width:680px;margin:0 auto}
 .badges{display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;margin-top:1rem}
 .badge{background:var(--card);border:1px solid rgba(201,162,39,0.25);border-radius:8px;padding:0.4rem 0.8rem;font-size:0.75rem}
 main{max-width:920px;margin:0 auto;padding:0 1rem 3rem}
 h2{color:var(--gold);font-size:1.3rem;margin:2rem 0 0.8rem}
-h3{color:#fff;font-size:1.02rem;margin:1rem 0 0.4rem}
-p,li{font-size:0.92rem;color:#ddd}
-ul{margin:0.3rem 0 0.8rem 1.3rem}
-li{margin-bottom:0.3rem}
 .box{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:1.2rem;margin-bottom:0.8rem}
-table{width:100%;border-collapse:collapse;font-size:0.85rem;margin:0.6rem 0 1rem}
-th,td{border:1px solid rgba(255,255,255,0.14);padding:0.5rem 0.6rem;text-align:left;vertical-align:top}
-th{color:var(--gold);background:rgba(201,162,39,0.07)}
-details.month{background:var(--card);border:1px solid rgba(201,162,39,0.2);border-radius:14px;margin-bottom:1rem;overflow:hidden}
-details.month>summary{cursor:pointer;padding:1.1rem 1.3rem;font-weight:800;font-size:1.05rem;color:var(--gold);list-style:none;display:flex;justify-content:space-between;gap:1rem}
-details.month>summary::-webkit-details-marker{display:none}
-details.month[open]>summary{border-bottom:1px solid rgba(201,162,39,0.2)}
-.month-body{padding:1.1rem 1.3rem}
-.lesson{margin-bottom:1.1rem}
-.lesson h4{color:var(--gold);font-size:0.95rem;margin-bottom:0.3rem}
-.practical{background:rgba(201,162,39,0.08);border-left:3px solid var(--gold);padding:0.7rem 0.9rem;border-radius:0 8px 8px 0;font-size:0.88rem;margin:0.8rem 0}
-.practical strong{color:var(--gold)}
-.video{background:rgba(255,255,255,0.04);border:1px dashed rgba(201,162,39,0.4);border-radius:10px;padding:0.7rem 0.9rem;font-size:0.85rem;margin:0.8rem 0;color:var(--muted)}
-.quiz{background:rgba(39,174,96,0.06);border:1px solid rgba(39,174,96,0.35);border-radius:12px;padding:1rem 1.2rem;margin-top:1rem}
-.quiz h4{color:var(--green);margin-bottom:0.6rem}
-.quiz .q{margin-bottom:0.8rem;font-size:0.9rem}
-.quiz details{margin-top:0.25rem}
-.quiz summary{cursor:pointer;color:var(--gold);font-size:0.83rem}
-.quiz .ans{margin-top:0.3rem;font-size:0.86rem;color:#cfe8d8}
-.safety{background:rgba(233,69,96,0.08);border:1px solid rgba(233,69,96,0.4);border-radius:12px;padding:1.1rem 1.2rem;margin:1rem 0}
-.safety h3{color:#ff8fa3;margin-top:0}
-.pricecheck{background:rgba(39,174,96,0.08);border:1px solid rgba(39,174,96,0.45);border-radius:12px;padding:0.9rem 1.1rem;font-size:0.9rem;margin:0.8rem 0}
-.cta{text-align:center;margin-top:2.5rem}
-.cta a{display:inline-block;background:var(--gold);color:var(--darker);font-weight:800;padding:0.9rem 2rem;border-radius:10px;text-decoration:none}
-footer{border-top:1px solid rgba(201,162,39,0.15);text-align:center;padding:1.5rem 1rem;color:var(--muted);font-size:0.8rem;margin-top:3rem}
-@media print{header,.cta,footer{display:none}body{background:#fff;color:#000}.box,details.month,.quiz{border:1px solid #ccc;background:#fff}h1,h2,h3,h4,summary{color:#000!important}details{display:block}.month-body{display:block!important}p,li{color:#000}}
-</style>
-</head>
+.pricing{display:flex;gap:0.8rem;flex-wrap:wrap;margin:1rem 0}
+.ptier{flex:1;min-width:180px;background:var(--card);border:1px solid rgba(201,162,39,0.25);border-radius:12px;padding:1rem}
+.ptier .amt{font-size:1.5rem;font-weight:800;color:#fff}
+.cta{display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:1rem}
+.cta a{padding:0.7rem 1.3rem;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.88rem}
+.cta .enroll{background:var(--gold);color:var(--darker)}
+.cta .wa{background:#25D366;color:#fff}
+footer{border-top:1px solid rgba(255,255,255,0.08);padding:1.5rem 1rem;text-align:center;color:var(--muted);font-size:0.8rem}
+</style></head>
 <body>
-<header>
-<div class="logo-icon">rAs</div><span class="brand">rise AFRICA skills</span>
-<a class="back" href="index.html">← All Courses</a>
-</header>
+<header><div class="logo-icon">rAs</div><div class="brand">rise AFRICA skills</div><a class="back" href="index.html">← All Courses</a></header>
 <div class="hero">
-<span class="cat-tag">AGRICULTURE · SPECIALTY LIVESTOCK</span>
+<span class="cat-tag">AGRICULTURE</span>
 <h1>Grasscutter Farming</h1>
-<p class="tag">A complete 5-month program — domesticating and farming the greater cane rat (grasscutter), a fast-growing, high-demand West and Central African bushmeat species: hutch design, breeding pair management, low-cost local feeding, and marketing to a market where demand consistently outstrips domestic supply.</p>
-<div class="badges"><span class="badge">⏱️ 5 Months</span><span class="badge">📊 Beginner → Business-ready</span><span class="badge">🌍 Hybrid: Online + Offline</span><span class="badge">🎓 Certificate on completion</span></div>
+<p class="tag">Raise grasscutters (cane rats): high-yield rodent livestock. Delicacy meat in West/Central Africa. High reproduction rate. Low feed cost. Startup: 5-10 animals. ROI: 4-6 months.</p>
+<div class="badges"><span class="badge">6 modules</span><span class="badge">30 video lessons</span><span class="badge">6 knowledge checks</span><span class="badge">Capstone project</span><span class="badge">Lifetime access</span></div>
 </div>
 <main>
-
-<h2>Course Overview</h2>
-<div class="box">
-<p><strong>Why grasscutter farming?</strong> The grasscutter (greater cane rat) is one of the most sought-after bushmeat species in West and Central Africa, and wild supply has been shrinking for years under hunting pressure while demand keeps rising. A domesticated grasscutter grows faster, breeds more reliably and is safer to raise than wild-caught animals — and farmed grasscutter consistently sells for a premium over less-preferred meats because demand still outstrips supply almost everywhere it's raised.</p>
-<p><strong>Structure:</strong> 5 monthly modules → lessons → practical assignments → a 10-question quiz each module → final business project.</p>
-<p><strong>How to study (hybrid):</strong> Online — modules on your phone, sessions in the <a href="index.html#study-diary">Study Diary</a>, questions to the rAs AI assistant. Offline — save this page (Print → Save as PDF); the practicals happen at the hutch, feeding and observing daily.</p>
+<div class="box"><strong style="color:var(--gold)">✅ Iron-Clad Price Check</strong><p>Before you start this farm or buy any equipment, call 3 suppliers and compare. This course teaches the method — you confirm the local prices and market demand.</p></div>
+<h2>What this course covers</h2>
+<p style="color:#ddd;margin:1rem 0">📚 6 Comprehensive Modules with video lessons, learning guides, quizzes, and capstone projects. Each module covers essential knowledge to start and scale your grasscutter farming business profitably.</p>
+<h2>Pricing</h2>
+<div class="pricing">
+<div class="ptier"><h3 style="color:var(--gold);margin-bottom:0.3rem">Full Course Access</h3><div class="amt">$8.00</div><p style="font-size:0.82rem;color:var(--muted)">All 6 modules, 30 videos, quizzes, capstone. Lifetime access.</p></div>
+<div class="ptier"><h3 style="color:var(--gold);margin-bottom:0.3rem">+ Business Seed Record</h3><div class="amt">$10.00</div><p style="font-size:0.82rem;color:var(--muted)">Everything above plus verifiable Business Seed Record.</p></div>
+<div class="ptier"><h3 style="color:var(--gold);margin-bottom:0.3rem">Print / Download / Share</h3><div class="amt">$3.50</div><p style="font-size:0.82rem;color:var(--muted)">High-resolution PDF, print-ready, shareable.</p></div>
 </div>
-
-<div class="safety">
-<h3>⚠️ Read first: the three rules that protect your investment</h3>
-<ul>
-<li><strong>Grasscutters have sharp, powerful gnawing teeth and can bite hard.</strong> Handle calmly and correctly, never by the tail alone, and use appropriate gloves/handling technique — careless handling injures both farmer and animal.</li>
-<li><strong>Domesticated grasscutters are calmer than wild ones, but breeding pairs must be introduced carefully.</strong> Mismatched or rushed pairing can result in fighting and injury — always supervise initial introductions.</li>
-<li><strong>Check your national wildlife/game farming regulations before starting.</strong> In some countries grasscutter farming requires a permit or registration as a form of wildlife husbandry, even though animals are captive-bred, not wild-caught.</li>
-</ul>
-</div>
-
-<!-- MONTH 1 -->
-<details class="month" open>
-<summary>MONTH 1 — Grasscutter Biology &amp; Hutch Design <span>▾</span></summary>
-<div class="month-body">
-
-<div class="lesson"><h4>Lesson 1.1 — Understanding the grasscutter</h4>
-<ul>
-<li>The grasscutter (Thryonomys species) is a large rodent native to sub-Saharan Africa, naturally living in grassland and reed areas near water, feeding on grasses, reeds and cane — hence the name.</li>
-<li>Domesticated grasscutters reach market weight (2.5–4.5 kg) in around 7–9 months, faster than most people expect, and are considerably calmer and easier to manage than their wild counterparts after a few generations of captive breeding.</li>
-<li>They are naturally social, living in small family groups in the wild — this informs hutch and breeding group design, unlike solitary species that need separate housing.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 1.2 — Hutch design</h4>
-<ul>
-<li>Hutches are typically built from concrete blocks, wood or strong wire mesh — grasscutters gnaw powerfully, so untreated soft wood alone is quickly destroyed; line gnaw-prone areas with metal sheeting or use concrete/block construction for durability.</li>
-<li>Provide a solid floor (concrete is common) to prevent burrowing escape, with good drainage and easy-to-clean design — grasscutters produce significant waste and hygiene depends on a cleanable floor.</li>
-<li>Include hide boxes or tunnels within the hutch — grasscutters are naturally secretive and use cover; hutches without hiding areas cause chronic stress.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 1.3 — Group housing structure</h4>
-<ul>
-<li>A typical breeding unit is one male with 4–6 females in a shared hutch (a "harem" system) — males are more aggressive toward each other than toward females, so multiple adult males should not be housed together.</li>
-<li>Provide enough hutch space per animal group to reduce stress and fighting — overcrowding is a common cause of poor breeding performance and aggression in grasscutter units.</li>
-<li>Separate hutches are needed for weaned young, for grow-out stock being fattened for market, and for isolating any sick or injured animals.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 1.4 — Site and environmental needs</h4>
-<ul>
-<li>Site hutches in a shaded, well-ventilated area protected from direct sun, rain and strong wind — grasscutters are sensitive to heat stress and do best in a stable, moderate microclimate.</li>
-<li>Keep noise and disturbance moderate — grasscutters are naturally cautious and can be stressed by constant loud noise or heavy foot traffic near the hutches.</li>
-<li>Ensure reliable access for daily feeding, watering and cleaning — a hutch site that's inconvenient to reach daily quickly leads to neglected care.</li>
-</ul></div>
-
-<div class="practical"><strong>🛠️ Practical assignments (Month 1):</strong> (1) Design a hutch layout for your target starting group size (e.g. 1 male + 4 females) with hiding areas included. (2) Source and cost gnaw-resistant construction materials, 3 quotes. (3) Site your hutch area for shade, ventilation and daily accessibility.</div>
-<div class="video">📹 VIDEO 1: "Building the grasscutter hutch" (14 min) — grasscutter biology, hutch construction, group housing structure, site selection.</div>
-
-<div class="quiz"><h4>QUIZ 1 — Biology &amp; hutch design</h4>
-<div class="q">Q1. What does the grasscutter naturally feed on in the wild?<details><summary>Show answer</summary><div class="ans">Grasses, reeds and cane, near water in grassland/reed habitat.</div></details></div>
-<div class="q">Q2. Roughly how long does it take a grasscutter to reach market weight?<details><summary>Show answer</summary><div class="ans">About 7–9 months, reaching 2.5–4.5 kg.</div></details></div>
-<div class="q">Q3. Are grasscutters naturally solitary or social?<details><summary>Show answer</summary><div class="ans">Naturally social, living in small family groups in the wild.</div></details></div>
-<div class="q">Q4. Why should soft untreated wood not be used alone in hutch construction?<details><summary>Show answer</summary><div class="ans">Grasscutters gnaw powerfully and quickly destroy soft wood.</div></details></div>
-<div class="q">Q5. Why is a solid, cleanable floor important?<details><summary>Show answer</summary><div class="ans">It prevents burrowing escape and allows the hutch to be kept hygienic despite significant waste production.</div></details></div>
-<div class="q">Q6. Why include hide boxes or tunnels in the hutch?<details><summary>Show answer</summary><div class="ans">Grasscutters are naturally secretive and use cover — without it they experience chronic stress.</div></details></div>
-<div class="q">Q7. What is a typical breeding group structure?<details><summary>Show answer</summary><div class="ans">One male with 4–6 females (a "harem" system).</div></details></div>
-<div class="q">Q8. Why should multiple adult males not be housed together?<details><summary>Show answer</summary><div class="ans">Males are aggressive toward each other, causing fighting.</div></details></div>
-<div class="q">Q9. Why site hutches in a shaded, well-ventilated area?<details><summary>Show answer</summary><div class="ans">Grasscutters are sensitive to heat stress and need a stable, moderate microclimate.</div></details></div>
-<div class="q">Q10. Why keep noise and disturbance moderate near hutches?<details><summary>Show answer</summary><div class="ans">Grasscutters are naturally cautious and can be stressed by loud noise or heavy traffic.</div></details></div>
-</div>
-</div>
-</details>
-
-<!-- MONTH 2 -->
-<details class="month">
-<summary>MONTH 2 — Feeding &amp; Nutrition <span>▾</span></summary>
-<div class="month-body">
-
-<div class="lesson"><h4>Lesson 2.1 — The forage-based diet</h4>
-<ul>
-<li>Grasscutters thrive on a diet dominated by fresh grasses (particularly elephant grass, guinea grass and similar), sugarcane, and a range of other forage — one of the lowest-cost feeding profiles of any farmed livestock since much of the diet can be cut from around the farm or roadside.</li>
-<li>Offer a variety of forage species rather than a single grass type — variety improves nutrition and grasscutters show clear preferences that are worth observing and catering to.</li>
-<li>Fresh forage should be wilted slightly (cut and left a few hours) rather than fed immediately soaking wet, which can cause digestive upset.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 2.2 — Supplementary feeding</h4>
-<ul>
-<li>Supplement forage with a concentrate ration (a mix including maize bran, groundnut cake or similar protein source, and a mineral supplement) especially for breeding females and growing young, who have higher nutrient demands than mature grow-out stock.</li>
-<li>Root vegetables (sweet potato, cassava) and fruit are readily eaten and useful for adding energy and variety, particularly useful during the dry season when green forage is scarcer.</li>
-<li>Provide a salt/mineral lick or supplement — mineral deficiency shows up as poor growth and poor breeding performance over time even when forage volume looks adequate.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 2.3 — Water</h4>
-<ul>
-<li>Grasscutters get much of their water from fresh forage but should still have clean drinking water available — don't assume forage alone is sufficient, especially in hot or dry conditions.</li>
-<li>Change water daily and keep containers clean — grasscutters will often foul water containers if not positioned and maintained carefully.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 2.4 — Feeding schedule and growth monitoring</h4>
-<ul>
-<li>Feed forage generously — grasscutters are natural grazers and do best with more-or-less continuous access to fresh material rather than one small daily portion.</li>
-<li>Weigh or estimate body condition periodically (monthly is practical for most smallholders) to track growth against expected benchmarks and catch feeding problems early.</li>
-<li>Keep feed records (what was fed, roughly how much, any changes) alongside growth data — this is what lets you refine your specific feeding programme over successive batches.</li>
-</ul></div>
-
-<div class="practical"><strong>🛠️ Practical assignments (Month 2):</strong> (1) Establish a varied forage supply plan (list 3+ forage sources near your farm). (2) Set up a supplementary concentrate/mineral feeding routine for breeding stock. (3) Weigh or condition-score your group and record a baseline for future comparison.</div>
-<div class="video">📹 VIDEO 2: "Feeding the grasscutter" (13 min) — forage-based diet, supplementary feeding, water, growth monitoring.</div>
-
-<div class="quiz"><h4>QUIZ 2 — Feeding &amp; nutrition</h4>
-<div class="q">Q1. What forage species are commonly fed to grasscutters?<details><summary>Show answer</summary><div class="ans">Elephant grass, guinea grass, sugarcane and similar forage.</div></details></div>
-<div class="q">Q2. Why is grasscutter feeding one of the lowest-cost livestock feeding profiles?<details><summary>Show answer</summary><div class="ans">Much of the diet can be cut from around the farm or roadside.</div></details></div>
-<div class="q">Q3. Why wilt fresh forage slightly before feeding?<details><summary>Show answer</summary><div class="ans">Feeding it immediately soaking wet can cause digestive upset.</div></details></div>
-<div class="q">Q4. Which animals in the group need supplementary concentrate feeding most?<details><summary>Show answer</summary><div class="ans">Breeding females and growing young, due to higher nutrient demands.</div></details></div>
-<div class="q">Q5. When are root vegetables and fruit particularly useful?<details><summary>Show answer</summary><div class="ans">During the dry season when green forage is scarcer.</div></details></div>
-<div class="q">Q6. What does mineral deficiency show up as over time?<details><summary>Show answer</summary><div class="ans">Poor growth and poor breeding performance, even when forage volume looks adequate.</div></details></div>
-<div class="q">Q7. Should water be provided even though forage supplies some moisture?<details><summary>Show answer</summary><div class="ans">Yes — clean drinking water should always be available, especially in hot or dry conditions.</div></details></div>
-<div class="q">Q8. Why change water daily and keep containers clean?<details><summary>Show answer</summary><div class="ans">Grasscutters often foul water containers if not maintained carefully.</div></details></div>
-<div class="q">Q9. How should forage access typically be managed?<details><summary>Show answer</summary><div class="ans">Generously, with more-or-less continuous access, since grasscutters are natural grazers.</div></details></div>
-<div class="q">Q10. Why keep feed and growth records together?<details><summary>Show answer</summary><div class="ans">It lets you refine your specific feeding programme over successive batches.</div></details></div>
-</div>
-</div>
-</details>
-
-<!-- MONTH 3 -->
-<details class="month">
-<summary>MONTH 3 — Breeding Management <span>▾</span></summary>
-<div class="month-body">
-
-<div class="lesson"><h4>Lesson 3.1 — Selecting breeding stock</h4>
-<ul>
-<li>Choose healthy, well-grown, calm-natured animals as breeding stock — temperament is partly heritable and calmer animals are easier and safer to manage across generations.</li>
-<li>Females typically reach breeding maturity around 5–7 months; avoid breeding too young, as this stresses the female and produces weaker litters.</li>
-<li>Source foundation stock from a reputable existing grasscutter farm rather than wild-caught animals where possible — captive-bred stock is calmer, healthier and usually the legally required source.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 3.2 — Introducing breeding pairs/groups</h4>
-<ul>
-<li>Introduce a male to a group of females gradually and under supervision — sudden introduction into an unfamiliar hutch can trigger fighting; allowing scent familiarisation through adjacent housing first can ease the transition.</li>
-<li>Watch for signs of successful pairing (calm cohabitation, normal feeding behaviour) versus problems (persistent fighting, one animal being excluded from food/shelter) and separate if serious aggression occurs.</li>
-<li>Once a stable breeding group is established, minimise unnecessary disturbance — repeatedly disrupting an established group for inspection can itself cause stress and reduce breeding success.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 3.3 — Gestation and birth</h4>
-<ul>
-<li>Gestation is approximately 5 months (about 150 days) — considerably longer than most rodents, and litters are correspondingly small, typically 2–6 young (called pups).</li>
-<li>Provide a quiet, undisturbed area with good hiding cover as birth approaches — minimise handling and disturbance in the days around expected birth.</li>
-<li>Pups are relatively well-developed at birth (furred, eyes open) compared with many rodents, but still depend on the mother for warmth and milk in the first weeks.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 3.4 — Weaning and young stock management</h4>
-<ul>
-<li>Pups typically wean around 4–6 weeks, after which they can be gradually introduced to solid forage alongside continued nursing until fully weaned.</li>
-<li>Separate weaned young by sex once they approach sexual maturity to prevent unplanned early breeding and reduce competition/aggression in the group.</li>
-<li>Track litter size, survival to weaning, and growth rate by breeding pair — this identifies your most productive breeding females for future stock retention decisions.</li>
-</ul></div>
-
-<div class="practical"><strong>🛠️ Practical assignments (Month 3):</strong> (1) Select and record your breeding stock with age and condition notes. (2) Introduce a breeding pair/group under supervision and record the outcome. (3) If a litter is born during the course, record litter size and monitor weaning.</div>
-<div class="video">📹 VIDEO 3: "Breeding grasscutters successfully" (15 min) — selecting stock, introducing pairs, gestation and birth, weaning management.</div>
-
-<div class="quiz"><h4>QUIZ 3 — Breeding</h4>
-<div class="q">Q1. At what age do females typically reach breeding maturity?<details><summary>Show answer</summary><div class="ans">Around 5–7 months.</div></details></div>
-<div class="q">Q2. Why avoid breeding females too young?<details><summary>Show answer</summary><div class="ans">It stresses the female and produces weaker litters.</div></details></div>
-<div class="q">Q3. Why source foundation stock from a reputable farm rather than wild-caught animals?<details><summary>Show answer</summary><div class="ans">Captive-bred stock is calmer, healthier, and usually the legally required source.</div></details></div>
-<div class="q">Q4. Why introduce breeding pairs gradually and under supervision?<details><summary>Show answer</summary><div class="ans">Sudden introduction into an unfamiliar hutch can trigger fighting.</div></details></div>
-<div class="q">Q5. Approximately how long is grasscutter gestation?<details><summary>Show answer</summary><div class="ans">About 5 months (150 days).</div></details></div>
-<div class="q">Q6. What is a typical litter size?<details><summary>Show answer</summary><div class="ans">2–6 young (pups).</div></details></div>
-<div class="q">Q7. Why provide a quiet, undisturbed area as birth approaches?<details><summary>Show answer</summary><div class="ans">To minimise handling/disturbance stress around expected birth.</div></details></div>
-<div class="q">Q8. At what age do pups typically wean?<details><summary>Show answer</summary><div class="ans">Around 4–6 weeks.</div></details></div>
-<div class="q">Q9. Why separate weaned young by sex before sexual maturity?<details><summary>Show answer</summary><div class="ans">To prevent unplanned early breeding and reduce competition/aggression.</div></details></div>
-<div class="q">Q10. Why track litter size and growth rate by breeding pair?<details><summary>Show answer</summary><div class="ans">To identify the most productive breeding females for future stock retention.</div></details></div>
-</div>
-</div>
-</details>
-
-<!-- MONTH 4 -->
-<details class="month">
-<summary>MONTH 4 — Health &amp; Handling <span>▾</span></summary>
-<div class="month-body">
-
-<div class="lesson"><h4>Lesson 4.1 — Common health issues</h4>
-<ul>
-<li>Watch for signs of illness: reduced feeding, lethargy, rough coat, diarrhoea, or abnormal discharge — grasscutters generally hide illness well (a survival trait), so subtle behaviour changes matter more than obvious symptoms.</li>
-<li>Overgrown teeth (if gnawing material is insufficient) can prevent normal feeding — provide gnaw-appropriate material (wood blocks, cane) continuously to keep teeth naturally worn.</li>
-<li>Parasites (internal and external) should be monitored and treated as advised by a local veterinary service familiar with grasscutter or rodent husbandry.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 4.2 — Hygiene and disease prevention</h4>
-<ul>
-<li>Clean hutches regularly, removing waste and old bedding/forage to prevent parasite buildup and disease — a dirty hutch is the most common root cause of preventable health problems.</li>
-<li>Quarantine any new stock brought onto the farm for a period before introducing to existing groups — this prevents introducing disease into an established, healthy population.</li>
-<li>Maintain good ventilation and avoid damp, poorly drained hutch conditions, which favour parasite and pathogen survival.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 4.3 — Safe handling technique</h4>
-<ul>
-<li>Never lift or restrain a grasscutter by the tail alone — support the body properly, typically by grasping firmly at the base of the tail while supporting the body weight with the other hand.</li>
-<li>Move slowly and calmly around grasscutters — sudden movements or loud noise trigger stress and defensive biting.</li>
-<li>Use appropriate protective gloves when handling is required, particularly with unfamiliar or stressed animals, given the strength of their bite.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 4.4 — Record-keeping for health</h4>
-<ul>
-<li>Keep a simple health log per hutch/group: any illness observed, treatment given, and outcome — this builds a record that helps identify recurring problems tied to a specific hutch or management practice.</li>
-<li>Track mortality and its likely cause where identifiable — unexplained repeated losses in one hutch usually point to an environmental or hygiene issue worth investigating directly.</li>
-</ul></div>
-
-<div class="practical"><strong>🛠️ Practical assignments (Month 4):</strong> (1) Set up a hutch cleaning schedule and follow it for 3 weeks, recording completion. (2) Practise correct, calm handling technique on your stock. (3) Start a simple health log per hutch/group.</div>
-<div class="video">📹 VIDEO 4: "Health, hygiene and safe handling" (13 min) — spotting illness early, hutch hygiene, correct handling technique.</div>
-
-<div class="quiz"><h4>QUIZ 4 — Health &amp; handling</h4>
-<div class="q">Q1. Why do subtle behaviour changes matter more than obvious symptoms in grasscutters?<details><summary>Show answer</summary><div class="ans">They generally hide illness well, so subtle changes are often the first sign.</div></details></div>
-<div class="q">Q2. What can prevent overgrown teeth?<details><summary>Show answer</summary><div class="ans">Continuous access to gnaw-appropriate material like wood blocks or cane.</div></details></div>
-<div class="q">Q3. What is the most common root cause of preventable health problems?<details><summary>Show answer</summary><div class="ans">A dirty hutch.</div></details></div>
-<div class="q">Q4. Why quarantine new stock before introducing to existing groups?<details><summary>Show answer</summary><div class="ans">To prevent introducing disease into an established, healthy population.</div></details></div>
-<div class="q">Q5. Why avoid damp, poorly drained hutch conditions?<details><summary>Show answer</summary><div class="ans">They favour parasite and pathogen survival.</div></details></div>
-<div class="q">Q6. How should a grasscutter be lifted or restrained?<details><summary>Show answer</summary><div class="ans">Never by the tail alone — support the body properly while grasping the tail base.</div></details></div>
-<div class="q">Q7. Why move slowly and calmly around grasscutters?<details><summary>Show answer</summary><div class="ans">Sudden movements or loud noise trigger stress and defensive biting.</div></details></div>
-<div class="q">Q8. Why wear protective gloves when handling?<details><summary>Show answer</summary><div class="ans">Grasscutters have a strong bite, particularly when unfamiliar or stressed.</div></details></div>
-<div class="q">Q9. Why keep a health log per hutch/group?<details><summary>Show answer</summary><div class="ans">It helps identify recurring problems tied to a specific hutch or management practice.</div></details></div>
-<div class="q">Q10. What does unexplained repeated mortality in one hutch usually indicate?<details><summary>Show answer</summary><div class="ans">An environmental or hygiene issue worth investigating directly.</div></details></div>
-</div>
-</div>
-</details>
-
-<!-- MONTH 5 -->
-<details class="month">
-<summary>MODULE 5 — Markets &amp; the Grasscutter Business <span>▾</span></summary>
-<div class="month-body">
-
-<div class="lesson"><h4>Lesson 5.1 — Understanding the market</h4>
-<ul>
-<li>Grasscutter meat commands a strong premium in most West and Central African markets due to cultural preference and consistently limited domestic supply — few farmed livestock have this combination of high demand and low competition.</li>
-<li>Live animal sale (for breeding stock, at a significant premium over meat animals) and meat sale are two distinct markets — building a reputation as a reliable breeding stock supplier can be more profitable than meat sale alone in the early years.</li>
-<li>Restaurants, chop bars/eateries specialising in bushmeat-style dishes, and individual household buyers are typical customers, alongside other farmers seeking foundation breeding stock.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 5.2 — Costing production</h4>
-<ul>
-<li>Cost per animal to market weight = forage/feed cost + labour + hutch/equipment share + health costs, divided across the group — forage cost is often low, but labour (daily cutting and carrying forage) should be counted honestly.</li>
-<li>Compare cost of production against local market price for both meat animals and breeding stock — breeding stock typically commands several times the price of a meat-market animal.</li>
-<li>Track your reproduction rate (litters per breeding female per year, survival to weaning) as a key business metric — this drives total output far more than any single input decision.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 5.3 — Scaling the business</h4>
-<ul>
-<li>Start with a manageable breeding group (1 male, 4–6 females) and reinvest early offspring into growing the breeding herd before shifting focus to meat/market sale at volume — a gradual scale-up matches capital and management capacity better than starting large.</li>
-<li>Retain your best-performing females (largest, healthiest litters, calm temperament) for ongoing breeding rather than selling them — this compounds herd quality and output over successive generations.</li>
-<li>Network with other grasscutter farmers and any regional farmer associations — shared knowledge and joint marketing access often benefit smallholders more than working in isolation on a still-developing local market.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 5.4 — Final project: your bankable business plan</h4>
-<ul>
-<li>Assemble: hutch design and capacity plan, forage and supplementary feeding plan, breeding programme with expected output, health and hygiene protocol, target markets (meat vs breeding stock) with pricing, and a staged growth plan from starting group to target scale.</li>
-<li>Submit with your breeding, growth and health records for your rAs certificate — grasscutter business plans that document reproduction rate and survival are exactly what buyers of breeding stock and lenders look for.</li>
-</ul></div>
-
-<div class="practical"><strong>🛠️ Practical assignments (Module 5):</strong> (1) Calculate cost per animal to market weight including honest labour costing. (2) Research and record local prices for both meat animals and breeding stock. (3) Complete and submit the bankable business plan.</div>
-<div class="video">📹 VIDEO 5: "Building a grasscutter business" (14 min) — market understanding, true costing, scaling the breeding herd.</div>
-
-<div class="quiz"><h4>QUIZ 5 — Markets &amp; business</h4>
-<div class="q">Q1. Why does grasscutter meat command a strong premium in most markets?<details><summary>Show answer</summary><div class="ans">Cultural preference combined with consistently limited domestic supply.</div></details></div>
-<div class="q">Q2. What are the two distinct grasscutter markets?<details><summary>Show answer</summary><div class="ans">Live animal sale (breeding stock, at a premium) and meat sale.</div></details></div>
-<div class="q">Q3. Why is being a breeding stock supplier often more profitable early on?<details><summary>Show answer</summary><div class="ans">Breeding stock typically commands several times the price of a meat-market animal.</div></details></div>
-<div class="q">Q4. What is often undercounted in cost per animal calculations?<details><summary>Show answer</summary><div class="ans">Labour, particularly daily forage cutting and carrying.</div></details></div>
-<div class="q">Q5. What key business metric drives total output more than any single input decision?<details><summary>Show answer</summary><div class="ans">Reproduction rate — litters per breeding female per year and survival to weaning.</div></details></div>
-<div class="q">Q6. What is a sensible starting breeding group size?<details><summary>Show answer</summary><div class="ans">1 male with 4–6 females.</div></details></div>
-<div class="q">Q7. Why retain best-performing females for breeding rather than selling them?<details><summary>Show answer</summary><div class="ans">It compounds herd quality and output over successive generations.</div></details></div>
-<div class="q">Q8. Why network with other grasscutter farmers and associations?<details><summary>Show answer</summary><div class="ans">Shared knowledge and joint marketing benefit smallholders in a still-developing local market.</div></details></div>
-<div class="q">Q9. Who are typical grasscutter meat customers?<details><summary>Show answer</summary><div class="ans">Restaurants, bushmeat-style eateries, and individual household buyers.</div></details></div>
-<div class="q">Q10. What should a bankable grasscutter business plan document to attract buyers/lenders?<details><summary>Show answer</summary><div class="ans">Reproduction rate and survival records.</div></details></div>
-</div>
-</div>
-</details>
-
-<h2>💰 Startup budget (starter breeding group)</h2>
-<div class="box">
-<table>
-<tr><th>Item</th><th>Typical range (USD)</th></tr>
-<tr><td>Breeding stock (1 male + 4–5 females, from a reputable farm)</td><td>$150–400</td></tr>
-<tr><td>Hutch construction (block/wood/mesh, gnaw-resistant)</td><td>$150–500</td></tr>
-<tr><td>Feeding/watering equipment</td><td>$20–60</td></tr>
-<tr><td>Concentrate/mineral supplement starter stock</td><td>$20–60</td></tr>
-<tr><td>Handling equipment (gloves, carrying box)</td><td>$15–40</td></tr>
-<tr><td><strong>Total</strong></td><td><strong>$355–1,060</strong></td></tr>
-</table>
-</div>
-<div class="pricecheck">✅ <strong>Iron-Clad Price Check:</strong> breeding stock (from a reputable, legal source), hutch construction materials, and supplement stock — 3 quotes each.</div>
-
-<h2>📖 Glossary</h2>
-<div class="box"><ul>
-<li><strong>Grasscutter</strong> — common name for the greater cane rat (Thryonomys), a large African rodent farmed for meat.</li>
-<li><strong>Harem system</strong> — a breeding group of one male with several females.</li>
-<li><strong>Pup</strong> — a young grasscutter.</li>
-<li><strong>Weaning</strong> — the transition from nursing to independent solid food, typically at 4–6 weeks.</li>
-<li><strong>Quarantine</strong> — isolating new stock before introduction to prevent disease spread.</li>
-<li><strong>Grow-out stock</strong> — young animals being raised to market weight, kept separate from breeding stock.</li>
-</ul></div>
-
-<h2>📚 Resources</h2>
-<div class="box"><ul>
-<li>National wildlife/agriculture regulation guidance on grasscutter farming permits</li>
-<li>Established local grasscutter farmer networks and associations — foundation stock sourcing, hutch design ideas</li>
-<li>rAs companion courses: Rabbit Farming · Animal Feed Making · Bookkeeping</li>
-</ul></div>
-
 <div class="cta">
-<a href="index.html#courses">🎓 Enroll &amp; earn your Grasscutter Farming certificate</a>
-<p style="color:var(--muted);font-size:0.8rem;margin-top:0.6rem">Certificate ($10) issued on completion of all module quizzes + the final project.</p>
+<a class="enroll" href="index.html#courses">Enroll — $8.00</a>
+<a class="wa" href="https://wa.me/263773001353?text=Hi%20rAs%2C%20I%20want%20to%20enroll%20in%20Grasscutter%20Farming" target="_blank" rel="noopener">💬 Enroll on WhatsApp</a>
 </div>
+<p style="margin-top:1.2rem;font-size:0.82rem;color:var(--muted)">rise AFRICA skills is not a school. We teach practical method and issue a Business Seed Record confirming you completed the work.</p>
 </main>
-<footer>© 2026 Rise Africa Skills · riseafricaskills.com · Learn Practical Skills. Start Your Business.<br>Educational guidance — always follow your national regulations. Figures are planning guides; verify local prices (Iron-Clad Price Check).</footer>
-
-<!-- Course Protection & Enrollment System -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="auth-system.js"></script>
-<script src="enrollment-system.js"></script>
-<script src="course-protection.js"></script>
-</body>
-</html>
-
+<footer>rise AFRICA skills · +263 77 300 1353 · all@riseafricaskills.com · riseafricaskills.com</footer>
+</body></html>

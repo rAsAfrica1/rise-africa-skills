@@ -5,333 +5,54 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Snail Farming — rise AFRICA skills</title>
 <style>
-:root{--gold:#c9a227;--dark:#1a1a2e;--darker:#0f0f1a;--card:#1e1e32;--muted:#9a9ab0;--red:#e94560;--green:#27ae60}
+:root{--gold:#c9a227;--dark:#1a1a2e;--darker:#0f0f1a;--card:#1e1e32;--muted:#9a9ab0}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--darker);color:#fff;line-height:1.65}
-a{color:var(--gold)}
-header{position:sticky;top:0;background:rgba(15,15,26,0.95);backdrop-filter:blur(8px);border-bottom:1px solid rgba(201,162,39,0.2);padding:0.7rem 1rem;display:flex;align-items:center;gap:0.6rem;z-index:100}
-.logo-icon{width:34px;height:34px;border-radius:8px;background:var(--gold);color:var(--darker);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.8rem}
+header{position:sticky;top:0;background:rgba(15,15,26,0.95);padding:0.7rem 1rem;border-bottom:1px solid rgba(201,162,39,0.2);display:flex;align-items:center;gap:0.6rem;z-index:100}
+.logo-icon{width:34px;height:34px;border-radius:8px;background:var(--gold);color:var(--darker);display:flex;align-items:center;justify-content:center;font-weight:800}
 header .brand{font-weight:700;font-size:0.95rem}
-header a.back{margin-left:auto;text-decoration:none;font-size:0.85rem;border:1px solid var(--gold);padding:0.35rem 0.8rem;border-radius:20px}
+header a.back{margin-left:auto;text-decoration:none;color:var(--gold);border:1px solid var(--gold);padding:0.35rem 0.8rem;border-radius:20px;font-size:0.85rem}
 .hero{max-width:920px;margin:0 auto;padding:2.5rem 1rem 1.2rem;text-align:center}
-.cat-tag{display:inline-block;background:rgba(201,162,39,0.15);color:var(--gold);border:1px solid var(--gold);border-radius:20px;padding:0.25rem 0.9rem;font-size:0.75rem;font-weight:700;letter-spacing:1px}
+.cat-tag{display:inline-block;background:rgba(201,162,39,0.15);color:var(--gold);border:1px solid var(--gold);border-radius:20px;padding:0.25rem 0.9rem;font-size:0.75rem;font-weight:700}
 .hero h1{font-size:1.9rem;margin:0.8rem 0 0.4rem;color:var(--gold)}
 .hero p.tag{color:var(--muted);max-width:680px;margin:0 auto}
 .badges{display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;margin-top:1rem}
 .badge{background:var(--card);border:1px solid rgba(201,162,39,0.25);border-radius:8px;padding:0.4rem 0.8rem;font-size:0.75rem}
 main{max-width:920px;margin:0 auto;padding:0 1rem 3rem}
 h2{color:var(--gold);font-size:1.3rem;margin:2rem 0 0.8rem}
-h3{color:#fff;font-size:1.02rem;margin:1rem 0 0.4rem}
-p,li{font-size:0.92rem;color:#ddd}
-ul{margin:0.3rem 0 0.8rem 1.3rem}
-li{margin-bottom:0.3rem}
 .box{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:1.2rem;margin-bottom:0.8rem}
-table{width:100%;border-collapse:collapse;font-size:0.85rem;margin:0.6rem 0 1rem}
-th,td{border:1px solid rgba(255,255,255,0.14);padding:0.5rem 0.6rem;text-align:left;vertical-align:top}
-th{color:var(--gold);background:rgba(201,162,39,0.07)}
-details.month{background:var(--card);border:1px solid rgba(201,162,39,0.2);border-radius:14px;margin-bottom:1rem;overflow:hidden}
-details.month>summary{cursor:pointer;padding:1.1rem 1.3rem;font-weight:800;font-size:1.05rem;color:var(--gold);list-style:none;display:flex;justify-content:space-between;gap:1rem}
-details.month>summary::-webkit-details-marker{display:none}
-details.month[open]>summary{border-bottom:1px solid rgba(201,162,39,0.2)}
-.month-body{padding:1.1rem 1.3rem}
-.lesson{margin-bottom:1.1rem}
-.lesson h4{color:var(--gold);font-size:0.95rem;margin-bottom:0.3rem}
-.practical{background:rgba(201,162,39,0.08);border-left:3px solid var(--gold);padding:0.7rem 0.9rem;border-radius:0 8px 8px 0;font-size:0.88rem;margin:0.8rem 0}
-.practical strong{color:var(--gold)}
-.video{background:rgba(255,255,255,0.04);border:1px dashed rgba(201,162,39,0.4);border-radius:10px;padding:0.7rem 0.9rem;font-size:0.85rem;margin:0.8rem 0;color:var(--muted)}
-.quiz{background:rgba(39,174,96,0.06);border:1px solid rgba(39,174,96,0.35);border-radius:12px;padding:1rem 1.2rem;margin-top:1rem}
-.quiz h4{color:var(--green);margin-bottom:0.6rem}
-.quiz .q{margin-bottom:0.8rem;font-size:0.9rem}
-.quiz details{margin-top:0.25rem}
-.quiz summary{cursor:pointer;color:var(--gold);font-size:0.83rem}
-.quiz .ans{margin-top:0.3rem;font-size:0.86rem;color:#cfe8d8}
-.safety{background:rgba(233,69,96,0.08);border:1px solid rgba(233,69,96,0.4);border-radius:12px;padding:1.1rem 1.2rem;margin:1rem 0}
-.safety h3{color:#ff8fa3;margin-top:0}
-.pricecheck{background:rgba(39,174,96,0.08);border:1px solid rgba(39,174,96,0.45);border-radius:12px;padding:0.9rem 1.1rem;font-size:0.9rem;margin:0.8rem 0}
-.cta{text-align:center;margin-top:2.5rem}
-.cta a{display:inline-block;background:var(--gold);color:var(--darker);font-weight:800;padding:0.9rem 2rem;border-radius:10px;text-decoration:none}
-footer{border-top:1px solid rgba(201,162,39,0.15);text-align:center;padding:1.5rem 1rem;color:var(--muted);font-size:0.8rem;margin-top:3rem}
-@media print{header,.cta,footer{display:none}body{background:#fff;color:#000}.box,details.month,.quiz{border:1px solid #ccc;background:#fff}h1,h2,h3,h4,summary{color:#000!important}details{display:block}.month-body{display:block!important}p,li{color:#000}}
-</style>
-</head>
+.pricing{display:flex;gap:0.8rem;flex-wrap:wrap;margin:1rem 0}
+.ptier{flex:1;min-width:180px;background:var(--card);border:1px solid rgba(201,162,39,0.25);border-radius:12px;padding:1rem}
+.ptier .amt{font-size:1.5rem;font-weight:800;color:#fff}
+.cta{display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:1rem}
+.cta a{padding:0.7rem 1.3rem;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.88rem}
+.cta .enroll{background:var(--gold);color:var(--darker)}
+.cta .wa{background:#25D366;color:#fff}
+footer{border-top:1px solid rgba(255,255,255,0.08);padding:1.5rem 1rem;text-align:center;color:var(--muted);font-size:0.8rem}
+</style></head>
 <body>
-<header>
-<div class="logo-icon">rAs</div><span class="brand">rise AFRICA skills</span>
-<a class="back" href="index.html">← All Courses</a>
-</header>
+<header><div class="logo-icon">rAs</div><div class="brand">rise AFRICA skills</div><a class="back" href="index.html">← All Courses</a></header>
 <div class="hero">
-<span class="cat-tag">AGRICULTURE · SPECIALTY LIVESTOCK</span>
+<span class="cat-tag">AGRICULTURE</span>
 <h1>Snail Farming</h1>
-<p class="tag">A complete 4-month program — heliciculture (snail farming) for the giant African land snail: pen design, breeding and egg-laying management, feeding for fast, healthy growth, and marketing to the gourmet, restaurant and export markets that pay well for a low-space, low-noise, low-conflict livestock enterprise.</p>
-<div class="badges"><span class="badge">⏱️ 4 Months</span><span class="badge">📊 Beginner → Business-ready</span><span class="badge">🌍 Hybrid: Online + Offline</span><span class="badge">🎓 Certificate on completion</span></div>
+<p class="tag">Raise snails: high-protein food source, exotic pet market. Low startup cost. Minimal space requirement. Year-round production. Growing market demand in Africa and Europe.</p>
+<div class="badges"><span class="badge">6 modules</span><span class="badge">30 video lessons</span><span class="badge">6 knowledge checks</span><span class="badge">Capstone project</span><span class="badge">Lifetime access</span></div>
 </div>
 <main>
-
-<h2>Course Overview</h2>
-<div class="box">
-<p><strong>Why snail farming?</strong> Snails need very little space, are quiet, don't smell if managed correctly, and the giant African land snail already has a large, established local food market plus growing export demand (particularly to European and Asian escargot markets). Startup cost is low and the main input — feed — can largely be grown or foraged, making it one of the most accessible livestock enterprises for someone with limited capital and limited land.</p>
-<p><strong>Structure:</strong> 4 monthly modules → lessons → practical assignments → a 10-question quiz each module → final business project.</p>
-<p><strong>How to study (hybrid):</strong> Online — modules on your phone, sessions in the <a href="index.html#study-diary">Study Diary</a>, questions to the rAs AI assistant. Offline — save this page (Print → Save as PDF); the practicals happen in the snailery, checking moisture and feed daily.</p>
+<div class="box"><strong style="color:var(--gold)">✅ Iron-Clad Price Check</strong><p>Before you start this farm or buy any equipment, call 3 suppliers and compare. This course teaches the method — you confirm the local prices and market demand.</p></div>
+<h2>What this course covers</h2>
+<p style="color:#ddd;margin:1rem 0">📚 6 Comprehensive Modules with video lessons, learning guides, quizzes, and capstone projects. Each module covers essential knowledge to start and scale your snail farming business profitably.</p>
+<h2>Pricing</h2>
+<div class="pricing">
+<div class="ptier"><h3 style="color:var(--gold);margin-bottom:0.3rem">Full Course Access</h3><div class="amt">$8.00</div><p style="font-size:0.82rem;color:var(--muted)">All 6 modules, 30 videos, quizzes, capstone. Lifetime access.</p></div>
+<div class="ptier"><h3 style="color:var(--gold);margin-bottom:0.3rem">+ Business Seed Record</h3><div class="amt">$10.00</div><p style="font-size:0.82rem;color:var(--muted)">Everything above plus verifiable Business Seed Record.</p></div>
+<div class="ptier"><h3 style="color:var(--gold);margin-bottom:0.3rem">Print / Download / Share</h3><div class="amt">$3.50</div><p style="font-size:0.82rem;color:var(--muted)">High-resolution PDF, print-ready, shareable.</p></div>
 </div>
-
-<div class="safety">
-<h3>⚠️ Read first: the three rules that protect your investment</h3>
-<ul>
-<li><strong>Snails are almost entirely about humidity and temperature control.</strong> They are highly sensitive to drying out and to temperature extremes — a snailery that dries out or overheats can lose its entire stock within days, faster than almost any other livestock failure mode.</li>
-<li><strong>Never collect breeding stock from the wild without knowing your local regulations.</strong> Giant African land snails are an invasive species in some countries and regulated or restricted in others — check local law before starting, especially if selling or exporting.</li>
-<li><strong>Escape prevention is not optional.</strong> Snails climb and can escape enclosures that look secure — in regions where the species is not native, an escape can become an invasive pest problem, and even locally, escapees represent a direct loss of stock.</li>
-</ul>
-</div>
-
-<!-- MONTH 1 -->
-<details class="month" open>
-<summary>MONTH 1 — Snail Biology &amp; Pen Design <span>▾</span></summary>
-<div class="month-body">
-
-<div class="lesson"><h4>Lesson 1.1 — Understanding the giant African land snail</h4>
-<ul>
-<li>Giant African land snails (Achatina species) are hermaphrodites (each individual has both male and female reproductive organs) but generally need a mating partner to reproduce — a single snail typically cannot self-fertilise effectively.</li>
-<li>They are most active at night and during humid, cool conditions, retreating into their shell and sealing it (aestivating) during dry or very hot periods to conserve moisture — this is a survival response, not illness, but frequent aestivation signals poor housing conditions.</li>
-<li>Growth to market size typically takes 6–12 months depending on species, feeding and conditions — faster than many people expect for an animal often assumed to be slow-growing in every sense.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 1.2 — Choosing your production system</h4>
-<table>
-<tr><th>System</th><th>Scale</th><th>Notes</th></tr>
-<tr><td>Box/crate system</td><td>Small, backyard</td><td>Cheapest entry point; stacked ventilated crates with soil substrate</td></tr>
-<tr><td>Pen/hutch system</td><td>Small–medium</td><td>Raised wooden or block pens with mesh cover; easier daily management</td></tr>
-<tr><td>Free-range pen (netted)</td><td>Medium–large</td><td>A netted outdoor enclosure over natural ground and vegetation; most natural conditions but needs strong predator/escape barriers</td></tr>
-</table></div>
-
-<div class="lesson"><h4>Lesson 1.3 — Substrate and humidity</h4>
-<ul>
-<li>Substrate (the soil/bedding snails live and burrow in) should be loose, loamy, moisture-retentive soil, free of chemicals and sharp debris, at least 15–20 cm deep to allow burrowing and egg-laying.</li>
-<li>Maintain humidity around 80–90% and temperature around 20–28°C — check substrate moisture daily by feel (damp, not waterlogged) and mist as needed, more often in hot or dry weather.</li>
-<li>Provide shade over the pen — direct sun quickly overheats and dries a snailery, undoing hours of careful moisture management in minutes.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 1.4 — Escape and predator prevention</h4>
-<ul>
-<li>Snails climb smooth vertical surfaces surprisingly well — pen walls need a smooth, climb-resistant lip or overhang, or fine mesh secured at all edges including the base.</li>
-<li>Bury mesh or solid barriers into the ground around outdoor pens to prevent both escape by burrowing and entry by predators (rats, birds, some ants that attack eggs and young snails).</li>
-<li>Check pen integrity regularly — a small gap that seems insignificant is enough for snails to escape through over time.</li>
-</ul></div>
-
-<div class="practical"><strong>🛠️ Practical assignments (Month 1):</strong> (1) Choose your production system (box, pen or free-range) and design a layout for your target scale. (2) Prepare substrate to correct depth and test moisture retention. (3) Build and test escape/predator barriers before introducing any stock.</div>
-<div class="video">📹 VIDEO 1: "Setting up a snailery" (13 min) — snail biology basics, choosing a system, substrate and humidity, escape prevention.</div>
-
-<div class="quiz"><h4>QUIZ 1 — Biology &amp; pen design</h4>
-<div class="q">Q1. Are giant African land snails male, female, or hermaphrodite?<details><summary>Show answer</summary><div class="ans">Hermaphrodite — each has both male and female organs, but generally needs a mating partner to reproduce.</div></details></div>
-<div class="q">Q2. When are snails most active?<details><summary>Show answer</summary><div class="ans">At night and during humid, cool conditions.</div></details></div>
-<div class="q">Q3. What is aestivation and what does frequent aestivation signal?<details><summary>Show answer</summary><div class="ans">Sealing into the shell to conserve moisture during dry/hot periods — frequent aestivation signals poor housing conditions.</div></details></div>
-<div class="q">Q4. Roughly how long does it take a snail to reach market size?<details><summary>Show answer</summary><div class="ans">About 6–12 months, depending on species, feeding and conditions.</div></details></div>
-<div class="q">Q5. What depth of substrate is needed for burrowing and egg-laying?<details><summary>Show answer</summary><div class="ans">At least 15–20 cm.</div></details></div>
-<div class="q">Q6. What humidity and temperature range should a snailery target?<details><summary>Show answer</summary><div class="ans">About 80–90% humidity and 20–28°C.</div></details></div>
-<div class="q">Q7. Why provide shade over the pen?<details><summary>Show answer</summary><div class="ans">Direct sun quickly overheats and dries the snailery.</div></details></div>
-<div class="q">Q8. Why do pen walls need a climb-resistant lip or fine mesh?<details><summary>Show answer</summary><div class="ans">Snails climb smooth vertical surfaces well and can otherwise escape.</div></details></div>
-<div class="q">Q9. Why bury barriers into the ground around outdoor pens?<details><summary>Show answer</summary><div class="ans">To prevent escape by burrowing and entry by predators such as rats and ants.</div></details></div>
-<div class="q">Q10. Why check pen integrity regularly?<details><summary>Show answer</summary><div class="ans">Even a small, seemingly insignificant gap is enough for snails to escape over time.</div></details></div>
-</div>
-</div>
-</details>
-
-<!-- MONTH 2 -->
-<details class="month">
-<summary>MONTH 2 — Feeding &amp; Growth Management <span>▾</span></summary>
-<div class="month-body">
-
-<div class="lesson"><h4>Lesson 2.1 — What snails eat</h4>
-<ul>
-<li>Snails eat a wide range of fruits and vegetables (pawpaw/papaya, banana, cucumber, lettuce, cabbage leaves, sweet potato leaves) plus some calcium-rich supplements — variety improves growth rate and shell health.</li>
-<li>Avoid feeding citrus, spicy, salty or oily foods, and any produce treated with pesticide residue — these can sicken or kill snails.</li>
-<li>Feed in the evening, since snails feed mainly at night, and remove uneaten food the next morning before it rots and fouls the pen.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 2.2 — Calcium and shell health</h4>
-<ul>
-<li>Snails need calcium to build and maintain their shell — provide crushed eggshell, oyster shell, limestone chips or a commercial calcium supplement regularly, not just occasionally.</li>
-<li>A thin, cracked or poorly formed shell indicates calcium deficiency and should be corrected immediately, as shell damage exposes the snail to infection and dehydration.</li>
-<li>Calcium supply matters even more during the growth phase and before/during egg-laying, when demand is highest.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 2.3 — Stocking density and sorting</h4>
-<ul>
-<li>Overcrowding stresses snails, slows growth and increases disease spread — follow a moderate stocking density appropriate to your pen size and adjust as snails grow and need more space.</li>
-<li>Sort snails by size periodically into separate pens — mixing large and small snails together means smaller ones compete poorly for food and space, growing more slowly than if grouped with similarly sized snails.</li>
-<li>Keep breeding stock separate from growth stock once a breeding programme is established, to manage feeding and space needs appropriately for each group.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 2.4 — Common health problems</h4>
-<ul>
-<li>Watch for signs of poor health: prolonged aestivation beyond normal weather-related periods, shell damage, mucus discoloration, or unusual lethargy even in good conditions — these usually trace back to humidity, temperature or nutrition problems rather than infectious disease.</li>
-<li>Remove and isolate any snail showing signs of illness or shell damage to prevent potential spread and allow monitoring.</li>
-<li>Keep the substrate clean of rotting food and waste — poor sanitation is the most common root cause of health problems in a snailery.</li>
-</ul></div>
-
-<div class="practical"><strong>🛠️ Practical assignments (Month 2):</strong> (1) Set up an evening feeding routine with a varied diet and record what your snails prefer. (2) Establish a regular calcium supplementation schedule. (3) Sort your snails into size groups and record growth over 3 weeks.</div>
-<div class="video">📹 VIDEO 2: "Feeding for fast, healthy growth" (13 min) — diet, calcium supplementation, stocking density, spotting health problems.</div>
-
-<div class="quiz"><h4>QUIZ 2 — Feeding &amp; growth</h4>
-<div class="q">Q1. Name three foods snails eat well.<details><summary>Show answer</summary><div class="ans">Any three of: pawpaw/papaya, banana, cucumber, lettuce, cabbage leaves, sweet potato leaves.</div></details></div>
-<div class="q">Q2. What foods should be avoided?<details><summary>Show answer</summary><div class="ans">Citrus, spicy, salty or oily foods, and pesticide-treated produce.</div></details></div>
-<div class="q">Q3. Why feed in the evening?<details><summary>Show answer</summary><div class="ans">Snails feed mainly at night.</div></details></div>
-<div class="q">Q4. Why remove uneaten food the next morning?<details><summary>Show answer</summary><div class="ans">To prevent it rotting and fouling the pen.</div></details></div>
-<div class="q">Q5. Why is calcium supplementation essential?<details><summary>Show answer</summary><div class="ans">Snails need calcium to build and maintain their shell.</div></details></div>
-<div class="q">Q6. What does a thin, cracked shell usually indicate?<details><summary>Show answer</summary><div class="ans">Calcium deficiency.</div></details></div>
-<div class="q">Q7. Why sort snails by size into separate pens?<details><summary>Show answer</summary><div class="ans">Mixing sizes means smaller snails compete poorly for food/space and grow more slowly.</div></details></div>
-<div class="q">Q8. What does overcrowding cause?<details><summary>Show answer</summary><div class="ans">Stress, slower growth and increased disease spread.</div></details></div>
-<div class="q">Q9. What is usually the root cause of health problems in a snailery?<details><summary>Show answer</summary><div class="ans">Poor sanitation — rotting food and waste in the substrate.</div></details></div>
-<div class="q">Q10. What should be done with a snail showing shell damage or illness signs?<details><summary>Show answer</summary><div class="ans">Remove and isolate it to prevent potential spread and allow monitoring.</div></details></div>
-</div>
-</div>
-</details>
-
-<!-- MONTH 3 -->
-<details class="month">
-<summary>MONTH 3 — Breeding &amp; Egg Management <span>▾</span></summary>
-<div class="month-body">
-
-<div class="lesson"><h4>Lesson 3.1 — Mating and egg-laying</h4>
-<ul>
-<li>Snails reach sexual maturity at roughly 5–10 months depending on species and conditions; mating requires two mature snails, and both partners can lay eggs afterward since both are hermaphroditic.</li>
-<li>Eggs are laid in a shallow burrow dug into the substrate, typically in clutches of 100–400 eggs depending on species and snail size and condition.</li>
-<li>Egg-laying is triggered by suitable substrate moisture and depth — a snailery with dry or shallow substrate will see few or no eggs laid even with healthy, mature breeding stock present.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 3.2 — Incubation</h4>
-<ul>
-<li>Eggs typically hatch in 2–4 weeks under correct humidity and temperature — leave eggs undisturbed in the substrate where laid, or carefully transfer to a dedicated hatching container with matching moist substrate if you need to separate them from adult activity.</li>
-<li>Maintain steady humidity around the egg-laying/incubation area — drying out is the most common cause of egg failure, more so than temperature within the normal range.</li>
-<li>Avoid handling eggs unnecessarily — the shells are delicate and rough handling reduces hatch rates.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 3.3 — Rearing hatchlings</h4>
-<ul>
-<li>Hatchlings are extremely small and vulnerable — house them separately from adults in a protected nursery area with fine mesh (adults can accidentally crush or the pen conditions may not suit the smallest size class).</li>
-<li>Feed very finely chopped or mashed soft foods initially, with easily accessible calcium (finely crushed eggshell) available from the start.</li>
-<li>Monitor humidity even more closely for hatchlings than for adults — their smaller size means they dehydrate and die much faster in dry conditions.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 3.4 — Managing a breeding programme</h4>
-<ul>
-<li>Keep breeding records: which pen, approximate mating/laying dates, clutch size, hatch rate — this data identifies your most productive breeding stock over time.</li>
-<li>Rotate or refresh breeding stock periodically and avoid excessive inbreeding within a small closed population by introducing new stock occasionally if scaling up.</li>
-<li>Plan pen capacity ahead of egg-laying season — a successful breeding programme can produce far more hatchlings than an unprepared pen has space or feed budget for.</li>
-</ul></div>
-
-<div class="practical"><strong>🛠️ Practical assignments (Month 3):</strong> (1) Identify mature breeding-age snails and set up a dedicated breeding pen with correct substrate depth. (2) Locate and carefully monitor an egg clutch through to hatching, recording hatch rate. (3) Set up a hatchling nursery area separate from adult stock.</div>
-<div class="video">📹 VIDEO 3: "From egg to hatchling" (14 min) — mating and egg-laying, incubation conditions, rearing hatchlings, breeding records.</div>
-
-<div class="quiz"><h4>QUIZ 3 — Breeding &amp; eggs</h4>
-<div class="q">Q1. At what age do snails typically reach sexual maturity?<details><summary>Show answer</summary><div class="ans">Roughly 5–10 months, depending on species and conditions.</div></details></div>
-<div class="q">Q2. Roughly how many eggs are laid per clutch?<details><summary>Show answer</summary><div class="ans">Typically 100–400, depending on species and snail size/condition.</div></details></div>
-<div class="q">Q3. What triggers egg-laying?<details><summary>Show answer</summary><div class="ans">Suitable substrate moisture and depth for digging a laying burrow.</div></details></div>
-<div class="q">Q4. How long do eggs typically take to hatch?<details><summary>Show answer</summary><div class="ans">About 2–4 weeks under correct humidity and temperature.</div></details></div>
-<div class="q">Q5. What is the most common cause of egg failure?<details><summary>Show answer</summary><div class="ans">Drying out — more so than temperature within the normal range.</div></details></div>
-<div class="q">Q6. Why avoid unnecessary handling of eggs?<details><summary>Show answer</summary><div class="ans">The shells are delicate and rough handling reduces hatch rates.</div></details></div>
-<div class="q">Q7. Why house hatchlings separately from adults?<details><summary>Show answer</summary><div class="ans">Adults can accidentally crush them and pen conditions may not suit the smallest size class.</div></details></div>
-<div class="q">Q8. Why do hatchlings need even closer humidity monitoring than adults?<details><summary>Show answer</summary><div class="ans">Their smaller size means they dehydrate and die much faster in dry conditions.</div></details></div>
-<div class="q">Q9. Why keep breeding records?<details><summary>Show answer</summary><div class="ans">To identify the most productive breeding stock over time.</div></details></div>
-<div class="q">Q10. Why plan pen capacity ahead of egg-laying season?<details><summary>Show answer</summary><div class="ans">A successful breeding programme can produce more hatchlings than an unprepared pen has space or feed budget for.</div></details></div>
-</div>
-</div>
-</details>
-
-<!-- MONTH 4 -->
-<details class="month">
-<summary>MODULE 4 — Harvest, Processing &amp; the Snail Business <span>▾</span></summary>
-<div class="month-body">
-
-<div class="lesson"><h4>Lesson 4.1 — Harvesting for market</h4>
-<ul>
-<li>Harvest snails once they reach a target shell size/weight for your market — bigger is not automatically better, as different buyers (local food market, restaurant, export) may want different size grades.</li>
-<li>Purge snails before sale/processing: keep them without food (but with water access) for 1–3 days to clear the gut, which is standard practice before cooking or processing.</li>
-<li>Handle live snails gently during harvest and transport — bruised or damaged snails are lower value and more likely to die before reaching the buyer.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 4.2 — Selling live vs processed</h4>
-<ul>
-<li>Live sale to local markets and restaurants is the simplest entry point, requiring only correct transport conditions (ventilated, cool, moist container) to keep snails alive and healthy until sale.</li>
-<li>Processing (cleaning, cooking, sometimes canning or freezing) accesses different, often higher-value markets but requires food-safety knowledge, equipment and often regulatory compliance for commercial sale.</li>
-<li>Shell and slime by-products (used in cosmetics in some markets) represent a smaller but real additional income stream worth investigating locally as the enterprise scales.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 4.3 — Building a market</h4>
-<ul>
-<li>Local markets, restaurants (particularly those serving West African or other cuisines where snail is a traditional delicacy), and church/community networks are typically the first and most accessible customers.</li>
-<li>Export markets (Europe and parts of Asia have established escargot markets) pay significantly more but require consistent supply, quality standards, and often specific regulatory/export certification — a scale-up goal rather than a starting point.</li>
-<li>Building relationships with a few reliable regular buyers is usually more valuable than one-off sales — snail farming rewards a steady supply relationship over opportunistic selling.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 4.4 — Final project: your bankable business plan</h4>
-<ul>
-<li>Assemble: your production system design and capacity, feeding and calcium supplementation plan, breeding programme and expected hatchling output, harvest and purging protocol, target markets (local/restaurant/export) with pricing, and a growth plan from your starting stock to target production scale.</li>
-<li>Submit with growth and breeding records and photos for your rAs certificate — snail businesses that document breeding output and consistent supply are exactly what restaurant buyers and aggregators look for.</li>
-</ul></div>
-
-<div class="practical"><strong>🛠️ Practical assignments (Module 4):</strong> (1) Harvest a batch at target size and correctly purge before sale. (2) Identify and approach 2 potential regular buyers (market, restaurant, or community network). (3) Complete and submit the bankable business plan.</div>
-<div class="video">📹 VIDEO 4: "From pen to plate: the snail business" (13 min) — harvesting and purging, live vs processed sale, building a buyer base.</div>
-
-<div class="quiz"><h4>QUIZ 4 — Harvest &amp; business</h4>
-<div class="q">Q1. What does "purging" mean and why is it done?<details><summary>Show answer</summary><div class="ans">Keeping snails without food for 1–3 days to clear the gut before cooking or processing.</div></details></div>
-<div class="q">Q2. Why does harvest target size vary by buyer?<details><summary>Show answer</summary><div class="ans">Different buyers (local market, restaurant, export) may want different size grades.</div></details></div>
-<div class="q">Q3. What conditions are needed to transport live snails safely?<details><summary>Show answer</summary><div class="ans">A ventilated, cool, moist container.</div></details></div>
-<div class="q">Q4. What does processing (cleaning, cooking, canning/freezing) require beyond live sale?<details><summary>Show answer</summary><div class="ans">Food-safety knowledge, equipment, and often regulatory compliance for commercial sale.</div></details></div>
-<div class="q">Q5. Name a smaller additional income stream from snail farming.<details><summary>Show answer</summary><div class="ans">Shell and slime by-products, used in cosmetics in some markets.</div></details></div>
-<div class="q">Q6. Who are typically the first and most accessible customers?<details><summary>Show answer</summary><div class="ans">Local markets, restaurants serving traditional snail dishes, and community networks.</div></details></div>
-<div class="q">Q7. What do export markets typically require beyond higher price?<details><summary>Show answer</summary><div class="ans">Consistent supply, quality standards, and specific regulatory/export certification.</div></details></div>
-<div class="q">Q8. Why is a steady supply relationship more valuable than one-off sales?<details><summary>Show answer</summary><div class="ans">Snail farming rewards reliable regular buyers over opportunistic selling.</div></details></div>
-<div class="q">Q9. Why must gently harvested and transported snails be prioritised?<details><summary>Show answer</summary><div class="ans">Bruised or damaged snails are lower value and more likely to die before reaching the buyer.</div></details></div>
-<div class="q">Q10. What should a bankable snail business plan document to attract buyers/aggregators?<details><summary>Show answer</summary><div class="ans">Breeding output and consistent supply capability.</div></details></div>
-</div>
-</div>
-</details>
-
-<h2>💰 Startup budget (small backyard snailery)</h2>
-<div class="box">
-<table>
-<tr><th>Item</th><th>Typical range (USD)</th></tr>
-<tr><td>Breeding stock (20–50 mature snails, where legally sourced)</td><td>$30–150</td></tr>
-<tr><td>Pen/crate construction materials</td><td>$50–200</td></tr>
-<tr><td>Substrate/soil preparation</td><td>$10–40</td></tr>
-<tr><td>Mesh/netting for escape and predator prevention</td><td>$20–80</td></tr>
-<tr><td>Calcium supplement stock</td><td>$10–30</td></tr>
-<tr><td>Misting/watering equipment</td><td>$10–40</td></tr>
-<tr><td><strong>Total</strong></td><td><strong>$130–540</strong></td></tr>
-</table>
-</div>
-<div class="pricecheck">✅ <strong>Iron-Clad Price Check:</strong> breeding stock (from a legal, reputable source), pen materials, and calcium supplement — 3 quotes each.</div>
-
-<h2>📖 Glossary</h2>
-<div class="box"><ul>
-<li><strong>Heliciculture</strong> — the practice of farming snails.</li>
-<li><strong>Aestivation</strong> — a snail sealing into its shell to conserve moisture during dry/hot conditions.</li>
-<li><strong>Substrate</strong> — the soil/bedding material snails live and burrow in.</li>
-<li><strong>Hermaphrodite</strong> — an organism with both male and female reproductive organs.</li>
-<li><strong>Clutch</strong> — a batch of eggs laid together.</li>
-<li><strong>Purging</strong> — withholding food (with water access) before slaughter/sale to clear the gut.</li>
-<li><strong>Stocking density</strong> — the number of animals kept per unit of pen space or area.</li>
-</ul></div>
-
-<h2>📚 Resources</h2>
-<div class="box"><ul>
-<li>National agriculture/wildlife regulation guidance on snail farming legality and export requirements</li>
-<li>Your extension office and established local snail farmers — pen design ideas, buyer contacts</li>
-<li>rAs companion courses: Animal Feed Making · Post-Harvest Handling · Bookkeeping</li>
-</ul></div>
-
 <div class="cta">
-<a href="index.html#courses">🎓 Enroll &amp; earn your Snail Farming certificate</a>
-<p style="color:var(--muted);font-size:0.8rem;margin-top:0.6rem">Certificate ($10) issued on completion of all module quizzes + the final project.</p>
+<a class="enroll" href="index.html#courses">Enroll — $8.00</a>
+<a class="wa" href="https://wa.me/263773001353?text=Hi%20rAs%2C%20I%20want%20to%20enroll%20in%20Snail%20Farming" target="_blank" rel="noopener">💬 Enroll on WhatsApp</a>
 </div>
+<p style="margin-top:1.2rem;font-size:0.82rem;color:var(--muted)">rise AFRICA skills is not a school. We teach practical method and issue a Business Seed Record confirming you completed the work.</p>
 </main>
-<footer>© 2026 Rise Africa Skills · riseafricaskills.com · Learn Practical Skills. Start Your Business.<br>Educational guidance — always follow your national regulations. Figures are planning guides; verify local prices (Iron-Clad Price Check).</footer>
-
-<!-- Course Protection & Enrollment System -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="auth-system.js"></script>
-<script src="enrollment-system.js"></script>
-<script src="course-protection.js"></script>
-</body>
-</html>
-
+<footer>rise AFRICA skills · +263 77 300 1353 · all@riseafricaskills.com · riseafricaskills.com</footer>
+</body></html>

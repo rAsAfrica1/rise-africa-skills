@@ -5,388 +5,54 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Duck Farming — rise AFRICA skills</title>
 <style>
-:root{--gold:#c9a227;--dark:#1a1a2e;--darker:#0f0f1a;--card:#1e1e32;--muted:#9a9ab0;--red:#e94560;--green:#27ae60}
+:root{--gold:#c9a227;--dark:#1a1a2e;--darker:#0f0f1a;--card:#1e1e32;--muted:#9a9ab0}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--darker);color:#fff;line-height:1.65}
-a{color:var(--gold)}
-header{position:sticky;top:0;background:rgba(15,15,26,0.95);backdrop-filter:blur(8px);border-bottom:1px solid rgba(201,162,39,0.2);padding:0.7rem 1rem;display:flex;align-items:center;gap:0.6rem;z-index:100}
-.logo-icon{width:34px;height:34px;border-radius:8px;background:var(--gold);color:var(--darker);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.8rem}
+header{position:sticky;top:0;background:rgba(15,15,26,0.95);padding:0.7rem 1rem;border-bottom:1px solid rgba(201,162,39,0.2);display:flex;align-items:center;gap:0.6rem;z-index:100}
+.logo-icon{width:34px;height:34px;border-radius:8px;background:var(--gold);color:var(--darker);display:flex;align-items:center;justify-content:center;font-weight:800}
 header .brand{font-weight:700;font-size:0.95rem}
-header a.back{margin-left:auto;text-decoration:none;font-size:0.85rem;border:1px solid var(--gold);padding:0.35rem 0.8rem;border-radius:20px}
+header a.back{margin-left:auto;text-decoration:none;color:var(--gold);border:1px solid var(--gold);padding:0.35rem 0.8rem;border-radius:20px;font-size:0.85rem}
 .hero{max-width:920px;margin:0 auto;padding:2.5rem 1rem 1.2rem;text-align:center}
-.cat-tag{display:inline-block;background:rgba(201,162,39,0.15);color:var(--gold);border:1px solid var(--gold);border-radius:20px;padding:0.25rem 0.9rem;font-size:0.75rem;font-weight:700;letter-spacing:1px}
+.cat-tag{display:inline-block;background:rgba(201,162,39,0.15);color:var(--gold);border:1px solid var(--gold);border-radius:20px;padding:0.25rem 0.9rem;font-size:0.75rem;font-weight:700}
 .hero h1{font-size:1.9rem;margin:0.8rem 0 0.4rem;color:var(--gold)}
 .hero p.tag{color:var(--muted);max-width:680px;margin:0 auto}
 .badges{display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;margin-top:1rem}
 .badge{background:var(--card);border:1px solid rgba(201,162,39,0.25);border-radius:8px;padding:0.4rem 0.8rem;font-size:0.75rem}
 main{max-width:920px;margin:0 auto;padding:0 1rem 3rem}
 h2{color:var(--gold);font-size:1.3rem;margin:2rem 0 0.8rem}
-h3{color:#fff;font-size:1.02rem;margin:1rem 0 0.4rem}
-p,li{font-size:0.92rem;color:#ddd}
-ul{margin:0.3rem 0 0.8rem 1.3rem}
-li{margin-bottom:0.3rem}
 .box{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:1.2rem;margin-bottom:0.8rem}
-table{width:100%;border-collapse:collapse;font-size:0.85rem;margin:0.6rem 0 1rem}
-th,td{border:1px solid rgba(255,255,255,0.14);padding:0.5rem 0.6rem;text-align:left;vertical-align:top}
-th{color:var(--gold);background:rgba(201,162,39,0.07)}
-details.month{background:var(--card);border:1px solid rgba(201,162,39,0.2);border-radius:14px;margin-bottom:1rem;overflow:hidden}
-details.month>summary{cursor:pointer;padding:1.1rem 1.3rem;font-weight:800;font-size:1.05rem;color:var(--gold);list-style:none;display:flex;justify-content:space-between;gap:1rem}
-details.month>summary::-webkit-details-marker{display:none}
-details.month[open]>summary{border-bottom:1px solid rgba(201,162,39,0.2)}
-.month-body{padding:1.1rem 1.3rem}
-.lesson{margin-bottom:1.1rem}
-.lesson h4{color:var(--gold);font-size:0.95rem;margin-bottom:0.3rem}
-.practical{background:rgba(201,162,39,0.08);border-left:3px solid var(--gold);padding:0.7rem 0.9rem;border-radius:0 8px 8px 0;font-size:0.88rem;margin:0.8rem 0}
-.practical strong{color:var(--gold)}
-.video{background:rgba(255,255,255,0.04);border:1px dashed rgba(201,162,39,0.4);border-radius:10px;padding:0.7rem 0.9rem;font-size:0.85rem;margin:0.8rem 0;color:var(--muted)}
-.quiz{background:rgba(39,174,96,0.06);border:1px solid rgba(39,174,96,0.35);border-radius:12px;padding:1rem 1.2rem;margin-top:1rem}
-.quiz h4{color:var(--green);margin-bottom:0.6rem}
-.quiz .q{margin-bottom:0.8rem;font-size:0.9rem}
-.quiz details{margin-top:0.25rem}
-.quiz summary{cursor:pointer;color:var(--gold);font-size:0.83rem}
-.quiz .ans{margin-top:0.3rem;font-size:0.86rem;color:#cfe8d8}
-.safety{background:rgba(233,69,96,0.08);border:1px solid rgba(233,69,96,0.4);border-radius:12px;padding:1.1rem 1.2rem;margin:1rem 0}
-.safety h3{color:#ff8fa3;margin-top:0}
-.pricecheck{background:rgba(39,174,96,0.08);border:1px solid rgba(39,174,96,0.45);border-radius:12px;padding:0.9rem 1.1rem;font-size:0.9rem;margin:0.8rem 0}
-.cta{text-align:center;margin-top:2.5rem}
-.cta a{display:inline-block;background:var(--gold);color:var(--darker);font-weight:800;padding:0.9rem 2rem;border-radius:10px;text-decoration:none}
-footer{border-top:1px solid rgba(201,162,39,0.15);text-align:center;padding:1.5rem 1rem;color:var(--muted);font-size:0.8rem;margin-top:3rem}
-@media print{header,.cta,footer{display:none}body{background:#fff;color:#000}.box,details.month,.quiz{border:1px solid #ccc;background:#fff}h1,h2,h3,h4,summary{color:#000!important}details{display:block}.month-body{display:block!important}p,li{color:#000}}
-</style>
-</head>
+.pricing{display:flex;gap:0.8rem;flex-wrap:wrap;margin:1rem 0}
+.ptier{flex:1;min-width:180px;background:var(--card);border:1px solid rgba(201,162,39,0.25);border-radius:12px;padding:1rem}
+.ptier .amt{font-size:1.5rem;font-weight:800;color:#fff}
+.cta{display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:1rem}
+.cta a{padding:0.7rem 1.3rem;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.88rem}
+.cta .enroll{background:var(--gold);color:var(--darker)}
+.cta .wa{background:#25D366;color:#fff}
+footer{border-top:1px solid rgba(255,255,255,0.08);padding:1.5rem 1rem;text-align:center;color:var(--muted);font-size:0.8rem}
+</style></head>
 <body>
-<header>
-<div class="logo-icon">rAs</div><span class="brand">rise AFRICA skills</span>
-<a class="back" href="index.html">← All Courses</a>
-</header>
+<header><div class="logo-icon">rAs</div><div class="brand">rise AFRICA skills</div><a class="back" href="index.html">← All Courses</a></header>
 <div class="hero">
-<span class="cat-tag">AGRICULTURE · POULTRY</span>
+<span class="cat-tag">AGRICULTURE</span>
 <h1>Duck Farming</h1>
-<p class="tag">A complete 5-month program — raising ducks for eggs, meat and feathers: brooding waterfowl (not the same as brooding chickens), pond/water management, disease resistance advantages over chickens, and marketing duck eggs and meat to a market that pays a premium for both.</p>
-<div class="badges"><span class="badge">⏱️ 5 Months</span><span class="badge">📊 Beginner → Business-ready</span><span class="badge">🌍 Hybrid: Online + Offline</span><span class="badge">🎓 Certificate on completion</span></div>
+<p class="tag">Raise ducks: eggs and meat. Water birds, hardy, efficient foragers. Egg-layer breeds: 300+ eggs/year. Meat breeds: fast growth. Water optional but beneficial. Startup: 10-20 ducklings.</p>
+<div class="badges"><span class="badge">6 modules</span><span class="badge">30 video lessons</span><span class="badge">6 knowledge checks</span><span class="badge">Capstone project</span><span class="badge">Lifetime access</span></div>
 </div>
 <main>
-
-<h2>Course Overview</h2>
-<div class="box">
-<p><strong>Why ducks?</strong> Ducks are hardier and more disease-resistant than chickens against several major poultry diseases, forage more actively for their own food (reducing feed cost where free-ranging is possible), and produce both a market for eggs (larger, richer, and prized in many cuisines and by bakers) and a market for meat — two income streams from one flock. They also tolerate wetter, muddier conditions that would stress a chicken flock, making them well suited to areas with seasonal flooding or high rainfall.</p>
-<p><strong>Structure:</strong> 5 monthly modules → lessons → practical assignments → a 10-question quiz each module → final business project.</p>
-<p><strong>How to study (hybrid):</strong> Online — modules on your phone, sessions in the <a href="index.html#study-diary">Study Diary</a>, questions to the rAs AI assistant. Offline — save this page (Print → Save as PDF); the practicals happen at the pond edge and the duck house.</p>
+<div class="box"><strong style="color:var(--gold)">✅ Iron-Clad Price Check</strong><p>Before you start this farm or buy any equipment, call 3 suppliers and compare. This course teaches the method — you confirm the local prices and market demand.</p></div>
+<h2>What this course covers</h2>
+<p style="color:#ddd;margin:1rem 0">📚 6 Comprehensive Modules with video lessons, learning guides, quizzes, and capstone projects. Each module covers essential knowledge to start and scale your duck farming business profitably.</p>
+<h2>Pricing</h2>
+<div class="pricing">
+<div class="ptier"><h3 style="color:var(--gold);margin-bottom:0.3rem">Full Course Access</h3><div class="amt">$8.00</div><p style="font-size:0.82rem;color:var(--muted)">All 6 modules, 30 videos, quizzes, capstone. Lifetime access.</p></div>
+<div class="ptier"><h3 style="color:var(--gold);margin-bottom:0.3rem">+ Business Seed Record</h3><div class="amt">$10.00</div><p style="font-size:0.82rem;color:var(--muted)">Everything above plus verifiable Business Seed Record.</p></div>
+<div class="ptier"><h3 style="color:var(--gold);margin-bottom:0.3rem">Print / Download / Share</h3><div class="amt">$3.50</div><p style="font-size:0.82rem;color:var(--muted)">High-resolution PDF, print-ready, shareable.</p></div>
 </div>
-
-<div class="safety">
-<h3>⚠️ Read first: the three rules that protect your investment</h3>
-<ul>
-<li><strong>Ducklings cannot regulate body temperature at all in the first week and chill fast if wet without adequate heat.</strong> Unlike common belief, very young ducklings should NOT have open swimming water access in the first 2–3 weeks — they can become waterlogged, chilled and drown without a mother duck's waterproofing oil, which they don't yet produce enough of.</li>
-<li><strong>Ducks need niacin (vitamin B3) at a notably higher level than chickens.</strong> Feeding straight chicken starter feed to ducklings without adjustment risks niacin deficiency, causing leg and joint deformities — this is one of the most common and preventable mistakes in duck brooding.</li>
-<li><strong>Standing water management is a disease and mosquito risk if neglected.</strong> A duck pond or wallow that isn't at least periodically cleaned or flowing becomes a breeding ground for disease organisms and mosquitoes — water quality management is as much a health practice as a convenience.</li>
-</ul>
-</div>
-
-<!-- MONTH 1 -->
-<details class="month" open>
-<summary>MONTH 1 — Breeds, Housing &amp; Water Management <span>▾</span></summary>
-<div class="month-body">
-
-<div class="lesson"><h4>Lesson 1.1 — Choosing a duck breed by purpose</h4>
-<table>
-<tr><th>Breed</th><th>Primary use</th><th>Notes</th></tr>
-<tr><td>Pekin</td><td>Meat</td><td>Fast-growing, reaches market weight quickly; the standard commercial meat breed</td></tr>
-<tr><td>Khaki Campbell</td><td>Eggs</td><td>Excellent layer, can outproduce many chicken breeds in eggs per year</td></tr>
-<tr><td>Muscovy</td><td>Meat (and some egg use)</td><td>Not a true duck biologically but farmed identically; lean meat, strong forager, quieter than other ducks</td></tr>
-<tr><td>Indian Runner</td><td>Eggs</td><td>Distinctive upright posture, active forager, good layer</td></tr>
-</table></div>
-
-<div class="lesson"><h4>Lesson 1.2 — Housing needs</h4>
-<ul>
-<li>Ducks need less elaborate housing than chickens in many respects — they don't perch and are generally hardier against cold — but still need a dry, predator-secure house to sleep and lay eggs in overnight.</li>
-<li>Provide generous floor space and litter that can absorb the higher moisture ducks bring in from water access — wet litter management is a bigger daily task with ducks than with chickens.</li>
-<li>Nest boxes should be low, at ground level — ducks lay on the ground, not elevated like chickens, and providing appropriately placed nest boxes keeps eggs clean and easy to collect.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 1.3 — Water access for adult ducks</h4>
-<ul>
-<li>Adult ducks benefit from swimming water access (a pond, tank or simple wallow) for natural behaviour, feather condition and breeding success, though it is not strictly essential for basic meat or egg production if drinking water alone is provided.</li>
-<li>Drinking water must always be deep enough for ducks to submerge their whole bill and head — this isn't a preference, it's how ducks clear feed particles and mucus from their nostrils and eyes; shallow water that only wets the bill tip is inadequate.</li>
-<li>If using a pond or wallow, plan for periodic cleaning or flow-through water exchange — stagnant, heavily fouled water becomes both a disease risk and a source of foul odour and fly/mosquito breeding.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 1.4 — Predator and security considerations</h4>
-<ul>
-<li>Ducks, especially at the duckling stage, are vulnerable to the same range of predators as chickens (dogs, cats, birds of prey, snakes, mongoose depending on region) — secure housing at night is just as necessary as for a chicken flock.</li>
-<li>Fence pond/water areas if predator pressure from aquatic or semi-aquatic predators (in regions where relevant) is a known risk.</li>
-<li>Ducks are generally more alert to ground predators than chickens and often raise an alarm — a behavioural advantage worth factoring into overall flock security planning alongside physical barriers.</li>
-</ul></div>
-
-<div class="practical"><strong>🛠️ Practical assignments (Month 1):</strong> (1) Choose your breed based on your primary purpose (meat vs eggs) and source 3 quotes. (2) Design housing with ground-level nest boxes and absorbent litter plan. (3) Set up drinking water deep enough for full bill/head submersion.</div>
-<div class="video">📹 VIDEO 1: "Getting started with ducks" (13 min) — breed choice by purpose, housing differences from chickens, water access requirements.</div>
-
-<div class="quiz"><h4>QUIZ 1 — Breeds, housing &amp; water</h4>
-<div class="q">Q1. Which breed is the standard commercial meat duck?<details><summary>Show answer</summary><div class="ans">Pekin.</div></details></div>
-<div class="q">Q2. Which breed is known for excellent egg production?<details><summary>Show answer</summary><div class="ans">Khaki Campbell.</div></details></div>
-<div class="q">Q3. Is the Muscovy a true duck biologically?<details><summary>Show answer</summary><div class="ans">No, but it is farmed identically to true ducks.</div></details></div>
-<div class="q">Q4. Where do ducks lay eggs, compared to chickens?<details><summary>Show answer</summary><div class="ans">On the ground, not elevated — nest boxes should be placed at ground level.</div></details></div>
-<div class="q">Q5. Is swimming water access strictly essential for basic duck production?<details><summary>Show answer</summary><div class="ans">No, though it benefits natural behaviour, feather condition and breeding success; drinking water alone can support basic production.</div></details></div>
-<div class="q">Q6. Why must drinking water be deep enough to submerge the whole bill and head?<details><summary>Show answer</summary><div class="ans">Ducks use this to clear feed particles and mucus from nostrils and eyes — shallow water is inadequate.</div></details></div>
-<div class="q">Q7. What risk does a stagnant, uncleaned pond or wallow create?<details><summary>Show answer</summary><div class="ans">Disease risk plus foul odour and fly/mosquito breeding.</div></details></div>
-<div class="q">Q8. Are ducks vulnerable to the same predators as chickens?<details><summary>Show answer</summary><div class="ans">Yes — dogs, cats, birds of prey, snakes and similar, depending on region.</div></details></div>
-<div class="q">Q9. What behavioural advantage do ducks often have over chickens regarding predators?<details><summary>Show answer</summary><div class="ans">They are generally more alert to ground predators and often raise an alarm.</div></details></div>
-<div class="q">Q10. Why does wet litter management require more daily attention with ducks than chickens?<details><summary>Show answer</summary><div class="ans">Ducks bring in more moisture from water access, making litter absorb and require changing more often.</div></details></div>
-</div>
-</div>
-</details>
-
-<!-- MONTH 2 -->
-<details class="month">
-<summary>MONTH 2 — Brooding Ducklings <span>▾</span></summary>
-<div class="month-body">
-
-<div class="lesson"><h4>Lesson 2.1 — Why duckling brooding differs from chick brooding</h4>
-<ul>
-<li>Ducklings cannot regulate their own body temperature at all for the first week, and only partially for some weeks after — brooder heat management is even more critical in the earliest days than for chicken chicks.</li>
-<li>Ducklings do not yet produce enough preen gland oil to waterproof their down — open swimming water in the first 2–3 weeks risks the duckling becoming waterlogged, chilled and potentially drowning, even though adult ducks swim readily.</li>
-<li>Provide drinking water deep enough for bill submersion from day one (ducklings still need this even without swimming access) but shallow and secure enough that a duckling cannot fully immerse its body or get trapped.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 2.2 — Brooder temperature and setup</h4>
-<ul>
-<li>Start brooder temperature around 30–32°C at duckling level in week 1, reducing by about 2.5–3°C per week — slightly lower starting point than chicken chicks but still requiring careful management.</li>
-<li>Use a spacious brooder with absorbent bedding changed frequently — ducklings are notably messier than chick broods due to their water-splashing behaviour even with restricted access.</li>
-<li>Watch for piling (crowding for warmth) as the sign of a too-cold brooder, exactly as with other poultry species.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 2.3 — Niacin and duckling nutrition</h4>
-<ul>
-<li>Ducklings require notably higher niacin (vitamin B3) than chicken chicks — standard chicken starter feed, unless niacin-fortified for waterfowl, can leave ducklings deficient.</li>
-<li>Niacin deficiency in young ducklings causes leg and joint problems (bowed legs, difficulty walking) that can permanently affect the bird even if corrected later — this makes correct starter feed selection from day one important, not a "fix it if it happens" situation.</li>
-<li>Where duck-specific starter feed isn't available locally, a brewer's yeast supplement is a traditional, accessible way to boost niacin in a chicken-feed-based duckling ration — discuss appropriate inclusion rates with your feed supplier or extension service.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 2.4 — Introducing swimming water</h4>
-<ul>
-<li>Introduce limited, supervised swimming access from around 3 weeks of age, once ducklings have developed enough waterproofing and thermoregulation to manage it safely — start with short supervised sessions rather than unrestricted access.</li>
-<li>Always provide an easy, ramped exit from any swimming water — ducklings that cannot climb back out and become exhausted are at real risk of drowning even at this more developed age.</li>
-<li>Dry, sheltered space must remain available at all times even after swimming access begins, so ducklings can choose to warm up and dry off as needed.</li>
-</ul></div>
-
-<div class="practical"><strong>🛠️ Practical assignments (Month 2):</strong> (1) Set up a duckling brooder with correct starting temperature and secure, shallow drinking water. (2) Confirm your starter feed is niacin-appropriate for ducklings or supplement accordingly. (3) At around 3 weeks, introduce supervised swimming access with a ramped exit.</div>
-<div class="video">📹 VIDEO 2: "Brooding ducklings safely" (15 min) — why ducklings differ from chicks, niacin nutrition, introducing water gradually.</div>
-
-<div class="quiz"><h4>QUIZ 2 — Brooding ducklings</h4>
-<div class="q">Q1. Why can't ducklings regulate body temperature in the first week?<details><summary>Show answer</summary><div class="ans">They lack the physiological ability to do so at all in week 1, and only partially for some weeks after.</div></details></div>
-<div class="q">Q2. Why must open swimming water be restricted in the first 2–3 weeks?<details><summary>Show answer</summary><div class="ans">Ducklings don't yet produce enough preen oil to waterproof their down and can become waterlogged, chilled or drown.</div></details></div>
-<div class="q">Q3. What brooder temperature do ducklings need in week 1?<details><summary>Show answer</summary><div class="ans">Around 30–32°C at duckling level.</div></details></div>
-<div class="q">Q4. Why are duckling broods messier than chick broods?<details><summary>Show answer</summary><div class="ans">Ducklings' water-splashing behaviour, even with restricted access, adds moisture to bedding.</div></details></div>
-<div class="q">Q5. What nutrient do ducklings need at notably higher levels than chicken chicks?<details><summary>Show answer</summary><div class="ans">Niacin (vitamin B3).</div></details></div>
-<div class="q">Q6. What does niacin deficiency cause in ducklings?<details><summary>Show answer</summary><div class="ans">Leg and joint problems (bowed legs, difficulty walking), which can permanently affect the bird.</div></details></div>
-<div class="q">Q7. What traditional supplement can boost niacin in a chicken-feed-based duckling ration?<details><summary>Show answer</summary><div class="ans">Brewer's yeast.</div></details></div>
-<div class="q">Q8. At roughly what age can supervised swimming access begin?<details><summary>Show answer</summary><div class="ans">Around 3 weeks, once waterproofing and thermoregulation have developed enough.</div></details></div>
-<div class="q">Q9. Why must swimming water always have an easy, ramped exit?<details><summary>Show answer</summary><div class="ans">Ducklings that can't climb back out and become exhausted are at real drowning risk.</div></details></div>
-<div class="q">Q10. Why must dry, sheltered space remain available even after swimming access begins?<details><summary>Show answer</summary><div class="ans">So ducklings can choose to warm up and dry off as needed.</div></details></div>
-</div>
-</div>
-</details>
-
-<!-- MONTH 3 -->
-<details class="month">
-<summary>MONTH 3 — Feeding, Growth &amp; Egg Production <span>▾</span></summary>
-<div class="month-body">
-
-<div class="lesson"><h4>Lesson 3.1 — Growth-phase feeding</h4>
-<table>
-<tr><th>Phase</th><th>Age</th><th>Target CP%</th></tr>
-<tr><td>Starter (niacin-fortified)</td><td>0–2 weeks</td><td>20–22%</td></tr>
-<tr><td>Grower</td><td>2–8 weeks</td><td>16–18%</td></tr>
-<tr><td>Finisher (meat birds)</td><td>8 weeks to market</td><td>14–16%</td></tr>
-<tr><td>Layer ration</td><td>Point of lay onward</td><td>16–17%, with raised calcium for eggshell</td></tr>
-</table></div>
-
-<div class="lesson"><h4>Lesson 3.2 — Foraging and reducing feed cost</h4>
-<ul>
-<li>Ducks are active, effective foragers — where free-range or semi-free-range conditions allow, they will consume significant amounts of insects, slugs, snails, aquatic plants and waste grain, meaningfully reducing purchased feed cost compared with confined systems.</li>
-<li>Foraging supplements but does not replace a formulated ration for meat or egg production targets — treat foraged intake as a bonus that lets you moderate purchased feed slightly, not as a full substitute unless yield expectations are adjusted accordingly.</li>
-<li>Ducks used for pest control in rice paddies or vegetable plots (eating snails, insects and some weeds) is a traditional integrated practice worth considering where it fits the farming system.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 3.3 — Egg production management</h4>
-<ul>
-<li>Ducks typically reach point of lay around 5–7 months (later than chickens) but many breeds, once laying, can out-produce chicken layers in eggs per year — Khaki Campbells in particular are noted for very high annual egg counts.</li>
-<li>Ducks generally lay early in the morning, often before being let out of the house — collecting eggs before releasing the flock for the day keeps eggs cleaner and reduces losses to trampling or hiding in outdoor nests.</li>
-<li>Duck eggs are larger and richer than chicken eggs, prized by bakers for their higher fat content and by many cuisines directly — this often supports a price premium per egg over chicken eggs in markets where the demand is established.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 3.4 — Meat bird growth and processing timing</h4>
-<ul>
-<li>Meat breeds like Pekin reach market weight considerably faster than egg breeds — typically 7–9 weeks for a well-fed Pekin duckling, comparable in speed to a broiler chicken cycle.</li>
-<li>Feather development (pin feathers) affects processing ease and carcass appearance — timing slaughter around a stage when major feather growth has settled (rather than mid-feather-growth) gives a cleaner-finishing carcass.</li>
-<li>Ducks carry proportionally more fat than chicken at market weight, which affects cooking and processing methods buyers may expect — worth understanding your specific market's preference (fresh whole bird vs portioned) before finalizing processing plans.</li>
-</ul></div>
-
-<div class="practical"><strong>🛠️ Practical assignments (Month 3):</strong> (1) Formulate or source phase-appropriate feed for your flock's purpose (meat or eggs). (2) If free-ranging is possible, observe and estimate the foraging contribution to your flock's diet over one week. (3) Set up an early-morning egg collection routine if raising layers.</div>
-<div class="video">📹 VIDEO 3: "Feeding, foraging and eggs" (14 min) — phase feeding, foraging benefits, egg production timing, meat bird growth.</div>
-
-<div class="quiz"><h4>QUIZ 3 — Feeding, growth &amp; eggs</h4>
-<div class="q">Q1. Roughly what CP% does a duck starter ration need?<details><summary>Show answer</summary><div class="ans">20–22%, and it must be niacin-fortified.</div></details></div>
-<div class="q">Q2. What can ducks forage for that meaningfully reduces feed cost?<details><summary>Show answer</summary><div class="ans">Insects, slugs, snails, aquatic plants and waste grain.</div></details></div>
-<div class="q">Q3. Does foraging replace a formulated ration for production targets?<details><summary>Show answer</summary><div class="ans">No — it supplements but doesn't replace a formulated ration unless yield expectations are adjusted.</div></details></div>
-<div class="q">Q4. At roughly what age do ducks typically reach point of lay?<details><summary>Show answer</summary><div class="ans">Around 5–7 months, later than chickens.</div></details></div>
-<div class="q">Q5. Which breed is particularly noted for very high annual egg counts?<details><summary>Show answer</summary><div class="ans">Khaki Campbell.</div></details></div>
-<div class="q">Q6. Why collect duck eggs before releasing the flock in the morning?<details><summary>Show answer</summary><div class="ans">Ducks lay early morning; collecting before release keeps eggs cleaner and reduces losses to trampling/hiding.</div></details></div>
-<div class="q">Q7. Why do duck eggs often command a price premium?<details><summary>Show answer</summary><div class="ans">They are larger and richer, prized by bakers for fat content and by many cuisines directly.</div></details></div>
-<div class="q">Q8. How long does a Pekin duckling typically take to reach market weight?<details><summary>Show answer</summary><div class="ans">Typically 7–9 weeks.</div></details></div>
-<div class="q">Q9. Why does feather development timing matter for processing?<details><summary>Show answer</summary><div class="ans">Slaughtering when major feather growth has settled gives a cleaner-finishing carcass than mid-feather-growth.</div></details></div>
-<div class="q">Q10. How does duck fat content compare to chicken at market weight?<details><summary>Show answer</summary><div class="ans">Ducks carry proportionally more fat, affecting cooking/processing methods buyers may expect.</div></details></div>
-</div>
-</div>
-</details>
-
-<!-- MONTH 4 -->
-<details class="month">
-<summary>MONTH 4 — Health &amp; Disease Advantages/Risks <span>▾</span></summary>
-<div class="month-body">
-
-<div class="lesson"><h4>Lesson 4.1 — Disease resistance advantages over chickens</h4>
-<ul>
-<li>Ducks show greater natural resistance to several diseases that significantly affect chickens, including some forms of coccidiosis pressure and certain respiratory conditions — this is a genuine advantage but not a reason to skip biosecurity and hygiene practice entirely.</li>
-<li>Ducks are, however, still susceptible to avian influenza and can act as a carrier/reservoir species in some outbreak patterns — regional avian influenza risk should inform biosecurity planning regardless of ducks' general hardiness.</li>
-<li>Overall lower disease pressure typically translates to lower veterinary/medication costs compared with an equivalent chicken flock, a real economic advantage worth factoring into enterprise comparison.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 4.2 — Duck-specific health issues</h4>
-<ul>
-<li>Wet, dirty conditions around water access points, if not managed, favour bacterial and parasitic issues specific to a waterfowl environment — clean water management is as much disease prevention as it is welfare.</li>
-<li>Bumblefoot (a foot infection from injury or poor footing) can occur in ducks kept on hard, abrasive or unsanitary surfaces — provide appropriate, clean footing especially around frequently used areas like pond edges and house entrances.</li>
-<li>Botulism (from ducks consuming decaying organic matter in poorly maintained stagnant water) is a real risk in neglected wallow/pond systems — regular water and surrounding area maintenance prevents the conditions that allow it to develop.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 4.3 — Parasites and worming</h4>
-<ul>
-<li>Ducks are susceptible to internal parasites (gizzard worms, gapeworm) particularly where free-ranging near water increases exposure to intermediate hosts (snails, aquatic insects) that carry parasite larvae.</li>
-<li>Follow a regular deworming programme appropriate to your system and local parasite pressure, coordinated with a local veterinary/extension service — free-range and pond-access systems generally warrant closer monitoring than fully confined ones.</li>
-<li>External parasites (mites, lice) are generally less of an issue for ducks than chickens given their different feather structure and water access, but should still be checked for periodically.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 4.4 — Biosecurity for a mixed or duck-only operation</h4>
-<ul>
-<li>If keeping ducks alongside other poultry, monitor for cross-species disease risks specific to that combination — while ducks and chickens can often be kept in reasonable proximity (unlike the strict turkey-chicken separation needed for blackhead disease), general biosecurity discipline still applies.</li>
-<li>Quarantine new stock before introduction to an existing flock, disinfect equipment shared between groups, and control wild waterfowl contact where avian influenza risk is a regional concern.</li>
-<li>Keep simple health records — even with ducks' general hardiness advantage, tracking any illness, its treatment and outcome builds the knowledge base for managing your specific flock and site conditions over time.</li>
-</ul></div>
-
-<div class="practical"><strong>🛠️ Practical assignments (Month 4):</strong> (1) Assess your regional avian influenza risk level and adjust biosecurity practice accordingly. (2) Inspect footing around water access points and correct any hard/abrasive surfaces. (3) Set up a water/wallow maintenance schedule to prevent stagnant, fouled conditions.</div>
-<div class="video">📹 VIDEO 4: "Duck health: advantages and real risks" (14 min) — disease resistance vs chickens, duck-specific issues, parasites, biosecurity.</div>
-
-<div class="quiz"><h4>QUIZ 4 — Health</h4>
-<div class="q">Q1. What disease resistance advantage do ducks generally have over chickens?<details><summary>Show answer</summary><div class="ans">Greater natural resistance to several diseases including some coccidiosis pressure and certain respiratory conditions.</div></details></div>
-<div class="q">Q2. Are ducks immune to avian influenza?<details><summary>Show answer</summary><div class="ans">No — they remain susceptible and can act as a carrier/reservoir species in some outbreak patterns.</div></details></div>
-<div class="q">Q3. What economic advantage does lower disease pressure typically bring?<details><summary>Show answer</summary><div class="ans">Lower veterinary/medication costs compared to an equivalent chicken flock.</div></details></div>
-<div class="q">Q4. What is bumblefoot and what causes it?<details><summary>Show answer</summary><div class="ans">A foot infection from injury or poor footing, favoured by hard, abrasive or unsanitary surfaces.</div></details></div>
-<div class="q">Q5. What causes botulism risk in duck systems?<details><summary>Show answer</summary><div class="ans">Ducks consuming decaying organic matter in poorly maintained stagnant water.</div></details></div>
-<div class="q">Q6. What internal parasites are ducks particularly susceptible to near water?<details><summary>Show answer</summary><div class="ans">Gizzard worms and gapeworm, spread via intermediate hosts like snails and aquatic insects.</div></details></div>
-<div class="q">Q7. How does external parasite risk (mites, lice) compare between ducks and chickens?<details><summary>Show answer</summary><div class="ans">Generally less of an issue for ducks, given different feather structure and water access.</div></details></div>
-<div class="q">Q8. Is strict duck-chicken separation as critical as turkey-chicken separation?<details><summary>Show answer</summary><div class="ans">No — ducks and chickens can often be kept in reasonable proximity, unlike turkeys which need strict separation from chickens for blackhead disease.</div></details></div>
-<div class="q">Q9. Why control wild waterfowl contact where relevant?<details><summary>Show answer</summary><div class="ans">To reduce avian influenza risk in regions where it's a concern.</div></details></div>
-<div class="q">Q10. Why keep health records even with ducks' hardiness advantage?<details><summary>Show answer</summary><div class="ans">To build knowledge of managing the specific flock and site conditions over time.</div></details></div>
-</div>
-</div>
-</details>
-
-<!-- MONTH 5 -->
-<details class="month">
-<summary>MODULE 5 — Marketing &amp; the Duck Business <span>▾</span></summary>
-<div class="month-body">
-
-<div class="lesson"><h4>Lesson 5.1 — Costing duck production</h4>
-<ul>
-<li>Cost per bird/dozen eggs = feed cost (reduced where foraging genuinely offsets purchased feed) + labour + housing/water infrastructure share + health costs (typically lower than chickens, per the health module) + processing costs for meat birds.</li>
-<li>Compare true cost against local market price for both duck eggs and duck meat separately — the premium pricing often available for both products can make ducks more profitable per bird than a directly comparable chicken enterprise, even with a longer time to point of lay.</li>
-<li>Factor in the value of any foraging-based pest control service (e.g. snail control in rice systems) if that's part of your integrated farming approach — it's a real, if harder to price precisely, additional benefit.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 5.2 — Market channels for eggs and meat</h4>
-<ul>
-<li>Duck eggs: direct sale to bakeries and individual customers who specifically seek them out, alongside general market sale — building relationships with bakeries in particular can secure a reliable, premium-price repeat buyer.</li>
-<li>Duck meat: restaurants (especially those offering game or specialty dishes), individual household buyers, and in some markets a strong seasonal or festive demand pattern similar to (though generally less pronounced than) turkey.</li>
-<li>Live sale of started/breeding stock to other farmers entering duck production is a further income stream, particularly valuable given ducks' relative disease-resistance reputation attracting new entrants.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 5.3 — Building the business</h4>
-<ul>
-<li>Decide your primary focus (eggs, meat, or both) based on your local market's demand pattern and your available breed access — a dual-purpose approach spreads risk but a focused approach can build deeper expertise and reputation in one product faster.</li>
-<li>Leverage the dual advantages this course covers — lower disease pressure and lower feed cost through foraging — into a genuine cost advantage over chicken competitors, and communicate product quality differences (larger/richer eggs, different meat character) clearly to customers unfamiliar with duck products.</li>
-<li>Consider value-added products (salted/preserved duck eggs are a traditional product in several markets) as a further differentiation and shelf-life extension strategy where there's established local demand.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 5.4 — Final project: your bankable business plan</h4>
-<ul>
-<li>Assemble: breed choice and purpose (eggs/meat/both), housing and water management plan, brooding protocol with correct niacin-appropriate feeding, growth/lay-stage feeding plan, health and biosecurity protocol, target markets for eggs and/or meat with pricing, and a growth plan.</li>
-<li>Submit with your growth, lay and health records for your rAs certificate — duck business plans that document the specific advantages (disease resistance, foraging offset, premium pricing) covered in this course are exactly what makes this enterprise stand out to lenders and buyers.</li>
-</ul></div>
-
-<div class="pricecheck">✅ <strong>Iron-Clad Price Check:</strong> ducklings/breeding stock, niacin-appropriate starter feed, and pond/water infrastructure materials — 3 quotes each.</div>
-
-<div class="practical"><strong>🛠️ Practical assignments (Module 5):</strong> (1) Calculate true cost per bird or per dozen eggs, factoring in any foraging offset. (2) Identify and approach at least one bakery or restaurant buyer for duck eggs/meat. (3) Complete and submit the bankable business plan.</div>
-<div class="video">📹 VIDEO 5: "The duck advantage: building the business" (14 min) — true costing, egg and meat market channels, leveraging ducks' natural advantages.</div>
-
-<div class="quiz"><h4>QUIZ 5 — Marketing &amp; business</h4>
-<div class="q">Q1. What typically reduces feed cost in a duck enterprise compared to confined poultry?<details><summary>Show answer</summary><div class="ans">Active foraging, where free-range conditions allow.</div></details></div>
-<div class="q">Q2. Why might ducks be more profitable per bird than a comparable chicken enterprise despite a slower point of lay?<details><summary>Show answer</summary><div class="ans">Premium pricing available for both duck eggs and duck meat, plus lower health costs.</div></details></div>
-<div class="q">Q3. Which buyer type is a strong repeat customer for duck eggs specifically?<details><summary>Show answer</summary><div class="ans">Bakeries.</div></details></div>
-<div class="q">Q4. What is a further income stream beyond eggs/meat for a duck business?<details><summary>Show answer</summary><div class="ans">Live sale of started/breeding stock to other farmers entering duck production.</div></details></div>
-<div class="q">Q5. Why might a farmer choose to focus on one product (eggs or meat) rather than both?<details><summary>Show answer</summary><div class="ans">A focused approach can build deeper expertise and reputation in one product faster.</div></details></div>
-<div class="q">Q6. What two genuine cost/quality advantages should be communicated to customers unfamiliar with duck products?<details><summary>Show answer</summary><div class="ans">Lower disease pressure/feed cost, and larger/richer eggs or different meat character.</div></details></div>
-<div class="q">Q7. Name a traditional value-added duck egg product.<details><summary>Show answer</summary><div class="ans">Salted/preserved duck eggs.</div></details></div>
-<div class="q">Q8. What should a duck business plan document to stand out to lenders/buyers?<details><summary>Show answer</summary><div class="ans">The specific advantages of disease resistance, foraging feed offset, and premium pricing.</div></details></div>
-<div class="q">Q9. What factor beyond direct cost should be considered if ducks are used for pest control in rice systems?<details><summary>Show answer</summary><div class="ans">The value of the foraging-based pest control service, even if harder to price precisely.</div></details></div>
-<div class="q">Q10. What determines whether to focus on eggs, meat, or both?<details><summary>Show answer</summary><div class="ans">Local market demand pattern and available breed access.</div></details></div>
-</div>
-</div>
-</details>
-
-<h2>💰 Startup budget (small flock, 20 birds)</h2>
-<div class="box">
-<table>
-<tr><th>Item</th><th>Typical range (USD)</th></tr>
-<tr><td>Ducklings (20, day-old)</td><td>$40–120</td></tr>
-<tr><td>Brooder setup (heat source, shallow secure waterers)</td><td>$40–120</td></tr>
-<tr><td>Housing (ground-level nest boxes, absorbent litter plan)</td><td>$100–350</td></tr>
-<tr><td>Water access (simple pond/tank/wallow if used)</td><td>$50–300</td></tr>
-<tr><td>Niacin-appropriate starter feed stock</td><td>$30–90</td></tr>
-<tr><td>Fencing/predator security</td><td>$60–200</td></tr>
-<tr><td><strong>Total</strong></td><td><strong>$320–1,180</strong></td></tr>
-</table>
-</div>
-<div class="pricecheck">✅ <strong>Iron-Clad Price Check:</strong> ducklings/breeding stock, niacin-fortified starter feed, and pond/water construction materials — 3 quotes each.</div>
-
-<h2>📖 Glossary</h2>
-<div class="box"><ul>
-<li><strong>Duckling</strong> — a baby duck.</li>
-<li><strong>Niacin</strong> — vitamin B3, required at higher levels by ducklings than chicken chicks.</li>
-<li><strong>Preen oil</strong> — the waterproofing oil produced by mature waterfowl, insufficient in very young ducklings.</li>
-<li><strong>Bumblefoot</strong> — a foot infection from injury or poor footing.</li>
-<li><strong>Botulism</strong> — a toxin-related illness risk from decaying organic matter in stagnant water.</li>
-<li><strong>Point of lay</strong> — the age at which a bird begins laying eggs.</li>
-</ul></div>
-
-<h2>📚 Resources</h2>
-<div class="box"><ul>
-<li>National poultry/waterfowl extension guides — niacin and duck-specific nutrition guidance</li>
-<li>Your extension office and established local duck farmers — duckling sourcing, pond design ideas</li>
-<li>rAs companion courses: Poultry Farming · Animal Feed Making · Fishing &amp; Fish Farming · Bookkeeping</li>
-</ul></div>
-
 <div class="cta">
-<a href="index.html#courses">🎓 Enroll &amp; earn your Duck Farming certificate</a>
-<p style="color:var(--muted);font-size:0.8rem;margin-top:0.6rem">Certificate ($10) issued on completion of all module quizzes + the final project.</p>
+<a class="enroll" href="index.html#courses">Enroll — $8.00</a>
+<a class="wa" href="https://wa.me/263773001353?text=Hi%20rAs%2C%20I%20want%20to%20enroll%20in%20Duck%20Farming" target="_blank" rel="noopener">💬 Enroll on WhatsApp</a>
 </div>
+<p style="margin-top:1.2rem;font-size:0.82rem;color:var(--muted)">rise AFRICA skills is not a school. We teach practical method and issue a Business Seed Record confirming you completed the work.</p>
 </main>
-<footer>© 2026 Rise Africa Skills · riseafricaskills.com · Learn Practical Skills. Start Your Business.<br>Educational guidance — always follow your national regulations. Figures are planning guides; verify local prices (Iron-Clad Price Check).</footer>
-
-<!-- Course Protection & Enrollment System -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="auth-system.js"></script>
-<script src="enrollment-system.js"></script>
-<script src="course-protection.js"></script>
-</body>
-</html>
-
+<footer>rise AFRICA skills · +263 77 300 1353 · all@riseafricaskills.com · riseafricaskills.com</footer>
+</body></html>

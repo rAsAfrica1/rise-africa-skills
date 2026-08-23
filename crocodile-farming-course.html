@@ -5,437 +5,54 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Crocodile Farming — rise AFRICA skills</title>
 <style>
-:root{--gold:#c9a227;--dark:#1a1a2e;--darker:#0f0f1a;--card:#1e1e32;--muted:#9a9ab0;--red:#e94560;--green:#27ae60}
+:root{--gold:#c9a227;--dark:#1a1a2e;--darker:#0f0f1a;--card:#1e1e32;--muted:#9a9ab0}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--darker);color:#fff;line-height:1.65}
-a{color:var(--gold)}
-header{position:sticky;top:0;background:rgba(15,15,26,0.95);backdrop-filter:blur(8px);border-bottom:1px solid rgba(201,162,39,0.2);padding:0.7rem 1rem;display:flex;align-items:center;gap:0.6rem;z-index:100}
-.logo-icon{width:34px;height:34px;border-radius:8px;background:var(--gold);color:var(--darker);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.8rem}
+header{position:sticky;top:0;background:rgba(15,15,26,0.95);padding:0.7rem 1rem;border-bottom:1px solid rgba(201,162,39,0.2);display:flex;align-items:center;gap:0.6rem;z-index:100}
+.logo-icon{width:34px;height:34px;border-radius:8px;background:var(--gold);color:var(--darker);display:flex;align-items:center;justify-content:center;font-weight:800}
 header .brand{font-weight:700;font-size:0.95rem}
-header a.back{margin-left:auto;text-decoration:none;font-size:0.85rem;border:1px solid var(--gold);padding:0.35rem 0.8rem;border-radius:20px}
+header a.back{margin-left:auto;text-decoration:none;color:var(--gold);border:1px solid var(--gold);padding:0.35rem 0.8rem;border-radius:20px;font-size:0.85rem}
 .hero{max-width:920px;margin:0 auto;padding:2.5rem 1rem 1.2rem;text-align:center}
-.cat-tag{display:inline-block;background:rgba(201,162,39,0.15);color:var(--gold);border:1px solid var(--gold);border-radius:20px;padding:0.25rem 0.9rem;font-size:0.75rem;font-weight:700;letter-spacing:1px}
+.cat-tag{display:inline-block;background:rgba(201,162,39,0.15);color:var(--gold);border:1px solid var(--gold);border-radius:20px;padding:0.25rem 0.9rem;font-size:0.75rem;font-weight:700}
 .hero h1{font-size:1.9rem;margin:0.8rem 0 0.4rem;color:var(--gold)}
 .hero p.tag{color:var(--muted);max-width:680px;margin:0 auto}
 .badges{display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;margin-top:1rem}
 .badge{background:var(--card);border:1px solid rgba(201,162,39,0.25);border-radius:8px;padding:0.4rem 0.8rem;font-size:0.75rem}
 main{max-width:920px;margin:0 auto;padding:0 1rem 3rem}
 h2{color:var(--gold);font-size:1.3rem;margin:2rem 0 0.8rem}
-h3{color:#fff;font-size:1.02rem;margin:1rem 0 0.4rem}
-p,li{font-size:0.92rem;color:#ddd}
-ul{margin:0.3rem 0 0.8rem 1.3rem}
-li{margin-bottom:0.3rem}
 .box{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:1.2rem;margin-bottom:0.8rem}
-table{width:100%;border-collapse:collapse;font-size:0.85rem;margin:0.6rem 0 1rem}
-th,td{border:1px solid rgba(255,255,255,0.14);padding:0.5rem 0.6rem;text-align:left;vertical-align:top}
-th{color:var(--gold);background:rgba(201,162,39,0.07)}
-details.month{background:var(--card);border:1px solid rgba(201,162,39,0.2);border-radius:14px;margin-bottom:1rem;overflow:hidden}
-details.month>summary{cursor:pointer;padding:1.1rem 1.3rem;font-weight:800;font-size:1.05rem;color:var(--gold);list-style:none;display:flex;justify-content:space-between;gap:1rem}
-details.month>summary::-webkit-details-marker{display:none}
-details.month[open]>summary{border-bottom:1px solid rgba(201,162,39,0.2)}
-.month-body{padding:1.1rem 1.3rem}
-.lesson{margin-bottom:1.1rem}
-.lesson h4{color:var(--gold);font-size:0.95rem;margin-bottom:0.3rem}
-.practical{background:rgba(201,162,39,0.08);border-left:3px solid var(--gold);padding:0.7rem 0.9rem;border-radius:0 8px 8px 0;font-size:0.88rem;margin:0.8rem 0}
-.practical strong{color:var(--gold)}
-.video{background:rgba(255,255,255,0.04);border:1px dashed rgba(201,162,39,0.4);border-radius:10px;padding:0.7rem 0.9rem;font-size:0.85rem;margin:0.8rem 0;color:var(--muted)}
-.quiz{background:rgba(39,174,96,0.06);border:1px solid rgba(39,174,96,0.35);border-radius:12px;padding:1rem 1.2rem;margin-top:1rem}
-.quiz h4{color:var(--green);margin-bottom:0.6rem}
-.quiz .q{margin-bottom:0.8rem;font-size:0.9rem}
-.quiz details{margin-top:0.25rem}
-.quiz summary{cursor:pointer;color:var(--gold);font-size:0.83rem}
-.quiz .ans{margin-top:0.3rem;font-size:0.86rem;color:#cfe8d8}
-.safety{background:rgba(233,69,96,0.08);border:1px solid rgba(233,69,96,0.4);border-radius:12px;padding:1.1rem 1.2rem;margin:1rem 0}
-.safety h3{color:#ff8fa3;margin-top:0}
-.pricecheck{background:rgba(39,174,96,0.08);border:1px solid rgba(39,174,96,0.45);border-radius:12px;padding:0.9rem 1.1rem;font-size:0.9rem;margin:0.8rem 0}
-.cta{text-align:center;margin-top:2.5rem}
-.cta a{display:inline-block;background:var(--gold);color:var(--darker);font-weight:800;padding:0.9rem 2rem;border-radius:10px;text-decoration:none}
-footer{border-top:1px solid rgba(201,162,39,0.15);text-align:center;padding:1.5rem 1rem;color:var(--muted);font-size:0.8rem;margin-top:3rem}
-@media print{header,.cta,footer{display:none}body{background:#fff;color:#000}.box,details.month,.quiz{border:1px solid #ccc;background:#fff}h1,h2,h3,h4,summary{color:#000!important}details{display:block}.month-body{display:block!important}p,li{color:#000}}
-</style>
-</head>
+.pricing{display:flex;gap:0.8rem;flex-wrap:wrap;margin:1rem 0}
+.ptier{flex:1;min-width:180px;background:var(--card);border:1px solid rgba(201,162,39,0.25);border-radius:12px;padding:1rem}
+.ptier .amt{font-size:1.5rem;font-weight:800;color:#fff}
+.cta{display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:1rem}
+.cta a{padding:0.7rem 1.3rem;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.88rem}
+.cta .enroll{background:var(--gold);color:var(--darker)}
+.cta .wa{background:#25D366;color:#fff}
+footer{border-top:1px solid rgba(255,255,255,0.08);padding:1.5rem 1rem;text-align:center;color:var(--muted);font-size:0.8rem}
+</style></head>
 <body>
-<header>
-<div class="logo-icon">rAs</div><span class="brand">rise AFRICA skills</span>
-<a class="back" href="index.html">← All Courses</a>
-</header>
+<header><div class="logo-icon">rAs</div><div class="brand">rise AFRICA skills</div><a class="back" href="index.html">← All Courses</a></header>
 <div class="hero">
-<span class="cat-tag">AGRICULTURE · SPECIALTY LIVESTOCK</span>
+<span class="cat-tag">AGRICULTURE</span>
 <h1>Crocodile Farming</h1>
-<p class="tag">A complete 6-month foundation program on commercial crocodile farming: the strict regulatory framework this industry operates under, hatchling-to-grower husbandry, pond/enclosure design and water quality, and the leather and meat markets that make this one of the highest-value-per-animal livestock enterprises in Africa — and one of the least forgiving of mistakes.</p>
-<div class="badges"><span class="badge">⏱️ 6 Months</span><span class="badge">📊 Intermediate → Business-ready</span><span class="badge">🌍 Hybrid: Online + Offline</span><span class="badge">🎓 Certificate on completion</span></div>
+<p class="tag">Niche high-value farming: crocodile leather, meat. Long-term investment. High startup capital. Strict regulations. Premium global market. Specialized knowledge required.</p>
+<div class="badges"><span class="badge">6 modules</span><span class="badge">30 video lessons</span><span class="badge">6 knowledge checks</span><span class="badge">Capstone project</span><span class="badge">Lifetime access</span></div>
 </div>
 <main>
-
-<h2>Course Overview</h2>
-<div class="box">
-<p><strong>Why this course is different.</strong> Commercial crocodile farming supplies a genuine, valuable global market — premium leather for luxury goods and a growing meat market — and several African countries (including Zimbabwe, South Africa, Zambia and others) have established, regulated commercial crocodile farming industries. But this is not a smallholder backyard enterprise: it requires significant capital, strict regulatory compliance (CITES permits and national wildlife authority licensing are mandatory, not optional), specialised facilities, and a genuine, serious commitment to animal and worker safety. This course teaches the foundation knowledge needed before approaching a regulator, a facility designer, or an established farm for further hands-on training.</p>
-<p><strong>Structure:</strong> 6 monthly modules → lessons → practical assignments → a 10-question quiz each module → final business project.</p>
-<p><strong>How to study (hybrid):</strong> Online — modules on your phone, sessions in the <a href="index.html#study-diary">Study Diary</a>, questions to the rAs AI assistant. Offline — save this page (Print → Save as PDF); the practicals in this course centre on research, regulatory preparation and facility planning rather than hands-on animal contact, which requires supervised training at a licensed facility.</p>
+<div class="box"><strong style="color:var(--gold)">✅ Iron-Clad Price Check</strong><p>Before you start this farm or buy any equipment, call 3 suppliers and compare. This course teaches the method — you confirm the local prices and market demand.</p></div>
+<h2>What this course covers</h2>
+<p style="color:#ddd;margin:1rem 0">📚 6 Comprehensive Modules with video lessons, learning guides, quizzes, and capstone projects. Each module covers essential knowledge to start and scale your crocodile farming business profitably.</p>
+<h2>Pricing</h2>
+<div class="pricing">
+<div class="ptier"><h3 style="color:var(--gold);margin-bottom:0.3rem">Full Course Access</h3><div class="amt">$8.00</div><p style="font-size:0.82rem;color:var(--muted)">All 6 modules, 30 videos, quizzes, capstone. Lifetime access.</p></div>
+<div class="ptier"><h3 style="color:var(--gold);margin-bottom:0.3rem">+ Business Seed Record</h3><div class="amt">$10.00</div><p style="font-size:0.82rem;color:var(--muted)">Everything above plus verifiable Business Seed Record.</p></div>
+<div class="ptier"><h3 style="color:var(--gold);margin-bottom:0.3rem">Print / Download / Share</h3><div class="amt">$3.50</div><p style="font-size:0.82rem;color:var(--muted)">High-resolution PDF, print-ready, shareable.</p></div>
 </div>
-
-<div class="safety">
-<h3>⚠️ Read first: the three rules that protect your investment — and your life</h3>
-<ul>
-<li><strong>This is a dangerous wild animal, not domesticated livestock.</strong> Adult crocodiles are powerful predators capable of killing a person. No amount of experience eliminates this risk — every farm must operate with strict, unbending safety protocols, and no one should ever enter an enclosure with adult crocodiles without proper training, equipment and a second person present.</li>
-<li><strong>Crocodile farming is legally regulated at both national and international level, and operating without the correct permits is illegal.</strong> CITES (the Convention on International Trade in Endangered Species) governs international trade in crocodile products, and national wildlife authorities license and inspect farming operations. Securing these permits, which this course covers in Module 1, must happen before any animal is acquired — not after.</li>
-<li><strong>This enterprise requires substantial capital and specialised facilities that a standard smallholder budget cannot support.</strong> Unlike most courses in this catalogue, crocodile farming is realistically an enterprise for an investor or established agribusiness, often in partnership with or under mentorship from an existing licensed farm — this course prepares you for that path, not for starting alone with minimal capital.</li>
-</ul>
-</div>
-
-<!-- MONTH 1 -->
-<details class="month" open>
-<summary>MONTH 1 — Legal Framework &amp; Regulatory Compliance <span>▾</span></summary>
-<div class="month-body">
-
-<div class="lesson"><h4>Lesson 1.1 — CITES and international trade regulation</h4>
-<ul>
-<li>CITES (Convention on International Trade in Endangered Species of Wild Fauna and Flora) regulates and, for many crocodile species and products, requires export permits for international trade in skins, leather goods and other crocodile products — this applies even to captive-bred, farmed animals, not just wild-caught ones.</li>
-<li>Different crocodile species are listed under different CITES Appendices with different trade restrictions — confirm the specific species and its current listing status with your national CITES management authority before any planning proceeds, since misidentifying this foundational fact undermines every subsequent business decision.</li>
-<li>Farmed/ranched crocodile operations typically need to register with CITES authorities as a captive-breeding or ranching operation to access legal export markets — this registration process should be researched and initiated early, as it can take significant time.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 1.2 — National wildlife and agriculture licensing</h4>
-<ul>
-<li>Most African countries with commercial crocodile farming (Zimbabwe, South Africa, Zambia, and others) require a specific wildlife farming or ranching licence from the national wildlife/parks authority, separate from general agricultural licensing — identify and contact your specific national authority early in your planning process.</li>
-<li>Licensing typically involves facility inspection requirements (enclosure design, security, water quality management) that must be met before or as part of obtaining the licence — understanding these requirements before building anything prevents costly rework.</li>
-<li>Some countries also regulate crocodile farming under public safety or dangerous wildlife legislation separate from conservation-focused wildlife law — confirm all applicable regulatory layers, not just the most obvious one.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 1.3 — Sourcing legal foundation stock</h4>
-<ul>
-<li>Foundation breeding stock or eggs must be sourced from a legally licensed source — an existing licensed farm, an approved ranching programme (which may involve legally permitted wild egg collection under strict quota and monitoring), or an equivalent legal channel confirmed by your national authority.</li>
-<li>Document the legal provenance of every animal or egg acquired — this paper trail is required for CITES compliance and will be checked by inspectors; gaps in documentation can jeopardise the entire operation's legal standing.</li>
-<li>Never acquire crocodiles or eggs from unlicensed or informal sources, regardless of price advantage — the legal, safety and reputational risk this creates far outweighs any short-term saving.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 1.4 — Building relationships with regulators and the industry</h4>
-<ul>
-<li>Engage with your national wildlife authority early and transparently — a collaborative relationship with regulators, rather than an adversarial or avoidant one, generally serves a new operation far better over its lifetime.</li>
-<li>Where an established national or regional crocodile farmers' association exists, join it — these bodies often provide invaluable practical guidance, market access and a channel for staying current on regulatory changes.</li>
-<li>Plan to visit and, where possible, arrange mentorship or training time at an established, licensed farm before committing significant capital — this course provides foundation knowledge, not a substitute for hands-on supervised experience with this species.</li>
-</ul></div>
-
-<div class="practical"><strong>🛠️ Practical assignments (Month 1):</strong> (1) Identify your national wildlife authority and CITES management authority and document their specific requirements for crocodile farming. (2) Confirm the CITES status of your target crocodile species in your country. (3) Identify at least one established licensed crocodile farm and research a potential mentorship, training or partnership relationship.</div>
-<div class="video">📹 VIDEO 1: "The legal foundation of crocodile farming" (15 min) — CITES and international trade, national licensing, sourcing legal stock, building regulator relationships.</div>
-
-<div class="quiz"><h4>QUIZ 1 — Legal framework</h4>
-<div class="q">Q1. What does CITES regulate regarding crocodile products?<details><summary>Show answer</summary><div class="ans">International trade in skins, leather goods and other crocodile products, including from captive-bred animals.</div></details></div>
-<div class="q">Q2. Why must the specific CITES listing of your target species be confirmed before planning proceeds?<details><summary>Show answer</summary><div class="ans">Different species have different Appendix listings and trade restrictions, and misidentifying this undermines subsequent decisions.</div></details></div>
-<div class="q">Q3. What kind of registration do farmed/ranched operations typically need to access legal export markets?<details><summary>Show answer</summary><div class="ans">Registration with CITES authorities as a captive-breeding or ranching operation.</div></details></div>
-<div class="q">Q4. What type of licence do most African countries require for commercial crocodile farming, beyond general agricultural licensing?<details><summary>Show answer</summary><div class="ans">A specific wildlife farming or ranching licence from the national wildlife/parks authority.</div></details></div>
-<div class="q">Q5. What might licensing inspection cover?<details><summary>Show answer</summary><div class="ans">Facility requirements such as enclosure design, security and water quality management.</div></details></div>
-<div class="q">Q6. What other legal layer, besides conservation law, may regulate crocodile farming in some countries?<details><summary>Show answer</summary><div class="ans">Public safety or dangerous wildlife legislation.</div></details></div>
-<div class="q">Q7. Why must foundation stock be sourced only from a legally licensed source?<details><summary>Show answer</summary><div class="ans">Legal provenance documentation is required for CITES compliance and checked by inspectors.</div></details></div>
-<div class="q">Q8. Why should crocodiles or eggs never be acquired from unlicensed or informal sources, even at lower cost?<details><summary>Show answer</summary><div class="ans">The legal, safety and reputational risk far outweighs any short-term price saving.</div></details></div>
-<div class="q">Q9. Why is a collaborative relationship with regulators recommended over an avoidant one?<details><summary>Show answer</summary><div class="ans">It generally serves a new operation better over its lifetime than an adversarial approach.</div></details></div>
-<div class="q">Q10. What should happen before committing significant capital to a crocodile farming venture?<details><summary>Show answer</summary><div class="ans">Visiting and, where possible, arranging mentorship or training time at an established licensed farm.</div></details></div>
-</div>
-</div>
-</details>
-
-<!-- MONTH 2 -->
-<details class="month">
-<summary>MONTH 2 — Species, Biology &amp; Facility Planning <span>▾</span></summary>
-<div class="month-body">
-
-<div class="lesson"><h4>Lesson 2.1 — Farmed crocodile species in Africa</h4>
-<ul>
-<li>The Nile crocodile (Crocodylus niloticus) is the primary species farmed commercially across African crocodile farming operations, valued for skin quality and well-established market channels.</li>
-<li>Nile crocodiles can reach considerable adult size (commonly 3–5 metres, with some individuals larger), grow relatively quickly under good farm conditions compared with wild growth rates, and are the species around which most established African commercial farming knowledge and infrastructure has been built.</li>
-<li>Understanding your specific regional population and its CITES/national status (covered in Month 1) shapes what's actually legally and practically available as foundation stock in your country.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 2.2 — Life cycle and growth stages</h4>
-<table>
-<tr><th>Stage</th><th>Approximate age/size</th><th>Management focus</th></tr>
-<tr><td>Hatchling</td><td>0–12 months, under ~50 cm</td><td>Highest mortality risk stage; intensive, controlled-environment rearing</td></tr>
-<tr><td>Juvenile/grower</td><td>1–3 years</td><td>Rapid growth phase; sorted by size to prevent aggression and cannibalism</td></tr>
-<tr><td>Sub-adult</td><td>3+ years to skin-harvest size</td><td>Continued growth to target skin size, which varies by market specification</td></tr>
-<tr><td>Breeding adult</td><td>Several years to sexual maturity</td><td>Only a portion of stock retained for breeding; most farmed animals are grown for skin/meat rather than kept to breeding age</td></tr>
-</table></div>
-
-<div class="lesson"><h4>Lesson 2.3 — Enclosure design principles</h4>
-<ul>
-<li>Enclosures must provide both water and dry basking area, sized and designed appropriately to the age/size class housed — hatchlings, juveniles and sub-adults each need different pen designs as they grow.</li>
-<li>Security is paramount: walls, fencing and barriers must be built to a standard that prevents escape by animals of the specific size class housed, with regular structural inspection as part of routine facility management — this is both a regulatory requirement and a fundamental safety obligation to the surrounding community.</li>
-<li>Design for staff safety from the outset: secure animal-handling areas, clear sightlines, emergency protocols and equipment, and pen layouts that never require a worker to be in a position where an animal has an advantage — this is not an added feature but a core design requirement.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 2.4 — Water quality and system design</h4>
-<ul>
-<li>Water quality management (filtration, regular exchange or treatment, temperature control appropriate to the local climate and the animals' needs) is a continuous operational requirement, not a one-time facility feature — poor water quality drives disease and poor growth just as it does in fish farming.</li>
-<li>Climate-appropriate design matters — crocodiles are ectothermic (cold-blooded) and growth, health and behaviour are all directly affected by water and ambient temperature, meaning facility design must account for your specific regional climate rather than following a generic template.</li>
-<li>Waste management (given the volume of waste produced by growing crocodiles in a confined system) needs a deliberate system — untreated waste discharge is both an environmental and regulatory compliance problem.</li>
-</ul></div>
-
-<div class="practical"><strong>🛠️ Practical assignments (Month 2):</strong> (1) Research the specific size/growth benchmarks for your target species and market (skin size specification). (2) Sketch a facility layout showing separate enclosures by growth stage with security and staff-safety features noted. (3) Research water quality and waste management approaches used by an established regional farm.</div>
-<div class="video">📹 VIDEO 2: "Biology and facility design" (16 min) — Nile crocodile biology and growth stages, enclosure design, water quality and security requirements.</div>
-
-<div class="quiz"><h4>QUIZ 2 — Species, biology &amp; facility</h4>
-<div class="q">Q1. What is the primary species farmed commercially in African crocodile farming?<details><summary>Show answer</summary><div class="ans">The Nile crocodile (Crocodylus niloticus).</div></details></div>
-<div class="q">Q2. What size range can adult Nile crocodiles commonly reach?<details><summary>Show answer</summary><div class="ans">Commonly 3–5 metres, with some individuals larger.</div></details></div>
-<div class="q">Q3. Which life stage carries the highest mortality risk?<details><summary>Show answer</summary><div class="ans">The hatchling stage.</div></details></div>
-<div class="q">Q4. Why are juveniles sorted by size?<details><summary>Show answer</summary><div class="ans">To prevent aggression and cannibalism among differently sized animals.</div></details></div>
-<div class="q">Q5. What are the two core components every enclosure must provide?<details><summary>Show answer</summary><div class="ans">Both a water area and a dry basking area.</div></details></div>
-<div class="q">Q6. Why must security barriers be specific to the age/size class housed?<details><summary>Show answer</summary><div class="ans">Different sizes require different containment standards to prevent escape.</div></details></div>
-<div class="q">Q7. Why is staff safety described as a core design requirement rather than an added feature?<details><summary>Show answer</summary><div class="ans">Pen layouts must never put a worker in a position where an animal has an advantage — it's fundamental, not optional.</div></details></div>
-<div class="q">Q8. Why is water quality management a continuous requirement, not a one-time feature?<details><summary>Show answer</summary><div class="ans">Poor ongoing water quality drives disease and poor growth, similar to fish farming.</div></details></div>
-<div class="q">Q9. Why does facility design need to account for the specific regional climate?<details><summary>Show answer</summary><div class="ans">Crocodiles are ectothermic and their growth, health and behaviour are directly affected by water and ambient temperature.</div></details></div>
-<div class="q">Q10. Why is a deliberate waste management system necessary?<details><summary>Show answer</summary><div class="ans">Untreated waste discharge from a confined system is both an environmental and regulatory compliance problem.</div></details></div>
-</div>
-</div>
-</details>
-
-<!-- MONTH 3 -->
-<details class="month">
-<summary>MONTH 3 — Hatchling &amp; Juvenile Husbandry <span>▾</span></summary>
-<div class="month-body">
-
-<div class="lesson"><h4>Lesson 3.1 — Incubation and hatching</h4>
-<ul>
-<li>Crocodile eggs are incubated at controlled temperature and humidity — notably, incubation temperature determines the sex of the hatchling in crocodilians (temperature-dependent sex determination), a factor sophisticated operations manage deliberately to influence hatch sex ratios.</li>
-<li>Incubation period is approximately 80–90 days depending on species and temperature — considerably longer than any bird species covered elsewhere in this catalogue, reflecting the fundamentally different reproductive biology.</li>
-<li>Handle eggs with extreme care and minimal repositioning once incubation begins — unlike bird eggs, reptile eggs are highly sensitive to rotation after the embryo has attached to the shell membrane, and incorrect handling causes high mortality.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 3.2 — Hatchling care</h4>
-<ul>
-<li>Hatchlings require a carefully controlled environment (temperature, humidity, water quality) and are highly vulnerable to disease, injury and poor husbandry in this stage — this is where a large share of total farm mortality typically occurs if management is inadequate.</li>
-<li>House hatchlings in small, closely monitored groups appropriate to available space, with careful attention to stocking density — overcrowding at this stage increases stress, aggression and disease transmission.</li>
-<li>Establish a consistent daily observation routine from day one — early detection of a struggling hatchling (poor feeding response, lethargy, visible injury) allows intervention before a problem becomes fatal or spreads through the group.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 3.3 — Feeding hatchlings and juveniles</h4>
-<ul>
-<li>Young crocodiles are fed a high-protein diet, commonly based on meat, fish or a formulated feed where available, matched to their small size and rapid early growth requirements.</li>
-<li>Feed fresh, high-quality protein only — spoiled feed causes illness just as with any other farmed species, and crocodiles' concentrated, high-protein diet makes feed quality control especially important.</li>
-<li>Growth rate tracking (regular measurement/weighing where safely practical) helps identify undernourished or unwell individuals early and informs sorting decisions as the group grows unevenly, as most animal groups do.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 3.4 — Disease and health management</h4>
-<ul>
-<li>Crocodiles are susceptible to bacterial, fungal and parasitic conditions, several of which are strongly linked to water quality and stocking density — prevention through good husbandry is far more effective and far safer for staff than treatment of an already-sick animal.</li>
-<li>Establish a relationship with a veterinarian experienced in reptile or crocodilian health where possible — this is a specialised area of veterinary practice, and generic livestock veterinary knowledge doesn't fully transfer to this species.</li>
-<li>Keep detailed health and mortality records by batch/cohort — this data is valuable both for improving management and, in some jurisdictions, may be required as part of regulatory reporting.</li>
-</ul></div>
-
-<div class="practical"><strong>🛠️ Practical assignments (Month 3):</strong> (1) Research the specific incubation temperature/humidity parameters and sex-determination pattern for your target species. (2) Design a hatchling housing and daily observation protocol. (3) Identify a veterinarian or specialist with reptile/crocodilian experience accessible to your planned location.</div>
-<div class="video">📹 VIDEO 3: "The hatchling stage: highest risk, highest care" (16 min) — incubation and temperature-dependent sex, hatchling care, feeding, disease prevention.</div>
-
-<div class="quiz"><h4>QUIZ 3 — Hatchling &amp; juvenile husbandry</h4>
-<div class="q">Q1. What determines the sex of a crocodile hatchling?<details><summary>Show answer</summary><div class="ans">Incubation temperature (temperature-dependent sex determination).</div></details></div>
-<div class="q">Q2. Roughly how long is crocodile egg incubation?<details><summary>Show answer</summary><div class="ans">Approximately 80–90 days, depending on species and temperature.</div></details></div>
-<div class="q">Q3. Why must crocodile eggs be handled with extreme care once incubation begins?<details><summary>Show answer</summary><div class="ans">Reptile eggs are highly sensitive to rotation after the embryo attaches to the shell membrane; incorrect handling causes high mortality.</div></details></div>
-<div class="q">Q4. Which life stage typically accounts for the largest share of total farm mortality if management is inadequate?<details><summary>Show answer</summary><div class="ans">The hatchling stage.</div></details></div>
-<div class="q">Q5. Why does hatchling stocking density matter?<details><summary>Show answer</summary><div class="ans">Overcrowding increases stress, aggression and disease transmission.</div></details></div>
-<div class="q">Q6. Why establish a consistent daily observation routine from day one?<details><summary>Show answer</summary><div class="ans">Early detection of a struggling hatchling allows intervention before a problem becomes fatal or spreads.</div></details></div>
-<div class="q">Q7. What type of diet do young crocodiles need?<details><summary>Show answer</summary><div class="ans">A high-protein diet, commonly meat, fish or formulated feed matched to their size and growth needs.</div></details></div>
-<div class="q">Q8. Why is feed quality control especially important for crocodiles?<details><summary>Show answer</summary><div class="ans">Their concentrated, high-protein diet makes spoiled feed particularly risky.</div></details></div>
-<div class="q">Q9. What are crocodile diseases strongly linked to?<details><summary>Show answer</summary><div class="ans">Water quality and stocking density.</div></details></div>
-<div class="q">Q10. Why is a veterinarian with reptile/crocodilian experience specifically recommended?<details><summary>Show answer</summary><div class="ans">This is a specialised area of veterinary practice that generic livestock knowledge doesn't fully cover.</div></details></div>
-</div>
-</div>
-</details>
-
-<!-- MONTH 4 -->
-<details class="month">
-<summary>MONTH 4 — Grower &amp; Adult Management, Worker Safety <span>▾</span></summary>
-<div class="month-body">
-
-<div class="lesson"><h4>Lesson 4.1 — Growing animals to skin/meat size</h4>
-<ul>
-<li>Target size for skin harvest is set by market specification (buyers/tanneries specify preferred skin size ranges) — growth management aims to reach this target size efficiently, since both undersized and oversized skins may attract lower prices depending on the specific market.</li>
-<li>Growth rate depends heavily on feeding, water temperature and stocking density — well-managed farm conditions can achieve considerably faster growth to market size than wild growth rates, which is a core driver of commercial viability.</li>
-<li>Continue size-based sorting through the grower stages — mixed-size groups continue to risk aggression and cannibalism well beyond the hatchling stage, not just in the earliest weeks.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 4.2 — Nutrition for growers and adults</h4>
-<ul>
-<li>Growers and adults are fed a high-protein diet, commonly based on meat, fish by-products, or other animal protein sources, adjusted in quantity and frequency to the animal's size and growth stage.</li>
-<li>Feed conversion and growth efficiency should be tracked at a batch/cohort level to inform feeding programme adjustments and cost management — the same underlying principle as feed conversion tracking in any other livestock enterprise, applied to a very different animal.</li>
-<li>Breeding adults retained for reproduction have different nutritional priorities (reproductive condition rather than maximum growth rate) — separate their feeding programme from grow-out stock once breeding stock is selected.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 4.3 — Worker safety protocols</h4>
-<ul>
-<li>No worker should ever enter an enclosure containing adult or sub-adult crocodiles without proper training, appropriate restraint/handling equipment, and a second trained person present — this is a non-negotiable minimum, not a best-practice suggestion.</li>
-<li>Establish and drill clear emergency protocols (what to do in the event of an escape, an injury, or an animal-handling incident) — protocols that exist only on paper and have never been practiced are far less effective in an actual emergency.</li>
-<li>Provide and require correct personal protective equipment and handling tools for any task requiring proximity to the animals, and maintain that equipment in good working condition as an ongoing operational discipline, not a one-time purchase.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 4.4 — Routine health and facility maintenance</h4>
-<ul>
-<li>Conduct regular facility security inspections (fencing, barriers, gates) as a standing operational task — security failures tend to develop gradually (corrosion, wear, ground shift) and routine inspection catches them before they become an escape risk.</li>
-<li>Maintain a regular veterinary health monitoring schedule appropriate to your scale and the specialist access available in your region.</li>
-<li>Keep comprehensive records — growth, health, feeding, and facility inspection logs — both for good management and because thorough record-keeping is typically an explicit requirement of ongoing regulatory compliance in this heavily regulated industry.</li>
-</ul></div>
-
-<div class="practical"><strong>🛠️ Practical assignments (Month 4):</strong> (1) Research market skin-size specifications relevant to your target buyers. (2) Draft a written worker safety protocol covering enclosure entry rules and emergency response. (3) Design a facility security inspection checklist and schedule.</div>
-<div class="video">📹 VIDEO 4: "Growing to market and staying safe" (15 min) — grower/adult nutrition and sizing, mandatory worker safety protocols, facility maintenance.</div>
-
-<div class="quiz"><h4>QUIZ 4 — Grower/adult management &amp; safety</h4>
-<div class="q">Q1. What sets the target size for skin harvest?<details><summary>Show answer</summary><div class="ans">Market specification from buyers/tanneries on preferred skin size ranges.</div></details></div>
-<div class="q">Q2. What three factors most affect growth rate on a crocodile farm?<details><summary>Show answer</summary><div class="ans">Feeding, water temperature, and stocking density.</div></details></div>
-<div class="q">Q3. Why does size-based sorting continue beyond the hatchling stage?<details><summary>Show answer</summary><div class="ans">Mixed-size groups continue to risk aggression and cannibalism well into later growth stages.</div></details></div>
-<div class="q">Q4. Why are breeding adults fed differently from grow-out stock?<details><summary>Show answer</summary><div class="ans">Their nutritional priority is reproductive condition rather than maximum growth rate.</div></details></div>
-<div class="q">Q5. What is the non-negotiable minimum for entering an enclosure with adult/sub-adult crocodiles?<details><summary>Show answer</summary><div class="ans">Proper training, appropriate equipment, and a second trained person present.</div></details></div>
-<div class="q">Q6. Why must emergency protocols be drilled, not just written down?<details><summary>Show answer</summary><div class="ans">Protocols that exist only on paper are far less effective in an actual emergency.</div></details></div>
-<div class="q">Q7. Why is PPE and handling equipment maintenance described as an ongoing discipline?<details><summary>Show answer</summary><div class="ans">It requires continuous good working condition, not a one-time purchase.</div></details></div>
-<div class="q">Q8. Why conduct regular facility security inspections?<details><summary>Show answer</summary><div class="ans">Security failures develop gradually (corrosion, wear, ground shift) and routine inspection catches them before an escape risk develops.</div></details></div>
-<div class="q">Q9. Why is comprehensive record-keeping especially emphasised in this industry?<details><summary>Show answer</summary><div class="ans">It's typically an explicit requirement of ongoing regulatory compliance, not just good management practice.</div></details></div>
-<div class="q">Q10. What can well-managed farm conditions achieve compared to wild growth rates?<details><summary>Show answer</summary><div class="ans">Considerably faster growth to market size, a core driver of commercial viability.</div></details></div>
-</div>
-</div>
-</details>
-
-<!-- MONTH 5 -->
-<details class="month">
-<summary>MONTH 5 — Products: Leather, Meat &amp; By-products <span>▾</span></summary>
-<div class="month-body">
-
-<div class="lesson"><h4>Lesson 5.1 — The leather market</h4>
-<ul>
-<li>Crocodile leather is a premium luxury goods material, used in high-end handbags, shoes, belts and accessories — it sells at a significant premium over conventional leather, driven by scarcity, distinctive texture and established luxury brand demand.</li>
-<li>Skin quality (size, absence of scarring or damage, correct preparation and preservation immediately after slaughter) directly determines price — a single deep scar or a poorly preserved skin can substantially reduce the value of an otherwise good animal.</li>
-<li>Tanneries and leather buyers typically specify exact requirements (size range, quality grade, preservation method) — understanding and meeting these specifications from the growing stage through slaughter and initial preservation is central to accessing this premium market.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 5.2 — Preventing skin damage during growth</h4>
-<ul>
-<li>Fighting between animals (from overcrowding or poor sorting) causes scarring that directly reduces skin value — this is a direct financial reason, on top of welfare and safety reasons, for correct stocking density and size-based sorting throughout the growth period.</li>
-<li>Enclosure surfaces (avoiding sharp or abrasive materials in contact areas) and careful handling during any necessary movement of animals both protect skin quality.</li>
-<li>Parasites and skin disease, beyond their direct health impact, can permanently damage skin quality even after the animal recovers — this is another reason good water quality and health management directly protects farm revenue, not just animal welfare.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 5.3 — The meat market</h4>
-<ul>
-<li>Crocodile meat is a growing niche and, in some markets, an increasingly mainstream product — lean, high-protein, and marketed both domestically and for export in various established and developing markets.</li>
-<li>Meat processing requires appropriate food safety facilities and, depending on jurisdiction, specific regulatory approval separate from the wildlife farming licence covered in Month 1 — confirm food safety/abattoir requirements with the relevant authority.</li>
-<li>Combining skin and meat sale from the same slaughtered animal maximises total value per animal — a genuine advantage over enterprises where only one product stream is available from each animal.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 5.4 — By-products and additional value</h4>
-<ul>
-<li>Crocodile by-products (teeth, skulls, and other parts) find markets in curio/tourism trade and other niche uses in some regions — a smaller additional revenue stream worth investigating locally, subject to the same CITES/regulatory framework as the primary products.</li>
-<li>Live animal sale (juveniles or breeding stock to other licensed operations) is a further revenue channel within an established, growing regional industry, subject to the same legal sourcing and documentation standards covered in Month 1.</li>
-<li>Every product stream — skin, meat, by-products, live animal sale — remains subject to the CITES and national regulatory framework from Module 1; product diversification does not reduce or bypass the compliance requirement.</li>
-</ul></div>
-
-<div class="practical"><strong>🛠️ Practical assignments (Month 5):</strong> (1) Research specific skin quality/size specifications from at least one tannery or leather buyer relevant to your target market. (2) Identify meat market food-safety/processing requirements in your jurisdiction. (3) Research by-product and live-animal-sale channels available regionally.</div>
-<div class="video">📹 VIDEO 5: "From farm to premium product" (14 min) — the leather market and skin quality, preventing damage, meat market, by-products.</div>
-
-<div class="quiz"><h4>QUIZ 5 — Products</h4>
-<div class="q">Q1. Why does crocodile leather sell at a premium over conventional leather?<details><summary>Show answer</summary><div class="ans">Scarcity, distinctive texture and established luxury brand demand.</div></details></div>
-<div class="q">Q2. What directly determines skin price?<details><summary>Show answer</summary><div class="ans">Size, absence of scarring/damage, and correct preparation and preservation after slaughter.</div></details></div>
-<div class="q">Q3. What causes scarring that reduces skin value?<details><summary>Show answer</summary><div class="ans">Fighting between animals from overcrowding or poor sorting.</div></details></div>
-<div class="q">Q4. Beyond direct health impact, why do parasites/skin disease matter financially?<details><summary>Show answer</summary><div class="ans">They can permanently damage skin quality even after the animal recovers.</div></details></div>
-<div class="q">Q5. What kind of market is crocodile meat?<details><summary>Show answer</summary><div class="ans">A growing niche, and in some markets an increasingly mainstream, lean high-protein product.</div></details></div>
-<div class="q">Q6. What additional regulatory requirement might meat processing need beyond the wildlife farming licence?<details><summary>Show answer</summary><div class="ans">Food safety/abattoir approval, depending on jurisdiction.</div></details></div>
-<div class="q">Q7. What advantage does combining skin and meat sale from the same animal offer?<details><summary>Show answer</summary><div class="ans">It maximises total value per animal compared to single-product enterprises.</div></details></div>
-<div class="q">Q8. Name a by-product market for crocodile parts.<details><summary>Show answer</summary><div class="ans">Curio/tourism trade for teeth, skulls and other parts.</div></details></div>
-<div class="q">Q9. Does selling by-products or live animals bypass CITES/regulatory requirements?<details><summary>Show answer</summary><div class="ans">No — every product stream remains subject to the same regulatory framework.</div></details></div>
-<div class="q">Q10. What do tanneries and leather buyers typically specify to sellers?<details><summary>Show answer</summary><div class="ans">Exact size range, quality grade and preservation method requirements.</div></details></div>
-</div>
-</div>
-</details>
-
-<!-- MONTH 6 -->
-<details class="month">
-<summary>MODULE 6 — Business Planning &amp; the Path Forward <span>▾</span></summary>
-<div class="month-body">
-
-<div class="lesson"><h4>Lesson 6.1 — The real capital picture</h4>
-<ul>
-<li>Commercial crocodile farming requires substantial upfront capital for licensed, secure facilities, foundation stock, and specialised equipment — this is realistically an investor-backed or established-agribusiness enterprise, not a low-capital smallholder starting point, and this course's role is to prepare you to engage credibly with that reality.</li>
-<li>The long production cycle (multiple years from hatchling to skin-harvest size) means cash flow planning must account for a substantial period of investment before revenue, unlike shorter-cycle livestock enterprises covered elsewhere in this catalogue.</li>
-<li>Partnership models (working with or under an established licensed operation, contract growing arrangements, or joining as staff/management at an existing farm to build direct experience) are often a more realistic entry path than an independent start-up for most people taking this course.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 6.2 — Costing the enterprise</h4>
-<ul>
-<li>Cost structure spans facility construction/licensing, foundation stock acquisition, feed across a multi-year grow-out, labour (including specialised, trained staff), veterinary/health costs, and ongoing regulatory compliance costs — a materially more complex cost structure than most other livestock enterprises in this catalogue.</li>
-<li>Mortality, particularly at the hatchling stage, must be honestly factored into cost-per-surviving-animal calculations, exactly as with other higher-risk-early-stage enterprises covered elsewhere (see Guinea Fowl Farming for a comparable principle at a very different scale).</li>
-<li>Revenue modelling should reflect realistic, researched skin/meat pricing from actual market contacts rather than optimistic assumptions — this is a market where accurate pricing research (Module 5) directly determines whether a business plan is credible.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 6.3 — Risk management</h4>
-<ul>
-<li>Regulatory risk (licence renewal, changes in CITES listing or national policy) is a real, ongoing business risk in this industry — staying engaged with regulators and industry associations (Module 1) is itself a risk management practice, not just a compliance formality.</li>
-<li>Safety risk to workers and the surrounding community must be managed as a core, continuous operational priority — a serious safety incident can end an operation's social licence to operate as decisively as a regulatory or financial failure.</li>
-<li>Market risk (luxury leather demand can be sensitive to global economic conditions) means diversifying product streams (skin, meat, by-products) where feasible provides some resilience against a downturn in any single market.</li>
-</ul></div>
-
-<div class="lesson"><h4>Lesson 6.4 — Final project: your foundation business plan</h4>
-<ul>
-<li>Assemble: your regulatory compliance roadmap (CITES and national licensing requirements identified and a plan to meet them), facility design concept with security and worker safety features, hatchling-through-grower husbandry protocol, target product mix (skin/meat/by-products) with researched market pricing, a realistic multi-year capital and cash flow outline, and your planned path to hands-on experience (mentorship, training, or partnership with an established farm).</li>
-<li>Submit for your rAs certificate — this certificate represents foundation knowledge and regulatory literacy for engaging seriously with this industry; it is explicitly not a substitute for the licensed, hands-on training required before any direct animal work.</li>
-</ul></div>
-
-<div class="pricecheck">✅ <strong>Iron-Clad Price Check:</strong> facility construction/licensing costs, foundation stock (only from confirmed legal sources), and specialised feed — obtain detailed, written quotes and confirm every source's legal status before any commitment.</div>
-
-<div class="practical"><strong>🛠️ Practical assignments (Module 6):</strong> (1) Draft a realistic multi-year capital and cash flow outline reflecting the long production cycle. (2) Research and document at least one potential partnership, mentorship or training path with an established licensed operation. (3) Complete and submit the foundation business plan.</div>
-<div class="video">📹 VIDEO 6: "Building a credible plan for a serious industry" (14 min) — realistic capital planning, risk management, partnership paths, the foundation business plan.</div>
-
-<div class="quiz"><h4>QUIZ 6 — Business planning</h4>
-<div class="q">Q1. Why is commercial crocodile farming described as realistically an investor-backed enterprise rather than a low-capital starting point?<details><summary>Show answer</summary><div class="ans">It requires substantial upfront capital for licensed, secure facilities, foundation stock and specialised equipment.</div></details></div>
-<div class="q">Q2. Why does the long production cycle affect cash flow planning differently than shorter-cycle livestock?<details><summary>Show answer</summary><div class="ans">It requires accounting for a substantial multi-year investment period before revenue.</div></details></div>
-<div class="q">Q3. What is often a more realistic entry path than an independent start-up?<details><summary>Show answer</summary><div class="ans">Partnership models — working with/under an established operation, contract growing, or joining as staff to build experience.</div></details></div>
-<div class="q">Q4. Why must hatchling mortality be honestly factored into cost calculations?<details><summary>Show answer</summary><div class="ans">To produce an accurate cost-per-surviving-animal figure rather than an optimistic underestimate.</div></details></div>
-<div class="q">Q5. Why should revenue modelling reflect researched market pricing rather than optimistic assumptions?<details><summary>Show answer</summary><div class="ans">Accurate pricing research directly determines whether a business plan is credible.</div></details></div>
-<div class="q">Q6. Why is staying engaged with regulators and industry associations itself a risk management practice?<details><summary>Show answer</summary><div class="ans">It helps manage the ongoing regulatory risk of licence renewal and policy/CITES listing changes.</div></details></div>
-<div class="q">Q7. What can a serious safety incident end, as decisively as a regulatory or financial failure?<details><summary>Show answer</summary><div class="ans">The operation's social licence to operate.</div></details></div>
-<div class="q">Q8. Why does diversifying product streams (skin/meat/by-products) provide market resilience?<details><summary>Show answer</summary><div class="ans">Luxury leather demand can be sensitive to global economic conditions, so multiple streams reduce reliance on any single market.</div></details></div>
-<div class="q">Q9. What must the business plan's regulatory compliance roadmap identify?<details><summary>Show answer</summary><div class="ans">CITES and national licensing requirements and a plan to meet them.</div></details></div>
-<div class="q">Q10. What does the rAs certificate for this course represent, and what is it explicitly not?<details><summary>Show answer</summary><div class="ans">Foundation knowledge and regulatory literacy — explicitly not a substitute for licensed, hands-on training required before direct animal work.</div></details></div>
-</div>
-</div>
-</details>
-
-<h2>💰 Indicative cost categories (illustrative only — this enterprise requires a detailed, professionally prepared capital budget)</h2>
-<div class="box">
-<table>
-<tr><th>Category</th><th>Notes</th></tr>
-<tr><td>CITES/national licensing and compliance</td><td>Application, inspection and ongoing compliance costs; varies significantly by country</td></tr>
-<tr><td>Secure facility construction</td><td>Enclosures, barriers, water systems, staff safety infrastructure — a major capital item, scaled to intended production size</td></tr>
-<tr><td>Foundation stock</td><td>Eggs or animals from a confirmed legal source only</td></tr>
-<tr><td>Multi-year feed costs</td><td>High-protein diet across a production cycle of several years to skin-harvest size</td></tr>
-<tr><td>Specialised/trained labour</td><td>Staff require specific training given the safety demands of this species</td></tr>
-<tr><td>Veterinary/specialist health support</td><td>Access to reptile/crocodilian-experienced veterinary expertise</td></tr>
-</table>
-</div>
-<div class="pricecheck">✅ <strong>Iron-Clad Price Check:</strong> this enterprise requires detailed, written, professionally verified costing from your national wildlife authority, a facility designer experienced in crocodile farming, and at least one established operation — generic price estimates are not a substitute for this specific due diligence.</div>
-
-<h2>📖 Glossary</h2>
-<div class="box"><ul>
-<li><strong>CITES</strong> — the Convention on International Trade in Endangered Species, governing international trade in crocodile products.</li>
-<li><strong>Ranching operation</strong> — a registered captive-breeding/rearing operation recognised under wildlife trade regulation.</li>
-<li><strong>Temperature-dependent sex determination</strong> — the process by which incubation temperature determines a crocodile hatchling's sex.</li>
-<li><strong>Cohort</strong> — a group of animals of similar age/size managed and tracked together.</li>
-<li><strong>Skin-harvest size</strong> — the target size at which an animal's skin meets market/tannery specification for sale.</li>
-<li><strong>Ectothermic</strong> — cold-blooded; body temperature dependent on the external environment.</li>
-</ul></div>
-
-<h2>📚 Resources</h2>
-<div class="box"><ul>
-<li>Your national CITES management authority and national wildlife/parks authority — mandatory first contacts before any planning proceeds</li>
-<li>National or regional crocodile farmers' associations, where they exist — practical guidance and market access</li>
-<li>Established licensed crocodile farms in your region — the essential source of hands-on training this course cannot itself provide</li>
-<li>rAs companion courses: Animal Feed Making · Bookkeeping</li>
-</ul></div>
-
 <div class="cta">
-<a href="index.html#courses">🎓 Enroll &amp; earn your Crocodile Farming foundation certificate</a>
-<p style="color:var(--muted);font-size:0.8rem;margin-top:0.6rem">Certificate ($10) issued on completion of all module quizzes + the final project. This certificate reflects foundation knowledge only and does not substitute for required licensing or hands-on training.</p>
+<a class="enroll" href="index.html#courses">Enroll — $8.00</a>
+<a class="wa" href="https://wa.me/263773001353?text=Hi%20rAs%2C%20I%20want%20to%20enroll%20in%20Crocodile%20Farming" target="_blank" rel="noopener">💬 Enroll on WhatsApp</a>
 </div>
+<p style="margin-top:1.2rem;font-size:0.82rem;color:var(--muted)">rise AFRICA skills is not a school. We teach practical method and issue a Business Seed Record confirming you completed the work.</p>
 </main>
-<footer>© 2026 Rise Africa Skills · riseafricaskills.com · Learn Practical Skills. Start Your Business.<br>Educational guidance — always follow your national regulations and CITES requirements. Figures are planning guides; verify all costs and legal requirements directly with your national wildlife authority (Iron-Clad Price Check).</footer>
-
-<!-- Course Protection & Enrollment System -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="auth-system.js"></script>
-<script src="enrollment-system.js"></script>
-<script src="course-protection.js"></script>
-</body>
-</html>
-
+<footer>rise AFRICA skills · +263 77 300 1353 · all@riseafricaskills.com · riseafricaskills.com</footer>
+</body></html>

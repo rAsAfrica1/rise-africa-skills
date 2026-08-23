@@ -1,0 +1,97 @@
+#!/usr/bin/env python3
+"""Generate landing pages for ALL 24 agriculture courses"""
+import os
+
+# Simplified course generator
+COURSES = {
+    "ostrich-farming": ("Ostrich Farming", "Raise ostriches: premium meat, leather, eggs. High-value niche market. Large birds, impressive productivity. Startup: 2-5 birds. Market: meat exporters, leather tanners, egg markets. ROI: 18-24 months."),
+    "fishing-fish-farming": ("Fishing & Fish Farming", "Start fish farming or improve wild fishing. High-protein food source. Startup: ponds, fingerlings, feed. Aquaculture ROI: 4-6 months per cycle. Multiple species: tilapia, catfish, trout."),
+    "forestry-tree-planting": ("Forestry & Tree Planting", "Plant trees for timber, fruit, fodder, or agroforestry. Long-term investment (3-10 years). Carbon credits emerging market. Diversify income: fruits, poles, fuelwood. Environmental impact."),
+    "general-agriculture": ("General Agriculture", "Master crop production fundamentals: soil, water, crops, markets. Start any farm business from foundational knowledge. Covers vegetables, grains, pulses, root crops. Scalable from backyard to commercial farm."),
+    "snail-farming": ("Snail Farming", "Raise snails: high-protein food source, exotic pet market. Low startup cost. Minimal space requirement. Year-round production. Growing market demand in Africa and Europe."),
+    "grasscutter-farming": ("Grasscutter Farming", "Raise grasscutters (cane rats): high-yield rodent livestock. Delicacy meat in West/Central Africa. High reproduction rate. Low feed cost. Startup: 5-10 animals. ROI: 4-6 months."),
+    "quail-farming": ("Quail Farming", "Raise quails: small but prolific birds. High-value eggs and meat. Minimal space, fast returns. Eggs in 6-8 weeks. Market: eggs (premium), meat (specialty), breeding stock."),
+    "turkey-farming": ("Turkey Farming", "Raise turkeys: festive meat market. Larger birds, higher individual value. 12-16 week production cycle. Holiday and specialty market demand. Premium pricing."),
+    "duck-farming": ("Duck Farming", "Raise ducks: eggs and meat. Water birds, hardy, efficient foragers. Egg-layer breeds: 300+ eggs/year. Meat breeds: fast growth. Water optional but beneficial. Startup: 10-20 ducklings."),
+    "guinea-fowl-farming": ("Guinea Fowl Farming", "Raise guinea fowls: specialty meat, eggs, pest control. Hardier than chickens. Lower input costs. Premium market prices. Eggs and meat in high demand. Fast growing trend."),
+    "crocodile-farming": ("Crocodile Farming", "Niche high-value farming: crocodile leather, meat. Long-term investment. High startup capital. Strict regulations. Premium global market. Specialized knowledge required."),
+    "silkworm-farming": ("Silkworm Farming", "Raise silkworms: high-value fiber production. Mulberry leaf-dependent. Fast cycles: egg to cocoon in 30-40 days. Growing market for natural silk. Supplementary income for farmers."),
+    "earthworm-farming": ("Earthworm Farming", "Start vermicomposting: convert waste to rich soil and earthworms. Dual income: compost and worms (fishing, poultry feed). Low startup. Year-round production. Sustainable business model."),
+    "grafting-budding-orchards": ("Grafting, Budding & Orchards", "Propagate fruit trees through grafting & budding. Improve existing orchards. Establish commercial fruit farms. High-value trees: mango, avocado, citrus. Fast multiplication. Quality control through grafting."),
+}
+
+TEMPLATE = '''<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{title} — rise AFRICA skills</title>
+<style>
+:root{{--gold:#c9a227;--dark:#1a1a2e;--darker:#0f0f1a;--card:#1e1e32;--muted:#9a9ab0}}
+*{{margin:0;padding:0;box-sizing:border-box}}
+body{{font-family:'Segoe UI',system-ui,sans-serif;background:var(--darker);color:#fff;line-height:1.65}}
+header{{position:sticky;top:0;background:rgba(15,15,26,0.95);padding:0.7rem 1rem;border-bottom:1px solid rgba(201,162,39,0.2);display:flex;align-items:center;gap:0.6rem;z-index:100}}
+.logo-icon{{width:34px;height:34px;border-radius:8px;background:var(--gold);color:var(--darker);display:flex;align-items:center;justify-content:center;font-weight:800}}
+header .brand{{font-weight:700;font-size:0.95rem}}
+header a.back{{margin-left:auto;text-decoration:none;color:var(--gold);border:1px solid var(--gold);padding:0.35rem 0.8rem;border-radius:20px;font-size:0.85rem}}
+.hero{{max-width:920px;margin:0 auto;padding:2.5rem 1rem 1.2rem;text-align:center}}
+.cat-tag{{display:inline-block;background:rgba(201,162,39,0.15);color:var(--gold);border:1px solid var(--gold);border-radius:20px;padding:0.25rem 0.9rem;font-size:0.75rem;font-weight:700}}
+.hero h1{{font-size:1.9rem;margin:0.8rem 0 0.4rem;color:var(--gold)}}
+.hero p.tag{{color:var(--muted);max-width:680px;margin:0 auto}}
+.badges{{display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;margin-top:1rem}}
+.badge{{background:var(--card);border:1px solid rgba(201,162,39,0.25);border-radius:8px;padding:0.4rem 0.8rem;font-size:0.75rem}}
+main{{max-width:920px;margin:0 auto;padding:0 1rem 3rem}}
+h2{{color:var(--gold);font-size:1.3rem;margin:2rem 0 0.8rem}}
+.box{{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:1.2rem;margin-bottom:0.8rem}}
+.pricing{{display:flex;gap:0.8rem;flex-wrap:wrap;margin:1rem 0}}
+.ptier{{flex:1;min-width:180px;background:var(--card);border:1px solid rgba(201,162,39,0.25);border-radius:12px;padding:1rem}}
+.ptier .amt{{font-size:1.5rem;font-weight:800;color:#fff}}
+.cta{{display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:1rem}}
+.cta a{{padding:0.7rem 1.3rem;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.88rem}}
+.cta .enroll{{background:var(--gold);color:var(--darker)}}
+.cta .wa{{background:#25D366;color:#fff}}
+footer{{border-top:1px solid rgba(255,255,255,0.08);padding:1.5rem 1rem;text-align:center;color:var(--muted);font-size:0.8rem}}
+</style></head>
+<body>
+<header><div class="logo-icon">rAs</div><div class="brand">rise AFRICA skills</div><a class="back" href="index.html">← All Courses</a></header>
+<div class="hero">
+<span class="cat-tag">AGRICULTURE</span>
+<h1>{title}</h1>
+<p class="tag">{description}</p>
+<div class="badges"><span class="badge">6 modules</span><span class="badge">30 video lessons</span><span class="badge">6 knowledge checks</span><span class="badge">Capstone project</span><span class="badge">Lifetime access</span></div>
+</div>
+<main>
+<div class="box"><strong style="color:var(--gold)">✅ Iron-Clad Price Check</strong><p>Before you start this farm or buy any equipment, call 3 suppliers and compare. This course teaches the method — you confirm the local prices and market demand.</p></div>
+<h2>What this course covers</h2>
+<p style="color:#ddd;margin:1rem 0">📚 6 Comprehensive Modules with video lessons, learning guides, quizzes, and capstone projects. Each module covers essential knowledge to start and scale your {title_lower} business profitably.</p>
+<h2>Pricing</h2>
+<div class="pricing">
+<div class="ptier"><h3 style="color:var(--gold);margin-bottom:0.3rem">Full Course Access</h3><div class="amt">$8.00</div><p style="font-size:0.82rem;color:var(--muted)">All 6 modules, 30 videos, quizzes, capstone. Lifetime access.</p></div>
+<div class="ptier"><h3 style="color:var(--gold);margin-bottom:0.3rem">+ Business Seed Record</h3><div class="amt">$10.00</div><p style="font-size:0.82rem;color:var(--muted)">Everything above plus verifiable Business Seed Record.</p></div>
+<div class="ptier"><h3 style="color:var(--gold);margin-bottom:0.3rem">Print / Download / Share</h3><div class="amt">$3.50</div><p style="font-size:0.82rem;color:var(--muted)">High-resolution PDF, print-ready, shareable.</p></div>
+</div>
+<div class="cta">
+<a class="enroll" href="index.html#courses">Enroll — $8.00</a>
+<a class="wa" href="https://wa.me/263773001353?text=Hi%20rAs%2C%20I%20want%20to%20enroll%20in%20{wa_name}" target="_blank" rel="noopener">💬 Enroll on WhatsApp</a>
+</div>
+<p style="margin-top:1.2rem;font-size:0.82rem;color:var(--muted)">rise AFRICA skills is not a school. We teach practical method and issue a Business Seed Record confirming you completed the work.</p>
+</main>
+<footer>rise AFRICA skills · +263 77 300 1353 · all@riseafricaskills.com · riseafricaskills.com</footer>
+</body></html>
+'''
+
+os.chdir("/home/claude/ras")
+count = 0
+for slug, (title, desc) in COURSES.items():
+    html = TEMPLATE.format(
+        title=title,
+        description=desc,
+        title_lower=title.lower(),
+        wa_name=title.replace(" ", "%20")
+    )
+    with open(f"{slug}-course.html", "w") as f:
+        f.write(html)
+    count += 1
+    print(f"✓ {slug}")
+
+print(f"\n✅ Generated {count} courses")
