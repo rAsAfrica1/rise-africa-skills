@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>24/7 AI Support Chat</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --gold: #C9A227; --dark: #1a1a1a; --card: #1e1e1e; --text: #e0e0e0; --muted: #888; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--dark); color: var(--text); display: flex; height: 100vh; }
+        .sidebar { width: 250px; background: rgba(0,0,0,0.5); border-right: 2px solid var(--gold); padding: 1rem; overflow-y: auto; }
+        .main { flex: 1; display: flex; flex-direction: column; }
+        header { background: rgba(0,0,0,0.5); border-bottom: 2px solid var(--gold); padding: 1rem; text-align: center; }
+        h1 { color: var(--gold); font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .chat-area { flex: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; }
+        .message { display: flex; gap: 0.5rem; animation: slideIn 0.3s ease; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .message.user { justify-content: flex-end; }
+        .message-bubble { max-width: 70%; padding: 0.8rem; border-radius: 8px; }
+        .message.assistant .message-bubble { background: var(--card); border-left: 3px solid var(--gold); }
+        .message.user .message-bubble { background: var(--gold); color: #111; }
+        .agent-button { width: 100%; padding: 0.8rem; margin-bottom: 0.5rem; background: rgba(201, 162, 39, 0.2); border: 2px solid var(--gold); color: var(--gold); border-radius: 6px; cursor: pointer; font-weight: 700; }
+        .agent-button:hover { background: rgba(201, 162, 39, 0.3); }
+        .input-area { padding: 1rem; border-top: 2px solid var(--gold); display: flex; gap: 0.5rem; }
+        input { flex: 1; padding: 0.8rem; background: var(--card); border: 2px solid var(--gold); color: var(--text); border-radius: 6px; }
+        button { padding: 0.8rem 1.5rem; background: var(--gold); color: #111; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; }
+        .agent-info { background: rgba(201, 162, 39, 0.1); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid var(--gold); }
+        .agent-info strong { color: var(--gold); }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h3 style="color: var(--gold); margin-bottom: 1rem;">🤖 Select Agent</h3>
+        <button class="agent-button" onclick="selectAgent('Content Master')">📝 Content Master</button>
+        <button class="agent-button" onclick="selectAgent('Analytics Prophet')">📊 Analytics Prophet</button>
+        <button class="agent-button" onclick="selectAgent('Marketing Maestro')">📢 Marketing Maestro</button>
+        <button class="agent-button" onclick="selectAgent('Support Sentinel')">💬 Support Sentinel</button>
+        <button class="agent-button" onclick="selectAgent('Pricing Optimizer')">💰 Pricing Optimizer</button>
+        <button class="agent-button" onclick="selectAgent('Growth Hacker')">🚀 Growth Hacker</button>
+        <button class="agent-button" onclick="selectAgent('Quality Assurance')">✅ Quality Assurance</button>
+        <button class="agent-button" onclick="selectAgent('Referral Engine')">🔗 Referral Engine</button>
+        <button class="agent-button" onclick="selectAgent('Trend Scout')">🔍 Trend Scout</button>
+        <button class="agent-button" onclick="selectAgent('Retention Warrior')">👥 Retention Warrior</button>
+        <button class="agent-button" onclick="selectAgent('Email Catalyst')">✉️ Email Catalyst</button>
+        <button class="agent-button" onclick="selectAgent('Revenue Maximizer')">💵 Revenue Maximizer</button>
+    </div>
+
+    <div class="main">
+        <header>
+            <h1>🌍 Rise AFRICA Skills Support</h1>
+            <p style="color: var(--muted);">24/7 AI-Powered Assistance</p>
+            <div class="agent-info">
+                <strong id="currentAgent">Select an agent to start</strong>
+            </div>
+        </header>
+
+        <div class="chat-area" id="chatArea">
+            <div class="message assistant">
+                <div class="message-bubble">👋 Welcome to rAs Support! Select an agent from the left to get started. Our 12 AI agents are ready to help with courses, sales, analytics, and more.</div>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Type your question..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedAgent = null;
+
+        const AGENT_INFO = {
+            'Content Master': '📝 Creates 5+ courses/week • 99.2% accuracy • Latest trends',
+            'Analytics Prophet': '📊 Real-time analytics • 10,000 data points/day • Revenue forecasting',
+            'Marketing Maestro': '📢 150+ posts/day • 40+ platform coverage • 96.8% accuracy',
+            'Support Sentinel': '💬 1,000 conversations/day • 88% first-contact resolution',
+            'Pricing Optimizer': '💰 Dynamic pricing • Adjusts 200x/day • Maximizes revenue',
+            'Growth Hacker': '🚀 80+ experiments/day • Finds growth loops • 92.7% accuracy',
+            'Quality Assurance': '✅ 300 checks/day • Reviews feedback • 98.9% accuracy',
+            'Referral Engine': '🔗 Manages 250+ affiliates • Daily payouts • 99.8% fraud detection',
+            'Trend Scout': '🔍 24/7 monitoring • Emerging skills • 1,000 scans/day',
+            'Retention Warrior': '👥 Prevents dropouts • 400 interventions/day • Peer mentoring',
+            'Email Catalyst': '✉️ Sends 5,000/day • 32% open rate • A/B testing',
+            'Revenue Maximizer': '💵 Upsell opportunities • Bundle creation • 18% success rate'
+        };
+
+        function selectAgent(agent) {
+            selectedAgent = agent;
+            document.getElementById('currentAgent').textContent = '🤖 ' + agent + ' - ' + AGENT_INFO[agent];
+            document.getElementById('chatArea').innerHTML = '<div class="message assistant"><div class="message-bubble">Hi! I\'m ' + agent + '. How can I help you today?</div></div>';
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            if (!input.value.trim() || !selectedAgent) return;
+
+            const message = input.value;
+            addMessage('user', message);
+
+            setTimeout(() => {
+                const response = generateResponse(selectedAgent, message);
+                addMessage('assistant', response);
+            }, 500);
+
+            input.value = '';
+        }
+
+        function addMessage(type, text) {
+            const chat = document.getElementById('chatArea');
+            const msg = document.createElement('div');
+            msg.className = 'message ' + type;
+            msg.innerHTML = '<div class="message-bubble">' + text + '</div>';
+            chat.appendChild(msg);
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        function generateResponse(agent, query) {
+            const responses = {
+                'Content Master': 'I can create courses on: Agriculture, Business, Services, Food, Crafts, Manufacturing. What topic interests you?',
+                'Analytics Prophet': 'Current metrics: 159 courses • 40+ platforms • 72% completion rate • $8-100k monthly revenue potential',
+                'Marketing Maestro': 'I\'ll generate posts for WhatsApp, Facebook, Twitter, LinkedIn, Instagram, TikTok and 34+ more platforms daily!',
+                'Support Sentinel': 'I handle customer questions 24/7 with 88% auto-resolution. Escalating complex issues to humans in 2-4 hours.',
+                'Pricing Optimizer': 'Dynamic pricing active: Base $8 stable • Bundles 10-20% off • Peak pricing +5% weekends • Holiday premiums',
+                'Growth Hacker': 'Running 80 experiments/day. Recent wins: +300% student growth • +150% revenue • 6.2% referral conversion',
+                'Quality Assurance': 'All 159 courses verified: ✓ Accurate ✓ Complete ✓ Mobile-ready ✓ Offline compatible',
+                'Referral Engine': '250+ active affiliates earning $45/month average • $2,100+/month guaranteed • Daily payouts enabled',
+                'Trend Scout': 'Trending now: Digital marketing (up 45%) • Food processing (up 38%) • E-commerce (up 52%)',
+                'Retention Warrior': 'Preventing dropouts with personalized encouragement. Currently tracking 400 at-risk students daily.',
+                'Email Catalyst': 'Sending 5,000 emails/day with 32% open rate (vs 21% industry). A/B testing all subject lines.',
+                'Revenue Maximizer': 'Identified upsell opportunities: Bundles +22% revenue • Certificates +$5 • Premium content +18% uptake'
+            };
+            return responses[agent] || 'How can I assist you?';
+        }
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') sendMessage();
+        }
+    </script>
+</body>
+</html>
