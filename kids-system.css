@@ -1,0 +1,89 @@
+/* ═══════════════════════════════════════════════════════════════
+   rAs KIDS — shared visual system
+   Palette drawn from West African wax-print and kente cloth:
+   saturated, high-contrast, joyful. Not pastel, not corporate.
+   Everything must read on a cracked 5-inch phone in daylight.
+   ═══════════════════════════════════════════════════════════════ */
+:root{
+  --k-gold:#FFB627; --k-flame:#FF5A36; --k-leaf:#00A86B;
+  --k-sky:#1E88E5;  --k-berry:#E5397F; --k-violet:#8E4FE8;
+  --k-night:#14122B; --k-deep:#0C0A1C; --k-card:#1F1B3D;
+  --k-cream:#FFF8EC; --k-ink:#2A2342; --k-mute:#A9A2C9;
+  --k-line:rgba(255,255,255,.10);
+  --k-shadow:0 10px 0 rgba(0,0,0,.25);
+  --font-display:'Baloo 2',system-ui,sans-serif;
+  --font-body:'Nunito',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{
+  font-family:var(--font-body);
+  background:var(--k-deep); color:var(--k-cream);
+  line-height:1.6; -webkit-text-size-adjust:100%;
+}
+h1,h2,h3,h4,.display{font-family:var(--font-display);font-weight:800;line-height:1.08;text-wrap:balance}
+
+/* ── Chunky tactile buttons: big targets for small fingers ── */
+.k-btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:var(--font-display);font-weight:800;font-size:1.05rem;
+  background:var(--k-gold);color:#3A2500;border:0;
+  padding:.85rem 1.6rem;border-radius:999px;cursor:pointer;
+  box-shadow:0 6px 0 #C98A12; text-decoration:none;
+  transition:transform .08s,box-shadow .08s; min-height:52px;
+}
+.k-btn:active{transform:translateY(5px);box-shadow:0 1px 0 #C98A12}
+.k-btn.flame{background:var(--k-flame);color:#fff;box-shadow:0 6px 0 #B93A1F}
+.k-btn.leaf {background:var(--k-leaf);color:#04301D;box-shadow:0 6px 0 #007A4D}
+.k-btn.sky  {background:var(--k-sky); color:#fff;box-shadow:0 6px 0 #1361A8}
+.k-btn:focus-visible{outline:4px solid #fff;outline-offset:3px}
+
+/* ── Cards ── */
+.k-card{
+  background:var(--k-card);border:2px solid var(--k-line);
+  border-radius:24px;padding:1.4rem;position:relative;overflow:hidden;
+}
+.k-card::before{content:"";position:absolute;inset:0 0 auto 0;height:6px;
+  background:linear-gradient(90deg,var(--k-gold),var(--k-flame),var(--k-berry),var(--k-violet),var(--k-sky),var(--k-leaf))}
+
+/* ── Kente stripe: the one recurring motif ── */
+.kente{height:14px;border-radius:99px;background:repeating-linear-gradient(90deg,
+  var(--k-gold) 0 18px, var(--k-night) 18px 22px, var(--k-flame) 22px 40px,
+  var(--k-night) 40px 44px, var(--k-leaf) 44px 62px, var(--k-night) 62px 66px)}
+
+/* ── "See it first" figure: the picture always leads ── */
+.k-see{background:rgba(255,255,255,.05);border:2px dashed var(--k-line);
+  border-radius:20px;padding:1.1rem;display:grid;place-items:center;gap:.7rem;text-align:center}
+.k-see .big{font-size:clamp(3rem,12vw,5rem);line-height:1}
+.k-see figcaption{font-size:.95rem;color:var(--k-mute)}
+
+/* ── Steps a child can follow without reading much ── */
+.k-steps{list-style:none;display:grid;gap:.8rem;counter-reset:s}
+.k-steps li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:.9rem;align-items:start;
+  background:rgba(255,255,255,.04);border-radius:16px;padding:.9rem}
+.k-steps li::before{content:counter(s);display:grid;place-items:center;
+  width:44px;height:44px;border-radius:50%;background:var(--k-gold);color:#3A2500;
+  font-family:var(--font-display);font-weight:800;font-size:1.25rem}
+
+/* ── Badges children collect ── */
+.k-badge{display:inline-grid;place-items:center;width:74px;height:74px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff3,transparent 60%),var(--k-violet);
+  font-size:2rem;border:3px solid rgba(255,255,255,.35);box-shadow:var(--k-shadow)}
+.k-badge.locked{background:#2A2550;filter:grayscale(1);opacity:.45}
+
+/* ── Phase pills: no-kit -> phone -> real kit ── */
+.k-phase{display:inline-flex;align-items:center;gap:.4rem;font-weight:800;font-size:.78rem;
+  padding:.35rem .8rem;border-radius:999px;letter-spacing:.02em}
+.k-phase.p1{background:rgba(0,168,107,.18);color:#4FE3A5;border:1.5px solid #00A86B}
+.k-phase.p2{background:rgba(30,136,229,.18);color:#7CC4FF;border:1.5px solid #1E88E5}
+.k-phase.p3{background:rgba(229,57,127,.18);color:#FF8FBC;border:1.5px solid #E5397F}
+
+/* ── Progress ── */
+.k-bar{height:16px;border-radius:99px;background:rgba(255,255,255,.10);overflow:hidden}
+.k-bar>i{display:block;height:100%;width:0;border-radius:99px;
+  background:linear-gradient(90deg,var(--k-leaf),var(--k-gold));transition:width .4s}
+
+.k-wrap{max-width:1080px;margin:0 auto;padding:0 1.1rem}
+.k-grid{display:grid;gap:1.1rem;grid-template-columns:repeat(auto-fill,minmax(270px,1fr))}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Module 3: Human PWM — Robotics with Python</title>
+<meta name="description" content="You can make a switch that is only ever fully on or fully off behave like a dial — by flicking it fast.">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="kids-system.css">
+<style>
+.topbar{position:sticky;top:0;z-index:50;background:rgba(12,10,28,.94);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--k-line);padding:.6rem 0}
+.topbar .in{display:flex;align-items:center;gap:.7rem}
+.topbar a.home{display:flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--k-cream);font-family:var(--font-display);font-weight:800}
+.topbar .sp{margin-left:auto}
+.crumb{color:var(--k-mute);font-size:.85rem}
+
+.mhero{padding:1.6rem 0 .6rem}
+.crumb{padding-top:.2rem}
+.mhero h1{font-size:clamp(1.7rem,4.8vw,2.5rem);margin:.35rem 0}
+.big-idea{font-size:1.12rem;color:#EFE8FF;max-width:60ch}
+.see{margin:1.3rem 0;padding:1.6rem 1.1rem;border-radius:24px;text-align:center;
+  border:3px dashed rgba(255,255,255,.18)}
+.see .v{font-size:clamp(2.6rem,11vw,4.4rem);line-height:1.25;word-break:break-word}
+.see .v.v-md{font-size:clamp(1.6rem,6vw,2.5rem)}
+.see .v.v-sm{font-size:clamp(1.15rem,3.6vw,1.6rem);line-height:1.5}
+.see .v.v-xs{font-size:clamp(.95rem,2.4vw,1.12rem);line-height:1.65;font-family:ui-monospace,'Courier New',monospace;
+  white-space:pre-wrap;text-align:left;max-width:62ch;margin-inline:auto}
+.see figcaption{margin-top:.7rem;color:#E6DFF7;font-weight:700}
+h2.sec{font-family:var(--font-display);font-size:1.35rem;margin:1.7rem 0 .7rem;display:flex;align-items:center;gap:.5rem}
+.need{list-style:none;display:flex;gap:.5rem;flex-wrap:wrap}
+.need li{background:rgba(255,255,255,.08);padding:.42rem .85rem;border-radius:99px;font-weight:700;font-size:.9rem}
+.why{background:rgba(0,168,107,.13);border:2px solid rgba(0,168,107,.4);border-radius:20px;padding:1.1rem}
+.chal{background:rgba(229,57,127,.13);border:2px solid rgba(229,57,127,.42);border-radius:20px;padding:1.1rem}
+.words{display:grid;gap:.6rem;grid-template-columns:repeat(auto-fill,minmax(215px,1fr))}
+.w{background:rgba(255,255,255,.06);border-radius:16px;padding:.8rem 1rem}
+.w b{font-size:1.45rem;display:block;font-family:var(--font-display)}
+.w .rom{color:var(--k-gold);font-weight:700;font-size:.95rem}
+.w .mean{display:block;color:var(--k-mute);font-size:.9rem;margin-top:.2rem}
+.done{display:flex;align-items:center;gap:.9rem;background:var(--k-card);border:2px solid var(--k-line);
+  border-radius:22px;padding:1.1rem;margin-top:1.6rem;flex-wrap:wrap}
+.nav{display:flex;gap:.7rem;justify-content:space-between;margin:1.6rem 0;flex-wrap:wrap}
+</style>
+<!--ras-social-meta-->
+<link rel="canonical" href="https://www.riseafricaskills.com/kids-robotics-senior-module-3.html">
+<meta property="og:site_name" content="rise AFRICA skills">
+<meta property="og:locale" content="en_ZW">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.riseafricaskills.com/kids-robotics-senior-module-3.html">
+<meta property="og:title" content="Module 3: Human PWM — Robotics with Python">
+<meta property="og:description" content="You can make a switch that is only ever fully on or fully off behave like a dial — by flicking it fast.">
+<meta property="og:image" content="https://www.riseafricaskills.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@riseafricaskills">
+<meta name="twitter:title" content="Module 3: Human PWM — Robotics with Python">
+<meta name="twitter:description" content="You can make a switch that is only ever fully on or fully off behave like a dial — by flicking it fast.">
+<meta name="twitter:image" content="https://www.riseafricaskills.com/og-image.png">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#0C0A1C">
+<link rel="icon" href="/og-image.png" type="image/png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Course", "name": "Module 3: Human PWM", "description": "You can make a switch that is only ever fully on or fully off behave like a dial — by flicking it fast.", "url": "https://www.riseafricaskills.com/kids-robotics-senior-module-3.html", "inLanguage": "en", "audience": {"@type": "EducationalAudience", "educationalRole": "student"}, "provider": {"@type": "EducationalOrganization", "name": "rise AFRICA skills", "url": "https://www.riseafricaskills.com/"}}</script>
+</head>
+<body>
+<div class="topbar"><div class="k-wrap in">
+  <a class="home" href="kids.html"><img src="kids-zola.svg" alt="" style="width:30px"> rAs Kids</a>
+  <span class="sp"></span>
+  <a href="index.html" style="color:var(--k-gold);text-decoration:none;font-weight:700;font-size:.9rem">All courses</a>
+</div></div>
+<header class="mhero"><div class="k-wrap">
+  <div class="crumb"><a href="kids-robotics-senior-course.html" style="color:var(--k-gold)">Robotics with Python</a> · Module 3 of 8</div>
+  <span class="k-phase p1">🪨 No device needed</span>
+  <h1>Human PWM</h1>
+  <p class="big-idea">You can make a switch that is only ever fully on or fully off behave like a dial — by flicking it fast.</p>
+  <div class="k-bar" style="margin-top:1rem"><i style="width:38%"></i></div>
+</div></header>
+<main class="k-wrap">
+
+  <figure class="see" style="background:linear-gradient(135deg,#00A86B2E,#00A86B0F)">
+    <div class="v v-md">▉▉__▉▉__ 50%  |  ▉▉▉▉▉▉_ 85%</div>
+    <figcaption>Two rows of blocks and gaps drawn in chalk, one half filled, one nearly solid.</figcaption>
+  </figure>
+
+  <h2 class="sec">🎒 What you need</h2>
+  <ul class="need"><li>a torch, phone light or candle and a hand to block it</li><li>someone to keep a steady beat by clapping</li><li>chalk and paper</li></ul>
+
+  <h2 class="sec">✋ Do this</h2>
+  <ol class="k-steps"><li><div>Beat time steadily, one beat per second. Turn the torch on for one beat, off for one beat, repeatedly. That is 50 percent duty cycle.</div></li><li><div>Now do on-on-on-off. That is 75 percent. Draw both patterns as filled and empty boxes on the ground.</div></li><li><div>Speed up until you are flicking several times per second. Look at the light out of the corner of your eye — it starts to look dim rather than flashing.</div></li><li><div>Try 25 percent fast. It looks dimmer still. You are controlling brightness with a switch that has no dimmer at all.</div></li><li><div>Write the formula yourself: average power equals duty cycle times full power. Check it against what you saw.</div></li><li><div>Last: flick slowly on purpose. The flicker returns. That is why PWM frequency matters as much as duty cycle.</div></li></ol>
+
+  <h2 class="sec">💡 Why it works</h2>
+  <div class="why"><p>This is pulse width modulation, and it is how nearly every motor speed and LED brightness is controlled in real electronics. Transistors are efficient when fully on or fully off and waste energy in between, so instead of throttling the current you switch it rapidly and vary the on-time. A motor&#x27;s own inertia smooths the pulses the same way your eye smoothed the torch.</p></div>
+
+  <h2 class="sec">🔥 Challenge</h2>
+  <div class="chal"><p>Two of you flick torches at different duty cycles at the same speed. Can a third person rank them by brightness without being told the numbers? Test whether people can tell 60 from 70.</p></div>
+
+  <h2 class="sec">📖 New words</h2>
+  <div class="words"><div class="w"><b>PWM</b><span class="mean">pulse width modulation: switching fast and varying the on-time to control power</span></div><div class="w"><b>duty cycle</b><span class="mean">the percentage of each cycle the switch spends on</span></div><div class="w"><b>frequency</b><span class="mean">how many complete on-off cycles happen per second</span></div></div>
+
+  <div class="done">
+    <div class="k-badge" id="bdg">💡</div>
+    <div style="flex:1;min-width:190px">
+      <strong style="font-family:var(--font-display);font-size:1.1rem">Pulse Master</strong>
+      <p style="color:var(--k-mute);font-size:.9rem">Tap when you have finished this module.</p>
+    </div>
+    <button class="k-btn" id="claim">I did it!</button>
+  </div>
+
+  <nav class="nav"><a class="k-btn" style="background:rgba(255,255,255,.12);color:#fff;box-shadow:0 6px 0 rgba(0,0,0,.3)" href="kids-robotics-senior-module-2.html">← Back</a><a class="k-btn leaf" href="kids-robotics-senior-module-4.html">Next module →</a></nav>
+</main>
+<script>
+(function(){
+  var KEY='rasKids:kids-robotics-senior';
+  function load(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {} } }
+  var st=load(), btn=document.getElementById('claim'), bdg=document.getElementById('bdg');
+  function paint(){
+    if(st['3']){btn.textContent='✓ Done';btn.classList.add('leaf');bdg.style.transform='scale(1.08)';}
+    else{bdg.classList.add('locked');}
+  }
+  btn.addEventListener('click',function(){
+    st['3']=!st['3'];
+    try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}
+    bdg.classList.toggle('locked',!st['3']);
+    btn.textContent=st['3']?'✓ Done':'I did it!';
+    btn.classList.toggle('leaf',!!st['3']);
+  });
+  paint();
+})();
+</script><footer style="padding:2rem 0;text-align:center;color:var(--k-mute);font-size:.86rem;border-top:1px solid var(--k-line);margin-top:2rem">
+<div class="k-wrap"><div class="kente" style="margin-bottom:1rem"></div>
+<p><strong>rise AFRICA skills — Kids</strong> · Learn by seeing.</p>
+<p style="margin-top:.35rem"><a href="https://wa.me/263773001353" style="color:var(--k-gold)">WhatsApp +263 77 300 1353</a></p></div>
+</footer></body></html>

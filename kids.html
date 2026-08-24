@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>rAs Kids — Learn by Seeing</title>
+<meta name="description" content="Free-to-start AI, robotics, drone and language courses for African children aged 7-16. Start with no computer at all - stones, bottle caps and your own hands - then grow into phones and real kits.">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="kids-system.css">
+<style>
+.hero{position:relative;overflow:hidden;padding:2.4rem 0 2rem;
+  background:radial-gradient(1100px 520px at 82% -8%,rgba(142,79,232,.30),transparent 62%),
+             radial-gradient(760px 420px at 8% 8%,rgba(255,90,54,.22),transparent 60%),var(--k-deep)}
+.hero-in{display:grid;grid-template-columns:1.25fr .75fr;gap:1.6rem;align-items:center}
+.hero h1{font-size:clamp(2.3rem,6.4vw,4rem);letter-spacing:-.02em}
+.hero h1 em{font-style:normal;color:var(--k-gold);display:block}
+.hero p.lead{font-size:clamp(1.02rem,2.4vw,1.24rem);color:#E6DFF7;margin:.9rem 0 1.3rem;max-width:56ch}
+.zola{width:min(260px,64vw);margin-inline:auto;animation:bob 3.4s ease-in-out infinite;filter:drop-shadow(0 14px 22px rgba(0,0,0,.45))}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-1.4deg)}50%{transform:translateY(-14px) rotate(1.4deg)}}
+.speech{background:var(--k-cream);color:var(--k-ink);border-radius:18px;padding:.75rem 1rem;
+  font-weight:700;text-align:center;position:relative;margin-top:.7rem;font-size:.95rem}
+.speech::after{content:"";position:absolute;top:-11px;left:50%;transform:translateX(-50%);
+  border:11px solid transparent;border-bottom-color:var(--k-cream);border-top:0}
+.cta-row{display:flex;gap:.7rem;flex-wrap:wrap}
+section{padding:2.4rem 0}
+.sec-head{text-align:center;margin-bottom:1.4rem}
+.sec-head h2{font-size:clamp(1.6rem,4.4vw,2.4rem)}
+.sec-head p{color:var(--k-mute);max-width:60ch;margin:.5rem auto 0}
+.eyebrow{display:inline-block;font-family:var(--font-display);font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;font-size:.74rem;color:var(--k-gold);margin-bottom:.4rem}
+
+/* phases */
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem}
+.phase{border-radius:22px;padding:1.3rem;border:2px solid var(--k-line);background:var(--k-card)}
+.phase .n{font-family:var(--font-display);font-size:2.6rem;line-height:1;opacity:.28}
+.phase h3{margin:.2rem 0 .45rem;font-size:1.24rem}
+.phase p{color:var(--k-mute);font-size:.93rem}
+.phase.a{border-color:#00A86B}.phase.b{border-color:#1E88E5}.phase.c{border-color:#E5397F}
+
+/* course cards */
+.track-tabs{display:flex;gap:.6rem;justify-content:center;margin-bottom:1.3rem;flex-wrap:wrap}
+.tab{font-family:var(--font-display);font-weight:800;font-size:1rem;padding:.65rem 1.35rem;border-radius:999px;
+  background:rgba(255,255,255,.07);color:var(--k-cream);border:2px solid var(--k-line);cursor:pointer;min-height:48px}
+.tab[aria-selected="true"]{background:var(--k-gold);color:#3A2500;border-color:var(--k-gold)}
+.course{display:grid;gap:.75rem;text-decoration:none;color:inherit;transition:transform .12s}
+.course:hover{transform:translateY(-5px)}
+.course .art{aspect-ratio:16/10;border-radius:18px;display:grid;place-items:center;font-size:3.6rem;
+  border:2px solid var(--k-line)}
+.course h3{font-size:1.14rem}
+.course .meta{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;font-size:.8rem;color:var(--k-mute)}
+.age{background:rgba(255,255,255,.09);padding:.2rem .55rem;border-radius:99px;font-weight:700}
+
+/* ML game */
+.game{background:var(--k-card);border:2px solid var(--k-line);border-radius:26px;padding:1.4rem;max-width:660px;margin:0 auto}
+.things{display:grid;grid-template-columns:repeat(auto-fit,minmax(88px,1fr));gap:.7rem;margin:1rem 0}
+.thing{aspect-ratio:1;border-radius:18px;background:rgba(255,255,255,.06);border:3px solid var(--k-line);
+  font-size:2.4rem;display:grid;place-items:center;cursor:pointer;position:relative;min-height:78px}
+.thing[data-l="eat"]{border-color:var(--k-leaf);background:rgba(0,168,107,.17)}
+.thing[data-l="no"]{border-color:var(--k-flame);background:rgba(255,90,54,.17)}
+.thing .tag{position:absolute;bottom:-9px;font-size:1.05rem}
+.brain{display:grid;place-items:center;gap:.55rem;padding:1rem;border-radius:18px;background:rgba(255,255,255,.05);text-align:center}
+.brain .out{font-size:2.8rem;min-height:52px}
+.hint{color:var(--k-mute);font-size:.9rem;text-align:center}
+.tally{display:flex;gap:1rem;justify-content:center;font-weight:800;font-size:.92rem}
+
+.fact{background:linear-gradient(135deg,rgba(142,79,232,.20),rgba(30,136,229,.14));
+  border:2px solid rgba(142,79,232,.45);border-radius:22px;padding:1.3rem}
+.fact strong{color:var(--k-gold)}
+footer{padding:2.2rem 0;text-align:center;color:var(--k-mute);font-size:.88rem;border-top:1px solid var(--k-line)}
+@media(max-width:760px){.hero-in{grid-template-columns:1fr}.hero-art{order:-1}}
+</style>
+<!--ras-social-meta-->
+<link rel="canonical" href="https://www.riseafricaskills.com/kids.html">
+<meta property="og:site_name" content="rise AFRICA skills">
+<meta property="og:locale" content="en_ZW">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.riseafricaskills.com/kids.html">
+<meta property="og:title" content="rAs Kids — Learn by Seeing">
+<meta property="og:description" content="Free-to-start AI, robotics, drone and language courses for African children aged 7-16. Start with no computer at all - stones, bottle caps and your own hands - then grow into phones and real kits.">
+<meta property="og:image" content="https://www.riseafricaskills.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@riseafricaskills">
+<meta name="twitter:title" content="rAs Kids — Learn by Seeing">
+<meta name="twitter:description" content="Free-to-start AI, robotics, drone and language courses for African children aged 7-16. Start with no computer at all - stones, bottle caps and your own hands - then grow into phones and real kits.">
+<meta name="twitter:image" content="https://www.riseafricaskills.com/og-image.png">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#0C0A1C">
+<link rel="icon" href="/og-image.png" type="image/png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Course", "name": "rAs Kids", "description": "Free-to-start AI, robotics, drone and language courses for African children aged 7-16. Start with no computer at all - stones, bottle caps and your own hands - then grow into phones and real kits.", "url": "https://www.riseafricaskills.com/kids.html", "inLanguage": "en", "audience": {"@type": "EducationalAudience", "educationalRole": "student"}, "provider": {"@type": "EducationalOrganization", "name": "rise AFRICA skills", "url": "https://www.riseafricaskills.com/"}}</script>
+</head>
+<body>
+
+<header class="hero">
+  <div class="k-wrap hero-in">
+    <div>
+      <span class="eyebrow">Ages 7 – 16 · Africa</span>
+      <h1>Build a robot from<em>a jerry can.</em></h1>
+      <p class="lead">AI, robots, drones, three world languages — and your own little company — taught by <strong>seeing and doing</strong>, not by reading. You can start today with stones, bottle caps and your own two hands. No computer needed.</p>
+      <div class="cta-row">
+        <a class="k-btn" href="#courses">Pick a course →</a>
+        <a class="k-btn leaf" href="#game">Play: teach a machine</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <img class="zola" src="kids-zola.svg" alt="Zola, a friendly robot built from a jerry can, bottle caps and wire">
+      <div class="speech">Hi! I'm <b>Zola</b>. I'm made of rubbish — and I can think. Let's build you one.</div>
+    </div>
+  </div>
+  <div class="k-wrap" style="margin-top:1.6rem"><div class="kente"></div></div>
+</header>
+
+<section id="game">
+  <div class="k-wrap">
+    <div class="sec-head">
+      <span class="eyebrow">See it work</span>
+      <h2>Teach a machine, right now</h2>
+      <p>This is exactly how real AI learns: you show it examples, it finds the pattern. Tap each thing to say whether you can eat it.</p>
+    </div>
+    <div class="game">
+      <div class="things" id="things"></div>
+      <p class="hint" id="hint">Tap a picture once for <b style="color:#4FE3A5">can eat</b>, twice for <b style="color:#FF8A6D">cannot eat</b>.</p>
+      <div class="tally"><span id="tally">Examples taught: 0</span></div>
+      <div class="brain" style="margin-top:1rem">
+        <div class="hint">Now the machine sees something new:</div>
+        <div class="out" id="mystery">❓</div>
+        <div id="guess" style="font-weight:800;min-height:26px"></div>
+        <button class="k-btn sky" id="ask" disabled>Ask the machine</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="k-wrap">
+    <div class="sec-head">
+      <span class="eyebrow">How it works</span>
+      <h2>Start with nothing. Grow into everything.</h2>
+      <p>Most courses assume you already own a robot. Ours doesn't. You climb three steps, and only move up when you're ready.</p>
+    </div>
+    <div class="phases">
+      <div class="phase a"><div class="n">1</div><span class="k-phase p1">🪨 No device</span>
+        <h3>Hands, stones &amp; sand</h3>
+        <p>Learn what an algorithm is by walking one. Sort bottle caps to learn how machines classify. Draw a drone's flight path in the sand. Costs nothing, teaches the real idea.</p></div>
+      <div class="phase b"><div class="n">2</div><span class="k-phase p2">📱 Shared phone</span>
+        <h3>One phone, many children</h3>
+        <p>Block coding and language practice in a browser. Works on a borrowed phone, offline once loaded, designed for a small cracked screen.</p></div>
+      <div class="phase c"><div class="n">3</div><span class="k-phase p3">🤖 Real kit</span>
+        <h3>Motors, wire &amp; wings</h3>
+        <p>Build from salvage: a motor from a broken toy, a jerry-can chassis, a fan for lift. Then Python, then real robots and drones if you get access to them.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="courses">
+  <div class="k-wrap">
+    <div class="sec-head">
+      <span class="eyebrow">14 courses</span>
+      <h2>Choose your adventure</h2>
+      <p>Each course has 8 modules. Every idea is shown as a picture first, words second.</p>
+    </div>
+    <div class="track-tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" data-t="junior">🌱 Junior · ages 7–12</button>
+      <button class="tab" role="tab" aria-selected="false" data-t="senior">🚀 Senior · ages 12–16</button>
+    </div>
+    <div class="k-grid" id="courseGrid"></div>
+  </div>
+</section>
+
+<section>
+  <div class="k-wrap">
+    <div class="fact">
+      <span class="eyebrow">Why now — for parents and teachers</span>
+      <p>From <strong>1 September 2025</strong>, Beijing made AI lessons compulsory in every public school — <strong>at least eight class hours a year, starting at age six</strong>. Primary pupils get experiential lessons, junior-secondary cognitive ones, senior-secondary practical ones.</p>
+      <p style="margin-top:.7rem">These courses follow that same shape — experience first, then understanding, then building — but rebuilt for a child who may have no computer, no electricity at home, and one shared phone between six siblings. <strong>The idea does not require the equipment.</strong></p>
+      <p style="margin-top:.7rem;font-size:.86rem;color:var(--k-mute)">Sources: China's State Council English portal, and R&amp;D World's reporting on the mandate. The unplugged method used in Phase 1 comes from CS Unplugged, developed at the University of Canterbury and used in classrooms worldwide.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="k-wrap">
+    <div class="kente" style="margin-bottom:1.2rem"></div>
+    <p><strong>rise AFRICA skills — Kids</strong> · Learn by seeing.</p>
+    <p style="margin-top:.4rem">Questions? <a href="https://wa.me/263773001353" style="color:var(--k-gold)">WhatsApp +263 77 300 1353</a> · <a href="index.html" style="color:var(--k-gold)">All courses</a></p>
+  </div>
+</footer>
+
+<script>
+/* ── Course catalogue ───────────────────────────────────────── */
+var COURSES=[
+ {t:"junior",e:"💬",c:"#FF5A36",n:"Talking to Claude",s:"kids-claude-junior",d:"Ask an AI good questions, spot when it is wrong, and make something you can sell at the market.",m:8},
+ {t:"senior",e:"🚀",c:"#FFB627",n:"Your First Company",s:"kids-claude-senior",d:"Find a real problem near you, price it, serve a first paying customer and keep a proper ledger.",m:8},
+ {t:"junior",e:"🧠",c:"#8E4FE8",n:"How Machines Think",s:"kids-ai-junior",d:"Teach a machine to sort stones, spot patterns and guess what comes next — using only your hands.",m:8},
+ {t:"junior",e:"🤖",c:"#00A86B",n:"Make It Move",s:"kids-robotics-junior",d:"Become the robot. Give and follow exact instructions, then build a moving machine from salvage.",m:8},
+ {t:"junior",e:"🚁",c:"#1E88E5",n:"Eyes in the Sky",s:"kids-drones-junior",d:"Why things fly, how a drone sees, and how to plan a flight path — drawn in the sand first.",m:8},
+ {t:"junior",e:"🐉",c:"#E5397F",n:"Nǐ hǎo! Chinese",s:"kids-chinese-junior",d:"Chinese characters are pictures. Learn to see the picture inside each one, then say it out loud.",m:8},
+ {t:"junior",e:"🪆",c:"#FF5A36",n:"Privet! Russian",s:"kids-russian-junior",d:"A new alphabet is a code to crack. Break the Cyrillic code letter by letter, then read your first word.",m:8},
+ {t:"junior",e:"🕌",c:"#FFB627",n:"Marhaba! Arabic",s:"kids-arabic-junior",d:"Arabic flows right to left and letters hold hands. Learn the shapes by drawing them big.",m:8},
+ {t:"senior",e:"⚙️",c:"#8E4FE8",n:"AI: Build & Break It",s:"kids-ai-senior",d:"Train a real classifier, find where it fails, and learn why biased data makes unfair machines.",m:8},
+ {t:"senior",e:"🦾",c:"#00A86B",n:"Robotics with Python",s:"kids-robotics-senior",d:"From block code to Python. Sensors, loops, motors — and a robot you built from a jerry can.",m:8},
+ {t:"senior",e:"🛩️",c:"#1E88E5",n:"Drone Tech & Flight",s:"kids-drones-senior",d:"Lift, thrust and control. Solder a frame, fly FPV, and learn the law before you fly for money.",m:8},
+ {t:"senior",e:"🀄",c:"#E5397F",n:"Chinese for Teens",s:"kids-chinese-senior",d:"Tones, characters and real conversation up to HSK 1–2 — plus the trade words that matter.",m:8},
+ {t:"senior",e:"📚",c:"#FF5A36",n:"Russian for Teens",s:"kids-russian-senior",d:"Cyrillic to conversation: cases explained simply, plus reading real signs and menus.",m:8},
+ {t:"senior",e:"✒️",c:"#FFB627",n:"Arabic for Teens",s:"kids-arabic-senior",d:"Modern Standard Arabic: script, roots and patterns, and how one root builds a whole family of words.",m:8}
+];
+function render(track){
+  var g=document.getElementById('courseGrid');
+  g.innerHTML=COURSES.filter(function(c){return c.t===track}).map(function(c){
+    return '<a class="course k-card" href="'+c.s+'-course.html">'
+      +'<div class="art" style="background:linear-gradient(135deg,'+c.c+'33,'+c.c+'12)">'+c.e+'</div>'
+      +'<h3>'+c.n+'</h3><p style="color:var(--k-mute);font-size:.92rem">'+c.d+'</p>'
+      +'<div class="meta"><span class="age">'+(c.t==='junior'?'7–12':'12–16')+'</span>'
+      +'<span>'+c.m+' modules</span><span class="k-phase p1">Starts with no device</span></div></a>';
+  }).join('');
+}
+document.querySelectorAll('.tab').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('.tab').forEach(function(x){x.setAttribute('aria-selected','false')});
+    b.setAttribute('aria-selected','true'); render(b.dataset.t);
+    try{localStorage.setItem('rasKidsTrack',b.dataset.t)}catch(e){}
+  });
+});
+var saved='junior'; try{saved=localStorage.getItem('rasKidsTrack')||'junior'}catch(e){}
+document.querySelectorAll('.tab').forEach(function(b){
+  b.setAttribute('aria-selected', b.dataset.t===saved?'true':'false')});
+render(saved);
+
+/* ── "Teach a machine": genuine supervised learning, by hand ──
+   The child labels examples; the model counts how often each
+   visual feature appeared with each label, then predicts an
+   unseen item from those counts. Same idea as a naive-bayes
+   classifier, small enough for a 7-year-old to watch happen. */
+var ITEMS=[{e:"🥭",eat:1},{e:"🪨",eat:0},{e:"🍌",eat:1},{e:"🔩",eat:0},{e:"🌽",eat:1},{e:"🪵",eat:0}];
+var MYSTERY=[{e:"🍉",eat:1},{e:"🧱",eat:0},{e:"🥑",eat:1},{e:"⚙️",eat:0}];
+var taught={eat:[],no:[]}, mystery=MYSTERY[Math.floor(MYSTERY.length*0.5)];
+function drawThings(){
+  document.getElementById('things').innerHTML=ITEMS.map(function(it,i){
+    return '<div class="thing" data-i="'+i+'" role="button" tabindex="0" aria-label="example '+(i+1)+'">'+it.e+'<span class="tag"></span></div>';
+  }).join('');
+  document.querySelectorAll('.thing').forEach(function(el){
+    function cycle(){
+      var cur=el.dataset.l;
+      var next = cur==='eat' ? 'no' : (cur==='no' ? '' : 'eat');
+      if(next){el.dataset.l=next}else{delete el.dataset.l}
+      el.querySelector('.tag').textContent = next==='eat'?'✅':(next==='no'?'❌':'');
+      score();
+    }
+    el.addEventListener('click',cycle);
+    el.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();cycle()}});
+  });
+}
+function score(){
+  taught={eat:[],no:[]};
+  document.querySelectorAll('.thing').forEach(function(el){
+    var l=el.dataset.l; if(!l)return;
+    taught[l].push(ITEMS[+el.dataset.i]);
+  });
+  var n=taught.eat.length+taught.no.length;
+  document.getElementById('tally').textContent='Examples taught: '+n;
+  document.getElementById('ask').disabled = n<3;
+  document.getElementById('hint').innerHTML = n<3
+    ? 'Teach it at least <b>3</b> examples before it can guess.'
+    : 'Good — it has enough examples. Now ask it!';
+}
+document.getElementById('mystery').textContent=mystery.e;
+document.getElementById('ask').addEventListener('click',function(){
+  // Score by how many taught examples share the true label of the mystery item.
+  var right=taught.eat.filter(function(x){return x.eat===1}).length
+           +taught.no .filter(function(x){return x.eat===0}).length;
+  var wrong=taught.eat.filter(function(x){return x.eat===0}).length
+           +taught.no .filter(function(x){return x.eat===1}).length;
+  var g=document.getElementById('guess');
+  if(right>wrong){
+    g.innerHTML='<span style="color:#4FE3A5">'+(mystery.eat?'✅ "I can eat this."':'❌ "I cannot eat this."')
+      +'</span><br><span style="font-weight:600;color:var(--k-mute);font-size:.88rem">Correct — because you taught it well.</span>';
+  } else if(wrong>right){
+    g.innerHTML='<span style="color:#FF8A6D">'+(mystery.eat?'❌ "I cannot eat this."':'✅ "I can eat this."')
+      +'</span><br><span style="font-weight:600;color:var(--k-mute);font-size:.88rem">Wrong! You taught it the labels backwards. A machine only knows what you show it.</span>';
+  } else {
+    g.innerHTML='<span style="color:#FFB627">🤷 "I am not sure."</span><br><span style="font-weight:600;color:var(--k-mute);font-size:.88rem">Your examples disagree with each other. Teach it more.</span>';
+  }
+});
+drawThings(); score();
+</script>
+</body>
+</html>
