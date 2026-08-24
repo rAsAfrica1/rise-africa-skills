@@ -2656,8 +2656,17 @@ if(!card) return;
 var h3 = card.querySelector('h3');
 var courseTitle = h3 ? h3.textContent.trim() : '';
 var tier = btn.dataset.tier || 'course';
+var price = btn.dataset.price || '';
 if(courseTitle){
-window.location.href = 'enroll.html?course=' + encodeURIComponent(courseTitle);
+  // The chosen tier MUST travel with the course. Previously it was read here
+  // and then dropped, so enroll.html fell back to its default $8 radio and
+  // sent the buyer to the $8 Stripe link no matter which button they pressed.
+  var url = 'enroll.html?course=' + encodeURIComponent(courseTitle)
+          + '&tier=' + encodeURIComponent(tier);
+  if(price) url += '&price=' + encodeURIComponent(price);
+  try { localStorage.setItem('rasPendingEnrolment',
+        JSON.stringify({course: courseTitle, tier: tier, price: price, at: Date.now()})); } catch(e){}
+  window.location.href = url;
 }
 };
 var btnRegister = document.getElementById('btnRegister');

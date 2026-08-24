@@ -47,7 +47,11 @@ main{max-width:900px;margin:2rem auto;padding:0 1rem}
 .option-item:hover{border-color:var(--gold);background:rgba(201,162,39,0.08)}
 .option-item input[type="radio"]{margin-right:0.75rem;cursor:pointer}
 .option-item.selected{border-color:var(--gold);background:rgba(201,162,39,0.15)}
-.option-label{flex:1}
+.option-label{flex:1;min-width:0}
+/* The radio had no width or flex constraint, so flex stretched it to 416px
+   and squeezed every payment label into 80px. Pin it. */
+.option-item input[type="radio"]{flex:0 0 auto;width:18px;height:18px;margin:0 .75rem 0 0;accent-color:#C9A227}
+.option-price{flex:0 0 auto;margin-left:auto;padding-left:.75rem;font-weight:700;white-space:nowrap}
 .option-price{color:var(--gold);font-weight:700;margin-left:auto}
 
 .error-message{color:#e94560;font-size:0.85rem;margin-top:0.3rem}
@@ -268,9 +272,81 @@ footer{border-top:1px solid rgba(201,162,39,0.15);text-align:center;padding:1.5r
               </div>
               <div class="option-price">$20.00</div>
             </div>
+            <div class="option-item" onclick="selectOption(this, 'gift')">
+              <input type="radio" name="tier" value="gift">
+              <div class="option-label">
+                <strong>🎁 Gift a Course</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">We email the course to someone else, from you</div>
+              </div>
+              <div class="option-price">$8.00</div>
+            </div>
           </div>
         </div>
 
+        
+        <!-- GIFT DETAILS — shown only when the Gift option is selected -->
+        <div class="form-section" id="giftSection" style="display:none">
+          <div style="background:rgba(201,162,39,.10);border:1px solid #C9A227;border-radius:10px;
+                      padding:.9rem 1.1rem;margin-bottom:1rem;font-size:.92rem;line-height:1.55">
+            <strong>🎁 You are buying this course for someone else.</strong><br>
+            We will email them the course access and your message. You pay; they learn.
+            Your own details above are used for the receipt.
+          </div>
+
+          <label for="giftRecipientName">Who is it for? *</label>
+          <input type="text" id="giftRecipientName" name="giftRecipientName"
+                 placeholder="Their full name, e.g. Tendai Moyo" autocomplete="off">
+
+          <label for="giftRecipientEmail" style="margin-top:.9rem">Where should we send the course? *</label>
+          <input type="email" id="giftRecipientEmail" name="giftRecipientEmail"
+                 placeholder="their.email@example.com" autocomplete="off">
+          <div style="font-size:.83rem;color:var(--muted);margin-top:.3rem">
+            Course access goes to this address. Check the spelling — we cannot recover a course
+            sent to the wrong inbox.
+          </div>
+
+          <label for="giftRecipientPhone" style="margin-top:.9rem">Their WhatsApp number (optional)</label>
+          <input type="tel" id="giftRecipientPhone" name="giftRecipientPhone"
+                 placeholder="+263 77 000 0000" autocomplete="off">
+          <div style="font-size:.83rem;color:var(--muted);margin-top:.3rem">
+            If they have no email, we can send it on WhatsApp instead.
+          </div>
+
+          <label for="giftFrom" style="margin-top:.9rem">Who is it from? *</label>
+          <input type="text" id="giftFrom" name="giftFrom"
+                 placeholder="The name they should see, e.g. Aunty Grace" autocomplete="off">
+
+          <label for="giftOccasion" style="margin-top:.9rem">What is the occasion?</label>
+          <select id="giftOccasion" name="giftOccasion">
+            <option value="">No particular occasion</option>
+            <option value="Birthday">🎂 Birthday</option>
+            <option value="Graduation">🎓 Graduation</option>
+            <option value="Christmas">🎄 Christmas</option>
+            <option value="Eid">🌙 Eid</option>
+            <option value="New Year">🎆 New Year</option>
+            <option value="Wedding">💍 Wedding</option>
+            <option value="New baby">👶 New baby</option>
+            <option value="Starting a business">🚀 Starting a business</option>
+            <option value="Well done">👏 Well done / congratulations</option>
+            <option value="Just because">💛 Just because</option>
+          </select>
+
+          <label for="giftMessage" style="margin-top:.9rem">Your message to them (optional)</label>
+          <textarea id="giftMessage" name="giftMessage" rows="3" maxlength="300"
+            placeholder="e.g. Happy birthday Tendai — I know you have wanted to start with chickens. Here is the first step. Make it count."
+            style="width:100%;padding:.7rem;border-radius:8px;border:1px solid rgba(255,255,255,.18);
+                   background:rgba(255,255,255,.05);color:inherit;font-family:inherit;resize:vertical"></textarea>
+          <div style="font-size:.83rem;color:var(--muted);margin-top:.3rem">
+            Up to 300 characters. It goes in the email they receive.
+          </div>
+
+          <label for="giftSendWhen" style="margin-top:.9rem">When should we send it?</label>
+          <select id="giftSendWhen" name="giftSendWhen">
+            <option value="now">Send as soon as payment clears</option>
+            <option value="date">Hold it for a specific date</option>
+          </select>
+          <input type="date" id="giftSendDate" name="giftSendDate" style="display:none;margin-top:.5rem">
+        </div>
         <!-- PAYMENT METHOD -->
         <div class="form-section">
           <label>Payment Method *</label>
@@ -294,6 +370,55 @@ footer{border-top:1px solid rgba(201,162,39,0.15);text-align:center;padding:1.5r
               <div class="option-label">
                 <strong>📱 M-Pesa</strong>
                 <div style="font-size:0.85rem;color:var(--muted)">East Africa mobile money</div>
+              </div>
+            </div>
+            <div class="option-item" data-methods onclick="selectOption(this, 'mtnmomo')">
+              <input type="radio" name="paymentMethod" value="mtnmomo">
+              <div class="option-label">
+                <strong>📱 MTN Mobile Money</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">Ghana, Uganda, Rwanda, Cameroon, Zambia, Côte d'Ivoire, Benin</div>
+              </div>
+            </div>
+            <div class="option-item" data-methods onclick="selectOption(this, 'airtel')">
+              <input type="radio" name="paymentMethod" value="airtel">
+              <div class="option-label">
+                <strong>📱 Airtel Money</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">Kenya, Uganda, Tanzania, Zambia, Malawi, Nigeria, Rwanda</div>
+              </div>
+            </div>
+            <div class="option-item" data-methods onclick="selectOption(this, 'orange')">
+              <input type="radio" name="paymentMethod" value="orange">
+              <div class="option-label">
+                <strong>📱 Orange Money</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">Senegal, Mali, Côte d'Ivoire, Cameroon, DRC, Guinea, Madagascar</div>
+              </div>
+            </div>
+            <div class="option-item" data-methods onclick="selectOption(this, 'vodacash')">
+              <input type="radio" name="paymentMethod" value="vodacash">
+              <div class="option-label">
+                <strong>📱 Vodafone Cash / Telecel</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">Ghana</div>
+              </div>
+            </div>
+            <div class="option-item" data-methods onclick="selectOption(this, 'wave')">
+              <input type="radio" name="paymentMethod" value="wave">
+              <div class="option-label">
+                <strong>📱 Wave</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">Senegal, Côte d'Ivoire, Mali, Burkina Faso, The Gambia</div>
+              </div>
+            </div>
+            <div class="option-item" data-methods onclick="selectOption(this, 'tigopesa')">
+              <input type="radio" name="paymentMethod" value="tigopesa">
+              <div class="option-label">
+                <strong>📱 Mixx by Yas / Tigo Pesa</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">Tanzania</div>
+              </div>
+            </div>
+            <div class="option-item" data-methods onclick="selectOption(this, 'nigeriatransfer')">
+              <input type="radio" name="paymentMethod" value="nigeriatransfer">
+              <div class="option-label">
+                <strong>🏦 Nigeria bank transfer / USSD</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">Opay, PalmPay, Moniepoint, Kuda, GTBank and others</div>
               </div>
             </div>
             <div class="option-item" onclick="selectOption(this, 'bank')">
@@ -362,11 +487,19 @@ const PAYMENT_METHOD_LINKS = { stripe: STRIPE_LINKS };
 
 // Mobile money and bank transfer are completed over WhatsApp with a live agent,
 // who sends the merchant code / account details and confirms payment within 2 hours.
-function waPay(course, tier, method, email) {
+function waPay(course, tier, method, email, gift) {
   var label = { ecocash: 'EcoCash', mpesa: 'M-Pesa', bank: 'Bank Transfer' }[method] || method;
   var msg = 'Hi rAs, I want to enroll and pay by ' + label + '.'
     + '\nCourse: ' + (course || 'to be confirmed')
     + '\nTier: ' + tier + ' (US$' + getTierPrice(tier) + ')'
+    + (gift ? '\n\n--- GIFT ---'
+        + '\nFor: ' + gift.recipientName
+        + (gift.recipientEmail ? '\nEmail: ' + gift.recipientEmail : '')
+        + (gift.recipientPhone ? '\nWhatsApp: ' + gift.recipientPhone : '')
+        + '\nFrom: ' + gift.from
+        + (gift.occasion ? '\nOccasion: ' + gift.occasion : '')
+        + (gift.message ? '\nMessage: ' + gift.message : '')
+        + '\nSend: ' + gift.sendWhen : '')
     + '\nEmail: ' + (email || 'to be confirmed')
     + '\nPlease send me the payment details.';
   window.open('https://wa.me/' + RAS_WHATSAPP + '?text=' + encodeURIComponent(msg), '_blank');
@@ -410,6 +543,39 @@ function initializePage() {
       option.selected = true;
     }
   });
+
+  // ── Honour the tier the buyer actually clicked ──────────────────────
+  // Without this the form silently falls back to its default $8 radio, so
+  // someone who pressed "$10.00 +Record" is routed to the $8 Stripe link.
+  const params = new URLSearchParams(window.location.search);
+  const urlTier = (params.get('tier') || '').toLowerCase();
+  const VALID = ['course', 'cert', 'print', 'bundle', 'gift'];
+  if (VALID.indexOf(urlTier) !== -1) {
+    const radio = document.querySelector('input[name="tier"][value="' + urlTier + '"]');
+    if (radio) {
+      radio.checked = true;
+      if (typeof radio.dispatchEvent === 'function') {
+        radio.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    }
+  }
+
+  // Confirm the selection back to the buyer, so a wrong tier is visible
+  // before they pay rather than after.
+  const chosen = document.querySelector('input[name="tier"]:checked');
+  if (urlCourse && chosen) {
+    const LABEL = { course: 'Full course', cert: 'Course + Business Seed Record',
+                    print: 'Printable materials', bundle: '3-course bundle', gift: 'Gift' };
+    const banner = document.createElement('div');
+    banner.id = 'selectionBanner';
+    banner.style.cssText = 'background:rgba(201,162,39,.12);border:1px solid #C9A227;' +
+      'border-radius:10px;padding:.85rem 1.1rem;margin:0 0 1.1rem;font-size:.94rem;line-height:1.5';
+    banner.innerHTML = 'You selected <strong>' + urlCourse.replace(/</g,'&lt;') + '</strong> — ' +
+      '<strong>' + (LABEL[chosen.value] || chosen.value) + ' (US$' + getTierPrice(chosen.value) + ')</strong>.' +
+      '<br><span style="opacity:.75">Not right? Change the option below before paying.</span>';
+    const form = document.querySelector('form') || document.body;
+    form.insertBefore(banner, form.firstChild);
+  }
 }
 
 // ============ SELECT OPTION IN FORM ============
@@ -435,6 +601,144 @@ function closeEnrollmentModal() {
   }
 }
 
+
+
+// ============ COUNTRY-AWARE PAYMENT METHODS ============
+// Twelve payment options is a wall. Showing a Kenyan buyer EcoCash, or a
+// Zimbabwean buyer Wave, is noise that costs conversions. Surface the rails
+// that actually operate in their country first; everything else stays
+// reachable behind "Show all".
+var METHODS_BY_COUNTRY = {
+  'Zimbabwe':['ecocash','stripe','bank'],
+  'Kenya':['mpesa','airtel','stripe','bank'],
+  'Tanzania':['mpesa','tigopesa','airtel','stripe'],
+  'Uganda':['mtnmomo','airtel','stripe'],
+  'Rwanda':['mtnmomo','airtel','stripe'],
+  'Ghana':['mtnmomo','vodacash','stripe','bank'],
+  'Nigeria':['nigeriatransfer','airtel','stripe','bank'],
+  'Zambia':['mtnmomo','airtel','stripe'],
+  'Malawi':['airtel','stripe','bank'],
+  'Cameroon':['mtnmomo','orange','stripe'],
+  'Senegal':['wave','orange','stripe'],
+  "Côte d'Ivoire":['wave','orange','mtnmomo','stripe'],
+  'Mali':['wave','orange','stripe'],
+  'Burkina Faso':['wave','orange','stripe'],
+  'Benin':['mtnmomo','orange','stripe'],
+  'Guinea':['orange','stripe'],
+  'Madagascar':['orange','stripe'],
+  'DR Congo':['orange','airtel','stripe'],
+  'Congo (DRC)':['orange','airtel','stripe'],
+  'South Africa':['stripe','bank','paypal'],
+  'Botswana':['stripe','bank'],
+  'Namibia':['stripe','bank'],
+  'Ethiopia':['stripe','bank'],
+  'The Gambia':['wave','stripe'],
+  'Gambia':['wave','stripe']
+};
+var ALWAYS = ['stripe','bank','paypal'];
+
+function applyCountryMethods(){
+  var sel = document.getElementById('country');
+  if(!sel) return;
+  var country = sel.value;
+  var relevant = METHODS_BY_COUNTRY[country];
+  var items = document.querySelectorAll('#paymentMethods .option-item');
+  var showAll = document.getElementById('showAllMethods');
+
+  if(!relevant || (showAll && showAll.dataset.expanded === '1')){
+    items.forEach(function(it){ it.style.display = ''; });
+    if(showAll) showAll.style.display = relevant ? 'block' : 'none';
+    return;
+  }
+  var keep = relevant.concat(ALWAYS);
+  items.forEach(function(it){
+    var r = it.querySelector('input[name="paymentMethod"]');
+    if(!r) return;
+    var visible = keep.indexOf(r.value) !== -1;
+    it.style.display = visible ? '' : 'none';
+    if(!visible && r.checked){
+      var first = document.querySelector('#paymentMethods input[name="paymentMethod"][value="' + relevant[0] + '"]');
+      if(first){
+        first.checked = true;
+        items.forEach(function(x){ x.classList.remove('selected'); });
+        if(first.closest('.option-item')) first.closest('.option-item').classList.add('selected');
+      }
+    }
+  });
+  if(showAll){ showAll.style.display = 'block'; showAll.dataset.expanded = '0';
+               showAll.textContent = 'Show all payment methods'; }
+}
+
+function initCountryMethods(){
+  var group = document.getElementById('paymentMethods');
+  if(group && !document.getElementById('showAllMethods')){
+    var b = document.createElement('button');
+    b.type = 'button'; b.id = 'showAllMethods'; b.dataset.expanded = '0';
+    b.textContent = 'Show all payment methods';
+    b.style.cssText = 'margin-top:.7rem;background:none;border:1px solid rgba(255,255,255,.25);' +
+      'color:inherit;padding:.5rem .9rem;border-radius:8px;cursor:pointer;font-size:.85rem;display:none';
+    b.addEventListener('click', function(){
+      var on = this.dataset.expanded === '1';
+      this.dataset.expanded = on ? '0' : '1';
+      this.textContent = on ? 'Show all payment methods' : 'Show fewer';
+      applyCountryMethods();
+    });
+    group.parentNode.appendChild(b);
+  }
+  var sel = document.getElementById('country');
+  if(sel) sel.addEventListener('change', applyCountryMethods);
+  applyCountryMethods();
+}
+
+// ============ GIFT FIELDS ============
+// The gift block is inert markup until wired: show it only for the gift tier,
+// and make its fields genuinely required, otherwise a buyer can pay for a gift
+// that has no recipient and no way to be delivered.
+function syncGiftSection(){
+  var chosen = document.querySelector('input[name="tier"]:checked');
+  var isGift = !!chosen && chosen.value === 'gift';
+  var sec = document.getElementById('giftSection');
+  if(sec) sec.style.display = isGift ? 'block' : 'none';
+  ['giftRecipientName','giftRecipientEmail','giftFrom'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.required = isGift;
+  });
+}
+document.addEventListener('change', function(e){
+  if(e.target && e.target.name === 'tier') syncGiftSection();
+  if(e.target && e.target.id === 'giftSendWhen'){
+    var d = document.getElementById('giftSendDate');
+    if(d) d.style.display = e.target.value === 'date' ? 'block' : 'none';
+  }
+});
+document.addEventListener('click', function(e){
+  if(e.target && e.target.closest && e.target.closest('.option-item')) setTimeout(syncGiftSection, 0);
+});
+
+function collectGift(){
+  var v = function(id){ var el = document.getElementById(id); return el ? el.value.trim() : ''; };
+  return {
+    recipientName:  v('giftRecipientName'),
+    recipientEmail: v('giftRecipientEmail'),
+    recipientPhone: v('giftRecipientPhone'),
+    from:           v('giftFrom'),
+    occasion:       v('giftOccasion'),
+    message:        v('giftMessage'),
+    sendWhen:       v('giftSendWhen') === 'date' ? (v('giftSendDate') || 'a chosen date') : 'immediately'
+  };
+}
+
+function validateGift(){
+  var g = collectGift();
+  if(!g.recipientName) return 'Please tell us who the gift is for.';
+  if(!g.recipientEmail && !g.recipientPhone)
+    return 'We need an email address or a WhatsApp number so we can deliver the course.';
+  if(g.recipientEmail && g.recipientEmail.indexOf('@') === -1)
+    return 'That recipient email does not look right — please check it.';
+  if(!g.from) return 'Please tell us who the gift is from.';
+  return null;
+}
+
 // ============ HANDLE ENROLLMENT FORM ============
 async function handleEnrollment(e) {
   e.preventDefault();
@@ -451,6 +755,12 @@ async function handleEnrollment(e) {
   if (!fullName || !email || !phone || !country || !course || !tier || !paymentMethod) {
     showError('Please fill in all required fields');
     return;
+  }
+  var giftData = null;
+  if (tier === 'gift') {
+    var giftErr = validateGift();
+    if (giftErr) { showError(giftErr); return; }
+    giftData = collectGift();
   }
 
   // Show loading
@@ -475,6 +785,7 @@ async function handleEnrollment(e) {
         user_id: userId,
         course_name: course,
         tier: tier,
+        gift_details: giftData,
         full_name: fullName,
         email: email,
         phone: phone,
@@ -499,7 +810,7 @@ async function handleEnrollment(e) {
     localStorage.setItem('enrollments', JSON.stringify(enrollments));
 
     // Route to payment
-    routeToPayment(course, tier, paymentMethod, email);
+    routeToPayment(course, tier, paymentMethod, email, giftData);
 
   } catch (err) {
     console.error('Error:', err);
@@ -510,7 +821,7 @@ async function handleEnrollment(e) {
 }
 
 // ============ ROUTE TO PAYMENT ============
-function routeToPayment(course, tier, paymentMethod, email) {
+function routeToPayment(course, tier, paymentMethod, email, gift) {
   let paymentUrl = '';
 
   if (paymentMethod === 'stripe') {
@@ -520,9 +831,10 @@ function routeToPayment(course, tier, paymentMethod, email) {
       paymentUrl += '?prefilled_email=' + encodeURIComponent(email);
     }
     window.open(paymentUrl, '_blank');
-  } else if (paymentMethod === 'ecocash' || paymentMethod === 'mpesa' || paymentMethod === 'bank') {
+  } else if (['ecocash','mpesa','mtnmomo','airtel','orange','vodacash','wave',
+              'tigopesa','nigeriatransfer','bank'].indexOf(paymentMethod) !== -1) {
     // Mobile money / bank transfer completed with a live agent on WhatsApp
-    waPay(course, tier, paymentMethod, email);
+    waPay(course, tier, paymentMethod, email, gift);
   } else if (paymentMethod === 'paypal') {
     // PayPal payment
     const paypalUrl = 'https://paypal.com/checkout?amount=' + getTierPrice(tier);
@@ -550,7 +862,7 @@ function showError(message) {
 }
 
 // Initialize on page load
-document.addEventListener('DOMContentLoaded', initializePage);
+document.addEventListener('DOMContentLoaded', function(){ initializePage(); syncGiftSection(); initCountryMethods(); });
 </script>
 </body>
 </html>
