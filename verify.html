@@ -435,7 +435,7 @@
             const certId = input.value.trim().toUpperCase();
 
             if (!certId) {
-                showInvalid('Please enter a certificate ID');
+                showInvalid('Please enter a Business Seed Record ID');
                 return;
             }
 
@@ -452,7 +452,7 @@
 
                 if (error) {
                     if (error.code === 'PGRST116') {
-                        showInvalid(`Certificate <strong>${certId}</strong> not found in our records. Please check the ID and try again.`);
+                        showInvalid(`Business Seed Record <strong>${certId}</strong> not found in our records. Please check the ID and try again.`);
                     } else {
                         showInvalid('Unable to verify right now. Please try again later.');
                         console.error('Supabase error:', error);
@@ -499,7 +499,7 @@
             resultBox.innerHTML = `
                 <div class="result-header">
                     <div class="icon">&#10003;</div>
-                    <span>Certificate Verified Successfully</span>
+                    <span>Business Seed Record Verified Successfully</span>
                 </div>
                 <div class="cert-card">
                     <div class="cert-badge">
@@ -512,7 +512,7 @@
                         </svg>
                     </div>
                     <div class="cert-field">
-                        <label>Certificate ID</label>
+                        <label>Business Seed Record ID</label>
                         <span>${certId}</span>
                     </div>
                     <div class="cert-field">
@@ -545,7 +545,7 @@
                     </div>
                 </div>
                 <div class="actions">
-                    <button class="btn btn-primary" onclick="window.print()">Print Certificate</button>
+                    <button class="btn btn-primary" onclick="window.print()">Print Business Seed Record</button>
                     <button class="btn btn-secondary" onclick="shareCertificate('${certId}', '${cert.user_name}', '${cert.course_title}')">Share</button>
                 </div>
             `;
@@ -564,11 +564,11 @@
         }
 
         function shareCertificate(id, recipient, course) {
-            const text = `I earned the ${course} certificate from Rise Africa Skills! Verify: ${id}`;
+            const text = `I completed the ${course} enterprise pointer exercise with Rise Africa Skills — Business Seed Record: Verify: ${id}`;
             if (navigator.share) {
-                navigator.share({ title: 'My Certificate', text: text });
+                navigator.share({ title: 'My Business Seed Record', text: text });
             } else {
-                navigator.clipboard.writeText(text).then(() => alert('Certificate details copied to clipboard!'));
+                navigator.clipboard.writeText(text).then(() => alert('Business Seed Record details copied to clipboard!'));
             }
         }
     </script>
