@@ -23,7 +23,52 @@ th { background:#c2185b; color:#fff; }
 .progress-bar { width:100%; height:30px; background:#ddd; border-radius:6px; overflow:hidden; margin:20px 0; }
 .progress-fill { height:100%; background:linear-gradient(90deg,#c2185b,#e91e63); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; }
 @media (max-width:768px) { .content { padding:20px; } table { font-size:12px; } }
-</style></head><body>
+</style><!--ras-video-v2-->
+<style>
+.ras-vid{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:8px;overflow:hidden;margin:14px 0;cursor:pointer;border:1px solid rgba(201,162,39,.35)}
+.ras-vid img{width:100%;height:100%;object-fit:cover;display:block;opacity:.82;transition:opacity .2s,transform .3s}
+.ras-vid:hover img{opacity:1;transform:scale(1.03)}
+.ras-vid .ras-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.ras-vid .ras-play span{width:64px;height:64px;border-radius:50%;background:rgba(201,162,39,.94);color:#111;display:flex;align-items:center;justify-content:center;font-size:26px;padding-left:5px;box-shadow:0 4px 18px rgba(0,0,0,.5)}
+.ras-vid:hover .ras-play span{background:#e0c050}
+.ras-vid .ras-meta{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 9px;background:linear-gradient(transparent,rgba(0,0,0,.88));color:#fff;font-size:.8rem;line-height:1.35;pointer-events:none}
+.ras-vid .ras-meta b{color:#c9a227;display:block;font-size:.72rem;font-weight:700;margin-bottom:2px}
+.ras-vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ras-vid.ras-dead{cursor:default;background:#14141f}
+.ras-vid .ras-fallback{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:18px;color:#ddd;font-size:.85rem}
+.ras-vid.ras-dead .ras-fallback{display:flex}
+.ras-vid.ras-dead img,.ras-vid.ras-dead .ras-play,.ras-vid.ras-dead .ras-meta{display:none}
+.ras-vid .ras-fallback a{background:#c9a227;color:#111;font-weight:700;padding:.55rem 1.1rem;border-radius:6px;text-decoration:none;font-size:.82rem}
+</style>
+<script>
+(function(){
+  function play(box){
+    if(box.dataset.on||box.classList.contains('ras-dead'))return;
+    box.dataset.on=1;
+    var f=document.createElement('iframe');
+    f.src='https://www.youtube-nocookie.com/embed/'+box.dataset.yt+
+          '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+    f.allow='accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture';
+    f.allowFullscreen=true;f.loading='eager';f.title=box.dataset.title||'Video lesson';
+    box.appendChild(f);
+  }
+  function init(){
+    document.querySelectorAll('.ras-vid').forEach(function(box){
+      var img=box.querySelector('img');
+      // Self-heal: a 404 thumbnail means the video is deleted or private.
+      // Swap to a topic search so a student never meets a blocked embed.
+      if(img){img.addEventListener('error',function(){box.classList.add('ras-dead');});}
+      box.addEventListener('click',function(){play(box);});
+      box.addEventListener('keydown',function(e){
+        if(e.key==='Enter'||e.key===' '){e.preventDefault();play(box);}
+      });
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
+  else init();
+})();
+</script>
+</head><body>
 <div class="container">
 <div class="header"><h1>📱 Mobile App Development</h1><p>Module 2: App Design MODULE_TITLE UX</p></div>
 <div class="content">
@@ -32,11 +77,11 @@ th { background:#c2185b; color:#fff; }
 <ul><li>Choose appropriate mobile platform</li><li>Master mobile UI/UX design</li><li>Learn native app development</li><li>Build cross-platform apps</li><li>Implement mobile APIs</li><li>Deploy to app stores</li></ul></div>
 </div>
 <div class="section"><h2>📹 Educational Videos</h2>
-<div class="video-container"><iframe src="https://www.youtube.com/embed/jOTxjpEgx-w"></iframe><p>Mobile Development Overview</p></div>
-<div class="video-container"><iframe src="https://www.youtube.com/embed/c_C6uHt0rFM"></iframe><p>Flutter Basics</p></div>
-<div class="video-container"><iframe src="https://www.youtube.com/embed/VdV9tKZfIqE"></iframe><p>React Native</p></div>
-<div class="video-container"><iframe src="https://www.youtube.com/embed/p_0R3C-yqcY"></iframe><p>Mobile UI/UX Design</p></div>
-<div class="video-container"><iframe src="https://www.youtube.com/embed/W6NP0A4VvFk"></iframe><p>App Store Deployment</p></div>
+<div class="video-container"><div class="ras-vid" data-yt="IcKrLwFXwz4" data-title="MAIZE SPACING WHEN PLANTING FOR HIGH YIELDS" role="button" tabindex="0" aria-label="Play: MAIZE SPACING WHEN PLANTING FOR HIGH YIELDS"><img loading="lazy" src="https://i.ytimg.com/vi/IcKrLwFXwz4/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>THE FARM CHIEF</b>MAIZE SPACING WHEN PLANTING FOR HIGH YIELDS</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=mobile+app+development+📚+Learning+Objectives" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div><p>Mobile Development Overview</p></div>
+<div class="video-container"><div class="ras-vid" data-yt="IcKrLwFXwz4" data-title="MAIZE SPACING WHEN PLANTING FOR HIGH YIELDS" role="button" tabindex="0" aria-label="Play: MAIZE SPACING WHEN PLANTING FOR HIGH YIELDS"><img loading="lazy" src="https://i.ytimg.com/vi/IcKrLwFXwz4/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>THE FARM CHIEF</b>MAIZE SPACING WHEN PLANTING FOR HIGH YIELDS</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=mobile+app+development+📚+Learning+Objectives" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div><p>Flutter Basics</p></div>
+<div class="video-container"><div class="ras-vid" data-yt="Zeo5AWR0zjk" data-title="Maize Farming Techniques Wirh Proper Spacing and Planting Depth | Profit Per Acre Business Model" role="button" tabindex="0" aria-label="Play: Maize Farming Techniques Wirh Proper Spacing and Planting Depth | Profit Per Acre Business Model"><img loading="lazy" src="https://i.ytimg.com/vi/Zeo5AWR0zjk/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Smart Farming Inside</b>Maize Farming Techniques Wirh Proper Spacing and Planting Depth | Profit Per Acre Business Model</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=mobile+app+development" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div><p>React Native</p></div>
+<div class="video-container"><div class="ras-vid" data-yt="asscF9W9tqQ" data-title="How to Grow Maize for High Yields |Expert Free Guide on Maize Farming in Kenya" role="button" tabindex="0" aria-label="Play: How to Grow Maize for High Yields |Expert Free Guide on Maize Farming in Kenya"><img loading="lazy" src="https://i.ytimg.com/vi/asscF9W9tqQ/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Farmworx Kenya</b>How to Grow Maize for High Yields |Expert Free Guide on Maize Farming in Kenya</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=mobile+app+development" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div><p>Mobile UI/UX Design</p></div>
+<div class="video-container"><div class="ras-vid" data-yt="NjyOjR3O4Yk" data-title="Maize Farming in Zambia: How We Established a Maize Crop at our New Farm" role="button" tabindex="0" aria-label="Play: Maize Farming in Zambia: How We Established a Maize Crop at our New Farm"><img loading="lazy" src="https://i.ytimg.com/vi/NjyOjR3O4Yk/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Mondo Farms</b>Maize Farming in Zambia: How We Established a Maize Crop at our New Farm</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=mobile+app+development" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div><p>App Store Deployment</p></div>
 </div>
 <div class="section"><h2>📊 Mobile Platforms Comparison</h2>
 <table><tr><th>Platform</th><th>Language</th><th>Market Share</th><th>Development Time</th></tr>

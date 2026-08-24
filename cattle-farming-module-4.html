@@ -42,6 +42,51 @@ button:hover { background: #1a1a2e; }
 .nav-buttons a { display: inline-block; padding: 12px 30px; background: #1a1a2e; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; }
 .nav-buttons a:hover { background: #0f3460; }
 </style>
+<!--ras-video-v2-->
+<style>
+.ras-vid{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:8px;overflow:hidden;margin:14px 0;cursor:pointer;border:1px solid rgba(201,162,39,.35)}
+.ras-vid img{width:100%;height:100%;object-fit:cover;display:block;opacity:.82;transition:opacity .2s,transform .3s}
+.ras-vid:hover img{opacity:1;transform:scale(1.03)}
+.ras-vid .ras-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.ras-vid .ras-play span{width:64px;height:64px;border-radius:50%;background:rgba(201,162,39,.94);color:#111;display:flex;align-items:center;justify-content:center;font-size:26px;padding-left:5px;box-shadow:0 4px 18px rgba(0,0,0,.5)}
+.ras-vid:hover .ras-play span{background:#e0c050}
+.ras-vid .ras-meta{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 9px;background:linear-gradient(transparent,rgba(0,0,0,.88));color:#fff;font-size:.8rem;line-height:1.35;pointer-events:none}
+.ras-vid .ras-meta b{color:#c9a227;display:block;font-size:.72rem;font-weight:700;margin-bottom:2px}
+.ras-vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ras-vid.ras-dead{cursor:default;background:#14141f}
+.ras-vid .ras-fallback{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:18px;color:#ddd;font-size:.85rem}
+.ras-vid.ras-dead .ras-fallback{display:flex}
+.ras-vid.ras-dead img,.ras-vid.ras-dead .ras-play,.ras-vid.ras-dead .ras-meta{display:none}
+.ras-vid .ras-fallback a{background:#c9a227;color:#111;font-weight:700;padding:.55rem 1.1rem;border-radius:6px;text-decoration:none;font-size:.82rem}
+</style>
+<script>
+(function(){
+  function play(box){
+    if(box.dataset.on||box.classList.contains('ras-dead'))return;
+    box.dataset.on=1;
+    var f=document.createElement('iframe');
+    f.src='https://www.youtube-nocookie.com/embed/'+box.dataset.yt+
+          '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+    f.allow='accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture';
+    f.allowFullscreen=true;f.loading='eager';f.title=box.dataset.title||'Video lesson';
+    box.appendChild(f);
+  }
+  function init(){
+    document.querySelectorAll('.ras-vid').forEach(function(box){
+      var img=box.querySelector('img');
+      // Self-heal: a 404 thumbnail means the video is deleted or private.
+      // Swap to a topic search so a student never meets a blocked embed.
+      if(img){img.addEventListener('error',function(){box.classList.add('ras-dead');});}
+      box.addEventListener('click',function(){play(box);});
+      box.addEventListener('keydown',function(e){
+        if(e.key==='Enter'||e.key===' '){e.preventDefault();play(box);}
+      });
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
+  else init();
+})();
+</script>
 </head>
 <body>
 <div class="container">
@@ -65,11 +110,11 @@ button:hover { background: #1a1a2e; }
 
 <div class="section">
 <h2>🎥 Video Lessons</h2>
-<div class="video-container"><h3>1. Module 4 Introduction & Overview</h3><iframe src="https://www.youtube.com/embed/fZshnKuNVv4?rel=0" allowfullscreen></iframe></div>
-<div class="video-container"><h3>2. Practical Skills & Best Practices</h3><iframe src="https://www.youtube.com/embed/D0eDLnWbMfI?rel=0" allowfullscreen></iframe></div>
-<div class="video-container"><h3>3. Problem-Solving & Troubleshooting</h3><iframe src="https://www.youtube.com/embed/u6s0nXIL5Qo?rel=0" allowfullscreen></iframe></div>
-<div class="video-container"><h3>4. Case Studies & Real-World Examples</h3><iframe src="https://www.youtube.com/embed/dOxUroR57xs?rel=0" allowfullscreen></iframe></div>
-<div class="video-container"><h3>5. Implementation & Action Planning</h3><iframe src="https://www.youtube.com/embed/6niqTuYvDik?rel=0" allowfullscreen></iframe></div>
+<div class="video-container"><h3>1. Module 4 Introduction & Overview</h3><div class="ras-vid" data-yt="1A0PoOtY3nU" data-title="Ethiopia VCA: Commercializing Smallholder Dairy Production" role="button" tabindex="0" aria-label="Play: Ethiopia VCA: Commercializing Smallholder Dairy Production"><img loading="lazy" src="https://i.ytimg.com/vi/1A0PoOtY3nU/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Fintrac</b>Ethiopia VCA: Commercializing Smallholder Dairy Production</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cattle+farming+Module+4+Introduction+&amp;+Overview" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
+<div class="video-container"><h3>2. Practical Skills & Best Practices</h3><div class="ras-vid" data-yt="uxJoILIbO5A" data-title="Revolutionizing Dairy Farming in Kenya: Advanced Techniques &amp; Expert Insights" role="button" tabindex="0" aria-label="Play: Revolutionizing Dairy Farming in Kenya: Advanced Techniques &amp; Expert Insights"><img loading="lazy" src="https://i.ytimg.com/vi/uxJoILIbO5A/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>AIM Agriculture Farm</b>Revolutionizing Dairy Farming in Kenya: Advanced Techniques &amp; Expert Insights</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cattle+farming+Practical+Skills+&amp;+Best+Practices" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
+<div class="video-container"><h3>3. Problem-Solving & Troubleshooting</h3><div class="ras-vid" data-yt="uxJoILIbO5A" data-title="Revolutionizing Dairy Farming in Kenya: Advanced Techniques &amp; Expert Insights" role="button" tabindex="0" aria-label="Play: Revolutionizing Dairy Farming in Kenya: Advanced Techniques &amp; Expert Insights"><img loading="lazy" src="https://i.ytimg.com/vi/uxJoILIbO5A/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>AIM Agriculture Farm</b>Revolutionizing Dairy Farming in Kenya: Advanced Techniques &amp; Expert Insights</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cattle+farming+Problem-Solving+&amp;+Troubleshooting" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
+<div class="video-container"><h3>4. Case Studies & Real-World Examples</h3><div class="ras-vid" data-yt="yRNe7chOLW4" data-title="Dairy farming is opening up entrepreneurship opportunities in Africa" role="button" tabindex="0" aria-label="Play: Dairy farming is opening up entrepreneurship opportunities in Africa"><img loading="lazy" src="https://i.ytimg.com/vi/yRNe7chOLW4/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>CGTN Africa</b>Dairy farming is opening up entrepreneurship opportunities in Africa</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cattle+farming+Case+Studies+&amp;+Real-World+Examples" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
+<div class="video-container"><h3>5. Implementation & Action Planning</h3><div class="ras-vid" data-yt="1A0PoOtY3nU" data-title="Ethiopia VCA: Commercializing Smallholder Dairy Production" role="button" tabindex="0" aria-label="Play: Ethiopia VCA: Commercializing Smallholder Dairy Production"><img loading="lazy" src="https://i.ytimg.com/vi/1A0PoOtY3nU/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Fintrac</b>Ethiopia VCA: Commercializing Smallholder Dairy Production</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cattle+farming+Implementation+&amp;+Action+Planning" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
 </div>
 
 <div class="section">
@@ -121,7 +166,7 @@ button:hover { background: #1a1a2e; }
 <div class="quiz-option"><input type="radio" name="q1" value="a" id="q1a"><label for="q1a">a) Understanding core principles and applying them to your farm</label></div>
 <div class="quiz-option"><input type="radio" name="q1" value="b" id="q1b"><label for="q1b">b) Memorizing technical details</label></div>
 <div class="quiz-option"><input type="radio" name="q1" value="c" id="q1c"><label for="q1c">c) Following procedures exactly</label></div>
-<button onclick="checkAnswer(q1, a, Correct! Applying principles to your specific situation is more valuable than memorizing details.)">Check Answer</button>
+<button onclick="checkAnswer(this)" data-q="q1" data-a="a" data-f="Correct! Applying principles to your specific situation is more valuable than memorizing details.">Check Answer</button>
 <div id="feedback-q1" class="feedback"></div>
 </div>
 <div class="quiz-question">
@@ -129,7 +174,7 @@ button:hover { background: #1a1a2e; }
 <div class="quiz-option"><input type="radio" name="q2" value="a" id="q2a"><label for="q2a">a) Watch videos passively</label></div>
 <div class="quiz-option"><input type="radio" name="q2" value="b" id="q2b"><label for="q2b">b) Take notes, experiment on your farm, track results, adjust</label></div>
 <div class="quiz-option"><input type="radio" name="q2" value="c" id="q2c"><label for="q2c">c) Read the materials once</label></div>
-<button onclick="checkAnswer(q2, b, Correct! Active learning through experimentation produces the best results.)">Check Answer</button>
+<button onclick="checkAnswer(this)" data-q="q2" data-a="b" data-f="Correct! Active learning through experimentation produces the best results.">Check Answer</button>
 <div id="feedback-q2" class="feedback"></div>
 </div>
 <div class="quiz-question">
@@ -137,7 +182,7 @@ button:hover { background: #1a1a2e; }
 <div class="quiz-option"><input type="radio" name="q3" value="a" id="q3a"><label for="q3a">a) How you apply it to solve real problems on your farm</label></div>
 <div class="quiz-option"><input type="radio" name="q3" value="b" id="q3b"><label for="q3b">b) How much you memorize</label></div>
 <div class="quiz-option"><input type="radio" name="q3" value="c" id="q3c"><label for="q3c">c) Academic credentials</label></div>
-<button onclick="checkAnswer(q3, a, Correct! The real value of knowledge is how it improves your farming results.)">Check Answer</button>
+<button onclick="checkAnswer(this)" data-q="q3" data-a="a" data-f="Correct! The real value of knowledge is how it improves your farming results.">Check Answer</button>
 <div id="feedback-q3" class="feedback"></div>
 </div>
 </div>
@@ -188,24 +233,40 @@ button:hover { background: #1a1a2e; }
 </div>
 
 <script>
-function checkAnswer(q, a, f) {
-    const s = document.querySelector(`input[name="${q}"]:checked`);
-    const e = document.getElementById(`feedback-${q}`);
-    if (!s) { alert(Select an answer); return; }
-    e.className = feedback show  + (s.value === a ? correct : incorrect);
-    e.textContent = (s.value === a ? ✓  : ✗ ) + f;
-    updateProgress();
+var PROGRESS_KEY = 'cattle-farming-module-4';
+
+function checkAnswer(el){
+  var q = el.dataset.q, a = el.dataset.a, f = el.dataset.f || '';
+  var sel = document.querySelector('input[name="' + q + '"]:checked');
+  var box = document.getElementById('feedback-' + q);
+  if(!sel){ if(box){ box.className='feedback show incorrect';
+            box.textContent='Please select an answer first.'; } return; }
+  var right = (sel.value === a);
+  if(box){
+    box.className = 'feedback show ' + (right ? 'correct' : 'incorrect');
+    box.textContent = (right ? '\u2713 ' : '\u2717 ') + f;
+  }
+  updateProgress();
 }
-function updateProgress() {
-    const c = document.querySelectorAll(input[type="radio"]:checked).length;
-    const t = document.querySelectorAll(input[type="radio"]).length / 3;
-    const p = (c / t) * 100;
-    document.getElementById(progressFill).style.width = p + %;
-    localStorage.setItem(cattle-farming_4, p);
+function updateProgress(){
+  var groups = {};
+  document.querySelectorAll('input[type="radio"]').forEach(function(r){ groups[r.name]=1; });
+  var total = Object.keys(groups).length;
+  var done  = {};
+  document.querySelectorAll('input[type="radio"]:checked').forEach(function(r){ done[r.name]=1; });
+  var pct = total ? (Object.keys(done).length / total) * 100 : 0;
+  var bar = document.getElementById('progressFill');
+  if(bar) bar.style.width = pct + '%';
+  try { localStorage.setItem(PROGRESS_KEY, String(pct)); } catch(e){}
 }
-window.addEventListener(load, () => {
-    const s = localStorage.getItem(cattle-farming_4);
-    if (s) document.getElementById(progressFill).style.width = s + %;
+window.addEventListener('load', function(){
+  var saved = null;
+  try { saved = localStorage.getItem(PROGRESS_KEY); } catch(e){}
+  var bar = document.getElementById('progressFill');
+  if(saved && bar) bar.style.width = saved + '%';
+  document.querySelectorAll('input[type="radio"]').forEach(function(r){
+    r.addEventListener('change', updateProgress);
+  });
 });
 </script>
 </body>

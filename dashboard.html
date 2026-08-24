@@ -141,7 +141,14 @@ Your progress is automatically saved. Questions? Email support@riseafricaskills.
 // ============ SUPABASE CONFIG ============
 const SUPABASE_URL = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc';
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+// Guarded init: an unguarded createClient() throws when the Supabase CDN is
+// blocked, slow or offline, killing every feature below it in this script.
+var supabaseClient = null;
+try {
+  if (typeof supabase !== 'undefined' && supabase && supabase.createClient) {
+    supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  } else { console.warn('[rAs] Supabase unavailable - offline mode.'); }
+} catch (e) { console.warn('[rAs] Supabase init failed:', e && e.message); }
 
 // ============ COURSE PAGES MAPPING ============
 const COURSE_PAGES = {

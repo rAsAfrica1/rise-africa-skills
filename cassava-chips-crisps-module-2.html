@@ -180,6 +180,51 @@
             font-weight: bold;
         }
     </style>
+<!--ras-video-v2-->
+<style>
+.ras-vid{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:8px;overflow:hidden;margin:14px 0;cursor:pointer;border:1px solid rgba(201,162,39,.35)}
+.ras-vid img{width:100%;height:100%;object-fit:cover;display:block;opacity:.82;transition:opacity .2s,transform .3s}
+.ras-vid:hover img{opacity:1;transform:scale(1.03)}
+.ras-vid .ras-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.ras-vid .ras-play span{width:64px;height:64px;border-radius:50%;background:rgba(201,162,39,.94);color:#111;display:flex;align-items:center;justify-content:center;font-size:26px;padding-left:5px;box-shadow:0 4px 18px rgba(0,0,0,.5)}
+.ras-vid:hover .ras-play span{background:#e0c050}
+.ras-vid .ras-meta{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 9px;background:linear-gradient(transparent,rgba(0,0,0,.88));color:#fff;font-size:.8rem;line-height:1.35;pointer-events:none}
+.ras-vid .ras-meta b{color:#c9a227;display:block;font-size:.72rem;font-weight:700;margin-bottom:2px}
+.ras-vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ras-vid.ras-dead{cursor:default;background:#14141f}
+.ras-vid .ras-fallback{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:18px;color:#ddd;font-size:.85rem}
+.ras-vid.ras-dead .ras-fallback{display:flex}
+.ras-vid.ras-dead img,.ras-vid.ras-dead .ras-play,.ras-vid.ras-dead .ras-meta{display:none}
+.ras-vid .ras-fallback a{background:#c9a227;color:#111;font-weight:700;padding:.55rem 1.1rem;border-radius:6px;text-decoration:none;font-size:.82rem}
+</style>
+<script>
+(function(){
+  function play(box){
+    if(box.dataset.on||box.classList.contains('ras-dead'))return;
+    box.dataset.on=1;
+    var f=document.createElement('iframe');
+    f.src='https://www.youtube-nocookie.com/embed/'+box.dataset.yt+
+          '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+    f.allow='accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture';
+    f.allowFullscreen=true;f.loading='eager';f.title=box.dataset.title||'Video lesson';
+    box.appendChild(f);
+  }
+  function init(){
+    document.querySelectorAll('.ras-vid').forEach(function(box){
+      var img=box.querySelector('img');
+      // Self-heal: a 404 thumbnail means the video is deleted or private.
+      // Swap to a topic search so a student never meets a blocked embed.
+      if(img){img.addEventListener('error',function(){box.classList.add('ras-dead');});}
+      box.addEventListener('click',function(){play(box);});
+      box.addEventListener('keydown',function(e){
+        if(e.key==='Enter'||e.key===' '){e.preventDefault();play(box);}
+      });
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
+  else init();
+})();
+</script>
 </head>
 <body>
     <header>
@@ -206,27 +251,27 @@
             <h2>📹 Video Lessons</h2>
             <h3>Video 1: Introduction & Fundamentals</h3>
             <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                <div class="ras-vid" data-yt="6K73uLe9u_4" data-title="HOW TO MAKE GARRI FROM CASSAVA || STEP BY STEP PROCESS OF MAKING GARRI FLAXES" role="button" tabindex="0" aria-label="Play: HOW TO MAKE GARRI FROM CASSAVA || STEP BY STEP PROCESS OF MAKING GARRI FLAXES"><img loading="lazy" src="https://i.ytimg.com/vi/6K73uLe9u_4/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Stellawhyt Dynamics</b>HOW TO MAKE GARRI FROM CASSAVA || STEP BY STEP PROCESS OF MAKING GARRI FLAXES</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cassava+chips+crisps+Video+1:+Introduction+&amp;+Fundamentals" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div>
             </div>
 
             <h3>Video 2: Step-by-Step Process</h3>
             <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                <div class="ras-vid" data-yt="_OXnWWVZ5gE" data-title="The Easy Way to Boost Cassava Yield Without Breaking the Bank - Cassava Farming Guide" role="button" tabindex="0" aria-label="Play: The Easy Way to Boost Cassava Yield Without Breaking the Bank - Cassava Farming Guide"><img loading="lazy" src="https://i.ytimg.com/vi/_OXnWWVZ5gE/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Discover Agriculture</b>The Easy Way to Boost Cassava Yield Without Breaking the Bank - Cassava Farming Guide</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cassava+chips+crisps+Video+2:+Step-by-Step+Process" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div>
             </div>
 
             <h3>Video 3: Equipment & Setup</h3>
             <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                <div class="ras-vid" data-yt="F02bO5C9HBU" data-title="Garri || How To Process Garri From Cassava Tubers (yucca)" role="button" tabindex="0" aria-label="Play: Garri || How To Process Garri From Cassava Tubers (yucca)"><img loading="lazy" src="https://i.ytimg.com/vi/F02bO5C9HBU/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>GLOBAL FOOD BOOK</b>Garri || How To Process Garri From Cassava Tubers (yucca)</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cassava+chips+crisps+Video+3:+Equipment+&amp;+Setup" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div>
             </div>
 
             <h3>Video 4: Optimization & Troubleshooting</h3>
             <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                <div class="ras-vid" data-yt="i84Ej9lkX5M" data-title="How Cassava Is Processed Into Garri Using an Automated Machine | Full Production Process" role="button" tabindex="0" aria-label="Play: How Cassava Is Processed Into Garri Using an Automated Machine | Full Production Process"><img loading="lazy" src="https://i.ytimg.com/vi/i84Ej9lkX5M/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Kwado Victory lifestyle</b>How Cassava Is Processed Into Garri Using an Automated Machine | Full Production Process</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cassava+chips+crisps+Video+4:+Optimization+&amp;+Troubleshooting" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div>
             </div>
 
             <h3>Video 5: Financial Management</h3>
             <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                <div class="ras-vid" data-yt="FblqM8XP2fI" data-title="DIY HOW to PROCESS GARRI FROM CASSAVA || GARRI processing @farmguards" role="button" tabindex="0" aria-label="Play: DIY HOW to PROCESS GARRI FROM CASSAVA || GARRI processing @farmguards"><img loading="lazy" src="https://i.ytimg.com/vi/FblqM8XP2fI/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Farming, Horticulture and Organic Drinks</b>DIY HOW to PROCESS GARRI FROM CASSAVA || GARRI processing @farmguards</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cassava+chips+crisps+Video+5:+Financial+Management" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div>
             </div>
         </section>
 
