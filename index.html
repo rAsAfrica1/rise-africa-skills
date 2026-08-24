@@ -2489,44 +2489,119 @@ chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 function hideTyping(){ var t = document.getElementById('chatTyping'); if(t) t.remove(); }
 function getAIResponse(question){
-var q = question.toLowerCase();
-if(q.indexOf('course') !== -1 || q.indexOf('learn') !== -1 || q.indexOf('study') !== -1){
-return 'We offer 128 practical courses across 13 categories — Agriculture, Food Processing, Trades, Technology, Business, Health, and more. Each course costs $8 for full access, $10 with certificate, or $3.50 for printable materials. Browse the Categories section to find your path!';
+var q = (question || '').toLowerCase();
+var esc = function(t){ return t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); };
+// Whole-word / whole-phrase matching. Plain indexOf misfires badly here:
+// 'son' matches inside "personal", 'pay ' inside "pay with". Word boundaries
+// stop a keyword claiming a question it has nothing to do with.
+var has = function(){
+  for(var i=0;i<arguments.length;i++){
+    var t = String(arguments[i]).trim();
+    if(!t) continue;
+    try {
+      if(new RegExp('(^|[^a-z0-9])' + esc(t) + '($|[^a-z0-9])','i').test(q)) return true;
+    } catch(e) {
+      if(q.indexOf(t) !== -1) return true;
+    }
+  }
+  return false;
+};
+
+// ── Knowledge base for the whole of riseafricaskills.com ──────────────
+// Every figure here is drawn from the live site: 142 courses (128 adult +
+// 14 rAs Kids), 764 modules, 140 oEmbed-verified videos. Keep in sync when
+// courses are added. Ordered most-specific first so narrow topics are not
+// swallowed by broad keywords.
+
+// -- rAs Kids -------------------------------------------------------
+if(has('kid','kids','child','children','my son','my daughter','age 7','young','school age','teen','teenager')){
+  return 'rAs Kids is our children\'s wing — 14 courses, 112 modules, for ages 7 to 16. It covers AI, robotics, drones, Chinese, Russian, Arabic, and two courses where a child ends up running a real little business. Every course starts with NO device at all: stones, bottle caps, sand and chalk. Then a shared phone. Then a salvage kit. A parent, guardian or teacher holds the account. Open riseafricaskills.com/kids.html to see it.';
 }
-if(q.indexOf('price') !== -1 || q.indexOf('cost') !== -1 || q.indexOf('how much') !== -1 || q.indexOf('$') !== -1){
-return 'Individual courses: $8.00 (full access), $10.00 (with certificate), $3.50 (print/download). We also offer a 3-course bundle for $20.00. For organizations, bulk discounts start at 50+ seats with up to 40% off per learner.';
+// -- Business Seed Record (never call it a certificate) --------------
+if(has('certificate','certification','qualification','accredit','diploma','degree','seed record','recognised','recognized')){
+  return 'Important: we are NOT a school, and we do not issue certificates, diplomas, degrees or accredited qualifications. What you get for $10 is a Business Seed Record — a dated, uniquely numbered confirmation, with a verification URL, that you worked through and completed a particular enterprise pointer exercise. It carries no academic or regulatory standing anywhere. If you need something a licensing body or visa office will accept, you need an accredited institution, and we will tell you that rather than sell you this. Full detail in our Terms: riseafricaskills.com/terms.html';
 }
-if(q.indexOf('payment') !== -1 || q.indexOf('pay') !== -1 || q.indexOf('eco') !== -1 || q.indexOf('m-pesa') !== -1){
-return 'We accept EcoCash, M-Pesa, Bank Transfer, Card (Stripe), PayPal, and Crypto. Choose your preferred method during enrollment. If you need help with a specific payment method, let me know!';
+// -- Privacy / data --------------------------------------------------
+if(has('privacy','my data','personal data','gdpr','popia','data protection','delete my account',
+      'information you hold','cookies','cookie','sell my information','sell my data',
+      'share my data','my information','who sees my','data safe','is my data')){
+  return 'We collect your name, email, optional phone number and password, plus which courses you enrol in. That is stored with Supabase, whose servers sit outside Africa — so your data does leave your country, and we say so plainly. We never see your card or bank numbers. Quiz progress stays in your own browser and never reaches us. You can ask to see, correct, export or delete anything we hold: email all@riseafricaskills.com with the subject "Data request". Full policy: riseafricaskills.com/privacy.html';
 }
-if(q.indexOf('certificate') !== -1 || q.indexOf('cert') !== -1){
-return 'Certificates are available for $10 per course. Each certificate has a unique verification URL that employers and partners can check instantly. They are digitally signed and include your completion date and skills learned. We also offer printed certificates for bulk/organization orders.';
+// -- Refunds ---------------------------------------------------------
+if(has('refund','money back','cancel my','chargeback','not happy','complain')){
+  return 'If a course does not work as described, tell us within 14 days and we will fix it or refund you — email all@riseafricaskills.com or WhatsApp +263 77 300 1353 with the course name and what went wrong. Refunds go back the way you paid, normally within 14 days. Full terms: riseafricaskills.com/terms.html';
 }
-if(q.indexOf('enroll') !== -1 || q.indexOf('register') !== -1 || q.indexOf('sign up') !== -1 || q.indexOf('account') !== -1){
-return 'You can create a free rAs account by clicking "Sign Up — Free" in the navigation or hero section. Once signed up, you can explore all 88 complete courses. Enrollment ($8-$10) unlocks full course content. No credit card needed to browse!';
+// -- Evidence / how the courses are made ------------------------------
+if(has('evidence','fact','accurate','true','reliable','source','research','made up','trust','proof','verified')){
+  return 'The courses are fact-based and we hold ourselves to it. Every video lesson is a real agricultural or technical video verified against YouTube before it went on the site — 140 of them, from channels like Farming In Africa, Agribusiness TV, FAO, CABI and TAAT Africa. Costs and yields are given as ranges, never promises, because they swing hugely by country and season. That is why every course tells you to CALL THREE SUPPLIERS before buying anything. We guarantee no income. If you find something wrong in a course, tell us and we will correct it.';
 }
-if(q.indexOf('gift') !== -1){
-return 'You can gift any course for $8.00. Select "🎁 Gift This Course" on any course card, enter the recipient\'s name and email, and they\'ll receive an instant enrollment link. Perfect for empowering friends, family, or team members!';
+// -- Zero-capital / phase model ---------------------------------------
+if(has('no money','no capital','cant afford','can\'t afford','broke','start with nothing','startup cost','how do i start','no equipment','poor')){
+  return 'That is exactly who these courses are written for. They start with what you already have — hands, buckets, a shovel — and scale only as profit allows. The animal feed courses, for example, begin with hand-mixing in a bucket using cup measures, then a manual grinder once you can afford $50-200, then motorised equipment later. Nothing assumes you own machinery on day one.';
 }
-if(q.indexOf('bulk') !== -1 || q.indexOf('organization') !== -1 || q.indexOf('company') !== -1 || q.indexOf('ministry') !== -1 || q.indexOf('school') !== -1){
-return 'Organizations worldwide can request bulk enrollment through our "Organizations" section at the bottom of the page. We offer volume discounts (up to 40% off), printed certificates, offline packages for low-connectivity areas, and dedicated account support. Fill out the form and we\'ll respond within 24 hours.';
+// -- Feed courses -----------------------------------------------------
+if(has('feed','fodder','ration','formulation')){
+  return 'We have 5 specialised animal feed courses, 8 modules each: Cattle, Poultry, Pig/Sheep/Goat, Fish/Duck/Rabbit, and Dog/Cat with alternative proteins. Each runs from hand-mixing with no equipment through to a commercial operation, with real formulations, ingredient costs and margins. They are among the fastest routes to income because you can sell feed the same week you make it.';
 }
-if(q.indexOf('offline') !== -1 || q.indexOf('download') !== -1 || q.indexOf('print') !== -1){
-return 'Yes! You can purchase printable/downloadable course materials for $3.50 per course. For organizations, we offer full offline packages — perfect for areas with limited internet. Contact us through the bulk enrollment form for details.';
+// -- Livestock / farming ----------------------------------------------
+if(has('farm','crop','livestock','cattle','goat','pig','poultry','chicken','fish','rabbit','bee','mushroom','cassava','maize')){
+  return 'Agriculture is our biggest category — 85 courses covering livestock (cattle, pigs, poultry, goats, rabbits, fish, bees), crops (maize, cassava, rice, soybean, sunflower and more), and 7 cassava value-addition courses from flour to export-grade HQCF. Each has 6 to 8 modules with real costs, timelines and market routes. Browse the Categories section, or tell me which animal or crop and I will point you at it.';
 }
-if(q.indexOf('contact') !== -1 || q.indexOf('email') !== -1 || q.indexOf('reach') !== -1 || q.indexOf('help') !== -1){
-return 'You can email us at all@riseafricaskills.com, WhatsApp +263 77 300 1353, or use this chat anytime. Our 12 AI assistants handle most questions instantly. For complex issues, a human responds within 2 hours.';
+// -- Languages ---------------------------------------------------------
+if(has('language','chinese','mandarin','russian','arabic','swahili','spanish','french')){
+  return 'For adults we have Chinese, Russian, Arabic, Swahili and Spanish. For children, rAs Kids teaches Chinese, Russian and Arabic through seeing rather than reading — Chinese characters taught as pictures, Cyrillic as a code to crack, Arabic letters as shapes that hold hands. Chinese and Russian matter here for trade and for engineering and medical scholarships; Arabic across North Africa, the Sahel and the Horn.';
 }
-if(q.indexOf('ai') !== -1 || q.indexOf('assistant') !== -1 || q.indexOf('bot') !== -1 || q.indexOf('backoffice') !== -1){
-return 'rAs operates with 12 specialized AI assistants: Enrollment, Course Matching, Progress Coach, Certificates, Billing, Supplier Price Intelligence, Business Plan Builder, Market Research, Legal & Compliance, Health & Safety, Marketing & Sales, and 24/7 General Support. They work together as your personal backoffice team — instant, accurate, always available.';
+// -- Tech ---------------------------------------------------------------
+if(has('drone','robot','coding','programming','web development','cyber','data science','app','iot','solar','technology','ai course','artificial intelligence')){
+  return 'Technology courses include Web Development, Data Science, Cybersecurity, Mobile App Development, IoT, Robotics, Drone Fundamentals, Solar Energy and AI Fundamentals. For children, rAs Kids covers AI, robotics and drones from age 7 — starting unplugged, with no computer needed. Note that drones are regulated in most African countries: our courses tell you to check your own civil aviation authority before flying.';
 }
-if(q.indexOf('hello') !== -1 || q.indexOf('hi') !== -1 || q.indexOf('hey') !== -1){
-return 'Hello! Welcome to Rise Africa Skills. How can I help you today? Ask me about courses, pricing, enrollment, certificates, bulk orders, or anything else!';
+// -- Pricing ------------------------------------------------------------
+if(has('price','cost','how much','fee','prices','pricing')){
+  return 'Each course is $8.00 for full access — all modules, videos, quizzes and the capstone, for life. $10.00 adds a Business Seed Record (a completion confirmation, not a certificate). $3.50 gets print-ready materials only. There is a 3-course bundle at $20.00, and volume discounts for organisations.';
 }
-if(q.indexOf('thank') !== -1){
-return 'You\'re very welcome! 🎓 Feel free to ask anything else, or go ahead and explore our 128 courses. Your future business starts with one skill!';
+// -- Payment ------------------------------------------------------------
+if(has('payment','ecocash','m-pesa','mpesa','paypal','stripe','card','bank','crypto','how do i pay')){
+  return 'You can pay by EcoCash, M-Pesa, bank transfer, card via Stripe, PayPal or crypto. Choose during enrolment. We never see or store your card or bank numbers — the payment provider handles those directly. Stuck? WhatsApp +263 77 300 1353 and we will walk you through it.';
 }
-return 'That\'s a great question! I\'ve shared it with the relevant AI assistant from our team of 12 specialists. In the meantime, you can: (1) Browse our 128 courses in the Categories section, (2) Create a free account to explore, or (3) Email all@riseafricaskills.com for a detailed human response within 2 hours. What would you like to do next?';
+// -- Enrolment ----------------------------------------------------------
+if(has('enrol','enroll','sign up','signup','register','create account','join','get started')){
+  return 'Click "Sign Up — Free" in the navigation, or WhatsApp +263 77 300 1353 and we will enrol you directly. A free account lets you browse all 142 courses before paying for any. You will be asked to accept our Terms and Privacy Policy — and if the learner is under 18, an adult must hold the account.';
+}
+// -- Offline / connectivity ---------------------------------------------
+if(has('offline','no internet','data bundle','connection','slow','airtime','download')){
+  return 'Print-ready materials are $3.50 per course and work with no connection at all. Course pages are built light: videos only load when you tap them, so browsing costs almost no data. rAs Kids goes further — Phase 1 of every kids course needs no device whatsoever. For organisations we can prepare full offline packages.';
+}
+// -- Gift ---------------------------------------------------------------
+if(has('gift','present','for my friend','for someone')){
+  return 'You can gift any course for $8.00 — hit "Gift" on any course card and enter the recipient\'s details. It is a common way families sponsor a younger relative through a trade.';
+}
+// -- Not a school --------------------------------------------------------
+if(has('are you a school','is this a school','university','college','accredited institution',
+      'is this real','are you accredited','are you a university','are you a college')){
+  return 'We are not a school, college or university. We run no terms or semesters and award no qualifications. We are an Instrom Idea Business Seed: we give you the idea, the blueprint and the working method; you bring the hustle and the execution. What you complete is an enterprise pointer exercise, and what you receive confirms you did it — nothing more, and we never dress it up as more.';
+}
+// -- Bulk / organisations ------------------------------------------------
+if(has('bulk','organisation','organization','ngo','company','group','cooperative','team','staff',
+      'for our school','our school','schools')){
+  return 'Yes — we work with NGOs, cooperatives, schools and companies worldwide. Volume discounts, offline packages, local-language versions and dedicated support are all available. Use the Organizations section at the bottom of the page, or email all@riseafricaskills.com with roughly how many learners and which courses.';
+}
+// -- Contact / support ----------------------------------------------------
+if(has('contact','support','help','human','speak to','talk to','email','whatsapp','phone')){
+  return 'Email all@riseafricaskills.com or WhatsApp +263 77 300 1353, 8am to 10pm CAT every day. I handle most questions instantly; anything I cannot answer goes to a person and you will hear back within about 2 hours.';
+}
+// -- The AI team ----------------------------------------------------------
+if(has('ai assistant','ai agent','agents','robot help','who are you','are you human','bot')){
+  return 'I am one of 12 AI assistants running this platform — covering enrolment, course matching, progress coaching, Business Seed Records, billing, supplier price intelligence, content updates, translation, support, analytics, community and quality checks. I am not a human. Anything I cannot answer goes to a person at all@riseafricaskills.com.';
+}
+// -- Greeting --------------------------------------------------------------
+if(has('hello','hi ','hey','good morning','good afternoon','good evening','greetings') && q.length < 30){
+  return 'Hello, and welcome to Rise Africa Skills. Ask me about any of our 142 courses, pricing, enrolment, rAs Kids for children, refunds, or how we handle your data — I can help with all of it.';
+}
+if(has('thank')){
+  return 'You are very welcome. Explore the 142 courses whenever you are ready — your business starts with one skill.';
+}
+// -- Fallback ----------------------------------------------------------------
+return 'I do not have a specific answer for that one, so let me point you somewhere useful. You can browse all 142 courses in the Categories section, see rAs Kids for ages 7-16 at riseafricaskills.com/kids.html, read our Terms or Privacy Policy in the footer, or email all@riseafricaskills.com and a person will reply within about 2 hours. What would help most?';
 }
 function handleChatSend(){
 if(!chatInput) return;
