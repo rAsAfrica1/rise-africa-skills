@@ -1,966 +1,594 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>rAs Newsletter Hub — Learn & Earn Points</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            color: #fff;
-            line-height: 1.6;
-        }
-
-        /* Header with rAs branding */
-        .header {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            border-bottom: 3px solid #d4af37;
-            padding: 1.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #d4af37;
-            letter-spacing: 2px;
-        }
-
-        .logo-text {
-            font-size: 0.9rem;
-            color: #aaa;
-            margin-top: 0.2rem;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .points-display {
-            background: rgba(212, 175, 55, 0.1);
-            border: 2px solid #d4af37;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: bold;
-        }
-
-        .points-display span {
-            color: #d4af37;
-        }
-
-        /* Navigation tabs */
-        .nav-tabs {
-            display: flex;
-            gap: 1rem;
-            padding: 1.5rem 2rem;
-            background: #1a1a1a;
-            border-bottom: 1px solid #d4af37;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .nav-tab {
-            background: transparent;
-            color: #fff;
-            border: 2px solid #555;
-            padding: 0.7rem 1.5rem;
-            cursor: pointer;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .nav-tab:hover {
-            border-color: #d4af37;
-            color: #d4af37;
-        }
-
-        .nav-tab.active {
-            background: #d4af37;
-            color: #1a1a1a;
-            border-color: #d4af37;
-        }
-
-        /* Pricing section */
-        .pricing-section {
-            background: rgba(212, 175, 55, 0.05);
-            border: 2px solid #d4af37;
-            padding: 2rem;
-            margin: 2rem;
-            border-radius: 12px;
-        }
-
-        .pricing-section h2 {
-            color: #d4af37;
-            margin-bottom: 1.5rem;
-            text-align: center;
-            font-size: 1.8rem;
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .price-card {
-            background: rgba(212, 175, 55, 0.1);
-            border: 2px solid #d4af37;
-            padding: 1.5rem;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .price-card h3 {
-            color: #d4af37;
-            margin-bottom: 0.8rem;
-            font-size: 1.2rem;
-        }
-
-        .price-card .price {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #d4af37;
-            margin: 1rem 0;
-        }
-
-        .price-card .description {
-            color: #ccc;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .price-card a {
-            display: inline-block;
-            background: #d4af37;
-            color: #1a1a1a;
-            padding: 0.7rem 1.5rem;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .price-card a:hover {
-            background: #e8c547;
-            transform: translateY(-2px);
-        }
-
-        /* Content container */
-        .content {
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Feed section */
-        .feed-card {
-            background: rgba(212, 175, 55, 0.05);
-            border: 2px solid #d4af37;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-radius: 8px;
-        }
-
-        .feed-card h3 {
-            color: #d4af37;
-            margin-bottom: 0.8rem;
-            font-size: 1.3rem;
-        }
-
-        .feed-card p {
-            color: #ccc;
-            margin-bottom: 0.8rem;
-        }
-
-        /* Quiz section */
-        .quiz-container {
-            background: rgba(212, 175, 55, 0.05);
-            border: 2px solid #d4af37;
-            padding: 2rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-        }
-
-        .quiz-dropdown {
-            margin-bottom: 1.5rem;
-        }
-
-        .quiz-dropdown label {
-            color: #d4af37;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .quiz-dropdown select {
-            width: 100%;
-            padding: 0.8rem;
-            background: rgba(212, 175, 55, 0.1);
-            color: #fff;
-            border: 2px solid #d4af37;
-            border-radius: 6px;
-            font-size: 1rem;
-        }
-
-        .question {
-            background: rgba(212, 175, 55, 0.1);
-            border-left: 4px solid #d4af37;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-radius: 6px;
-        }
-
-        .question h4 {
-            color: #d4af37;
-            margin-bottom: 0.8rem;
-        }
-
-        .question label {
-            display: block;
-            margin: 0.5rem 0;
-            color: #ccc;
-            cursor: pointer;
-        }
-
-        .question input[type="radio"] {
-            margin-right: 0.5rem;
-        }
-
-        .submit-btn {
-            background: #d4af37;
-            color: #1a1a1a;
-            padding: 0.8rem 2rem;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .submit-btn:hover {
-            background: #e8c547;
-            transform: translateY(-2px);
-        }
-
-        /* Games section */
-        .game-card {
-            background: rgba(212, 175, 55, 0.05);
-            border: 2px solid #d4af37;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .game-card h3 {
-            color: #d4af37;
-            margin-bottom: 1rem;
-        }
-
-        .game-card button {
-            background: #d4af37;
-            color: #1a1a1a;
-            padding: 0.8rem 2rem;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .game-card button:hover {
-            background: #e8c547;
-            transform: translateY(-2px);
-        }
-
-        /* Careers section */
-        .career-card {
-            background: rgba(212, 175, 55, 0.05);
-            border: 2px solid #d4af37;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-radius: 8px;
-        }
-
-        .career-card h3 {
-            color: #d4af37;
-            margin-bottom: 0.8rem;
-        }
-
-        .career-card p {
-            color: #ccc;
-        }
-
-        /* Prizes section */
-        .prizes-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .prize-box {
-            background: rgba(212, 175, 55, 0.05);
-            border: 2px solid #d4af37;
-            padding: 1.5rem;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .prize-box .emoji {
-            font-size: 2.5rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .prize-box h3 {
-            color: #d4af37;
-            margin-bottom: 0.5rem;
-        }
-
-        .prize-box p {
-            color: #ccc;
-            font-size: 0.9rem;
-        }
-
-        /* Leaderboard */
-        .leaderboard {
-            background: rgba(212, 175, 55, 0.05);
-            border: 2px solid #d4af37;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-        }
-
-        .leaderboard h3 {
-            color: #d4af37;
-            margin-bottom: 1rem;
-        }
-
-        .leaderboard-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .leaderboard-table tr {
-            border-bottom: 1px solid #555;
-        }
-
-        .leaderboard-table th {
-            color: #d4af37;
-            text-align: left;
-            padding: 0.8rem;
-            font-weight: bold;
-        }
-
-        .leaderboard-table td {
-            color: #ccc;
-            padding: 0.8rem;
-        }
-
-        .leaderboard-table tr.you {
-            background: rgba(212, 175, 55, 0.1);
-        }
-
-        .leaderboard-table .rank {
-            color: #d4af37;
-            font-weight: bold;
-        }
-
-        /* Footer */
-        .footer {
-            background: #1a1a1a;
-            border-top: 3px solid #d4af37;
-            padding: 2rem;
-            text-align: center;
-            color: #aaa;
-            margin-top: 2rem;
-        }
-
-        .footer a {
-            color: #d4af37;
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Alert message */
-        .alert {
-            background: rgba(212, 175, 55, 0.1);
-            border: 2px solid #d4af37;
-            color: #d4af37;
-            padding: 1rem;
-            border-radius: 6px;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Rise Letter &mdash; rise AFRICA skills</title>
+<meta name="description" content="Games, 150 business ideas, food processing know-how and market trends for African makers, farmers and traders. Free every issue.">
+<style>
+:root{--gold:#c9a227;--gold2:#ffb627;--dark:#1a1a2e;--darker:#0f0f1a;--card:#1e1e32;--card2:#252540;--muted:#9a9ab0;--green:#27ae60;--red:#c0392b}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--darker);color:#fff;line-height:1.6}
+a{color:var(--gold);text-decoration:none}
+header{position:sticky;top:0;background:rgba(15,15,26,0.96);backdrop-filter:blur(10px);border-bottom:1px solid rgba(201,162,39,0.25);padding:.7rem 1rem;display:flex;align-items:center;gap:.7rem;z-index:200}
+.logo-icon{width:34px;height:34px;border-radius:8px;background:var(--gold);color:var(--darker);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.78rem;flex-shrink:0}
+header .brand{font-weight:700;font-size:.95rem}
+header .back{margin-left:auto;border:1px solid var(--gold);padding:.35rem .85rem;border-radius:20px;font-size:.82rem;white-space:nowrap}
+.wrap{max-width:1000px;margin:0 auto;padding:0 1rem}
+.hero{text-align:center;padding:2.5rem 1rem 1.5rem;background:radial-gradient(ellipse at top,rgba(201,162,39,.14),transparent 65%)}
+.kicker{display:inline-block;background:rgba(201,162,39,.15);border:1px solid var(--gold);color:var(--gold);border-radius:20px;padding:.25rem .9rem;font-size:.72rem;font-weight:700;letter-spacing:1.5px}
+.hero h1{font-size:2.4rem;margin:.7rem 0 .3rem;color:var(--gold);line-height:1.15}
+.hero .sub{color:var(--muted);max-width:640px;margin:0 auto;font-size:1rem}
+.stats{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:1.3rem}
+.stat{background:var(--card);border:1px solid rgba(201,162,39,.22);border-radius:10px;padding:.6rem 1rem;min-width:92px}
+.stat b{display:block;font-size:1.35rem;color:var(--gold2)}
+.stat span{font-size:.7rem;color:var(--muted);letter-spacing:.5px}
+nav.tabs{display:flex;gap:.4rem;overflow-x:auto;padding:1rem 0 .3rem;scrollbar-width:none}
+nav.tabs::-webkit-scrollbar{display:none}
+.tab{background:var(--card);border:1px solid rgba(255,255,255,.08);color:#ddd;padding:.55rem 1rem;border-radius:20px;font-size:.85rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:.15s}
+.tab:hover{border-color:var(--gold)}
+.tab.on{background:var(--gold);color:var(--darker);border-color:var(--gold)}
+section.pane{display:none;padding:1.2rem 0 3rem}
+section.pane.on{display:block}
+h2.sec{color:var(--gold);font-size:1.35rem;margin:1.6rem 0 .3rem}
+h2.sec:first-child{margin-top:.4rem}
+p.lede{color:var(--muted);font-size:.9rem;margin-bottom:1rem;max-width:680px}
+.grid{display:grid;gap:.8rem}
+.g2{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.g3{grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.card{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:1rem;transition:.15s}
+.card:hover{border-color:rgba(201,162,39,.45);transform:translateY(-2px)}
+.game-card{cursor:pointer;position:relative;overflow:hidden}
+.game-card .emoji{font-size:1.8rem;display:block;margin-bottom:.4rem}
+.game-card h3{color:var(--gold);font-size:1rem;margin-bottom:.25rem}
+.game-card p{font-size:.8rem;color:var(--muted);line-height:1.45}
+.game-card .play{display:inline-block;margin-top:.6rem;background:var(--gold);color:var(--darker);font-weight:800;font-size:.75rem;padding:.35rem .8rem;border-radius:6px}
+.searchbar{width:100%;background:var(--card);border:1px solid rgba(201,162,39,.3);color:#fff;padding:.7rem 1rem;border-radius:10px;font-size:.9rem;margin-bottom:.9rem;font-family:inherit}
+.searchbar:focus{outline:none;border-color:var(--gold)}
+.idea{background:var(--card);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:.7rem .9rem}
+.idea b{display:block;color:#fff;font-size:.9rem;margin-bottom:.15rem}
+.idea span{font-size:.78rem;color:var(--muted);line-height:1.45}
+.idea .colink{display:block;margin-top:.5rem;font-size:.75rem;font-weight:700;color:var(--gold2)}
+.idea .colink:hover{text-decoration:underline}
+.idea .nocourse{display:block;margin-top:.5rem;font-size:.72rem;color:#6a6a80;font-style:italic}
+.idea .tag{display:inline-block;margin-top:.4rem;font-size:.65rem;letter-spacing:.5px;background:rgba(201,162,39,.14);color:var(--gold);border-radius:4px;padding:.15rem .45rem;font-weight:700}
+.note{background:rgba(201,162,39,.09);border-left:4px solid var(--gold);border-radius:0 8px 8px 0;padding:.85rem 1rem;font-size:.85rem;color:#f0e6c8;margin:1rem 0}
+.warn{background:rgba(192,57,43,.12);border-left:4px solid var(--red);border-radius:0 8px 8px 0;padding:.85rem 1rem;font-size:.85rem;color:#f5cfc9;margin:1rem 0}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;padding:1rem;z-index:500}
+.modal.on{display:flex}
+.modal-box{background:var(--card);border:1px solid rgba(201,162,39,.35);border-radius:14px;max-width:520px;width:100%;max-height:88vh;overflow-y:auto;padding:1.3rem}
+.modal-box h3{color:var(--gold);font-size:1.15rem;margin-bottom:.2rem}
+.modal-box .gsub{font-size:.8rem;color:var(--muted);margin-bottom:.9rem}
+.gclose{float:right;background:none;border:1px solid rgba(255,255,255,.2);color:#ddd;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:1rem;line-height:1}
+.btn{background:var(--gold);color:var(--darker);border:none;font-weight:800;padding:.6rem 1.1rem;border-radius:8px;cursor:pointer;font-size:.85rem;font-family:inherit}
+.btn.ghost{background:transparent;border:1px solid var(--gold);color:var(--gold)}
+.opt{display:block;width:100%;text-align:left;background:var(--card2);border:1px solid rgba(255,255,255,.09);color:#eee;padding:.6rem .8rem;border-radius:8px;margin-bottom:.45rem;cursor:pointer;font-size:.87rem;font-family:inherit}
+.opt:hover{border-color:var(--gold)}
+.opt.right{background:rgba(39,174,96,.22);border-color:var(--green)}
+.opt.wrong{background:rgba(192,57,43,.22);border-color:var(--red)}
+.gin{width:100%;background:var(--card2);border:1px solid rgba(255,255,255,.12);color:#fff;padding:.6rem .8rem;border-radius:8px;font-size:.9rem;font-family:inherit;margin-bottom:.5rem}
+.score{font-size:.85rem;color:var(--muted);margin-top:.7rem}
+.memgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:.45rem}
+.memcard{aspect-ratio:1;background:var(--card2);border:1px solid rgba(255,255,255,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;cursor:pointer;user-select:none}
+.memcard.flip{background:rgba(201,162,39,.2);border-color:var(--gold)}
+.memcard.done{background:rgba(39,174,96,.2);border-color:var(--green);cursor:default}
+.linkrow{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.6rem}
+.linkrow a{background:var(--card2);border:1px solid rgba(255,255,255,.1);padding:.45rem .85rem;border-radius:20px;font-size:.8rem}
+.linkrow a:hover{border-color:var(--gold)}
+footer{border-top:1px solid rgba(255,255,255,.08);padding:1.6rem 1rem;text-align:center;color:var(--muted);font-size:.78rem;line-height:1.7}
+@media(max-width:600px){.hero h1{font-size:1.75rem}.memgrid{grid-template-columns:repeat(4,1fr)}}
+</style>
 </head>
 <body>
-    <!-- Header -->
-    <div class="header">
-        <div>
-            <div class="logo">rAs</div>
-            <div class="logo-text">rise AFRICA skills</div>
-        </div>
-        <div class="header-right">
-            <div class="points-display">⭐ Your Points: <span id="pointsDisplay">0</span></div>
-        </div>
-    </div>
+<header>
+<div class="logo-icon">rAs</div>
+<div class="brand">rise AFRICA skills</div>
+<a class="back" href="index.html">&larr; Home</a>
+</header>
 
-    <!-- Navigation Tabs -->
-    <div class="nav-tabs">
-        <button class="nav-tab active" onclick="showTab('feed')">📰 Feed</button>
-        <button class="nav-tab" onclick="showTab('quizzes')">❓ Quizzes</button>
-        <button class="nav-tab" onclick="showTab('games')">🎮 Games</button>
-        <button class="nav-tab" onclick="showTab('careers')">💼 Careers</button>
-        <button class="nav-tab" onclick="showTab('prizes')">🏆 Prizes</button>
-    </div>
+<div class="hero">
+<span class="kicker">THE RISE LETTER</span>
+<h1>Ideas you can start on Monday</h1>
+<p class="sub">Games to sharpen your business head, 150 things you can make, grow and sell, and honest numbers &mdash; for makers, farmers and traders across Africa.</p>
+<div class="stats">
+<div class="stat"><b>10</b><span>GAMES</span></div>
+<div class="stat"><b>50</b><span>COTTAGE IDEAS</span></div>
+<div class="stat"><b>50</b><span>FOOD &amp; DRINK</span></div>
+<div class="stat"><b>50</b><span>AGRICULTURE</span></div>
+<div class="stat"><b>Free</b><span>ALWAYS</span></div>
+</div>
+</div>
 
-    <!-- Transparent Pricing Section -->
-    <div class="pricing-section">
-        <h2>💰 rAs Pricing — What You Pay, What You Get</h2>
-        <p style="text-align: center; color: #ccc; margin-bottom: 1.5rem;">All prices are transparent. No hidden fees. Cancel anytime.</p>
-        <div class="pricing-grid">
-            <div class="price-card">
-                <h3>📚 Full Course Access</h3>
-                <p class="description">Complete video lessons, downloadable materials, AI tutor support, lifetime access</p>
-                <div class="price">$8.00</div>
-                <a href="https://buy.stripe.com/14AaEXgus0cRg8PcHW2sM03" target="_blank">Buy Now</a>
-            </div>
-            <div class="price-card">
-                <h3>📜 Course + Certificate</h3>
-                <p class="description">Everything in Full Access + verified digital certificate + blockchain verified</p>
-                <div class="price">$10.00</div>
-                <a href="https://buy.stripe.com/cNi28r0vu9Nr4q74bq2sM00" target="_blank">Buy Now</a>
-            </div>
-            <div class="price-card">
-                <h3>📥 Print / Download</h3>
-                <p class="description">High-res PDF download, physical print option, social media sharing</p>
-                <div class="price">$3.50</div>
-                <a href="https://buy.stripe.com/4gM5kDba8bVzbSz7nC2sM01" target="_blank">Buy Now</a>
-            </div>
-            <div class="price-card">
-                <h3>📦 Bundle (3 Courses)</h3>
-                <p class="description">Three courses of your choice at one price. Best value.</p>
-                <div class="price">$20.00</div>
-                <a href="https://buy.stripe.com/5kQaEXdig3p39KrgYc2sM02" target="_blank">Buy Now</a>
-            </div>
-        </div>
-    </div>
+<div class="wrap">
+<nav class="tabs" id="tabs">
+<button class="tab on" data-p="games">&#127918; Games</button>
+<button class="tab" data-p="cottage">&#127981; 50 Cottage Ideas</button>
+<button class="tab" data-p="food">&#127858; 50 Food &amp; Drink</button>
+<button class="tab" data-p="agri">&#127806; 50 Agriculture</button>
+<button class="tab" data-p="trends">&#128200; Trends</button>
+<button class="tab" data-p="network">&#129309; Network</button>
+</nav>
 
-    <!-- Content -->
-    <div class="content">
-        <!-- Feed Tab -->
-        <div id="feed" class="tab-content active">
-            <h2 style="color: #d4af37; margin-bottom: 1.5rem;">📰 Latest Learning Feed</h2>
-            
-            <div class="feed-card">
-                <h3>🤖 AI for Kids & Teens</h3>
-                <p>The future is AI. Learn how machines think, and become an <strong>AI-ready professional</strong>.</p>
-                <p><strong>Real Jobs Paying Now:</strong></p>
-                <ul style="margin: 0.8rem 0 0 1.5rem; color: #ccc;">
-                    <li>💰 <strong>Data Annotator</strong> — Label images & text → $100–300 / month</li>
-                    <li>🚁 <strong>Drone Pilot</strong> — Fly commercial drones → $400–1,000 / month</li>
-                    <li>💻 <strong>Junior Developer</strong> — Code AI scripts → $1,000+ / month</li>
-                </ul>
-            </div>
+<section class="pane on" id="p-games">
+<h2 class="sec">Play a round, learn a habit</h2>
+<p class="lede">Every game here drills something a real business owner does weekly &mdash; pricing, margins, break-even, spotting a bad deal. Two minutes each. No score is saved, no account needed.</p>
+<div class="grid g3" id="gameGrid"></div>
+<div class="note"><b>Why games?</b> Because the arithmetic that decides whether your business survives &mdash; margin, break-even, cost per unit &mdash; is the arithmetic most people avoid. Do it as a game twenty times and it stops being frightening.</div>
+</section>
 
-            <div class="feed-card">
-                <h3>💼 Business & Entrepreneurship</h3>
-                <p><strong>Cattle Fattening:</strong> Buy 2–3 month old calves, feed for 6–8 months, sell for 50–70% profit.</p>
-                <p>💡 <strong>Market Intel:</strong> Call 5 buyers. Understand the price cycle. Buy low, sell high.</p>
-            </div>
+<section class="pane" id="p-cottage">
+<h2 class="sec">50 things you can make at home and sell</h2>
+<p class="lede">Small-capital businesses that start in a kitchen, a yard or a rented corner. Costs shown are rough starting ranges &mdash; call three suppliers in your own town before you trust any number here.</p>
+<input class="searchbar" id="searchCottage" placeholder="Search the 50 ideas...">
+<div class="grid g2" id="cottageGrid"></div>
+</section>
 
-            <div class="feed-card">
-                <h3>👩‍🌾 Women in Farming</h3>
-                <p><strong>Zara's Story:</strong> Started with $50 (80 kg / 175 lbs tomato seeds), now earns $500 / month from vegetable farming.</p>
-                <p>📌 <strong>Co-ops Win:</strong> Join a farmers' co-op. Bulk buying = 30% cheaper inputs. Collective marketing = 40% higher prices.</p>
-            </div>
-        </div>
+<section class="pane" id="p-food">
+<h2 class="sec">50 food &amp; drink products from what grows near you</h2>
+<p class="lede">Spices, sauces, natural drinks and health foods built on ingredients you can actually buy at a local market &mdash; baobab, moringa, hibiscus, groundnut, tamarind, ginger, chilli.</p>
+<div class="warn"><b>Read before you bottle anything.</b> Low-acid foods (meat, fish, most vegetables, garlic and herbs in oil) can grow <i>Clostridium botulinum</i> in a sealed jar. That is a fatal risk, not a spoilage risk. Low-acid products need a pressure canner or must be kept refrigerated and sold fast. High-acid products &mdash; vinegar pickles, most fruit jams, hibiscus drinks &mdash; are safe in a boiling water bath. If you are unsure which yours is, treat it as low-acid.</div>
+<input class="searchbar" id="searchFood" placeholder="Search the 50 products...">
+<div class="grid g2" id="foodGrid"></div>
+</section>
 
-        <!-- Quizzes Tab -->
-        <div id="quizzes" class="tab-content">
-            <h2 style="color: #d4af37; margin-bottom: 1.5rem;">❓ Test Your Knowledge & Earn Points</h2>
-            
-            <div class="quiz-container">
-                <div class="quiz-dropdown">
-                    <label for="courseSelect">Select a Course:</label>
-                    <select id="courseSelect" onchange="loadQuiz()">
-                        <option value="">-- Choose a course --</option>
-                        <option value="pig">🐷 Pig Farming</option>
-                        <option value="poultry">🐔 Poultry Farming</option>
-                        <option value="goat">🐐 Goat & Sheep Rearing</option>
-                        <option value="rabbit">🐰 Rabbit Farming</option>
-                        <option value="bee">🐝 Bee Farming</option>
-                        <option value="maize">🌾 Maize Farming</option>
-                        <option value="tomato">🍅 Tomato Farming</option>
-                        <option value="avocado">🥑 Avocado Farming</option>
-                        <option value="onion">🧅 Onion Farming</option>
-                        <option value="potato">🥔 Potato Farming</option>
-                        <option value="cattle">🐄 Cattle Farming</option>
-                    </select>
-                </div>
-                <div id="quizContent"></div>
-            </div>
-        </div>
+<section class="pane" id="p-agri">
+<h2 class="sec">50 farming businesses, from a backyard to a block</h2>
+<p class="lede">Sorted roughly by how much land and money you need to begin. Cycle length matters as much as profit &mdash; a fast cycle lets you learn and recover from mistakes; a slow one ties up your money for years.</p>
+<div class="note"><b>Before you choose:</b> match the enterprise to your water, not your ambition. The single most common reason a small farm fails is picking something thirsty in a place with an unreliable borehole.</div>
+<input class="searchbar" id="searchAgri" placeholder="Search the 50...">
+<div class="grid g2" id="agriGrid"></div>
+</section>
 
-        <!-- Games Tab -->
-        <div id="games" class="tab-content">
-            <h2 style="color: #d4af37; margin-bottom: 1.5rem;">🎮 Play & Earn Points</h2>
-            
-            <div class="game-card">
-                <h3>🎯 Sudoku Master</h3>
-                <p>Complete a 4x4 Sudoku puzzle and earn 100 points!</p>
-                <button id="sudokuBtn">Play Sudoku</button>
-            </div>
+<section class="pane" id="p-trends">
+<h2 class="sec">What buyers are asking for</h2>
+<p class="lede">Patterns worth knowing before you choose a product. These are directions of travel, not guarantees &mdash; verify demand in your own market before you spend money.</p>
+<div class="grid g2" id="trendGrid"></div>
+<div class="note"><b>How to test a trend for free.</b> Make ten units. Stand at a market or a taxi rank on the busiest day. If you sell all ten before noon and three people ask for more, you have something. If you carry six home, the trend is real but your version, price or place is wrong. Change one of those three and repeat next week.</div>
+</section>
 
-            <div class="game-card">
-                <h3>🔤 Word Search</h3>
-                <p>Find farming words in the grid. Coming soon...</p>
-                <button disabled>Coming Soon</button>
-            </div>
-
-            <div class="game-card">
-                <h3>🧠 Memory Match</h3>
-                <p>Match crop pairs and test your memory. Coming soon...</p>
-                <button disabled>Coming Soon</button>
-            </div>
-        </div>
-
-        <!-- Careers Tab -->
-        <div id="careers" class="tab-content">
-            <h2 style="color: #d4af37; margin-bottom: 1.5rem;">💼 High-Paying Careers in Africa</h2>
-            
-            <div class="career-card">
-                <h3>🎓 Agribusiness Manager</h3>
-                <p><strong>Salary Range:</strong> $600–1,200 / month</p>
-                <p>Manage farms, supply chains, and markets. Needs business + farming knowledge.</p>
-            </div>
-
-            <div class="career-card">
-                <h3>📢 Extension Officer</h3>
-                <p><strong>Salary Range:</strong> $400–800 / month</p>
-                <p>Teach farmers modern techniques. Government & NGO roles. Stable income.</p>
-            </div>
-
-            <div class="career-card">
-                <h3>🛒 Procurement Officer</h3>
-                <p><strong>Salary Range:</strong> $500–1,000 / month</p>
-                <p>Source materials for agricultural companies. Corporate & warehouse roles.</p>
-            </div>
-
-            <div class="career-card">
-                <h3>🤖 AI Farm Consultant</h3>
-                <p><strong>Salary Range:</strong> $1,000–2,500 / month</p>
-                <p>Help farms use drones, AI, & tech. Growing remote field. High pay.</p>
-            </div>
-        </div>
-
-        <!-- Prizes & Leaderboard Tab -->
-        <div id="prizes" class="tab-content">
-            <h2 style="color: #d4af37; margin-bottom: 1.5rem;">🏆 Prizes & Leaderboard</h2>
-
-            <!-- Leaderboard -->
-            <div class="leaderboard">
-                <h3>📊 Live Leaderboard</h3>
-                <table class="leaderboard-table">
-                    <tr>
-                        <th>Rank</th>
-                        <th>Name</th>
-                        <th>Points</th>
-                    </tr>
-                    <tr>
-                        <td class="rank">1</td>
-                        <td>Amara Okafor</td>
-                        <td>2,450</td>
-                    </tr>
-                    <tr>
-                        <td class="rank">2</td>
-                        <td>Kwame Asante</td>
-                        <td>2,180</td>
-                    </tr>
-                    <tr>
-                        <td class="rank">3</td>
-                        <td>Zara Mwangi</td>
-                        <td>1,920</td>
-                    </tr>
-                    <tr>
-                        <td class="rank">4</td>
-                        <td>Tendai Chengeta</td>
-                        <td>1,650</td>
-                    </tr>
-                    <tr>
-                        <td class="rank">5</td>
-                        <td>Fatima Hassan</td>
-                        <td>1,480</td>
-                    </tr>
-                    <tr class="you">
-                        <td class="rank">—</td>
-                        <td><strong>You</strong></td>
-                        <td><strong id="yourPoints">0</strong></td>
-                    </tr>
-                </table>
-            </div>
-
-            <!-- Prizes -->
-            <h3 style="color: #d4af37; margin-top: 2rem; margin-bottom: 1rem;">🎁 Redeem Your Points for Prizes</h3>
-            <div class="prizes-grid">
-                <div class="prize-box">
-                    <div class="emoji">👕</div>
-                    <h3>T-Shirt</h3>
-                    <p>Branded rAs T-Shirt</p>
-                    <p style="color: #d4af37; font-weight: bold; margin-top: 0.5rem;">150 pts</p>
-                </div>
-                <div class="prize-box">
-                    <div class="emoji">📖</div>
-                    <h3>E-Book Bundle</h3>
-                    <p>5 farming guides + business plans</p>
-                    <p style="color: #d4af37; font-weight: bold; margin-top: 0.5rem;">200 pts</p>
-                </div>
-                <div class="prize-box">
-                    <div class="emoji">🌾</div>
-                    <h3>Premium Feed</h3>
-                    <p>10 kg (22 lbs) animal feed</p>
-                    <p style="color: #d4af37; font-weight: bold; margin-top: 0.5rem;">300 pts</p>
-                </div>
-                <div class="prize-box">
-                    <div class="emoji">📜</div>
-                    <h3>Certificate</h3>
-                    <p>Printed rAs Course Certificate</p>
-                    <p style="color: #d4af37; font-weight: bold; margin-top: 0.5rem;">400 pts</p>
-                </div>
-                <div class="prize-box">
-                    <div class="emoji">🎒</div>
-                    <h3>Starter Kit</h3>
-                    <p>Seed kit + soil + tools</p>
-                    <p style="color: #d4af37; font-weight: bold; margin-top: 0.5rem;">500 pts</p>
-                </div>
-                <div class="prize-box">
-                    <div class="emoji">💉</div>
-                    <h3>Vaccine Pack</h3>
-                    <p>Livestock vaccines & treatments</p>
-                    <p style="color: #d4af37; font-weight: bold; margin-top: 0.5rem;">600 pts</p>
-                </div>
-                <div class="prize-box">
-                    <div class="emoji">👨‍🏫</div>
-                    <h3>Expert Consultation</h3>
-                    <p>1-hour call with rAs expert</p>
-                    <p style="color: #d4af37; font-weight: bold; margin-top: 0.5rem;">800 pts</p>
-                </div>
-                <div class="prize-box">
-                    <div class="emoji">🚜</div>
-                    <h3>Farm Tablet</h3>
-                    <p>Rugged tablet for farm management</p>
-                    <p style="color: #d4af37; font-weight: bold; margin-top: 0.5rem;">2,000 pts</p>
-                </div>
-            </div>
-
-            <!-- How to Earn Points -->
-            <div style="background: rgba(212, 175, 55, 0.05); border: 2px solid #d4af37; padding: 1.5rem; border-radius: 8px; margin-top: 2rem;">
-                <h3 style="color: #d4af37; margin-bottom: 1rem;">📈 How to Earn Points</h3>
-                <ul style="margin-left: 1.5rem; color: #ccc;">
-                    <li>✅ <strong>Complete Lesson</strong> → +20 pts</li>
-                    <li>✅ <strong>Pass Quiz</strong> → +50 pts</li>
-                    <li>✅ <strong>Win Game</strong> → +40–100 pts</li>
-                    <li>✅ <strong>Daily Login</strong> → +10 pts</li>
-                    <li>✅ <strong>Refer Friend</strong> → +100 pts</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <div class="footer">
-        <p><strong>rAs — rise AFRICA skills</strong></p>
-        <p>Serving Africa with 388 practical, low-cost courses. Learn. Earn. Grow.</p>
-        <p style="margin-top: 1rem;">
-            📧 <a href="mailto:hello@riseafricaskills.com">hello@riseafricaskills.com</a> | 
-            📱 <a href="https://wa.me/263773001353">WhatsApp +263 773 001 353</a>
-        </p>
-        <p style="margin-top: 1rem; color: #666;">© 2026 Rise Africa Skills. All rights reserved.</p>
-    </div>
-
-    <script>
-        // Quiz data with metric first, imperial in brackets
-        var quizzes = {
-            pig: {
-                title: '🐷 Pig Farming',
-                questions: [
-                    { q: 'Pig gestation period?', opts: ['114 days', '120 days', '110 days'], ans: 0 },
-                    { q: 'Best meat breed?', opts: ['Duroc', 'Landrace', 'Berkshire'], ans: 0 },
-                    { q: 'Space per pig (1.5-2 m² / 16-22 sq ft)?', opts: ['Yes', 'No', 'Sometimes'], ans: 0 },
-                    { q: 'Feed = % of body weight?', opts: ['60-70%', '50-60%', '70-80%'], ans: 0 },
-                    { q: 'Iron supplement (days old)?', opts: ['1-3 days', '5-7 days', '10-14 days'], ans: 0 },
-                    { q: 'ASF vaccine available?', opts: ['No', 'Yes', 'Maybe'], ans: 0 },
-                    { q: 'Weaning age (days)?', opts: ['21-28 days', '30-35 days', '14-21 days'], ans: 0 },
-                    { q: 'Castration age (days)?', opts: ['7-10 days', '14-21 days', '1-3 days'], ans: 0 },
-                    { q: 'Manure from 100 pigs/year?', opts: ['5 tonnes (11,000 lbs)', '8 tonnes (17,600 lbs)', '3 tonnes (6,600 lbs)'], ans: 0 },
-                    { q: 'Market weight?', opts: ['90-110 kg (198-242 lbs)', '80-90 kg (176-198 lbs)', '110-120 kg (242-265 lbs)'], ans: 0 }
-                ]
-            },
-            poultry: {
-                title: '🐔 Poultry Farming',
-                questions: [
-                    { q: 'Broiler maturity (weeks)?', opts: ['12 weeks', '14 weeks', '10 weeks'], ans: 0 },
-                    { q: 'Layer start (weeks)?', opts: ['18-20 weeks', '16-18 weeks', '20-22 weeks'], ans: 0 },
-                    { q: 'Space per bird (m² / sq ft)?', opts: ['0.05 m² (0.5 sq ft)', '0.1 m² (1 sq ft)', '0.02 m² (0.2 sq ft)'], ans: 0 },
-                    { q: 'Water per bird/day?', opts: ['300-400 ml (10-13 fl oz)', '500-600 ml (17-20 fl oz)', '200-300 ml (7-10 fl oz)'], ans: 0 },
-                    { q: 'Brooder temp?', opts: ['35°C (95°F)', '30°C (86°F)', '40°C (104°F)'], ans: 0 },
-                    { q: 'Feed conversion ratio?', opts: ['3:1', '2:1', '4:1'], ans: 0 },
-                    { q: 'Newcastle vaccination?', opts: ['Yes, critical', 'No', 'Optional'], ans: 0 },
-                    { q: 'Peak laying (months)?', opts: ['9-12 months', '6-9 months', '12-15 months'], ans: 0 },
-                    { q: 'Cost per chick ($)?', opts: ['$1-1.50', '$0.50-0.75', '$2-2.50'], ans: 0 },
-                    { q: 'Best biosecurity practice?', opts: ['All-in/all-out', 'Continuous stocking', 'Mixed age groups'], ans: 0 }
-                ]
-            },
-            goat: {
-                title: '🐐 Goat & Sheep Rearing',
-                questions: [
-                    { q: 'Goat gestation (days)?', opts: ['150 days', '145 days', '155 days'], ans: 0 },
-                    { q: 'Litter size (kids)?', opts: ['2-3', '1-2', '3-4'], ans: 1 },
-                    { q: 'Space per goat (m² / sq ft)?', opts: ['3-4 m² (32-43 sq ft)', '5-6 m² (54-65 sq ft)', '2-3 m² (21-32 sq ft)'], ans: 0 },
-                    { q: 'Weaning age (weeks)?', opts: ['8 weeks', '12 weeks', '6 weeks'], ans: 0 },
-                    { q: 'Milk yield/day?', opts: ['2-3 L (0.5-0.8 gal)', '1-2 L (0.3-0.5 gal)', '3-4 L (0.8-1 gal)'], ans: 0 },
-                    { q: 'Castration age (weeks)?', opts: ['2-3 weeks', '4-6 weeks', '6-8 weeks'], ans: 0 },
-                    { q: 'Best feed type?', opts: ['Grass + legumes', 'Grain only', 'Crop residue'], ans: 0 },
-                    { q: 'Worm control (parasite)?', opts: ['Critical', 'Minor', 'Not needed'], ans: 0 },
-                    { q: 'Market value ($)?', opts: ['$60-100', '$40-60', '$100-150'], ans: 0 },
-                    { q: 'Breeding start (months)?', opts: ['12 months', '18 months', '6 months'], ans: 0 }
-                ]
-            },
-            rabbit: {
-                title: '🐰 Rabbit Farming',
-                questions: [
-                    { q: 'Pregnancy period (days)?', opts: ['28-32 days', '35-40 days', '21-25 days'], ans: 0 },
-                    { q: 'Weaning age (weeks)?', opts: ['6-8 weeks', '4-6 weeks', '8-10 weeks'], ans: 0 },
-                    { q: 'Market weight?', opts: ['3-4 kg (6.6-8.8 lbs)', '2-3 kg (4.4-6.6 lbs)', '4-5 kg (8.8-11 lbs)'], ans: 0 },
-                    { q: 'Feed/day?', opts: ['100-150 g (3.5-5.3 oz)', '200-250 g (7-8.8 oz)', '50-75 g (1.8-2.6 oz)'], ans: 0 },
-                    { q: 'Angora for fiber?', opts: ['Yes, valuable', 'No', 'Rarely'], ans: 0 },
-                    { q: 'Hutch space (m² / sq ft)?', opts: ['0.25 m² (2.7 sq ft)', '0.5 m² (5.4 sq ft)', '1 m² (10.8 sq ft)'], ans: 0 },
-                    { q: 'Vitamin C needed?', opts: ['Yes, critical', 'No', 'Optional'], ans: 0 },
-                    { q: 'Lifespan (years)?', opts: ['5-8 years', '3-5 years', '8-10 years'], ans: 0 },
-                    { q: 'Export price per rabbit ($)?', opts: ['$6-8', '$3-5', '$10-12'], ans: 0 },
-                    { q: 'Breeding interval (weeks)?', opts: ['3-4 weeks', '6-8 weeks', '2-3 weeks'], ans: 0 }
-                ]
-            },
-            bee: {
-                title: '🐝 Bee Farming',
-                questions: [
-                    { q: 'Best harvest season?', opts: ['End dry/start rain', 'Mid-dry', 'Any time'], ans: 0 },
-                    { q: 'Production cycle (months)?', opts: ['6 months', '4 months', '8 months'], ans: 0 },
-                    { q: 'Flight distance?', opts: ['200-300 m (656-984 ft)', '100-150 m (328-492 ft)', '400-500 m (1,312-1,640 ft)'], ans: 0 },
-                    { q: 'Best work time?', opts: ['Evening/night', 'Morning', 'Afternoon'], ans: 0 },
-                    { q: 'Honey yield/year?', opts: ['30-40 kg (66-88 lbs)', '50-60 kg (110-132 lbs)', '20-25 kg (44-55 lbs)'], ans: 0 },
-                    { q: 'Protective gear?', opts: ['Full suit + veil', 'Hat only', 'Gloves only'], ans: 0 },
-                    { q: 'Shelf life (honey)?', opts: ['Infinite', '1-2 years', '5-10 years'], ans: 0 },
-                    { q: 'Hive capacity?', opts: ['50 L (13.2 gal)', '30 L (7.9 gal)', '100 L (26.4 gal)'], ans: 0 },
-                    { q: 'Export price ($/L)?', opts: ['$8-15', '$3-5', '$20-30'], ans: 0 },
-                    { q: 'Hives per hectare?', opts: ['10-15 hives', '20-25 hives', '5-8 hives'], ans: 0 }
-                ]
-            },
-            maize: {
-                title: '🌾 Maize Farming',
-                questions: [
-                    { q: 'Maturity period (days)?', opts: ['120-140 days', '100-110 days', '140-160 days'], ans: 0 },
-                    { q: 'Seed rate?', opts: ['30-40 kg/ha (26-35 lbs/acre)', '50-60 kg/ha (44-53 lbs/acre)', '20-25 kg/ha (18-22 lbs/acre)'], ans: 0 },
-                    { q: 'Spacing (cm / in)?', opts: ['75x25 cm (30x10 in)', '60x20 cm (24x8 in)', '90x30 cm (36x12 in)'], ans: 0 },
-                    { q: 'Weeding (weeks)?', opts: ['4-6 weeks', '8-10 weeks', '2-4 weeks'], ans: 0 },
-                    { q: 'Nitrogen splits?', opts: ['2-3 splits', '1 split', '4+ splits'], ans: 0 },
-                    { q: 'Silking stage (days)?', opts: ['30-40 days', '50-60 days', '20-30 days'], ans: 0 },
-                    { q: 'Yield?', opts: ['8-10 t/ha (3.2-4 t/acre)', '6-8 t/ha (2.4-3.2 t/acre)', '10-12 t/ha (4-4.8 t/acre)'], ans: 0 },
-                    { q: 'Stem borer control?', opts: ['Critical pest', 'Minor', 'No issue'], ans: 0 },
-                    { q: 'Harvest moisture (%)?', opts: ['10-12%', '15-18%', '20-25%'], ans: 0 },
-                    { q: 'Storage (temp)?', opts: ['Cool, dry', 'Warm, wet', 'Any condition'], ans: 0 }
-                ]
-            },
-            tomato: {
-                title: '🍅 Tomato Farming',
-                questions: [
-                    { q: 'Transplant age (weeks)?', opts: ['4-6 weeks', '2-3 weeks', '8-10 weeks'], ans: 0 },
-                    { q: 'Spacing (m / ft)?', opts: ['0.75-1 x 0.5 m (2.5-3.3 x 1.6 ft)', '0.5 x 0.3 m (1.6 x 1 ft)', '1 x 1 m (3.3 x 3.3 ft)'], ans: 0 },
-                    { q: 'Harvest period (days)?', opts: ['120-150 days', '100-120 days', '150-180 days'], ans: 0 },
-                    { q: 'Major disease?', opts: ['Blight', 'Rust', 'Mildew'], ans: 0 },
-                    { q: 'Water needed?', opts: ['50 mm/week (2 in/week)', '30 mm/week (1.2 in/week)', '70 mm/week (2.8 in/week)'], ans: 0 },
-                    { q: 'Support method?', opts: ['String/stakes', 'Bare ground', 'Cages'], ans: 0 },
-                    { q: 'Yield (kg/plant / lbs/plant)?', opts: ['10 kg (22 lbs)', '5-8 kg (11-18 lbs)', '15-20 kg (33-44 lbs)'], ans: 0 },
-                    { q: 'Pruning benefit?', opts: ['All benefits', 'No benefit', 'Minor'], ans: 0 },
-                    { q: 'Harvest stage (color)?', opts: ['Light pink', 'Full red', 'Green'], ans: 0 },
-                    { q: 'Storage temp?', opts: ['12-15°C (54-59°F)', '8-10°C (46-50°F)', '20-25°C (68-77°F)'], ans: 0 }
-                ]
-            },
-            avocado: {
-                title: '🥑 Avocado Farming',
-                questions: [
-                    { q: 'Fruiting age (years)?', opts: ['5-7 years', '3-4 years', '8-10 years'], ans: 0 },
-                    { q: 'Tree spacing (m / ft)?', opts: ['8-10 x 8-10 m (26-33 x 26-33 ft)', '5-6 x 5-6 m (16-20 x 16-20 ft)', '10-12 x 10-12 m (33-39 x 33-39 ft)'], ans: 0 },
-                    { q: 'Fruit season (months)?', opts: ['12-14 months', '6-8 months', '20-24 months'], ans: 0 },
-                    { q: 'Major pest?', opts: ['Scale insect', 'Aphid', 'Whitefly'], ans: 0 },
-                    { q: 'Water needed?', opts: ['1000-1200 mm/year (39-47 in/year)', '800-900 mm/year (31-35 in/year)', '1500-1800 mm/year (59-71 in/year)'], ans: 0 },
-                    { q: 'Best altitude?', opts: ['500-1500 m (1,640-4,921 ft)', '100-300 m (328-984 ft)', '2000+ m (6,562+ ft)'], ans: 0 },
-                    { q: 'Export grade?', opts: ['16-18', '10-12', '20-22'], ans: 0 },
-                    { q: 'Peak production (years)?', opts: ['15-25 years', '8-12 years', '25-30 years'], ans: 0 },
-                    { q: 'Export price premium?', opts: ['100% premium', '50% premium', 'No premium'], ans: 0 },
-                    { q: 'Pollinator?', opts: ['Bees', 'Wind', 'Self-pollinating'], ans: 0 }
-                ]
-            },
-            onion: {
-                title: '🧅 Onion Farming',
-                questions: [
-                    { q: 'Seed to harvest (days)?', opts: ['150-180 days', '120-140 days', '200-220 days'], ans: 0 },
-                    { q: 'Spacing (cm / in)?', opts: ['15-20 cm (6-8 in)', '10-12 cm (4-5 in)', '20-30 cm (8-12 in)'], ans: 0 },
-                    { q: 'Seedling age (weeks)?', opts: ['4-6 weeks', '2-3 weeks', '8-10 weeks'], ans: 0 },
-                    { q: 'Curing period (weeks)?', opts: ['3-4 weeks', '1-2 weeks', '6-8 weeks'], ans: 0 },
-                    { q: 'Storage humidity (%)?', opts: ['40-50%', '60-75%', '80-90%'], ans: 0 },
-                    { q: 'Neck size at harvest (cm / in)?', opts: ['1-2 cm (0.4-0.8 in)', '3-4 cm (1.2-1.6 in)', '0.5 cm (0.2 in)'], ans: 0 },
-                    { q: 'Yield?', opts: ['20-30 t/ha (8-12 t/acre)', '40-50 t/ha (16-20 t/acre)', '10-15 t/ha (4-6 t/acre)'], ans: 0 },
-                    { q: 'Storage temp?', opts: ['10-15°C (50-59°F)', '5-8°C (41-46°F)', '20-25°C (68-77°F)'], ans: 0 },
-                    { q: 'Major disease?', opts: ['Mold', 'Rust', 'Blight'], ans: 0 },
-                    { q: 'Export demand?', opts: ['High (Kenya wants)', 'Low', 'Moderate'], ans: 0 }
-                ]
-            },
-            potato: {
-                title: '🥔 Potato Farming',
-                questions: [
-                    { q: 'Seed size (g / oz)?', opts: ['30-40 g (1-1.4 oz)', '50-60 g (1.8-2.1 oz)', '20-25 g (0.7-0.9 oz)'], ans: 0 },
-                    { q: 'Planting depth (cm / in)?', opts: ['8-10 cm (3.2-3.9 in)', '5-6 cm (2-2.4 in)', '12-15 cm (4.7-5.9 in)'], ans: 0 },
-                    { q: 'Emergence (days)?', opts: ['14-21 days', '10-12 days', '25-30 days'], ans: 0 },
-                    { q: 'Hilling prevents?', opts: ['Light exposure', 'Pests', 'Disease'], ans: 0 },
-                    { q: 'Critical season?', opts: ['Cool, wet (blight)', 'Hot, dry', 'Warm, moderate'], ans: 0 },
-                    { q: 'Maturity signal?', opts: ['Stop growing', 'Yellow leaves', 'Flower fall'], ans: 0 },
-                    { q: 'Yield?', opts: ['25-30 t/ha (10-12 t/acre)', '40-50 t/ha (16-20 t/acre)', '15-20 t/ha (6-8 t/acre)'], ans: 0 },
-                    { q: 'Storage temp?', opts: ['10-15°C (50-59°F)', '5-8°C (41-46°F)', '20-25°C (68-77°F)'], ans: 0 },
-                    { q: 'Urban premium (%)?', opts: ['40%', '20%', '60%'], ans: 0 },
-                    { q: 'Best seed source?', opts: ['Research station', 'Own harvest', 'Market'], ans: 0 }
-                ]
-            },
-            cattle: {
-                title: '🐄 Cattle Farming',
-                questions: [
-                    { q: 'Fattening start (months)?', opts: ['12-18 months', '6-12 months', '18-24 months'], ans: 0 },
-                    { q: 'Fattening duration (months)?', opts: ['6-8 months', '3-4 months', '10-12 months'], ans: 0 },
-                    { q: 'Daily weight gain?', opts: ['1 kg (2.2 lbs)', '0.5 kg (1.1 lbs)', '1.5 kg (3.3 lbs)'], ans: 0 },
-                    { q: 'Feed/day?', opts: ['15-20 kg (33-44 lbs)', '10-12 kg (22-26 lbs)', '20-25 kg (44-55 lbs)'], ans: 0 },
-                    { q: 'Forage in diet (%)?', opts: ['50-70%', '80-90%', '20-30%'], ans: 0 },
-                    { q: 'Profit/animal ($)?', opts: ['$100-200', '$50-100', '$200-300'], ans: 0 },
-                    { q: 'Body condition score (scale)?', opts: ['4/5', '3/5', '5/5'], ans: 0 },
-                    { q: 'Water/day?', opts: ['30-40 L (7.9-10.6 gal)', '50-60 L (13.2-15.9 gal)', '20-25 L (5.3-6.6 gal)'], ans: 0 },
-                    { q: 'Space/animal (m² / sq ft)?', opts: ['6-8 m² (65-86 sq ft)', '4-5 m² (43-54 sq ft)', '10-12 m² (108-129 sq ft)'], ans: 0 },
-                    { q: 'Startup cost ($)?', opts: ['$80-120', '$150-200', '$50-70'], ans: 0 }
-                ]
-            }
-        };
-
-        function showTab(tabName) {
-            var tabs = document.getElementsByClassName('tab-content');
-            for (var i = 0; i < tabs.length; i++) {
-                tabs[i].classList.remove('active');
-            }
-            document.getElementById(tabName).classList.add('active');
-
-            var buttons = document.getElementsByClassName('nav-tab');
-            for (var i = 0; i < buttons.length; i++) {
-                buttons[i].classList.remove('active');
-            }
-            event.target.classList.add('active');
-        }
-
-        function loadQuiz() {
-            var courseSelect = document.getElementById('courseSelect');
-            var courseKey = courseSelect.value;
-            var quizContent = document.getElementById('quizContent');
-
-            if (!courseKey) {
-                quizContent.innerHTML = '<p style="color: #d4af37; text-align: center;">Select a course to begin.</p>';
-                return;
-            }
-
-            var quiz = quizzes[courseKey];
-            var html = '<h3 style="color: #d4af37; margin-bottom: 1rem;">' + quiz.title + '</h3>';
-
-            for (var i = 0; i < quiz.questions.length; i++) {
-                var q = quiz.questions[i];
-                html += '<div class="question">';
-                html += '<h4>Q' + (i + 1) + ': ' + q.q + '</h4>';
-                for (var j = 0; j < q.opts.length; j++) {
-                    html += '<label><input type="radio" name="q' + i + '" data-idx="' + i + '" data-correct="' + q.ans + '"> ' + q.opts[j] + '</label>';
-                }
-                html += '</div>';
-            }
-
-            html += '<button class="submit-btn" onclick="submitQuiz()">Submit Quiz</button>';
-            quizContent.innerHTML = html;
-        }
-
-        function submitQuiz() {
-            var correct = 0;
-            var total = Object.keys(quizzes[document.getElementById('courseSelect').value].questions).length;
-
-            for (var i = 0; i < total; i++) {
-                var selected = document.querySelector('input[name="q' + i + '"]:checked');
-                if (selected && parseInt(selected.getAttribute('data-correct')) === parseInt(selected.getAttribute('data-idx'))) {
-                    correct++;
-                }
-            }
-
-            var points = correct * 5;
-            var currentPoints = parseInt(localStorage.getItem('rasPoints') || '0');
-            var newPoints = currentPoints + points;
-            localStorage.setItem('rasPoints', newPoints);
-
-            alert('Quiz Complete!\nCorrect: ' + correct + '/' + total + '\nPoints Earned: ' + points);
-            updatePoints();
-        }
-
-        function updatePoints() {
-            var points = localStorage.getItem('rasPoints') || '0';
-            document.getElementById('pointsDisplay').textContent = points;
-            document.getElementById('yourPoints').textContent = points;
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            updatePoints();
-
-            var sudokuBtn = document.getElementById('sudokuBtn');
-            if (sudokuBtn) {
-                sudokuBtn.addEventListener('click', function() {
-                    var currentPoints = parseInt(localStorage.getItem('rasPoints') || '0');
-                    var newPoints = currentPoints + 100;
-                    localStorage.setItem('rasPoints', newPoints);
-                    alert('🎉 Sudoku Complete! +100 points!');
-                    updatePoints();
-                });
-            }
-        });
-    </script>
+<section class="pane" id="p-network">
+<h2 class="sec">Find people, find buyers</h2>
+<p class="lede">A business with no network is a hobby. These are the places to start.</p>
+<div class="grid g2">
+<div class="card"><h3 style="color:var(--gold);font-size:1rem;margin-bottom:.35rem">&#128172; Talk to rAs directly</h3><p style="font-size:.83rem;color:var(--muted)">Questions about a course, a price, or which idea suits your town. A real person answers.</p><div class="linkrow"><a href="https://wa.me/263773001353" target="_blank" rel="noopener">WhatsApp us</a><a href="mailto:all@riseafricaskills.com">Email us</a></div></div>
+<div class="card"><h3 style="color:var(--gold);font-size:1rem;margin-bottom:.35rem">&#128218; Start a course</h3><p style="font-size:.83rem;color:var(--muted)">Many ideas here have a course behind them &mdash; real costs, real equipment, a capstone you can photograph and show a customer.</p><div class="linkrow"><a href="index.html#courses">Browse all courses</a><a href="index.html#pricing">See pricing</a></div></div>
+<div class="card"><h3 style="color:var(--gold);font-size:1rem;margin-bottom:.35rem">&#127793; For the children</h3><p style="font-size:.83rem;color:var(--muted)">A separate space with simple growing and making projects for younger learners.</p><div class="linkrow"><a href="kids.html">Open Kids</a></div></div>
+<div class="card"><h3 style="color:var(--gold);font-size:1rem;margin-bottom:.35rem">&#129518; Use the tools</h3><p style="font-size:.83rem;color:var(--muted)">Preservation calculator and planting calendar &mdash; free, no sign-up, honest ranges rather than made-up precision.</p><div class="linkrow"><a href="index.html#calculator">Calculator</a><a href="index.html#calendar">Calendar</a></div></div>
+</div>
+<h2 class="sec">Five ways to build a customer list this month</h2>
+<div class="grid g2" id="netTips"></div>
+</section>
+</div>
+<div class="modal" id="modal"><div class="modal-box" id="modalBox"></div></div>
+<footer>
+rise AFRICA skills &middot; +263 77 300 1353 &middot; all@riseafricaskills.com<br>
+We are not a school and do not award accredited qualifications.<br>
+Every cost in this letter is a range to verify locally, never a promise of income.
+</footer>
+<script>
+document.getElementById('tabs').addEventListener('click',function(e){
+  var b=e.target.closest('.tab'); if(!b)return;
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('on',t===b);});
+  document.querySelectorAll('.pane').forEach(function(p){p.classList.toggle('on',p.id==='p-'+b.dataset.p);});
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+var COTTAGE=[
+["Bar soap making","Caustic soda plus oil. The cheapest real manufacturing you can start.","UNDER $50"],
+["Liquid dish soap","Mix, bottle, sell to tuckshops. Refills beat new bottles on price.","UNDER $50"],
+["Petroleum jelly / balms","Melt, scent, tin. Very high margin, very low barrier.","UNDER $50"],
+["Candle making","Paraffin or soy. Load-shedding keeps demand steady.","UNDER $50"],
+["Floor polish","Wax and solvent. Schools and churches buy in bulk.","UNDER $50"],
+["Detergent powder","Blend and pack. Sell by the scoop for market traders.","UNDER $50"],
+["Chalk making","Plaster of Paris in moulds. Schools are the whole market.","UNDER $50"],
+["Charcoal briquettes","Press waste dust with a binder. Cheaper than lump charcoal.","UNDER $50","forestry-tree-planting"],
+["Firelighters","Sawdust and wax. Sells beside every charcoal seller.","UNDER $50"],
+["Beeswax wraps","Cloth and beeswax. A city-market product with a good story.","UNDER $50"],
+["Tailoring and repairs","Start with alterations before you cut anything new.","UNDER $100"],
+["School uniform sewing","One school, one contract, a predictable January.","$100-300"],
+["Chitenge and ankara bags","Offcuts become totes. Very low material cost.","UNDER $100"],
+["Beadwork and jewellery","Weight is nothing, margin is everything. Ships easily.","UNDER $50"],
+["Leather sandals","Repair first, make second. Learn on other people's shoes.","$100-300","leather-working"],
+["Shoe repair","A bench, an awl, glue. Cash daily.","UNDER $100","leather-working"],
+["Basket weaving","Free material in many districts. Slow to make, sells high to tourists.","UNDER $50"],
+["Mat and broom making","Grass and reeds. Everyone needs one, nobody makes their own.","UNDER $50"],
+["Pottery and clay pots","Water pots still outsell plastic in the heat.","UNDER $100"],
+["Wood carving","Skill-heavy, capital-light. Tourist and export routes.","UNDER $100"],
+["Furniture from pallets","Free pallets, sanded and joined. City buyers pay well.","$100-300"],
+["Carpentry and joinery","Doors, frames, shelving. Builders subcontract constantly.","$300+"],
+["Upholstery and re-covering","People re-cover sofas far more often than they replace them.","$100-300"],
+["Welding: burglar bars and gates","Security demand does not fade. Learn arc safety first.","$300+"],
+["Brick making","Sand, cement, a mould. Sell by the thousand to builders.","$100-300"],
+["Bricklaying and plastering","Sell labour before you sell materials.","UNDER $100"],
+["Tiling","A niche within building with fewer competitors and better pay.","$100-300"],
+["Painting and decorating","Brushes and a ladder. Repeat work through landlords.","UNDER $100"],
+["Borehole and pipe repair","Every borehole eventually fails. Few can fix one.","$300+"],
+["Solar panel and battery install","Growing fast. Learn wiring properly &mdash; badly done, it burns houses.","$300+"],
+["Phone repair","Screens and charging ports are most of the work.","$100-300"],
+["Laptop and TV repair","Higher value per job, fewer people competing.","$300+"],
+["Boda / motorcycle repair","Riders cannot earn while broken down. They pay same-day.","$100-300"],
+["Bicycle repair","Rural essential. Tubes, brakes, chains.","UNDER $100"],
+["Car wash","Water, soap, hustle. Site matters more than equipment.","UNDER $100"],
+["Mobile money agency","Float is the business. Commission is thin but daily.","$300+"],
+["Printing and photocopying","Schools, churches, funerals. Constant small jobs.","$300+"],
+["Photography and videography","Weddings and funerals fund the whole year.","$300+"],
+["Barbering","Clippers and a mirror. Cash every single day.","$100-300"],
+["Hairdressing and braiding","Skill is the capital. Start in your own front room.","UNDER $100"],
+["Laundry and ironing","Sell time back to people who work long hours.","UNDER $100"],
+["Courier and delivery","A bicycle and a phone. Tuckshops and pharmacies need it.","UNDER $100"],
+["Catering for events","Cook for one funeral well and the calls do not stop.","$100-300"],
+["Tuckshop / market stall","Turnover teaches you more about business than any book.","$100-300"],
+["Second-hand clothing","Bale buying is a skill. One bad bale costs a month.","$300+"],
+["Agro-dealer / input shop","Seed, fertiliser, chemicals. Farmers need credit &mdash; be careful.","$300+"],
+["Seedling nursery","Sell time. A farmer buys six weeks of growth from you.","UNDER $100","vegetable-production"],
+["Poultry: layers or broilers","Fast cycle, tight margin. Feed cost decides everything.","$100-300","poultry-farming"],
+["Rabbit or quail keeping","Small space, fast breeding, growing city demand.","UNDER $100","rabbit-farming"],
+["Beekeeping","Hives, patience, and honey plus wax plus pollination income.","$100-300","bee-farming"]
+];
+var FOOD=[
+["Groundnut / peanut butter","Roast, skin, mill. Aflatoxin is the real risk &mdash; roasting does NOT destroy it. Reject any mouldy or shrivelled nut before roasting.","CHECK EVERY NUT","groundnut-farming"],
+["Chilli sauce","Vinegar-based sauces are high-acid and shelf-stable. Keep pH below 4.6.","SAFE TO BOTTLE","tomato-paste-sauce"],
+["Piri-piri oil","Chilli in oil is LOW-ACID. Refrigerate and sell within weeks. Never room-temperature.","REFRIGERATE","oil-preservation"],
+["Tomato relish / chakalaka","Add vinegar or lemon to acidify, or pressure can.","ACIDIFY FIRST","tomato-paste-sauce"],
+["Mango atchar","Oil-and-spice pickle. Salt and acid do the preserving. Watch the oil layer.","ACIDIFY FIRST","pickling-vegetables"],
+["Lemon or lime pickle","Salt-cured and high-acid. One of the safest to start with.","SAFE TO BOTTLE","pickling-vegetables"],
+["Vinegar pickled vegetables","Onion, carrot, cucumber. Classic water-bath product.","SAFE TO BOTTLE","pickling-vegetables"],
+["Hibiscus (roselle / zobo) cordial","High-acid, deep red, no artificial colour needed. Strong margin.","SAFE TO BOTTLE","fruit-juice-concentrate"],
+["Baobab powder","Dry, deseed, mill, sift. Very high vitamin C. Dry-pack product.","DRY PRODUCT"],
+["Baobab juice concentrate","Steep and strain. Naturally tart, so naturally high-acid.","SAFE TO BOTTLE","fruit-juice-concentrate"],
+["Tamarind concentrate","Soak, press, reduce. High-acid and long-keeping.","SAFE TO BOTTLE","fruit-juice-concentrate"],
+["Ginger and lemon shot","Cold-pressed, refrigerated, sold same week.","REFRIGERATE"],
+["Ginger beer (non-alcoholic)","Ferment briefly. Bottle pressure must be controlled or bottles burst.","REFRIGERATE"],
+["Moringa leaf powder","Shade-dry &mdash; sun destroys the nutrients you are selling.","DRY PRODUCT"],
+["Moringa tea bags","Same leaf, different format, better price per kilo.","DRY PRODUCT"],
+["Lemongrass tea","Grows almost anywhere. Cut, dry, cut again.","DRY PRODUCT"],
+["Rooibos or bush tea blends","Blend with ginger, mint or hibiscus for your own label.","DRY PRODUCT"],
+["Chilli powder","Dry fully, mill, sieve. Wear a mask &mdash; milling chilli hurts.","DRY PRODUCT","dehydration"],
+["Curry and masala blends","Your own blend is your own brand. Buy whole, roast, grind.","DRY PRODUCT","dehydration"],
+["Garlic and ginger paste","LOW-ACID. Must be acidified and refrigerated. A classic botulism trap.","ACIDIFY FIRST"],
+["Onion and tomato cooking base","Sells to busy households. Freeze or pressure-can only.","FREEZE ONLY"],
+["Stock and soup powder","Dried vegetables, salt, herbs. Long shelf life, tiny capital.","DRY PRODUCT"],
+["Peri-peri dry rub","Salt, chilli, herbs. No moisture means no spoilage.","DRY PRODUCT"],
+["Groundnut powder for relish","Roasted and milled fine. A staple in many kitchens.","DRY PRODUCT","groundnut-farming"],
+["Maize meal milling","Volume business. Margins live or die on your milling loss.","DRY PRODUCT","maize-farming"],
+["Sorghum or millet flour","Gluten-free and rising in demand in cities.","DRY PRODUCT","sorghum-millet-farming"],
+["Cassava flour","Bitter varieties MUST be processed correctly &mdash; raw cassava contains cyanogens.","PROCESS FULLY","cassava-flour-processing"],
+["Sweet potato flour","Dry, mill, sift. Bakers buy it for colour and sweetness.","DRY PRODUCT","sweet-potato-farming"],
+["Banana / plantain crisps","Slice, fry, salt. Fast turnover, needs sealed packaging.","DRY PRODUCT","banana-farming"],
+["Cassava crisps","Same process, different root, different customer.","DRY PRODUCT","cassava-chips-crisps"],
+["Popcorn packing","Almost no capital. Sell at schools and taxi ranks.","DRY PRODUCT"],
+["Roasted and salted nuts","Cashew, groundnut, macadamia. Package small for daily buyers.","DRY PRODUCT","groundnut-farming"],
+["Nut brittle and sweets","Sugar plus nuts. Children's money is daily money.","DRY PRODUCT"],
+["Sesame (simsim) bars","Honey and sesame. Health-food shelf and a school-gate seller.","DRY PRODUCT"],
+["Granola with local grains","Oats, sorghum, groundnut, honey. City-market product.","DRY PRODUCT"],
+["Dried mango","Peak-season fruit at a fraction of the price, sold all year.","DRY PRODUCT","solar-drying"],
+["Dried pineapple or banana","Same principle. Solar drier pays for itself in one season.","DRY PRODUCT","solar-drying"],
+["Fruit leather","Puree, spread, dry. Uses fruit too ripe to sell fresh.","DRY PRODUCT","dehydration"],
+["Mango or guava jam","High-acid fruit plus sugar. Water-bath safe.","SAFE TO BOTTLE","sugar-preservation"],
+["Marmalade from local citrus","Peel is free flavour. Long shelf life.","SAFE TO BOTTLE","sugar-preservation"],
+["Honey packing and labelling","Buy raw from keepers, filter, jar, brand. Never heat it hard.","SHELF STABLE","honey-processing-packaging"],
+["Yoghurt","Simple culture, but the cold chain is the whole business.","REFRIGERATE","dairy-production"],
+["Sour milk / amasi / lacto","Traditional demand, modern packaging.","REFRIGERATE","fermentation"],
+["Soft cheese","Milk, acid, cloth. Restaurants buy weekly.","REFRIGERATE","dairy-production"],
+["Ice cream and ice lollies","Hot climate, cheap ingredients, needs reliable power.","FREEZE ONLY","freezing-techniques"],
+["Bread and buns","The most reliable daily seller there is.","BAKE DAILY","bakery"],
+["Cakes and celebration baking","Weddings and funerals. Deposits protect you.","BAKE DAILY","bakery"],
+["Samosas and pies","Prepare frozen, fry to order. Tuckshops resell them.","FREEZE ONLY"],
+["Sausage making","LOW-ACID and high risk. Curing salts and refrigeration are not optional.","REFRIGERATE","butchery"],
+["Bottled drinking water","Cheap to fill, expensive to certify. Licensing is the real barrier.","LICENCE FIRST","quality-control-testing"]
+];
+var AGRI=[
+["Broiler chickens","Six-week cycle. Fast money, thin margin. Feed is most of your cost, so feed price is your whole business.","FAST CYCLE","poultry-farming"],
+["Layer chickens (eggs)","Daily income once laying starts, but 18-20 weeks of feeding before the first egg pays.","DAILY INCOME","chicken-egg-production-intensive"],
+["Road-runner / indigenous chickens","Slower growing, hardier, better price per bird. Low input, low risk.","LOW INPUT","poultry-farming"],
+["Hatchery / day-old chicks","Sell the start of everyone else's cycle. Incubator plus reliable power.","NEEDS POWER","poultry-farming"],
+["Quail keeping","Tiny space, eggs in 6-7 weeks, premium price where there is a market.","SMALL SPACE"],
+["Turkeys or geese","Seasonal peaks at Christmas and Easter. Plan backwards from the date.","SEASONAL","turkey-farming"],
+["Rabbit keeping","Breeds fast, eats greens, needs almost no land. Market must be built.","SMALL SPACE","rabbit-farming"],
+["Guinea fowl","Hardy, disease-resistant, strong local demand, low feed cost.","LOW INPUT","guinea-fowl-farming"],
+["Pig farming: sows and piglets","One sow gives 10-12 piglets, twice yearly. Sell weaners for faster cash.","MEDIUM CAPITAL","pig-farming"],
+["Pig fattening (grower-finisher)","Buy weaners, feed to market weight. Shorter cycle than breeding.","MEDIUM CAPITAL","pig-fattening-operations"],
+["Goat rearing (meat)","Browses on land too poor for cattle. Steady demand for ceremonies.","LOW INPUT","goat-sheep-rearing"],
+["Dairy goats","Less feed than a cow, milk sells at a premium in cities.","MEDIUM CAPITAL","goat-breeding-selection"],
+["Sheep for meat","Similar to goats but better on grass than on scrub.","LOW INPUT","goat-sheep-rearing"],
+["Beef cattle fattening","Buy lean, feed out, sell heavy. Capital-hungry and slow.","HIGH CAPITAL","beef-farming"],
+["Dairy cattle","Daily income, daily work, and a cold chain problem to solve.","HIGH CAPITAL","dairy-production"],
+["Beekeeping","Honey, wax, and pollination fees. Low running cost, needs patience.","LOW INPUT","bee-farming"],
+["Fish farming (tilapia)","Ponds or tanks. Water quality is the whole skill.","MEDIUM CAPITAL","fishing-fish-farming"],
+["Catfish farming","Tolerates poorer water than tilapia. Strong West African market.","MEDIUM CAPITAL","fishing-fish-farming"],
+["Earthworm farming (vermiculture)","Sell castings to gardeners and worms to fish farmers. Tiny footprint.","SMALL SPACE","earthworm-farming"],
+["Black soldier fly larvae","Turn food waste into protein feed. Cuts a poultry keeper's biggest cost.","SMALL SPACE"],
+["Snail farming","Very low input, slow, premium niche market.","LOW INPUT","snail-farming"],
+["Silkworm rearing","Needs mulberry. Long value chain but almost no competition.","NICHE","silkworm-farming"],
+["Maize","The staple. Predictable market, thin margin, weather is everything.","FIELD CROP","maize-farming"],
+["Sorghum and millet","Drought-tolerant where maize fails. Rising demand from brewers.","DROUGHT HARDY","sorghum-millet-farming"],
+["Groundnuts","Improves your soil and sells well. Watch storage &mdash; damp means aflatoxin.","FIELD CROP","groundnut-farming"],
+["Soya beans","Processors buy in volume. Fixes nitrogen for next season's crop.","FIELD CROP","soybean-farming"],
+["Sugar beans / cowpeas","Short season, good price, stores well without a cold chain.","FAST CYCLE","beans-legumes-farming"],
+["Sunflower","Low input, and you can press oil yourself for a second income.","FIELD CROP","sunflower-farming"],
+["Sesame (simsim)","Export demand, drought-tolerant, high value per kilo.","EXPORT"],
+["Cassava","Survives poor soil and drought. Bitter varieties must be processed properly.","DROUGHT HARDY","cassava-farming"],
+["Sweet potatoes","Fast, cheap to plant, orange-flesh varieties sell on nutrition.","FAST CYCLE","sweet-potato-farming"],
+["Irish potatoes","Higher input, higher return. Seed potato cost decides your margin.","MEDIUM CAPITAL","irish-potato-farming"],
+["Tomatoes","Everyone grows them, so timing is the business. Sell when others cannot.","HIGH RISK","tomato-farming"],
+["Onions","Stores for months, which means you choose when to sell.","STORES WELL","onion-farming"],
+["Cabbage and rape","Fast, forgiving, and a reliable first vegetable crop.","FAST CYCLE","vegetable-production"],
+["Leafy greens (covo, spinach)","Cut and come again. Cash within weeks of planting.","FAST CYCLE","vegetable-production"],
+["Green beans and peas","Often contract-grown for export. Check the contract carefully.","EXPORT","beans-legumes-farming"],
+["Butternut and pumpkin","Stores well, low disease pressure, sells by the piece.","STORES WELL","vegetable-production"],
+["Chillies","High value per square metre. Dry them to remove the rush to sell.","HIGH VALUE","vegetable-production"],
+["Garlic and ginger","Long season, high price, strong processing potential.","HIGH VALUE","vegetable-production"],
+["Herbs (basil, coriander, mint)","Restaurants and city markets. Grows in buckets.","SMALL SPACE","vegetable-production"],
+["Mushroom growing (oyster)","No land needed. Grows on straw or cotton waste in a dark room.","NO LAND","mushroom-farming"],
+["Hydroponic fodder","Sprouted barley for livestock. Cuts feed cost in a drought.","NO LAND","cattle-feed-production"],
+["Seedling nursery","Sell six weeks of growth to other farmers. Fast turnover.","FAST CYCLE","vegetable-production"],
+["Banana farming","Once established, harvests year-round. Needs steady water.","PERENNIAL","banana-farming"],
+["Avocado orchard","Three to four years to fruit, then decades of income. Slow money.","PERENNIAL","avocado-farming"],
+["Mango orchard","Same pattern. Plant now for a business your children inherit.","PERENNIAL","mango-citrus-farming"],
+["Citrus orchard","Lemons and oranges. Processing turns a glut into cordial.","PERENNIAL","mango-citrus-farming"],
+["Passion fruit","Fruits within a year. Good bridge between annual crops and orchards.","PERENNIAL","grafting-budding-orchards"],
+["Moringa growing","Cut leaves repeatedly from the same tree. Dries into a high-value powder.","PERENNIAL","forestry-tree-planting"]
+];
+var TRENDS=[
+["&#127793; Buyers want to know where it came from","A handwritten label saying which village grew it now sells better than a glossy anonymous one. Traceability used to be an export requirement. It is becoming a market-stall advantage."],
+["&#128241; The phone is the shopfront","A clear photo, a price and a WhatsApp number outsell a physical stall in many towns. The cheapest business upgrade available is better lighting on your product photo."],
+["&#129380; Health framing beats novelty framing","Moringa, baobab, hibiscus and millet sell faster described by what they do than by being traditional. Do not invent medical claims &mdash; describe the food honestly."],
+["&#9889; Load-shedding shapes what survives","Products needing continuous cold are fragile businesses right now. Dried, fermented and shelf-stable products are the resilient end of food processing."],
+["&#128230; Refill beats repurchase","Selling soap, oil or detergent into the customer's own container undercuts packaged rivals and cuts your biggest cost. Bring your own bottle is a business model."],
+["&#127974; Small packs win on cash flow","Most customers buy what they can afford today, not what is cheapest per kilo. Sachets and small jars move faster than value sizes."],
+["&#128176; Mobile money changed who can trade","Taking payment without holding cash removes the biggest risk of market trading. If you are not accepting it, you are losing sales you never see."],
+["&#127981; Import substitution is real","Currency pressure makes locally made soap, sauce and furniture competitive against imports for the first time in years. Check what your town imports and could make."]
+];
+var NETTIPS=[
+["Write down every buyer's number","A notebook is enough. Fifty numbers is a business. Two hundred is an income."],
+["Sell to one shop before ten","One tuckshop that reorders weekly teaches you more than ten one-off sales."],
+["Join the market association","Membership costs little and gets you pitch rights, price news and protection."],
+["Give five samples to loud people","Not to your friends &mdash; to the people who talk to everyone. A hairdresser, a kombi driver, a nurse."],
+["Ask every customer one question","What would make you buy this again? Write the answer down. That is free product development."]
+];
+function renderIdeas(arr,el){
+  document.getElementById(el).innerHTML=arr.map(function(x){
+    var link = x[3] ? '<a class="colink" href="'+x[3]+'-course.html">Course available &mdash; from $8 &rarr;</a>' : '<span class="nocourse">No course yet</span>';
+    return '<div class="idea"><b>'+x[0]+'</b><span>'+x[1]+'</span><span class="tag">'+x[2]+'</span>'+link+'</div>';
+  }).join('');
+}
+renderIdeas(COTTAGE,'cottageGrid');
+renderIdeas(FOOD,'foodGrid');
+renderIdeas(AGRI,'agriGrid');
+document.getElementById('trendGrid').innerHTML=TRENDS.map(function(t){
+  return '<div class="card"><h3 style="color:var(--gold);font-size:.98rem;margin-bottom:.35rem">'+t[0]+'</h3><p style="font-size:.83rem;color:var(--muted)">'+t[1]+'</p></div>';
+}).join('');
+document.getElementById('netTips').innerHTML=NETTIPS.map(function(t){
+  return '<div class="idea"><b>'+t[0]+'</b><span>'+t[1]+'</span></div>';
+}).join('');
+function wireSearch(inputId,arr,gridId){
+  document.getElementById(inputId).addEventListener('input',function(){
+    var q=this.value.toLowerCase().trim();
+    renderIdeas(q?arr.filter(function(x){return (x[0]+' '+x[1]+' '+x[2]).toLowerCase().indexOf(q)>-1;}):arr,gridId);
+  });
+}
+wireSearch('searchCottage',COTTAGE,'cottageGrid');
+wireSearch('searchFood',FOOD,'foodGrid');
+wireSearch('searchAgri',AGRI,'agriGrid');
+var modal=document.getElementById('modal'),box=document.getElementById('modalBox');
+function openModal(title,sub,html){
+  box.innerHTML='<button class="gclose" onclick="closeModal()">&times;</button><h3>'+title+'</h3><div class="gsub">'+sub+'</div><div id="gbody">'+html+'</div>';
+  modal.classList.add('on');
+}
+function closeModal(){modal.classList.remove('on');}
+modal.addEventListener('click',function(e){if(e.target===modal)closeModal();});
+function ri(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function g1(){
+  var cost=ri(3,40),price=cost+ri(2,30);
+  var correct=Math.round((price-cost)/price*100);
+  var opts=shuffle([correct,correct+ri(6,15),Math.max(1,correct-ri(6,15)),Math.round((price-cost)/cost*100)]);
+  openModal('Margin Master','Profit margin = (price minus cost) divided by price',
+    '<p style="font-size:.9rem;margin-bottom:.8rem">You buy for <b>$'+cost+'</b> and sell for <b>$'+price+'</b>.<br>What is your profit margin?</p>'+
+    opts.map(function(o){return '<button class="opt" onclick="g1a(this,'+(o===correct)+','+correct+','+cost+','+price+')">'+o+'%</button>';}).join('')+
+    '<div class="score" id="sc"></div>');
+}
+function g1a(el,ok,c,cost,price){
+  document.querySelectorAll('#gbody .opt').forEach(function(b){b.disabled=true;});
+  el.classList.add(ok?'right':'wrong');
+  document.getElementById('sc').innerHTML=(ok?'<b style="color:var(--green)">Correct.</b>':'<b style="color:var(--red)">Not quite &mdash; it is '+c+'%.</b>')+
+    ' You made $'+(price-cost)+' on a $'+price+' sale. Margin on <i>price</i> is not the same as mark-up on <i>cost</i> &mdash; mixing them up is how people price themselves out of business.'+
+    '<br><br><button class="btn" onclick="g1()">Another</button>';
+}
+function g2(){
+  var fixed=ri(20,200),unit=ri(1,9);
+  var correct=Math.ceil(fixed/unit);
+  var opts=shuffle([correct,correct+ri(3,20),Math.max(1,correct-ri(3,15)),Math.ceil(fixed*unit/10)]);
+  openModal('Break-Even Builder','Units needed = fixed costs divided by profit per unit',
+    '<p style="font-size:.9rem;margin-bottom:.8rem">Your stall costs <b>$'+fixed+'</b> a month whether you sell anything or not.<br>You make <b>$'+unit+'</b> profit on each unit.<br>How many units before you break even?</p>'+
+    opts.map(function(o){return '<button class="opt" onclick="g2a(this,'+(o===correct)+','+correct+')">'+o+' units</button>';}).join('')+
+    '<div class="score" id="sc"></div>');
+}
+function g2a(el,ok,c){
+  document.querySelectorAll('#gbody .opt').forEach(function(b){b.disabled=true;});
+  el.classList.add(ok?'right':'wrong');
+  document.getElementById('sc').innerHTML=(ok?'<b style="color:var(--green)">Correct.</b>':'<b style="color:var(--red)">It is '+c+' units.</b>')+
+    ' Everything after that number is yours. Everything before it belongs to the rent.<br><br><button class="btn" onclick="g2()">Another</button>';
+}
+var memState={};
+function g3(){
+  var items=['&#127798;','&#129476;','&#127851;','&#127839;','&#129382;','&#127850;','&#127818;','&#127820;'];
+  var deck=shuffle(items.concat(items));
+  memState={deck:deck,flip:[],done:[],moves:0};
+  openModal('Spice Memory','Find all eight pairs',
+    '<div class="memgrid" id="mg">'+deck.map(function(_,i){return '<div class="memcard" data-i="'+i+'" onclick="memFlip('+i+')"></div>';}).join('')+'</div><div class="score" id="sc">Moves: 0</div>');
+}
+function memFlip(i){
+  var s=memState;
+  if(s.flip.length>=2||s.flip.indexOf(i)>-1||s.done.indexOf(i)>-1)return;
+  var el=document.querySelector('.memcard[data-i="'+i+'"]');
+  el.innerHTML=s.deck[i];el.classList.add('flip');s.flip.push(i);
+  if(s.flip.length===2){
+    s.moves++;
+    document.getElementById('sc').textContent='Moves: '+s.moves;
+    var a=s.flip[0],b=s.flip[1];
+    setTimeout(function(){
+      if(s.deck[a]===s.deck[b]){
+        s.done.push(a,b);
+        [a,b].forEach(function(x){var e=document.querySelector('.memcard[data-i="'+x+'"]');e.classList.remove('flip');e.classList.add('done');});
+        if(s.done.length===s.deck.length)document.getElementById('sc').innerHTML='<b style="color:var(--green)">All pairs found in '+s.moves+' moves.</b><br><br><button class="btn" onclick="g3()">Play again</button>';
+      }else{
+        [a,b].forEach(function(x){var e=document.querySelector('.memcard[data-i="'+x+'"]');e.classList.remove('flip');e.innerHTML='';});
+      }
+      s.flip=[];
+    },650);
+  }
+}
+var PRES=[["Sun drying (vegetables)","8-12 months"],["Freezing (meat)","6-12 months"],["Vinegar pickling","6-12 months"],["Hot smoking (meat)","2-4 days"],["Dry salting (fish)","3-6 months"],["Waxing (fruit)","1-3 months"]];
+function g4(){
+  var q=PRES[ri(0,PRES.length-1)];
+  var others=shuffle(PRES.filter(function(p){return p[1]!==q[1];})).slice(0,3).map(function(p){return p[1];});
+  var opts=shuffle([q[1]].concat(others));
+  openModal('Preserve Match','Realistic shelf life, stored correctly',
+    '<p style="font-size:.9rem;margin-bottom:.8rem">How long does <b>'+q[0]+'</b> keep?</p>'+
+    opts.map(function(o){return '<button class="opt" onclick="g4a(this,'+(o===q[1])+',\''+q[1]+'\')">'+o+'</button>';}).join('')+
+    '<div class="score" id="sc"></div>');
+}
+function g4a(el,ok,c){
+  document.querySelectorAll('#gbody .opt').forEach(function(b){b.disabled=true;});
+  el.classList.add(ok?'right':'wrong');
+  document.getElementById('sc').innerHTML=(ok?'<b style="color:var(--green)">Correct.</b>':'<b style="color:var(--red)">It is '+c+'.</b>')+
+    ' Shelf life assumes correct processing AND correct storage. Get either wrong and the number means nothing.<br><br><button class="btn" onclick="g4()">Another</button>';
+}
+var mkt={};
+function g5(){ mkt={cash:100,stock:0,round:1,price:ri(4,12)}; g5r(); }
+function g5r(){
+  if(mkt.round>5){
+    var end=mkt.cash+mkt.stock*mkt.price;
+    openModal('Market Trader','Five rounds complete',
+      '<p style="font-size:.95rem">You finished with <b>$'+end.toFixed(0)+'</b> from $100.</p>'+
+      '<div class="score">'+(end>100?'<b style="color:var(--green)">You made $'+(end-100).toFixed(0)+'.</b>':'<b style="color:var(--red)">You lost $'+(100-end).toFixed(0)+'.</b>')+
+      ' Real trading is this, plus transport, plus spoilage, plus the customer who does not pay. Never trade with money you need this week.<br><br><button class="btn" onclick="g5()">Play again</button></div>');
+    return;
+  }
+  openModal('Market Trader','Round '+mkt.round+' of 5',
+    '<p style="font-size:.9rem;margin-bottom:.6rem">Price today: <b>$'+mkt.price+'</b> per crate<br>Cash: <b>$'+mkt.cash.toFixed(0)+'</b> &middot; Stock: <b>'+mkt.stock+'</b> crates</p>'+
+    '<input class="gin" id="qty" type="number" min="1" placeholder="How many crates?">'+
+    '<button class="btn" onclick="g5do(1)">Buy</button> <button class="btn ghost" onclick="g5do(-1)">Sell</button> <button class="btn ghost" onclick="g5do(0)">Wait</button>'+
+    '<div class="score" id="sc"></div>');
+}
+function g5do(dir){
+  var q=parseInt(document.getElementById('qty').value)||0;
+  if(dir===1){ var cost=q*mkt.price; if(cost>mkt.cash){document.getElementById('sc').innerHTML='<b style="color:var(--red)">Not enough cash.</b>';return;} mkt.cash-=cost;mkt.stock+=q; }
+  if(dir===-1){ if(q>mkt.stock){document.getElementById('sc').innerHTML='<b style="color:var(--red)">You do not have that many.</b>';return;} mkt.cash+=q*mkt.price;mkt.stock-=q; }
+  mkt.round++;
+  mkt.price=Math.max(2,mkt.price+ri(-3,3));
+  g5r();
+}
+var WORDS=[["MARGIN","What is left after cost, as a share of price"],["CAPITAL","Money you put in to start"],["INVOICE","The document that asks to be paid"],["SUPPLIER","Where your inputs come from"],["PROFIT","Revenue minus every cost"],["STOCK","Goods sitting waiting to sell"],["LEDGER","Where every cent in and out is written"],["DEPOSIT","Money upfront that protects you"]];
+function g6(){
+  var w=WORDS[ri(0,WORDS.length-1)];
+  var sc=shuffle(w[0].split('')).join('');
+  if(sc===w[0])sc=shuffle(w[0].split('')).join('');
+  openModal('Business Scramble','Unscramble the term',
+    '<p style="font-size:1.4rem;letter-spacing:5px;text-align:center;color:var(--gold);font-weight:800;margin:.6rem 0">'+sc+'</p>'+
+    '<p style="font-size:.85rem;color:var(--muted);text-align:center;margin-bottom:.8rem">Clue: '+w[1]+'</p>'+
+    '<input class="gin" id="ans" placeholder="Your answer"><button class="btn" onclick="g6a(\''+w[0]+'\')">Check</button>'+
+    '<div class="score" id="sc"></div>');
+}
+function g6a(w){
+  var v=(document.getElementById('ans').value||'').toUpperCase().trim();
+  document.getElementById('sc').innerHTML=(v===w?'<b style="color:var(--green)">Correct &mdash; '+w+'.</b>':'<b style="color:var(--red)">It was '+w+'.</b>')+'<br><br><button class="btn" onclick="g6()">Another</button>';
+}
+var QUIZ=[
+["A customer asks for credit until month end. Safest response?",["Give it, they will be loyal","Small amount, written down, agreed date","Refuse all credit forever","Give it if they seem honest"],1,"Credit is not wrong. Unrecorded credit is. Write it down, cap it, and agree a date."],
+["Your product costs $4 and sells for $10. Someone offers to buy 50 at $5.",["Take it, volume is king","Refuse, it barely covers cost","Depends whether $1 x 50 beats your alternative","Raise your price to $12"],2,"$1 profit x 50 is $50. Worth it only if you have spare capacity and no better buyer. Volume at a loss is a faster way to fail."],
+["Best first record to keep?",["Social media followers","Money in and money out, daily","Competitor prices","Your business plan"],1,"A daily cash record is the one book that tells you the truth. Everything else is opinion."],
+["You run out of stock on your best seller.",["Substitute something similar quietly","Tell them when it returns and take their number","Close for the day","Raise the price of what is left"],1,"A captured phone number turns a lost sale into a future one. Quiet substitution loses trust permanently."],
+["Aflatoxin in groundnuts is destroyed by:",["Roasting","Boiling","Nothing you can do at home","Salting"],2,"Roasting does NOT destroy aflatoxin. The only control is rejecting mouldy, shrivelled or discoloured nuts before processing."],
+["A sealed jar of garlic in oil at room temperature is:",["Traditional and safe","A botulism risk","Safe if boiled first","Safe for six months"],1,"Garlic is low-acid and oil excludes air &mdash; ideal botulism conditions. Acidify and refrigerate, or do not make it."],
+["Your margin is thin but volume is high. The biggest danger is:",["Boredom","One unpaid customer wiping out many sales","Competitors copying you","Running out of ideas"],1,"At 10% margin, one unpaid $100 order cancels $1000 of good sales. Thin margins make credit lethal."],
+["Best time to raise your price:",["Never","When costs rise, explained honestly","Secretly, hoping nobody notices","Only for new customers"],1,"Customers accept honest increases far better than shrinking portions or silent quality cuts."],
+["A supplier offers a big discount for cash today.",["Always take it","Only if you still cover next month costs","Never trust discounts","Borrow to take it"],1,"A discount that leaves you unable to buy next month stock is not a saving, it is a trap."],
+["The most useful question to ask a customer:",["Do you like it?","Would you buy it again, and what would change your mind?","Is it cheap enough?","How is my packaging?"],1,"Do you like it invites politeness. Asking what would change their mind invites the truth."]
+];
+var qz={};
+function g7(){qz={i:0,score:0};g7q();}
+function g7q(){
+  if(qz.i>=QUIZ.length){
+    openModal('Quick Quiz','Finished',
+      '<p style="font-size:1.05rem">You scored <b style="color:var(--gold)">'+qz.score+' / '+QUIZ.length+'</b></p><div class="score">'+
+      (qz.score>=8?'Strong. You think about risk before opportunity &mdash; that is the right order.':qz.score>=5?'Solid start. Look again at the ones about credit and food safety.':'Worth another run. These are the mistakes that cost real money.')+
+      '<br><br><button class="btn" onclick="g7()">Play again</button></div>');
+    return;
+  }
+  var q=QUIZ[qz.i];
+  openModal('Quick Quiz','Question '+(qz.i+1)+' of '+QUIZ.length,
+    '<p style="font-size:.9rem;margin-bottom:.8rem">'+q[0]+'</p>'+
+    q[1].map(function(o,i){return '<button class="opt" onclick="g7a(this,'+i+','+q[2]+')">'+o+'</button>';}).join('')+
+    '<div class="score" id="sc"></div>');
+}
+function g7a(el,pick,ans){
+  document.querySelectorAll('#gbody .opt').forEach(function(b){b.disabled=true;});
+  var ok=pick===ans;
+  el.classList.add(ok?'right':'wrong');
+  if(ok)qz.score++;
+  document.getElementById('sc').innerHTML=(ok?'<b style="color:var(--green)">Correct.</b> ':'<b style="color:var(--red)">Not quite.</b> ')+QUIZ[qz.i][3]+
+    '<br><br><button class="btn" onclick="qz.i++;g7q()">Next</button>';
+}
+function g8(){
+  var kg=ri(2,80),type=ri(0,2);
+  var q,c;
+  if(type===0){q=kg+' kg is how many grams?';c=kg*1000;}
+  else if(type===1){q=(kg*1000)+' g is how many kg?';c=kg;}
+  else {q=kg+' kg is roughly how many pounds?';c=Math.round(kg*2.20462);}
+  openModal('Unit Race','Get it wrong at the scale and you lose money',
+    '<p style="font-size:.95rem;margin-bottom:.8rem">'+q+'</p><input class="gin" id="ans" type="number" placeholder="Your answer">'+
+    '<button class="btn" onclick="g8a('+c+')">Check</button><div class="score" id="sc"></div>');
+}
+function g8a(c){
+  var v=parseFloat(document.getElementById('ans').value);
+  var ok=Math.abs(v-c)<=Math.max(1,c*0.02);
+  document.getElementById('sc').innerHTML=(ok?'<b style="color:var(--green)">Correct.</b>':'<b style="color:var(--red)">It is '+c+'.</b>')+'<br><br><button class="btn" onclick="g8()">Another</button>';
+}
+function g9(){
+  var birds=ri(20,300),kgBird=(ri(30,45)/10),pricePerKg=(ri(4,12)/10)+0.3;
+  var total=birds*kgBird*pricePerKg;
+  var per=total/birds;
+  openModal('Feed Cost Puzzle','The number most keepers never work out',
+    '<p style="font-size:.9rem;margin-bottom:.8rem">You have <b>'+birds+'</b> broilers.<br>Each eats about <b>'+kgBird.toFixed(1)+' kg</b> of feed to market weight.<br>Feed costs <b>$'+pricePerKg.toFixed(2)+'</b> per kg.<br><br>What is your feed cost <b>per bird</b>?</p>'+
+    '<input class="gin" id="ans" type="number" step="0.01" placeholder="$ per bird">'+
+    '<button class="btn" onclick="g9a('+per+','+total+','+birds+')">Check</button><div class="score" id="sc"></div>');
+}
+function g9a(per,total,birds){
+  var v=parseFloat(document.getElementById('ans').value);
+  var ok=Math.abs(v-per)<=per*0.06;
+  document.getElementById('sc').innerHTML=(ok?'<b style="color:var(--green)">Correct.</b>':'<b style="color:var(--red)">It is about $'+per.toFixed(2)+'.</b>')+
+    ' Total feed bill: <b>$'+total.toFixed(0)+'</b> for '+birds+' birds. If you cannot sell each bird for meaningfully more than $'+per.toFixed(2)+', the flock loses money before you count chicks, medicine, transport or deaths.'+
+    '<br><br><button class="btn" onclick="g9()">Another</button>';
+}
+var SPIN_P=['soap','chilli sauce','dried mango','peanut butter','candles','school uniforms','yoghurt','charcoal briquettes','hibiscus cordial','moringa powder','samosas','beaded jewellery','floor polish','seedlings','bread'];
+var SPIN_L=['a market stall','a tuckshop supply round','your church and its network','a school gate','a taxi rank','WhatsApp status only','one restaurant','a farm gate'];
+var SPIN_C=['mothers buying weekly','young workers with no time to cook','shop owners who resell','farmers','students','office workers in town','event caterers'];
+function g10(){
+  openModal('Idea Spinner','A starting point, not a business plan',
+    '<div id="spinOut" style="text-align:center;padding:1rem 0;font-size:1.05rem;line-height:2">Press spin.</div>'+
+    '<button class="btn" onclick="g10s()">Spin</button>'+
+    '<div class="score">Whatever comes up, test it the cheap way: make ten, sell ten, count honestly.</div>');
+}
+function g10s(){
+  document.getElementById('spinOut').innerHTML=
+    'Sell <b style="color:var(--gold)">'+SPIN_P[ri(0,SPIN_P.length-1)]+'</b><br>at <b style="color:var(--gold)">'+SPIN_L[ri(0,SPIN_L.length-1)]+'</b><br>to <b style="color:var(--gold)">'+SPIN_C[ri(0,SPIN_C.length-1)]+'</b>';
+}
+var GAMES=[
+["&#128176;","Margin Master","Given cost and selling price, pick the right profit margin.",g1],
+["&#9878;","Break-Even Builder","Fixed costs, unit profit. How many must you sell before you earn?",g2],
+["&#127843;","Spice Memory","Match the pairs. Trains the recall you need at a market stall.",g3],
+["&#129482;","Preserve Match","Match each method to its real shelf life.",g4],
+["&#128200;","Market Trader","Five rounds. Buy low, sell high, do not run out of cash.",g5],
+["&#128221;","Business Scramble","Unscramble the term. Vocabulary is confidence.",g6],
+["&#129504;","Quick Quiz","Ten questions on running a small business honestly.",g7],
+["&#128207;","Unit Race","Kilos, grams, pounds. Get it wrong and you lose money.",g8],
+["&#127793;","Feed Cost Puzzle","Work out cost per bird.",g9],
+["&#127920;","Idea Spinner","Spin a product, a place and a customer.",g10]
+];
+document.getElementById('gameGrid').innerHTML=GAMES.map(function(g,i){
+  return '<div class="card game-card" onclick="GAMES['+i+'][3]()"><span class="emoji">'+g[0]+'</span><h3>'+g[1]+'</h3><p>'+g[2]+'</p><span class="play">PLAY &rarr;</span></div>';
+}).join('');
+</script>
 </body>
 </html>
