@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Courses — rise AFRICA skills</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --gold: #c9a227;
+            --dark: #1a1a2e;
+            --darker: #0f0f1a;
+            --card: #1e1e32;
+            --muted: #9a9ab0;
+            --green: #27ae60;
+            --red: #e94560;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--darker);
+            color: #fff;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            background: rgba(15, 15, 26, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(201, 162, 39, 0.2);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: var(--gold);
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1rem;
+        }
+
+        .brand {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        nav {
+            display: flex;
+            gap: 1.5rem;
+            margin-left: auto;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--muted);
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--gold);
+        }
+
+        .logout-btn {
+            background: rgba(233, 69, 96, 0.2);
+            border: 1px solid var(--red);
+            color: var(--red);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .logout-btn:hover {
+            background: rgba(233, 69, 96, 0.3);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            color: var(--gold);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: var(--muted);
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .course-card {
+            background: var(--card);
+            border: 1px solid rgba(201, 162, 39, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .course-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(201, 162, 39, 0.1);
+        }
+
+        .course-header {
+            background: linear-gradient(135deg, rgba(201, 162, 39, 0.1) 0%, rgba(201, 162, 39, 0.05) 100%);
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(201, 162, 39, 0.2);
+        }
+
+        .course-category {
+            color: var(--gold);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .course-body {
+            padding: 1.5rem;
+        }
+
+        .progress-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--gold) 0%, #d4af3a 100%);
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        .course-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .stat {
+            background: rgba(201, 162, 39, 0.05);
+            padding: 0.8rem;
+            border-radius: 6px;
+            border: 1px solid rgba(201, 162, 39, 0.1);
+        }
+
+        .stat-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .stat-label {
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+
+        .course-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: var(--dark);
+        }
+
+        .btn-primary:hover {
+            background: #dbc249;
+        }
+
+        .btn-secondary {
+            background: rgba(201, 162, 39, 0.2);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(201, 162, 39, 0.3);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--muted);
+        }
+
+        .empty-state h2 {
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state p {
+            margin-bottom: 2rem;
+        }
+
+        .btn-explore {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--dark);
+            padding: 0.8rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .btn-explore:hover {
+            background: #dbc249;
+        }
+
+        .auth-required {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: var(--card);
+            border: 1px solid rgba(201, 162, 39, 0.2);
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .auth-required h2 {
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(39, 174, 96, 0.2);
+            color: var(--green);
+        }
+
+        .badge.completed {
+            background: rgba(39, 174, 96, 0.2);
+            color: var(--green);
+        }
+
+        .badge.in-progress {
+            background: rgba(52, 152, 219, 0.2);
+            color: #3498db;
+        }
+
+        footer {
+            border-top: 1px solid rgba(201, 162, 39, 0.15);
+            text-align: center;
+            padding: 1.5rem 1rem;
+            color: var(--muted);
+            font-size: 0.8rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-icon">rAs</div>
+        <span class="brand">rise AFRICA skills</span>
+        <nav>
+            <a href="index.html">← Browse Courses</a>
+            <span id="userEmail" style="color: var(--muted);"></span>
+            <button class="logout-btn" onclick="handleLogout()">Logout</button>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h1>📚 My Enrolled Courses</h1>
+            <p>Continue learning where you left off</p>
+        </div>
+
+        <div id="authContainer" style="display: none;">
+            <div class="auth-required">
+                <h2>📖 Sign In to View Your Courses</h2>
+                <p>Login to see your enrolled courses and continue learning.</p>
+                <div class="auth-buttons">
+                    <button class="btn btn-primary" onclick="redirectToLogin()">Sign In</button>
+                    <a href="index.html" class="btn btn-secondary" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">Browse Courses</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="coursesContainer" style="display: none;">
+            <div id="coursesList" class="courses-grid"></div>
+
+            <div id="emptyState" style="display: none;">
+                <div class="empty-state">
+                    <h2>🎓 No Courses Yet</h2>
+                    <p>You haven't enrolled in any courses yet. Browse our collection and start learning today!</p>
+                    <a href="index.html" class="btn-explore">Explore Courses</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>rise AFRICA skills • © 2026 • All rights reserved</p>
+    </footer>
+
+    <script>
+        const SUPABASE_URL = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc';
+
+        let supabaseClient = null;
+        let currentUser = null;
+
+        // Initialize Supabase
+        function initSupabase() {
+            if (window.supabase) {
+                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+                console.log('[My Courses] Supabase initialized');
+            }
+        }
+
+        // Check authentication
+        async function checkAuth() {
+            initSupabase();
+
+            if (!supabaseClient) {
+                showAuthRequired();
+                return;
+            }
+
+            try {
+                const { data: { session } } = await supabaseClient.auth.getSession();
+                if (session && session.user) {
+                    currentUser = session.user;
+                    document.getElementById('userEmail').textContent = currentUser.email;
+                    console.log('[My Courses] User logged in:', currentUser.email);
+                    loadEnrolledCourses();
+                } else {
+                    showAuthRequired();
+                }
+            } catch (error) {
+                console.error('[My Courses] Auth check failed:', error);
+                showAuthRequired();
+            }
+        }
+
+        function showAuthRequired() {
+            document.getElementById('authContainer').style.display = 'block';
+            document.getElementById('coursesContainer').style.display = 'none';
+        }
+
+        async function loadEnrolledCourses() {
+            try {
+                // Get enrollments from localStorage (Supabase sync coming)
+                const enrollmentsData = localStorage.getItem('rise-africa-enrollments');
+                let enrollments = enrollmentsData ? JSON.parse(enrollmentsData) : [];
+
+                // Filter by current user email
+                enrollments = enrollments.filter(e => e.userId === currentUser.id || e.email === currentUser.email);
+
+                console.log('[My Courses] Loaded', enrollments.length, 'enrollments');
+
+                if (enrollments.length === 0) {
+                    showEmptyState();
+                    return;
+                }
+
+                // Load course data from Supabase
+                const { data: courses } = await supabaseClient.from('courses').select('*');
+                const coursesMap = {};
+                if (courses) {
+                    courses.forEach(c => {
+                        coursesMap[c.id] = c;
+                    });
+                }
+
+                // Render enrollments
+                document.getElementById('coursesContainer').style.display = 'block';
+                const coursesList = document.getElementById('coursesList');
+                coursesList.innerHTML = '';
+
+                enrollments.forEach(enrollment => {
+                    const course = coursesMap[enrollment.courseId];
+                    if (!course) return;
+
+                    const progress = enrollment.progress || 0;
+                    const isCompleted = progress === 100;
+                    const status = isCompleted ? 'completed' : 'in-progress';
+
+                    const card = document.createElement('div');
+                    card.className = 'course-card';
+                    card.innerHTML = `
+                        <div class="course-header">
+                            <div class="course-category">${course.category || 'Course'}</div>
+                            <div class="course-title">${course.title}</div>
+                        </div>
+                        <div class="course-body">
+                            <div class="progress-section">
+                                <div class="progress-label">
+                                    <span>Progress</span>
+                                    <span>${progress}%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${progress}%"></div>
+                                </div>
+                            </div>
+
+                            <div class="course-stats">
+                                <div class="stat">
+                                    <div class="stat-value">${enrollment.completedModules?.length || 0}</div>
+                                    <div class="stat-label">Modules Done</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-value">${enrollment.completedQuizzes?.length || 0}</div>
+                                    <div class="stat-label">Quizzes Passed</div>
+                                </div>
+                            </div>
+
+                            ${enrollment.certificateIssued ? '<span class="badge completed">✓ Certificate Earned</span>' : '<span class="badge in-progress">In Progress</span>'}
+
+                            <div class="course-buttons" style="margin-top: 1.5rem;">
+                                <button class="btn btn-primary" onclick="openCourse('${enrollment.courseId}', '${enrollment.courseName}')">
+                                    ${isCompleted ? '📜 View Certificate' : '▶️ Continue Learning'}
+                                </button>
+                                <button class="btn btn-secondary" onclick="viewCourseDetails('${enrollment.courseId}')">
+                                    📊 Details
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    coursesList.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error('[My Courses] Error loading courses:', error);
+            }
+        }
+
+        function showEmptyState() {
+            document.getElementById('coursesContainer').style.display = 'block';
+            document.getElementById('coursesList').style.display = 'none';
+            document.getElementById('emptyState').style.display = 'block';
+        }
+
+        function openCourse(courseId, courseName) {
+            // Redirect to course content page
+            window.location.href = `course-content.html?courseId=${courseId}&courseName=${encodeURIComponent(courseName)}`;
+        }
+
+        function viewCourseDetails(courseId) {
+            // Show course details modal (future enhancement)
+            alert('Course details coming soon');
+        }
+
+        function redirectToLogin() {
+            // Redirect to login page (future enhancement)
+            alert('Login page coming soon - use index.html');
+        }
+
+        async function handleLogout() {
+            if (supabaseClient) {
+                await supabaseClient.auth.signOut();
+            }
+            localStorage.removeItem('authToken');
+            window.location.href = 'index.html';
+        }
+
+        // Check auth on page load
+        document.addEventListener('DOMContentLoaded', checkAuth);
+    </script>
+</body>
+</html>

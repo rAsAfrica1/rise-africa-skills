@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rise AFRICA Skills (rAs) - 159 Practical Courses</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --gold: #C9A227;
+            --dark: #1a1a1a;
+            --darker: #111;
+            --card: #1e1e1e;
+            --text: #e0e0e0;
+            --muted: #888;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            color: var(--text);
+        }
+
+        header {
+            background: rgba(0,0,0,0.5);
+            border-bottom: 3px solid var(--gold);
+            padding: 2rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        h1 {
+            color: var(--gold);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 10px rgba(201, 162, 39, 0.3);
+        }
+
+        .subtitle {
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            font-size: 0.95rem;
+        }
+
+        .stat-value { color: var(--gold); font-weight: 700; }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .search-filter {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        input, select {
+            padding: 0.8rem;
+            background: var(--card);
+            border: 2px solid var(--gold);
+            color: var(--text);
+            border-radius: 6px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .course-card {
+            background: var(--card);
+            border: 2px solid rgba(201, 162, 39, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .course-card:hover {
+            border-color: var(--gold);
+            box-shadow: 0 8px 24px rgba(201, 162, 39, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .course-title {
+            color: var(--gold);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(201, 162, 39, 0.2);
+            color: var(--gold);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .desc {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .pricing {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .price { background: rgba(201, 162, 39, 0.1); padding: 0.4rem; border-radius: 4px; font-size: 0.85rem; }
+
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        button {
+            flex: 1;
+            padding: 0.6rem;
+            background: var(--gold);
+            color: var(--darker);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        button:hover { background: #e0c050; }
+
+        button.secondary {
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--muted);
+            margin-top: 3rem;
+            border-top: 1px solid rgba(201, 162, 39, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🌍 Rise AFRICA Skills (rAs)</h1>
+        <p class="subtitle">Practical Courses for African Entrepreneurs</p>
+        <div class="stats">
+            <div>📚 <span class="stat-value">159</span> Courses</div>
+            <div>📱 <span class="stat-value">40+</span> Social Platforms</div>
+            <div>🤖 <span class="stat-value">24/7</span> AI Support</div>
+            <div>💾 <span class="stat-value">100%</span> Offline Ready</div>
+            <div><span style="background: #4CAF50; color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 700;">🔴 LIVE</span></div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="search-filter">
+            <input type="text" id="searchInput" placeholder="Search courses..." onkeyup="filterCourses()">
+            <select id="categoryFilter" onchange="filterCourses()">
+                <option value="">All Categories</option>
+                <option value="Agriculture">Agriculture</option>
+                <option value="Business">Business</option>
+                <option value="Services">Services</option>
+                <option value="Food">Food & Beverage</option>
+                <option value="Crafts">Crafts</option>
+                <option value="Manufacturing">Manufacturing</option>
+            </select>
+        </div>
+
+        <div class="grid" id="gridCourses"></div>
+    </div>
+
+    <footer>
+        <p>© 2026 Rise AFRICA Skills. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const COURSES = [
+            {id:1,title:'Agro-Forestry',category:'Agriculture',desc:'Sustainable farming with trees',duration:'18 days'},{id:2,title:'Soil Management',category:'Agriculture',desc:'Soil health and fertility techniques',duration:'16 days'},{id:3,title:'Organic Farming',category:'Agriculture',desc:'Chemical-free agriculture methods',duration:'20 days'},{id:4,title:'Crop Rotation',category:'Agriculture',desc:'Maximize yields with rotation',duration:'14 days'},{id:5,title:'Irrigation Systems',category:'Agriculture',desc:'Water management for farms',duration:'17 days'},{id:6,title:'Vegetable Farming',category:'Agriculture',desc:'Growing high-value vegetables',duration:'15 days'},{id:7,title:'Fruit Cultivation',category:'Agriculture',desc:'Orchard management and harvesting',duration:'19 days'},{id:8,title:'Horticulture Basics',category:'Agriculture',desc:'Garden and nursery management',duration:'16 days'},{id:9,title:'Spice Farming',category:'Agriculture',desc:'High-profit spice cultivation',duration:'18 days'},{id:10,title:'Coffee Farming',category:'Agriculture',desc:'Coffee plant care and harvesting',duration:'20 days'},{id:11,title:'Cocoa Production',category:'Agriculture',desc:'Cocoa tree farming and processing',duration:'21 days'},{id:12,title:'Tea Cultivation',category:'Agriculture',desc:'Tea plant growing and picking',duration:'19 days'},{id:13,title:'Honey Production',category:'Agriculture',desc:'Beekeeping and honey harvesting',duration:'17 days'},{id:14,title:'Mushroom Farming',category:'Agriculture',desc:'Indoor mushroom cultivation',duration:'14 days'},{id:15,title:'Pest Management',category:'Agriculture',desc:'Natural pest control methods',duration:'15 days'},{id:16,title:'Plant Diseases',category:'Agriculture',desc:'Identify and treat plant diseases',duration:'16 days'},{id:17,title:'Crop Planning',category:'Agriculture',desc:'Strategic farm planning',duration:'12 days'},{id:18,title:'Farm Business',category:'Agriculture',desc:'Agricultural entrepreneurship',duration:'18 days'},{id:19,title:'Seed Selection',category:'Agriculture',desc:'Choosing quality seeds',duration:'10 days'},{id:20,title:'Fertilizer Use',category:'Agriculture',desc:'Proper fertilizer application',duration:'12 days'},{id:21,title:'Aquaponics',category:'Agriculture',desc:'Fish and plant farming together',duration:'20 days'},{id:22,title:'Hydroponics',category:'Agriculture',desc:'Water-based plant growing',duration:'18 days'},{id:23,title:'Greenhouse Farming',category:'Agriculture',desc:'Controlled environment growing',duration:'16 days'},{id:24,title:'Nut Farming',category:'Agriculture',desc:'Cashew, shea, and nut trees',duration:'22 days'},{id:25,title:'Dairy Farming',category:'Agriculture',desc:'Milk production essentials',duration:'17 days'},{id:26,title:'Poultry Farming',category:'Agriculture',desc:'Chicken and bird raising',duration:'15 days'},{id:27,title:'Pig Farming',category:'Agriculture',desc:'Profitable pig production',duration:'14 days'},{id:28,title:'Goat Farming',category:'Agriculture',desc:'Goat rearing and management',duration:'13 days'},{id:29,title:'Fish Farming',category:'Agriculture',desc:'Aquaculture and fish ponds',duration:'19 days'},{id:30,title:'Rabbit Farming',category:'Agriculture',desc:'Rabbit breeding and care',duration:'12 days'},{id:31,title:'Bee Products',category:'Agriculture',desc:'Honey, wax, and propolis',duration:'16 days'},{id:32,title:'Sheep Farming',category:'Agriculture',desc:'Wool and meat production',duration:'15 days'},{id:33,title:'Cattle Ranching',category:'Agriculture',desc:'Beef cattle management',duration:'18 days'},{id:34,title:'Fodder Production',category:'Agriculture',desc:'Growing animal feed',duration:'13 days'},{id:35,title:'Silage Making',category:'Agriculture',desc:'Preserve fodder for livestock',duration:'11 days'},{id:36,title:'Farm Equipment',category:'Agriculture',desc:'Tools and machinery use',duration:'14 days'},{id:37,title:'Market Gardening',category:'Agriculture',desc:'Intensive vegetable production',duration:'16 days'},{id:38,title:'Agro-Processing',category:'Agriculture',desc:'Add value to farm products',duration:'17 days'},{id:39,title:'Extension Farming',category:'Agriculture',desc:'Scaling farm operations',duration:'15 days'},{id:40,title:'Weather Farming',category:'Agriculture',desc:'Adapt to climate patterns',duration:'12 days'},{id:41,title:'Soil Testing',category:'Agriculture',desc:'Analyze soil quality',duration:'9 days'},{id:42,title:'Water Harvesting',category:'Agriculture',desc:'Rainwater collection systems',duration:'13 days'},{id:43,title:'Pasture Management',category:'Agriculture',desc:'Grazing land improvement',duration:'14 days'},{id:44,title:'Mixed Farming',category:'Agriculture',desc:'Combining crops and livestock',duration:'18 days'},{id:45,title:'Precision Farming',category:'Agriculture',desc:'Modern farming technology',duration:'16 days'},{id:46,title:'Business Basics',category:'Business',desc:'Starting your business',duration:'15 days'},{id:47,title:'Business Planning',category:'Business',desc:'Create a winning business plan',duration:'14 days'},{id:48,title:'Financial Management',category:'Business',desc:'Handle business finances',duration:'16 days'},{id:49,title:'Bookkeeping',category:'Business',desc:'Record keeping and accounting',duration:'13 days'},{id:50,title:'Taxation Basics',category:'Business',desc:'Understanding business taxes',duration:'12 days'},{id:51,title:'Marketing Strategy',category:'Business',desc:'Market your products',duration:'15 days'},{id:52,title:'Digital Marketing',category:'Business',desc:'Online marketing essentials',duration:'14 days'},{id:53,title:'Social Media Business',category:'Business',desc:'Grow with social platforms',duration:'13 days'},{id:54,title:'Sales Fundamentals',category:'Business',desc:'Selling techniques that work',duration:'14 days'},{id:55,title:'Customer Service',category:'Business',desc:'Keep customers happy',duration:'12 days'},{id:56,title:'Team Management',category:'Business',desc:'Lead and manage teams',duration:'15 days'},{id:57,title:'Leadership Skills',category:'Business',desc:'Become an effective leader',duration:'16 days'},{id:58,title:'Negotiation Skills',category:'Business',desc:'Win better deals',duration:'12 days'},{id:59,title:'Supply Chain',category:'Business',desc:'Manage product flow',duration:'14 days'},{id:60,title:'Inventory Control',category:'Business',desc:'Track and manage stock',duration:'11 days'},{id:61,title:'Pricing Strategy',category:'Business',desc:'Price products effectively',duration:'10 days'},{id:62,title:'Export Business',category:'Business',desc:'Sell internationally',duration:'17 days'},{id:63,title:'Import Business',category:'Business',desc:'Import goods for resale',duration:'16 days'},{id:64,title:'Franchise Model',category:'Business',desc:'Franchise your business',duration:'15 days'},{id:65,title:'Cooperative Business',category:'Business',desc:'Form and run cooperatives',duration:'14 days'},{id:66,title:'E-commerce Business',category:'Business',desc:'Sell online effectively',duration:'16 days'},{id:67,title:'Retail Management',category:'Business',desc:'Run a retail shop',duration:'14 days'},{id:68,title:'Wholesale Business',category:'Business',desc:'Bulk buying and selling',duration:'13 days'},{id:69,title:'Microcredit Operations',category:'Business',desc:'Small loan management',duration:'15 days'},{id:70,title:'Credit Management',category:'Business',desc:'Manage customer credit',duration:'12 days'},{id:71,title:'Business Registration',category:'Business',desc:'Register your business',duration:'9 days'},{id:72,title:'Legal Compliance',category:'Business',desc:'Follow business laws',duration:'13 days'},{id:73,title:'Risk Management',category:'Business',desc:'Protect your business',duration:'12 days'},{id:74,title:'Insurance Basics',category:'Business',desc:'Business insurance types',duration:'11 days'},{id:75,title:'Productivity',category:'Business',desc:'Work efficiently and smartly',duration:'10 days'},{id:76,title:'Problem Solving',category:'Business',desc:'Find creative solutions',duration:'11 days'},{id:77,title:'Decision Making',category:'Business',desc:'Make better business decisions',duration:'10 days'},{id:78,title:'Hairdressing',category:'Services',desc:'Hair cutting and styling',duration:'15 days'},{id:79,title:'Salon Management',category:'Services',desc:'Run a beauty salon',duration:'14 days'},{id:80,title:'Barber Skills',category:'Services',desc:'Professional barbering',duration:'14 days'},{id:81,title:'Tailoring',category:'Services',desc:'Clothing design and sewing',duration:'16 days'},{id:82,title:'Fashion Design',category:'Services',desc:'Create fashion designs',duration:'17 days'},{id:83,title:'Plumbing Skills',category:'Services',desc:'Water system installation',duration:'15 days'},{id:84,title:'Electrical Work',category:'Services',desc:'Wiring and electrical systems',duration:'16 days'},{id:85,title:'Carpentry',category:'Services',desc:'Woodworking and furniture',duration:'18 days'},{id:86,title:'Masonry',category:'Services',desc:'Brick and stone work',duration:'16 days'},{id:87,title:'Painting',category:'Services',desc:'House and decorative painting',duration:'13 days'},{id:88,title:'Welding',category:'Services',desc:'Metal joining techniques',duration:'16 days'},{id:89,title:'Vehicle Repair',category:'Services',desc:'Car maintenance and repair',duration:'18 days'},{id:90,title:'Motorcycle Repair',category:'Services',desc:'Bike repair and maintenance',duration:'15 days'},{id:91,title:'Phone Repair',category:'Services',desc:'Mobile device repair',duration:'12 days'},{id:92,title:'Computer Repair',category:'Services',desc:'Fix computers and laptops',duration:'14 days'},{id:93,title:'Appliance Repair',category:'Services',desc:'Fix kitchen and home appliances',duration:'15 days'},{id:94,title:'Cleaning Services',category:'Services',desc:'Professional cleaning business',duration:'11 days'},{id:95,title:'Pest Control',category:'Services',desc:'Pest elimination services',duration:'13 days'},{id:96,title:'Security Services',category:'Services',desc:'Security and guarding',duration:'14 days'},{id:97,title:'Tutoring Services',category:'Services',desc:'Educational tutoring business',duration:'12 days'},{id:98,title:'Translation Services',category:'Services',desc:'Language translation work',duration:'13 days'},{id:99,title:'Event Planning',category:'Services',desc:'Organize events and functions',duration:'15 days'},{id:100,title:'Bakery Basics',category:'Food',desc:'Bread and pastry production',duration:'14 days'},{id:101,title:'Baking Advanced',category:'Food',desc:'Advanced baking techniques',duration:'16 days'},{id:102,title:'Cake Decoration',category:'Food',desc:'Decorate cakes professionally',duration:'12 days'},{id:103,title:'Restaurant Business',category:'Food',desc:'Run a restaurant',duration:'17 days'},{id:104,title:'Catering Services',category:'Food',desc:'Food service and catering',duration:'15 days'},{id:105,title:'Fast Food Business',category:'Food',desc:'Start a fast food outlet',duration:'13 days'},{id:106,title:'Juice Production',category:'Food',desc:'Make and sell juices',duration:'11 days'},{id:107,title:'Jam Making',category:'Food',desc:'Preserve and make jams',duration:'10 days'},{id:108,title:'Pickle Production',category:'Food',desc:'Pickling and preservation',duration:'11 days'},{id:109,title:'Sauce Making',category:'Food',desc:'Produce sauces and condiments',duration:'12 days'},{id:110,title:'Snack Production',category:'Food',desc:'Make and sell snacks',duration:'12 days'},{id:111,title:'Meat Processing',category:'Food',desc:'Butchery and meat products',duration:'14 days'},{id:112,title:'Fish Processing',category:'Food',desc:'Fish preservation and products',duration:'13 days'},{id:113,title:'Dairy Products',category:'Food',desc:'Make cheese and yogurt',duration:'14 days'},{id:114,title:'Cooking Skills',category:'Food',desc:'Master cooking techniques',duration:'15 days'},{id:115,title:'Menu Planning',category:'Food',desc:'Plan nutritious menus',duration:'11 days'},{id:116,title:'Food Safety',category:'Food',desc:'Food hygiene and safety',duration:'10 days'},{id:117,title:'Nutrition Basics',category:'Food',desc:'Understand nutrition',duration:'12 days'},{id:118,title:'Coffee Roasting',category:'Food',desc:'Roast and prepare coffee',duration:'13 days'},{id:119,title:'Tea Preparation',category:'Food',desc:'Prepare and sell tea',duration:'11 days'},{id:120,title:'Chocolate Making',category:'Food',desc:'Artisan chocolate production',duration:'13 days'},{id:121,title:'Herbal Drinks',category:'Food',desc:'Make herbal beverages',duration:'12 days'},{id:122,title:'Alcohol Production',category:'Food',desc:'Brewing and fermentation',duration:'16 days'},{id:123,title:'Food Packaging',category:'Food',desc:'Professional food packaging',duration:'10 days'},{id:124,title:'Soap Making',category:'Crafts',desc:'Handmade soap production',duration:'10 days'},{id:125,title:'Candle Making',category:'Crafts',desc:'Produce decorative candles',duration:'9 days'},{id:126,title:'Pottery',category:'Crafts',desc:'Ceramic and clay work',duration:'16 days'},{id:127,title:'Beadwork',category:'Crafts',desc:'Bead jewelry and crafts',duration:'12 days'},{id:128,title:'Leather Work',category:'Crafts',desc:'Leather crafts and goods',duration:'15 days'},{id:129,title:'Basketry',category:'Crafts',desc:'Basket weaving and plaiting',duration:'13 days'},{id:130,title:'Jewel Making',category:'Crafts',desc:'Make jewelry and accessories',duration:'14 days'},{id:131,title:'Wood Carving',category:'Crafts',desc:'Wood art and carving',duration:'14 days'},{id:132,title:'Stone Carving',category:'Crafts',desc:'Sculpture and stone work',duration:'15 days'},{id:133,title:'Glass Work',category:'Crafts',desc:'Glass art and decoration',duration:'14 days'},{id:134,title:'Embroidery',category:'Crafts',desc:'Decorative embroidery work',duration:'13 days'},{id:135,title:'Weaving',category:'Crafts',desc:'Cloth and fabric weaving',duration:'16 days'},{id:136,title:'Batik Design',category:'Crafts',desc:'Batik fabric decoration',duration:'12 days'},{id:137,title:'Screen Printing',category:'Crafts',desc:'Print designs on fabric',duration:'13 days'},{id:138,title:'Tie Dye',category:'Crafts',desc:'Tie dye fabric techniques',duration:'11 days'},{id:139,title:'Paper Making',category:'Crafts',desc:'Make handmade paper',duration:'11 days'},{id:140,title:'Book Binding',category:'Crafts',desc:'Bind and make books',duration:'12 days'},{id:141,title:'Floral Design',category:'Crafts',desc:'Flower arrangement and design',duration:'11 days'},{id:142,title:'Fabric Production',category:'Manufacturing',desc:'Textile manufacturing',duration:'18 days'},{id:143,title:'Plastic Products',category:'Manufacturing',desc:'Plastic molding and products',duration:'16 days'},{id:144,title:'Ceramic Tiles',category:'Manufacturing',desc:'Tile production',duration:'17 days'},{id:145,title:'Brick Making',category:'Manufacturing',desc:'Produce bricks and blocks',duration:'14 days'},{id:146,title:'Cement Production',category:'Manufacturing',desc:'Small-scale cement making',duration:'16 days'},{id:147,title:'Charcoal Making',category:'Manufacturing',desc:'Produce charcoal briquettes',duration:'12 days'},{id:148,title:'Soap Factory',category:'Manufacturing',desc:'Scale soap production',duration:'15 days'},{id:149,title:'Detergent Production',category:'Manufacturing',desc:'Make cleaning products',duration:'14 days'},{id:150,title:'Perfume Making',category:'Manufacturing',desc:'Cosmetic and fragrance production',duration:'13 days'},{id:151,title:'Shoe Making',category:'Manufacturing',desc:'Footwear manufacturing',duration:'16 days'},{id:152,title:'Bag Making',category:'Manufacturing',desc:'Produce bags and luggage',duration:'15 days'},{id:153,title:'Furniture Making',category:'Manufacturing',desc:'Furniture manufacturing',duration:'17 days'},{id:154,title:'Metal Work',category:'Manufacturing',desc:'Metal fabrication and products',duration:'16 days'},{id:155,title:'Tool Making',category:'Manufacturing',desc:'Produce tools and implements',duration:'15 days'},{id:156,title:'Rope Making',category:'Manufacturing',desc:'Produce ropes and twines',duration:'12 days'},{id:157,title:'Paint Production',category:'Manufacturing',desc:'Make paints and coatings',duration:'14 days'},{id:158,title:'Glue Production',category:'Manufacturing',desc:'Adhesive manufacturing',duration:'12 days'},{id:159,title:'Fertilizer Production',category:'Manufacturing',desc:'Make organic fertilizers',duration:'13 days'}
+        ];
+
+        function displayCourses(list) {
+            const grid = document.getElementById('gridCourses');
+            grid.innerHTML = '';
+            list.forEach(c => {
+                grid.innerHTML += `
+                    <div class="course-card">
+                        <div class="course-title">${c.title}</div>
+                        <div class="badge">${c.category}</div>
+                        <p class="desc">${c.desc}</p>
+                        <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 1rem;">📅 ${c.duration}</p>
+                        <div class="pricing">
+                            <div class="price">$8</div>
+                            <div class="price">$10+Cert</div>
+                            <div class="price">$3.50</div>
+                        </div>
+                        <div class="actions">
+                            <button onclick="enroll(${c.id})">▶️ Enroll</button>
+                            <button class="secondary" onclick="gift(${c.id})">🎁 Gift</button>
+                            <button class="secondary" onclick="qrshare(${c.id})">📱 QR</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function filterCourses() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const cat = document.getElementById('categoryFilter').value;
+            const filtered = COURSES.filter(c => 
+                (c.title.toLowerCase().includes(search) || c.desc.toLowerCase().includes(search)) &&
+                (!cat || c.category === cat)
+            );
+            displayCourses(filtered);
+        }
+
+        function enroll(id) { alert('Enrolling in course #' + id + '\n\nPayment: $8/$10/$3.50\nProcessing...'); }
+        function gift(id) { const email = prompt('Gift to email:'); if(email) alert('Gift sent to ' + email); }
+        function qrshare(id) { alert('QR Code for course #' + id + '\n\nSharing to 40+ platforms...'); }
+
+        displayCourses(COURSES);
+    </script>
+</body>
+</html>

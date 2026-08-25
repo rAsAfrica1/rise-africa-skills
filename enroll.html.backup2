@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enroll in Course — rise AFRICA skills</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+:root{--gold:#c9a227;--dark:#1a1a2e;--darker:#0f0f1a;--card:#1e1e32;--muted:#9a9ab0;--red:#e94560;--green:#27ae60}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--darker);color:#fff;padding:2rem 1rem}
+header{position:sticky;top:0;background:rgba(15,15,26,0.95);backdrop-filter:blur(8px);border-bottom:1px solid rgba(201,162,39,0.2);padding:0.7rem 1rem;display:flex;align-items:center;gap:0.6rem;z-index:100;margin:-2rem -1rem 0}
+.logo-icon{width:34px;height:34px;border-radius:8px;background:var(--gold);color:var(--darker);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.85rem}
+.brand{font-weight:700}
+a.back{margin-left:auto;text-decoration:none;font-size:0.85rem;border:1px solid var(--gold);padding:0.35rem 0.8rem;border-radius:20px;color:var(--gold)}
+main{max-width:900px;margin:2rem auto;padding:0 1rem}
+.hero{text-align:center;margin-bottom:3rem}
+.hero h1{color:var(--gold);font-size:2rem;margin-bottom:0.5rem}
+.hero p{color:var(--muted);font-size:1.05rem}
+
+/* MODAL & FORM STYLES */
+.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--card);border:1px solid rgba(201,162,39,0.3);border-radius:12px;padding:2rem;max-width:600px;width:95%;max-height:90vh;overflow-y:auto;box-shadow:0 10px 40px rgba(0,0,0,0.5)}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;border-bottom:1px solid rgba(201,162,39,0.2);padding-bottom:1rem}
+.modal-header h2{color:var(--gold);font-size:1.5rem;margin:0}
+.modal-close{background:none;border:none;color:var(--muted);font-size:1.5rem;cursor:pointer;padding:0;width:30px;height:30px}
+.modal-close:hover{color:var(--gold)}
+
+.form-section{margin-bottom:1.5rem}
+.form-section label{display:block;color:#fff;font-weight:600;margin-bottom:0.5rem;font-size:0.95rem}
+.form-section input,
+.form-section select,
+.form-section textarea{width:100%;padding:0.75rem;background:rgba(255,255,255,0.08);border:1px solid rgba(201,162,39,0.2);border-radius:6px;color:#fff;font-family:inherit;font-size:0.95rem;transition:border-color 0.2s}
+.form-section input::placeholder,
+.form-section select,
+.form-section textarea{color:var(--muted)}
+.form-section input:focus,
+.form-section select:focus,
+.form-section textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 2px rgba(201,162,39,0.1)}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-grid.full{grid-template-columns:1fr}
+
+.option-group{display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem}
+.option-item{display:flex;align-items:center;padding:0.75rem;background:rgba(255,255,255,0.04);border:1px solid rgba(201,162,39,0.15);border-radius:6px;cursor:pointer;transition:all 0.2s}
+.option-item:hover{border-color:var(--gold);background:rgba(201,162,39,0.08)}
+.option-item input[type="radio"]{margin-right:0.75rem;cursor:pointer}
+.option-item.selected{border-color:var(--gold);background:rgba(201,162,39,0.15)}
+.option-label{flex:1;min-width:0}
+/* The radio had no width or flex constraint, so flex stretched it to 416px
+   and squeezed every payment label into 80px. Pin it. */
+.option-item input[type="radio"]{flex:0 0 auto;width:18px;height:18px;margin:0 .75rem 0 0;accent-color:#C9A227}
+.option-price{flex:0 0 auto;margin-left:auto;padding-left:.75rem;font-weight:700;white-space:nowrap}
+.option-price{color:var(--gold);font-weight:700;margin-left:auto}
+
+.error-message{color:#e94560;font-size:0.85rem;margin-top:0.3rem}
+.success-message{color:var(--green);font-size:0.85rem;margin-top:0.3rem}
+
+.form-actions{display:flex;gap:1rem;margin-top:2rem;padding-top:1rem;border-top:1px solid rgba(201,162,39,0.2)}
+.btn{padding:0.85rem 1.5rem;border:none;border-radius:6px;font-weight:700;cursor:pointer;transition:all 0.2s;font-size:0.95rem}
+.btn-primary{background:var(--gold);color:var(--darker);flex:1}
+.btn-primary:hover{background:#dbc249}
+.btn-primary:disabled{background:var(--muted);color:#666;cursor:not-allowed}
+.btn-secondary{background:rgba(201,162,39,0.2);color:var(--gold);border:1px solid var(--gold)}
+.btn-secondary:hover{background:rgba(201,162,39,0.3)}
+
+.loading{display:none;text-align:center;color:var(--muted)}
+.loading.show{display:block}
+.spinner{display:inline-block;width:20px;height:20px;border:3px solid rgba(201,162,39,0.3);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* PRICING GRID (shown if form closed) */
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;margin-bottom:2rem}
+.price-card{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:1.5rem;text-align:center;transition:transform 0.2s,border-color 0.2s}
+.price-card:hover{border-color:var(--gold);transform:translateY(-4px)}
+.price-card.featured{border-color:var(--gold);background:linear-gradient(135deg, rgba(201,162,39,0.1) 0%, rgba(201,162,39,0) 100%)}
+.price-tag{color:var(--gold);font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:0.5rem}
+.price{font-size:2.5rem;font-weight:700;margin-bottom:0.5rem}
+.price small{font-size:0.6em;color:var(--muted)}
+.description{color:var(--muted);font-size:0.9rem;margin-bottom:1.5rem;min-height:60px}
+.features{text-align:left;margin-bottom:1.5rem}
+.features li{list-style:none;padding:0.4rem 0;color:#ddd;font-size:0.9rem}
+.features li:before{content:"✓ ";color:var(--green);font-weight:700;margin-right:0.5rem}
+
+.info-box{background:rgba(39,174,96,0.1);border:1px solid rgba(39,174,96,0.3);border-radius:8px;padding:1rem;margin-bottom:2rem;color:#a8e6c1}
+.info-box strong{color:#fff}
+footer{border-top:1px solid rgba(201,162,39,0.15);text-align:center;padding:1.5rem 1rem;color:var(--muted);font-size:0.8rem;margin-top:3rem}
+</style>
+<!--ras-social-meta-->
+<link rel="canonical" href="https://www.riseafricaskills.com/enroll.html">
+<meta property="og:site_name" content="rise AFRICA skills">
+<meta property="og:locale" content="en_ZW">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.riseafricaskills.com/enroll.html">
+<meta property="og:title" content="Enroll in Course — rise AFRICA skills">
+<meta property="og:description" content="Enroll in Course — a practical, fact-based course from rise AFRICA skills. Start with minimal equipment and scale as profits grow. Videos, assessments and a capstone project. From $8, lifetime access.">
+<meta property="og:image" content="https://www.riseafricaskills.com/og-image.png">
+<meta property="og:image:secure_url" content="https://www.riseafricaskills.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="rise AFRICA skills — learn practical skills, start your business">
+<meta property="og:image:type" content="image/png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@riseafricaskills">
+<meta name="twitter:creator" content="@riseafricaskills">
+<meta name="twitter:title" content="Enroll in Course — rise AFRICA skills">
+<meta name="twitter:description" content="Enroll in Course — a practical, fact-based course from rise AFRICA skills. Start with minimal equipment and scale as profits grow. Videos, assessments and a capstone project. From $8, lifetime access.">
+<meta name="twitter:image" content="https://www.riseafricaskills.com/og-image.png">
+<meta name="twitter:image:alt" content="rise AFRICA skills">
+<meta name="description" content="Fact-based practical training for African entrepreneurs. 128 courses in farming, food processing, trades, technology and business - start from zero capital. From $8 with lifetime access.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#0f0f1a">
+<meta name="author" content="rise AFRICA skills">
+<link rel="icon" href="/og-image.png" type="image/png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Course", "name": "Enroll in Course", "description": "Enroll in Course — a practical, fact-based course from rise AFRICA skills. Start with minimal equipment and scale as profits grow. Videos, assessments and a capstone project. From $8, lifetime access.", "url": "https://www.riseafricaskills.com/enroll.html", "provider": {"@type": "EducationalOrganization", "name": "rise AFRICA skills", "url": "https://www.riseafricaskills.com/"}, "inLanguage": "en"}</script>
+</head>
+<body>
+<header>
+  <div class="logo-icon">rAs</div>
+  <span class="brand">rise AFRICA skills</span>
+  <a class="back" href="index.html">← All Courses</a>
+</header>
+
+<main>
+  <div class="hero">
+    <h1>📝 Enroll Now</h1>
+    <p id="courseDesc">Choose your learning path and enroll today</p>
+  </div>
+
+  <div class="info-box">
+    <strong>✓ Secure Payment:</strong> All payments processed securely through Stripe and other trusted partners. Your information is never stored on our servers.
+  </div>
+
+  <!-- ENROLLMENT FORM MODAL -->
+  <div class="modal-overlay open" id="enrollmentModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>📝 Enroll Now</h2>
+        <button class="modal-close" onclick="closeEnrollmentModal()">✕</button>
+      </div>
+
+      <form id="enrollmentForm" onsubmit="handleEnrollment(event)">
+        <!-- PERSONAL INFORMATION -->
+        <div class="form-section">
+          <label>Full Name *</label>
+          <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name">
+        </div>
+
+        <div class="form-grid">
+          <div class="form-section">
+            <label>Email Address *</label>
+            <input type="email" id="email" name="email" required placeholder="your@email.com">
+          </div>
+          <div class="form-section">
+            <label>Phone Number *</label>
+            <input type="tel" id="phone" name="phone" required placeholder="+27 123 456 7890">
+          </div>
+        </div>
+
+        <!-- COUNTRY SELECTION -->
+        <div class="form-section">
+          <label>Country 🌍 *</label>
+          <select id="country" name="country" required>
+            <option value="">Select your country</option>
+            <optgroup label="Africa (General)">
+              <option value="Africa (General)">🌍 Africa (General)</option>
+            </optgroup>
+            <optgroup label="Africa">
+              <option value="Algeria">🇩🇿 Algeria</option>
+              <option value="Angola">🇦🇴 Angola</option>
+              <option value="Benin">🇧🇯 Benin</option>
+              <option value="Botswana">🇧🇼 Botswana</option>
+              <option value="Burkina Faso">🇧🇫 Burkina Faso</option>
+              <option value="Burundi">🇧🇮 Burundi</option>
+              <option value="Cameroon">🇨🇲 Cameroon</option>
+              <option value="Cape Verde">🇨🇻 Cape Verde</option>
+              <option value="Central African Republic">🇨🇫 Central African Republic</option>
+              <option value="Chad">🇹🇩 Chad</option>
+              <option value="Comoros">🇰🇲 Comoros</option>
+              <option value="Congo">🇨🇬 Congo</option>
+              <option value="Congo, DRC">🇨🇩 Congo, DRC</option>
+              <option value="Côte d'Ivoire">🇨🇮 Côte d'Ivoire</option>
+              <option value="Djibouti">🇩🇯 Djibouti</option>
+              <option value="Egypt">🇪🇬 Egypt</option>
+              <option value="Equatorial Guinea">🇬🇶 Equatorial Guinea</option>
+              <option value="Eritrea">🇪🇷 Eritrea</option>
+              <option value="Eswatini">🇸🇿 Eswatini</option>
+              <option value="Ethiopia">🇪🇹 Ethiopia</option>
+              <option value="Gabon">🇬🇦 Gabon</option>
+              <option value="Gambia">🇬🇲 Gambia</option>
+              <option value="Ghana">🇬🇭 Ghana</option>
+              <option value="Guinea">🇬🇳 Guinea</option>
+              <option value="Guinea-Bissau">🇬🇼 Guinea-Bissau</option>
+              <option value="Kenya">🇰🇪 Kenya</option>
+              <option value="Lesotho">🇱🇸 Lesotho</option>
+              <option value="Liberia">🇱🇷 Liberia</option>
+              <option value="Libya">🇱🇾 Libya</option>
+              <option value="Madagascar">🇲🇬 Madagascar</option>
+              <option value="Malawi">🇲🇼 Malawi</option>
+              <option value="Mali">🇲🇱 Mali</option>
+              <option value="Mauritania">🇲🇷 Mauritania</option>
+              <option value="Mauritius">🇲🇺 Mauritius</option>
+              <option value="Morocco">🇲🇦 Morocco</option>
+              <option value="Mozambique">🇲🇿 Mozambique</option>
+              <option value="Namibia">🇳🇦 Namibia</option>
+              <option value="Niger">🇳🇪 Niger</option>
+              <option value="Nigeria">🇳🇬 Nigeria</option>
+              <option value="Rwanda">🇷🇼 Rwanda</option>
+              <option value="São Tomé & Príncipe">🇸🇹 São Tomé & Príncipe</option>
+              <option value="Senegal">🇸🇳 Senegal</option>
+              <option value="Seychelles">🇸🇨 Seychelles</option>
+              <option value="Sierra Leone">🇸🇱 Sierra Leone</option>
+              <option value="Somalia">🇸🇴 Somalia</option>
+              <option value="South Africa">🇿🇦 South Africa</option>
+              <option value="South Sudan">🇸🇸 South Sudan</option>
+              <option value="Sudan">🇸🇩 Sudan</option>
+              <option value="Tanzania">🇹🇿 Tanzania</option>
+              <option value="Togo">🇹🇬 Togo</option>
+              <option value="Tunisia">🇹🇳 Tunisia</option>
+              <option value="Uganda">🇺🇬 Uganda</option>
+              <option value="Zambia">🇿🇲 Zambia</option>
+              <option value="Zimbabwe">🇿🇼 Zimbabwe</option>
+            </optgroup>
+            <optgroup label="Rest of the World">
+              <option value="Rest of the World">🌐 Rest of the World</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <!-- COURSE SELECTION -->
+        <div class="form-section">
+          <label>Select Course *</label>
+          <select id="course" name="course" required>
+            <option value="">Choose a course...</option>
+          </select>
+        </div>
+
+        <!-- PURCHASE OPTION -->
+        <div class="form-section">
+          <label>Purchase Option *</label>
+          <div class="option-group" id="purchaseOptions">
+            <div class="option-item selected" onclick="selectOption(this, 'course')">
+              <input type="radio" name="tier" value="course" checked>
+              <div class="option-label">
+                <strong>📚 Full Course Access</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">Complete online course with all lessons</div>
+              </div>
+              <div class="option-price">$8.00</div>
+            </div>
+            <div class="option-item" onclick="selectOption(this, 'cert')">
+              <input type="radio" name="tier" value="cert">
+              <div class="option-label">
+                <strong>📜 Course + Business Seed Record</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">Full course + Business Seed Record</div>
+              </div>
+              <div class="option-price">$10.00</div>
+            </div>
+            <div class="option-item" onclick="selectOption(this, 'print')">
+              <input type="radio" name="tier" value="print">
+              <div class="option-label">
+                <strong>📥 Print / Download / Share</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">Printable PDF course material</div>
+              </div>
+              <div class="option-price">$3.50</div>
+            </div>
+            <div class="option-item" onclick="selectOption(this, 'bundle')">
+              <input type="radio" name="tier" value="bundle">
+              <div class="option-label">
+                <strong>📦 Bundle (3 Courses)</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">Discounted access to 3 full courses</div>
+              </div>
+              <div class="option-price">$20.00</div>
+            </div>
+            <div class="option-item" onclick="selectOption(this, 'gift')">
+              <input type="radio" name="tier" value="gift">
+              <div class="option-label">
+                <strong>🎁 Gift a Course</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">We email the course to someone else, from you</div>
+              </div>
+              <div class="option-price">$8.00</div>
+            </div>
+          </div>
+        </div>
+
+        
+        <!-- GIFT DETAILS — shown only when the Gift option is selected -->
+        <div class="form-section" id="giftSection" style="display:none">
+          <div style="background:rgba(201,162,39,.10);border:1px solid #C9A227;border-radius:10px;
+                      padding:.9rem 1.1rem;margin-bottom:1rem;font-size:.92rem;line-height:1.55">
+            <strong>🎁 You are buying this course for someone else.</strong><br>
+            We will email them the course access and your message. You pay; they learn.
+            Your own details above are used for the receipt.
+          </div>
+
+          <label for="giftRecipientName">Who is it for? *</label>
+          <input type="text" id="giftRecipientName" name="giftRecipientName"
+                 placeholder="Their full name, e.g. Tendai Moyo" autocomplete="off">
+
+          <label for="giftRecipientEmail" style="margin-top:.9rem">Where should we send the course? *</label>
+          <input type="email" id="giftRecipientEmail" name="giftRecipientEmail"
+                 placeholder="their.email@example.com" autocomplete="off">
+          <div style="font-size:.83rem;color:var(--muted);margin-top:.3rem">
+            Course access goes to this address. Check the spelling — we cannot recover a course
+            sent to the wrong inbox.
+          </div>
+
+          <label for="giftRecipientPhone" style="margin-top:.9rem">Their WhatsApp number (optional)</label>
+          <input type="tel" id="giftRecipientPhone" name="giftRecipientPhone"
+                 placeholder="+263 77 000 0000" autocomplete="off">
+          <div style="font-size:.83rem;color:var(--muted);margin-top:.3rem">
+            If they have no email, we can send it on WhatsApp instead.
+          </div>
+
+          <label for="giftFrom" style="margin-top:.9rem">Who is it from? *</label>
+          <input type="text" id="giftFrom" name="giftFrom"
+                 placeholder="The name they should see, e.g. Aunty Grace" autocomplete="off">
+
+          <label for="giftOccasion" style="margin-top:.9rem">What is the occasion?</label>
+          <select id="giftOccasion" name="giftOccasion">
+            <option value="">No particular occasion</option>
+            <option value="Birthday">🎂 Birthday</option>
+            <option value="Graduation">🎓 Graduation</option>
+            <option value="Christmas">🎄 Christmas</option>
+            <option value="Eid">🌙 Eid</option>
+            <option value="New Year">🎆 New Year</option>
+            <option value="Wedding">💍 Wedding</option>
+            <option value="New baby">👶 New baby</option>
+            <option value="Starting a business">🚀 Starting a business</option>
+            <option value="Well done">👏 Well done / congratulations</option>
+            <option value="Just because">💛 Just because</option>
+          </select>
+
+          <label for="giftMessage" style="margin-top:.9rem">Your message to them (optional)</label>
+          <textarea id="giftMessage" name="giftMessage" rows="3" maxlength="300"
+            placeholder="e.g. Happy birthday Tendai — I know you have wanted to start with chickens. Here is the first step. Make it count."
+            style="width:100%;padding:.7rem;border-radius:8px;border:1px solid rgba(255,255,255,.18);
+                   background:rgba(255,255,255,.05);color:inherit;font-family:inherit;resize:vertical"></textarea>
+          <div style="font-size:.83rem;color:var(--muted);margin-top:.3rem">
+            Up to 300 characters. It goes in the email they receive.
+          </div>
+
+          <label for="giftSendWhen" style="margin-top:.9rem">When should we send it?</label>
+          <select id="giftSendWhen" name="giftSendWhen">
+            <option value="now">Send as soon as payment clears</option>
+            <option value="date">Hold it for a specific date</option>
+          </select>
+          <input type="date" id="giftSendDate" name="giftSendDate" style="display:none;margin-top:.5rem">
+        </div>
+        <!-- PAYMENT METHOD -->
+        <div class="form-section">
+          <label>Payment Method *</label>
+          <div class="option-group" id="paymentMethods">
+            <div class="option-item selected" onclick="selectOption(this, 'stripe')">
+              <input type="radio" name="paymentMethod" value="stripe" checked>
+              <div class="option-label">
+                <strong>💳 Card (Stripe)</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">Visa, Mastercard, American Express</div>
+              </div>
+            </div>
+            <div class="option-item" onclick="selectOption(this, 'ecocash')">
+              <input type="radio" name="paymentMethod" value="ecocash">
+              <div class="option-label">
+                <strong>📱 EcoCash</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">Zimbabwe mobile money</div>
+              </div>
+            </div>
+            <div class="option-item" onclick="selectOption(this, 'mpesa')">
+              <input type="radio" name="paymentMethod" value="mpesa">
+              <div class="option-label">
+                <strong>📱 M-Pesa</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">East Africa mobile money</div>
+              </div>
+            </div>
+            <div class="option-item" data-methods onclick="selectOption(this, 'mtnmomo')">
+              <input type="radio" name="paymentMethod" value="mtnmomo">
+              <div class="option-label">
+                <strong>📱 MTN Mobile Money</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">Ghana, Uganda, Rwanda, Cameroon, Zambia, Côte d'Ivoire, Benin</div>
+              </div>
+            </div>
+            <div class="option-item" data-methods onclick="selectOption(this, 'airtel')">
+              <input type="radio" name="paymentMethod" value="airtel">
+              <div class="option-label">
+                <strong>📱 Airtel Money</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">Kenya, Uganda, Tanzania, Zambia, Malawi, Nigeria, Rwanda</div>
+              </div>
+            </div>
+            <div class="option-item" data-methods onclick="selectOption(this, 'orange')">
+              <input type="radio" name="paymentMethod" value="orange">
+              <div class="option-label">
+                <strong>📱 Orange Money</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">Senegal, Mali, Côte d'Ivoire, Cameroon, DRC, Guinea, Madagascar</div>
+              </div>
+            </div>
+            <div class="option-item" data-methods onclick="selectOption(this, 'vodacash')">
+              <input type="radio" name="paymentMethod" value="vodacash">
+              <div class="option-label">
+                <strong>📱 Vodafone Cash / Telecel</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">Ghana</div>
+              </div>
+            </div>
+            <div class="option-item" data-methods onclick="selectOption(this, 'wave')">
+              <input type="radio" name="paymentMethod" value="wave">
+              <div class="option-label">
+                <strong>📱 Wave</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">Senegal, Côte d'Ivoire, Mali, Burkina Faso, The Gambia</div>
+              </div>
+            </div>
+            <div class="option-item" data-methods onclick="selectOption(this, 'tigopesa')">
+              <input type="radio" name="paymentMethod" value="tigopesa">
+              <div class="option-label">
+                <strong>📱 Mixx by Yas / Tigo Pesa</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">Tanzania</div>
+              </div>
+            </div>
+            <div class="option-item" data-methods onclick="selectOption(this, 'nigeriatransfer')">
+              <input type="radio" name="paymentMethod" value="nigeriatransfer">
+              <div class="option-label">
+                <strong>🏦 Nigeria bank transfer / USSD</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">Opay, PalmPay, Moniepoint, Kuda, GTBank and others</div>
+              </div>
+            </div>
+            <div class="option-item" onclick="selectOption(this, 'bank')">
+              <input type="radio" name="paymentMethod" value="bank">
+              <div class="option-label">
+                <strong>🏦 Bank Transfer</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">Direct bank payment</div>
+              </div>
+            </div>
+            <div class="option-item" onclick="selectOption(this, 'paypal')">
+              <input type="radio" name="paymentMethod" value="paypal">
+              <div class="option-label">
+                <strong>🅿️ PayPal</strong>
+                <div style="font-size:0.85rem;color:var(--muted)">International payment</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="loading" id="enrollmentLoading">
+          <div class="spinner"></div>
+          <p style="margin-top:1rem">Processing your enrollment...</p>
+        </div>
+
+        <div id="enrollmentError" class="error-message"></div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeEnrollmentModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="submitBtn">Complete Enrollment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+
+<footer>
+© 2026 Rise Africa Skills · riseafricaskills.com · We seed businesses, not graduates.<br>
+Money-back guarantee if you don't complete the course within 30 days.
+</footer>
+
+<script>
+// ============ SUPABASE CONFIG ============
+const SUPABASE_URL = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc';
+// Guarded init: an unguarded createClient() throws when the Supabase CDN is
+// blocked, slow or offline, killing every feature below it in this script.
+var supabaseClient = null;
+try {
+  if (typeof supabase !== 'undefined' && supabase && supabase.createClient) {
+    supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  } else { console.warn('[rAs] Supabase unavailable - offline mode.'); }
+} catch (e) { console.warn('[rAs] Supabase init failed:', e && e.message); }
+
+// ============ STRIPE PAYMENT LINKS (LIVE) ============
+const STRIPE_LINKS = {
+  course: 'https://buy.stripe.com/14AaEXgus0cRg8PcHW2sM03',
+  cert:   'https://buy.stripe.com/cNi28r0vu9Nr4q74bq2sM00',
+  print:  'https://buy.stripe.com/4gM5kDba8bVzbSz7nC2sM01',
+  bundle: 'https://buy.stripe.com/5kQaEXdig3p39KrgYc2sM02',
+  gift:   'https://buy.stripe.com/14AaEXgus0cRg8PcHW2sM03'
+};
+
+// ============ PAYMENT METHOD LINKS ============
+const RAS_WHATSAPP = '263773001353';
+const PAYMENT_METHOD_LINKS = { stripe: STRIPE_LINKS };
+
+// Mobile money and bank transfer are completed over WhatsApp with a live agent,
+// who sends the merchant code / account details and confirms payment within 2 hours.
+function waPay(course, tier, method, email, gift) {
+  var label = { ecocash: 'EcoCash', mpesa: 'M-Pesa', bank: 'Bank Transfer' }[method] || method;
+  var msg = 'Hi rAs, I want to enroll and pay by ' + label + '.'
+    + '\nCourse: ' + (course || 'to be confirmed')
+    + '\nTier: ' + tier + ' (US$' + getTierPrice(tier) + ')'
+    + (gift ? '\n\n--- GIFT ---'
+        + '\nFor: ' + gift.recipientName
+        + (gift.recipientEmail ? '\nEmail: ' + gift.recipientEmail : '')
+        + (gift.recipientPhone ? '\nWhatsApp: ' + gift.recipientPhone : '')
+        + '\nFrom: ' + gift.from
+        + (gift.occasion ? '\nOccasion: ' + gift.occasion : '')
+        + (gift.message ? '\nMessage: ' + gift.message : '')
+        + '\nSend: ' + gift.sendWhen : '')
+    + '\nEmail: ' + (email || 'to be confirmed')
+    + '\nPlease send me the payment details.';
+  window.open('https://wa.me/' + RAS_WHATSAPP + '?text=' + encodeURIComponent(msg), '_blank');
+}
+
+// ============ COURSE LIST (loaded from parent) ============
+let allCourses = [];
+
+// ============ GET COURSE NAME FROM URL ============
+function getCourseName() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('course') || params.get('c') || null;
+}
+
+// ============ INITIALIZE PAGE ============
+function initializePage() {
+  // Load courses from localStorage (set by index.html)
+  const stored = localStorage.getItem('COURSE_LIST');
+  if (stored) {
+    allCourses = JSON.parse(stored);
+  } else {
+    // Fallback: common courses
+    allCourses = [
+      "Pig Farming", "Poultry Farming", "Maize Farming", "Beans & Legumes",
+      "Tomato Farming", "Onion Farming", "Potato Farming", "Avocado Farming"
+    ];
+  }
+
+  // Populate course dropdown
+  const courseSelect = document.getElementById('course');
+  const urlCourse = getCourseName();
+
+  allCourses.forEach(course => {
+    const option = document.createElement('option');
+    option.value = course;
+    option.textContent = course;
+    courseSelect.appendChild(option);
+
+    // Pre-select if from URL
+    if (urlCourse && urlCourse.toLowerCase() === course.toLowerCase()) {
+      option.selected = true;
+    }
+  });
+
+  // ── Honour the tier the buyer actually clicked ──────────────────────
+  // Without this the form silently falls back to its default $8 radio, so
+  // someone who pressed "$10.00 +Record" is routed to the $8 Stripe link.
+  const params = new URLSearchParams(window.location.search);
+  const urlTier = (params.get('tier') || '').toLowerCase();
+  const VALID = ['course', 'cert', 'print', 'bundle', 'gift'];
+  if (VALID.indexOf(urlTier) !== -1) {
+    const radio = document.querySelector('input[name="tier"][value="' + urlTier + '"]');
+    if (radio) {
+      radio.checked = true;
+      if (typeof radio.dispatchEvent === 'function') {
+        radio.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    }
+  }
+
+  // Confirm the selection back to the buyer, so a wrong tier is visible
+  // before they pay rather than after.
+  const chosen = document.querySelector('input[name="tier"]:checked');
+  if (urlCourse && chosen) {
+    const LABEL = { course: 'Full course', cert: 'Course + Business Seed Record',
+                    print: 'Printable materials', bundle: '3-course bundle', gift: 'Gift' };
+    const banner = document.createElement('div');
+    banner.id = 'selectionBanner';
+    banner.style.cssText = 'background:rgba(201,162,39,.12);border:1px solid #C9A227;' +
+      'border-radius:10px;padding:.85rem 1.1rem;margin:0 0 1.1rem;font-size:.94rem;line-height:1.5';
+    banner.innerHTML = 'You selected <strong>' + urlCourse.replace(/</g,'&lt;') + '</strong> — ' +
+      '<strong>' + (LABEL[chosen.value] || chosen.value) + ' (US$' + getTierPrice(chosen.value) + ')</strong>.' +
+      '<br><span style="opacity:.75">Not right? Change the option below before paying.</span>';
+    const form = document.querySelector('form') || document.body;
+    form.insertBefore(banner, form.firstChild);
+  }
+}
+
+// ============ SELECT OPTION IN FORM ============
+function selectOption(element, value) {
+  const parent = element.parentElement;
+  // Remove selected class from siblings
+  parent.querySelectorAll('.option-item').forEach(item => {
+    item.classList.remove('selected');
+  });
+  // Add selected class to clicked item
+  element.classList.add('selected');
+  // Check the radio button
+  const radio = element.querySelector('input[type="radio"]');
+  if (radio) radio.checked = true;
+}
+
+// ============ CLOSE ENROLLMENT MODAL ============
+function closeEnrollmentModal() {
+  document.getElementById('enrollmentModal').classList.remove('open');
+  // Redirect back if opened from index
+  if (document.referrer.includes('index.html') || document.referrer === '') {
+    window.location.href = 'index.html';
+  }
+}
+
+
+
+// ============ COUNTRY-AWARE PAYMENT METHODS ============
+// Twelve payment options is a wall. Showing a Kenyan buyer EcoCash, or a
+// Zimbabwean buyer Wave, is noise that costs conversions. Surface the rails
+// that actually operate in their country first; everything else stays
+// reachable behind "Show all".
+var METHODS_BY_COUNTRY = {
+  'Zimbabwe':['ecocash','stripe','bank'],
+  'Kenya':['mpesa','airtel','stripe','bank'],
+  'Tanzania':['mpesa','tigopesa','airtel','stripe'],
+  'Uganda':['mtnmomo','airtel','stripe'],
+  'Rwanda':['mtnmomo','airtel','stripe'],
+  'Ghana':['mtnmomo','vodacash','stripe','bank'],
+  'Nigeria':['nigeriatransfer','airtel','stripe','bank'],
+  'Zambia':['mtnmomo','airtel','stripe'],
+  'Malawi':['airtel','stripe','bank'],
+  'Cameroon':['mtnmomo','orange','stripe'],
+  'Senegal':['wave','orange','stripe'],
+  "Côte d'Ivoire":['wave','orange','mtnmomo','stripe'],
+  'Mali':['wave','orange','stripe'],
+  'Burkina Faso':['wave','orange','stripe'],
+  'Benin':['mtnmomo','orange','stripe'],
+  'Guinea':['orange','stripe'],
+  'Madagascar':['orange','stripe'],
+  'DR Congo':['orange','airtel','stripe'],
+  'Congo (DRC)':['orange','airtel','stripe'],
+  'South Africa':['stripe','bank','paypal'],
+  'Botswana':['stripe','bank'],
+  'Namibia':['stripe','bank'],
+  'Ethiopia':['stripe','bank'],
+  'The Gambia':['wave','stripe'],
+  'Gambia':['wave','stripe']
+};
+var ALWAYS = ['stripe','bank','paypal'];
+
+function applyCountryMethods(){
+  var sel = document.getElementById('country');
+  if(!sel) return;
+  var country = sel.value;
+  var relevant = METHODS_BY_COUNTRY[country];
+  var items = document.querySelectorAll('#paymentMethods .option-item');
+  var showAll = document.getElementById('showAllMethods');
+
+  if(!relevant || (showAll && showAll.dataset.expanded === '1')){
+    items.forEach(function(it){ it.style.display = ''; });
+    if(showAll) showAll.style.display = relevant ? 'block' : 'none';
+    return;
+  }
+  var keep = relevant.concat(ALWAYS);
+  items.forEach(function(it){
+    var r = it.querySelector('input[name="paymentMethod"]');
+    if(!r) return;
+    var visible = keep.indexOf(r.value) !== -1;
+    it.style.display = visible ? '' : 'none';
+    if(!visible && r.checked){
+      var first = document.querySelector('#paymentMethods input[name="paymentMethod"][value="' + relevant[0] + '"]');
+      if(first){
+        first.checked = true;
+        items.forEach(function(x){ x.classList.remove('selected'); });
+        if(first.closest('.option-item')) first.closest('.option-item').classList.add('selected');
+      }
+    }
+  });
+  if(showAll){ showAll.style.display = 'block'; showAll.dataset.expanded = '0';
+               showAll.textContent = 'Show all payment methods'; }
+}
+
+function initCountryMethods(){
+  var group = document.getElementById('paymentMethods');
+  if(group && !document.getElementById('showAllMethods')){
+    var b = document.createElement('button');
+    b.type = 'button'; b.id = 'showAllMethods'; b.dataset.expanded = '0';
+    b.textContent = 'Show all payment methods';
+    b.style.cssText = 'margin-top:.7rem;background:none;border:1px solid rgba(255,255,255,.25);' +
+      'color:inherit;padding:.5rem .9rem;border-radius:8px;cursor:pointer;font-size:.85rem;display:none';
+    b.addEventListener('click', function(){
+      var on = this.dataset.expanded === '1';
+      this.dataset.expanded = on ? '0' : '1';
+      this.textContent = on ? 'Show all payment methods' : 'Show fewer';
+      applyCountryMethods();
+    });
+    group.parentNode.appendChild(b);
+  }
+  var sel = document.getElementById('country');
+  if(sel) sel.addEventListener('change', applyCountryMethods);
+  applyCountryMethods();
+}
+
+// ============ GIFT FIELDS ============
+// The gift block is inert markup until wired: show it only for the gift tier,
+// and make its fields genuinely required, otherwise a buyer can pay for a gift
+// that has no recipient and no way to be delivered.
+function syncGiftSection(){
+  var chosen = document.querySelector('input[name="tier"]:checked');
+  var isGift = !!chosen && chosen.value === 'gift';
+  var sec = document.getElementById('giftSection');
+  if(sec) sec.style.display = isGift ? 'block' : 'none';
+  ['giftRecipientName','giftRecipientEmail','giftFrom'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.required = isGift;
+  });
+}
+document.addEventListener('change', function(e){
+  if(e.target && e.target.name === 'tier') syncGiftSection();
+  if(e.target && e.target.id === 'giftSendWhen'){
+    var d = document.getElementById('giftSendDate');
+    if(d) d.style.display = e.target.value === 'date' ? 'block' : 'none';
+  }
+});
+document.addEventListener('click', function(e){
+  if(e.target && e.target.closest && e.target.closest('.option-item')) setTimeout(syncGiftSection, 0);
+});
+
+function collectGift(){
+  var v = function(id){ var el = document.getElementById(id); return el ? el.value.trim() : ''; };
+  return {
+    recipientName:  v('giftRecipientName'),
+    recipientEmail: v('giftRecipientEmail'),
+    recipientPhone: v('giftRecipientPhone'),
+    from:           v('giftFrom'),
+    occasion:       v('giftOccasion'),
+    message:        v('giftMessage'),
+    sendWhen:       v('giftSendWhen') === 'date' ? (v('giftSendDate') || 'a chosen date') : 'immediately'
+  };
+}
+
+function validateGift(){
+  var g = collectGift();
+  if(!g.recipientName) return 'Please tell us who the gift is for.';
+  if(!g.recipientEmail && !g.recipientPhone)
+    return 'We need an email address or a WhatsApp number so we can deliver the course.';
+  if(g.recipientEmail && g.recipientEmail.indexOf('@') === -1)
+    return 'That recipient email does not look right — please check it.';
+  if(!g.from) return 'Please tell us who the gift is from.';
+  return null;
+}
+
+// ============ HANDLE ENROLLMENT FORM ============
+async function handleEnrollment(e) {
+  e.preventDefault();
+
+  const fullName = document.getElementById('fullName').value;
+  const email = document.getElementById('email').value;
+  const phone = document.getElementById('phone').value;
+  const country = document.getElementById('country').value;
+  const course = document.getElementById('course').value;
+  const tier = document.querySelector('input[name="tier"]:checked').value;
+  const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+  // Validate
+  if (!fullName || !email || !phone || !country || !course || !tier || !paymentMethod) {
+    showError('Please fill in all required fields');
+    return;
+  }
+  var giftData = null;
+  if (tier === 'gift') {
+    var giftErr = validateGift();
+    if (giftErr) { showError(giftErr); return; }
+    giftData = collectGift();
+  }
+
+  // Show loading
+  document.getElementById('enrollmentLoading').classList.add('show');
+  document.getElementById('submitBtn').disabled = true;
+  document.getElementById('enrollmentError').textContent = '';
+
+  try {
+    // Try to save enrollment to Supabase
+    // First, get or create user (using email as unique identifier)
+    let userId = localStorage.getItem(`user_${email}`);
+
+    if (!userId) {
+      // Create anonymous session for now
+      userId = 'anon_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem(`user_${email}`, userId);
+    }
+
+    // Save enrollment data
+    const { data, error } = await supabaseClient.from('enrollments').insert([
+      {
+        user_id: userId,
+        course_name: course,
+        tier: tier,
+        gift_details: giftData,
+        full_name: fullName,
+        email: email,
+        phone: phone,
+        country: country,
+        payment_method: paymentMethod,
+        status: 'pending_payment',
+        created_at: new Date().toISOString()
+      }
+    ]);
+
+    if (error) {
+      console.error('Supabase error:', error);
+      // Continue anyway - non-critical
+    }
+
+    // Save to localStorage as backup
+    const enrollments = JSON.parse(localStorage.getItem('enrollments') || '[]');
+    enrollments.push({
+      fullName, email, phone, country, course, tier, paymentMethod,
+      timestamp: new Date().toISOString()
+    });
+    localStorage.setItem('enrollments', JSON.stringify(enrollments));
+
+    // Route to payment
+    routeToPayment(course, tier, paymentMethod, email, giftData);
+
+  } catch (err) {
+    console.error('Error:', err);
+    showError('Enrollment error. Please try again or contact support.');
+    document.getElementById('enrollmentLoading').classList.remove('show');
+    document.getElementById('submitBtn').disabled = false;
+  }
+}
+
+// ============ ROUTE TO PAYMENT ============
+function routeToPayment(course, tier, paymentMethod, email, gift) {
+  let paymentUrl = '';
+
+  if (paymentMethod === 'stripe') {
+    // Stripe payment
+    paymentUrl = STRIPE_LINKS[tier] || STRIPE_LINKS.course;
+    if (course) {
+      paymentUrl += '?prefilled_email=' + encodeURIComponent(email);
+    }
+    window.open(paymentUrl, '_blank');
+  } else if (['ecocash','mpesa','mtnmomo','airtel','orange','vodacash','wave',
+              'tigopesa','nigeriatransfer','bank'].indexOf(paymentMethod) !== -1) {
+    // Mobile money / bank transfer completed with a live agent on WhatsApp
+    waPay(course, tier, paymentMethod, email, gift);
+  } else if (paymentMethod === 'paypal') {
+    // PayPal payment
+    const paypalUrl = 'https://paypal.com/checkout?amount=' + getTierPrice(tier);
+    window.open(paypalUrl, '_blank');
+  }
+
+  // Close modal after routing
+  setTimeout(() => {
+    closeEnrollmentModal();
+  }, 1500);
+}
+
+// ============ GET TIER PRICE ============
+function getTierPrice(tier) {
+  const prices = { course: 8, cert: 10, print: 3.50, bundle: 20 };
+  return prices[tier] || 8;
+}
+
+// ============ SHOW ERROR ============
+function showError(message) {
+  const errorDiv = document.getElementById('enrollmentError');
+  errorDiv.textContent = message;
+  document.getElementById('enrollmentLoading').classList.remove('show');
+  document.getElementById('submitBtn').disabled = false;
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function(){ initializePage(); syncGiftSection(); initCountryMethods(); });
+</script>
+</body>
+</html>

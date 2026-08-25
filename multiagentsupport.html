@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Agent Support System — Rise AFRICA Skills</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --gold: #C9A227;
+            --dark: #1a1a1a;
+            --darker: #111;
+            --card: #1e1e1e;
+            --text: #e0e0e0;
+            --muted: #888;
+            --green: #2ecc71;
+            --blue: #3498db;
+            --red: #e74c3c;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 2rem;
+        }
+
+        h1 {
+            color: var(--gold);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            font-size: 1rem;
+        }
+
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .agent-btn {
+            padding: 1rem;
+            background: var(--card);
+            border: 2px solid #333;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .agent-btn:hover,
+        .agent-btn.active {
+            border-color: var(--gold);
+            background: rgba(201, 162, 39, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .agent-btn .emoji {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .agent-btn .name {
+            font-weight: 700;
+            color: var(--gold);
+            font-size: 0.9rem;
+        }
+
+        .agent-btn .title {
+            font-size: 0.75rem;
+            color: var(--muted);
+            margin-top: 0.3rem;
+        }
+
+        .chat-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .chat-window {
+            border: 1px solid #333;
+            border-radius: 12px;
+            background: var(--card);
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, var(--gold), #d4af37);
+            color: var(--darker);
+            padding: 1.5rem;
+            border-radius: 11px 11px 0 0;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .chat-header .emoji {
+            font-size: 1.8rem;
+        }
+
+        .chat-header-text h2 {
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .chat-header-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #fff;
+            animation: pulse 1s infinite;
+            margin-left: auto;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            display: flex;
+            gap: 0.8rem;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.bot {
+            justify-content: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .bot .avatar {
+            background: var(--gold);
+            color: var(--darker);
+        }
+
+        .user .avatar {
+            background: var(--blue);
+        }
+
+        .content {
+            max-width: 70%;
+            padding: 1rem;
+            border-radius: 12px;
+            word-wrap: break-word;
+        }
+
+        .bot .content {
+            background: #2a2a2a;
+            color: #fff;
+            border: 1px solid #333;
+        }
+
+        .user .content {
+            background: var(--blue);
+            color: #fff;
+        }
+
+        .chat-input {
+            border-top: 1px solid #333;
+            padding: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background: #2a2a2a;
+            color: var(--text);
+            font-family: inherit;
+        }
+
+        input[type="text"]::placeholder {
+            color: var(--muted);
+        }
+
+        button {
+            padding: 0.8rem 1.5rem;
+            background: var(--gold);
+            color: var(--darker);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(201, 162, 39, 0.3);
+        }
+
+        .agent-info {
+            background: var(--card);
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .agent-info h3 {
+            color: var(--gold);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-item {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #333;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: var(--muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-bottom: 0.3rem;
+        }
+
+        .info-value {
+            color: var(--text);
+        }
+
+        .capability-section {
+            margin-bottom: 2rem;
+        }
+
+        .capability-section h2 {
+            color: var(--gold);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #333;
+            padding-bottom: 0.5rem;
+        }
+
+        .capability-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .capability-card {
+            background: var(--card);
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.2s;
+        }
+
+        .capability-card:hover {
+            border-color: var(--gold);
+            box-shadow: 0 0 20px rgba(201, 162, 39, 0.1);
+        }
+
+        .capability-card h4 {
+            color: var(--gold);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .capability-card ul {
+            list-style: none;
+            font-size: 0.9rem;
+        }
+
+        .capability-card li {
+            padding: 0.4rem 0;
+            color: var(--text);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .capability-card li::before {
+            content: "▸";
+            color: var(--gold);
+            flex-shrink: 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-box {
+            background: var(--card);
+            border: 1px solid #333;
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: 12px;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .stat-label {
+            color: var(--muted);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .agent-card {
+            background: var(--card);
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .agent-card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 1rem;
+        }
+
+        .agent-card-emoji {
+            font-size: 2rem;
+        }
+
+        .agent-card-title h3 {
+            color: var(--gold);
+            font-size: 1.1rem;
+        }
+
+        .agent-card-title p {
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        .agent-card-code {
+            margin-left: auto;
+            background: #0a0a0a;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: var(--green);
+        }
+
+        @media (max-width: 1024px) {
+            .chat-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .agents-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .chat-window {
+                height: 400px;
+            }
+            .agent-btn .emoji {
+                font-size: 1.5rem;
+            }
+        }
+
+        .quick-questions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .quick-btn {
+            padding: 0.4rem 0.8rem;
+            background: transparent;
+            border: 1px solid #444;
+            color: var(--text);
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .quick-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: none;
+            padding: 0.4rem 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 Multi-Agent Support System</h1>
+            <p class="subtitle">All 12 AI Agents — Specialized Support for Every Question</p>
+        </header>
+
+        <h2 style="color: var(--gold); margin-bottom: 1.5rem; font-size: 1.3rem;">👥 Select an Agent</h2>
+
+        <div class="agents-grid">
+            <div class="agent-btn" data-agent="1" onclick="selectAgent(1, this)">
+                <div class="emoji">📝</div>
+                <div class="name">Content Master</div>
+                <div class="title">Courses & Content</div>
+            </div>
+            <div class="agent-btn" data-agent="2" onclick="selectAgent(2, this)">
+                <div class="emoji">📊</div>
+                <div class="name">Analytics Prophet</div>
+                <div class="title">Data & Metrics</div>
+            </div>
+            <div class="agent-btn" data-agent="3" onclick="selectAgent(3, this)">
+                <div class="emoji">📢</div>
+                <div class="name">Marketing Maestro</div>
+                <div class="title">Social & Marketing</div>
+            </div>
+            <div class="agent-btn active" data-agent="4" onclick="selectAgent(4, this)">
+                <div class="emoji">💬</div>
+                <div class="name">Support Sentinel</div>
+                <div class="title">General Support</div>
+            </div>
+            <div class="agent-btn" data-agent="5" onclick="selectAgent(5, this)">
+                <div class="emoji">💰</div>
+                <div class="name">Pricing Optimizer</div>
+                <div class="title">Pricing & Discounts</div>
+            </div>
+            <div class="agent-btn" data-agent="6" onclick="selectAgent(6, this)">
+                <div class="emoji">🚀</div>
+                <div class="name">Growth Hacker</div>
+                <div class="title">Growth Strategies</div>
+            </div>
+            <div class="agent-btn" data-agent="7" onclick="selectAgent(7, this)">
+                <div class="emoji">✅</div>
+                <div class="name">Quality Assurance</div>
+                <div class="title">Course Quality</div>
+            </div>
+            <div class="agent-btn" data-agent="8" onclick="selectAgent(8, this)">
+                <div class="emoji">🔗</div>
+                <div class="name">Referral Engine</div>
+                <div class="title">Affiliates & Refs</div>
+            </div>
+            <div class="agent-btn" data-agent="9" onclick="selectAgent(9, this)">
+                <div class="emoji">🔍</div>
+                <div class="name">Trend Scout</div>
+                <div class="title">Market Trends</div>
+            </div>
+            <div class="agent-btn" data-agent="10" onclick="selectAgent(10, this)">
+                <div class="emoji">👥</div>
+                <div class="name">Retention Warrior</div>
+                <div class="title">Student Progress</div>
+            </div>
+            <div class="agent-btn" data-agent="11" onclick="selectAgent(11, this)">
+                <div class="emoji">✉️</div>
+                <div class="name">Email Catalyst</div>
+                <div class="title">Email Marketing</div>
+            </div>
+            <div class="agent-btn" data-agent="12" onclick="selectAgent(12, this)">
+                <div class="emoji">💵</div>
+                <div class="name">Revenue Maximizer</div>
+                <div class="title">Revenue Optimization</div>
+            </div>
+        </div>
+
+        <div class="chat-container">
+            <div class="chat-window">
+                <div class="chat-header" id="chatHeader">
+                    <div class="emoji">💬</div>
+                    <div class="chat-header-text">
+                        <h2 id="agentName">Support Sentinel</h2>
+                        <p id="agentDesc">General Customer Support</p>
+                    </div>
+                    <div class="status-dot"></div>
+                </div>
+                <div class="messages" id="chatMessages">
+                    <div class="message bot">
+                        <div class="avatar">🤖</div>
+                        <div class="content">
+                            Hello! I'm Support Sentinel, your 24/7 customer support AI. I'm here to answer questions about courses, pricing, enrollment, gifts, and more. What can I help you with?
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="userInput" placeholder="Ask me anything...">
+                    <button onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+
+            <div id="agentPanel">
+                <div class="agent-info">
+                    <h3>💬 Support Sentinel</h3>
+
+                    <div class="info-item">
+                        <div class="info-label">Code</div>
+                        <div class="info-value">AGENT-SS-004</div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-label">Operation</div>
+                        <div class="info-value">24/7 Continuous</div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-label">Daily Conversations</div>
+                        <div class="info-value">~1,000</div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-label">Resolution Rate</div>
+                        <div class="info-value">88%</div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-label">Response Time</div>
+                        <div class="info-value">&lt;1 second</div>
+                    </div>
+                </div>
+
+                <div class="quick-questions">
+                    <button class="quick-btn" onclick="askQuestion('How much does a course cost?')">💰 Pricing</button>
+                    <button class="quick-btn" onclick="askQuestion('How do I enroll?')">📚 Enroll</button>
+                    <button class="quick-btn" onclick="askQuestion('What is the gift feature?')">🎁 Gift</button>
+                    <button class="quick-btn" onclick="askQuestion('How do I get a refund?')">💳 Refund</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-number">12</div>
+                <div class="stat-label">AI Agents</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Availability</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">&lt;1s</div>
+                <div class="stat-label">Response Time</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">95.8%</div>
+                <div class="stat-label">Avg Accuracy</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">~19k</div>
+                <div class="stat-label">Tasks/Day</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">0%</div>
+                <div class="stat-label">Rest Time</div>
+            </div>
+        </div>
+
+        <h2 style="color: var(--gold); margin-top: 3rem; margin-bottom: 1.5rem; font-size: 1.3rem;">📋 Agent Specializations</h2>
+
+        <div id="capabilitiesContainer"></div>
+    </div>
+
+    <script>
+        const AGENTS = {
+            1: {
+                name: "Content Master",
+                emoji: "📝",
+                code: "AGENT-CM-001",
+                desc: "Course Content Generation & Updates",
+                operation: "24/7",
+                tasks: "~50/day",
+                accuracy: "99.2%",
+                capabilities: [
+                    "Can you create a course about [topic]?",
+                    "What topics do you create courses on?",
+                    "How detailed are the course modules?",
+                    "Can I suggest a new course topic?",
+                    "What's the course structure like?",
+                    "Do you create custom courses?"
+                ]
+            },
+            2: {
+                name: "Analytics Prophet",
+                emoji: "📊",
+                code: "AGENT-AP-002",
+                desc: "Data Analysis & Trend Prediction",
+                operation: "24/7",
+                tasks: "~10,000/day",
+                accuracy: "98.5%",
+                capabilities: [
+                    "What are our daily active users?",
+                    "What's our conversion rate?",
+                    "Which courses perform best?",
+                    "What's the revenue forecast?",
+                    "Can you analyze my course engagement?",
+                    "What are the trending metrics?"
+                ]
+            },
+            3: {
+                name: "Marketing Maestro",
+                emoji: "📢",
+                code: "AGENT-MM-003",
+                desc: "Social Media Marketing & Content",
+                operation: "24/7",
+                tasks: "~150/day",
+                accuracy: "96.8%",
+                capabilities: [
+                    "Can you promote my course on social media?",
+                    "What platforms do you use for marketing?",
+                    "How often do you post on social media?",
+                    "Can you help with viral marketing?",
+                    "What's your social media reach?",
+                    "Can I request a specific marketing campaign?"
+                ]
+            },
+            4: {
+                name: "Support Sentinel",
+                emoji: "💬",
+                code: "AGENT-SS-004",
+                desc: "24/7 Customer Service & Support",
+                operation: "24/7",
+                tasks: "~1,000/day",
+                accuracy: "94.3%",
+                capabilities: [
+                    "How much do courses cost?",
+                    "How do I enroll in a course?",
+                    "How do I gift a course?",
+                    "What payment methods do you accept?",
+                    "Can I get a refund?",
+                    "How do I reset my password?"
+                ]
+            },
+            5: {
+                name: "Pricing Optimizer",
+                emoji: "💰",
+                code: "AGENT-PO-005",
+                desc: "Dynamic Pricing & Revenue Maximization",
+                operation: "12-hourly",
+                tasks: "~200/day",
+                accuracy: "97.1%",
+                capabilities: [
+                    "What are the current prices?",
+                    "Are there any discounts available?",
+                    "How do bundle discounts work?",
+                    "What's the difference between pricing tiers?",
+                    "Can I get a bulk discount?",
+                    "What's the best deal right now?"
+                ]
+            },
+            6: {
+                name: "Growth Hacker",
+                emoji: "🚀",
+                code: "AGENT-GH-006",
+                desc: "Growth Strategy & User Acquisition",
+                operation: "24/7",
+                tasks: "~80/day",
+                accuracy: "92.7%",
+                capabilities: [
+                    "How can I grow my student base?",
+                    "What are your growth strategies?",
+                    "How can I get more referrals?",
+                    "What's your user acquisition cost?",
+                    "Can you help with growth hacking?",
+                    "What channels are working best for growth?"
+                ]
+            },
+            7: {
+                name: "Quality Assurance",
+                emoji: "✅",
+                code: "AGENT-QA-007",
+                desc: "Quality Control & Content Improvement",
+                operation: "6-hourly",
+                tasks: "~300/day",
+                accuracy: "98.9%",
+                capabilities: [
+                    "How do you ensure course quality?",
+                    "What are your quality standards?",
+                    "Can I report a quality issue?",
+                    "How often are courses updated?",
+                    "What's your course completion rate?",
+                    "How do you handle course improvements?"
+                ]
+            },
+            8: {
+                name: "Referral Engine",
+                emoji: "🔗",
+                code: "AGENT-RE-008",
+                desc: "Affiliate & Referral Program Management",
+                operation: "Hourly",
+                tasks: "~500/day",
+                accuracy: "99.8%",
+                capabilities: [
+                    "How do I join the affiliate program?",
+                    "What's the commission rate?",
+                    "How do I track my referrals?",
+                    "When do I get paid?",
+                    "Can you help with my referral link?",
+                    "What's the referral conversion rate?"
+                ]
+            },
+            9: {
+                name: "Trend Scout",
+                emoji: "🔍",
+                code: "AGENT-TS-009",
+                desc: "Market Trends & Trend Prediction",
+                operation: "24/7",
+                tasks: "~1,000/day",
+                accuracy: "91.2%",
+                capabilities: [
+                    "What are the emerging skills?",
+                    "What topics are trending right now?",
+                    "What skills will be in demand soon?",
+                    "What industry trends should I know about?",
+                    "Which courses are most popular?",
+                    "What's the market demand forecast?"
+                ]
+            },
+            10: {
+                name: "Retention Warrior",
+                emoji: "👥",
+                code: "AGENT-RW-010",
+                desc: "Student Retention & Engagement",
+                operation: "24/7",
+                tasks: "~400/day",
+                accuracy: "93.5%",
+                capabilities: [
+                    "How do I track my course progress?",
+                    "How long does it take to complete a course?",
+                    "Can you help me stay motivated?",
+                    "What's the course completion rate?",
+                    "How do you help struggling students?",
+                    "What support is available during my course?"
+                ]
+            },
+            11: {
+                name: "Email Catalyst",
+                emoji: "✉️",
+                code: "AGENT-EC-011",
+                desc: "Email Marketing & Automation",
+                operation: "24/7",
+                tasks: "~5,000/day",
+                accuracy: "95.6%",
+                capabilities: [
+                    "Can I subscribe to your newsletter?",
+                    "What email campaigns do you run?",
+                    "How often will I receive emails?",
+                    "Can I customize my email preferences?",
+                    "What's your email open rate?",
+                    "How do I unsubscribe from emails?"
+                ]
+            },
+            12: {
+                name: "Revenue Maximizer",
+                emoji: "💵",
+                code: "AGENT-RM-012",
+                desc: "Revenue Optimization & Upsell",
+                operation: "24/7",
+                tasks: "~600/day",
+                accuracy: "96.4%",
+                capabilities: [
+                    "What bundle deals are available?",
+                    "How can I get the most value?",
+                    "What upsell options are there?",
+                    "Can you recommend courses for me?",
+                    "What's the best bundle for my needs?",
+                    "How do limited-time offers work?"
+                ]
+            }
+        };
+
+        const AGENT_RESPONSES = {
+            1: {
+                price: "I focus on course content creation. For pricing questions, please contact Support Sentinel or Pricing Optimizer.",
+                enroll: "I create the courses! Once you enroll, you'll have access to comprehensive course materials with detailed lessons.",
+                gift: "I don't handle gifts directly, but I can tell you our courses are structured to be easily shareable. Ask Support Sentinel about gifting!",
+                course: "We create 5+ new courses per week! Topics include agriculture, business, crafts, manufacturing, services, and food production.",
+                topic: "I develop courses based on trending topics and student demand. We cover 159+ courses across multiple categories.",
+                default: "I'm Content Master! I create and manage course content. What would you like to know about course topics or content structure?"
+            },
+            2: {
+                analytics: "We track 10,000+ data points daily! Metrics include engagement rates, conversion funnels, revenue trends, and student behavior patterns.",
+                data: "Our daily analytics show conversion rates around 3.2%, revenue per student averaging $8.50, and real-time performance metrics.",
+                performance: "I analyze daily engagement metrics, identify underperforming courses, predict popular content, and forecast revenue trends.",
+                metrics: "Key metrics: daily active users, click-through rates, conversion funnels, course popularity, and quarterly revenue forecasts.",
+                report: "I generate comprehensive daily reports at 6 AM showing all performance metrics, trends, and predictive analytics.",
+                default: "I'm Analytics Prophet! I monitor all data and predict trends. Ask me about metrics, performance, or forecasts!"
+            },
+            3: {
+                social: "I create content for 40+ social platforms! Facebook, Twitter, Instagram, TikTok, LinkedIn, WhatsApp, and more.",
+                marketing: "We generate 150+ post variations daily and post every 2 hours across platforms with optimized hashtags and timing.",
+                viral: "I A/B test messaging, analyze competitor content, and identify trending topics to create viral marketing content.",
+                reach: "Our average engagement rate is 4.2%, and we gain ~500 new followers daily with 5-10 viral posts per month.",
+                campaign: "I manage complete social media campaigns including scheduling, optimization, and performance tracking across all platforms.",
+                default: "I'm Marketing Maestro! I handle all social media and marketing content. Ask about campaigns, viral strategies, or platform coverage!"
+            },
+            4: {
+                price: "Courses cost $8 for basic access, $10 for course+certificate, or $3.50 for print materials. You can also gift courses!",
+                enroll: "To enroll: 1) Find a course, 2) Click course, 3) Choose pricing tier, 4) Complete payment, 5) Get instant access!",
+                gift: "Click the 🎁 Gift button on any course card, enter the recipient's email, and they'll get instant access after you pay!",
+                refund: "Refunds are available within 7 days if you haven't started the course. Reach out for exceptions - we review each case!",
+                access: "You get instant access after payment. Courses are valid for 1 year from enrollment with no time limits on learning.",
+                payment: "We accept credit/debit cards (Visa, Mastercard), PayPal, and mobile money in most African countries.",
+                default: "I'm Support Sentinel! I handle general customer support. Ask about courses, pricing, enrollment, or anything else!"
+            },
+            5: {
+                price: "Our base prices are $8, $10, and $3.50 tiers. We offer bundle discounts of 10-20% depending on combinations.",
+                discount: "We offer seasonal discounts, bundle deals, and peak pricing (5% premium on weekends). Holiday specials are active too!",
+                bundle: "Bundle discounts combine multiple courses for savings of 10-20%. We optimize bundles based on demand and student segments.",
+                tier: "$8 gets basic access, $10 includes certificate, $3.50 is for print. Prices adjust dynamically based on demand!",
+                bulk: "For bulk purchases, we have special corporate pricing. Contact our team for 50+ student organization deals!",
+                strategy: "We use dynamic pricing based on real-time demand, competitor pricing, seasonal patterns, and student segments.",
+                default: "I'm Pricing Optimizer! I manage all pricing strategy and revenue optimization. Ask about prices, discounts, or bundles!"
+            },
+            6: {
+                grow: "We test viral growth strategies continuously! Recent wins: +15% mobile conversion, +22% email growth week-over-week.",
+                referral: "Our referral program has 250+ active affiliates with a 6.2% conversion rate. Affiliates earn ~$45/month on average.",
+                acquisition: "We experiment with new channels, referral mechanics, and growth loops to find scalable acquisition strategies.",
+                strategy: "We identify product-market fit opportunities, test viral mechanics, optimize user acquisition, and find growth loops.",
+                experiment: "We run 80+ growth experiments daily testing everything from pricing to referrals to content distribution.",
+                channel: "We test multiple growth channels including social sharing, referrals, email, and paid advertising for optimal ROI.",
+                default: "I'm Growth Hacker! I find and test growth strategies to scale rapidly. Ask about growth opportunities or referral programs!"
+            },
+            7: {
+                quality: "We run quality checks every 6 hours! Our average course quality score is 4.3/5 with 99.1% content accuracy.",
+                standard: "We verify course structure, check for accuracy, test functionality, update outdated content, and monitor student feedback daily.",
+                issue: "If you find a quality issue, please report it! We review feedback daily and make improvements within 48 hours.",
+                update: "Courses are updated regularly based on feedback and market trends. Deep-dive analysis happens every Sunday at 2 AM.",
+                completion: "Our course completion rate is 72% - far above the 15% industry average thanks to retention focus and quality content!",
+                improvement: "We identify problem courses, recommend specific improvements, and track quality metrics for continuous enhancement.",
+                default: "I'm Quality Assurance! I ensure all courses meet high standards. Ask about course quality, updates, or improvements!"
+            },
+            8: {
+                affiliate: "Join our affiliate program and earn commissions! 250+ active affiliates generate $2,100+ in referral revenue monthly.",
+                commission: "Commission rates: typical affiliates earn ~$45/month. We process payouts daily and pay via your preferred method.",
+                tracking: "Your affiliate links are tracked in real-time. You see conversions, earnings, and referral performance in your dashboard.",
+                fraud: "We detect and prevent fraud with 99.8% accuracy. Your earnings are protected and legitimate referrals are guaranteed payment.",
+                payment: "Payments are processed daily! We pay via bank transfer, mobile money, or PayPal depending on your location.",
+                recruit: "We actively recruit new affiliates and provide marketing materials, tracking tools, and support to help you succeed!",
+                default: "I'm Referral Engine! I manage affiliate programs and referrals. Ask about joining, commissions, or your referral stats!"
+            },
+            9: {
+                trends: "Hot trending topics: AI, Sustainability, Remote Work. Emerging skills: Prompt Engineering, Web3. Growing demand: Health, Finance, Tech.",
+                emerging: "Emerging skills include prompt engineering, web3 development, AI application, sustainability practices, and remote work optimization.",
+                future: "3-6 month forecast: AI skills demand will continue growing, sustainability becomes essential, remote work stays strong.",
+                demand: "Health, Finance, and Tech are highest demand. Traditional retail and legacy skills show declining enrollment.",
+                popular: "Most popular courses: AI applications, digital marketing, business basics, agricultural innovations, and e-commerce.",
+                industry: "I monitor internet trends, social media signals, YouTube trends, Google Trends, and competitor launches 24/7!",
+                default: "I'm Trend Scout! I analyze market trends and predict future demands. Ask about emerging skills, trending topics, or forecasts!"
+            },
+            10: {
+                progress: "Track your course progress in your dashboard! You can see completion percentage, time spent, and milestones achieved.",
+                completion: "Average completion time is 18 days. Our 72% completion rate (vs 15% industry average) comes from personalized support!",
+                motivation: "I identify at-risk students and send targeted encouragement. We offer peer mentoring and success stories to keep you motivated!",
+                dropout: "We prevent 42% of potential dropouts through early intervention, personalized learning paths, and targeted support messages.",
+                support: "24/7 support available! Get help with struggling lessons, discuss challenges, and access peer mentors for your course.",
+                milestone: "I track your milestones and celebrate achievements! Get encouragement messages when you complete sections or courses.",
+                default: "I'm Retention Warrior! I help you stay engaged and complete your courses. Ask about progress, motivation, or support!"
+            },
+            11: {
+                newsletter: "Subscribe to our newsletter for weekly course updates, tips, and exclusive offers! Open rate: 32% (vs 21% industry avg).",
+                campaign: "We run behavioral email campaigns triggered by your actions - course recommendations, enrollment tips, and re-engagement messages.",
+                frequency: "We send ~5,000 personalized emails daily. Smart send times mean emails arrive when you're most likely to open them!",
+                preference: "Customize your email preferences in settings! Choose frequencies, topics, and communication style.",
+                open: "Our email open rate is 32% and click rate is 4.8% - both far above industry averages thanks to personalization!",
+                content: "Personalized course recommendations, promotional campaigns, newsletters, and behavioral triggers all optimized for engagement.",
+                default: "I'm Email Catalyst! I send personalized marketing emails. Ask about newsletters, campaigns, or email preferences!"
+            },
+            12: {
+                bundle: "Bundle packages combine 2-5 courses for 10-20% savings. Popular bundles: Business Foundations, Agricultural Skills Pack, Tech Basics.",
+                upsell: "After your first course, I recommend complementary courses at 18% upsell success rate. Only suggestions that add real value!",
+                recommendation: "I analyze your interests and learning history to recommend your best next course. Personal recommendations increase satisfaction!",
+                value: "Get maximum value! Bundles save money, payment plans spread costs, and I help you choose the best learning path for your goals.",
+                lifetime: "Average student lifetime value is $24.50. Most students take 2-3 courses! I help you find your second and third best options.",
+                offer: "Limited-time offers created weekly based on inventory and demand. Flash sales on popular courses happen regularly!",
+                default: "I'm Revenue Maximizer! I optimize bundles, recommendations, and upsells. Ask about deals, recommendations, or value!"
+            }
+        };
+
+        let currentAgent = 4;
+
+        function selectAgent(agentNum, element) {
+            currentAgent = agentNum;
+
+            // Update active button
+            document.querySelectorAll('.agent-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+
+            // Update chat header
+            const agent = AGENTS[agentNum];
+            document.getElementById('chatHeader').style.background = getAgentColor(agentNum);
+            document.querySelector('.chat-header .emoji').textContent = agent.emoji;
+            document.getElementById('agentName').textContent = agent.name;
+            document.getElementById('agentDesc').textContent = agent.desc;
+
+            // Clear messages and add intro
+            document.getElementById('chatMessages').innerHTML = `
+                <div class="message bot">
+                    <div class="avatar">${agent.emoji}</div>
+                    <div class="content">
+                        Hello! I'm ${agent.name}. I specialize in ${agent.desc.toLowerCase()}. Ask me anything related to my expertise!
+                    </div>
+                </div>
+            `;
+
+            // Update agent info panel
+            document.getElementById('agentPanel').innerHTML = `
+                <div class="agent-info">
+                    <h3>${agent.emoji} ${agent.name}</h3>
+
+                    <div class="info-item">
+                        <div class="info-label">Code</div>
+                        <div class="info-value">${agent.code}</div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-label">Specialization</div>
+                        <div class="info-value">${agent.desc}</div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-label">Operation</div>
+                        <div class="info-value">${agent.operation}</div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-label">Tasks/Day</div>
+                        <div class="info-value">${agent.tasks}</div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-label">Accuracy</div>
+                        <div class="info-value">${agent.accuracy}</div>
+                    </div>
+                </div>
+
+                <div class="quick-questions">
+                    ${agent.capabilities.slice(0, 4).map(q =>
+                        `<button class="quick-btn" onclick="askQuestion('${q.replace(/'/g, "\\'")}')">${q.substring(0, 25)}...</button>`
+                    ).join('')}
+                </div>
+            `;
+        }
+
+        function getAgentColor(num) {
+            const colors = [
+                'linear-gradient(135deg, #C9A227, #d4af37)',      // 1
+                'linear-gradient(135deg, #3498db, #2980b9)',      // 2
+                'linear-gradient(135deg, #e74c3c, #c0392b)',      // 3
+                'linear-gradient(135deg, #C9A227, #d4af37)',      // 4
+                'linear-gradient(135deg, #2ecc71, #27ae60)',      // 5
+                'linear-gradient(135deg, #f39c12, #d68910)',      // 6
+                'linear-gradient(135deg, #9b59b6, #8e44ad)',      // 7
+                'linear-gradient(135deg, #1abc9c, #16a085)',      // 8
+                'linear-gradient(135deg, #34495e, #2c3e50)',      // 9
+                'linear-gradient(135deg, #e67e22, #d35400)',      // 10
+                'linear-gradient(135deg, #95a5a6, #7f8c8d)',      // 11
+                'linear-gradient(135deg, #C9A227, #d4af37)'       // 12
+            ];
+            return colors[num - 1];
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+
+            if (!message) return;
+
+            // Add user message
+            addMessage(message, 'user');
+
+            // Get bot response
+            const response = getBotResponse(message, currentAgent);
+            setTimeout(() => addMessage(response, 'bot'), 500);
+
+            input.value = '';
+        }
+
+        function addMessage(text, sender) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+
+            const avatar = document.createElement('div');
+            avatar.className = 'avatar';
+            avatar.textContent = sender === 'bot' ? AGENTS[currentAgent].emoji : '👤';
+
+            const content = document.createElement('div');
+            content.className = 'content';
+            content.textContent = text;
+
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(content);
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function getBotResponse(message, agent) {
+            const lower = message.toLowerCase();
+            const responses = AGENT_RESPONSES[agent];
+
+            for (let key of Object.keys(responses)) {
+                if (key !== 'default' && lower.includes(key)) {
+                    return responses[key];
+                }
+            }
+
+            return responses.default;
+        }
+
+        function askQuestion(question) {
+            document.getElementById('userInput').value = question;
+            sendMessage();
+        }
+
+        document.getElementById('userInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        // Build capabilities section
+        function buildCapabilities() {
+            const container = document.getElementById('capabilitiesContainer');
+            let html = '';
+
+            Object.entries(AGENTS).forEach(([num, agent]) => {
+                html += `
+                    <div class="agent-card">
+                        <div class="agent-card-header">
+                            <div class="agent-card-emoji">${agent.emoji}</div>
+                            <div class="agent-card-title">
+                                <h3>${agent.name}</h3>
+                                <p>${agent.desc}</p>
+                            </div>
+                            <div class="agent-card-code">${agent.code}</div>
+                        </div>
+
+                        <div class="capability-grid">
+                            ${agent.capabilities.map(cap => `
+                                <div class="capability-card">
+                                    <h4>${cap.split('?')[0]}</h4>
+                                    <ul>
+                                        <li>${cap}</li>
+                                    </ul>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Initialize
+        buildCapabilities();
+    </script>
+</body>
+</html>

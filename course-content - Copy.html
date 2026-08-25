@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Content — rise AFRICA skills</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --gold: #c9a227;
+            --dark: #1a1a2e;
+            --darker: #0f0f1a;
+            --card: #1e1e32;
+            --muted: #9a9ab0;
+            --green: #27ae60;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--darker);
+            color: #fff;
+        }
+
+        header {
+            background: rgba(15, 15, 26, 0.95);
+            border-bottom: 1px solid rgba(201, 162, 39, 0.2);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: var(--gold);
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+        }
+
+        .brand {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        nav {
+            display: flex;
+            gap: 1rem;
+            margin-left: auto;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        nav a:hover {
+            color: var(--gold);
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: calc(100vh - 60px);
+        }
+
+        .sidebar {
+            background: var(--card);
+            border: 1px solid rgba(201, 162, 39, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .sidebar h3 {
+            color: var(--gold);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(201, 162, 39, 0.2);
+            padding-bottom: 1rem;
+        }
+
+        .modules-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .module-item {
+            padding: 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+            font-size: 0.9rem;
+        }
+
+        .module-item:hover {
+            background: rgba(201, 162, 39, 0.1);
+            border-color: rgba(201, 162, 39, 0.3);
+        }
+
+        .module-item.active {
+            background: rgba(201, 162, 39, 0.2);
+            border-color: var(--gold);
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .module-item.completed::before {
+            content: "✓ ";
+            color: var(--green);
+            font-weight: 700;
+        }
+
+        .main-content {
+            background: var(--card);
+            border: 1px solid rgba(201, 162, 39, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .course-header {
+            margin-bottom: 2rem;
+            border-bottom: 2px solid rgba(201, 162, 39, 0.2);
+            padding-bottom: 2rem;
+        }
+
+        .course-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .course-meta {
+            display: flex;
+            gap: 2rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .progress-section {
+            margin-bottom: 2rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            color: var(--muted);
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--gold) 0%, #d4af3a 100%);
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.3s;
+        }
+
+        .module-content {
+            line-height: 1.8;
+        }
+
+        .module-content h2 {
+            color: var(--gold);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .module-content h3 {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .module-content p {
+            margin-bottom: 1rem;
+            color: #ddd;
+        }
+
+        .module-content ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .module-content li {
+            margin-bottom: 0.5rem;
+            color: #ddd;
+        }
+
+        .video-section {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .video-placeholder {
+            background: rgba(201, 162, 39, 0.1);
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: rgba(201, 162, 39, 0.3);
+            margin-bottom: 0.5rem;
+        }
+
+        .quiz-section {
+            background: rgba(52, 152, 219, 0.1);
+            border: 1px solid rgba(52, 152, 219, 0.3);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .quiz-section h3 {
+            color: #3498db;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            margin-top: 1.5rem;
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: var(--dark);
+        }
+
+        .btn-primary:hover {
+            background: #dbc249;
+        }
+
+        .btn-secondary {
+            background: rgba(201, 162, 39, 0.2);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(201, 162, 39, 0.3);
+        }
+
+        .completion-badge {
+            display: inline-block;
+            background: rgba(39, 174, 96, 0.2);
+            color: var(--green);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--muted);
+        }
+
+        .error {
+            background: rgba(233, 69, 96, 0.1);
+            border: 1px solid rgba(233, 69, 96, 0.3);
+            color: #e94560;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .course-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-icon">rAs</div>
+        <span class="brand">rise AFRICA skills</span>
+        <nav>
+            <a href="my-courses.html">← Back to My Courses</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="sidebar">
+            <h3>📚 Course Modules</h3>
+            <div class="modules-list" id="modulesList"></div>
+        </div>
+
+        <div class="main-content">
+            <div class="course-header">
+                <div class="course-title" id="courseTitle">Loading...</div>
+                <div class="course-meta">
+                    <span id="courseCategory">—</span>
+                    <span id="progressText">Progress: 0%</span>
+                </div>
+            </div>
+
+            <div class="progress-section">
+                <div class="progress-label">
+                    <span>Overall Progress</span>
+                    <span id="progressPercent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div id="moduleContent" class="module-content">
+                <p style="text-align: center; color: var(--muted);">Select a module to begin learning...</p>
+            </div>
+
+            <div id="errorContainer" style="display: none;">
+                <div class="error" id="errorMessage"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc';
+
+        let supabaseClient = null;
+        let currentCourse = null;
+        let currentEnrollment = null;
+        let currentModule = 1;
+
+        // Get URL parameters
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                courseId: params.get('courseId'),
+                courseName: params.get('courseName')
+            };
+        }
+
+        // Initialize
+        async function init() {
+            if (window.supabase) {
+                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            }
+
+            const { courseId, courseName } = getUrlParams();
+            if (!courseId) {
+                showError('No course selected. <a href="my-courses.html">← Go back</a>');
+                return;
+            }
+
+            await loadCourse(courseId, courseName);
+        }
+
+        async function loadCourse(courseId, courseName) {
+            try {
+                // Load course from Supabase
+                const { data: courses } = await supabaseClient.from('courses').select('*').eq('id', courseId);
+                if (!courses || courses.length === 0) {
+                    showError('Course not found.');
+                    return;
+                }
+
+                currentCourse = courses[0];
+                document.getElementById('courseTitle').textContent = currentCourse.title;
+                document.getElementById('courseCategory').textContent = `📚 ${currentCourse.category}`;
+
+                // Load enrollment data
+                const enrollmentsData = localStorage.getItem('rise-africa-enrollments');
+                if (enrollmentsData) {
+                    const enrollments = JSON.parse(enrollmentsData);
+                    currentEnrollment = enrollments.find(e => e.courseId === courseId);
+                }
+
+                // Render modules
+                renderModules();
+
+                // Load first module
+                loadModule(1);
+
+            } catch (error) {
+                console.error('[Course Content] Error:', error);
+                showError('Error loading course: ' + error.message);
+            }
+        }
+
+        function renderModules() {
+            const modulesList = document.getElementById('modulesList');
+            modulesList.innerHTML = '';
+
+            // Create 6 modules by default
+            for (let i = 1; i <= 6; i++) {
+                const isCompleted = currentEnrollment?.completedModules?.includes(i);
+                const item = document.createElement('div');
+                item.className = `module-item ${i === 1 ? 'active' : ''} ${isCompleted ? 'completed' : ''}`;
+                item.textContent = `Module ${i}`;
+                item.onclick = () => loadModule(i);
+                modulesList.appendChild(item);
+            }
+        }
+
+        function loadModule(moduleNumber) {
+            currentModule = moduleNumber;
+
+            // Update active state
+            document.querySelectorAll('.module-item').forEach((item, idx) => {
+                item.classList.toggle('active', idx + 1 === moduleNumber);
+            });
+
+            // Load module content
+            const content = getModuleContent(moduleNumber);
+            document.getElementById('moduleContent').innerHTML = content;
+
+            // Update progress
+            updateProgress();
+        }
+
+        function getModuleContent(moduleNumber) {
+            const modules = {
+                1: `
+                    <h2>Module 1: Introduction & Fundamentals</h2>
+                    <p>Welcome to this course! In this module, you'll learn the essential concepts and foundations.</p>
+
+                    <div class="video-section">
+                        <p><strong>📹 Lesson Video</strong></p>
+                        <div class="video-placeholder">▶️</div>
+                        <p style="font-size: 0.9rem; color: var(--muted);">Video player coming soon</p>
+                    </div>
+
+                    <h3>Key Topics</h3>
+                    <ul>
+                        <li>Understanding the basics</li>
+                        <li>Key terminology</li>
+                        <li>Core principles</li>
+                        <li>Getting started</li>
+                    </ul>
+
+                    <p>Take your time to understand these fundamentals as they form the foundation for all subsequent modules.</p>
+
+                    <div class="quiz-section">
+                        <h3>📝 Quick Quiz</h3>
+                        <p>Test your understanding of Module 1 concepts.</p>
+                        <button class="btn btn-secondary" onclick="alert('Quiz system coming soon')">Take Quiz</button>
+                    </div>
+                `,
+                2: `
+                    <h2>Module 2: Intermediate Concepts</h2>
+                    <p>Building on your foundation, this module covers more advanced topics.</p>
+
+                    <div class="video-section">
+                        <p><strong>📹 Lesson Video</strong></p>
+                        <div class="video-placeholder">▶️</div>
+                    </div>
+
+                    <h3>Topics Covered</h3>
+                    <ul>
+                        <li>Advanced techniques</li>
+                        <li>Practical applications</li>
+                        <li>Real-world examples</li>
+                        <li>Problem-solving strategies</li>
+                    </ul>
+
+                    <div class="quiz-section">
+                        <h3>📝 Module 2 Quiz</h3>
+                        <button class="btn btn-secondary" onclick="alert('Quiz system coming soon')">Take Quiz</button>
+                    </div>
+                `,
+                3: `
+                    <h2>Module 3: Advanced Implementation</h2>
+                    <p>Master advanced implementation techniques in this comprehensive module.</p>
+
+                    <div class="video-section">
+                        <p><strong>📹 Lesson Video</strong></p>
+                        <div class="video-placeholder">▶️</div>
+                    </div>
+
+                    <h3>What You'll Learn</h3>
+                    <ul>
+                        <li>Advanced strategies</li>
+                        <li>Best practices</li>
+                        <li>Optimization techniques</li>
+                        <li>Case studies</li>
+                    </ul>
+
+                    <div class="quiz-section">
+                        <h3>📝 Module 3 Assessment</h3>
+                        <button class="btn btn-secondary" onclick="alert('Quiz system coming soon')">Take Assessment</button>
+                    </div>
+                `,
+                4: `
+                    <h2>Module 4: Practical Projects</h2>
+                    <p>Apply your knowledge to real-world projects.</p>
+
+                    <h3>Project Overview</h3>
+                    <p>In this module, you'll work on practical projects that demonstrate your understanding.</p>
+
+                    <div class="video-section">
+                        <p><strong>📹 Project Walkthrough</strong></p>
+                        <div class="video-placeholder">▶️</div>
+                    </div>
+
+                    <h3>Project Tasks</h3>
+                    <ul>
+                        <li>Project setup and planning</li>
+                        <li>Implementation phases</li>
+                        <li>Testing and validation</li>
+                        <li>Project completion</li>
+                    </ul>
+
+                    <div class="quiz-section">
+                        <h3>🎯 Project Submission</h3>
+                        <p>Submit your completed project for review.</p>
+                        <button class="btn btn-secondary" onclick="alert('Project submission coming soon')">Submit Project</button>
+                    </div>
+                `,
+                5: `
+                    <h2>Module 5: Advanced Topics</h2>
+                    <p>Explore specialized and advanced topics in this final technical module.</p>
+
+                    <div class="video-section">
+                        <p><strong>📹 Advanced Concepts</strong></p>
+                        <div class="video-placeholder">▶️</div>
+                    </div>
+
+                    <h3>Topics</h3>
+                    <ul>
+                        <li>Specialized techniques</li>
+                        <li>Industry standards</li>
+                        <li>Professional approaches</li>
+                        <li>Future trends</li>
+                    </ul>
+
+                    <div class="quiz-section">
+                        <h3>📝 Advanced Quiz</h3>
+                        <button class="btn btn-secondary" onclick="alert('Quiz system coming soon')">Take Quiz</button>
+                    </div>
+                `,
+                6: `
+                    <h2>Module 6: Course Project & Certification</h2>
+                    <p>Complete your final project and earn your certificate of completion!</p>
+
+                    <h3>Final Project</h3>
+                    <p>Bring everything together in this comprehensive final project.</p>
+
+                    <div class="video-section">
+                        <p><strong>📹 Final Project Guide</strong></p>
+                        <div class="video-placeholder">▶️</div>
+                    </div>
+
+                    <h3>Requirements</h3>
+                    <ul>
+                        <li>Comprehensive project plan</li>
+                        <li>Complete implementation</li>
+                        <li>Documentation</li>
+                        <li>Final submission</li>
+                    </ul>
+
+                    <div class="quiz-section">
+                        <h3>🏆 Final Submission & Certificate</h3>
+                        <p>Submit your final project to receive your course certificate.</p>
+                        <button class="btn btn-primary" onclick="submitFinalProject()">Submit Final Project</button>
+                    </div>
+
+                    ${currentEnrollment?.certificateIssued ? `
+                        <div class="completion-badge">✓ Certificate Earned!</div>
+                        <button class="btn btn-secondary" onclick="downloadCertificate()">📥 Download Certificate</button>
+                    ` : ''}
+                `
+            };
+
+            return modules[moduleNumber] || modules[1];
+        }
+
+        function updateProgress() {
+            const completed = currentEnrollment?.completedModules?.length || 0;
+            const total = 6;
+            const progress = Math.round((completed / total) * 100);
+
+            document.getElementById('progressPercent').textContent = progress + '%';
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `Progress: ${progress}%`;
+
+            // Mark module as completed
+            if (!currentEnrollment?.completedModules?.includes(currentModule)) {
+                if (!currentEnrollment) {
+                    currentEnrollment = { completedModules: [] };
+                }
+                if (!currentEnrollment.completedModules) {
+                    currentEnrollment.completedModules = [];
+                }
+                currentEnrollment.completedModules.push(currentModule);
+
+                // Save to localStorage
+                const enrollmentsData = localStorage.getItem('rise-africa-enrollments');
+                const enrollments = enrollmentsData ? JSON.parse(enrollmentsData) : [];
+                const idx = enrollments.findIndex(e => e.courseId === currentCourse.id);
+                if (idx >= 0) {
+                    enrollments[idx] = currentEnrollment;
+                    localStorage.setItem('rise-africa-enrollments', JSON.stringify(enrollments));
+                }
+
+                // Update module list visual
+                renderModules();
+            }
+        }
+
+        function submitFinalProject() {
+            alert('Congratulations! Your final project has been submitted. Your certificate will be issued shortly.');
+            // Mark course as completed
+            if (currentEnrollment) {
+                currentEnrollment.progress = 100;
+                currentEnrollment.certificateIssued = true;
+                currentEnrollment.completedAt = new Date().toISOString();
+
+                const enrollmentsData = localStorage.getItem('rise-africa-enrollments');
+                const enrollments = enrollmentsData ? JSON.parse(enrollmentsData) : [];
+                const idx = enrollments.findIndex(e => e.courseId === currentCourse.id);
+                if (idx >= 0) {
+                    enrollments[idx] = currentEnrollment;
+                    localStorage.setItem('rise-africa-enrollments', JSON.stringify(enrollments));
+                }
+
+                loadModule(6); // Reload to show certificate
+            }
+        }
+
+        function downloadCertificate() {
+            alert('Certificate download coming soon - will include student name, course, and date completed');
+        }
+
+        function showError(message) {
+            document.getElementById('errorContainer').style.display = 'block';
+            document.getElementById('errorMessage').innerHTML = message;
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
