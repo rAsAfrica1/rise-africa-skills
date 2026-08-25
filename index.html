@@ -2188,8 +2188,34 @@ document.getElementById('btnModalX').addEventListener('click', function(){ modal
 modalBg.addEventListener('click', function(e){ if(e.target === this) this.classList.remove('on'); });
  
 // ===== PRESERVATION CALC =====
-var baseRates = { drying:0.35, smoking:0.30, salting:0.25, pickling:0.20, canning:0.15, freezing:0.10, vacuum:0.12, waxing:0.18, sugar:0.22, oil:0.20 };
-var productMultipliers = {meat:1.0, fish:1.05, vegetable:0.9, fruit:0.85, grain:0.8};
+var LOSS = {
+drying:{meat:[55,68],fish:[62,72],vegetable:[80,90],fruit:[70,85],grain:[5,12]},
+smoking:{meat:[20,35],fish:[15,25],vegetable:[20,35],fruit:[25,40],grain:[5,10]},
+salting:{meat:[25,35],fish:[30,45],vegetable:[10,25],fruit:[15,30],grain:[2,5]},
+pickling:{meat:[5,12],fish:[5,12],vegetable:[5,15],fruit:[5,15],grain:[2,6]},
+canning:{meat:[3,10],fish:[3,10],vegetable:[8,18],fruit:[8,18],grain:[2,6]},
+freezing:{meat:[2,6],fish:[3,8],vegetable:[5,12],fruit:[5,12],grain:[1,3]},
+vacuum:{meat:[1,4],fish:[1,4],vegetable:[2,6],fruit:[2,6],grain:[1,2]},
+waxing:{meat:[0,0],fish:[0,0],vegetable:[2,6],fruit:[2,6],grain:[0,0]},
+sugar:{meat:[0,0],fish:[0,0],vegetable:[0,0],fruit:[0,0],grain:[0,0]},
+oil:{meat:[5,15],fish:[5,15],vegetable:[8,20],fruit:[8,20],grain:[2,5]}};
+var SHELF2 = {
+drying:{meat:'3-6 months',fish:'3-6 months',vegetable:'8-12 months',fruit:'6-12 months',grain:'12+ months'},
+smoking:{meat:'2-4 days hot / 1-3 weeks cold',fish:'1-2 weeks',vegetable:'2-4 weeks',fruit:'2-4 weeks',grain:'6-12 months'},
+salting:{meat:'2-6 months',fish:'3-6 months',vegetable:'3-6 months',fruit:'2-4 months',grain:'6-12 months'},
+pickling:{meat:'not recommended',fish:'2-4 weeks chilled',vegetable:'6-12 months',fruit:'6-12 months',grain:'n/a'},
+canning:{meat:'1-2 years',fish:'1-2 years',vegetable:'1-2 years',fruit:'1-2 years',grain:'1-2 years'},
+freezing:{meat:'6-12 months',fish:'3-6 months',vegetable:'8-12 months',fruit:'8-12 months',grain:'12+ months'},
+vacuum:{meat:'2-3 wks chilled / 1-2 yrs frozen',fish:'1-2 weeks chilled',vegetable:'1-2 weeks chilled',fruit:'1-2 weeks chilled',grain:'12+ months'},
+waxing:{meat:'n/a',fish:'n/a',vegetable:'1-3 months',fruit:'1-3 months',grain:'n/a'},
+sugar:{meat:'not applicable',fish:'not applicable',vegetable:'6-12 months',fruit:'12-18 months',grain:'n/a'},
+oil:{meat:'chilled, 1-2 weeks',fish:'chilled, 1-2 weeks',vegetable:'chilled, 2-4 weeks',fruit:'chilled, 2-4 weeks',grain:'2-3 months'}};
+var SAFETY2 = {
+canning:{meat:'PRESSURE CANNER REQUIRED. Meat is low-acid. A boiling water bath does not reach the temperature that destroys botulism spores.',fish:'PRESSURE CANNER REQUIRED. Fish is low-acid - a water bath is not safe.',vegetable:'PRESSURE CANNER REQUIRED for most vegetables. Only acidified products are water-bath safe.',fruit:'Most fruit is high-acid and water-bath safe. Check pH is below 4.6 or add lemon juice.',grain:'Grain is low-acid and not suitable for home canning. Store it dry instead.'},
+oil:{meat:'Botulism risk. Do not store meat in oil at room temperature.',fish:'Botulism risk. Do not store fish in oil at room temperature.',vegetable:'Garlic, chillies and herbs in oil carry botulism risk. Acidify, refrigerate, use within weeks.',fruit:'Refrigerate and use within weeks.',grain:'Refrigerate - oil goes rancid.'},
+smoking:{meat:'Cold-smoked meat is raw. It needs curing salt and refrigeration.',fish:'Cold-smoked fish is raw and not shelf-stable.'},
+pickling:{meat:'Pickling alone does not make meat shelf-stable.'}};
+
 var shelf = { drying:'6–12 months', smoking:'3–6 months', salting:'4–8 months', pickling:'6–12 months', canning:'1–2 years', freezing:'6–12 months', vacuum:'3–6 months', waxing:'2–4 months', sugar:'6–12 months', oil:'3–6 months' };
 var bestTemp = { drying:[25,35], smoking:[20,30], salting:[15,25], pickling:[10,20], canning:[15,25], freezing:[-18,-18], vacuum:[10,20], waxing:[10,20], sugar:[15,25], oil:[15,25] };
 function calcPreserv(){
@@ -2197,26 +2223,26 @@ var method = document.getElementById('selMethod').value;
 var product = document.getElementById('selProduct').value;
 var qty = parseFloat(document.getElementById('inpQty').value) || 0;
 var temp = parseFloat(document.getElementById('inpTemp').value) || 25;
-var baseRate = baseRates[method] || 0.20;
-var prodMult = productMultipliers[product] || 1.0;
+
+
 var ideal = bestTemp[method] ? bestTemp[method][0] : 20;
 var tempDiff = Math.abs(temp - ideal);
 var tempPenalty = Math.min(0.15, tempDiff * 0.005);
-var rate = Math.min(0.95, baseRate * prodMult + tempPenalty);
+var lossPair = (LOSS[method] && LOSS[method][product]) ? LOSS[method][product] : [10,20]; var rateLo = lossPair[0]/100; var rateHi = lossPair[1]/100; var rate = rateHi;
 if(currentUnit === 'imperial') qty = qty / 2.20462;
 var finalKg = qty * (1 - rate);
 var isM = currentUnit === 'metric';
 var w = isM ? 'kg' : 'lbs';
 var t = isM ? '°C' : '°F';
 var finalVal = isM ? finalKg.toFixed(1) : (finalKg * 2.20462).toFixed(1);
-document.getElementById('resQty').innerHTML = finalVal + ' <span class="unit-w">' + w + '</span>';
-document.getElementById('resShelf').textContent = shelf[method] || '3–6 months';
+var loKg = qty*(1-rateHi); var hiKg = qty*(1-rateLo); var loV = isM ? loKg.toFixed(1) : (loKg*2.20462).toFixed(1); var hiV = isM ? hiKg.toFixed(1) : (hiKg*2.20462).toFixed(1); document.getElementById('resQty').innerHTML = loV + '-' + hiV + ' <span class="unit-w">' + w + '</span>'; var sfEl = document.getElementById('rasSafetyNote'); if(!sfEl){ sfEl = document.createElement('div'); sfEl.id='rasSafetyNote'; sfEl.style.cssText='margin-top:12px;padding:12px 14px;border-radius:8px;font-size:0.85rem;line-height:1.5;background:rgba(201,162,39,0.12);border-left:4px solid #c9a227;color:#f0e6c8'; var box=document.getElementById('resLoss'); if(box&&box.parentElement&&box.parentElement.parentElement){ box.parentElement.parentElement.appendChild(sfEl);} } var sfTxt = (SAFETY2[method] && SAFETY2[method][product]) ? SAFETY2[method][product] : ''; if(sfTxt){ sfEl.textContent = '\u26A0 ' + sfTxt; sfEl.style.display='block'; } else { sfEl.style.display='none'; }
+document.getElementById('resShelf').textContent = (SHELF2[method] && SHELF2[method][product]) ? SHELF2[method][product] : 'varies';
 var tr = bestTemp[method] || [15,25];
 var bestT;
 if(tr[0] === tr[1]){ bestT = (isM ? tr[0] : Math.round(tr[0]*9/5+32)); }
 else { bestT = (isM ? tr[0] : Math.round(tr[0]*9/5+32)) + '–' + (isM ? tr[1] : Math.round(tr[1]*9/5+32)); }
 document.getElementById('resTemp').innerHTML = bestT + '<span class="unit-t">' + t + '</span>';
-document.getElementById('resLoss').textContent = Math.round(rate*100) + '%';
+document.getElementById('resLoss').textContent = Math.round(rateLo*100) + '-' + Math.round(rateHi*100) + '%';
 document.querySelectorAll('.mtag').forEach(function(tg){ tg.classList.toggle('on', tg.dataset.m === method); });
 }
 ['selProduct','selMethod'].forEach(function(id){ var el = document.getElementById(id); if(el) el.addEventListener('change', calcPreserv); });
