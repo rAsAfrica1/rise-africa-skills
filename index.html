@@ -456,7 +456,7 @@ body.light .fineprint p{opacity:1}
 </div>
 <span style="background:#FFB627;color:#3A2500;font-weight:800;padding:.7rem 1.3rem;border-radius:99px;white-space:nowrap">Open →</span>
 </a></div></section>
-id="courses"&gt;<h2 class="section-title" id="coursesTitle">All Courses</h2>
+<section id="courses"><h2 class="section-title" id="coursesTitle">All Courses</h2>
 <div class="course-grid" id="gridCourses">
 <div class="course-card" data-cat="FOOD PRESERVATION"><div class="course-category">FOOD PRESERVATION</div><h3>Food Preservation Methods</h3><p>Master all 10 preservation techniques in one course. Compare shelf life, cost, and equipment so you pick the right method for every product you sell.</p><div class="price-check">✅ Iron-Clad Price Check: Call 3 suppliers before you buy.</div>
 <div class="card-actions">
@@ -2839,11 +2839,11 @@ grid.innerHTML='';
 enrollments.forEach(function(enr){
 var card = document.createElement('div');
 card.className = 'enrolled-card';
-var dateStr = new Date(enr.date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+var dateStr = new Date(enr.date||Date.now()).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
 var prog = Math.min(100,Math.max(0,enr.progress||0));
 var tierLabel = {course:'Course',cert:'Certificate',print:'Print',bundle:'Bundle',gift:'Gift'}[enr.tier]||'Course';
 var giftInfo = enr.gift ? '<br><small style="color:var(--gold)">🎁 Gift for '+escapeHtml(enr.gift.recipient)+'</small>' : '';
-card.innerHTML = '<div class="badge">ENROLLED</div><h4>'+escapeHtml(enr.course)+'</h4><div class="meta">'+tierLabel+' · '+dateStr+' · $'+enr.price.toFixed(2)+giftInfo+'</div><div class="progress-wrap"><div class="progress-bar" style="width:'+prog+'%"></div></div><div class="progress-lbl"><span>Progress</span><span>'+prog+'%</span></div>';
+card.innerHTML = '<div class="badge">ENROLLED</div><h4>'+escapeHtml(enr.course)+'</h4><div class="meta">'+tierLabel+' · '+dateStr+' · $'+(typeof enr.price==='number'?enr.price:parseFloat(enr.price)||0).toFixed(2)+giftInfo+'</div><div class="progress-wrap"><div class="progress-bar" style="width:'+prog+'%"></div></div><div class="progress-lbl"><span>Progress</span><span>'+prog+'%</span></div>';
 grid.appendChild(card);
 });
 }
