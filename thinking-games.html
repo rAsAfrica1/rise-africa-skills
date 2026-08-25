@@ -1,0 +1,503 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>100 Thinking Games &mdash; rise AFRICA skills</title>
+<meta name="description" content="100 games that build computational thinking in children: 8 playable free in your browser, 92 you can play with chalk and stones. Ages 3-14.">
+<style>
+:root{--sun:#FFB627;--sky:#3AAFE0;--leaf:#3FB98C;--berry:#E4572E;--grape:#7B5EA7;--ink:#1F2937;--paper:#FFF8EC;--card:#fff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6}
+header{background:linear-gradient(135deg,var(--grape),var(--sky));color:#fff;padding:.8rem 1rem;display:flex;align-items:center;gap:.7rem;position:sticky;top:0;z-index:100}
+.logo{width:36px;height:36px;border-radius:10px;background:var(--sun);color:var(--ink);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem}
+header .t{font-weight:800;font-size:.95rem}
+header a{margin-left:auto;color:#fff;text-decoration:none;border:2px solid rgba(255,255,255,.6);padding:.3rem .8rem;border-radius:20px;font-size:.8rem;font-weight:700}
+.wrap{max-width:900px;margin:0 auto;padding:1rem}
+.hero{text-align:center;padding:1.5rem 0}
+.hero h1{font-size:2.1rem;color:var(--grape);line-height:1.15}
+.hero p{max-width:640px;margin:.6rem auto 0}
+.pill{display:inline-block;background:var(--sun);color:var(--ink);font-weight:800;padding:.3rem 1rem;border-radius:20px;font-size:.78rem;letter-spacing:1px}
+.tabs{display:flex;gap:.4rem;overflow-x:auto;padding:.8rem 0;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{background:#fff;border:2px solid #e3d9c6;color:#555;padding:.5rem 1rem;border-radius:20px;font-size:.85rem;font-weight:700;cursor:pointer;white-space:nowrap}
+.tab.on{background:var(--grape);color:#fff;border-color:var(--grape)}
+.pane{display:none}.pane.on{display:block}
+.pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.6rem;margin-bottom:1rem}
+.pickbtn{background:#fff;border:3px solid #e3d9c6;border-radius:14px;padding:.8rem .5rem;text-align:center;cursor:pointer;font-weight:800;font-size:.82rem}
+.pickbtn:hover{border-color:var(--grape)}
+.pickbtn.on{background:var(--grape);color:#fff;border-color:var(--grape)}
+.pickbtn .e{display:block;font-size:1.7rem;margin-bottom:.2rem}
+.stage{background:#fff;border-radius:18px;padding:1.2rem;box-shadow:0 3px 14px rgba(0,0,0,.08);border:3px solid var(--grape);min-height:260px}
+.stage h2{color:var(--grape);font-size:1.25rem}
+.stage .how{font-size:.85rem;color:#666;margin-bottom:.5rem}
+.bar{display:flex;gap:.5rem;justify-content:space-between;align-items:center;background:#f4eee2;border-radius:12px;padding:.45rem .8rem;font-size:.8rem;font-weight:800;margin-bottom:.8rem;flex-wrap:wrap}
+.bar span{white-space:nowrap}
+.lvl{color:var(--grape)}.stk{color:var(--berry)}.bst{color:var(--leaf)}
+.big{font-size:1.15rem;font-weight:700;text-align:center;margin:.7rem 0}
+.btnrow{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;margin:.7rem 0}
+button{font-family:inherit;cursor:pointer;border:none;font-weight:800;border-radius:12px;padding:.65rem 1.1rem;font-size:.92rem;transition:transform .1s}
+button:active{transform:scale(.95)}
+.b-sky{background:var(--sky);color:#fff}.b-leaf{background:var(--leaf);color:#fff}
+.b-berry{background:var(--berry);color:#fff}.b-grape{background:var(--grape);color:#fff}
+.b-sun{background:var(--sun);color:var(--ink)}.b-ghost{background:#eee;color:var(--ink)}
+.feed{text-align:center;font-weight:700;min-height:2.6rem;padding:.55rem;border-radius:12px;font-size:.9rem}
+.feed.yes{background:#d6f5e6;color:#146c48}
+.feed.no{background:#ffe0da;color:#9c2a12}
+.gridw{display:grid;gap:4px;margin:0 auto;background:#e8e0d0;padding:6px;border-radius:12px}
+.cell{aspect-ratio:1;background:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;cursor:pointer}
+.cell.wall{background:#8a7a63}
+.cell.lit{background:var(--sun)}
+.cmds{display:flex;gap:.35rem;flex-wrap:wrap;justify-content:center;margin:.6rem 0;min-height:2.2rem;background:#f2ece0;border-radius:12px;padding:.45rem}
+.chip{background:var(--grape);color:#fff;font-weight:800;padding:.25rem .6rem;border-radius:8px;font-size:.8rem}
+.thing{font-size:3rem;text-align:center;margin:.4rem 0}
+.row{display:flex;gap:.45rem;justify-content:center;font-size:1.9rem;flex-wrap:wrap;margin:.6rem 0}
+.slot{width:48px;height:48px;border:3px dashed #bbb;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.olist{background:#fff;border-radius:14px;padding:.8rem 1rem;margin-bottom:.6rem;border-left:5px solid var(--leaf);box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.olist b{display:block;font-size:.95rem;color:var(--ink)}
+.olist .meta{font-size:.72rem;font-weight:800;color:var(--grape);letter-spacing:.4px;margin:.15rem 0}
+.olist .txt{font-size:.85rem;color:#555}
+.search{width:100%;padding:.7rem 1rem;border-radius:12px;border:3px solid #e3d9c6;font-size:.92rem;font-family:inherit;margin-bottom:.8rem}
+.search:focus{outline:none;border-color:var(--grape)}
+.note{background:#EEF6FF;border-left:5px solid var(--sky);border-radius:0 12px 12px 0;padding:1rem;margin:1rem 0;font-size:.88rem}
+.note b{color:var(--sky)}
+.honest{background:#FFF3D6;border-left:5px solid var(--sun);border-radius:0 12px 12px 0;padding:1rem;margin:1rem 0;font-size:.88rem}
+.honest b{color:#a8760a}
+footer{text-align:center;padding:1.6rem 1rem;color:#777;font-size:.78rem}
+@media(max-width:520px){.hero h1{font-size:1.55rem}}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">rAs</div><div class="t">100 Thinking Games</div>
+<a href="index.html">&larr; Home</a>
+</header>
+
+<div class="wrap">
+<div class="hero">
+<span class="pill">AGES 3&ndash;14 &middot; FREE</span>
+<h1>100 Thinking Games</h1>
+<p>Eight you can play right now on this page, and ninety-two you can play with chalk, stones and bottle tops. Every one of them builds the same four skills that AI itself runs on.</p>
+</div>
+
+<div class="honest">
+<b>An honest word before you start.</b> These games will not raise your child's general intelligence &mdash; no game does, and companies have been fined for claiming otherwise. What they genuinely build is <b>computational thinking</b>: breaking a problem into steps, spotting patterns, sorting things by a rule, and finding your own mistake. Those are learnable, they transfer to real work, and they are exactly what school systems in China are now teaching from age six.
+</div>
+
+<div class="tabs" id="tabs">
+<button class="tab on" data-p="play">&#127918; Play now (8)</button>
+<button class="tab" data-p="off">&#9999;&#65039; Chalk &amp; stones (92)</button>
+<button class="tab" data-p="guide">&#128105; For grown-ups</button>
+</div>
+
+<div class="pane on" id="p-play">
+<div class="pick" id="picker"></div>
+<div class="stage">
+<div class="bar">
+<span class="lvl" id="barLvl">Level 1</span>
+<span class="stk" id="barStk">Streak 0</span>
+<span class="bst" id="barBst">Best 0</span>
+</div>
+<div id="stage"></div>
+</div>
+<div class="note">
+<b>Why it gets harder.</b> Every game raises its own level after three correct answers in a row, and drops back one level after two mistakes. A child should be getting roughly one in four wrong. If they get everything right they are bored; if they get everything wrong they will quit. The games chase that middle on their own.
+</div>
+</div>
+
+<div class="pane" id="p-off">
+<input class="search" id="offSearch" placeholder="Search 92 games... try stones, age 5, pattern, no equipment">
+<div id="offList"></div>
+</div>
+
+<div class="pane" id="p-guide">
+<h2 style="color:var(--grape);margin:.5rem 0">How to run these so nobody gets bored</h2>
+<div class="olist"><b>Stop before they want to stop</b><div class="txt">Twenty minutes at full attention beats an hour of drifting. End on a win, while they are still asking for one more. That is what makes them come back tomorrow.</div></div>
+<div class="olist"><b>Never give the answer</b><div class="txt">Ask "what made you choose that?" instead. A child who explains their wrong answer usually finds the mistake themselves &mdash; and that is the whole skill.</div></div>
+<div class="olist"><b>Let them beat you</b><div class="txt">Play badly on purpose sometimes, and be genuinely wrong in front of them. A child who sees an adult make a mistake and fix it calmly learns that mistakes are normal, not shameful.</div></div>
+<div class="olist"><b>Let them invent the rules</b><div class="txt">Once they know a game, ask them to change one rule and see what happens. Inventing a rule is harder and better than following one.</div></div>
+<div class="olist"><b>Mix screen and ground</b><div class="txt">The chalk versions are not the poor cousin. Moving your whole body through a maze teaches sequencing better than tapping arrows. Do both.</div></div>
+<div class="olist"><b>Older child teaches younger</b><div class="txt">The fastest way to find the gaps in a ten-year-old's understanding is to ask them to teach a six-year-old. It also doubles how many children you reach.</div></div>
+<div class="note"><b>The four skills, in plain words.</b> <b>Sequencing</b> &mdash; putting steps in the right order and finding the one that is wrong. <b>Patterns</b> &mdash; noticing what repeats and predicting what comes next. <b>Classification</b> &mdash; sorting by a rule, which is most of what AI actually does. <b>Debugging</b> &mdash; the calm habit of hunting your own mistake instead of giving up. Every game on this page is one of those four wearing a different costume.</div>
+</div>
+
+</div>
+
+<footer>rise AFRICA skills &middot; 100 Thinking Games &middot; free, always<br>Not a school. No accredited qualification. We do not claim these games raise IQ.</footer>
+<script>
+function ri(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function pick(a){return a[ri(0,a.length-1)];}
+var S=document.getElementById('stage');
+
+document.getElementById('tabs').addEventListener('click',function(e){
+  var b=e.target.closest('.tab');if(!b)return;
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('on',t===b);});
+  document.querySelectorAll('.pane').forEach(function(p){p.classList.toggle('on',p.id==='p-'+b.dataset.p);});
+});
+
+var G={lvl:1,streak:0,best:0,right:0,wrong:0,cur:0};
+function bar(){
+  document.getElementById('barLvl').textContent='Level '+G.lvl;
+  document.getElementById('barStk').textContent='Streak '+G.streak;
+  document.getElementById('barBst').textContent='Best '+G.best;
+}
+function scored(ok){
+  if(ok){G.streak++;G.right++;G.wrong=0;if(G.streak>G.best)G.best=G.streak;
+    if(G.right>=3){G.right=0;if(G.lvl<8){G.lvl++;}}}
+  else{G.streak=0;G.right=0;G.wrong++;if(G.wrong>=2){G.wrong=0;if(G.lvl>1)G.lvl--;}}
+  bar();
+}
+function fb(id,ok,msg){var f=document.getElementById(id);f.className='feed '+(ok?'yes':'no');f.innerHTML=msg;}
+
+var R={};
+function robot(){
+  var n=Math.min(4+Math.floor(G.lvl/2),8);
+  var nw=Math.min(2+G.lvl,Math.floor(n*n/4));
+  var walls=[];
+  while(walls.length<nw){var w=ri(0,n*n-1);if(w!==0&&w!==n*n-1&&walls.indexOf(w)<0)walls.push(w);}
+  R={n:n,pos:0,goal:n*n-1,walls:walls,cmds:[]};
+  S.innerHTML='<h2>&#129302; Robot Commander</h2><p class="how">Stack the arrows, then RUN. The robot does exactly what you said &mdash; including your mistakes.</p>'+
+    '<div class="gridw" id="rg" style="grid-template-columns:repeat('+n+',1fr);max-width:'+(n*54)+'px"></div>'+
+    '<div class="cmds" id="rc"></div>'+
+    '<div class="btnrow"><button class="b-grape" onclick="rAdd(\'up\')">&#11014;&#65039;</button><button class="b-grape" onclick="rAdd(\'down\')">&#11015;&#65039;</button><button class="b-grape" onclick="rAdd(\'left\')">&#11013;&#65039;</button><button class="b-grape" onclick="rAdd(\'right\')">&#10145;&#65039;</button></div>'+
+    '<div class="btnrow"><button class="b-leaf" onclick="rRun()">&#9654;&#65039; RUN</button><button class="b-ghost" onclick="robot()">New maze</button></div>'+
+    '<div class="feed" id="rf"></div>';
+  rDraw();rCmds();
+}
+function rDraw(){
+  var h='';
+  for(var i=0;i<R.n*R.n;i++){
+    h+='<div class="cell'+(R.walls.indexOf(i)>-1?' wall':'')+'">'+(i===R.pos?'&#129302;':(i===R.goal?'&#127820;':''))+'</div>';
+  }
+  document.getElementById('rg').innerHTML=h;
+}
+function rCmds(){
+  var m={up:'&#11014;&#65039;',down:'&#11015;&#65039;',left:'&#11013;&#65039;',right:'&#10145;&#65039;'};
+  document.getElementById('rc').innerHTML=R.cmds.length?R.cmds.map(function(c){return '<span class="chip">'+m[c]+'</span>';}).join(''):'<span style="color:#999;font-size:.82rem">Add arrows, then RUN</span>';
+}
+function rAdd(d){if(R.cmds.length<30){R.cmds.push(d);rCmds();}}
+function rRun(){
+  if(!R.cmds.length)return;
+  R.pos=0;rDraw();var st=0;
+  var t=setInterval(function(){
+    if(st>=R.cmds.length){clearInterval(t);
+      if(R.pos===R.goal){fb('rf',true,'You did it! That is a program.');scored(true);setTimeout(robot,1400);}
+      else{fb('rf',false,'Stopped short. Count the squares you still needed.');scored(false);R.cmds=[];rCmds();}
+      return;}
+    var d=R.cmds[st++],r=Math.floor(R.pos/R.n),c=R.pos%R.n,nr=r,nc=c;
+    if(d==='up')nr--;if(d==='down')nr++;if(d==='left')nc--;if(d==='right')nc++;
+    if(nr<0||nr>=R.n||nc<0||nc>=R.n){clearInterval(t);fb('rf',false,'BUMP! Off the edge &mdash; because that is what you told it to do.');scored(false);R.cmds=[];rCmds();return;}
+    var np=nr*R.n+nc;
+    if(R.walls.indexOf(np)>-1){clearInterval(t);fb('rf',false,'BUMP! Into the wall. Fix one arrow and try again.');scored(false);R.cmds=[];rCmds();return;}
+    R.pos=np;rDraw();
+  },330);
+}
+
+var PIC=['&#127822;','&#127820;','&#11088;','&#127765;','&#128031;','&#128038;','&#127796;','&#127811;','&#9898;','&#9899;','&#128035;','&#129417;'];
+var PANS=-1;
+function pattern(){
+  var set=shuffle(PIC).slice(0,4);
+  var rule,seq=[],i;
+  if(G.lvl<=2)rule=[0,1];
+  else if(G.lvl<=4)rule=[0,0,1];
+  else if(G.lvl<=6)rule=[0,1,2];
+  else rule=[0,1,2,1];
+  for(i=0;i<rule.length*2+ri(0,1);i++)seq.push(set[rule[i%rule.length]]);
+  var nextItem=set[rule[seq.length%rule.length]];
+  var opts=shuffle([nextItem,set[3],set[(rule[0]+1)%3]].filter(function(v,ix,ar){return ar.indexOf(v)===ix;}));
+  if(opts.length<2)opts=shuffle([nextItem,set[3]]);
+  PANS=opts.indexOf(nextItem);
+  S.innerHTML='<h2>&#128142; Pattern Master</h2><p class="how">What comes next in the row?</p>'+
+    '<div class="row">'+seq.map(function(s){return '<span>'+s+'</span>';}).join('')+'<span class="slot">?</span></div>'+
+    '<div class="btnrow">'+opts.map(function(o,ix){return '<button class="b-sun" style="font-size:1.6rem" onclick="pPick('+ix+')">'+o+'</button>';}).join('')+'</div>'+
+    '<div class="feed" id="pf"></div>';
+}
+function pPick(i){
+  var ok=(i===PANS);
+  fb('pf',ok,ok?'Yes! You found the rule.':'Say the row out loud &mdash; the rule repeats.');
+  scored(ok);setTimeout(pattern,1300);
+}
+
+var RULES=[
+["ends up in a pot",["&#127813;","&#129370;","&#127814;","&#129365;"],["&#128663;","&#128241;","&#9917;","&#128021;"]],
+["grows on a tree",["&#127822;","&#127820;","&#127818;","&#129373;"],["&#129370;","&#127805;","&#127813;","&#129365;"]],
+["has wings",["&#128038;","&#129417;","&#128034;","&#129419;"],["&#128021;","&#128018;","&#128040;","&#128053;"]],
+["lives in water",["&#128031;","&#128032;","&#128033;","&#128011;"],["&#128046;","&#128020;","&#128017;","&#128024;"]],
+["you can carry in one hand",["&#128241;","&#9749;","&#128218;","&#128274;"],["&#128663;","&#127968;","&#128644;","&#9973;"]],
+["makes a sound to warn you",["&#128276;","&#128680;","&#128227;","&#9200;"],["&#129681;","&#128220;","&#129525;","&#128736;"]]
+];
+var GR={};
+function guessrule(){
+  var r=pick(RULES);
+  var show=Math.max(2,4-Math.floor(G.lvl/3));
+  GR={rule:r,ans:-1};
+  var yes=shuffle(r[1]).slice(0,show);
+  var no=shuffle(r[2]).slice(0,show);
+  var testYes=r[1].filter(function(x){return yes.indexOf(x)<0;});
+  var testNo=r[2].filter(function(x){return no.indexOf(x)<0;});
+  var t=testYes.length&&(ri(0,1)||!testNo.length)?{v:pick(testYes),in:true}:{v:pick(testNo.length?testNo:r[2]),in:false};
+  GR.ans=t.in;
+  S.innerHTML='<h2>&#129504; Guess My Rule</h2><p class="how">These belong. These do not. Work out the hidden rule &mdash; then decide about the new one.</p>'+
+    '<div style="text-align:center;font-size:.8rem;font-weight:800;color:var(--leaf)">THESE BELONG</div><div class="row">'+yes.join(' ')+'</div>'+
+    '<div style="text-align:center;font-size:.8rem;font-weight:800;color:var(--berry)">THESE DO NOT</div><div class="row">'+no.join(' ')+'</div>'+
+    '<div class="big">Does this one belong?</div><div class="thing">'+t.v+'</div>'+
+    '<div class="btnrow"><button class="b-leaf" onclick="grPick(true)">&#9989; Belongs</button><button class="b-berry" onclick="grPick(false)">&#10060; Does not</button></div>'+
+    '<div class="feed" id="gf"></div>';
+}
+function grPick(p){
+  var ok=(p===GR.ans);
+  fb('gf',ok,(ok?'Correct! ':'Not this time. ')+'The hidden rule was: <b>'+GR.rule[0]+'</b>');
+  scored(ok);setTimeout(guessrule,2100);
+}
+
+var M={};
+function memory(){
+  var n=Math.min(3+Math.floor(G.lvl/3),6);
+  var cnt=Math.min(2+G.lvl,Math.floor(n*n/2));
+  var lit=[];
+  while(lit.length<cnt){var c=ri(0,n*n-1);if(lit.indexOf(c)<0)lit.push(c);}
+  M={n:n,lit:lit,found:[],locked:true};
+  S.innerHTML='<h2>&#128064; Memory Grid</h2><p class="how">Remember which squares light up, then tap them all.</p>'+
+    '<div class="gridw" id="mg" style="grid-template-columns:repeat('+n+',1fr);max-width:'+(n*54)+'px"></div>'+
+    '<div class="feed" id="mf">Watch...</div>';
+  mDraw(true);
+  setTimeout(function(){M.locked=false;mDraw(false);document.getElementById('mf').textContent='Now tap them!';},1200+G.lvl*120);
+}
+function mDraw(show){
+  var h='';
+  for(var i=0;i<M.n*M.n;i++){
+    var on=(show&&M.lit.indexOf(i)>-1)||M.found.indexOf(i)>-1;
+    h+='<div class="cell'+(on?' lit':'')+'" onclick="mTap('+i+')"></div>';
+  }
+  document.getElementById('mg').innerHTML=h;
+}
+function mTap(i){
+  if(M.locked||M.found.indexOf(i)>-1)return;
+  if(M.lit.indexOf(i)>-1){
+    M.found.push(i);mDraw(false);
+    if(M.found.length===M.lit.length){M.locked=true;fb('mf',true,'All found!');scored(true);setTimeout(memory,1200);}
+  }else{
+    M.locked=true;mDraw(true);fb('mf',false,'Not that one. Here they are again.');scored(false);setTimeout(memory,2000);
+  }
+}
+var SETS=[
+[["&#127822;","&#127820;","&#127818;","&#127817;"],"&#128663;","fruit"],
+[["&#128021;","&#128049;","&#128052;","&#128017;"],"&#127794;","animals"],
+[["&#9899;","&#9898;","&#128308;","&#128309;"],"&#11088;","circles"],
+[["&#128031;","&#128032;","&#128033;"],"&#128038;","fish"],
+[["&#128666;","&#128663;","&#128652;","&#128654;"],"&#127968;","things that move"],
+[["&#9749;","&#127861;","&#127869;&#65039;","&#129379;"],"&#128296;","food"],
+[["&#128276;","&#127925;","&#128227;"],"&#128065;&#65039;","sound"],
+[["&#127796;","&#127807;","&#127811;","&#127810;"],"&#128640;","plants"]
+];
+var OO=-1;
+function oddone(){
+  var s=pick(SETS);
+  var many=shuffle(s[0]).slice(0,Math.min(3+Math.floor(G.lvl/3),s[0].length));
+  var all=shuffle(many.concat([s[1]]));
+  OO=all.indexOf(s[1]);
+  S.innerHTML='<h2>&#128269; Odd One Out</h2><p class="how">Three or more belong together. One does not. Which?</p>'+
+    '<div class="btnrow">'+all.map(function(o,i){return '<button class="b-ghost" style="font-size:2rem" onclick="ooPick('+i+',\''+s[2]+'\')">'+o+'</button>';}).join('')+'</div>'+
+    '<div class="feed" id="of"></div>';
+}
+function ooPick(i,why){
+  var ok=(i===OO);
+  fb('of',ok,ok?'Right! The others were all '+why+'.':'Look again &mdash; most of them are '+why+'.');
+  scored(ok);setTimeout(oddone,1600);
+}
+
+var LB={};
+function loops(){
+  var times=ri(2,Math.min(2+G.lvl,7));
+  var per=ri(2,Math.min(2+Math.floor(G.lvl/2),5));
+  LB={t:times,p:per,ans:times*per};
+  var opts=shuffle([times*per,times+per,times*per+per,Math.max(1,times*per-times)].filter(function(v,i,a){return a.indexOf(v)===i;}));
+  LB.idx=opts.indexOf(times*per);
+  S.innerHTML='<h2>&#128260; Loop Builder</h2><p class="how">A loop repeats instructions. Work out how many steps happen in total.</p>'+
+    '<div style="background:#f4eee2;border-radius:12px;padding:1rem;font-family:monospace;font-size:1rem;text-align:center;margin:.6rem 0">'+
+    'REPEAT <b style="color:var(--berry)">'+times+'</b> TIMES {<br>&nbsp;&nbsp;&nbsp;step forward &times; <b style="color:var(--grape)">'+per+'</b><br>}</div>'+
+    '<div class="big">How many steps in total?</div>'+
+    '<div class="btnrow">'+opts.map(function(o,i){return '<button class="b-sky" onclick="lbPick('+i+')">'+o+'</button>';}).join('')+'</div>'+
+    '<div class="feed" id="lf"></div>';
+}
+function lbPick(i){
+  var ok=(i===LB.idx);
+  fb('lf',ok,ok?'Yes! '+LB.t+' &times; '+LB.p+' = '+LB.ans+'. A loop saves you writing it out '+LB.t+' times.':'Not quite &mdash; it is '+LB.t+' lots of '+LB.p+', which is '+LB.ans+'.');
+  scored(ok);setTimeout(loops,2000);
+}
+
+var IFS=[
+["If it is raining, take an umbrella.","It is raining.","Take an umbrella.","Leave the umbrella."],
+["If the pot boils, turn down the heat.","The pot is boiling.","Turn down the heat.","Turn up the heat."],
+["If the light is red, stop.","The light is red.","Stop.","Keep going."],
+["If the goat is out, close the gate.","The goat is out.","Close the gate.","Open the gate wider."],
+["If the phone is under 10 percent, charge it.","The phone is at 6 percent.","Charge it.","Watch a video."],
+["If the soil is dry, water the plants.","The soil is dry.","Water the plants.","Wait another week."],
+["If a stranger asks for your PIN, refuse.","A stranger asks for your PIN.","Refuse.","Tell them."]
+];
+var IT=-1;
+function ifthen(){
+  var q=pick(IFS);
+  var opts=shuffle([q[2],q[3]]);
+  IT=opts.indexOf(q[2]);
+  S.innerHTML='<h2>&#10145;&#65039; If... Then...</h2><p class="how">Computers follow rules exactly. Follow this one.</p>'+
+    '<div style="background:#f4eee2;border-radius:12px;padding:.9rem;text-align:center;font-weight:800;margin:.5rem 0">'+q[0]+'</div>'+
+    '<div class="big">'+q[1]+'</div><div style="text-align:center;font-size:.85rem;color:#666">So what happens?</div>'+
+    '<div class="btnrow">'+opts.map(function(o,i){return '<button class="b-grape" onclick="itPick('+i+')">'+o+'</button>';}).join('')+'</div>'+
+    '<div class="feed" id="if2"></div>';
+}
+function itPick(i){
+  var ok=(i===IT);
+  fb('if2',ok,ok?'Correct. That is exactly how an IF rule works.':'Read the rule again slowly. It tells you exactly what to do.');
+  scored(ok);setTimeout(ifthen,1600);
+}
+
+var EST={};
+function estimate(){
+  var n=ri(6+G.lvl*4,14+G.lvl*9);
+  var icon=pick(['&#128031;','&#11088;','&#127822;','&#9898;','&#128038;','&#127820;']);
+  var h='';for(var i=0;i<n;i++)h+=icon;
+  var lo=Math.max(1,Math.round(n*0.75)),hi=Math.round(n*1.25);
+  EST={n:n,lo:lo,hi:hi};
+  S.innerHTML='<h2>&#128207; How Many?</h2><p class="how">Do not count them one by one. Guess fast &mdash; get close and you win. Estimating is a real skill at a market stall.</p>'+
+    '<div style="font-size:1rem;line-height:1.5;word-break:break-all;background:#f4eee2;border-radius:12px;padding:.8rem;text-align:center">'+h+'</div>'+
+    '<div class="btnrow"><input id="eIn" type="number" style="padding:.6rem;border-radius:10px;border:3px solid #e3d9c6;width:110px;font-size:1rem;font-family:inherit" placeholder="?"><button class="b-leaf" onclick="ePick()">Guess</button></div>'+
+    '<div class="feed" id="ef"></div>';
+}
+function ePick(){
+  var v=parseInt(document.getElementById('eIn').value);
+  if(isNaN(v))return;
+  var ok=(v>=EST.lo&&v<=EST.hi);
+  fb('ef',ok,ok?'Close enough! There were '+EST.n+'. Good eye.':'There were '+EST.n+'. Try grouping them in fives next time.');
+  scored(ok);setTimeout(estimate,2000);
+}
+
+var GAMES=[
+["&#129302;","Robot Commander",robot],
+["&#128142;","Pattern Master",pattern],
+["&#129504;","Guess My Rule",guessrule],
+["&#128064;","Memory Grid",memory],
+["&#128269;","Odd One Out",oddone],
+["&#128260;","Loop Builder",loops],
+["&#10145;&#65039;","If... Then...",ifthen],
+["&#128207;","How Many?",estimate]
+];
+document.getElementById('picker').innerHTML=GAMES.map(function(g,i){
+  return '<div class="pickbtn'+(i===0?' on':'')+'" id="pb'+i+'" onclick="startGame('+i+')"><span class="e">'+g[0]+'</span>'+g[1]+'</div>';
+}).join('');
+function startGame(i){
+  G={lvl:1,streak:0,best:G.best||0,right:0,wrong:0,cur:i};
+  document.querySelectorAll('.pickbtn').forEach(function(b,ix){b.classList.toggle('on',ix===i);});
+  bar();GAMES[i][2]();
+}
+/* ================= 92 OFFLINE GAMES ================= */
+var OFF=[
+["Robot Walk","3-6","Sequencing","Chalk or open floor","Child gives you one instruction at a time to cross the room. You obey exactly, mistakes included."],
+["Bottle Top Patterns","3-6","Patterns","Bottle tops, two colours","Lay a repeating row. Child adds the next three."],
+["Two Baskets","3-6","Classification","Two containers, mixed objects","Child invents a sorting rule and sorts. You must guess the rule."],
+["Copy My Tower","3-6","Spatial","Stones or blocks","Build a small tower behind a cloth. Show it for five seconds. They rebuild it."],
+["Follow the Claps","3-6","Memory","Hands","Clap a short rhythm. Child claps it back. Add one clap each round."],
+["Big, Bigger, Biggest","3-6","Ordering","Any five objects","Line them up smallest to largest. Then by weight, then by colour darkness."],
+["Simon Says, Exactly","3-6","Precision","Nothing","Only obey instructions given exactly right. Teaches that machines need precision."],
+["What Is Missing","3-6","Attention","Five objects, a cloth","Show five, cover, remove one. What went?"],
+["Animal Sorting","3-6","Classification","Drawings or toys","Sort by legs, then by where they live, then by size. Same objects, different rules."],
+["Step Counting","3-6","Estimation","Open ground","Guess how many steps to the tree. Then walk it and count."],
+["Colour Hunt","3-6","Attention","Nothing","Find seven blue things in two minutes."],
+["Stone Sequence","3-6","Sequencing","Stones","Lay three stones in an order. Child recreates it from memory."],
+["Loud and Quiet","3-6","Classification","Nothing","Name things. Child sorts them into loud or quiet. Then fast or slow."],
+["The Wrong Sandwich","3-6","Debugging","Bread, spread","Child instructs you to make it. You follow wrongly and hilariously. They fix the instructions."],
+["Shadow Shapes","3-6","Spatial","Sunlight","Make a shape with your hands. Child copies the shadow exactly."],
+["Same or Different","3-6","Comparison","Two similar objects","Name three things that are the same, three that differ."],
+["Line Up By Rule","3-6","Ordering","Children","Line up by height. Then by first letter of name. Then by shoe size."],
+["Count In Fives","5-8","Number sense","Stones","Group a big pile into fives before counting. Faster and more accurate."],
+["Grid Treasure","5-8","Coordinates","Chalk grid","Hide a stone under one square. Child guesses using row and column."],
+["Instruction Cards","5-8","Algorithms","Paper scraps","Write STEP, TURN, PICK UP on cards. Child arranges them to solve a route."],
+["Twenty Questions","5-8","Deduction","Nothing","Think of an object. Child narrows it with yes or no questions only."],
+["Odd One Out Walk","5-8","Classification","The street","Point at four things. Which does not belong, and why? Multiple right answers count."],
+["Guess My Rule","5-8","Rule inference","Any objects","Sort objects secretly. Child works out the rule from your examples alone."],
+["Human Loop","5-8","Loops","Open space","Give an instruction plus repeat four times. Child performs it. Then they write one for you."],
+["Sorting Race","5-8","Classification","Mixed beans or seeds","Two children, same pile. Who sorts by type fastest? Discuss the method that won."],
+["Map My Room","5-8","Spatial","Paper","Draw the room from above. Others must find a hidden object using the map."],
+["Broken Telephone","5-8","Data loss","Group of children","Whisper a message down the line. Compare start and end. This is data corruption."],
+["Yes-No Tree","5-8","Decision trees","Paper","Draw a chart of yes or no questions that identifies any animal in three steps."],
+["Traffic Light Rules","5-8","If-then","Three coloured cards","Hold up a colour. Child performs the matching action. Speed it up."],
+["Beat the Estimate","5-8","Estimation","A jar of seeds","Everyone guesses. Then count. Closest wins. Play weekly and watch guesses improve."],
+["Pattern Clap-Stomp","5-8","Patterns","Body","Clap-stomp-clap-stomp. Child continues. Then invents a three-beat pattern."],
+["Sort the Washing","5-8","Classification","Real washing","A genuinely useful chore that is also a sorting exercise. Change the rule each time."],
+["Treasure Instructions","5-8","Algorithms","Paper, a hidden object","Write instructions for a friend to find it. If they fail, the instructions were wrong, not the friend."],
+["Which Is Heavier","5-8","Estimation","Household items","Guess before lifting. Keep score of who guesses better."],
+["Shopping List Memory","5-8","Memory","Nothing","Say five items. Child repeats. Add one each round until it breaks."],
+["Draw What I Say","5-8","Precise language","Paper","Describe a simple picture without naming it. They draw from your words alone."],
+["Backwards Day","5-8","Reversal","Nothing","Give a sequence. Child performs it in reverse order."],
+["Count The Vehicles","5-8","Data collection","Roadside, notebook","Tally vehicle types for ten minutes. Which was most common? That is a dataset."],
+["Rule Breaker","5-8","Rule inference","Objects","Sort a pile by a rule, but slip in one wrong item. Child must find it."],
+["Left, Right, Blindfold","5-8","Sequencing","Cloth","Guide a blindfolded partner across the room by instruction only. Safety first."],
+["Story Order","5-8","Sequencing","Paper strips","Write a five-step story, cut it up, shuffle. Child reorders it."],
+["Bean Bar Chart","7-11","Data","Beans, paper","Survey ten people on a favourite. Lay beans in columns. Read the answer off the shape."],
+["Sorting Algorithm Race","7-11","Algorithms","Numbered cards","Sort by swapping neighbours only. Count the swaps. Then find a faster method."],
+["Binary Search","7-11","Algorithms","Numbers 1 to 100","Think of a number. Child finds it by halving each time. Seven guesses is enough."],
+["The Biased Basket","7-11","AI bias","Two baskets, fruit","Fill the teaching basket with only green mangoes. Then test with a yellow one. Discuss why it failed."],
+["Flowchart My Morning","7-11","Algorithms","Paper","Draw the full decision chart of getting ready, including the if-it-is-raining branch."],
+["Cipher Notes","7-11","Encoding","Paper","Shift every letter by three. Write a secret note. Partner decodes it."],
+["Binary Fingers","7-11","Binary","Hands","Fingers as 1, 2, 4, 8, 16. Count to 31 on one hand. Children love this one."],
+["Pixel Grid Drawing","7-11","Images as data","Squared paper","Fill squares to make a picture. That is exactly how a screen works."],
+["Sensor Body","7-11","Sensors","Nothing","Name every sense you have. Which machine has the same one? Which does a phone have?"],
+["Human Sorting Network","7-11","Parallel processing","Chalk lines, children","Children walk lines, compare at each meeting, swap if out of order. They emerge sorted."],
+["Bug Hunt","7-11","Debugging","Written instructions","Write instructions for a task with one deliberate error. Child finds it before running."],
+["Weather Diary","7-11","Data","Notebook","Record weather daily for a month. Find the pattern. Predict next week. Check yourself."],
+["The Recommendation Game","7-11","Algorithms","Paper","Ask three friends their favourite songs. Recommend one to a fourth. Explain your reasoning."],
+["Balance Puzzle","7-11","Logic","Stones, a stick","Find the one heavier stone from eight, using two weighings."],
+["Category Chain","7-11","Classification","Nothing","Name something. Next person names something sharing a property. Say which property."],
+["Map Route Planner","7-11","Optimisation","Hand-drawn map","Five errands, one town. Find the shortest route. Compare answers."],
+["Tally and Predict","7-11","Statistics","Coin or bottle top","Flip fifty times, tally. Does it come out even? Why not exactly?"],
+["Instruction Golf","7-11","Efficiency","Chalk grid","Solve the maze in the fewest instructions. Loops count as one."],
+["True, False, Depends","7-11","Logic","Nothing","Read statements. Sort into three piles. The depends pile is the interesting one."],
+["Build a Chatbot on Paper","7-11","AI limits","Paper","Write rules for answering ten questions. Try to break your own bot. Everyone can."],
+["Pass the Data","7-11","Networks","Group, paper","Pass a message via three people who may only pass paper. Time it. Add a rule that one is unreliable."],
+["Guess the Animal Tree","7-11","Decision trees","Paper","Build a question tree identifying twenty animals. Test it on someone."],
+["Shadow Clock","7-11","Measurement","Stick, ground","Mark the shadow hourly. Build a working sundial. Compare with a phone clock."],
+["Fair Split","7-11","Algorithms","Anything shareable","Divide unevenly-sized items fairly between three people. Argue the method."],
+["Symbol Language","7-11","Abstraction","Paper","Invent ten symbols for common actions. Write a message using only symbols."],
+["Reverse Engineer","7-11","Analysis","A broken pen or torch","Take it apart. Draw how it worked. Rebuild it."],
+["Count The Steps","7-11","Complexity","Nothing","Count steps to find a name in a list of ten, then a hundred. Discuss the growth."],
+["Traffic Simulation","7-11","Systems","Chalk roads, toys","Set rules for cars at a junction. Run it. Improve the rules when it jams."],
+["The Honest Label","7-11","Data ethics","Paper","Write a truthful label for a product. Then a misleading one. Discuss the difference."],
+["Grid Battleship","7-11","Coordinates","Paper","Classic grid guessing. Teaches coordinates and search strategy."],
+["Memory Palace","9-14","Memory","Nothing","Place ten items mentally along a walk home. Recall them in order the next day."],
+["Sorting By Two Rules","9-14","Multi-attribute","Objects","Sort by size AND colour at once, into a grid. That is a two-dimensional dataset."],
+["Break My Cipher","9-14","Cryptanalysis","Paper","Encode a long message. Partner cracks it by letter frequency."],
+["Algorithm Auction","9-14","Efficiency","Paper","Two teams write instructions for the same task. Fewest steps that still works wins."],
+["Fake or Real","9-14","Media literacy","Printed images or headlines","Sort into real and suspicious. Justify each. Reveal answers and discuss what fooled you."],
+["The Trolley Problem, Farm Edition","9-14","Ethics","Nothing","An automatic gate can save the crop or the goat, not both. Who decides? Who is responsible?"],
+["Build a Ledger","9-14","Data","Notebook","Track a week of household spending. Find the largest surprise."],
+["Rock Paper Scissors Bot","9-14","Prediction","Paper","Record fifty rounds. Find your opponent's pattern. Exploit it. This is machine learning by hand."],
+["Queue Simulation","9-14","Systems","Stopwatch","Time a real queue. Model one long queue versus three short. Which is fairer?"],
+["Compression Challenge","9-14","Compression","Paper","Rewrite a paragraph in half the words with no meaning lost. Compare methods."],
+["Search Engine By Hand","9-14","Search","Twenty index cards","Index the cards by keyword. Race someone searching unindexed cards."],
+["Error Correction","9-14","Data integrity","Paper","Add a check digit to a number. Partner corrupts one digit. Detect it."],
+["Design a Sensor","9-14","Engineering","Junk materials","Design a device to warn when a water tank is full. No electronics, just a mechanism."],
+["Weighted Choice","9-14","Decision making","Paper","Choose between three real options by scoring criteria and weighting them. Then check your gut."],
+["Interview a Machine","9-14","AI limits","Nothing","One child answers only from a fixed rulebook. Others try to expose that it does not understand."],
+["Probability Market","9-14","Probability","Bottle tops as stakes","Bet on outcomes of a dice roll. Discover why the house always wins."],
+["Debug the Recipe","9-14","Debugging","A written recipe","Introduce three subtle errors. Partner finds them before cooking."],
+["Network Handshake","9-14","Networks","Group","Everyone must greet everyone. How many handshakes for ten people? Predict, then count."],
+["Teach the Younger One","9-14","Mastery","Any earlier game","Run a full session for a younger child. Write down what confused them."],
+["Design Your Own Game","9-14","Creation","Paper","Invent a game teaching one of the four skills. Test it on three people. Fix what breaks."],
+["The Village Dataset","9-14","Data","Notebook","Survey thirty households on one question. Present findings honestly, including what you could not know."]
+];
+function renderOff(list){
+  document.getElementById('offList').innerHTML=list.map(function(g){
+    return '<div class="olist"><b>'+g[0]+'</b><div class="meta">AGES '+g[1]+' &middot; '+g[2].toUpperCase()+' &middot; '+g[3]+'</div><div class="txt">'+g[4]+'</div></div>';
+  }).join('')||'<p style="text-align:center;color:#888;padding:1rem">Nothing matched. Try another word.</p>';
+}
+renderOff(OFF);
+document.getElementById('offSearch').addEventListener('input',function(){
+  var q=this.value.toLowerCase().trim();
+  renderOff(q?OFF.filter(function(g){return g.join(' ').toLowerCase().indexOf(q)>-1;}):OFF);
+});
+
+bar();robot();
+</script>
+</body>
+</html>
