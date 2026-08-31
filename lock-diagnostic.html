@@ -1,0 +1,38 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Lock diagnostic</title>
+<style>body{font:15px/1.6 system-ui;margin:24px;max-width:760px}
+pre{background:#f4f1ec;padding:12px;border-radius:8px;white-space:pre-wrap;word-break:break-word}
+h2{margin:22px 0 6px;font-size:16px}.ok{color:#1a7a4c;font-weight:700}.bad{color:#b3261e;font-weight:700}</style>
+</head><body>
+<h1>Course lock diagnostic</h1>
+<p>This page does not redirect. It shows what course-lock.js sees.</p>
+<div id="out">Running...</div>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script>
+(async function(){
+  var o = document.getElementById('out');
+  function say(h, body, ok){
+    o.insertAdjacentHTML('beforeend','<h2>'+h+' <span class="'+(ok?'ok':'bad')+'">'+(ok?'OK':'PROBLEM')+'</span></h2><pre>'+
+      String(body).replace(/</g,'&lt;')+'</pre>');
+  }
+  o.innerHTML='';
+  if(!window.supabase){ say('1. Supabase SDK','Did not load from unpkg. Network or CSP blocked it.',false); return; }
+  say('1. Supabase SDK','loaded',true);
+  var c = window.supabase.createClient(
+    'https://lsvmykrentkbcdrzsaqj.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc');
+  var s = (await c.auth.getSession()).data.session;
+  if(!s || !s.user || !s.user.email){
+    say('2. Logged in session','NO SESSION. You are not logged in on this browser. The lock would redirect with ?locked=login',false);
+    return;
+  }
+  say('2. Logged in session','email: '+s.user.email+'\nuser id: '+s.user.id,true);
+  var r = await c.from('enrollments').select('id,course_id,status,user_email')
+           .eq('user_email', s.user.email).eq('course_id','pig-farming').eq('status','active').maybeSingle();
+  if(r.error){ say('3. Enrollment lookup (exact lock query)','ERROR: '+JSON.stringify(r.error,null,2),false); }
+  else if(!r.data){ say('3. Enrollment lookup (exact lock query)','No row returned. Row Level Security is hiding it, or the email case differs. The lock would redirect with ?locked=buy',false); }
+  else { say('3. Enrollment lookup (exact lock query)',JSON.stringify(r.data,null,2),true); }
+  var all = await c.from('enrollments').select('id,course_id,status,user_email');
+  say('4. Every enrollment row this login can read', all.error ? ('ERROR: '+JSON.stringify(all.error)) :
+      (all.data.length + ' row(s)\n' + JSON.stringify(all.data,null,2)), !all.error && all.data.length>0);
+})();
+</script></body></html>
