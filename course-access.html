@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Open your course - rise AFRICA skills</title>
+<style>
+:root{--ink:#1d1a16;--muted:#6f6759;--paper:#fbf8f3;--line:#e5ddd0;--brand:#8f3b1b;--accent:#256b4a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+header{background:#1d1a16;color:#f6f1e8;padding:14px 0}
+header .w{max-width:560px;margin:0 auto;padding:0 20px;font-weight:700;font-size:15px}
+header span{color:#e8a06a}
+main{max-width:560px;margin:0 auto;padding:34px 20px 60px}
+h1{font-size:24px;line-height:1.25;margin:0 0 10px}
+p{margin:0 0 14px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin:18px 0}
+label{display:block;font-weight:600;font-size:14px;margin:0 0 6px}
+input[type=email]{width:100%;padding:12px 13px;font:inherit;border:1px solid var(--line);border-radius:10px;background:#fff}
+button{width:100%;margin-top:12px;padding:13px;font:inherit;font-weight:700;color:#fff;background:var(--brand);border:0;border-radius:10px;cursor:pointer}
+button:disabled{opacity:.55;cursor:default}
+.msg{margin-top:14px;padding:12px 14px;border-radius:10px;font-size:15px;display:none}
+.msg.show{display:block}
+.ok{background:#e9f2ed;border:1px solid var(--accent);color:#14472f}
+.bad{background:#fdeceb;border:1px solid #c2513f;color:#7d2a1e}
+.note{font-size:13.5px;color:var(--muted)}
+.btnlink{display:block;text-align:center;background:var(--accent);color:#fff;text-decoration:none;padding:13px;border-radius:10px;font-weight:700;margin-top:10px}
+a{color:var(--brand)}
+</style>
+</head>
+<body>
+<header><div class="w">rise <span>AFRICA</span> skills</div></header>
+<main>
+  <h1>Open the course you paid for</h1>
+  <p>Enter the same email address you used when you paid. We will send you a link that logs you straight in. No password needed.</p>
+  <div class="card" id="signedin" style="display:none">
+    <p><strong>You are already signed in as <span id="who"></span>.</strong></p>
+    <a class="btnlink" id="go" href="#">Open my course</a>
+    <p class="note" style="margin-top:12px">Not you? <a href="#" id="out">Sign out</a></p>
+  </div>
+  <div class="card" id="form">
+    <label for="email">The email you paid with</label>
+    <input type="email" id="email" placeholder="you@example.com" autocomplete="email">
+    <button id="send">Email me my course link</button>
+    <div class="msg" id="msg"></div>
+    <p class="note" style="margin-top:14px">The link lasts about an hour. If it does not arrive within a few minutes, check your spam folder. The address must match the one on your payment, or we cannot find your enrolment.</p>
+  </div>
+  <p class="note">Paid but this still does not work? Message us on WhatsApp on +263 77 300 1353 with the email you paid with and we will sort it by hand.</p>
+</main>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script>
+(function () {
+  var URL_ = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
+  var KEY_ = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc';
+  function slug(){ var m=/[?&]course=([a-z0-9-]+)/i.exec(window.location.search); return m?m[1]:'pig-farming'; }
+  function target(){ var s=slug(); return s==='pig-farming' ? '/pig-farming-lessons.html' : '/'+s+'-module-1.html'; }
+  function show(el,cls,text){ el.className='msg show '+cls; el.textContent=text; }
+  var msg=document.getElementById('msg'), btn=document.getElementById('send');
+  if(!window.supabase){ show(msg,'bad','Could not load the login system. Check your connection and reload.'); btn.disabled=true; return; }
+  var sb=window.supabase.createClient(URL_,KEY_);
+  sb.auth.getSession().then(function(r){
+    var s=r.data.session;
+    if(s&&s.user&&s.user.email){
+      document.getElementById('who').textContent=s.user.email;
+      document.getElementById('go').href=target();
+      document.getElementById('signedin').style.display='block';
+      document.getElementById('form').style.display='none';
+    }
+  });
+  document.getElementById('out').addEventListener('click',function(e){ e.preventDefault(); sb.auth.signOut().then(function(){ window.location.reload(); }); });
+  btn.addEventListener('click',function(){
+    var email=(document.getElementById('email').value||'').trim();
+    if(!email||email.indexOf('@')<0){ show(msg,'bad','Please type the email address you paid with.'); return; }
+    btn.disabled=true; btn.textContent='Sending...';
+    sb.auth.signInWithOtp({ email:email, options:{ emailRedirectTo: window.location.origin + target() } })
+      .then(function(r){
+        if(r.error){ show(msg,'bad','Could not send the link: '+r.error.message); btn.disabled=false; btn.textContent='Email me my course link'; }
+        else { show(msg,'ok','Sent. Check '+email+' and click the link in the email. It opens your course.'); btn.textContent='Link sent'; }
+      });
+  });
+})();
+</script>
+</body>
+</html>
