@@ -1,10 +1,11 @@
-﻿(function () {
+(function () {
   const SUPABASE_URL = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc';
 
   document.documentElement.style.visibility = 'hidden';
 
   function getCourseSlug() {
+    if (window.RAS_COURSE_SLUG) return window.RAS_COURSE_SLUG;
     const file = window.location.pathname.split('/').pop().replace('.html', '');
     return file.replace(/-module-?\d+$/i, '');
   }
