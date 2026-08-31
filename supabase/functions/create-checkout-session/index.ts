@@ -74,7 +74,7 @@ serve(async (req: Request) => {
       line_items: [{
         price_data: {
           currency: currency || "usd",
-          product_data: { name: isGift ? courseName + " (Gift)" : courseName, tax_code: "txcd_10103001" },
+          product_data: { name: isGift ? courseName + " (Gift)" : courseName, tax_code: "txcd_10103001" }, tax_behavior: "inclusive",
           unit_amount: priceInCents,
         },
         quantity: 1,
@@ -96,5 +96,6 @@ serve(async (req: Request) => {
     });
   }
 });
+
 
 
