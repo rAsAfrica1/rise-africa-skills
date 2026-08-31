@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Steer Fattening - The Flagship Course | rise AFRICA skills</title>
+<meta name="description" content="Ten modules, sixty written lessons. Buy lean cattle, feed them safely, sell them finished. Real gain, intake and dressing figures for African conditions.">
+<style>
+:root{
+  --ink:#1d1a16; --ink-soft:#4a443c; --muted:#6f6759;
+  --paper:#fbf8f3; --card:#ffffff; --line:#e5ddd0;
+  --brand:#8f3b1b; --brand-soft:#f6ece5; --accent:#256b4a; --accent-soft:#e9f2ed;
+  --warn:#8a6d12; --warn-soft:#fbf3d9;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased}
+a{color:var(--brand)}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px}
+header.top{background:var(--ink);color:#f6f1e8;padding:14px 0}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-weight:700;letter-spacing:.02em;font-size:15px}
+.brand span{color:#e8a06a}
+header.top a{color:#e8d9c6;text-decoration:none;font-size:14px}
+header.top a:hover{color:#fff}
+.hero{background:linear-gradient(180deg,#2a241d,#3b332a);color:#f7f2e9;padding:38px 0 34px}
+.hero .kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#e8a06a;margin:0 0 10px}
+.hero h1{margin:0 0 10px;font-size:30px;line-height:1.25}
+.hero p{margin:0;color:#d9d0c2;max-width:60ch}
+.crumbs{font-size:13px;color:#b9ae9d;margin-bottom:14px}
+.crumbs a{color:#e8d9c6;text-decoration:none}
+main{padding:30px 0 60px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin:0 0 22px}
+h2{font-size:22px;margin:34px 0 12px;line-height:1.3}
+h3{font-size:18px;margin:0 0 6px}
+h4{font-size:15px;margin:18px 0 6px;color:var(--ink)}
+p{margin:0 0 12px}
+ul,ol{margin:0 0 12px;padding-left:22px}
+li{margin:0 0 6px}
+table{width:100%;border-collapse:collapse;margin:0 0 14px;font-size:14.5px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--brand-soft)}
+.lesson{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin:0 0 20px}
+.lesson-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+.lnum{background:var(--brand);color:#fff;font-size:12px;font-weight:700;border-radius:999px;
+  padding:3px 10px;letter-spacing:.04em;white-space:nowrap}
+.read{font-size:13px;color:var(--muted)}
+.objectives{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
+  padding:12px 14px;margin:14px 0 18px;font-size:14.5px}
+.objectives strong{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.objectives ul{margin:0;padding-left:18px}
+.body{margin-top:4px}
+.numbers{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin:18px 0}
+.num{background:var(--warn-soft);border:1px solid #eadfb8;border-radius:10px;padding:12px 14px}
+.num .k{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--warn);font-weight:700}
+.num .v{font-size:17px;font-weight:700;margin:3px 0}
+.num .n{font-size:12.5px;color:var(--muted);line-height:1.45}
+.action{border:1px dashed var(--brand);background:var(--brand-soft);border-radius:10px;padding:12px 14px;margin-top:16px;font-size:15px}
+.action strong{color:var(--brand)}
+.quiz .q{border-top:1px solid var(--line);padding-top:16px;margin-top:16px}
+.quiz .q:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.opts{list-style:none;padding:0;margin:8px 0 0}
+.opts li{margin:0 0 6px}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:9px;
+  padding:9px 12px;font:inherit;font-size:15px;cursor:pointer;color:var(--ink)}
+.opt:hover{border-color:var(--brand)}
+.opt.right{background:var(--accent-soft);border-color:var(--accent);font-weight:600}
+.opt.wrong{background:#fdeceb;border-color:#c2513f}
+.why{display:none;margin-top:8px;font-size:14.5px;color:var(--ink-soft);background:#f3efe8;border-radius:8px;padding:10px 12px}
+.why.show{display:block}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.mcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;text-decoration:none;color:inherit;display:block}
+.mcard:hover{border-color:var(--brand);box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.mcard .mn{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);font-weight:700}
+.mcard h3{margin:5px 0 6px;font-size:16.5px}
+.mcard p{font-size:13.5px;color:var(--muted);margin:0}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:26px;flex-wrap:wrap}
+.btn{display:inline-block;background:var(--brand);color:#fff;text-decoration:none;padding:11px 18px;border-radius:10px;font-weight:600;font-size:15px}
+.btn.ghost{background:transparent;color:var(--brand);border:1px solid var(--brand)}
+.note{font-size:13.5px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:24px 0 40px;font-size:13.5px;color:var(--muted)}
+.disclaim{background:#f3efe8;border-radius:10px;padding:14px 16px;font-size:13.5px;color:var(--ink-soft);margin-top:18px}
+.toc{font-size:14.5px}
+.toc a{display:block;padding:6px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.toc a:hover{color:var(--brand)}
+.done{font-size:12px;color:var(--accent);font-weight:700}
+.vgrid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:14px}
+.vcard{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+.vthumb{position:relative;display:block;width:100%;aspect-ratio:16/9;border:0;padding:0;margin:0;cursor:pointer;
+  background:#111 center/cover no-repeat;overflow:hidden}
+.vthumb img{width:100%;height:100%;object-fit:cover;display:block}
+.vthumb iframe{width:100%;height:100%;border:0;display:block}
+.vthumb::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.18)}
+.vthumb[data-on]::after{display:none}
+.vplay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;
+  width:54px;height:38px;border-radius:9px;background:rgba(20,20,20,.82);display:flex;align-items:center;justify-content:center}
+.vthumb[data-on] .vplay{display:none}
+.vplay span{display:block;width:0;height:0;border-left:15px solid #fff;border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:3px}
+.vthumb:hover .vplay{background:#c4302b}
+.vmeta{padding:11px 13px}
+.vmeta .vt{font-weight:600;font-size:14.5px;line-height:1.35;margin:0 0 4px}
+.vmeta .va{font-size:12.5px;color:var(--muted);margin:0 0 6px}
+.vmeta .vw{font-size:13px;color:var(--ink-soft);margin:0}
+.vnote{background:#f3efe8;border-radius:8px;padding:11px 13px;font-size:13.5px;color:var(--ink-soft);margin:0}
+@media(max-width:560px){.hero h1{font-size:24px}.lesson{padding:18px}}
+</style>
+</head>
+<body>
+<div style="background:#256b4a;color:#fff;padding:14px 16px;text-align:center;font:600 15px/1.4 system-ui,sans-serif"><a href="/course-access.html?course=steer-fattening" style="color:#fff;text-decoration:underline">Already paid? Open your course here</a></div>
+<header class="top"><div class="wrap">
+<div class="brand">rise <span>AFRICA</span> skills</div>
+<nav><a href="index.html">All courses</a></nav>
+</div></header>
+<section class="hero"><div class="wrap">
+<p class="kicker">Flagship course</p>
+<h1>Steer Fattening - The Complete Course</h1>
+<p>Ten modules. Sixty written lessons. Ten knowledge checks. A full costed batch plan as the final project.
+Buy lean cattle, feed them safely, and sell them finished.</p>
+</div></section>
+<main><div class="wrap">
+
+<div class="disclaim"><strong>Iron-Clad Price Check.</strong> Before you buy cattle, feed, or build a pen, call
+three suppliers and three buyers and compare. Prices, cattle availability and grading schemes vary widely between
+countries and seasons. This course teaches the method and the real biology. You confirm the local numbers.</div>
+
+<div class="card">
+<h3>What this course is</h3>
+<p>Fattening is a short-cycle business: you buy a lean animal, feed it hard for roughly three to four months,
+and sell it finished. It needs less land and less skill than breeding, and it returns your money faster - but
+the margin lives or dies on feed cost and on not killing cattle during the switch to a high-concentrate diet.</p>
+<p class="note">These are <strong>written</strong> lessons, not video lessons. Approximately 38,000 words of teaching
+text, plus checklists, tables, ten knowledge checks and a final costed batch plan. Lifetime access.</p>
+</div>
+
+<h2>The numbers this course is built on</h2>
+<div class="card"><ul>
+<li>A finishing period commonly runs <strong>90 to 120 days</strong>, sometimes to 150.</li>
+<li>Average daily gain on a well balanced ration commonly runs <strong>1.0 to 1.5 kg per day</strong>.</li>
+<li>Feed conversion commonly runs roughly <strong>6 to 10 kg of dry matter per kg of gain</strong>.</li>
+<li>Cattle must be stepped onto concentrate gradually over about <strong>14 to 21 days</strong>, or they risk acidosis.</li>
+<li>Dressing percentage commonly runs <strong>50 to 58 percent</strong> - so live weight and carcass weight prices are never directly comparable.</li>
+<li>Ticks and tick-borne disease are a first-rank regional threat. Dipping on a strict schedule is not optional.</li>
+<li><strong>Medicine withdrawal periods must be observed before slaughter</strong>, or the meat is unsafe and can be condemned.</li>
+</ul>
+<p class="note">Figures are ranges from published beef research and African feedlot and smallholder studies. Your
+cattle, feed and management will move them. Grading schemes, movement permits and slaughter rules differ by
+country - confirm yours with your vet or livestock officer.</p></div>
+
+<h2>The ten modules</h2>
+<div class="card"><div class="mn" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);font-weight:700">Module 1 &middot; 6 lessons</div>
+<h3 style="margin:5px 0 8px">The Business of Steer Fattening</h3>
+<p>Steer fattening is a short-cycle trading and feeding business: you buy a lean animal, add weight and condition over roughly 90 to 120 days, and sell it into a better market. This module shows you how the money moves, how much working capital one batch really needs, how to size your first batch so a mistake does not end your business, and the four records that tell you whether you made money or only felt busy.</p>
+<h4>What you will be able to do</h4><ul>
+<li>You will be able to explain the difference between a fattening business and a breeding herd, and say which one your capital suits.</li>
+<li>You will be able to draw your own cash cycle from purchase day to sale day and identify the weeks when you have no incoming money.</li>
+<li>You will be able to build a working capital estimate for one batch using your own phoned-in local prices.</li>
+<li>You will be able to choose a first batch size that matches your cash, feed supply, pen space and labour.</li>
+<li>You will be able to calculate margin per head and margin per day, and tell the difference between them.</li>
+<li>You will be able to keep the four core records - animal, feed, money, health - in a simple book from day one.</li>
+</ul><h4>The six lessons</h4><ol>
+<li>What Fattening Actually Is, and Why It Suits Small Capital</li>
+<li>The Cash Cycle: Where Your Money Sits and When It Comes Back</li>
+<li>Working Out Your Capital Requirement</li>
+<li>Choosing Your First Batch Size</li>
+<li>Margin Per Head and Margin Per Day</li>
+<li>The Four Records That Decide Whether You Made Money</li>
+</ol>
+<p class="note"><strong>Capstone piece:</strong> Produce a one-page batch plan for your own situation: your batch size justified under all four limits, your per-head capital estimate built from three dated local quotes per cost line, and your break-even cost of gain per kilogram. Set up your four record books before you buy a single animal.</p></div>
+<div class="card"><div class="mn" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);font-weight:700">Module 2 &middot; 6 lessons</div>
+<h3 style="margin:5px 0 8px">Buying Store Cattle</h3>
+<p>Most of the profit in a fattening batch is decided on the day you buy, before a single kilogram of feed is eaten. This module teaches you which breeds and crosses in the region actually respond to a finishing ration, how to age an animal by its teeth, how to score body condition and frame, how to walk a market and reject the animals that will cost you money, and how to move stock legally and safely so it arrives ready to eat.</p>
+<h4>What you will be able to do</h4><ul>
+<li>You will be able to name the main breed types available in your region and say which suit a short finishing period.</li>
+<li>You will be able to age cattle by dentition and explain why age matters for feed conversion.</li>
+<li>You will be able to score body condition on a 1 to 5 or 1 to 9 scale and judge frame size independently of fat.</li>
+<li>You will be able to run a structured 10-point inspection on a store animal before bidding.</li>
+<li>You will be able to spot signs of illness and the warning signs of stolen or undocumented stock.</li>
+<li>You will be able to plan transport and an arrival protocol that reduces shrink and sickness.</li>
+</ul><h4>The six lessons</h4><ol>
+<li>Breeds and Crosses: What Actually Finishes Well in the Region</li>
+<li>Age and Dentition: Reading the Mouth</li>
+<li>Frame Size and Body Condition Scoring</li>
+<li>The Ten Point Inspection: Judging a Store Animal</li>
+<li>Avoiding Sick Stock and Stolen Stock</li>
+<li>Transport and Arrival</li>
+</ol>
+<p class="note"><strong>Capstone piece:</strong> Attend one market or farm sale as an observer only, with no money to spend. Run the ten point inspection and dentition check on at least five animals, score them for frame and condition, write down the price you would have paid and why, then compare your figure to what each animal actually sold for.</p></div>
+<div class="card"><div class="mn" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);font-weight:700">Module 3 &middot; 6 lessons</div>
+<h3 style="margin:5px 0 8px">Pens, Water, Handling and Site Layout</h3>
+<p>A fattening pen is a machine for converting feed into weight, and every fault in it costs you kilograms. This module covers how much space each animal needs to lie down and to eat, how to get water right when water is the most limiting input of all, how shade and drainage protect gain in a hot climate, how to build a crush that lets one person work safely, and how to phase the whole build so you spend on the things that pay first.</p>
+<h4>What you will be able to do</h4><ul>
+<li>You will be able to size a pen correctly for your batch on your surface type.</li>
+<li>You will be able to calculate trough length for both restricted and free choice feeding.</li>
+<li>You will be able to plan water supply, storage and trough space for hot weather demand.</li>
+<li>You will be able to design shade and drainage that protect intake and keep animals clean.</li>
+<li>You will be able to lay out a simple race and crush that one person can work safely.</li>
+<li>You will be able to phase your building spend so the highest return items come first.</li>
+</ul><h4>The six lessons</h4><ol>
+<li>Pen Space Per Head and Pen Layout</li>
+<li>Feed Trough Design and Bunk Space</li>
+<li>Water: The Input That Limits Everything</li>
+<li>Shade, Drainage and Manure Management</li>
+<li>A Simple Race and Crush for Safe Handling</li>
+<li>Phased Building on a Small Budget</li>
+</ol>
+<p class="note"><strong>Capstone piece:</strong> Draw your yard to scale on one sheet of paper: pen with its area per head marked, trough length calculated for your batch, water points, shade footprint, direction of slope and drainage, and the position of a collecting pen, race and crush. Mark each item Phase 1, 2 or 3 and price the Phase 1 items from three local quotes.</p></div>
+<div class="card"><div class="mn" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);font-weight:700">Module 4 &middot; 6 lessons</div>
+<h3 style="margin:5px 0 8px">Feeds and Rations for Fattening</h3>
+<p>This module teaches you to think about feed the way a nutritionist does: in dry matter, in energy and protein, and in cost per unit of nutrient rather than cost per bag. You will learn the roughages and concentrates available across the region, how to judge them, how to read a feed label, and how to balance a workable finishing ration by hand. It closes with the safe use of urea and a clear list of what must never enter a cattle ration.</p>
+<h4>What you will be able to do</h4><ul>
+<li>You will be able to convert any feed between as fed weight and dry matter and explain why it matters.</li>
+<li>You will be able to estimate dry matter intake for a pen from average body weight.</li>
+<li>You will be able to judge roughage quality by look, feel, smell and shake, and set a safe minimum roughage level.</li>
+<li>You will be able to compare protein feeds on cost per kg of crude protein using your own quoted prices.</li>
+<li>You will be able to read a commercial feed label and identify NPN, mineral balance and withdrawal periods.</li>
+<li>You will be able to balance a simple two feed ration with the Pearson square and convert it into daily scoops.</li>
+</ul><h4>The six lessons</h4><ol>
+<li>Energy and Protein: What a Fattening Steer Actually Needs</li>
+<li>Roughages: Stover, Hay, Silage and Sugarcane Tops</li>
+<li>Concentrates: Grain, Bran, Oilseed Cake, Molasses and Brewers Grains</li>
+<li>Minerals, Salt, Water and How to Read a Feed Label</li>
+<li>Balancing a Simple Ration by Hand</li>
+<li>Urea, NPN and What Never to Feed</li>
+</ol>
+<p class="note"><strong>Capstone piece:</strong> Build a complete written ration for your own cattle at their current average weight: intake target, roughage share, Pearson square working, mineral inclusion, and the as fed conversion table. Attach three supplier quotes and your cost per kg of crude protein calculation.</p></div>
+<div class="card"><div class="mn" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);font-weight:700">Module 5 &middot; 6 lessons</div>
+<h3 style="margin:5px 0 8px">Starting Cattle Safely: The Adaptation Period</h3>
+<p>The first three weeks decide most of the profit or loss in a fattening cycle. This module covers the arrival routine, quarantine and health processing, the 14 to 21 day step-up onto a high concentrate ration, and how to recognise and prevent acidosis and bloat. It ends with daily bunk management and an honest look at what a botched transition actually costs.</p>
+<h4>What you will be able to do</h4><ul>
+<li>You will be able to run a correct arrival routine of rest, water and hay before any concentrate is fed.</li>
+<li>You will be able to set up quarantine and a health processing routine, and say when a vet is required.</li>
+<li>You will be able to write and follow a 14 to 21 day step-up schedule with defined step diets.</li>
+<li>You will be able to recognise acute and subacute acidosis and act correctly on each.</li>
+<li>You will be able to tell frothy bloat from free gas bloat and follow the correct emergency sequence.</li>
+<li>You will be able to score bunks daily and use the score to decide the next feed delivery.</li>
+</ul><h4>The six lessons</h4><ol>
+<li>The First 24 Hours: Rest, Water and Hay</li>
+<li>Quarantine and the Arrival Health Routine</li>
+<li>The Step-Up: Moving to a High Concentrate Ration Over 14 to 21 Days</li>
+<li>Acidosis: Recognising It, Stopping It, Preventing It</li>
+<li>Bloat and the Other Transition Disorders</li>
+<li>Bunk Management: Reading Leftover Feed</li>
+</ol>
+<p class="note"><strong>Capstone piece:</strong> Write and post a complete 21 day starting plan for your next purchase: arrival checklist, quarantine and health processing schedule with your vet's advice, the step-up table with ingredient weights per step, and a daily record sheet with bunk score, manure score and intake columns.</p></div>
+<div class="card"><div class="mn" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);font-weight:700">Module 6 &middot; 6 lessons</div>
+<h3 style="margin:5px 0 8px">Daily Management and Tracking Gain</h3>
+<p>This module turns your fattening pen into a managed system rather than a place where cattle are fed. You will build a fixed daily routine, learn to read the feed bunk and adjust feed with confidence, keep water above suspicion, and measure gain with a heart girth tape so you know at any point whether the cycle is making money. It also covers spotting the animal that has gone off feed, and managing heat, mud and manure.</p>
+<h4>What you will be able to do</h4><ul>
+<li>You will be able to run a fixed daily routine covering feeding, pen walking, water checks and record keeping.</li>
+<li>You will be able to feed roughage and concentrate in the correct order and make ration changes without causing digestive upsets.</li>
+<li>You will be able to score a feed bunk and use that score to decide today's feed amount.</li>
+<li>You will be able to check, clean and size water troughs so water is never the factor limiting gain.</li>
+<li>You will be able to estimate liveweight with a heart girth tape and calculate average daily gain over a sensible interval.</li>
+<li>You will be able to identify an animal that has gone off feed, and recognise and act on heat stress and muddy pen conditions.</li>
+</ul><h4>The six lessons</h4><ol>
+<li>The Daily Routine and Why Consistency Matters</li>
+<li>Feeding Times, Feeding Order and Safe Ration Changes</li>
+<li>Reading the Feed Bunk and Adjusting Feed</li>
+<li>Water, Troughs and Trough Hygiene</li>
+<li>Estimating Weight with a Girth Tape and Calculating ADG</li>
+<li>Off-Feed Animals, Heat Stress and Pen Conditions</li>
+</ol>
+<p class="note"><strong>Capstone piece:</strong> Run your pen for seven consecutive days on a written routine: two fixed feeding times, two pen walks, a daily bunk score, a daily water check and a signed record book entry. At the end of the week, tape five animals and file the sheet as your baseline.</p></div>
+<div class="card"><div class="mn" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);font-weight:700">Module 7 &middot; 6 lessons</div>
+<h3 style="margin:5px 0 8px">Health, Parasites and Disease in Fattening Cattle</h3>
+<p>Health problems in a fattening pen are concentrated in the first month, and most of them are preventable or cheap to fix if you catch them early. This module gives you an arrival and quarantine protocol, a working knowledge of ticks and tick-borne disease, parasite control, lameness, and the feeding-related emergencies of bloat and acidosis. It ends with your legal duties: reporting notifiable disease, movement permits, and observing drug withdrawal periods before slaughter.</p>
+<h4>What you will be able to do</h4><ul>
+<li>You will be able to run an arrival and quarantine protocol that finds disease in the first two weeks.</li>
+<li>You will be able to apply a disciplined tick control schedule and recognise the main tick-borne diseases.</li>
+<li>You will be able to plan parasite and liver fluke treatment and dose it correctly by weight.</li>
+<li>You will be able to recognise bloat, acidosis and respiratory disease and take the right first action.</li>
+<li>You will be able to find and manage lameness early and remove the pen conditions that cause it.</li>
+<li>You will be able to report notifiable disease correctly, handle movement paperwork, and calculate a safe slaughter date from label withdrawal periods.</li>
+</ul><h4>The six lessons</h4><ol>
+<li>Arrival Health Protocol and Quarantine</li>
+<li>Ticks and Tick-Borne Diseases</li>
+<li>Worms, Liver Fluke and Deworming</li>
+<li>Bloat, Acidosis and Respiratory Disease</li>
+<li>Lameness and Foot Problems</li>
+<li>Notifiable Disease, Permits, Withdrawal Periods and Your Health Calendar</li>
+</ol>
+<p class="note"><strong>Capstone piece:</strong> Write a one-page health plan for your next batch: quarantine pen and dates, arrival processing list, the local dipping interval confirmed by your veterinary office, your parasite plan with withdrawal periods copied from the labels, your vet's number, and the reporting number for notifiable disease.</p></div>
+<div class="card"><div class="mn" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);font-weight:700">Module 8 &middot; 6 lessons</div>
+<h3 style="margin:5px 0 8px">Records, Costing and Feed Conversion</h3>
+<p>Fattening is a margin business, not a cattle business. This module teaches the small set of records that tell you whether a batch is making or losing money, how to work out your true cost per kilogram of gain, how to calculate a break-even sale price that is honest about dressing percentage, and how to spot a losing batch in week three instead of on sale day.</p>
+<h4>What you will be able to do</h4><ul>
+<li>You will be able to keep the six records that actually change decisions, on paper, in under ten minutes a week.</li>
+<li>You will be able to weigh or estimate weight consistently and calculate average daily gain for a pen and for an individual animal.</li>
+<li>You will be able to calculate feed conversion in kilograms of dry matter per kilogram of gain and compare it against published ranges.</li>
+<li>You will be able to work out cost per kilogram of gain, including feed, purchase, health, labour and losses.</li>
+<li>You will be able to calculate a break-even sale price on a live weight basis and on a carcass weight basis, and explain why the two are not comparable.</li>
+<li>You will be able to use margin over feed cost to decide each month whether to sell an animal now or feed it on.</li>
+</ul><h4>The six lessons</h4><ol>
+<li>The Six Records That Change Decisions</li>
+<li>Weighing, Weight Estimation and Average Daily Gain</li>
+<li>Feed Conversion: Dry Matter In, Kilograms Out</li>
+<li>Cost Per Kilogram of Gain</li>
+<li>Break-Even Sale Price and the Dressing Percentage Trap</li>
+<li>Tracking a Batch and Spotting a Losing Batch Early</li>
+</ol>
+<p class="note"><strong>Capstone piece:</strong> Build a complete costing sheet for the pen you are feeding now: purchase cost, all costs to date, kilograms gained, cost per kg of gain, and break-even prices on both a live weight and a carcass weight basis across a 50 to 58 percent dressing range. Bring it to the next module.</p></div>
+<div class="card"><div class="mn" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);font-weight:700">Module 9 &middot; 6 lessons</div>
+<h3 style="margin:5px 0 8px">Marketing, Grading and Selling</h3>
+<p>The money in fattening is made on the day you sell, but it is decided in the weeks before. This module covers how to tell when an animal is actually finished, how fat cover is judged, the real difference between selling on live weight and carcass weight, how grading systems reward or punish you, and how to negotiate, transport and time a sale without giving away the margin you spent 100 days building.</p>
+<h4>What you will be able to do</h4><ul>
+<li>You will be able to assess fat cover and decide whether an animal is finished, under finished or over fed.</li>
+<li>You will be able to explain the difference between live weight and carcass weight selling and choose the basis that suits your animals.</li>
+<li>You will be able to find out how your local grading scheme works and what it pays for.</li>
+<li>You will be able to compare three buyer offers on a common basis before agreeing to anything.</li>
+<li>You will be able to negotiate from prepared numbers rather than from hope.</li>
+<li>You will be able to plan transport and marketing timing to limit shrink and catch demand peaks.</li>
+</ul><h4>The six lessons</h4><ol>
+<li>Knowing When an Animal Is Finished</li>
+<li>Live Weight Versus Carcass Weight Selling</li>
+<li>Grading and What Buyers Actually Pay For</li>
+<li>Finding Buyers and Comparing Offers Properly</li>
+<li>Negotiating With Butchers and Abattoirs</li>
+<li>Transport, Shrink and Timing the Sale</li>
+</ol>
+<p class="note"><strong>Capstone piece:</strong> Complete a buyer comparison sheet for your current or next batch: three real buyers phoned, each offer converted to a common live weight basis, deductions and payment terms listed, and your break-even, target and walk away prices written at the bottom.</p></div>
+<div class="card"><div class="mn" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);font-weight:700">Module 10 &middot; 6 lessons</div>
+<h3 style="margin:5px 0 8px">Scaling, Risk and Growing the Business</h3>
+<p>One good batch is luck. A business is a system that survives bad batches. This module covers staggering batches for steady cash flow, working capital and the real danger of credit, price and feed cost risk, theft and security, drought shocks, when hiring actually pays, and a realistic three year growth path built on reinvestment rather than borrowing.</p>
+<h4>What you will be able to do</h4><ul>
+<li>You will be able to design a staggered batch calendar that produces regular sale income.</li>
+<li>You will be able to calculate the working capital one batch cycle requires before you commit to it.</li>
+<li>You will be able to judge whether a credit offer is affordable using the cost of gain and cycle length.</li>
+<li>You will be able to name your main price and feed cost risks and put practical limits on each.</li>
+<li>You will be able to put in place basic theft prevention and drought contingency measures.</li>
+<li>You will be able to write a three year growth plan funded mainly from retained profit.</li>
+</ul><h4>The six lessons</h4><ol>
+<li>Batching and Staggering for Steady Cash Flow</li>
+<li>Working Capital and the Danger of Credit</li>
+<li>Price Risk and the Buy Low Sell High Trap</li>
+<li>Theft, Security and Loss Prevention</li>
+<li>Drought, Feed Price Shocks and Contingency</li>
+<li>Hiring Help and a Realistic Three Year Growth Path</li>
+</ol>
+<p class="note"><strong>Capstone piece:</strong> Final project: write a complete costed plan for one fattening batch from start to sale. Include the number and type of animals and your maximum buying price per kilogram, the ration and total dry matter required, expected ADG and FCR with the days on feed, full working capital with contingency and the month of peak cash need, cost per kilogram of gain, break-even prices on both a live weight and a carcass weight basis across a 50 to 58 percent dressing range, three named buyers with their price basis and deductions, the transport and shrink plan, the intended sale window and target price, and a one page contingency plan for theft, disease and a feed price shock.</p></div>
+
+<h2>Pricing</h2>
+<div class="grid">
+<div class="mcard"><div class="mn">Full course access</div><h3>$8.00</h3>
+<p>All 10 modules, 60 written lessons, quizzes and the final costed batch plan. Lifetime access.</p></div>
+<div class="mcard"><div class="mn">Course + Business Seed Record</div><h3>$10.00</h3>
+<p>Everything above plus a verifiable Business Seed Record with a unique number. This is a record of completion, not an accredited qualification.</p></div>
+<div class="mcard"><div class="mn">Print / Download / Share</div><h3>$3.50</h3>
+<p>High-resolution PDF of your record, print-ready and shareable.</p></div>
+</div>
+<p style="margin-top:18px">
+<a class="btn" href="index.html#courses">Enroll - $8.00</a>
+&nbsp;
+<a class="btn ghost" href="https://wa.me/263773001353?text=Hi%20rAs%2C%20I%20want%20to%20enroll%20in%20the%20Steer%20Fattening%20Course" rel="noopener" target="_blank">Enroll on WhatsApp</a>
+</p>
+
+<div class="card"><h3>Honest limits</h3>
+<p>This course teaches method, biology and costing. It does not replace a vet. Disease diagnosis, medicine choice
+and withdrawal periods belong with a qualified veterinarian, and notifiable diseases such as foot and mouth must be
+reported to your government veterinary officer. Movement permits, slaughter rules and carcass grading schemes differ
+by country and you must confirm your own.</p></div>
+
+</div></main>
+<footer><div class="wrap">
+<p>rise AFRICA skills is not a school, college, technical institute, vocational institute or university.
+We are a pointer: we help you find a real business idea and teach the practical method, and issue a Business
+Seed Record confirming you completed the work. We do not award accredited qualifications.</p>
+<p>rise AFRICA skills &middot; +263 77 300 1353 &middot; all@riseafricaskills.com &middot; riseafricaskills.com</p>
+</div></footer>
+</body></html>

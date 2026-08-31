@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Module 3: Pens, Water, Handling and Site Layout - Steer Fattening | rise AFRICA skills</title>
+<meta name="description" content="A fattening pen is a machine for converting feed into weight, and every fault in it costs you kilograms. This module covers how much space each animal needs to lie down and to eat, how to get water right when water is the most limiting input of all, how shade and drainage protect gain in a hot climate, how to build a crush that lets one person work safely, and how to phase the whole build so you spend on the things that pay first.">
+<style>
+:root{
+  --ink:#1d1a16; --ink-soft:#4a443c; --muted:#6f6759;
+  --paper:#fbf8f3; --card:#ffffff; --line:#e5ddd0;
+  --brand:#8f3b1b; --brand-soft:#f6ece5; --accent:#256b4a; --accent-soft:#e9f2ed;
+  --warn:#8a6d12; --warn-soft:#fbf3d9;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased}
+a{color:var(--brand)}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px}
+header.top{background:var(--ink);color:#f6f1e8;padding:14px 0}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-weight:700;letter-spacing:.02em;font-size:15px}
+.brand span{color:#e8a06a}
+header.top a{color:#e8d9c6;text-decoration:none;font-size:14px}
+header.top a:hover{color:#fff}
+.hero{background:linear-gradient(180deg,#2a241d,#3b332a);color:#f7f2e9;padding:38px 0 34px}
+.hero .kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#e8a06a;margin:0 0 10px}
+.hero h1{margin:0 0 10px;font-size:30px;line-height:1.25}
+.hero p{margin:0;color:#d9d0c2;max-width:60ch}
+.crumbs{font-size:13px;color:#b9ae9d;margin-bottom:14px}
+.crumbs a{color:#e8d9c6;text-decoration:none}
+main{padding:30px 0 60px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin:0 0 22px}
+h2{font-size:22px;margin:34px 0 12px;line-height:1.3}
+h3{font-size:18px;margin:0 0 6px}
+h4{font-size:15px;margin:18px 0 6px;color:var(--ink)}
+p{margin:0 0 12px}
+ul,ol{margin:0 0 12px;padding-left:22px}
+li{margin:0 0 6px}
+table{width:100%;border-collapse:collapse;margin:0 0 14px;font-size:14.5px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--brand-soft)}
+.lesson{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin:0 0 20px}
+.lesson-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+.lnum{background:var(--brand);color:#fff;font-size:12px;font-weight:700;border-radius:999px;
+  padding:3px 10px;letter-spacing:.04em;white-space:nowrap}
+.read{font-size:13px;color:var(--muted)}
+.objectives{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
+  padding:12px 14px;margin:14px 0 18px;font-size:14.5px}
+.objectives strong{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.objectives ul{margin:0;padding-left:18px}
+.body{margin-top:4px}
+.numbers{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin:18px 0}
+.num{background:var(--warn-soft);border:1px solid #eadfb8;border-radius:10px;padding:12px 14px}
+.num .k{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--warn);font-weight:700}
+.num .v{font-size:17px;font-weight:700;margin:3px 0}
+.num .n{font-size:12.5px;color:var(--muted);line-height:1.45}
+.action{border:1px dashed var(--brand);background:var(--brand-soft);border-radius:10px;padding:12px 14px;margin-top:16px;font-size:15px}
+.action strong{color:var(--brand)}
+.quiz .q{border-top:1px solid var(--line);padding-top:16px;margin-top:16px}
+.quiz .q:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.opts{list-style:none;padding:0;margin:8px 0 0}
+.opts li{margin:0 0 6px}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:9px;
+  padding:9px 12px;font:inherit;font-size:15px;cursor:pointer;color:var(--ink)}
+.opt:hover{border-color:var(--brand)}
+.opt.right{background:var(--accent-soft);border-color:var(--accent);font-weight:600}
+.opt.wrong{background:#fdeceb;border-color:#c2513f}
+.why{display:none;margin-top:8px;font-size:14.5px;color:var(--ink-soft);background:#f3efe8;border-radius:8px;padding:10px 12px}
+.why.show{display:block}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.mcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;text-decoration:none;color:inherit;display:block}
+.mcard:hover{border-color:var(--brand);box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.mcard .mn{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);font-weight:700}
+.mcard h3{margin:5px 0 6px;font-size:16.5px}
+.mcard p{font-size:13.5px;color:var(--muted);margin:0}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:26px;flex-wrap:wrap}
+.btn{display:inline-block;background:var(--brand);color:#fff;text-decoration:none;padding:11px 18px;border-radius:10px;font-weight:600;font-size:15px}
+.btn.ghost{background:transparent;color:var(--brand);border:1px solid var(--brand)}
+.note{font-size:13.5px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:24px 0 40px;font-size:13.5px;color:var(--muted)}
+.disclaim{background:#f3efe8;border-radius:10px;padding:14px 16px;font-size:13.5px;color:var(--ink-soft);margin-top:18px}
+.toc{font-size:14.5px}
+.toc a{display:block;padding:6px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.toc a:hover{color:var(--brand)}
+.done{font-size:12px;color:var(--accent);font-weight:700}
+.vgrid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:14px}
+.vcard{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+.vthumb{position:relative;display:block;width:100%;aspect-ratio:16/9;border:0;padding:0;margin:0;cursor:pointer;
+  background:#111 center/cover no-repeat;overflow:hidden}
+.vthumb img{width:100%;height:100%;object-fit:cover;display:block}
+.vthumb iframe{width:100%;height:100%;border:0;display:block}
+.vthumb::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.18)}
+.vthumb[data-on]::after{display:none}
+.vplay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;
+  width:54px;height:38px;border-radius:9px;background:rgba(20,20,20,.82);display:flex;align-items:center;justify-content:center}
+.vthumb[data-on] .vplay{display:none}
+.vplay span{display:block;width:0;height:0;border-left:15px solid #fff;border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:3px}
+.vthumb:hover .vplay{background:#c4302b}
+.vmeta{padding:11px 13px}
+.vmeta .vt{font-weight:600;font-size:14.5px;line-height:1.35;margin:0 0 4px}
+.vmeta .va{font-size:12.5px;color:var(--muted);margin:0 0 6px}
+.vmeta .vw{font-size:13px;color:var(--ink-soft);margin:0}
+.vnote{background:#f3efe8;border-radius:8px;padding:11px 13px;font-size:13.5px;color:var(--ink-soft);margin:0}
+@media(max-width:560px){.hero h1{font-size:24px}.lesson{padding:18px}}
+</style>
+</head>
+<body>
+<!-- Access gate: same lock used by every other rise AFRICA skills course page -->
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="/course-lock.js"></script>
+<header class="top"><div class="wrap">
+<div class="brand">rise <span>AFRICA</span> skills</div>
+<nav><a href="steer-fattening-lessons.html">Course contents</a> &nbsp;|&nbsp; <a href="index.html">Home</a></nav>
+</div></header>
+
+<section class="hero"><div class="wrap">
+<div class="crumbs"><a href="steer-fattening-lessons.html">Steer Fattening course</a> / Module 3 of 10</div>
+<p class="kicker">Module 3</p>
+<h1>Pens, Water, Handling and Site Layout</h1>
+<p>A fattening pen is a machine for converting feed into weight, and every fault in it costs you kilograms. This module covers how much space each animal needs to lie down and to eat, how to get water right when water is the most limiting input of all, how shade and drainage protect gain in a hot climate, how to build a crush that lets one person work safely, and how to phase the whole build so you spend on the things that pay first.</p>
+</div></section>
+<main><div class="wrap">
+<div class="card"><h3>What you will be able to do after this module</h3><ul>
+<li>You will be able to size a pen correctly for your batch on your surface type.</li>
+<li>You will be able to calculate trough length for both restricted and free choice feeding.</li>
+<li>You will be able to plan water supply, storage and trough space for hot weather demand.</li>
+<li>You will be able to design shade and drainage that protect intake and keep animals clean.</li>
+<li>You will be able to lay out a simple race and crush that one person can work safely.</li>
+<li>You will be able to phase your building spend so the highest return items come first.</li>
+</ul></div>
+<div class="card toc"><h3>The six lessons</h3>
+<a href="#lesson-1">1. Pen Space Per Head and Pen Layout <span class="read">&middot; 15 min</span></a>
+<a href="#lesson-2">2. Feed Trough Design and Bunk Space <span class="read">&middot; 15 min</span></a>
+<a href="#lesson-3">3. Water: The Input That Limits Everything <span class="read">&middot; 16 min</span></a>
+<a href="#lesson-4">4. Shade, Drainage and Manure Management <span class="read">&middot; 15 min</span></a>
+<a href="#lesson-5">5. A Simple Race and Crush for Safe Handling <span class="read">&middot; 16 min</span></a>
+<a href="#lesson-6">6. Phased Building on a Small Budget <span class="read">&middot; 15 min</span></a>
+</div>
+<article class="lesson" id="lesson-1">
+<div class="lesson-head"><span class="lnum">Lesson 3.1</span><span class="read">15 min</span></div>
+<h2 style="margin-top:6px">Pen Space Per Head and Pen Layout</h2>
+<div class="objectives"><strong>In this lesson</strong><ul>
+<li>Apply space standards for your surface type</li>
+<li>Explain how overcrowding reduces gain</li>
+<li>Lay out pen shape and gates for easy working</li>
+</ul></div>
+<div class="body"><p>Space is not comfort, it is production. A crowded animal eats less, lies down less, gets injured more, and shares more disease with its pen mates. Every one of those effects removes kilograms you have already paid to grow.</p><h4>How much space</h4><p>Published space standards vary by country, climate and surface, and you should check any code that applies where you are. Broadly, for finishing cattle:</p><table><tr><th>Surface</th><th>Approximate space per head</th><th>Notes</th></tr><tr><td>Earth or dirt pen, dry climate</td><td>Roughly 15 to 25 square metres</td><td>More space is needed because the surface must stay dry and self-draining</td></tr><tr><td>Earth pen, wet season or high rainfall</td><td>Toward the upper end and beyond</td><td>Mud destroys gain; drainage and area both matter</td></tr><tr><td>Concrete or paved pen</td><td>Roughly 3 to 5 square metres for the lying and standing area</td><td>Needs daily scraping and good drainage; less area but far more management</td></tr></table><p>Use these as planning ranges, not as legal minimums. If you are near the bottom of a range, you are relying on everything else being perfect.</p><h4>What overcrowding actually does</h4><ul><li><strong>Cuts lying time.</strong> Finishing cattle lie down for a large part of the day, and cattle that cannot lie comfortably eat less and gain less. Every animal must be able to lie down at the same time without lying in muck.</li><li><strong>Increases bullying.</strong> Dominant animals monopolise feed and water. In a crowded pen the timid animals in your batch simply do not get their share, and your batch finishes unevenly.</li><li><strong>Raises disease pressure.</strong> More animals per square metre means more manure, more flies, more moisture, more foot problems and faster spread of respiratory disease.</li><li><strong>Raises heat load.</strong> Crowded cattle in the sun cannot get air movement between them.</li></ul><h4>Pen shape</h4><p>Shape matters as much as area. A long, relatively narrow pen with the feed trough along one long side gives you plenty of trough frontage for the area. A square pen of the same area gives less trough line and forces animals to compete.</p><p>Practical layout points:</p><ol><li><strong>Feed from outside the pen.</strong> Put the trough on the fence line so you can fill it from a passage or a road without entering the pen. This is safer, faster, and keeps you from stirring the animals at every feed.</li><li><strong>Water at the opposite end or corner from feed</strong> in a large pen, so animals move and so a bully cannot hold both resources at once. In a small pen, keep water where it will not be fouled by feed and manure.</li><li><strong>Gates in corners, opening the way you want animals to travel.</strong> Cattle move along fence lines and into corners. A gate in the middle of a wall is much harder to work.</li><li><strong>Wide enough gates.</strong> A gate of about 2.5 to 3 metres reduces the risk of an animal jamming or bruising a hip as it passes.</li><li><strong>Slope the floor</strong> gently away from the feed and water so liquid drains away from where animals eat. Covered in Lesson 4.</li></ol><h4>Fencing that holds cattle</h4><ul><li>Strong corner and gate posts, well braced. Cattle test corners and gates first.</li><li>Height around 1.4 to 1.6 metres for finishing cattle, higher if you have flighty animals.</li><li>No sharp edges, protruding wire ends, loose nails or broken poles anywhere at animal height. Bruises are trimmed off the carcass and paid for by you.</li><li>Solid or visually solid sides where you want animals calm; cattle settle better when they cannot see activity outside.</li></ul><h4>Group by size, not just by number</h4><p>Where you have more than one pen, sort animals into groups of similar size and condition. A small animal penned with much larger ones eats last and gains least. Sorting is free and it evens out your finish dates, which makes selling as a lot far easier.</p><h4>Do not fill the pen to the number, fill it to the trough</h4><p>A common error is to calculate area, fill the pen to that number, and then discover the trough is too short. Area and trough frontage are separate constraints. Whichever gives the smaller number is your pen capacity, exactly as batch size is the smallest of the four limits from Module 1.</p></div>
+<div class="numbers">
+<div class="num"><div class="k">Earth pen space</div><div class="v">roughly 15 to 25 square metres per head</div><div class="n">More in high rainfall; check any national code that applies</div></div>
+<div class="num"><div class="k">Paved pen space</div><div class="v">roughly 3 to 5 square metres per head</div><div class="n">Requires daily scraping and good drainage</div></div>
+<div class="num"><div class="k">Fence height</div><div class="v">about 1.4 to 1.6 metres</div><div class="n">Higher for flighty cattle; strong braced corners matter most</div></div>
+<div class="num"><div class="k">Gate width</div><div class="v">about 2.5 to 3 metres</div><div class="n">Reduces jamming and hip bruising</div></div>
+</div>
+<div class="action"><strong>Do this today:</strong> Measure your intended pen in metres, calculate the area, and divide by the space standard for your surface. Compare that number with the batch size you chose in Module 1.</div>
+</article>
+<article class="lesson" id="lesson-2">
+<div class="lesson-head"><span class="lnum">Lesson 3.2</span><span class="read">15 min</span></div>
+<h2 style="margin-top:6px">Feed Trough Design and Bunk Space</h2>
+<div class="objectives"><strong>In this lesson</strong><ul>
+<li>Calculate trough length for your feeding system</li>
+<li>Build a trough at the right height and shape</li>
+<li>Read the trough to manage intake</li>
+</ul></div>
+<div class="body"><p>The feed trough, or bunk, is where your money physically turns into gain. Get its length, height and shape right and every animal in the batch eats its share. Get it wrong and the two or three timid animals in every group quietly underperform while you blame the ration.</p><h4>Trough length: the critical number</h4><p>How much trough each animal needs depends entirely on whether they all eat at once.</p><ul><li><strong>Restricted or once daily feeding</strong> - you deliver a measured amount and all animals rush to eat together. Every animal must have its own place at the trough at the same moment. Allow roughly <strong>0.6 to 0.75 metres per head</strong> for finishing cattle, more for large framed or horned animals.</li><li><strong>Free choice or ad libitum feeding</strong> - feed is always available and animals eat in shifts through the day. You can allow less, roughly <strong>0.2 to 0.3 metres per head</strong>, but only if feed genuinely never runs out. If the trough empties, you have created restricted feeding without the trough space for it, and the timid animals lose.</li></ul><p>For a beginner running a small batch, plan for the restricted figure. It costs a little more timber and it removes a whole class of problem.</p><h4>Worked calculation</h4><p>Five head, restricted feeding, at 0.7 metres per head requires 3.5 metres of trough. If the trough is accessible from both sides, 1.75 metres of trough serves both sides. If it is on a fence line, accessible from one side only, you need the full 3.5 metres.</p><h4>Trough height and shape</h4><ol><li><strong>Throat height</strong> - the height of the lip the animal reaches over - around <strong>0.5 metres above where the animal stands</strong> for mature cattle, lower for smaller stock. Too high and small animals cannot reach; too low and animals step in and foul the feed.</li><li><strong>Depth</strong> around 0.3 to 0.4 metres, so feed is contained but reachable.</li><li><strong>Rounded bottom.</strong> A U shaped or rounded floor lets animals clean the trough out and lets you sweep refusals. Square corners trap old feed, which ferments, moulds and puts animals off eating.</li><li><strong>Smooth, non absorbent surface.</strong> Concrete, plastered brick, or a half drum. Rough timber holds moisture and old feed.</li><li><strong>Stand the animals on firm, drained ground at the trough.</strong> The apron in front of the trough is the most heavily used ground in the pen. If it turns to mud, intake falls. Concrete or well compacted gravel here pays for itself.</li></ol><h4>Cheap troughs that work</h4><ul><li>Split steel drums cut lengthways and mounted on a timber or block frame. Grind off every sharp edge and cap the ends.</li><li>A simple in-situ concrete trough cast against the fence line, with a rounded bottom.</li><li>Plastered brick or block. Durable and easy to clean.</li><li>Avoid feeding on bare ground. Feed on the ground is trampled, fouled with manure, wasted, and is a route for worm and coccidia transmission. Waste of even a modest fraction of a ration is expensive when feed is the dominant cost.</li></ul><h4>Reading the trough</h4><p>The trough is your best daily instrument. Check it at the same time every day, before the morning feed.</p><ul><li><strong>Trough licked clean well before the next feed</strong> - the animals may be underfed. Consider a small increase, but only in steps.</li><li><strong>A thin scattering left</strong> - usually about right for restricted feeding.</li><li><strong>Substantial feed left over</strong> - something is wrong. Check for spoiled or mouldy feed, water failure, heat stress, or sick animals. Rising refusals are one of the earliest signs of trouble in a pen.</li><li><strong>Sorted feed</strong> - the fines left behind and the long or tasty pieces gone means animals are selecting. Chop roughage finer or add a little molasses or water to bind the mix so they cannot sort it.</li></ul><h4>Feed storage next to the pen</h4><p>Store feed dry, off the ground on pallets, away from rain and rodents, and out of direct sun. Mouldy feed is not just wasted money - some moulds produce toxins that harm cattle. Never feed visibly mouldy, hot or sour feed. If you suspect mycotoxin problems in a batch of grain or bran, discard it rather than risk the herd, and seek advice.</p><h4>Consistency</h4><p>Feed at the same times every day, in the same order, with the same mix. The rumen microbe population adjusts to a routine, and sudden changes in timing or ration composition upset it. A steady routine is one of the cheapest ways to protect feed conversion.</p></div>
+<div class="numbers">
+<div class="num"><div class="k">Trough space, restricted feeding</div><div class="v">about 0.6 to 0.75 m per head</div><div class="n">All animals eat at once, so each needs its own place</div></div>
+<div class="num"><div class="k">Trough space, ad libitum</div><div class="v">about 0.2 to 0.3 m per head</div><div class="n">Only valid if feed genuinely never runs out</div></div>
+<div class="num"><div class="k">Trough throat height</div><div class="v">about 0.5 m above standing surface</div><div class="n">Lower for smaller framed cattle</div></div>
+<div class="num"><div class="k">Trough depth</div><div class="v">about 0.3 to 0.4 m</div><div class="n">Rounded bottom so it can be cleaned out</div></div>
+</div>
+<div class="action"><strong>Do this today:</strong> Calculate the trough length your batch needs at 0.7 m per head for restricted feeding, then measure the trough you actually have. If it is short, note the shortfall in metres.</div>
+</article>
+<article class="lesson" id="lesson-3">
+<div class="lesson-head"><span class="lnum">Lesson 3.3</span><span class="read">16 min</span></div>
+<h2 style="margin-top:6px">Water: The Input That Limits Everything</h2>
+<div class="objectives"><strong>In this lesson</strong><ul>
+<li>Estimate daily water demand for your batch</li>
+<li>Size storage and trough space for hot weather</li>
+<li>Set a daily water checking routine</li>
+</ul></div>
+<div class="body"><p>Cattle can lose a large share of their body condition slowly through poor feeding. They can be ruined in a single hot day by a broken water pipe. Water is the cheapest input and the most limiting. In fattening it matters even more than on grazing, because dry concentrate rations carry very little moisture, so every litre must come from the trough.</p><h4>How much water</h4><p>Water intake in cattle rises sharply with air temperature, with dry matter intake, with body weight, and with the salt content of the ration. Published ranges for growing and finishing cattle commonly sit in the order of <strong>25 to 60 litres per head per day</strong>, and demand can go higher in very hot conditions. Do not plan to the middle of that range. Plan to the top of it, because the day you undersupply is the hot day when it does most damage.</p><p>The relationship worth remembering: <strong>water intake and feed intake move together</strong>. An animal that cannot drink enough will not eat enough, and an animal that does not eat does not gain. Water restriction is one of the fastest ways to destroy feed conversion.</p><h4>Sizing your supply</h4><ol><li>Take your batch number and multiply by the top of the range for your climate to get peak daily demand in litres.</li><li>Provide storage for at least <strong>two to three days</strong> of peak demand. Pumps break, power fails, boreholes are shared. Storage is your insurance.</li><li>Check that your delivery rate - the rate at which the trough refills - can keep up when the whole batch drinks in the same hour after the midday heat. A large trough that refills slowly still runs dry at the moment of peak demand.</li></ol><h4>Trough space and access</h4><ul><li>Allow roughly <strong>0.06 to 0.1 metres of water trough edge per head</strong> as a common planning guide for cattle with continuous access, with a practical minimum so that even a small group has a usable trough.</li><li>Never rely on a single water point for a group if you can avoid it. A dominant animal can guard one trough. Two smaller troughs beat one large one.</li><li>Trough water surface height around 0.5 to 0.8 metres above the standing surface for mature cattle, so animals drink comfortably without stepping in.</li><li>Place troughs on firm, drained ground, ideally on a concrete or gravel apron, because the area around water becomes the muddiest point in any pen.</li><li>Site troughs so they are shaded if possible, or at least not in full afternoon sun. Hot water is drunk less.</li></ul><h4>Water quality</h4><p>Cattle drink less dirty water, and drinking less means eating less.</p><ul><li>Clean troughs regularly - scrub out algae, manure and old feed. A trough that has feed dropped into it ferments and goes sour.</li><li>Fit a lid or a cover on storage tanks to keep out light, birds, dust and debris.</li><li>Keep troughs away from where animals defecate at the feed apron if the layout allows it.</li><li>If your water is saline or comes from a suspect source, get it tested. High salinity depresses intake, and contaminated water can carry disease. Your local water or veterinary office can advise on testing.</li></ul><h4>The daily water check</h4><p>Make this a fixed part of every morning and every evening:</p><ol><li>Is there water in the trough right now?</li><li>Is it clean and free of feed and manure?</li><li>Is the float valve or inlet working, and is the trough refilling at a reasonable rate?</li><li>Is the tank level where it should be for the time of day? A level that is falling faster than expected means a leak.</li><li>Walk the line for wet patches indicating a burst or a slow leak.</li></ol><h4>Hot weather</h4><p>On very hot days, check water more often - midday and mid afternoon as well. Signs of heat stress include rapid breathing, open mouth breathing, drooling, crowding around water, standing rather than lying, and a fall in feed intake. Heat stress reduces gain directly and can kill. The responses are shade, air movement, plentiful cool water, and shifting the main feed to the cooler part of the day. If animals are in serious distress, that is a veterinary emergency.</p><h4>Backup plan</h4><p>Write down, before you buy cattle, exactly what you will do if the pump fails on a hot Saturday. Who has a bowser or a tank? Which neighbour has a working borehole? What is the phone number of the pump repairer? A plan written in advance takes ten minutes. Improvising in a crisis costs animals.</p></div>
+<div class="numbers">
+<div class="num"><div class="k">Daily water intake</div><div class="v">roughly 25 to 60 litres per head per day</div><div class="n">Growing and finishing cattle; higher in extreme heat and on dry rations</div></div>
+<div class="num"><div class="k">Storage buffer</div><div class="v">2 to 3 days of peak demand</div><div class="n">Covers pump failure and power outage</div></div>
+<div class="num"><div class="k">Water trough space</div><div class="v">about 0.06 to 0.1 m of edge per head</div><div class="n">Common planning guide with continuous access; use two troughs rather than one</div></div>
+<div class="num"><div class="k">Trough water height</div><div class="v">about 0.5 to 0.8 m above standing surface</div><div class="n">Comfortable drinking without stepping in</div></div>
+</div>
+<div class="action"><strong>Do this today:</strong> Calculate your batch peak daily water demand at 60 litres per head, then measure your storage capacity in litres. Write down your backup plan and the pump repairer's phone number today.</div>
+</article>
+<article class="lesson" id="lesson-4">
+<div class="lesson-head"><span class="lnum">Lesson 3.4</span><span class="read">15 min</span></div>
+<h2 style="margin-top:6px">Shade, Drainage and Manure Management</h2>
+<div class="objectives"><strong>In this lesson</strong><ul>
+<li>Provide shade that protects intake in hot climates</li>
+<li>Grade and drain a pen so it stays dry</li>
+<li>Handle manure as a resource rather than a problem</li>
+</ul></div>
+<div class="body"><p>Shade and drainage are the two site features most often skipped on a budget, and both cost you gain quietly rather than dramatically. An animal standing in the sun or standing in mud is spending energy on being uncomfortable instead of putting on weight.</p><h4>Shade</h4><p>Heat stress reduces feed intake, reduces gain and in severe cases kills. In hot parts of the region shade is not a luxury.</p><ul><li><strong>Area:</strong> plan on roughly <strong>2 to 4 square metres of shade per head</strong> for finishing cattle, toward the upper end in the hottest areas. Too little shade concentrates animals into a crowded, hot, muddy patch, which is worse than none.</li><li><strong>Height:</strong> a shade roof around <strong>3 to 4 metres</strong> high allows air to move underneath. A low roof traps heat.</li><li><strong>Orientation:</strong> a roof running roughly east to west casts a shadow that stays put through the middle of the day. A roof running north to south lets the shade sweep across the pen, which dries the ground underneath but gives less consistent midday shade. Both are used; the east to west orientation is generally preferred where midday heat is the problem.</li><li><strong>Material:</strong> shade cloth, thatch, iron sheet, or trees. Shade cloth and thatch are cheap and effective. Iron sheet works but radiates heat downward unless it is high enough and there is good air movement.</li><li><strong>Air movement matters as much as shade.</strong> Do not build solid walls that block breeze on the windward side.</li></ul><h4>Drainage</h4><p>Mud is expensive. Cattle standing in deep mud use more energy to move, lie down less, get dirtier, and suffer more foot problems. Wet, dirty animals also come out of the pen needing more cleaning at slaughter, which some abattoirs charge for.</p><ol><li><strong>Site selection first.</strong> Choose slightly elevated ground with natural fall. Never place a pen in a hollow or a place where surface water collects. This decision is free and no amount of later work fixes a bad site.</li><li><strong>Grade the pen floor.</strong> A slope of roughly <strong>2 to 4 percent</strong> - that is about 2 to 4 metres of fall over 100 metres - moves water off without eroding the surface. Slope away from the feed trough and water so the eating apron stays driest.</li><li><strong>Cut off outside water.</strong> Dig a diversion drain or berm on the uphill side so rainwater running off surrounding land does not flow through the pen.</li><li><strong>Collect the runoff.</strong> Effluent from a cattle pen is strong and should not run into a stream, dam, borehole or a neighbour's land. Direct it to a grassed area, a settling area or a lagoon well away from any water source, and check your national environmental rules.</li><li><strong>Harden the high traffic areas.</strong> The feed apron and around the water trough get the most hoof traffic. Concrete, compacted gravel or rubble here prevents most of your mud problem for a modest cost.</li></ol><h4>Manure</h4><p>A pen of finishing cattle produces a lot of manure. Fresh cattle manure is largely water, and the dry solids are what you actually want.</p><ul><li><strong>Scrape regularly.</strong> On a paved pen, scrape daily or near daily. On an earth pen, remove accumulations at intervals and definitely between batches.</li><li><strong>Stack and compost it.</strong> A heap turned occasionally heats up, kills many parasite eggs and weed seeds, loses odour, and becomes a far better product than fresh manure. Compost it away from the pens and away from water.</li><li><strong>Use it or sell it.</strong> Manure applied to your maize or vegetable land is real value. In many areas there is a ready market for composted manure from horticulture growers. This is a genuine second income stream and it should appear in your money record.</li><li><strong>Control flies.</strong> Flies breed in wet manure and spoiled feed. Keeping the pen scraped, dry and free of spilled feed is by far the most effective fly control. Chemical control is a supplement, not a substitute.</li><li><strong>Clean out between batches.</strong> Removing manure, letting the pen dry, and where practical resting the pen between batches reduces the disease load carried from one batch to the next.</li></ul><h4>The visual test</h4><p>Walk your pen after heavy rain. If you sink past your boot sole, your cattle are worse off than you are. If water is still standing 24 hours later, your slope or your drainage is wrong and it needs fixing before the next batch.</p></div>
+<div class="numbers">
+<div class="num"><div class="k">Shade area</div><div class="v">roughly 2 to 4 square metres per head</div><div class="n">Upper end in the hottest areas; too little shade is worse than none</div></div>
+<div class="num"><div class="k">Shade roof height</div><div class="v">about 3 to 4 metres</div><div class="n">Allows air movement underneath</div></div>
+<div class="num"><div class="k">Pen floor slope</div><div class="v">about 2 to 4 percent</div><div class="n">Drains water without eroding the surface</div></div>
+</div>
+<div class="action"><strong>Do this today:</strong> Stand in your pen area and identify the direction the ground falls. Mark where water would flow out and where it would collect, and dig or plan a diversion drain on the uphill side.</div>
+</article>
+<article class="lesson" id="lesson-5">
+<div class="lesson-head"><span class="lnum">Lesson 3.5</span><span class="read">16 min</span></div>
+<h2 style="margin-top:6px">A Simple Race and Crush for Safe Handling</h2>
+<div class="objectives"><strong>In this lesson</strong><ul>
+<li>Explain how cattle behaviour drives handling design</li>
+<li>Lay out a working race and crush</li>
+<li>Handle animals safely with minimal labour</li>
+</ul></div>
+<div class="body"><p>You will need to weigh, dose, vaccinate, treat, inspect mouths and load every animal. Without proper handling facilities all of that is dangerous, slow and stressful, so it gets skipped - which means you stop weighing, stop treating early, and lose the information and the animals. A basic race and crush is one of the highest return structures on a small fattening yard.</p><h4>Cattle behaviour is the design brief</h4><ul><li><strong>Cattle follow each other.</strong> A race works because the animal in front leads. Never work a single animal alone up a race if you can help it - give it a companion in front.</li><li><strong>Cattle move toward light and open space, and away from dark dead ends.</strong> Never make them walk into darkness.</li><li><strong>Cattle prefer to go back where they came from.</strong> Curved races exploit this: the animal thinks it is returning to the herd. Curved races handle better than straight ones, though a straight race well built is far better than no race.</li><li><strong>Cattle balk at shadows, puddles, flapping objects, changes in flooring, and people standing in front of them.</strong> Remove distractions along the race and keep handlers out of the animal's forward view.</li><li><strong>Cattle have a flight zone.</strong> Move to its edge to make an animal move, step back to stop it. Quiet, patient pressure works; shouting and beating does not, and it costs you gain through stress and bruising.</li></ul><h4>The components, in order of flow</h4><ol><li><strong>Collecting pen.</strong> Where the group is gathered. It should lead naturally toward the forcing pen.</li><li><strong>Forcing pen.</strong> A funnel shaped area, often a part circle, that concentrates animals into the race entrance. Solid sides. It should never be crowded to the point animals cannot turn.</li><li><strong>Race.</strong> A single file passage. Inside width for mature cattle around <strong>0.7 to 0.8 metres</strong> - just wide enough that an animal walks freely and cannot turn around. Too wide and animals turn and jam. Height around 1.5 to 1.7 metres. Solid sides at least at the lower part so animals cannot see out and be distracted. A length that holds about three to five animals is plenty for a small yard.</li><li><strong>Crush or squeeze.</strong> At the end of the race, where the animal is held still for treatment. Needs a head gate or head bail at the front and a back bar or gate behind, so the animal cannot go forward or back.</li><li><strong>Exit.</strong> Straight ahead and into open space or a holding pen, so the animal leaves willingly. Never have the exit face a dead end.</li></ol><h4>The crush itself</h4><ul><li><strong>Head restraint.</strong> A simple hinged head bail that closes on the neck when the animal puts its head through is sufficient for a small yard. Commercial crushes are excellent if affordable, but a well built timber crush with a working head bail does the job.</li><li><strong>Side access.</strong> A hinged or removable side panel or a gap at the right height lets you reach the animal for injections and inspection without climbing in.</li><li><strong>Non slip floor.</strong> Grooved concrete or firm compacted ground. An animal that slips in a crush panics and injures itself, and it will resist the crush ever after.</li><li><strong>No sharp edges anywhere.</strong> Check every bolt, nail and cut end.</li><li><strong>Strong construction.</strong> A crush takes the full force of a frightened animal. Deep set posts, proper bracing, hardwood or steel.</li></ul><h4>A weigh point</h4><p>If you can afford a scale, site it in the race just before or in the crush so weighing is part of the normal flow rather than a separate operation. If you cannot, use a weigh band or girth tape at the crush - the same person, the same tape position, the same time of day every time, so your readings are comparable.</p><h4>Safety rules for the operator</h4><ol><li>Never stand in the race with an animal, and never work alone if you can avoid it.</li><li>Always know your escape route. Build man gaps - narrow vertical openings a person can slip through and an animal cannot - into the race and pen fences.</li><li>Never turn your back on a bull or on an animal you have just restrained and released.</li><li>Do not put your arm through the side of a crush past the elbow.</li><li>Work quietly. Most handling injuries follow panic that the handler created.</li><li>Move animals in the cool of the day where you can.</li></ol><h4>Build order on a budget</h4><p>If you can only build part of it now, build in this order: a solid holding pen with a good gate, then the race, then the crush, then the forcing pen refinements, then a loading ramp. Even a short race and a head bail transform what one person can safely do alone.</p></div>
+<div class="numbers">
+<div class="num"><div class="k">Race inside width</div><div class="v">about 0.7 to 0.8 m for mature cattle</div><div class="n">Wide enough to walk, narrow enough not to turn around</div></div>
+<div class="num"><div class="k">Race height</div><div class="v">about 1.5 to 1.7 m</div><div class="n">Solid lower sides reduce distraction</div></div>
+<div class="num"><div class="k">Race capacity for a small yard</div><div class="v">about 3 to 5 animals</div><div class="n">Cattle follow a leader, so never work one animal alone up the race</div></div>
+</div>
+<div class="action"><strong>Do this today:</strong> Walk your yard and mark on the ground with pegs where a collecting pen, race and crush would go, checking that the exit leads into open space and light rather than a dead end.</div>
+</article>
+<article class="lesson" id="lesson-6">
+<div class="lesson-head"><span class="lnum">Lesson 3.6</span><span class="read">15 min</span></div>
+<h2 style="margin-top:6px">Phased Building on a Small Budget</h2>
+<div class="objectives"><strong>In this lesson</strong><ul>
+<li>Rank infrastructure by return per unit spent</li>
+<li>Build a three phase plan tied to batch income</li>
+<li>Avoid the common overspending traps</li>
+</ul></div>
+<div class="body"><p>The temptation with a first batch is to build the yard you want. The discipline is to build the yard the first batch needs, and let the batches pay for the rest. Money spent on infrastructure is money not spent on animals and feed, and animals and feed are what generate the return.</p><h4>The ranking principle</h4><p>Rank every possible structure by one question: <strong>how many kilograms of gain does this protect or create per unit of money spent?</strong> Anything that protects intake - water, feed access, shade, dry footing - ranks high. Anything that protects your ability to manage - the crush, identification, records - ranks high. Anything cosmetic ranks last.</p><h4>Phase 1: before the first animal arrives</h4><p>These are non negotiable. Do not buy cattle until they are done.</p><ul><li><strong>Secure fencing and a working gate.</strong> An escaped animal can be lost, stolen, killed on a road, or cause an accident you are liable for.</li><li><strong>Water supply, storage and at least one good trough.</strong> Sized for peak hot weather demand with a two to three day buffer.</li><li><strong>Feed trough with adequate length</strong> for restricted feeding, on the fence line so you can fill from outside.</li><li><strong>Basic shade,</strong> even if it is only shade cloth on poles or existing trees.</li><li><strong>Drainage,</strong> at minimum a graded pen floor and a diversion drain upslope.</li><li><strong>Dry, secure feed store,</strong> off the ground and rodent resistant.</li><li><strong>A minimum handling arrangement,</strong> at least a small holding pen with a strong gate and a corner where an animal can be restrained. A full crush can wait one batch if it must, but not longer.</li><li><strong>Ear tags and a record book.</strong> Almost free and they change everything.</li></ul><h4>Phase 2: paid for by batch one</h4><ul><li><strong>Proper race and crush with a head bail.</strong> This is usually the first thing batch one income should buy.</li><li><strong>Concrete or gravel apron</strong> at the feed trough and around the water trough - the cheapest cure for the worst mud.</li><li><strong>Second water trough,</strong> so no single point can be guarded or fail alone.</li><li><strong>A separate quarantine or arrival pen,</strong> which lets you hold new arrivals apart for two to four weeks without disrupting a finishing group.</li><li><strong>Improved shade</strong> to the full 2 to 4 square metres per head standard at proper height.</li></ul><h4>Phase 3: once several batches are proven</h4><ul><li>Weighing scale, if you have been using a tape until now.</li><li>Loading ramp of your own, so you are not dependent on other people's facilities and schedules.</li><li>Additional pens allowing you to run overlapping batches and sort by size.</li><li>Feed mixing and storage capacity, so you can buy ingredients in bulk when prices are low. This one often has a very good return once you have the volume to justify it.</li><li>Paved pen floors, if your rainfall makes earth pens unmanageable.</li></ul><h4>Build cheap, build safe</h4><p>Use what is locally available - gum poles, offcut timber, bush poles, split drums, recycled steel, second hand sheeting. Cheap materials are perfectly acceptable, with three conditions that are never negotiable:</p><ol><li><strong>Strength where force lands.</strong> Corner posts, gate posts, the crush and the head bail take the load. Do not economise there.</li><li><strong>No sharp edges.</strong> Grind, cap or cover every cut edge, nail and bolt end at animal height.</li><li><strong>Sound footing.</strong> Never leave a slippery or broken surface where animals walk.</li></ol><h4>Overspending traps</h4><ul><li><strong>Building a pen for the herd you dream of.</strong> Build for the batch you can feed. Empty pens earn nothing and rot just as fast.</li><li><strong>Concreting everything.</strong> Concrete is expensive and demands daily scraping. Concrete the high traffic aprons first and see whether you need more.</li><li><strong>Buying equipment before you need it.</strong> A mixer wagon or a bulk mill for a five head batch is money standing idle that should be standing in the pen eating.</li><li><strong>Skipping water to afford something visible.</strong> This is the worst trade in the whole business. Water first, always.</li></ul><h4>The end of batch review</h4><p>After every batch, walk the yard with your record book open and ask one question at each point: <em>did this cost me kilograms?</em> The muddy corner, the trough two animals had to share, the shade that only covered half the group. Fix the biggest one before the next batch. That is how a small yard becomes a good yard without a loan.</p></div>
+<div class="numbers">
+<div class="num"><div class="k">Phase 1 must-haves</div><div class="v">fence, water, trough, shade, drainage, feed store, records</div><div class="n">Complete before any animal arrives</div></div>
+<div class="num"><div class="k">First phase 2 purchase</div><div class="v">race and crush</div><div class="n">Highest return structure once basics are in place</div></div>
+<div class="num"><div class="k">Shade standard to reach</div><div class="v">2 to 4 square metres per head</div><div class="n">Can be phased up from a basic starting provision</div></div>
+</div>
+<div class="action"><strong>Do this today:</strong> Write your three phase build list on one page, with a cost estimate from three local quotes for each phase 1 item. Cross off anything not in phase 1 until batch one has sold.</div>
+</article>
+<div class="card quiz"><h3>Knowledge check</h3><p class="note">Five questions. Click an answer to see whether it is right and why.</p>
+<div class="q"><p><strong>1. You are feeding once daily, restricted, to 8 head. How much trough length should you plan on a fence line trough accessible from one side?</strong></p><ul class="opts">
+<li><button class="opt" data-correct="0">About 1.6 to 2.4 metres</button></li>
+<li><button class="opt" data-correct="1">About 4.8 to 6.0 metres</button></li>
+<li><button class="opt" data-correct="0">About 0.7 metres</button></li>
+<li><button class="opt" data-correct="0">Trough length does not matter with restricted feeding</button></li>
+</ul><div class="why">Restricted feeding means all animals eat at once, so each needs about 0.6 to 0.75 m of its own space. Eight head needs roughly 4.8 to 6.0 metres. The lower figures apply only to true ad libitum feeding where feed never runs out.</div></div>
+<div class="q"><p><strong>2. What is a realistic planning range for daily water intake per head for finishing cattle?</strong></p><ul class="opts">
+<li><button class="opt" data-correct="0">About 5 to 10 litres</button></li>
+<li><button class="opt" data-correct="1">About 25 to 60 litres, higher in extreme heat</button></li>
+<li><button class="opt" data-correct="0">About 100 to 150 litres</button></li>
+<li><button class="opt" data-correct="0">Water intake does not vary with temperature</button></li>
+</ul><div class="why">Growing and finishing cattle commonly drink in the order of 25 to 60 litres a day, rising with heat, dry matter intake and body weight. Plan to the top of the range and hold 2 to 3 days of storage.</div></div>
+<div class="q"><p><strong>3. Which is the correct first phase of building, before any cattle arrive?</strong></p><ul class="opts">
+<li><button class="opt" data-correct="0">Loading ramp, scale and feed mixer</button></li>
+<li><button class="opt" data-correct="0">Concrete floors throughout the pen</button></li>
+<li><button class="opt" data-correct="1">Secure fencing, water supply and storage, feed trough, shade, drainage, feed store and record book</button></li>
+<li><button class="opt" data-correct="0">A full commercial crush with hydraulic squeeze</button></li>
+</ul><div class="why">Phase 1 covers everything that protects intake and lets you manage animals safely. Scales, ramps and mixers are later phases paid for by batch income.</div></div>
+<div class="q"><p><strong>4. Why should a race be only about 0.7 to 0.8 metres wide inside for mature cattle?</strong></p><ul class="opts">
+<li><button class="opt" data-correct="0">To save on materials</button></li>
+<li><button class="opt" data-correct="1">So the animal walks freely but cannot turn around and jam the race</button></li>
+<li><button class="opt" data-correct="0">Because wider races are illegal</button></li>
+<li><button class="opt" data-correct="0">So two animals can walk side by side</button></li>
+</ul><div class="why">A race too wide lets an animal turn, which jams the race and risks injury to the animal and handler. It must be single file, with solid lower sides and an exit into light and open space.</div></div>
+<div class="q"><p><strong>5. You find your earth pen still has standing water 24 hours after rain. What does this tell you?</strong></p><ul class="opts">
+<li><button class="opt" data-correct="0">Nothing important, it will dry eventually</button></li>
+<li><button class="opt" data-correct="1">The pen slope or drainage is inadequate and should be fixed before the next batch</button></li>
+<li><button class="opt" data-correct="0">You should add more animals to compact the surface</button></li>
+<li><button class="opt" data-correct="0">You need to reduce the water trough supply</button></li>
+</ul><div class="why">Standing water means the grade or the diversion drainage is wrong. Mud reduces lying time and intake, raises foot problems, and dirties animals. Aim for about 2 to 4 percent fall away from feed and water, with an upslope cut off drain.</div></div>
+</div>
+<div class="card"><h3>Module 3 capstone</h3><p>Draw your yard to scale on one sheet of paper: pen with its area per head marked, trough length calculated for your batch, water points, shade footprint, direction of slope and drainage, and the position of a collecting pen, race and crush. Mark each item Phase 1, 2 or 3 and price the Phase 1 items from three local quotes.</p><p><button class="btn" onclick="rasMarkDone(3,this)">Mark module 3 complete</button></p></div>
+<div class="pager">
+<a class="btn ghost" href="steer-fattening-module-2.html">&larr; Previous</a>
+<a class="btn" href="steer-fattening-module-4.html">Next &rarr;</a>
+</div>
+<div class="disclaim"><strong>Price check, always.</strong> Before you buy cattle, feed, call three suppliers and three buyers and compare. Prices and cattle availability vary widely grading schemes vary between countries and seasons. This course teaches the method and the biology. You confirm the local prices, the local market, and the local disease and permit rules with your vet or livestock officer.</div>
+</div></main>
+
+<script>
+(function(){
+  var KEY='raskills.steerfattening.progress';
+  function load(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}}
+  function save(o){try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}}
+  window.rasMarkDone=function(n,btn){var p=load();p['m'+n]=true;save(p);
+    if(btn){btn.textContent='Module complete';btn.classList.add('ghost');}};
+  window.rasProgress=load;
+})();
+</script>
+
+
+<script>
+document.addEventListener('click',function(e){
+  var b=e.target.closest('.opt'); if(!b) return;
+  var q=b.closest('.q'); if(q.dataset.answered) return;
+  q.dataset.answered='1';
+  q.querySelectorAll('.opt').forEach(function(o){
+    if(o.dataset.correct==='1') o.classList.add('right');
+    else if(o===b) o.classList.add('wrong');
+    o.disabled=true;
+  });
+  var w=q.querySelector('.why'); if(w) w.classList.add('show');
+});
+</script>
+
+
+<script>
+(function(){
+  function play(box){
+    if (box.dataset.on) return;
+    box.dataset.on = 1;
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + box.dataset.yt +
+            '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+    f.setAttribute('allow','accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
+    f.setAttribute('allowfullscreen','');
+    f.setAttribute('title', box.dataset.t || 'video');
+    f.loading = 'lazy';
+    box.innerHTML = '';
+    box.appendChild(f);
+  }
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('.vthumb');
+    if (b) play(b);
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    var b = e.target.closest && e.target.closest('.vthumb');
+    if (b) { e.preventDefault(); play(b); }
+  });
+})();
+</script>
+
+<footer><div class="wrap">
+<p>rise AFRICA skills is not a school, college, technical institute, vocational institute or university.
+We are a pointer: we help you find a real business idea and teach the practical method, and issue a Business
+Seed Record confirming you completed the work. We do not award accredited qualifications.</p>
+<p>rise AFRICA skills &middot; +263 77 300 1353 &middot; all@riseafricaskills.com &middot; riseafricaskills.com</p>
+</div></footer>
+</body></html>
