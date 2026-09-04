@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Assignment review — rise AFRICA skills</title>
+<style>
+:root{
+  --brand:#8c2f39; --brand-soft:#f7ecec; --accent:#e08a8a;
+  --paper:#faf7f2; --card:#fff; --ink:#231f1c; --ink-soft:#4a423c;
+  --muted:#7b7169; --line:#e3dcd2; --radius:14px;
+  --ok:#1f6b34; --ok-soft:#dcefe0; --wait:#7a5b1e; --wait-soft:#f0e6d2;
+  --redo:#9b2c2c; --redo-soft:#fbe3e3;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:0 18px}
+header.top{background:var(--card);border-bottom:1px solid var(--line);padding:14px 0}
+header.top .wrap{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.brand{font-weight:800;letter-spacing:.5px}
+.brand span{color:var(--brand)}
+nav a{color:var(--ink-soft);text-decoration:none;font-size:14.5px}
+nav a:hover{text-decoration:underline}
+h1{font-size:26px;margin:26px 0 4px}
+.sub{color:var(--muted);font-size:14.5px;margin:0 0 22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin:0 0 18px}
+.note{font-size:13.5px;color:var(--muted)}
+.btn{display:inline-block;background:var(--brand);color:#fff;border:0;cursor:pointer;
+  padding:10px 17px;border-radius:10px;font-weight:600;font-size:15px;font-family:inherit;text-decoration:none}
+.btn[disabled]{opacity:.55;cursor:default}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+input,select,textarea{font:inherit;font-size:16px;border:1px solid var(--line);border-radius:10px;
+  padding:11px 12px;background:var(--card);color:var(--ink);width:100%}
+textarea{min-height:88px;resize:vertical}
+label{display:block;font-weight:600;font-size:14px;margin:0 0 6px}
+.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;align-items:end}
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 18px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 15px;font-size:14px}
+.stat b{display:block;font-size:22px;line-height:1.2}
+.pill{font-size:12.5px;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap}
+.p-wait{background:var(--wait-soft);color:var(--wait)}
+.p-ok{background:var(--ok-soft);color:var(--ok)}
+.p-redo{background:var(--redo-soft);color:var(--redo)}
+.sub-head{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;justify-content:space-between}
+.who{font-weight:700;word-break:break-all}
+.meta{font-size:13.5px;color:var(--muted);margin-top:2px}
+.vid{margin-top:14px;max-width:440px}
+.vid .frame{position:relative;padding-bottom:56.25%;height:0;border-radius:10px;overflow:hidden;background:#000}
+.vid .frame iframe,.vid .frame img{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
+.vid .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.32);color:#fff;font-size:40px;cursor:pointer}
+.link{word-break:break-all;font-size:13.5px;margin-top:8px}
+.studnote{background:var(--paper);border-radius:10px;padding:10px 13px;margin-top:12px;font-size:14.5px}
+.fbbox{margin-top:16px;border-top:1px solid var(--line);padding-top:14px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px}
+.msg{margin-top:12px;padding:11px 13px;border-radius:10px;font-size:14.5px;display:none}
+.msg.show{display:block}
+.msg.err{background:var(--redo-soft);color:var(--redo);border:1px solid var(--redo)}
+.msg.ok{background:var(--ok-soft);color:var(--ok);border:1px solid var(--ok)}
+.empty{text-align:center;color:var(--muted);padding:36px 10px}
+footer{border-top:1px solid var(--line);margin-top:30px;padding:22px 0 40px;font-size:13.5px;color:var(--muted)}
+@media(max-width:560px){h1{font-size:22px}.card{padding:16px}}
+</style>
+</head>
+<body>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+<header class="top"><div class="wrap">
+  <div class="brand">rise <span>AFRICA</span> skills</div>
+  <nav>
+    <a href="index.html">Home</a> &nbsp;|&nbsp;
+    <span id="whoami" class="note"></span> &nbsp;
+    <a href="#" id="signout" hidden>Sign out</a>
+  </nav>
+</div></header>
+
+<div class="wrap">
+  <h1>Assignment review</h1>
+  <p class="sub">Student videos submitted against each module capstone. Only accounts listed in the <code>admins</code> table can see this.</p>
+
+  <div id="gate" class="card" hidden>
+    <h3 style="margin-top:0">Sign in</h3>
+    <p class="note">Enter your admin email. Supabase sends you a one-time link — the same login you use for the courses.</p>
+    <div class="row" style="margin-top:14px">
+      <input type="email" id="gate-email" placeholder="you@example.com" style="flex:1 1 240px">
+      <button class="btn" id="gate-send">Send me a link</button>
+    </div>
+    <div class="msg" id="gate-msg"></div>
+  </div>
+
+  <div id="app" hidden>
+    <div class="stats" id="stats"></div>
+
+    <div class="card">
+      <div class="filters">
+        <div>
+          <label for="f-status">Status</label>
+          <select id="f-status">
+            <option value="submitted">Waiting for review</option>
+            <option value="all">All</option>
+            <option value="reviewed">Reviewed</option>
+            <option value="needs_redo">Needs another try</option>
+          </select>
+        </div>
+        <div>
+          <label for="f-course">Course</label>
+          <select id="f-course"><option value="all">All courses</option></select>
+        </div>
+        <div>
+          <label for="f-search">Search student email</label>
+          <input type="search" id="f-search" placeholder="part of an email">
+        </div>
+        <div><button class="btn ghost" id="f-refresh">Refresh</button></div>
+      </div>
+    </div>
+
+    <div id="list"></div>
+  </div>
+</div>
+
+<footer><div class="wrap">rise AFRICA skills — assignment review</div></footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var SUPABASE_URL = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
+  var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc';
+
+  var COURSE_NAMES = {
+    'pig-feed': 'Pig Feed Formulation',
+    'cattle-steer-feed': 'Cattle and Steer Feed Formulation',
+    'broiler-layers-feed': 'Broiler and Layer Feed Formulation',
+    'dog-cat-feed': 'Dog and Cat Feed Formulation',
+    'fish-feed': 'Fish Feed Formulation',
+    'bakery': 'Bakery and Baking Business',
+    'butchery': 'Butchery and Meat Processing'
+  };
+  var STATUS = {
+    submitted:  { t: 'Waiting for review', c: 'p-wait' },
+    reviewed:   { t: 'Reviewed — passed',  c: 'p-ok' },
+    needs_redo: { t: 'Needs another try',  c: 'p-redo' }
+  };
+
+  var client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  var rows = [];
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function when(d) {
+    if (!d) return '';
+    return new Date(d).toLocaleString(undefined,
+      { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  }
+  function say(el, kind, text) {
+    el.className = 'msg show ' + kind;
+    el.textContent = text;
+  }
+
+  /* ---------- sign in -------------------------------------------------- */
+
+  function showGate(msg) {
+    $('app').hidden = true;
+    $('gate').hidden = false;
+    if (msg) say($('gate-msg'), 'err', msg);
+  }
+
+  $('gate-send').addEventListener('click', function () {
+    var em = $('gate-email').value.trim();
+    if (!em) { say($('gate-msg'), 'err', 'Enter your email address.'); return; }
+    $('gate-send').disabled = true;
+    client.auth.signInWithOtp({
+      email: em,
+      options: { emailRedirectTo: window.location.href }
+    }).then(function (r) {
+      $('gate-send').disabled = false;
+      if (r.error) { say($('gate-msg'), 'err', r.error.message); return; }
+      say($('gate-msg'), 'ok', 'Check your email and open the link on this device.');
+    });
+  });
+
+  $('signout').addEventListener('click', function (e) {
+    e.preventDefault();
+    client.auth.signOut().then(function () { window.location.reload(); });
+  });
+
+  /* ---------- load ----------------------------------------------------- */
+
+  function load() {
+    var q = client.from('submissions')
+      .select('id,user_email,course_id,module_num,title,video_url,video_id,provider,note,status,feedback,reviewed_at,reviewed_by,created_at')
+      .order('created_at', { ascending: false })
+      .limit(500);
+
+    return q.then(function (res) {
+      if (res.error) {
+        // An admin sees rows; a non-admin sees an empty set, not an error.
+        showGate('Could not load submissions: ' + res.error.message);
+        return;
+      }
+      rows = res.data || [];
+      fillCourses();
+      render();
+    });
+  }
+
+  function fillCourses() {
+    var sel = $('f-course');
+    var seen = {};
+    rows.forEach(function (r) { seen[r.course_id] = true; });
+    var keep = sel.value;
+    sel.innerHTML = '<option value="all">All courses</option>' +
+      Object.keys(seen).sort().map(function (c) {
+        return '<option value="' + esc(c) + '">' + esc(COURSE_NAMES[c] || c) + '</option>';
+      }).join('');
+    sel.value = keep && (keep === 'all' || seen[keep]) ? keep : 'all';
+  }
+
+  function stats() {
+    var n = { submitted: 0, reviewed: 0, needs_redo: 0 };
+    rows.forEach(function (r) { if (n[r.status] != null) n[r.status]++; });
+    $('stats').innerHTML =
+      '<div class="stat"><b>' + n.submitted + '</b>waiting for review</div>' +
+      '<div class="stat"><b>' + n.reviewed + '</b>reviewed</div>' +
+      '<div class="stat"><b>' + n.needs_redo + '</b>need another try</div>' +
+      '<div class="stat"><b>' + rows.length + '</b>total submissions</div>';
+  }
+
+  function filtered() {
+    var st = $('f-status').value;
+    var co = $('f-course').value;
+    var q  = $('f-search').value.trim().toLowerCase();
+    return rows.filter(function (r) {
+      if (st !== 'all' && r.status !== st) return false;
+      if (co !== 'all' && r.course_id !== co) return false;
+      if (q && String(r.user_email || '').toLowerCase().indexOf(q) === -1) return false;
+      return true;
+    });
+  }
+
+  function videoBlock(r) {
+    if (r.video_id) {
+      return '<div class="vid"><div class="frame" data-yt="' + esc(r.video_id) + '">' +
+        '<img loading="lazy" alt="" src="https://i.ytimg.com/vi/' + esc(r.video_id) + '/mqdefault.jpg">' +
+        '<div class="play">▶</div></div></div>';
+    }
+    return '';
+  }
+
+  function render() {
+    stats();
+    var list = filtered();
+    if (!list.length) {
+      $('list').innerHTML = '<div class="card empty">Nothing here with these filters.</div>';
+      return;
+    }
+    $('list').innerHTML = list.map(function (r) {
+      var s = STATUS[r.status] || STATUS.submitted;
+      return '<div class="card" data-id="' + esc(r.id) + '">' +
+        '<div class="sub-head">' +
+          '<div>' +
+            '<div class="who">' + esc(r.user_email) + '</div>' +
+            '<div class="meta">' + esc(COURSE_NAMES[r.course_id] || r.course_id) +
+              ' · Module ' + esc(r.module_num) +
+              (r.title ? ' — ' + esc(r.title) : '') + '</div>' +
+            '<div class="meta">Sent ' + esc(when(r.created_at)) +
+              (r.reviewed_at ? ' · reviewed ' + esc(when(r.reviewed_at)) : '') + '</div>' +
+          '</div>' +
+          '<span class="pill ' + s.c + '">' + esc(s.t) + '</span>' +
+        '</div>' +
+        videoBlock(r) +
+        '<p class="link"><a href="' + esc(r.video_url) + '" target="_blank" rel="noopener">' +
+          esc(r.video_url) + '</a>' +
+          (r.provider !== 'youtube' ? ' <span class="note">(' + esc(r.provider) + ' — opens in a new tab)</span>' : '') +
+        '</p>' +
+        (r.note ? '<div class="studnote"><strong>Student note:</strong> ' + esc(r.note) + '</div>' : '') +
+        '<div class="fbbox">' +
+          '<label for="fb-' + esc(r.id) + '">Feedback to the student</label>' +
+          '<textarea id="fb-' + esc(r.id) + '" placeholder="What they did well, and the one thing to fix.">' +
+            esc(r.feedback || '') + '</textarea>' +
+          '<div class="row">' +
+            '<button class="btn" data-act="reviewed" data-id="' + esc(r.id) + '">Save &amp; mark passed</button>' +
+            '<button class="btn ghost" data-act="needs_redo" data-id="' + esc(r.id) + '">Save &amp; ask for a redo</button>' +
+            '<button class="btn ghost" data-act="save" data-id="' + esc(r.id) + '">Save feedback only</button>' +
+          '</div>' +
+          '<div class="msg" id="m-' + esc(r.id) + '"></div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  /* ---------- actions -------------------------------------------------- */
+
+  document.addEventListener('click', function (e) {
+    var frame = e.target.closest && e.target.closest('.frame[data-yt]');
+    if (frame && !frame.getAttribute('data-on')) {
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube.com/embed/' + frame.getAttribute('data-yt') + '?autoplay=1';
+      f.allow = 'accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture';
+      f.allowFullscreen = true;
+      frame.innerHTML = '';
+      frame.appendChild(f);
+      frame.setAttribute('data-on', '1');
+      return;
+    }
+
+    var btn = e.target.closest && e.target.closest('[data-act]');
+    if (!btn) return;
+    var id  = btn.getAttribute('data-id');
+    var act = btn.getAttribute('data-act');
+    var msg = $('m-' + id);
+    var text = $('fb-' + id).value.trim();
+
+    var patch = { feedback: text || null };
+    if (act !== 'save') {
+      patch.status = act;
+      patch.reviewed_at = new Date().toISOString();
+      patch.reviewed_by = (window.RAS_ADMIN_EMAIL || null);
+    }
+
+    btn.disabled = true;
+    client.from('submissions').update(patch).eq('id', id).then(function (res) {
+      btn.disabled = false;
+      if (res.error) { say(msg, 'err', res.error.message); return; }
+      say(msg, 'ok', act === 'save' ? 'Feedback saved.' : 'Saved. The student sees this on their module page.');
+      var row = rows.filter(function (r) { return r.id === id; })[0];
+      if (row) { Object.keys(patch).forEach(function (k) { row[k] = patch[k]; }); }
+      stats();
+      // Re-render only if the row would drop out of the current filter.
+      if ($('f-status').value !== 'all' && patch.status && patch.status !== $('f-status').value) {
+        setTimeout(render, 900);
+      }
+    });
+  });
+
+  ['f-status', 'f-course'].forEach(function (id) {
+    $(id).addEventListener('change', render);
+  });
+  $('f-search').addEventListener('input', render);
+  $('f-refresh').addEventListener('click', load);
+
+  /* ---------- boot ----------------------------------------------------- */
+
+  client.auth.getSession().then(function (r) {
+    var session = r && r.data && r.data.session;
+    if (!session || !session.user || !session.user.email) { showGate(); return; }
+    window.RAS_ADMIN_EMAIL = session.user.email;
+    $('whoami').textContent = session.user.email;
+    $('signout').hidden = false;
+    $('gate').hidden = true;
+    $('app').hidden = false;
+    load();
+  });
+})();
+</script>
+</body>
+</html>
