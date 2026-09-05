@@ -14,7 +14,11 @@
   }
 
   function redirectLocked(courseSlug, reason) {
-        window.location.replace(`/course-info.html?c=${courseSlug}&locked=${reason}`);
+    // One public page serves every course. The old per-course
+    // `<slug>-course.html` files did not exist for the five feed courses, so a
+    // locked visitor was redirected to a 404 instead of a chance to buy.
+    window.location.replace(`/course-info.html?c=${courseSlug}&locked=${reason}`);
+  }
 
   function reveal() {
     document.documentElement.style.visibility = 'visible';
