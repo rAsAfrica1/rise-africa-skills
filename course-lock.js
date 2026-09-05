@@ -14,8 +14,7 @@
   }
 
   function redirectLocked(courseSlug, reason) {
-    window.location.replace(`/${courseSlug}-course.html?locked=${reason}`);
-  }
+        window.location.replace(`/course-info.html?c=${courseSlug}&locked=${reason}`);
 
   function reveal() {
     document.documentElement.style.visibility = 'visible';
