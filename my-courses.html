@@ -1,530 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Courses — rise AFRICA skills</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            --gold: #c9a227;
-            --dark: #1a1a2e;
-            --darker: #0f0f1a;
-            --card: #1e1e32;
-            --muted: #9a9ab0;
-            --green: #27ae60;
-            --red: #e94560;
-        }
-
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: var(--darker);
-            color: #fff;
-        }
-
-        header {
-            position: sticky;
-            top: 0;
-            background: rgba(15, 15, 26, 0.95);
-            backdrop-filter: blur(8px);
-            border-bottom: 1px solid rgba(201, 162, 39, 0.2);
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 100;
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background: var(--gold);
-            color: var(--dark);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 1rem;
-        }
-
-        .brand {
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        nav {
-            display: flex;
-            gap: 1.5rem;
-            margin-left: auto;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--muted);
-            transition: color 0.2s;
-        }
-
-        nav a:hover {
-            color: var(--gold);
-        }
-
-        .logout-btn {
-            background: rgba(233, 69, 96, 0.2);
-            border: 1px solid var(--red);
-            color: var(--red);
-            padding: 0.4rem 0.8rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.85rem;
-        }
-
-        .logout-btn:hover {
-            background: rgba(233, 69, 96, 0.3);
-        }
-
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-        }
-
-        .page-header {
-            margin-bottom: 2rem;
-        }
-
-        .page-header h1 {
-            color: var(--gold);
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .page-header p {
-            color: var(--muted);
-        }
-
-        .courses-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .course-card {
-            background: var(--card);
-            border: 1px solid rgba(201, 162, 39, 0.2);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .course-card:hover {
-            border-color: var(--gold);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(201, 162, 39, 0.1);
-        }
-
-        .course-header {
-            background: linear-gradient(135deg, rgba(201, 162, 39, 0.1) 0%, rgba(201, 162, 39, 0.05) 100%);
-            padding: 1.5rem;
-            border-bottom: 1px solid rgba(201, 162, 39, 0.2);
-        }
-
-        .course-category {
-            color: var(--gold);
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
-        }
-
-        .course-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .course-body {
-            padding: 1.5rem;
-        }
-
-        .progress-section {
-            margin-bottom: 1.5rem;
-        }
-
-        .progress-label {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            color: var(--muted);
-        }
-
-        .progress-bar {
-            background: rgba(255, 255, 255, 0.1);
-            height: 8px;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            background: linear-gradient(90deg, var(--gold) 0%, #d4af3a 100%);
-            height: 100%;
-            border-radius: 4px;
-            transition: width 0.3s;
-        }
-
-        .course-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
-        }
-
-        .stat {
-            background: rgba(201, 162, 39, 0.05);
-            padding: 0.8rem;
-            border-radius: 6px;
-            border: 1px solid rgba(201, 162, 39, 0.1);
-        }
-
-        .stat-value {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--gold);
-        }
-
-        .stat-label {
-            color: var(--muted);
-            font-size: 0.8rem;
-        }
-
-        .course-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn {
-            flex: 1;
-            padding: 0.8rem;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-        }
-
-        .btn-primary {
-            background: var(--gold);
-            color: var(--dark);
-        }
-
-        .btn-primary:hover {
-            background: #dbc249;
-        }
-
-        .btn-secondary {
-            background: rgba(201, 162, 39, 0.2);
-            color: var(--gold);
-            border: 1px solid var(--gold);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(201, 162, 39, 0.3);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 3rem 1rem;
-            color: var(--muted);
-        }
-
-        .empty-state h2 {
-            color: #fff;
-            margin-bottom: 1rem;
-        }
-
-        .empty-state p {
-            margin-bottom: 2rem;
-        }
-
-        .btn-explore {
-            display: inline-block;
-            background: var(--gold);
-            color: var(--dark);
-            padding: 0.8rem 2rem;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .btn-explore:hover {
-            background: #dbc249;
-        }
-
-        .auth-required {
-            text-align: center;
-            padding: 3rem 1rem;
-            background: var(--card);
-            border: 1px solid rgba(201, 162, 39, 0.2);
-            border-radius: 12px;
-            margin: 2rem 0;
-        }
-
-        .auth-required h2 {
-            color: var(--gold);
-            margin-bottom: 1rem;
-        }
-
-        .auth-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            background: rgba(39, 174, 96, 0.2);
-            color: var(--green);
-        }
-
-        .badge.completed {
-            background: rgba(39, 174, 96, 0.2);
-            color: var(--green);
-        }
-
-        .badge.in-progress {
-            background: rgba(52, 152, 219, 0.2);
-            color: #3498db;
-        }
-
-        footer {
-            border-top: 1px solid rgba(201, 162, 39, 0.15);
-            text-align: center;
-            padding: 1.5rem 1rem;
-            color: var(--muted);
-            font-size: 0.8rem;
-            margin-top: 3rem;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>My Courses - rise AFRICA skills</title>
+<style>
+:root{--gold:#c9a227;--darker:#0f0f1a;--dark:#16162a;--card:#1e1e32;--muted:#9a9ab0;
+      --line:rgba(201,162,39,.22);--ok:#27ae60;--warn:#e2a03f;--bad:#e05a5a}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--darker);color:#fff;line-height:1.6}
+a{color:var(--gold)}
+header{position:sticky;top:0;background:rgba(15,15,26,.96);border-bottom:1px solid var(--line);
+  padding:.7rem 1rem;display:flex;align-items:center;gap:.6rem;z-index:9;flex-wrap:wrap}
+.logo{width:34px;height:34px;border-radius:8px;background:var(--gold);color:var(--darker);
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem}
+header .brand{font-weight:700;font-size:.95rem}
+header .right{margin-left:auto;display:flex;gap:.7rem;align-items:center;font-size:.82rem;color:var(--muted)}
+header .btn-sm{text-decoration:none;font-size:.8rem;border:1px solid var(--gold);padding:.3rem .75rem;
+  border-radius:20px;color:var(--gold);cursor:pointer;background:none;font-family:inherit}
+.wrap{max-width:900px;margin:0 auto;padding:1.6rem 1rem 4rem}
+h1{font-size:1.7rem;color:var(--gold)}
+.sub{color:var(--muted);font-size:.92rem;margin:.2rem 0 1.6rem}
+h2{font-size:1.1rem;color:var(--gold);margin:2.2rem 0 .8rem}
+.gate{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.5rem;max-width:460px;margin:2rem auto}
+.gate h2{margin-top:0}
+input{font:inherit;font-size:1rem;width:100%;padding:.7rem .8rem;border-radius:8px;
+  border:1px solid var(--line);background:var(--dark);color:#fff;margin:.6rem 0}
+button.go{font:inherit;font-weight:800;background:var(--gold);color:var(--darker);border:0;
+  border-radius:8px;padding:.65rem 1.2rem;cursor:pointer}
+button.go[disabled]{opacity:.5;cursor:default}
+.msg{margin-top:.8rem;padding:.7rem .9rem;border-radius:8px;font-size:.88rem;display:none}
+.msg.on{display:block}
+.msg.err{background:rgba(224,90,90,.12);border:1px solid var(--bad);color:#ffb3b3}
+.msg.ok{background:rgba(39,174,96,.12);border:1px solid var(--ok);color:#9fe0b8}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.9rem}
+.c{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1.1rem;
+   display:flex;flex-direction:column;gap:.5rem}
+.c .n{font-size:.74rem;font-weight:800;letter-spacing:.09em;color:var(--gold)}
+.c h3{font-size:1.02rem;line-height:1.3}
+.c .meta{font-size:.8rem;color:var(--muted)}
+.c a.open{margin-top:auto;text-align:center;background:var(--gold);color:var(--darker);font-weight:800;
+  padding:.55rem .9rem;border-radius:8px;text-decoration:none;font-size:.86rem}
+.pill{display:inline-block;font-size:.72rem;font-weight:700;padding:.15rem .55rem;border-radius:999px}
+.p-ok{background:rgba(39,174,96,.16);color:#7fd8a0}
+.p-wait{background:rgba(226,160,63,.16);color:#ffcf8a}
+.p-bad{background:rgba(224,90,90,.16);color:#ffb3b3}
+.sub-row{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1rem;margin-bottom:.7rem}
+.sub-head{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:space-between;align-items:center}
+.fb{border-left:3px solid var(--gold);padding:.5rem 0 .5rem .8rem;margin-top:.7rem;font-size:.9rem}
+.fb b{color:var(--gold)}
+.empty{color:var(--muted);padding:1.6rem;text-align:center;background:var(--card);
+  border:1px solid var(--line);border-radius:12px;font-size:.92rem}
+.empty a{font-weight:700}
+footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align:center;
+  color:var(--muted);font-size:.78rem}
+</style>
 </head>
 <body>
-    <header>
-        <div class="logo-icon">rAs</div>
-        <span class="brand">rise AFRICA skills</span>
-        <nav>
-            <a href="index.html">← Browse Courses</a>
-            <span id="userEmail" style="color: var(--muted);"></span>
-            <button class="logout-btn" onclick="handleLogout()">Logout</button>
-        </nav>
-    </header>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
-    <main>
-        <div class="page-header">
-            <h1>📚 My Enrolled Courses</h1>
-            <p>Continue learning where you left off</p>
-        </div>
+<header>
+  <div class="logo">rAs</div><div class="brand">rise AFRICA skills</div>
+  <div class="right">
+    <span id="who"></span>
+    <a href="course-info.html" class="btn-sm">All courses</a>
+    <button class="btn-sm" id="out" hidden>Sign out</button>
+  </div>
+</header>
 
-        <div id="authContainer" style="display: none;">
-            <div class="auth-required">
-                <h2>📖 Sign In to View Your Courses</h2>
-                <p>Login to see your enrolled courses and continue learning.</p>
-                <div class="auth-buttons">
-                    <button class="btn btn-primary" onclick="redirectToLogin()">Sign In</button>
-                    <a href="index.html" class="btn btn-secondary" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">Browse Courses</a>
-                </div>
-            </div>
-        </div>
+<div class="wrap">
 
-        <div id="coursesContainer" style="display: none;">
-            <div id="coursesList" class="courses-grid"></div>
+<div class="gate" id="gate" hidden>
+  <h2>Sign in to your courses</h2>
+  <p class="sub" style="margin:.4rem 0 0">Use the email address you paid with. We email you a one-time
+     link &mdash; there is no password to remember.</p>
+  <input type="email" id="em" placeholder="you@example.com" autocomplete="email">
+  <button class="go" id="send">Email me a link</button>
+  <div class="msg" id="gmsg"></div>
+</div>
 
-            <div id="emptyState" style="display: none;">
-                <div class="empty-state">
-                    <h2>🎓 No Courses Yet</h2>
-                    <p>You haven't enrolled in any courses yet. Browse our collection and start learning today!</p>
-                    <a href="index.html" class="btn-explore">Explore Courses</a>
-                </div>
-            </div>
-        </div>
-    </main>
+<div id="app" hidden>
+  <h1>My courses</h1>
+  <p class="sub" id="sub"></p>
+  <div id="courses"></div>
 
-    <footer>
-        <p>rise AFRICA skills • © 2026 • All rights reserved</p>
-    </footer>
+  <h2>My assignment videos</h2>
+  <div id="subs"></div>
+</div>
 
-    <script>
-        const SUPABASE_URL = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc';
+</div>
+<footer>rise AFRICA skills &middot; +263 77 300 1353 &middot; all@riseafricaskills.com</footer>
 
-        let supabaseClient = null;
-        let currentUser = null;
+<script>
+(function () {
+  'use strict';
+  var URL_ = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
+  var KEY_ = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc';
+  var sb = window.supabase.createClient(URL_, KEY_);
+  var $ = function (id) { return document.getElementById(id); };
 
-        // Initialize Supabase
-        function initSupabase() {
-            if (window.supabase) {
-                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-                console.log('[My Courses] Supabase initialized');
-            }
-        }
+  // Numbers match the badges on course-info.html so a student sees the same
+  // label everywhere. Courses not listed simply show no number.
+  var NUM = { 'pig-farming':1, 'pig-feed':2, 'cattle-steer-feed':3, 'broiler-layers-feed':4,
+              'dog-cat-feed':5, 'fish-feed':6, 'bakery':7, 'butchery':8 };
 
-        // Check authentication
-        async function checkAuth() {
-            initSupabase();
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function rowDate(r) {
+    var keys = ['created_at','enrolled_at','purchased_at','inserted_at','updated_at','date'];
+    for (var i = 0; i < keys.length; i++) {
+      if (r[keys[i]]) { var d = new Date(r[keys[i]]); if (!isNaN(d)) return d; }
+    }
+    return null;
+  }
+  function fmt(d) {
+    return d ? d.toLocaleDateString(undefined, { day:'numeric', month:'short', year:'numeric' }) : '';
+  }
+  function say(el, kind, text) { el.className = 'msg on ' + kind; el.textContent = text; }
 
-            if (!supabaseClient) {
-                showAuthRequired();
-                return;
-            }
+  function showGate(m) {
+    $('app').hidden = true; $('gate').hidden = false;
+    if (m) say($('gmsg'), 'err', m);
+  }
+  $('send').addEventListener('click', function () {
+    var em = $('em').value.trim();
+    if (!em) { say($('gmsg'), 'err', 'Enter the email you paid with.'); return; }
+    $('send').disabled = true;
+    sb.auth.signInWithOtp({ email: em, options: { emailRedirectTo: location.href } })
+      .then(function (r) {
+        $('send').disabled = false;
+        if (r.error) { say($('gmsg'), 'err', r.error.message); return; }
+        say($('gmsg'), 'ok', 'Sent. Open the link from that inbox on this device.');
+      });
+  });
+  $('out').addEventListener('click', function () {
+    sb.auth.signOut().then(function () { location.reload(); });
+  });
 
-            try {
-                const { data: { session } } = await supabaseClient.auth.getSession();
-                if (session && session.user) {
-                    currentUser = session.user;
-                    document.getElementById('userEmail').textContent = currentUser.email;
-                    console.log('[My Courses] User logged in:', currentUser.email);
-                    loadEnrolledCourses();
-                } else {
-                    showAuthRequired();
-                }
-            } catch (error) {
-                console.error('[My Courses] Auth check failed:', error);
-                showAuthRequired();
-            }
-        }
+  var STATUS = { submitted:{t:'Waiting for review',c:'p-wait'},
+                 reviewed:{t:'Reviewed - passed',c:'p-ok'},
+                 needs_redo:{t:'Needs another try',c:'p-bad'} };
 
-        function showAuthRequired() {
-            document.getElementById('authContainer').style.display = 'block';
-            document.getElementById('coursesContainer').style.display = 'none';
-        }
+  function load(email) {
+    return Promise.all([
+      sb.from('enrollments').select('*').eq('status','active').limit(200),
+      sb.from('courses').select('id,title').limit(1000),
+      sb.from('submissions').select('*').order('created_at',{ascending:false}).limit(200)
+    ]).then(function (res) {
+      var enr = res[0], crs = res[1], sbm = res[2];
+      if (enr.error) { showGate('Could not load your courses: ' + enr.error.message); return; }
 
-        async function loadEnrolledCourses() {
-            try {
-                // Get enrollments from localStorage (Supabase sync coming)
-                const enrollmentsData = localStorage.getItem('rise-africa-enrollments');
-                let enrollments = enrollmentsData ? JSON.parse(enrollmentsData) : [];
+      var titles = {};
+      (crs.data || []).forEach(function (c) { titles[c.id] = c.title; });
+      // Row level security already limits these to this student, but filter
+      // again here so a policy change can never leak someone else's row.
+      var mine = (enr.data || []).filter(function (r) {
+        return String(r.user_email||'').toLowerCase() === email.toLowerCase();
+      });
+      var subs = sbm.error ? [] : (sbm.data || []).filter(function (r) {
+        return String(r.user_email||'').toLowerCase() === email.toLowerCase();
+      });
 
-                // Filter by current user email
-                enrollments = enrollments.filter(e => e.userId === currentUser.id || e.email === currentUser.email);
+      $('sub').textContent = mine.length
+        ? mine.length + (mine.length === 1 ? ' course' : ' courses') + ' on this account'
+        : '';
 
-                console.log('[My Courses] Loaded', enrollments.length, 'enrollments');
+      if (!mine.length) {
+        $('courses').innerHTML = '<div class="empty">Nothing on this account yet.<br><br>' +
+          'If you have paid, check you signed in with the <strong>same email you paid with</strong> ' +
+          '&mdash; that is what we match on. Otherwise <a href="course-info.html">browse the courses</a> ' +
+          'or message us on <a href="https://wa.me/263773001353" target="_blank" rel="noopener">WhatsApp</a>.</div>';
+      } else {
+        mine.sort(function (a,b) { return (NUM[a.course_id]||99) - (NUM[b.course_id]||99); });
+        $('courses').innerHTML = '<div class="grid">' + mine.map(function (r) {
+          var n = NUM[r.course_id];
+          var when = fmt(rowDate(r));
+          return '<div class="c">' +
+            (n ? '<div class="n">COURSE ' + (n<10?'0'+n:n) + '</div>' : '') +
+            '<h3>' + esc(titles[r.course_id] || r.course_id) + '</h3>' +
+            '<div class="meta">' + esc(r.tier || 'course') +
+              (when ? ' &middot; since ' + esc(when) : '') +
+              (r.progress_percent != null ? ' &middot; ' + esc(r.progress_percent) + '% done' : '') +
+            '</div>' +
+            '<a class="open" href="' + esc(r.course_id) + '-lessons.html">Open the lessons &rarr;</a>' +
+          '</div>';
+        }).join('') + '</div>';
+      }
 
-                if (enrollments.length === 0) {
-                    showEmptyState();
-                    return;
-                }
+      if (!subs.length) {
+        $('subs').innerHTML = '<div class="empty">You have not sent any assignment videos yet. ' +
+          'Open a module and use the box under the capstone.</div>';
+      } else {
+        $('subs').innerHTML = subs.map(function (s) {
+          var st = STATUS[s.status] || STATUS.submitted;
+          return '<div class="sub-row"><div class="sub-head">' +
+            '<strong>' + esc(titles[s.course_id] || s.course_id) + ' &middot; Module ' + esc(s.module_num) + '</strong>' +
+            '<span class="pill ' + st.c + '">' + esc(st.t) + '</span></div>' +
+            '<div class="meta" style="font-size:.8rem;color:var(--muted);margin-top:.3rem">Sent ' +
+              esc(fmt(new Date(s.created_at))) + ' &middot; ' +
+              '<a href="' + esc(s.video_url) + '" target="_blank" rel="noopener">watch your video</a></div>' +
+            (s.feedback ? '<div class="fb"><b>Feedback from Tendayi</b><br>' +
+              esc(s.feedback).replace(/\n/g,'<br>') + '</div>' : '') +
+          '</div>';
+        }).join('');
+      }
+    });
+  }
 
-                // Load course data from Supabase
-                const { data: courses } = await supabaseClient.from('courses').select('*');
-                const coursesMap = {};
-                if (courses) {
-                    courses.forEach(c => {
-                        coursesMap[c.id] = c;
-                    });
-                }
-
-                // Render enrollments
-                document.getElementById('coursesContainer').style.display = 'block';
-                const coursesList = document.getElementById('coursesList');
-                coursesList.innerHTML = '';
-
-                enrollments.forEach(enrollment => {
-                    const course = coursesMap[enrollment.courseId];
-                    if (!course) return;
-
-                    const progress = enrollment.progress || 0;
-                    const isCompleted = progress === 100;
-                    const status = isCompleted ? 'completed' : 'in-progress';
-
-                    const card = document.createElement('div');
-                    card.className = 'course-card';
-                    card.innerHTML = `
-                        <div class="course-header">
-                            <div class="course-category">${course.category || 'Course'}</div>
-                            <div class="course-title">${course.title}</div>
-                        </div>
-                        <div class="course-body">
-                            <div class="progress-section">
-                                <div class="progress-label">
-                                    <span>Progress</span>
-                                    <span>${progress}%</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: ${progress}%"></div>
-                                </div>
-                            </div>
-
-                            <div class="course-stats">
-                                <div class="stat">
-                                    <div class="stat-value">${enrollment.completedModules?.length || 0}</div>
-                                    <div class="stat-label">Modules Done</div>
-                                </div>
-                                <div class="stat">
-                                    <div class="stat-value">${enrollment.completedQuizzes?.length || 0}</div>
-                                    <div class="stat-label">Quizzes Passed</div>
-                                </div>
-                            </div>
-
-                            ${enrollment.certificateIssued ? '<span class="badge completed">✓ Certificate Earned</span>' : '<span class="badge in-progress">In Progress</span>'}
-
-                            <div class="course-buttons" style="margin-top: 1.5rem;">
-                                <button class="btn btn-primary" onclick="openCourse('${enrollment.courseId}', '${enrollment.courseName}')">
-                                    ${isCompleted ? '📜 View Certificate' : '▶️ Continue Learning'}
-                                </button>
-                                <button class="btn btn-secondary" onclick="viewCourseDetails('${enrollment.courseId}')">
-                                    📊 Details
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                    coursesList.appendChild(card);
-                });
-
-            } catch (error) {
-                console.error('[My Courses] Error loading courses:', error);
-            }
-        }
-
-        function showEmptyState() {
-            document.getElementById('coursesContainer').style.display = 'block';
-            document.getElementById('coursesList').style.display = 'none';
-            document.getElementById('emptyState').style.display = 'block';
-        }
-
-        function openCourse(courseId, courseName) {
-            // Redirect to course content page
-            window.location.href = `course-content.html?courseId=${courseId}&courseName=${encodeURIComponent(courseName)}`;
-        }
-
-        function viewCourseDetails(courseId) {
-            // Show course details modal (future enhancement)
-            alert('Course details coming soon');
-        }
-
-        function redirectToLogin() {
-            // Redirect to login page (future enhancement)
-            alert('Login page coming soon - use index.html');
-        }
-
-        async function handleLogout() {
-            if (supabaseClient) {
-                await supabaseClient.auth.signOut();
-            }
-            localStorage.removeItem('authToken');
-            window.location.href = 'index.html';
-        }
-
-        // Check auth on page load
-        document.addEventListener('DOMContentLoaded', checkAuth);
-    </script>
+  sb.auth.getSession().then(function (r) {
+    var s = r && r.data && r.data.session;
+    if (!s || !s.user || !s.user.email) { showGate(); return; }
+    $('who').textContent = s.user.email;
+    $('out').hidden = false;
+    $('gate').hidden = true;
+    $('app').hidden = false;
+    return load(s.user.email);
+  });
+})();
+</script>
 </body>
 </html>
