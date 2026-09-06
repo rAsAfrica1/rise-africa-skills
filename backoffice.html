@@ -51,6 +51,8 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 .p-wait{background:rgba(226,160,63,.16);color:#ffcf8a}
 .p-bad{background:rgba(224,90,90,.16);color:#ffb3b3}
 .scroll{overflow-x:auto}
+.split{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:.9rem;margin-top:.9rem}
+.split h3{font-size:.82rem;color:var(--gold);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4rem}
 .note{color:var(--muted);font-size:.83rem;margin-top:.5rem}
 .callout{background:rgba(201,162,39,.08);border:1px solid var(--line);border-left:3px solid var(--gold);
   border-radius:0 10px 10px 0;padding:.85rem 1rem;margin:1rem 0;font-size:.88rem}
@@ -98,6 +100,10 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
     for what you were actually paid.
   </div>
 
+  <h2>Visitors</h2>
+  <div class="tiles" id="vtiles"></div>
+  <div id="vsplit" class="split"></div>
+
   <h2>Students per course</h2>
   <div class="scroll"><table id="bycourse"><tbody></tbody></table></div>
 
@@ -124,9 +130,6 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
   }
-  // The enrollments table has no created_at; different rows may carry a
-  // differently-named timestamp. Take whichever date-ish field is present
-  // rather than assuming one and rendering "Invalid Date".
   function rowDate(r) {
     var keys = ['created_at', 'enrolled_at', 'purchased_at', 'inserted_at', 'updated_at', 'date'];
     for (var i = 0; i < keys.length; i++) {
@@ -163,15 +166,19 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
       sb.from('enrollments').select('*').limit(5000),
       sb.from('courses').select('id,title').limit(1000),
       sb.from('submissions').select('id,user_email,course_id,module_num,title,status,created_at')
-        .order('created_at', { ascending: false }).limit(500)
+        .order('created_at', { ascending: false }).limit(500),
+      sb.from('page_views').select('path,course_id,page_kind,referrer_host,session_id,viewed_at')
+        .gte('viewed_at', new Date(Date.now() - 30 * 864e5).toISOString())
+        .order('viewed_at', { ascending: false }).limit(20000)
     ]).then(function (res) {
-      var enr = res[0], crs = res[1], sub = res[2];
+      var enr = res[0], crs = res[1], sub = res[2], pv = res[3];
       if (enr.error) { showGate('Could not read enrollments: ' + enr.error.message); return; }
       var rows = enr.data || [];
       var titles = {};
       (crs.data || []).forEach(function (c) { titles[c.id] = c.title; });
       var subs = sub.error ? [] : (sub.data || []);
       render(rows, titles, subs, sub.error);
+      renderVisitors(pv.error ? [] : (pv.data || []), titles, pv.error);
     });
   }
 
@@ -237,6 +244,63 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
     $('stamp').textContent = 'Live from Supabase - read ' + new Date().toLocaleString();
   }
 
+  // A "visit" is one browser tab session, so a student reading six lessons in
+  // a row counts once, not six times.
+  function renderVisitors(views, titles, err) {
+    if (err) {
+      $('vtiles').innerHTML = '<div class="empty">Could not read page_views: ' + esc(err.message) +
+        '. Has analytics.sql been run?</div>';
+      return;
+    }
+    if (!views.length) {
+      $('vtiles').innerHTML = '<div class="empty">No visits recorded yet. If track.js has just gone up, ' +
+        'open the site in another browser and refresh this page.</div>';
+      return;
+    }
+
+    var now = Date.now();
+    function within(days) {
+      var cut = now - days * 864e5, s = {}, n = 0;
+      views.forEach(function (v) {
+        if (new Date(v.viewed_at).getTime() >= cut) { n++; s[v.session_id] = 1; }
+      });
+      return { views: n, visits: Object.keys(s).length };
+    }
+    var d1 = within(1), d7 = within(7), d30 = within(30);
+
+    $('vtiles').innerHTML =
+      tile(d1.visits, 'Visits today') +
+      tile(d7.visits, 'Visits, 7 days') +
+      tile(d30.visits, 'Visits, 30 days') +
+      tile(d30.views, 'Page views, 30 days');
+
+    function top(keyFn, limit) {
+      var c = {};
+      views.forEach(function (v) { var k = keyFn(v); if (k) c[k] = (c[k] || 0) + 1; });
+      return Object.keys(c).sort(function (a, b) { return c[b] - c[a]; })
+                   .slice(0, limit).map(function (k) { return [k, c[k]]; });
+    }
+    function table(head, rows, nameFn) {
+      if (!rows.length) return '<div class="empty">Nothing yet.</div>';
+      return '<div class="scroll"><table><thead><tr><th>' + head +
+        '</th><th class="num">Views</th></tr></thead><tbody>' +
+        rows.map(function (r) {
+          return '<tr><td>' + esc(nameFn ? nameFn(r[0]) : r[0]) +
+                 '</td><td class="num">' + r[1] + '</td></tr>';
+        }).join('') + '</tbody></table></div>';
+    }
+
+    $('vsplit').innerHTML =
+      '<div><h3>Most viewed pages</h3>' +
+        table('Page', top(function (v) { return v.path; }, 10)) + '</div>' +
+      '<div><h3>Interest by course</h3>' +
+        table('Course', top(function (v) { return v.course_id; }, 10),
+              function (k) { return titles[k] || k; }) + '</div>' +
+      '<div><h3>Where visitors came from</h3>' +
+        table('Referrer', top(function (v) { return v.referrer_host; }, 8)) +
+        '<p class="note">Blank means typed the address or came from a bookmark.</p></div>';
+  }
+
   function tile(n, label, alert) {
     return '<div class="tile' + (alert ? ' alert' : '') + '"><div class="n">' + n +
            '</div><div class="l">' + esc(label) + '</div></div>';
@@ -251,7 +315,6 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
     $('app').hidden = false;
     return load();
   });
-})();
-</script>
+})();</script>
 </body>
 </html>
