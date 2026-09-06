@@ -4,7 +4,7 @@
 
   document.documentElement.style.visibility = 'hidden'; (function () { if (!/-module-?\d+$/i.test(location.pathname.split('/').pop().replace('.html',''))) return; var mt = document.createElement('meta'); mt.name = 'robots'; mt.content = 'noindex,nofollow'; document.head.appendChild(mt); })();
 
-  function getCourseSlug() {
+  (function () { var t = document.createElement('script'); t.src = '/track.js'; t.defer = true; document.head.appendChild(t); })(); function getCourseSlug() {
     if (window.RAS_COURSE_SLUG) return window.RAS_COURSE_SLUG;
     const file = window.location.pathname.split('/').pop().replace('.html', '');
     // Strip BOTH page-type suffixes. Without the -lessons case, the course
