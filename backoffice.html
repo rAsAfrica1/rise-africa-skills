@@ -77,6 +77,8 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
   </div>
 </header>
 <div class="wrap">
+<div class="gate" id="wait"><h2>Checking your sign-in&hellip;</h2>
+  <p class="note">One moment. If you arrived from an emailed link this is it being read.</p></div>
 <div class="gate" id="gate" hidden>
   <h2>Director sign-in</h2>
   <p class="note">Supabase emails you a one-time link. Only addresses in the admins table can see anything here.</p>
@@ -111,6 +113,19 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
   'use strict';
   var URL_ = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
   var KEY_ = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc';
+  // If the Supabase library did not load, say so instead of throwing an
+  // error nobody sees. Happens on a blocked network, or in a preview frame
+  // that refuses external scripts.
+  if (!window.supabase || !window.supabase.createClient) {
+    var w = document.getElementById('wait');
+    if (w) {
+      w.innerHTML = '<h2>Could not load the sign-in library</h2>' +
+        '<p class="note">The page needs supabase-js from unpkg.com and it did not load. ' +
+        'Check your connection and refresh. If you are viewing this file as a preview ' +
+        'rather than on riseafricaskills.com, that is the reason.</p>';
+    }
+    return;
+  }
   var sb = window.supabase.createClient(URL_, KEY_);
   var $ = function (id) { return document.getElementById(id); };
   function esc(s) {
@@ -130,6 +145,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
   }
   function say(el, kind, text) { el.className = 'msg on ' + kind; el.textContent = text; }
   function showGate(m) {
+    $('wait').hidden = true;
     $('app').hidden = true; $('gate').hidden = false;
     if (m) say($('gmsg'), 'err', m);
   }
@@ -276,15 +292,59 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
     return '<div class="tile' + (alert ? ' alert' : '') + '"><div class="n">' + n +
            '</div><div class="l">' + esc(label) + '</div></div>';
   }
-  sb.auth.getSession().then(function (r) {
-    var s = r && r.data && r.data.session;
-    if (!s || !s.user || !s.user.email) { showGate(); return; }
+  /* ------------------------------------------------------------------
+     Deciding whether you are logged in.
+
+     The old version called getSession() once, the instant the page loaded,
+     and showed the login form if it came back empty. That is a race: when
+     you arrive from a magic link the token is still sitting in the URL and
+     the Supabase SDK has not finished turning it into a session yet. So
+     clicking the emailed link landed you back on the login form, looking
+     like the link had failed when it had not.
+
+     Now: enter() is called by whichever finishes first, and runs once.
+     ------------------------------------------------------------------ */
+  var entered = false;
+  function enter(s) {
+    if (entered) return;
+    if (!s || !s.user || !s.user.email) return;
+    entered = true;
+    $('wait').hidden = true;
     $('who').textContent = s.user.email;
     $('out').hidden = false;
     $('gate').hidden = true;
     $('app').hidden = false;
-    return load();
+    // Take the token out of the address bar so it is not left in history.
+    if (location.hash || location.search) {
+      history.replaceState(null, '', location.pathname);
+    }
+    load();
+  }
+
+  // Fires when the SDK finishes reading a token out of the URL.
+  sb.auth.onAuthStateChange(function (event, s) { enter(s); });
+
+  // Some projects send the token as ?code= instead of in the hash.
+  var code = new URLSearchParams(location.search).get('code');
+  if (code) {
+    sb.auth.exchangeCodeForSession(code).then(function (r) {
+      enter(r && r.data && r.data.session);
+    }).catch(function () {});
+  }
+
+  // An already-logged-in visitor with no token in the URL.
+  sb.auth.getSession().then(function (r) {
+    enter(r && r.data && r.data.session);
   });
+
+  // If nothing has produced a session after a moment, show the login form.
+  // Deliberately not instant: that is what caused the original bug.
+  setTimeout(function () {
+    if (!entered) {
+      var err = new URLSearchParams(location.hash.replace(/^#/, '')).get('error_description');
+      showGate(err ? err + '. Magic links last one hour and work once — request another.' : null);
+    }
+  }, 2500);
 })();
 </script>
 </body>
