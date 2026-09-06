@@ -10,7 +10,7 @@
       --line:rgba(201,162,39,.22);--ok:#27ae60;--warn:#e2a03f;--bad:#e05a5a}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--darker);color:#fff;line-height:1.6}
-a{color:var(--gold)}
+a{color:var(--gold)}F
 header{position:sticky;top:0;background:rgba(15,15,26,.96);border-bottom:1px solid var(--line);
   padding:.7rem 1rem;display:flex;align-items:center;gap:.6rem;z-index:9;flex-wrap:wrap}
 .logo{width:34px;height:34px;border-radius:8px;background:var(--gold);color:var(--darker);
@@ -166,7 +166,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
       sb.from('enrollments').select('*').limit(5000),
       sb.from('courses').select('id,title').limit(1000),
       sb.from('submissions').select('id,user_email,course_id,module_num,title,status,created_at')
-        .order('created_at', { ascending: false }).limit(500),
+        .order('created_at', { ascending: false }).limit(500), sb.from('page_views').select('path,course_id,page_kind,referrer_host,session_id,viewed_at').gte('viewed_at', new Date(Date.now() - 30 * 864e5).toISOString()).order('viewed_at', { ascending: false }).limit(20000),
       sb.from('page_views').select('path,course_id,page_kind,referrer_host,session_id,viewed_at')
         .gte('viewed_at', new Date(Date.now() - 30 * 864e5).toISOString())
         .order('viewed_at', { ascending: false }).limit(20000)
