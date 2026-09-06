@@ -10,7 +10,7 @@
       --line:rgba(201,162,39,.22);--ok:#27ae60;--warn:#e2a03f;--bad:#e05a5a}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--darker);color:#fff;line-height:1.6}
-a{color:var(--gold)}F
+a{color:var(--gold)}
 header{position:sticky;top:0;background:rgba(15,15,26,.96);border-bottom:1px solid var(--line);
   padding:.7rem 1rem;display:flex;align-items:center;gap:.6rem;z-index:9;flex-wrap:wrap}
 .logo{width:34px;height:34px;border-radius:8px;background:var(--gold);color:var(--darker);
@@ -24,7 +24,7 @@ h1{font-size:1.6rem;color:var(--gold);margin-bottom:.2rem}
 .sub{color:var(--muted);font-size:.9rem;margin-bottom:1.4rem}
 h2{font-size:1.1rem;color:var(--gold);margin:2rem 0 .7rem}
 .gate{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.4rem;max-width:460px;margin:2rem auto}
-.gate h2{margin-top:0}F
+.gate h2{margin-top:0}
 input{font:inherit;font-size:1rem;width:100%;padding:.7rem .8rem;border-radius:8px;
   border:1px solid var(--line);background:var(--dark);color:#fff;margin:.6rem 0}
 button.go{font:inherit;font-weight:800;background:var(--gold);color:var(--darker);border:0;
@@ -50,7 +50,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 .p-ok{background:rgba(39,174,96,.16);color:#7fd8a0}
 .p-wait{background:rgba(226,160,63,.16);color:#ffcf8a}
 .p-bad{background:rgba(224,90,90,.16);color:#ffb3b3}
-.scroll{overflow-x:auto}.split{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:.9rem;margin-top:.9rem}.split h3{font-size:.82rem;color:var(--gold);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4rem}
+.scroll{overflow-x:auto}
 .split{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:.9rem;margin-top:.9rem}
 .split h3{font-size:.82rem;color:var(--gold);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4rem}
 .note{color:var(--muted);font-size:.83rem;margin-top:.5rem}
@@ -66,7 +66,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
 </head>
 <body>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-
+<script src="/track.js" defer></script>
 <header>
   <div class="logo">rAs</div><div class="brand">rise AFRICA skills</div>
   <div class="right">
@@ -76,9 +76,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
     <button class="btn-sm" id="out" hidden>Sign out</button>
   </div>
 </header>
-
 <div class="wrap">
-
 <div class="gate" id="gate" hidden>
   <h2>Director sign-in</h2>
   <p class="note">Supabase emails you a one-time link. Only addresses in the admins table can see anything here.</p>
@@ -86,37 +84,28 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
   <button class="go" id="send">Send me a link</button>
   <div class="msg" id="gmsg"></div>
 </div>
-
 <div id="app" hidden>
   <h1>Backoffice</h1>
   <p class="sub" id="stamp">Live from Supabase.</p>
-
   <div class="tiles" id="tiles"></div>
-
   <div class="callout">
     <b>Money lives in Stripe, not here.</b> This page counts access granted, not cash received.
     A gift, a manual row or a failed refund all look the same to it. Check
     <a href="https://dashboard.stripe.com/payments" target="_blank" rel="noopener">Stripe Payments</a>
     for what you were actually paid.
   </div>
-
   <h2>Visitors</h2>
   <div class="tiles" id="vtiles"></div>
   <div id="vsplit" class="split"></div>
-
-  <h2>Visitors</h2><div class="tiles" id="vtiles"></div><div id="vsplit" class="split"></div><h2>Students per course</h2>
+  <h2>Students per course</h2>
   <div class="scroll"><table id="bycourse"><tbody></tbody></table></div>
-
   <h2>Most recent enrollments</h2>
   <div class="scroll"><table id="recent"><tbody></tbody></table></div>
-
   <h2>Assignment videos waiting for you</h2>
   <div id="subs"></div>
 </div>
-
 </div>
 <footer>rise AFRICA skills &middot; backoffice &middot; admins only</footer>
-
 <script>
 (function () {
   'use strict';
@@ -124,7 +113,6 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
   var KEY_ = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc';
   var sb = window.supabase.createClient(URL_, KEY_);
   var $ = function (id) { return document.getElementById(id); };
-
   function esc(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
@@ -141,7 +129,6 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
     return d ? d.toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' }) : '-';
   }
   function say(el, kind, text) { el.className = 'msg on ' + kind; el.textContent = text; }
-
   function showGate(m) {
     $('app').hidden = true; $('gate').hidden = false;
     if (m) say($('gmsg'), 'err', m);
@@ -160,13 +147,12 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
   $('out').addEventListener('click', function () {
     sb.auth.signOut().then(function () { location.reload(); });
   });
-
   function load() {
     return Promise.all([
       sb.from('enrollments').select('*').limit(5000),
       sb.from('courses').select('id,title').limit(1000),
       sb.from('submissions').select('id,user_email,course_id,module_num,title,status,created_at')
-        .order('created_at', { ascending: false }).limit(500), sb.from('page_views').select('path,course_id,page_kind,referrer_host,session_id,viewed_at').gte('viewed_at', new Date(Date.now() - 30 * 864e5).toISOString()).order('viewed_at', { ascending: false }).limit(20000),
+        .order('created_at', { ascending: false }).limit(500),
       sb.from('page_views').select('path,course_id,page_kind,referrer_host,session_id,viewed_at')
         .gte('viewed_at', new Date(Date.now() - 30 * 864e5).toISOString())
         .order('viewed_at', { ascending: false }).limit(20000)
@@ -177,11 +163,10 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
       var titles = {};
       (crs.data || []).forEach(function (c) { titles[c.id] = c.title; });
       var subs = sub.error ? [] : (sub.data || []);
-      render(rows, titles, subs, sub.error); renderVisitors(pv.error ? [] : (pv.data || []), titles, pv.error);
+      render(rows, titles, subs, sub.error);
       renderVisitors(pv.error ? [] : (pv.data || []), titles, pv.error);
     });
   }
-
   function render(rows, titles, subs, subErr) {
     var active = rows.filter(function (r) { return r.status === 'active'; });
     var students = {}, courses = {};
@@ -190,13 +175,11 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
       courses[r.course_id] = (courses[r.course_id] || 0) + 1;
     });
     var waiting = subs.filter(function (s) { return s.status === 'submitted'; }).length;
-
     $('tiles').innerHTML =
       tile(Object.keys(students).length, 'Students') +
       tile(active.length, 'Active enrollments') +
       tile(Object.keys(courses).length, 'Courses with students') +
       tile(waiting, 'Videos to review', waiting > 0);
-
     var order = Object.keys(courses).sort(function (a, b) { return courses[b] - courses[a]; });
     if (order.length) {
       $('bycourse').innerHTML =
@@ -208,7 +191,6 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
     } else {
       $('bycourse').outerHTML = '<div class="empty">No active enrollments yet.</div>';
     }
-
     var sorted = rows.slice().sort(function (a, b) {
       var da = rowDate(a), db = rowDate(b);
       return (db ? db.getTime() : 0) - (da ? da.getTime() : 0);
@@ -223,7 +205,6 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
           '<td><span class="pill ' + cls + '">' + esc(r.status) + '</span></td>' +
           '<td>' + esc(fmt(rowDate(r))) + '</td></tr>';
       }).join('') + '</tbody>';
-
     if (subErr) {
       $('subs').innerHTML = '<div class="empty">Could not read submissions: ' + esc(subErr.message) + '</div>';
     } else if (!waiting) {
@@ -240,24 +221,18 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
         }).join('') + '</tbody></table></div>' +
         '<p class="note"><a href="assignment-review.html">Open the review page to watch and mark them &rarr;</a></p>';
     }
-
     $('stamp').textContent = 'Live from Supabase - read ' + new Date().toLocaleString();
   }
-
-  // A "visit" is one browser tab session, so a student reading six lessons in
-  // a row counts once, not six times.
   function renderVisitors(views, titles, err) {
     if (err) {
       $('vtiles').innerHTML = '<div class="empty">Could not read page_views: ' + esc(err.message) +
-        '. Has analytics.sql been run?</div>';
+        '. Has the analytics SQL been run?</div>';
       return;
     }
     if (!views.length) {
-      $('vtiles').innerHTML = '<div class="empty">No visits recorded yet. If track.js has just gone up, ' +
-        'open the site in another browser and refresh this page.</div>';
+      $('vtiles').innerHTML = '<div class="empty">No visits recorded yet. Open the site in another browser, then refresh this page.</div>';
       return;
     }
-
     var now = Date.now();
     function within(days) {
       var cut = now - days * 864e5, s = {}, n = 0;
@@ -267,13 +242,11 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
       return { views: n, visits: Object.keys(s).length };
     }
     var d1 = within(1), d7 = within(7), d30 = within(30);
-
     $('vtiles').innerHTML =
       tile(d1.visits, 'Visits today') +
       tile(d7.visits, 'Visits, 7 days') +
       tile(d30.visits, 'Visits, 30 days') +
       tile(d30.views, 'Page views, 30 days');
-
     function top(keyFn, limit) {
       var c = {};
       views.forEach(function (v) { var k = keyFn(v); if (k) c[k] = (c[k] || 0) + 1; });
@@ -289,7 +262,6 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
                  '</td><td class="num">' + r[1] + '</td></tr>';
         }).join('') + '</tbody></table></div>';
     }
-
     $('vsplit').innerHTML =
       '<div><h3>Most viewed pages</h3>' +
         table('Page', top(function (v) { return v.path; }, 10)) + '</div>' +
@@ -300,12 +272,10 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
         table('Referrer', top(function (v) { return v.referrer_host; }, 8)) +
         '<p class="note">Blank means typed the address or came from a bookmark.</p></div>';
   }
-
-  function renderVisitors(views, titles, err) { var V=document.getElementById('vtiles'), S=document.getElementById('vsplit'); if (err) { V.innerHTML = '<div class="empty">Could not read page_views: ' + esc(err.message) + '. Has the analytics SQL been run?</div>'; return; } if (!views.length) { V.innerHTML = '<div class="empty">No visits recorded yet. Open the site in another browser, then refresh this page.</div>'; return; } var now = Date.now(); function within(days) { var cut = now - days * 864e5, ss = {}, n = 0; views.forEach(function (v) { if (new Date(v.viewed_at).getTime() >= cut) { n++; ss[v.session_id] = 1; } }); return { views: n, visits: Object.keys(ss).length }; } var d1 = within(1), d7 = within(7), d30 = within(30); V.innerHTML = tile(d1.visits, 'Visits today') + tile(d7.visits, 'Visits, 7 days') + tile(d30.visits, 'Visits, 30 days') + tile(d30.views, 'Page views, 30 days'); function top(fn, lim) { var c = {}; views.forEach(function (v) { var k = fn(v); if (k) c[k] = (c[k] || 0) + 1; }); return Object.keys(c).sort(function (a, b) { return c[b] - c[a]; }).slice(0, lim).map(function (k) { return [k, c[k]]; }); } function tbl(head, rows, nameFn) { if (!rows.length) return '<div class="empty">Nothing yet.</div>'; return '<div class="scroll"><table><thead><tr><th>' + head + '</th><th class="num">Views</th></tr></thead><tbody>' + rows.map(function (r) { return '<tr><td>' + esc(nameFn ? nameFn(r[0]) : r[0]) + '</td><td class="num">' + r[1] + '</td></tr>'; }).join('') + '</tbody></table></div>'; } S.innerHTML = '<div><h3>Most viewed pages</h3>' + tbl('Page', top(function (v) { return v.path; }, 10)) + '</div>' + '<div><h3>Interest by course</h3>' + tbl('Course', top(function (v) { return v.course_id; }, 10), function (k) { return titles[k] || k; }) + '</div>' + '<div><h3>Where visitors came from</h3>' + tbl('Referrer', top(function (v) { return v.referrer_host; }, 8)) + '<p class="note">Blank means typed the address or came from a bookmark.</p></div>'; } function tile(n, label, alert) {
+  function tile(n, label, alert) {
     return '<div class="tile' + (alert ? ' alert' : '') + '"><div class="n">' + n +
            '</div><div class="l">' + esc(label) + '</div></div>';
   }
-
   sb.auth.getSession().then(function (r) {
     var s = r && r.data && r.data.session;
     if (!s || !s.user || !s.user.email) { showGate(); return; }
@@ -315,6 +285,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align
     $('app').hidden = false;
     return load();
   });
-})();</script>
+})();
+</script>
 </body>
 </html>
