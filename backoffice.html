@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Backoffice - rise AFRICA skills</title>
+<style>
+:root{--gold:#c9a227;--darker:#0f0f1a;--dark:#16162a;--card:#1e1e32;--muted:#9a9ab0;
+      --line:rgba(201,162,39,.22);--ok:#27ae60;--warn:#e2a03f;--bad:#e05a5a}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--darker);color:#fff;line-height:1.6}
+a{color:var(--gold)}
+header{position:sticky;top:0;background:rgba(15,15,26,.96);border-bottom:1px solid var(--line);
+  padding:.7rem 1rem;display:flex;align-items:center;gap:.6rem;z-index:9;flex-wrap:wrap}
+.logo{width:34px;height:34px;border-radius:8px;background:var(--gold);color:var(--darker);
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem}
+header .brand{font-weight:700;font-size:.95rem}
+header .right{margin-left:auto;display:flex;gap:.8rem;align-items:center;font-size:.82rem;color:var(--muted)}
+header .btn-sm{text-decoration:none;font-size:.8rem;border:1px solid var(--gold);
+  padding:.3rem .75rem;border-radius:20px;color:var(--gold);cursor:pointer;background:none;font-family:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:1.4rem 1rem 4rem}
+h1{font-size:1.6rem;color:var(--gold);margin-bottom:.2rem}
+.sub{color:var(--muted);font-size:.9rem;margin-bottom:1.4rem}
+h2{font-size:1.1rem;color:var(--gold);margin:2rem 0 .7rem}
+.gate{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.4rem;max-width:460px;margin:2rem auto}
+.gate h2{margin-top:0}
+input{font:inherit;font-size:1rem;width:100%;padding:.7rem .8rem;border-radius:8px;
+  border:1px solid var(--line);background:var(--dark);color:#fff;margin:.6rem 0}
+button.go{font:inherit;font-weight:800;background:var(--gold);color:var(--darker);border:0;
+  border-radius:8px;padding:.65rem 1.2rem;cursor:pointer}
+button.go[disabled]{opacity:.5;cursor:default}
+.msg{margin-top:.8rem;padding:.7rem .9rem;border-radius:8px;font-size:.88rem;display:none}
+.msg.on{display:block}
+.msg.err{background:rgba(224,90,90,.12);border:1px solid var(--bad);color:#ffb3b3}
+.msg.ok{background:rgba(39,174,96,.12);border:1px solid var(--ok);color:#9fe0b8}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:.8rem;margin-bottom:.5rem}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem}
+.tile .n{font-size:2rem;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.tile .l{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:.2rem}
+.tile.alert .n{color:var(--warn)}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);
+  border-radius:12px;overflow:hidden;font-size:.9rem}
+th,td{padding:.6rem .8rem;text-align:left;border-bottom:1px solid rgba(255,255,255,.05)}
+th{background:rgba(201,162,39,.08);color:var(--gold);font-size:.78rem;text-transform:uppercase;
+  letter-spacing:.05em;font-weight:700}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.pill{display:inline-block;font-size:.72rem;font-weight:700;padding:.15rem .55rem;border-radius:999px}
+.p-ok{background:rgba(39,174,96,.16);color:#7fd8a0}
+.p-wait{background:rgba(226,160,63,.16);color:#ffcf8a}
+.p-bad{background:rgba(224,90,90,.16);color:#ffb3b3}
+.scroll{overflow-x:auto}
+.note{color:var(--muted);font-size:.83rem;margin-top:.5rem}
+.callout{background:rgba(201,162,39,.08);border:1px solid var(--line);border-left:3px solid var(--gold);
+  border-radius:0 10px 10px 0;padding:.85rem 1rem;margin:1rem 0;font-size:.88rem}
+.callout b{color:var(--gold)}
+.empty{color:var(--muted);padding:1.4rem;text-align:center;background:var(--card);
+  border:1px solid var(--line);border-radius:12px;font-size:.9rem}
+footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align:center;
+  color:var(--muted);font-size:.78rem}
+@media(max-width:560px){.tile .n{font-size:1.6rem}}
+</style>
+</head>
+<body>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+<header>
+  <div class="logo">rAs</div><div class="brand">rise AFRICA skills</div>
+  <div class="right">
+    <span id="who"></span>
+    <a href="assignment-review.html" class="btn-sm">Assignments</a>
+    <a href="index.html" class="btn-sm">Site</a>
+    <button class="btn-sm" id="out" hidden>Sign out</button>
+  </div>
+</header>
+
+<div class="wrap">
+
+<div class="gate" id="gate" hidden>
+  <h2>Director sign-in</h2>
+  <p class="note">Supabase emails you a one-time link. Only addresses in the admins table can see anything here.</p>
+  <input type="email" id="em" placeholder="all@riseafricaskills.com" autocomplete="email">
+  <button class="go" id="send">Send me a link</button>
+  <div class="msg" id="gmsg"></div>
+</div>
+
+<div id="app" hidden>
+  <h1>Backoffice</h1>
+  <p class="sub" id="stamp">Live from Supabase.</p>
+
+  <div class="tiles" id="tiles"></div>
+
+  <div class="callout">
+    <b>Money lives in Stripe, not here.</b> This page counts access granted, not cash received.
+    A gift, a manual row or a failed refund all look the same to it. Check
+    <a href="https://dashboard.stripe.com/payments" target="_blank" rel="noopener">Stripe Payments</a>
+    for what you were actually paid.
+  </div>
+
+  <h2>Students per course</h2>
+  <div class="scroll"><table id="bycourse"><tbody></tbody></table></div>
+
+  <h2>Most recent enrollments</h2>
+  <div class="scroll"><table id="recent"><tbody></tbody></table></div>
+
+  <h2>Assignment videos waiting for you</h2>
+  <div id="subs"></div>
+</div>
+
+</div>
+<footer>rise AFRICA skills &middot; backoffice &middot; admins only</footer>
+
+<script>
+(function () {
+  'use strict';
+  var URL_ = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
+  var KEY_ = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc';
+  var sb = window.supabase.createClient(URL_, KEY_);
+  var $ = function (id) { return document.getElementById(id); };
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  // The enrollments table has no created_at; different rows may carry a
+  // differently-named timestamp. Take whichever date-ish field is present
+  // rather than assuming one and rendering "Invalid Date".
+  function rowDate(r) {
+    var keys = ['created_at', 'enrolled_at', 'purchased_at', 'inserted_at', 'updated_at', 'date'];
+    for (var i = 0; i < keys.length; i++) {
+      if (r[keys[i]]) { var d = new Date(r[keys[i]]); if (!isNaN(d)) return d; }
+    }
+    return null;
+  }
+  function fmt(d) {
+    return d ? d.toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' }) : '-';
+  }
+  function say(el, kind, text) { el.className = 'msg on ' + kind; el.textContent = text; }
+
+  function showGate(m) {
+    $('app').hidden = true; $('gate').hidden = false;
+    if (m) say($('gmsg'), 'err', m);
+  }
+  $('send').addEventListener('click', function () {
+    var em = $('em').value.trim();
+    if (!em) { say($('gmsg'), 'err', 'Enter your email address.'); return; }
+    $('send').disabled = true;
+    sb.auth.signInWithOtp({ email: em, options: { emailRedirectTo: location.href } })
+      .then(function (r) {
+        $('send').disabled = false;
+        if (r.error) { say($('gmsg'), 'err', r.error.message); return; }
+        say($('gmsg'), 'ok', 'Check that inbox and open the link on this device.');
+      });
+  });
+  $('out').addEventListener('click', function () {
+    sb.auth.signOut().then(function () { location.reload(); });
+  });
+
+  function load() {
+    return Promise.all([
+      sb.from('enrollments').select('*').limit(5000),
+      sb.from('courses').select('id,title').limit(1000),
+      sb.from('submissions').select('id,user_email,course_id,module_num,title,status,created_at')
+        .order('created_at', { ascending: false }).limit(500)
+    ]).then(function (res) {
+      var enr = res[0], crs = res[1], sub = res[2];
+      if (enr.error) { showGate('Could not read enrollments: ' + enr.error.message); return; }
+      var rows = enr.data || [];
+      var titles = {};
+      (crs.data || []).forEach(function (c) { titles[c.id] = c.title; });
+      var subs = sub.error ? [] : (sub.data || []);
+      render(rows, titles, subs, sub.error);
+    });
+  }
+
+  function render(rows, titles, subs, subErr) {
+    var active = rows.filter(function (r) { return r.status === 'active'; });
+    var students = {}, courses = {};
+    active.forEach(function (r) {
+      students[String(r.user_email || '').toLowerCase()] = 1;
+      courses[r.course_id] = (courses[r.course_id] || 0) + 1;
+    });
+    var waiting = subs.filter(function (s) { return s.status === 'submitted'; }).length;
+
+    $('tiles').innerHTML =
+      tile(Object.keys(students).length, 'Students') +
+      tile(active.length, 'Active enrollments') +
+      tile(Object.keys(courses).length, 'Courses with students') +
+      tile(waiting, 'Videos to review', waiting > 0);
+
+    var order = Object.keys(courses).sort(function (a, b) { return courses[b] - courses[a]; });
+    if (order.length) {
+      $('bycourse').innerHTML =
+        '<thead><tr><th>Course</th><th class="num">Students</th></tr></thead><tbody>' +
+        order.map(function (c) {
+          return '<tr><td>' + esc(titles[c] || c) + '<div class="note">' + esc(c) + '</div></td>' +
+                 '<td class="num">' + courses[c] + '</td></tr>';
+        }).join('') + '</tbody>';
+    } else {
+      $('bycourse').outerHTML = '<div class="empty">No active enrollments yet.</div>';
+    }
+
+    var sorted = rows.slice().sort(function (a, b) {
+      var da = rowDate(a), db = rowDate(b);
+      return (db ? db.getTime() : 0) - (da ? da.getTime() : 0);
+    }).slice(0, 25);
+    $('recent').innerHTML =
+      '<thead><tr><th>Student</th><th>Course</th><th>Tier</th><th>Status</th><th>When</th></tr></thead><tbody>' +
+      sorted.map(function (r) {
+        var cls = r.status === 'active' ? 'p-ok' : 'p-bad';
+        return '<tr><td>' + esc(r.user_email) + '</td>' +
+          '<td>' + esc(titles[r.course_id] || r.course_id) + '</td>' +
+          '<td>' + esc(r.tier || '-') + '</td>' +
+          '<td><span class="pill ' + cls + '">' + esc(r.status) + '</span></td>' +
+          '<td>' + esc(fmt(rowDate(r))) + '</td></tr>';
+      }).join('') + '</tbody>';
+
+    if (subErr) {
+      $('subs').innerHTML = '<div class="empty">Could not read submissions: ' + esc(subErr.message) + '</div>';
+    } else if (!waiting) {
+      $('subs').innerHTML = '<div class="empty">Nothing waiting. ' +
+        (subs.length ? subs.length + ' submission(s) already reviewed.' : 'No videos submitted yet.') + '</div>';
+    } else {
+      $('subs').innerHTML = '<div class="scroll"><table><thead><tr><th>Student</th><th>Course</th>' +
+        '<th class="num">Module</th><th>Sent</th></tr></thead><tbody>' +
+        subs.filter(function (s) { return s.status === 'submitted'; }).slice(0, 25).map(function (s) {
+          return '<tr><td>' + esc(s.user_email) + '</td>' +
+            '<td>' + esc(titles[s.course_id] || s.course_id) + '</td>' +
+            '<td class="num">' + esc(s.module_num) + '</td>' +
+            '<td>' + esc(fmt(new Date(s.created_at))) + '</td></tr>';
+        }).join('') + '</tbody></table></div>' +
+        '<p class="note"><a href="assignment-review.html">Open the review page to watch and mark them &rarr;</a></p>';
+    }
+
+    $('stamp').textContent = 'Live from Supabase - read ' + new Date().toLocaleString();
+  }
+
+  function tile(n, label, alert) {
+    return '<div class="tile' + (alert ? ' alert' : '') + '"><div class="n">' + n +
+           '</div><div class="l">' + esc(label) + '</div></div>';
+  }
+
+  sb.auth.getSession().then(function (r) {
+    var s = r && r.data && r.data.session;
+    if (!s || !s.user || !s.user.email) { showGate(); return; }
+    $('who').textContent = s.user.email;
+    $('out').hidden = false;
+    $('gate').hidden = true;
+    $('app').hidden = false;
+    return load();
+  });
+})();
+</script>
+</body>
+</html>
