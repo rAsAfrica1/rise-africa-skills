@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Grant access - rise AFRICA skills</title>
+<style>
+:root{--gold:#c9a227;--darker:#0f0f1a;--dark:#16162a;--card:#1e1e32;--muted:#9a9ab0;
+      --line:rgba(201,162,39,.22);--ok:#27ae60;--warn:#e2a03f;--bad:#e05a5a}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--darker);color:#fff;line-height:1.6}
+a{color:var(--gold)}
+header{position:sticky;top:0;background:rgba(15,15,26,.96);border-bottom:1px solid var(--line);
+  padding:.7rem 1rem;display:flex;align-items:center;gap:.6rem;z-index:9;flex-wrap:wrap}
+.logo{width:34px;height:34px;border-radius:8px;background:var(--gold);color:var(--darker);
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem}
+header .brand{font-weight:700;font-size:.95rem}
+header .right{margin-left:auto;display:flex;gap:.8rem;align-items:center;font-size:.82rem;color:var(--muted)}
+header .btn-sm{text-decoration:none;font-size:.8rem;border:1px solid var(--gold);padding:.3rem .75rem;
+  border-radius:20px;color:var(--gold);cursor:pointer;background:none;font-family:inherit}
+.wrap{max-width:640px;margin:0 auto;padding:1.4rem 1rem 4rem}
+h1{font-size:1.5rem;color:var(--gold);margin-bottom:.2rem}
+.sub{color:var(--muted);font-size:.9rem;margin-bottom:1.2rem}
+.gate,.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.4rem;margin-bottom:1rem}
+label{display:block;font-weight:600;font-size:.88rem;margin:.9rem 0 .3rem}
+input,select{font:inherit;font-size:1rem;width:100%;padding:.7rem .8rem;border-radius:8px;
+  border:1px solid var(--line);background:var(--dark);color:#fff}
+button.go{font:inherit;font-weight:800;background:var(--gold);color:var(--darker);border:0;
+  border-radius:8px;padding:.75rem 1.2rem;cursor:pointer;width:100%;margin-top:1.2rem;font-size:1rem}
+button.go[disabled]{opacity:.5;cursor:default}
+.msg{margin-top:1rem;padding:.8rem .95rem;border-radius:9px;font-size:.9rem;display:none}
+.msg.on{display:block}
+.msg.err{background:rgba(224,90,90,.12);border:1px solid var(--bad);color:#ffb3b3}
+.msg.ok{background:rgba(39,174,96,.12);border:1px solid var(--ok);color:#9fe0b8}
+.note{color:var(--muted);font-size:.83rem;margin-top:.5rem}
+.callout{background:rgba(226,160,63,.1);border:1px solid var(--warn);border-left:3px solid var(--warn);
+  border-radius:0 10px 10px 0;padding:.85rem 1rem;margin-bottom:1rem;font-size:.88rem}
+.callout b{color:var(--warn)}
+table{width:100%;border-collapse:collapse;font-size:.86rem;margin-top:.6rem}
+th,td{padding:.5rem .6rem;text-align:left;border-bottom:1px solid rgba(255,255,255,.06)}
+th{color:var(--gold);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em}
+footer{border-top:1px solid rgba(255,255,255,.07);padding:1.4rem 1rem;text-align:center;
+  color:var(--muted);font-size:.78rem}
+</style>
+</head>
+<body>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<header>
+  <div class="logo">rAs</div><div class="brand">rise AFRICA skills</div>
+  <div class="right">
+    <span id="who"></span>
+    <a href="backoffice.html" class="btn-sm">Backoffice</a>
+    <button class="btn-sm" id="out" hidden>Sign out</button>
+  </div>
+</header>
+
+<div class="wrap">
+
+<div class="gate" id="wait"><h2 style="color:var(--gold);font-size:1.1rem">Checking your sign-in&hellip;</h2>
+  <p class="note">One moment. If you arrived from an emailed link this is it being read.</p></div>
+
+<div class="gate" id="gate" hidden>
+  <h1>Admin sign-in</h1>
+  <p class="note">Supabase emails you a one-time link. Only addresses in the admins table can grant access.</p>
+  <label for="em">Your email address</label>
+  <input type="email" id="em" placeholder="allafrica@chengeta.ru" autocomplete="email">
+  <button class="go" id="send">Send me a link</button>
+  <div class="msg" id="gmsg"></div>
+</div>
+
+<div id="app" hidden>
+  <h1>Grant course access</h1>
+  <p class="sub">For a student who paid you by EcoCash, bank transfer, cash or WhatsApp.</p>
+
+  <div class="callout">
+    <b>This records access, not money.</b> Nothing here tells Stripe or your books that you were
+    paid. Confirm the money arrived before you use this, and keep your own record of who paid
+    what. Granting access to someone who has not paid is a decision only you can make.
+  </div>
+
+  <div class="card">
+    <label for="sem">Student email address</label>
+    <input type="email" id="sem" placeholder="student@example.com" autocomplete="off">
+    <p class="note">It must be the exact address they will log in with. A different address is a
+       different person as far as the site is concerned.</p>
+
+    <label for="course">Course</label>
+    <select id="course"></select>
+
+    <label for="tier">What they paid for</label>
+    <select id="tier">
+      <option value="premium">Course access ($8)</option>
+      <option value="enterprise">Course + Business Seed Record ($10)</option>
+      <option value="free">Free / sponsored place</option>
+    </select>
+
+    <button class="go" id="grant">Open this course for them</button>
+    <div class="msg" id="gm"></div>
+  </div>
+
+  <div class="card">
+    <h2 style="color:var(--gold);font-size:1rem;margin-bottom:.3rem">Recently granted</h2>
+    <p class="note" id="recentnote">Loading&hellip;</p>
+    <div id="recent"></div>
+  </div>
+</div>
+
+</div>
+<footer>rise AFRICA skills &middot; admins only</footer>
+
+<script>
+(function () {
+  'use strict';
+  var URL_ = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
+  var KEY_ = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc';
+  var $ = function (id) { return document.getElementById(id); };
+
+  if (!window.supabase || !window.supabase.createClient) {
+    $('wait').innerHTML = '<h2 style="color:var(--gold);font-size:1.1rem">Could not load the sign-in library</h2>' +
+      '<p class="note">This page needs supabase-js from unpkg.com and it did not load. Refresh on ' +
+      'riseafricaskills.com. If you are looking at a preview of the file rather than the live site, ' +
+      'that is the reason and the file itself is fine.</p>';
+    return;
+  }
+  var sb = window.supabase.createClient(URL_, KEY_);
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function say(el, kind, text) { el.className = 'msg on ' + kind; el.textContent = text; }
+  function showGate(m) {
+    $('wait').hidden = true; $('app').hidden = true; $('gate').hidden = false;
+    if (m) say($('gmsg'), 'err', m);
+  }
+
+  $('send').addEventListener('click', function () {
+    var em = $('em').value.trim();
+    if (!em) { say($('gmsg'), 'err', 'Enter your email address.'); return; }
+    $('send').disabled = true;
+    sb.auth.signInWithOtp({ email: em, options: { emailRedirectTo: location.href } })
+      .then(function (r) {
+        $('send').disabled = false;
+        if (r.error) { say($('gmsg'), 'err', r.error.message); return; }
+        say($('gmsg'), 'ok', 'Check that inbox and open the link on this device.');
+      });
+  });
+  $('out').addEventListener('click', function () {
+    sb.auth.signOut().then(function () { location.reload(); });
+  });
+
+  /* ---------- the course list comes from the courses table itself ----------
+     Not from a list typed into this page. If a course is missing from that
+     table, enrollment in it is impossible, and the honest thing is for it not
+     to appear here at all rather than to fail on submit. */
+  function loadCourses() {
+    return sb.from('courses').select('id,title').order('id').then(function (r) {
+      var sel = $('course');
+      if (r.error) {
+        sel.innerHTML = '<option value="">Could not read the course list</option>';
+        say($('gm'), 'err', 'Could not read the courses table: ' + r.error.message);
+        return;
+      }
+      var rows = r.data || [];
+      if (!rows.length) {
+        sel.innerHTML = '<option value="">No courses in the database</option>';
+        say($('gm'), 'err', 'The courses table is empty, so nobody can be enrolled in anything. ' +
+            'Run grant-access.sql step 2 first.');
+        return;
+      }
+      sel.innerHTML = rows.map(function (c) {
+        return '<option value="' + esc(c.id) + '">' + esc(c.title || c.id) + '  (' + esc(c.id) + ')</option>';
+      }).join('');
+    });
+  }
+
+  function loadRecent() {
+    return sb.from('enrollments').select('user_email,course_id,tier,status')
+      .order('user_email').limit(15).then(function (r) {
+        if (r.error) { $('recentnote').textContent = 'Could not read enrollments: ' + r.error.message; return; }
+        var rows = r.data || [];
+        if (!rows.length) { $('recentnote').textContent = 'No enrollments yet.'; return; }
+        $('recentnote').textContent = rows.length + ' shown.';
+        $('recent').innerHTML = '<table><thead><tr><th>Student</th><th>Course</th><th>Tier</th>' +
+          '<th>Status</th></tr></thead><tbody>' + rows.map(function (e) {
+            return '<tr><td>' + esc(e.user_email) + '</td><td>' + esc(e.course_id) + '</td><td>' +
+                   esc(e.tier) + '</td><td>' + esc(e.status) + '</td></tr>';
+          }).join('') + '</tbody></table>';
+      });
+  }
+
+  $('grant').addEventListener('click', function () {
+    var em = $('sem').value.trim().toLowerCase();
+    var course = $('course').value;
+    var tier = $('tier').value;
+    if (!em || em.indexOf('@') === -1) { say($('gm'), 'err', 'Type the student’s email address.'); $('sem').focus(); return; }
+    if (!course) { say($('gm'), 'err', 'Choose a course.'); return; }
+    $('grant').disabled = true;
+    say($('gm'), 'ok', 'Working…');
+
+    // upsert, not insert: granting the same course twice must not error, and a
+    // student whose access was cancelled should come back as active.
+    sb.from('enrollments').upsert({
+      user_email: em,
+      course_id: course,
+      status: 'active',
+      tier: tier,
+      progress_percent: 0
+    }, { onConflict: 'user_email,course_id' }).then(function (r) {
+      $('grant').disabled = false;
+      if (r.error) {
+        say($('gm'), 'err', 'Not granted. ' + r.error.message +
+            (/violates foreign key/i.test(r.error.message || '')
+              ? '  — that course is missing from the courses table; run grant-access.sql step 2.'
+              : /row-level security/i.test(r.error.message || '')
+                ? '  — the admin insert policy is missing; run grant-access.sql step 3.'
+                : ''));
+        return;
+      }
+      say($('gm'), 'ok', em + ' can now open ' + course + '. Tell them to log in with that exact ' +
+          'address and open the course from the homepage.');
+      $('sem').value = '';
+      loadRecent();
+    });
+  });
+
+  /* ---------- sign-in, written to survive the magic-link race ---------- */
+  var entered = false;
+  function enter(s) {
+    if (entered) return;
+    if (!s || !s.user || !s.user.email) return;
+    entered = true;
+    $('wait').hidden = true;
+    $('who').textContent = s.user.email;
+    $('out').hidden = false;
+    $('gate').hidden = true;
+    $('app').hidden = false;
+    if (location.hash || location.search) history.replaceState(null, '', location.pathname);
+    loadCourses();
+    loadRecent();
+  }
+  sb.auth.onAuthStateChange(function (event, s) { enter(s); });
+  var code = new URLSearchParams(location.search).get('code');
+  if (code) {
+    sb.auth.exchangeCodeForSession(code).then(function (r) {
+      enter(r && r.data && r.data.session);
+    }).catch(function () {});
+  }
+  sb.auth.getSession().then(function (r) { enter(r && r.data && r.data.session); });
+  setTimeout(function () {
+    if (!entered) {
+      var err = new URLSearchParams(location.hash.replace(/^#/, '')).get('error_description');
+      showGate(err ? err + '. Magic links last one hour and work once — request another.' : null);
+    }
+  }, 2500);
+})();
+</script>
+</body>
+</html>
