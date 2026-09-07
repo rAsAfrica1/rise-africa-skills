@@ -1,302 +1,352 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Module 1 - Cattle Farming</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Module 1: The Business of Cattle Farming - Cattle Farming</title>
+<meta name="description" content="Most African cattle herds are large in number and small in output. This module puts the honest arithmetic in front of you: the measured gap between communal and commercial calving rates, what a cow that does not calve actually costs you in grass, water, dip and labour, how to calculate a gross margin per cow with your own local prices, and why raising output per cow is usually a bigger lever on income than buying more cattle. It is the argument the rest of the course is built on.">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: #f9f9f9; }
-.container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-.header { background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%); color: white; padding: 30px; border-radius: 10px; margin-bottom: 30px; }
-.header h1 { font-size: 2.5em; margin-bottom: 10px; }
-.content { background: white; padding: 30px; border-radius: 10px; }
-.section { margin-bottom: 40px; }
-.section h2 { color: #1a1a2e; font-size: 1.8em; margin-bottom: 20px; border-bottom: 3px solid #0f3460; padding-bottom: 10px; }
-.learning-objectives { background: #e8f4f8; padding: 20px; border-left: 5px solid #0f3460; border-radius: 5px; }
-.learning-objectives li { margin-bottom: 8px; }
-.video-container { background: #f5f5f5; padding: 15px; margin-bottom: 15px; border-radius: 5px; border-left: 4px solid #0f3460; }
-.video-container h3 { color: #1a1a2e; margin-bottom: 10px; }
-iframe { width: 100%; height: 300px; border-radius: 5px; border: none; margin-top: 10px; }
-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-th { background: #1a1a2e; color: white; padding: 12px; text-align: left; }
-td { padding: 12px; border-bottom: 1px solid #ddd; }
-.concept { background: #fafafa; padding: 15px; margin-bottom: 15px; border-radius: 5px; border-left: 4px solid #0f3460; }
-.concept h3 { color: #1a1a2e; margin-bottom: 8px; font-size: 1.1em; }
-.concept p { font-size: 0.95em; }
-.quiz-section { background: #e8f4f8; padding: 20px; border-radius: 5px; border: 2px solid #0f3460; }
-.quiz-question { margin-bottom: 20px; background: white; padding: 15px; border-radius: 5px; }
-.quiz-option { margin-left: 20px; margin-bottom: 8px; }
-button { background: #0f3460; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px; }
-button:hover { background: #1a1a2e; }
-.feedback { margin-top: 10px; padding: 10px; border-radius: 5px; display: none; }
-.feedback.show { display: block; }
-.feedback.correct { background: #c8e6c9; border-left: 4px solid #27ae60; }
-.feedback.incorrect { background: #ffcdd2; border-left: 4px solid #c62828; }
-.project-section { background: #e8f4f8; padding: 20px; border-radius: 5px; }
-.project-item { background: white; padding: 15px; margin: 15px 0; border-radius: 5px; border-left: 4px solid #0f3460; }
-.project-item h4 { color: #1a1a2e; margin-bottom: 8px; }
-.progress-bar { background: #e0e0e0; height: 10px; border-radius: 5px; overflow: hidden; margin-bottom: 20px; }
-.progress-fill { height: 100%; background: linear-gradient(90deg, #1a1a2e, #0f3460); width: 0%; }}
-.nav-buttons { display: flex; gap: 10px; margin-top: 30px; justify-content: center; flex-wrap: wrap; }
-.nav-buttons a { display: inline-block; padding: 12px 30px; background: #1a1a2e; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; }
-.nav-buttons a:hover { background: #0f3460; }
+:root{
+  --ink:#1d1a16; --ink-soft:#4a443c; --muted:#6f6759;
+  --paper:#fbf8f3; --card:#ffffff; --line:#e5ddd0;
+  --brand:#5c4a2a; --brand-soft:#f6ece5; --accent:#256b4a; --accent-soft:#e9f2ed;
+  --warn:#8a6d12; --warn-soft:#fbf3d9;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased}
+a{color:var(--brand)}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px}
+header.top{background:var(--ink);color:#f6f1e8;padding:14px 0}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-weight:700;letter-spacing:.02em;font-size:15px}
+.brand span{color:#cfae6a}
+header.top a{color:#e8d9c6;text-decoration:none;font-size:14px}
+header.top a:hover{color:#fff}
+.hero{background:linear-gradient(180deg,#2a241d,#3b332a);color:#f7f2e9;padding:38px 0 34px}
+.hero .kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#cfae6a;margin:0 0 10px}
+.hero h1{margin:0 0 10px;font-size:30px;line-height:1.25}
+.hero p{margin:0;color:#d9d0c2;max-width:60ch}
+.crumbs{font-size:13px;color:#b9ae9d;margin-bottom:14px}
+.crumbs a{color:#e8d9c6;text-decoration:none}
+main{padding:30px 0 60px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin:0 0 22px}
+h2{font-size:22px;margin:34px 0 12px;line-height:1.3}
+h3{font-size:18px;margin:0 0 6px}
+h4{font-size:15px;margin:18px 0 6px;color:var(--ink)}
+p{margin:0 0 12px}
+ul,ol{margin:0 0 12px;padding-left:22px}
+li{margin:0 0 6px}
+table{width:100%;border-collapse:collapse;margin:0 0 14px;font-size:14.5px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--brand-soft)}
+.lesson{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin:0 0 20px}
+.lesson-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+.lnum{background:var(--brand);color:#fff;font-size:12px;font-weight:700;border-radius:999px;
+  padding:3px 10px;letter-spacing:.04em;white-space:nowrap}
+.read{font-size:13px;color:var(--muted)}
+.objectives{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
+  padding:12px 14px;margin:14px 0 18px;font-size:14.5px}
+.objectives strong{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.objectives ul{margin:0;padding-left:18px}
+.body{margin-top:4px}
+.numbers{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin:18px 0}
+.num{background:var(--warn-soft);border:1px solid #eadfb8;border-radius:10px;padding:12px 14px}
+.num .k{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--warn);font-weight:700}
+.num .v{font-size:17px;font-weight:700;margin:3px 0}
+.num .n{font-size:12.5px;color:var(--muted);line-height:1.45}
+.action{border:1px dashed var(--brand);background:var(--brand-soft);border-radius:10px;padding:12px 14px;margin-top:16px;font-size:15px}
+.action strong{color:var(--brand)}
+.quiz .q{border-top:1px solid var(--line);padding-top:16px;margin-top:16px}
+.quiz .q:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.opts{list-style:none;padding:0;margin:8px 0 0}
+.opts li{margin:0 0 6px}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:9px;
+  padding:9px 12px;font:inherit;font-size:15px;cursor:pointer;color:var(--ink)}
+.opt:hover{border-color:var(--brand)}
+.opt.right{background:var(--accent-soft);border-color:var(--accent);font-weight:600}
+.opt.wrong{background:#fdeceb;border-color:#c2513f}
+.why{display:none;margin-top:8px;font-size:14.5px;color:var(--ink-soft);background:#f3efe8;border-radius:8px;padding:10px 12px}
+.why.show{display:block}
+.toc{font-size:14.5px}
+.toc a{display:block;padding:6px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.toc a:hover{color:var(--brand)}
+.vgrid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:14px}
+.vcard{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+.vthumb{position:relative;display:block;width:100%;aspect-ratio:16/9;border:0;padding:0;margin:0;cursor:pointer;
+  background:#111 center/cover no-repeat;overflow:hidden}
+.vthumb img{width:100%;height:100%;object-fit:cover;display:block}
+.vthumb iframe{width:100%;height:100%;border:0;display:block}
+.vthumb::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.18)}
+.vthumb[data-on]::after{display:none}
+.vplay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;
+  width:54px;height:38px;border-radius:9px;background:rgba(20,20,20,.82);display:flex;align-items:center;justify-content:center}
+.vthumb[data-on] .vplay{display:none}
+.vplay span{display:block;width:0;height:0;border-left:15px solid #fff;border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:3px}
+.vthumb:hover .vplay{background:#c4302b}
+.vmeta{padding:11px 13px}
+.vmeta .vt{font-weight:600;font-size:14.5px;line-height:1.35;margin:0 0 4px}
+.vmeta .va{font-size:12.5px;color:var(--muted);margin:0 0 6px}
+.vmeta .vw{font-size:13px;color:var(--ink-soft);margin:0}
+.vnote{background:#f3efe8;border-radius:8px;padding:11px 13px;font-size:13.5px;color:var(--ink-soft);margin:0}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:26px;flex-wrap:wrap}
+.btn{display:inline-block;background:var(--brand);color:#fff;text-decoration:none;padding:11px 18px;border-radius:10px;font-weight:600;font-size:15px}
+.note{font-size:13.5px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:24px 0 40px;font-size:13.5px;color:var(--muted)}
+.disclaim{background:#f3efe8;border-radius:10px;padding:14px 16px;font-size:13.5px;color:var(--ink-soft);margin-top:18px}
+@media(max-width:560px){.hero h1{font-size:24px}.lesson{padding:18px}}
+
 </style>
-<!--ras-video-v2-->
-<style>
-.ras-vid{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:8px;overflow:hidden;margin:14px 0;cursor:pointer;border:1px solid rgba(201,162,39,.35)}
-.ras-vid img{width:100%;height:100%;object-fit:cover;display:block;opacity:.82;transition:opacity .2s,transform .3s}
-.ras-vid:hover img{opacity:1;transform:scale(1.03)}
-.ras-vid .ras-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
-.ras-vid .ras-play span{width:64px;height:64px;border-radius:50%;background:rgba(201,162,39,.94);color:#111;display:flex;align-items:center;justify-content:center;font-size:26px;padding-left:5px;box-shadow:0 4px 18px rgba(0,0,0,.5)}
-.ras-vid:hover .ras-play span{background:#e0c050}
-.ras-vid .ras-meta{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 9px;background:linear-gradient(transparent,rgba(0,0,0,.88));color:#fff;font-size:.8rem;line-height:1.35;pointer-events:none}
-.ras-vid .ras-meta b{color:#c9a227;display:block;font-size:.72rem;font-weight:700;margin-bottom:2px}
-.ras-vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.ras-vid.ras-dead{cursor:default;background:#14141f}
-.ras-vid .ras-fallback{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:18px;color:#ddd;font-size:.85rem}
-.ras-vid.ras-dead .ras-fallback{display:flex}
-.ras-vid.ras-dead img,.ras-vid.ras-dead .ras-play,.ras-vid.ras-dead .ras-meta{display:none}
-.ras-vid .ras-fallback a{background:#c9a227;color:#111;font-weight:700;padding:.55rem 1.1rem;border-radius:6px;text-decoration:none;font-size:.82rem}
-</style>
-<script>
-(function(){
-  function play(box){
-    if(box.dataset.on||box.classList.contains('ras-dead'))return;
-    box.dataset.on=1;
-    var f=document.createElement('iframe');
-    f.src='https://www.youtube-nocookie.com/embed/'+box.dataset.yt+
-          '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
-    f.allow='accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture';
-    f.allowFullscreen=true;f.loading='eager';f.title=box.dataset.title||'Video lesson';
-    box.appendChild(f);
-  }
-  function init(){
-    document.querySelectorAll('.ras-vid').forEach(function(box){
-      var img=box.querySelector('img');
-      // Self-heal: a 404 thumbnail means the video is deleted or private.
-      // Swap to a topic search so a student never meets a blocked embed.
-      if(img){img.addEventListener('error',function(){box.classList.add('ras-dead');});}
-      box.addEventListener('click',function(){play(box);});
-      box.addEventListener('keydown',function(e){
-        if(e.key==='Enter'||e.key===' '){e.preventDefault();play(box);}
-      });
-    });
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
-  else init();
-})();
-</script>
-<!--ras-social-meta-->
-<link rel="canonical" href="https://www.riseafricaskills.com/cattle-farming-module-1.html">
-<meta property="og:site_name" content="rise AFRICA skills">
-<meta property="og:locale" content="en_ZW">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://www.riseafricaskills.com/cattle-farming-module-1.html">
-<meta property="og:title" content="Module 1 - Cattle Farming — rise AFRICA skills">
-<meta property="og:description" content="Module 1 - Cattle Farming — a practical, fact-based course from rise AFRICA skills. Start with minimal equipment and scale as profits grow. Videos, assessments and a capstone project. From $8, lifetime access.">
-<meta property="og:image" content="https://www.riseafricaskills.com/og-image.png">
-<meta property="og:image:secure_url" content="https://www.riseafricaskills.com/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="rise AFRICA skills — learn practical skills, start your business">
-<meta property="og:image:type" content="image/png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@riseafricaskills">
-<meta name="twitter:creator" content="@riseafricaskills">
-<meta name="twitter:title" content="Module 1 - Cattle Farming — rise AFRICA skills">
-<meta name="twitter:description" content="Module 1 - Cattle Farming — a practical, fact-based course from rise AFRICA skills. Start with minimal equipment and scale as profits grow. Videos, assessments and a capstone project. From $8, lifetime access.">
-<meta name="twitter:image" content="https://www.riseafricaskills.com/og-image.png">
-<meta name="twitter:image:alt" content="rise AFRICA skills">
-<meta name="description" content="Fact-based practical training for African entrepreneurs. 128 courses in farming, food processing, trades, technology and business - start from zero capital. From $8 with lifetime access.">
-<meta name="robots" content="index,follow,max-image-preview:large">
-<meta name="theme-color" content="#0f0f1a">
-<meta name="author" content="rise AFRICA skills">
-<link rel="icon" href="/og-image.png" type="image/png">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Course", "name": "Module 1 - Cattle Farming", "description": "Module 1 - Cattle Farming — a practical, fact-based course from rise AFRICA skills. Start with minimal equipment and scale as profits grow. Videos, assessments and a capstone project. From $8, lifetime access.", "url": "https://www.riseafricaskills.com/cattle-farming-module-1.html", "provider": {"@type": "EducationalOrganization", "name": "rise AFRICA skills", "url": "https://www.riseafricaskills.com/"}, "inLanguage": "en"}</script>
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="/course-lock.js"></script>
 </head>
 <body>
-<div class="container">
-<div class="header">
-<h1>🌾 Cattle Farming</h1>
-<p>Module 1: Comprehensive Farming Skills</p>
-</div>
-<div class="content">
-<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="/course-lock.js"></script>
+<script>
+window.RAS_COURSE_SLUG  = "cattle-farming";
+window.RAS_MODULE_NUM   = 1;
+window.RAS_MODULE_TITLE = "The Business of Cattle Farming";
+window.RAS_WHATSAPP     = "263773001353";
+</script>
+<header class="top"><div class="wrap">
+<div class="brand">rise <span>AFRICA</span> skills</div>
+<nav><a href="cattle-farming-lessons.html">Course contents</a> &nbsp;|&nbsp; <a href="video-library.html">Video library</a> &nbsp;|&nbsp; <a href="index.html">Home</a></nav>
+</div></header>
 
-<div class="section learning-objectives">
-<h2>📚 Learning Objectives</h2>
-<ul>
-<li>Master Module 1 practical skills for Cattle Farming</li>
-<li>Apply evidence-based farming techniques</li>
-<li>Solve real problems on your farm</li>
-<li>Implement sustainable practices</li>
-<li>Track results and optimize operations</li>
-</ul>
+<section class="hero"><div class="wrap">
+<div class="crumbs"><a href="cattle-farming-lessons.html">Cattle Farming</a> / Module 1 of 12</div>
+<p class="kicker">Module 1</p>
+<h1>🐄 The Business of Cattle Farming</h1>
+<p>Most African cattle herds are large in number and small in output. This module puts the honest arithmetic in front of you: the measured gap between communal and commercial calving rates, what a cow that does not calve actually costs you in grass, water, dip and labour, how to calculate a gross margin per cow with your own local prices, and why raising output per cow is usually a bigger lever on income than buying more cattle. It is the argument the rest of the course is built on.</p>
+</div></section>
+
+<main><div class="wrap">
+<div class="card"><h3>What you will be able to do after this module</h3><ul>
+<li>Distinguish cattle kept as a store of wealth from cattle kept as a commercial breeding enterprise</li><li>Calculate a calving percentage from your own cow and calf counts</li><li>Name the four structural constraints documented behind low African herd output</li><li>List the four costs every cow carries whether or not she produces a calf</li><li>Separate variable costs per cow from fixed costs of the whole enterprise</li><li>Compare the cost and risk of adding cows against improving output per cow</li>
+</ul></div>
+<div class="card toc"><h3>The six lessons</h3>
+<a href="#lesson-1">1. Two Businesses Wearing the Same Brand</a>
+<a href="#lesson-2">2. The Number That Decides Everything</a>
+<a href="#lesson-3">3. Why the Calving Rate Is Low</a>
+<a href="#lesson-4">4. What an Unproductive Cow Actually Costs</a>
+<a href="#lesson-5">5. Costing Your Herd Honestly</a>
+<a href="#lesson-6">6. More Cows, or Better Cows?</a>
+</div>
+<article class="lesson" id="lesson-1">
+<div class="lesson-head"><span class="lnum">Lesson 1.1</span><span class="read">~12 min</span></div>
+<h2 style="margin-top:6px">Two Businesses Wearing the Same Brand</h2>
+<div class="objectives"><strong>In this lesson</strong><ul><li>Distinguish cattle kept as a store of wealth from cattle kept as a commercial breeding enterprise</li><li>Explain why herd size and herd output are two different measures of success</li><li>Decide which business you are running before you change any management practice</li></ul></div>
+<div class="body">
+<p>Two men each own thirty cattle. They live in the same district, graze the same kind of veld, and both call themselves cattle farmers. But they are running two different businesses, and until you know which one you are running, nothing else in this course can help you.</p>
+<p>The first business is cattle as a store of wealth. The herd is a living bank account. It is bride-price, it is drought reserve, it is standing in the community, it is what you sell when a child needs school fees or a roof needs replacing. In this business, herd size is the measure of success. Selling an animal is a last resort, not a plan. A man with thirty head is doing better than a man with twenty, and that is the end of the calculation.</p>
+<p>The second business is cattle as a commercial breeding-and-selling enterprise. Here the herd is a machine that converts grass, water and your labour into weaned calves that sell for more than they cost to produce. In this business, output per cow is the measure of success. Thirty cows that wean nine calves are a worse business than twenty cows that wean fourteen, even though the first man looks richer standing at the gate.</p>
+<p>Both are legitimate reasons to own cattle. Most African herd owners are doing some of both at once, and this course does not tell you to stop valuing cattle as security. That would be dishonest advice from someone who does not carry your risk. What this course teaches is the second business, for one simple reason: a herd that is also productive gives up nothing as a store of wealth and earns you a cash income besides. A cow that weans a calf every year is still there in the drought. She has just paid you a calf for the privilege of standing in your kraal.</p>
+<p>Here is where the two businesses pull against each other, and you should see it clearly. If success is measured by number, you keep every animal. You keep the ten-year-old cow that has not calved in three years, because selling her makes the herd smaller and the herd looking smaller feels like going backwards. You keep the heifer that lost two calves. You keep animals because parting with them feels like loss. And every one of those animals eats grass, drinks water, needs dipping, needs deworming, occupies space on land that has a fixed carrying capacity, and takes your time - while returning nothing at all.</p>
+<p>That is the trap this whole course is built to get you out of. It is not a moral failing and it is not stupidity. It is what happens when you measure the right thing for one business while running the other.</p>
+<p>So how do you tell which one you are actually running? Ask yourself four questions, and answer them honestly on paper.</p>
+<ol><li>When did you last sell an animal on purpose, as part of a plan, rather than because you suddenly needed money?</li><li>Do you know how many of your cows produced a calf last year? Not roughly - exactly.</li><li>Could you name the three cows in your herd that have produced least over the last three years?</li><li>If someone offered you a fair price today for your five worst cows, would you take it?</li></ol>
+<p>If you cannot answer questions two and three, you are not yet running a commercial breeding enterprise, whatever you call yourself. You are keeping cattle. That is a starting point, not an insult - almost every commercial herd in Africa started exactly there.</p>
+<p>The good news is that moving from the first business to the second does not require you to buy anything. It requires you to start counting, and then to act on what you count. The counting starts in the next lesson, with the single number that decides whether a cattle herd makes money or slowly eats it.</p>
+<p>One more honest point before you go. Cattle in most African systems do several jobs at once. They pull ploughs, they make manure for the crop fields, they give a little milk for the household, and they are savings. A cow doing four jobs cannot be managed purely for calf production, and a course that pretends otherwise is lying to you. What you can do is know what each job costs you in calves, and choose deliberately - instead of finding out at the end of the year.</p>
+</div>
+<div class="numbers"><div class="num"><div class="k">Commercial calving rate, South Africa</div><div class="v">61 percent</div><div class="n">From a comparison of the commercial and communal sectors within one country. It shows what is achievable under commercial management, not what an unmanaged herd will do by itself</div></div><div class="num"><div class="k">Communal calving rate, same comparison</div><div class="v">23 percent</div><div class="n">The communal-sector figure from the same South African comparison. Commercial herds calved roughly 2.7 times as often per cow per year</div></div><div class="num"><div class="k">Continental picture</div><div class="v">roughly six in ten cows fail to calve in a given year</div><div class="n">A review summary of communal African cattle-keeping, working out at roughly a 40 percent average calving rate. It is a review figure, not a law, and your own herd may sit anywhere</div></div><div class="num"><div class="k">Local cattle and beef prices</div><div class="v">not available - obtain locally</div><div class="n">No current, dated African cattle, beef, feed or veterinary price of adequate quality was available for this course. You must price your own market this month</div></div></div>
+<div class="action"><strong>Do this today:</strong> write down the number of breeding cows you own and, beside it, the number that produced a live calf in the last twelve months. If you cannot remember, ask everyone in the household who handles the cattle and write down the best answer you can all agree on. That is the first line of your herd record.</div>
+<div class="card"><h3>Recommended viewing</h3><p class="vnote"><strong>These are free videos made by other people, not by rise AFRICA skills.</strong> Each one was checked against YouTube and is on topic. The written lessons are the course. Treat these as useful extra watching.</p><div class="vgrid"><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="QYxUNJ6qm8Y" data-t="Managing a Small Cattle Herd" aria-label="Play video: Managing a Small Cattle Herd"><img src="https://i.ytimg.com/vi/QYxUNJ6qm8Y/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Managing a Small Cattle Herd</p><p class="va">Just a Few Acres Farm</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="eLSGQkkgFLc" data-t="Cattle Farming in South Africa Exposed: What Actually Work" aria-label="Play video: Cattle Farming in South Africa Exposed: What Actually Work"><img src="https://i.ytimg.com/vi/eLSGQkkgFLc/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Cattle Farming in South Africa Exposed: What Actually Work</p><p class="va">Duratag SA</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="1KFfEjkvXGI" data-t="Early Weaning Calves: Management, Nutrition and Profitability" aria-label="Play video: Early Weaning Calves: Management, Nutrition and Profitability"><img src="https://i.ytimg.com/vi/1KFfEjkvXGI/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Early Weaning Calves: Management, Nutrition and Profitability</p><p class="va">Nebraska Center for Agricultural Profitability</p></div></div></div></div>
+</article>
+<article class="lesson" id="lesson-2">
+<div class="lesson-head"><span class="lnum">Lesson 1.2</span><span class="read">~12 min</span></div>
+<h2 style="margin-top:6px">The Number That Decides Everything</h2>
+<div class="objectives"><strong>In this lesson</strong><ul><li>Calculate a calving percentage from your own cow and calf counts</li><li>Compare your figure against the sourced African and commercial benchmarks</li><li>Explain why calving percentage sits underneath every other number in the beef business</li></ul></div>
+<div class="body">
+<p>If you learn one calculation from this whole course, learn this one. It takes thirty seconds and it tells you more about your cattle business than any amount of looking at the herd.</p>
+<p>Calving percentage equals the number of cows that produced a live calf, divided by the number of cows exposed to the bull, multiplied by 100.</p>
+<p>Work an example. You had 20 cows running with the bull last season. Eight of them produced a live calf. Eight divided by twenty is 0.4. Times 100 is 40 percent. Your calving percentage is 40.</p>
+<p>Now, what does 40 mean? Here is the honest evidence, and it is uncomfortable reading.</p>
+<ul><li>A South African comparison found the commercial sector calving at 61 percent and the communal sector at 23 percent in the same country. That is commercial herds calving roughly 2.7 times as often, per cow, per year.</li><li>One communal survey in Venda, in Limpopo, South Africa, found a calving rate as low as 15 percent.</li><li>A southern Ethiopia dataset gave an average of 55 percent, ranging from 12 percent to 83 percent across the herds surveyed.</li><li>Zambian data in the same review ranged from 44 percent to 80 percent.</li><li>A twelve-year dataset from Mazvihwa in southern Zimbabwe gave a range of 68 to 82 percent.</li><li>The review summarised the continental picture as roughly six in ten cows in Africa failing to produce a calf in a given year - about a 40 percent average across communal African cattle-keeping.</li></ul>
+<p>Be careful how you hold these numbers. They come from a farming-press review article summarising several underlying studies, and the individual country studies behind them were not read directly and re-checked. So do not treat any single percentage as a fixed law for a country. What is beyond argument, because every figure retrieved points the same way, is the pattern: there is a large, persistent, well-documented gap between communal or smallholder herds and commercial herds, across several African countries, measured over many years. That gap is real. Teach yourself to believe the pattern and to distrust any single decimal point.</p>
+<p>Notice also how wide the ranges are. Ethiopia 12 to 83 percent. Zambia 44 to 80. These are not different countries - they are different herds inside the same survey. Some smallholders in those datasets were calving at commercial levels. The gap is not fixed by geography or by breed or by poverty alone. It moves with management, which is exactly why it is worth your attention.</p>
+<p>Now see why this one number matters more than any other. A cow that eats grass, drinks water, occupies land and takes your labour for a full year, and does not wean a calf, has cost you a full year of everything for zero output. She has not cost you a little less than a productive cow. She has cost you almost exactly the same, because she eats the same grass and needs the same dip.</p>
+<p>So run the arithmetic on your own 20 cows.</p>
+<ol><li>At a 40 percent calving rate, 20 cows wean 8 calves.</li><li>At a 70 percent calving rate - a realistic commercial improvement target, given that commercial sector figure of 61 percent - the same 20 cows wean 14 calves.</li><li>The land bill, the labour, the bull, the dip and the water bill for those 20 cows is nearly identical either way.</li></ol>
+<p>Six extra calves. Same cows, same land, same costs. That is the entire economic argument of this course in one line: for most herds, raising the calving percentage is a far bigger lever on income than growing the herd.</p>
+<p>One warning about definitions before you start comparing your figure with anyone else&#x27;s. Different studies mean different things by similar words. A Tuli dataset from Zimbabwe reports a reproductive rate of 85 percent, while a different Zimbabwe comparison reports a calving rate of 69 percent for the same breed. Those two figures come from different sources, probably different herds, and possibly different definitions - one may count conceptions and the other weaned calves. They must never be averaged or treated as the same measurement. When somebody quotes you a percentage, ask them what exactly they counted, and over what period.</p>
+<p>For your own herd, use the simplest definition and use it consistently, year after year: live calves born, divided by cows put to the bull. Consistency with yourself matters more than matching anybody else&#x27;s method.</p>
+</div>
+<div class="numbers"><div class="num"><div class="k">Lowest communal figure retrieved</div><div class="v">15 percent</div><div class="n">One communal survey in Venda, Limpopo, South Africa. A single survey in one place, not a national average - but a real, measured figure</div></div><div class="num"><div class="k">Southern Ethiopia dataset</div><div class="v">55 percent average, range 12-83 percent</div><div class="n">The spread inside a single survey shows that management, not geography alone, drives the difference. Some smallholders in that dataset calved at commercial levels</div></div><div class="num"><div class="k">Mazvihwa, Zimbabwe, 12-year dataset</div><div class="v">68-82 percent</div><div class="n">A long-run communal dataset well above the continental average, which is why no single figure should be taught as what a smallholder herd must produce</div></div><div class="num"><div class="k">Worked improvement, 20 cows</div><div class="v">8 calves at 40 percent vs 14 calves at 70 percent</div><div class="n">Derived arithmetic on the sourced rates. The costs of keeping those 20 cows are nearly identical either way, which is what makes calving percentage the biggest lever you have</div></div></div>
+<div class="action"><strong>Do this today:</strong> count your breeding cows and count the live calves born in the last twelve months. Divide the calves by the cows, multiply by 100, and write that number at the front of your notebook with the date. That is your baseline, and every improvement in this course will be measured against it.</div>
+<div class="card"><h3>Recommended viewing</h3><p class="vnote"><strong>These are free videos made by other people, not by rise AFRICA skills.</strong> Each one was checked against YouTube and is on topic. The written lessons are the course. Treat these as useful extra watching.</p><div class="vgrid"><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="0U-ijajCalM" data-t="Tues Management Of the Cow Herd" aria-label="Play video: Tues Management Of the Cow Herd"><img src="https://i.ytimg.com/vi/0U-ijajCalM/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Tues Management Of the Cow Herd</p><p class="va">Beef Reproduction Task Force</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="1KFfEjkvXGI" data-t="Early Weaning Calves: Management, Nutrition and Profitability" aria-label="Play video: Early Weaning Calves: Management, Nutrition and Profitability"><img src="https://i.ytimg.com/vi/1KFfEjkvXGI/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Early Weaning Calves: Management, Nutrition and Profitability</p><p class="va">Nebraska Center for Agricultural Profitability</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="eLSGQkkgFLc" data-t="Cattle Farming in South Africa Exposed: What Actually Work" aria-label="Play video: Cattle Farming in South Africa Exposed: What Actually Work"><img src="https://i.ytimg.com/vi/eLSGQkkgFLc/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Cattle Farming in South Africa Exposed: What Actually Work</p><p class="va">Duratag SA</p></div></div></div></div>
+</article>
+<article class="lesson" id="lesson-3">
+<div class="lesson-head"><span class="lnum">Lesson 1.3</span><span class="read">~12 min</span></div>
+<h2 style="margin-top:6px">Why the Calving Rate Is Low</h2>
+<div class="objectives"><strong>In this lesson</strong><ul><li>Name the four structural constraints documented behind low African herd output</li><li>Separate the constraints you can act on from those you cannot fix alone</li><li>Explain why a technically sound practice can still fail on a real smallholding</li></ul></div>
+<div class="body">
+<p>It would be easy, and wrong, to read the last lesson and conclude that African cattle keepers are simply not trying hard enough. The evidence says something more complicated and more useful. A review of the economics of African livestock ownership names several structural constraints behind low output, and knowing which is which tells you where your own effort will actually pay.</p>
+<p>Constraint one: dry-season grazing and feed. The review describes inadequate dry-season grazing and feed as probably the single most important constraint on productivity. This is the point in the year where every other number in this course is at risk. A cow that loses condition through a hard dry season may not come back into heat in time to be served, and a calf on a thin, low-milk mother grows slowly. Nothing you do in the wet season protects you if the dry season is unplanned.</p>
+<p>Constraint two: disease. The review names both highly contagious epidemic disease and vector-borne disease as major production constraints. The scale is not small. East Coast fever alone is estimated to kill on the order of one million cattle a year across its endemic range in eastern, central and southern Africa. Across the tsetse belt - more than 9 million square kilometres, roughly one-third of Africa&#x27;s land area, in 37 countries - trypanosomiasis is estimated to cause about 3 million cattle deaths a year, with roughly 50 million cattle at risk. Disease is not a background nuisance in African cattle-keeping. It is one of the two main things standing between your cows and a calf each.</p>
+<p>Constraint three: cattle do several jobs at once. The same review states directly that using cattle for draught power, manure, milk, meat, savings and social currency all at the same time competes with optimising any single output, such as calf production. A cow pulling a plough in the ploughing season, or being milked for the household, is not free to be managed purely for calving efficiency. This is a real cost and you should count it as one, not pretend it away.</p>
+<p>Constraint four: markets and institutions. Poor price signals, weak distribution of breeding inputs like good bulls, and thin research investment are all named as constraints. If you cannot find a sound bull to buy or hire within reach, that is not your management failure - it is a gap in the system you are farming inside.</p>
+<p>Now separate them. Two of those four are largely inside your control: how you plan for the dry season, and how you manage animal health. Two are largely outside it: land tenure and market structure, and the wider disease environment that no single farm can clear alone. Honest teaching means saying that plainly. Anybody who tells you that doing X will lift you straight to commercial-ranch numbers is selling something. What the evidence does support is that meaningful, measured improvement is realistic and worth pursuing - through bull management, calving season discipline, dry-season feed planning, a health calendar, records and culling. Every one of those is taught in this course.</p>
+<p>Here is a lesson that matters more than any single technique, and it comes from real adoption data rather than a laboratory. In Zimbabwe, farmers were taught to treat maize stover with urea, which raises the feeding value of a very poor dry-season roughage. Among farmers who adopted it, the results were excellent: 97 percent reported increased feed intake, 93.9 percent reported improved milk production, and 87.8 percent reported improved liveweight gain.</p>
+<p>And yet adoption collapsed. Only 20 percent of untrained farmers adopted it at all. Even among farmers who had been specifically trained, only 38.8 percent kept using it. The barriers they named were not biological. They were high labour demand, cited by 78.8 percent; lack of extension follow-up, cited by 87.9 percent; and difficulty accessing urea fertiliser, cited by 72.7 percent.</p>
+<p>Read that carefully, because it is the most important practical lesson in this module. A technique that genuinely works can still fail on a real farm for reasons that have nothing to do with the animal science - labour you do not have, an input you cannot buy, and nobody coming back to help you fix the first problem you hit.</p>
+<p>So when you choose which improvement to make first, judge it on three things, not one: does it work biologically, can you actually do it with the labour and cash you have, and can you keep doing it every year without outside help? An improvement you sustain for five years beats a better improvement you abandon after one season.</p>
+</div>
+<div class="numbers"><div class="num"><div class="k">East Coast fever mortality</div><div class="v">on the order of 1 million cattle a year</div><div class="n">Across the endemic range in eastern, central and southern Africa. An estimate of regional scale, not a figure for any one district or herd</div></div><div class="num"><div class="k">Trypanosomiasis area and deaths</div><div class="v">more than 9 million sq km affected; about 3 million cattle deaths a year</div><div class="n">Roughly one-third of Africa&#x27;s land area across 37 countries, with about 50 million cattle at risk. If you are in the tsetse belt this, not ticks, may be your main constraint</div></div><div class="num"><div class="k">Urea-treated stover, reported benefits</div><div class="v">97 percent reported higher intake; 87.8 percent better liveweight gain</div><div class="n">From a Zimbabwean adoption study, among farmers who actually adopted it. These are farmer-reported outcomes, not measured weight gains</div></div><div class="num"><div class="k">Urea-treated stover, sustained use</div><div class="v">38.8 percent of trained farmers continued</div><div class="n">Only 20 percent of untrained farmers adopted at all. Barriers were labour (78.8 percent), no extension follow-up (87.9 percent) and urea access (72.7 percent) - not biology</div></div></div>
+<div class="action"><strong>Do this today:</strong> write down the four constraints - dry-season feed, disease, cattle doing several jobs, and market access - and beside each one write in a single sentence how it shows up on your own farm. Mark the two you could act on this year without spending money you do not have.</div>
+<div class="card"><h3>Recommended viewing</h3><p class="vnote"><strong>These are free videos made by other people, not by rise AFRICA skills.</strong> Each one was checked against YouTube and is on topic. The written lessons are the course. Treat these as useful extra watching.</p><div class="vgrid"><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="OXMA4YPmwv8" data-t="Zambeef&#x27;s Mbala Smallholder Cattle Development Project" aria-label="Play video: Zambeef&#x27;s Mbala Smallholder Cattle Development Project"><img src="https://i.ytimg.com/vi/OXMA4YPmwv8/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Zambeef&#x27;s Mbala Smallholder Cattle Development Project</p><p class="va">Langmead &amp; Baker Ltd</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="TDqGTM0RXl4" data-t="Mineral Nutrition for Beef Cattle" aria-label="Play video: Mineral Nutrition for Beef Cattle"><img src="https://i.ytimg.com/vi/TDqGTM0RXl4/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Mineral Nutrition for Beef Cattle</p><p class="va">Maryland Beef Extension</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="QYxUNJ6qm8Y" data-t="Managing a Small Cattle Herd" aria-label="Play video: Managing a Small Cattle Herd"><img src="https://i.ytimg.com/vi/QYxUNJ6qm8Y/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Managing a Small Cattle Herd</p><p class="va">Just a Few Acres Farm</p></div></div></div></div>
+</article>
+<article class="lesson" id="lesson-4">
+<div class="lesson-head"><span class="lnum">Lesson 1.4</span><span class="read">~12 min</span></div>
+<h2 style="margin-top:6px">What an Unproductive Cow Actually Costs</h2>
+<div class="objectives"><strong>In this lesson</strong><ul><li>List the four costs every cow carries whether or not she produces a calf</li><li>Convert cows of different sizes into Large Stock Units to compare their load on your grazing</li><li>Calculate total kilograms of calf weaned as the true physical output of a breeding herd</li></ul></div>
+<div class="body">
+<p>A cow that does not calve is not free. That sentence sounds obvious and yet whole herds are run as if it were not true. This lesson puts a shape on what she costs you, so you can see it on paper instead of feeling it vaguely at the end of a bad year.</p>
+<p>Every animal in your herd, productive or not, carries four costs.</p>
+<ol><li>A grazing cost. She occupies carrying capacity that a productive animal could have used. This is the biggest and the most invisible of the four, because no money changes hands.</li><li>A water cost. Whether that is a borehole running cost, a share of a pumped supply, or the hours somebody spends walking her to water and back.</li><li>A health cost. Dip or spray, vaccination, deworming - the barren cow is dipped exactly as often as the productive one.</li><li>A labour cost. Herding, kraaling, handling, dosing. Your own time or somebody else&#x27;s.</li></ol>
+<p>Now put a measure on the grazing cost, because it is the one people cannot see. The standard unit for comparing different animals on the same land is the Large Stock Unit, or LSU, conventionally defined in the South African system as a 450 kg bovine animal. Examples from that source: a mature Bonsmara cow at 450 kg is 1.0 LSU. A smaller-framed mature Nguni cow at roughly 320 kg is about 0.7 LSU. Small stock such as sheep and goats run at roughly 0.12 to 0.14 LSU per animal.</p>
+<p>That has a real consequence you should note now and remember when you get to breed choice. A herd of smaller-framed indigenous cows genuinely places a lighter load on the same hectare than the same number of larger-framed exotic or crossbred cows, because each animal is a smaller fraction of an LSU. Ten Nguni-sized cows are about 7 LSU. Ten Bonsmara-sized cows are 10 LSU. On the same grazing, that difference is real.</p>
+<p>How much does one LSU eat? The same South African source estimates that one LSU needs approximately 3 percent of its body weight in dry matter per day. For the 450 kg reference animal that is roughly 13.5 kg of dry matter a day, or about 4,900 kg a year. Treat that as an order-of-magnitude planning tool. It is a general estimation rule quoted by that source, not a measured African rangeland figure for any particular grass or region, and building an actual balanced ration from it belongs to the Cattle and Steer Feed Formulation course this platform sells separately, not here.</p>
+<p>But it lets you see the point. A barren cow eats roughly 4,900 kg of dry matter in a year and gives you nothing. That grass had to be grown, and it was not free just because you did not pay for it.</p>
+<p>Now the equation that ties the whole business together. Write it down and learn to say it without hesitating.</p>
+<p>Total kilograms of calf weaned per year equals the number of cows exposed to the bull, multiplied by the calving percentage, multiplied by the calf survival rate to weaning, multiplied by the average weaning weight per surviving calf.</p>
+<p>Every one of those four terms has its own module in this course. And because they multiply rather than add, weakness in any one of them drags the whole answer down. That is why a herd that is large in cow numbers but weak in one term can produce less usable output than a smaller, tightly managed herd.</p>
+<p>Work it with real sourced figures. Take 20 cows. Use a weaning weight of 190 kg, which sits close to the sourced Tuli weaning figure of 189.7 kg - used here because it is a real measured number from a real African breed, not because 190 kg is a target you should aim at.</p>
+<ol><li>At a 40 percent calving rate: 20 cows times 0.40 is 8 calves. 8 times 190 kg is 1,520 kg of weaned calf for the year.</li><li>At a 70 percent calving rate: 20 cows times 0.70 is 14 calves. 14 times 190 kg is 2,660 kg.</li></ol>
+<p>That is a 75 percent increase in the total physical output of the business, from the same 20 cows, the same land and very nearly the same costs. No cattle were bought. No land was added.</p>
+<p>That calculation is the reason this course exists. Do it with your own cow number, your own calving percentage and your own weaning weight as soon as you have them - and then do it again next year.</p>
+</div>
+<div class="numbers"><div class="num"><div class="k">One Large Stock Unit</div><div class="v">a 450 kg bovine animal</div><div class="n">The South African convention for comparing animals of different size on the same land. A 320 kg Nguni-type cow is about 0.7 LSU; sheep and goats about 0.12-0.14 LSU each</div></div><div class="num"><div class="k">Daily dry matter intake per LSU</div><div class="v">about 3 percent of body weight, roughly 13.5 kg/day</div><div class="n">About 4,900 kg a year for the 450 kg reference animal. A general estimation rule from that source for planning, not a measured African rangeland figure or a ration</div></div><div class="num"><div class="k">Tuli weaning weight</div><div class="v">189.7 kg</div><div class="n">A real measured figure for one indigenous breed in one dataset, used here as a worked example. It is not a target your calves must hit</div></div><div class="num"><div class="k">Worked output gain, 20 cows</div><div class="v">1,520 kg vs 2,660 kg weaned per year</div><div class="n">Derived from a 40 percent versus 70 percent calving rate at 190 kg per calf. A 75 percent output increase with no extra cows and no extra land</div></div></div>
+<div class="action"><strong>Do this today:</strong> convert your herd to Large Stock Units. Count your mature cows, decide honestly whether they are nearer 450 kg (1.0 LSU) or nearer 320 kg (0.7 LSU), and multiply. Write the LSU total in your notebook. That number, not the head count, is what your grazing actually carries.</div>
+<div class="card"><h3>Recommended viewing</h3><p class="vnote"><strong>These are free videos made by other people, not by rise AFRICA skills.</strong> Each one was checked against YouTube and is on topic. The written lessons are the course. Treat these as useful extra watching.</p><div class="vgrid"><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="eLSGQkkgFLc" data-t="Cattle Farming in South Africa Exposed: What Actually Work" aria-label="Play video: Cattle Farming in South Africa Exposed: What Actually Work"><img src="https://i.ytimg.com/vi/eLSGQkkgFLc/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Cattle Farming in South Africa Exposed: What Actually Work</p><p class="va">Duratag SA</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="1KFfEjkvXGI" data-t="Early Weaning Calves: Management, Nutrition and Profitability" aria-label="Play video: Early Weaning Calves: Management, Nutrition and Profitability"><img src="https://i.ytimg.com/vi/1KFfEjkvXGI/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Early Weaning Calves: Management, Nutrition and Profitability</p><p class="va">Nebraska Center for Agricultural Profitability</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="QYxUNJ6qm8Y" data-t="Managing a Small Cattle Herd" aria-label="Play video: Managing a Small Cattle Herd"><img src="https://i.ytimg.com/vi/QYxUNJ6qm8Y/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Managing a Small Cattle Herd</p><p class="va">Just a Few Acres Farm</p></div></div></div></div>
+</article>
+<article class="lesson" id="lesson-5">
+<div class="lesson-head"><span class="lnum">Lesson 1.5</span><span class="read">~12 min</span></div>
+<h2 style="margin-top:6px">Costing Your Herd Honestly</h2>
+<div class="objectives"><strong>In this lesson</strong><ul><li>Separate variable costs per cow from fixed costs of the whole enterprise</li><li>Calculate a gross margin per cow using your own local, dated prices</li><li>Put a real value on family labour instead of treating it as free</li></ul></div>
+<div class="body">
+<p>You cannot manage what you have not costed, and you cannot cost a herd from a book. This lesson gives you the method. You supply the prices, from your own district, this month, with the supplier&#x27;s name and the date written beside each one.</p>
+<p>Why no prices here? Because no current, dated African cattle, beef, feed, dip, vaccine or veterinary-service price of adequate quality was available for this course. The few price figures that exist in the source material are historical study figures from named countries and years - useful for showing you how a costing works, useless as a price you should expect to pay. Anyone who prints a universal African cattle price is guessing, and a business plan built on a guessed price is a business plan built on nothing.</p>
+<p>Start with the core calculation.</p>
+<p>Gross margin per cow equals the revenue from that cow&#x27;s output, minus the variable costs of keeping her for the year.</p>
+<p>Revenue is the weaning weight of her calf multiplied by the price per kilogram or per head you actually achieved. And here is the part that connects this lesson to everything before it: her revenue is zero in any year she does not wean a calf. Not reduced. Zero. That is why calving percentage sits underneath every financial number in your business.</p>
+<p>Variable costs are the ones that attach to one cow, for one year, and would disappear if she were not there.</p>
+<ul><li>Her share of the bull. Purchase price spread over his working years, or a hire fee, divided by the number of cows he serves.</li><li>Acaricide or dip, including the communal dip-tank levy where you pay one, and the labour of getting her there.</li><li>Dewormer.</li><li>Vaccination, hers and her calf&#x27;s.</li><li>Any bought or supplementary dry-season feed she or her calf needed.</li><li>Water provision attributable to her - the borehole running cost, or the time cost of trekking.</li><li>Her calf&#x27;s ear tag or branding materials, and castration or dehorning if you pay someone to do it.</li></ul>
+<p>Fixed costs are different and must be kept in a separate list. These are the costs of the whole enterprise, which do not change much whether you keep nineteen cows or twenty-one.</p>
+<ul><li>Land rent, or the opportunity cost of the land if you own it.</li><li>The handling facility - kraal, crush and race - spread over the years it will last.</li><li>Your own and your family&#x27;s labour.</li></ul>
+<p>Keep those two lists apart, and keep them apart deliberately. Mixing them makes it impossible to answer the one question that actually changes what you do: is this particular cow worth keeping? That is a variable-cost question about one animal. It is not a question about the whole farm.</p>
+<p>Now the part most smallholder costings get wrong. Family labour is almost always left out, because no cash changes hands for it. That single omission makes an enterprise look far more profitable than it is - as long as your time and your family&#x27;s time have any other use at all. And they do: paid work, another crop, school, rest. So put a number on it. Even a rough one, even just the local daily wage for farm work multiplied by the days you honestly spend on cattle. If the herd cannot pay for the hours it eats, that is something you need to know, not something to hide from yourself.</p>
+<p>Here is one more useful number to calculate, and it is the one that will change your mind fastest.</p>
+<p>Cost per weaned calf equals your total annual variable cost for the whole breeding herd, divided by the number of calves you actually weaned.</p>
+<p>Watch what happens. Twenty cows cost you the same to dip, dose and vaccinate whether they calve or not. If those 20 cows wean 8 calves, the whole year&#x27;s cost is carried by 8 animals. If they wean 14, the same cost is spread across 14. Your cost per calf falls by roughly 43 percent without you spending one unit of currency less. This is the same arithmetic as the last lesson, seen from the money side instead of the kilogram side.</p>
+<p>One final honesty note about the historical cost figures you may meet elsewhere. In the source material for this course, East Coast fever immunisation was costed in a study at 1.08 to 27.70 US dollars per animal, and acaricide-based control at 2.99 to 309.61 US dollars per animal per year depending on method. Those are historical study figures from named countries and years, quoted here only to show you two things: that the ranges are enormous, and that a disease-control decision is a costing decision you make by comparing the annual cost of control against the expected loss from doing nothing. Get your own current prices from your own supplier and your own veterinary authority before you decide anything.</p>
+</div>
+<div class="numbers"><div class="num"><div class="k">Gross margin per cow</div><div class="v">revenue from her calf minus variable costs of keeping her</div><div class="n">Her revenue is zero in any year she does not wean a calf - not reduced, zero. That is why calving percentage sits underneath every financial number</div></div><div class="num"><div class="k">African cattle and input prices</div><div class="v">not available - obtain locally and date them</div><div class="n">No current, dated African cattle, beef, feed, dip, vaccine or veterinary-service price of adequate quality was available for this course. Price your own market this month</div></div><div class="num"><div class="k">East Coast fever control costs, historical study range</div><div class="v">immunisation USD 1.08-27.70 per animal; acaricide control USD 2.99-309.61 per animal per year</div><div class="n">Historical figures from named countries and years, shown only to demonstrate how wide the range is. Not a current price and not a price for your country</div></div><div class="num"><div class="k">Cost per weaned calf</div><div class="v">total annual variable cost divided by calves actually weaned</div><div class="n">Twenty cows weaning 14 calves instead of 8 cut the cost per calf by roughly 43 percent without spending anything less</div></div></div>
+<div class="action"><strong>Do this today:</strong> get one real, current price. Phone or visit your dip supplier, or the person who runs the communal dip tank, and write down what it costs to treat one animal once, with the date and the supplier&#x27;s name. That is the first line of your variable cost list and it is worth more than any figure printed in a book.</div>
+<div class="card"><h3>Recommended viewing</h3><p class="vnote"><strong>These are free videos made by other people, not by rise AFRICA skills.</strong> Each one was checked against YouTube and is on topic. The written lessons are the course. Treat these as useful extra watching.</p><div class="vgrid"><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="QYxUNJ6qm8Y" data-t="Managing a Small Cattle Herd" aria-label="Play video: Managing a Small Cattle Herd"><img src="https://i.ytimg.com/vi/QYxUNJ6qm8Y/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Managing a Small Cattle Herd</p><p class="va">Just a Few Acres Farm</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="OXMA4YPmwv8" data-t="Zambeef&#x27;s Mbala Smallholder Cattle Development Project" aria-label="Play video: Zambeef&#x27;s Mbala Smallholder Cattle Development Project"><img src="https://i.ytimg.com/vi/OXMA4YPmwv8/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Zambeef&#x27;s Mbala Smallholder Cattle Development Project</p><p class="va">Langmead &amp; Baker Ltd</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="1KFfEjkvXGI" data-t="Early Weaning Calves: Management, Nutrition and Profitability" aria-label="Play video: Early Weaning Calves: Management, Nutrition and Profitability"><img src="https://i.ytimg.com/vi/1KFfEjkvXGI/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Early Weaning Calves: Management, Nutrition and Profitability</p><p class="va">Nebraska Center for Agricultural Profitability</p></div></div></div></div>
+</article>
+<article class="lesson" id="lesson-6">
+<div class="lesson-head"><span class="lnum">Lesson 1.6</span><span class="read">~13 min</span></div>
+<h2 style="margin-top:6px">More Cows, or Better Cows?</h2>
+<div class="objectives"><strong>In this lesson</strong><ul><li>Compare the cost and risk of adding cows against improving output per cow</li><li>Judge whether your herd sits below or above the carrying capacity of your land</li><li>Choose a first improvement and set a measurable target for next year</li></ul></div>
+<div class="body">
+<p>There are only two ways to grow the output of a cattle enterprise. Add more cows, or get more out of the cows you already own. They are not equally cheap, they are not equally risky, and they are not equally available to you.</p>
+<p>Adding cows requires one of two things: capital to buy breeding stock, or more grazing land. If you have neither, adding cows means putting more animals on land that is already carrying what it can. And here the arithmetic turns against you completely.</p>
+<p>Carrying capacity is the number of animals a piece of land can support on its own forage without the land itself degrading. Stocking rate is what you actually put on it. When stocking rate exceeds carrying capacity, the land loses productive capacity: the same ground feeds fewer animals next year, not more, because overgrazing damages the grass&#x27;s ability to recover. It preferentially kills the most palatable, most valuable grass species first, because those are grazed hardest and most often, and the pasture shifts toward poorer grasses, then toward bush thickening, then toward bare ground and erosion.</p>
+<p>That is why adding cows to over-stocked land does not increase output. It reduces it, with a delay long enough that most people do not connect the cause to the effect.</p>
+<p>Now, how many hectares does one Large Stock Unit need on your land? This course will not tell you, and you should be suspicious of anyone who does from a distance. The South African source consulted for this material warns explicitly that regional benchmark figures for hectares per LSU are unreliable and can mislead a farmer, because real carrying capacity depends on the specific veld condition, the grass species growing there, the rainfall in that particular year, and the grazing history of that particular piece of land. No hectares-per-LSU figure for any named African region is taught here, because no figure of adequate quality exists that would be honest to teach. The right authority is your nearest agricultural extension office, or a proper veld condition assessment on your own land.</p>
+<p>So how do you judge whether you are over-stocked without a number? Look at the land, at the end of the dry season, and answer these:</p>
+<ul><li>Is there still standing grass, or is the ground bare between plants?</li><li>Are the grasses your cattle prefer still present, or only the ones they refuse?</li><li>Is bush thickening year on year where there used to be grass?</li><li>Do your cows come out of every dry season thin, every year, not just in drought years?</li></ul>
+<p>Bush encroachment in particular is worth understanding correctly. It is widely documented as a rangeland degradation problem in southern Africa, and it is not simply bad luck. Overgrazing removes the grass competition that would suppress woody seedlings; the bush then thickens and further reduces the grazing; and the spiral feeds itself. Clearing it back is possible, but the literature describes it as an investment to restore lost carrying capacity - not a free fix.</p>
+<p>Now the other route. Improving output per cow requires management changes and sometimes modest capital - a second bull, dry-season feed conservation, a better dip and vaccination routine - but it does not require more land. And from the arithmetic you have already done, it can produce a larger output increase from the same herd and the same land than the same money spent on buying more animals for a pasture already stretched.</p>
+<p>So the honest recommendation this course can make, and the limits of it:</p>
+<p>If your herd is already at or near the carrying capacity of your land, raising output per cow is very likely the higher-return, lower-risk strategy. That is not a universal law. It is the direct consequence of the carrying-capacity ceiling and the calving-percentage arithmetic taken together.</p>
+<p>If your herd is genuinely below the carrying capacity of your land, the two are not in competition. Do both.</p>
+<p>Where should you start? The levers, in the order the evidence supports:</p>
+<ol><li>Bull management and a defined breeding season. Half your calf crop comes from the bull, and an outnumbered, unsound or year-round bull quietly caps your calving percentage.</li><li>Calving season discipline, so calving falls when grass is available and cows can rebreed.</li><li>Dry-season feed planning, made before the dry season starts, not during it.</li><li>A health calendar built with your veterinary authority, focused on the diseases your district actually has.</li><li>Records, so you know which cow is failing.</li><li>Culling discipline, so the failures leave.</li></ol>
+<p>None of the first five requires you to buy an animal. All six are taught in this course.</p>
+<p>Finish with a target, not a feeling. Write down your calving percentage from lesson two. Write beside it what you intend it to be twelve months from now, and the one change you are making to get there. A target you wrote down is a business decision. A target you only thought about is a wish.</p>
+</div>
+<div class="numbers"><div class="num"><div class="k">Hectares per LSU for African rangeland</div><div class="v">not available - assess your own land</div><div class="n">The source consulted warns that regional benchmark figures are unreliable and misleading, because capacity depends on veld condition, species, that year&#x27;s rainfall and grazing history. Ask your extension office for a veld assessment</div></div><div class="num"><div class="k">Carrying capacity versus stocking rate</div><div class="v">exceeding capacity reduces future output</div><div class="n">Overgrazing kills the most palatable grasses first and shifts the pasture toward poorer species, bush and bare ground. Adding cattle above capacity lowers total output with a delay</div></div><div class="num"><div class="k">Bush encroachment</div><div class="v">a self-reinforcing spiral, not bad luck</div><div class="n">Overgrazing removes the grass competition that suppresses woody seedlings; the thickening bush then further reduces grazing. Clearing is an investment to restore lost capacity, not a free fix</div></div><div class="num"><div class="k">Output gain available without more land</div><div class="v">75 percent, on the worked 20-cow example</div><div class="n">From moving 20 cows from a 40 percent to a 70 percent calving rate at 190 kg per calf. Derived arithmetic on sourced rates, shown as the scale of the opportunity, not a promise</div></div></div>
+<div class="action"><strong>Do this today:</strong> walk to the part of your grazing that gets used hardest and look at the ground between the grass plants. Write down what you see - bare soil, only unpalatable grasses, thickening bush, or good cover - and date it. Repeat at the end of every dry season. That record tells you more about your carrying capacity than any book figure.</div>
+<div class="card"><h3>Recommended viewing</h3><p class="vnote"><strong>These are free videos made by other people, not by rise AFRICA skills.</strong> Each one was checked against YouTube and is on topic. The written lessons are the course. Treat these as useful extra watching.</p><div class="vgrid"><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="eLSGQkkgFLc" data-t="Cattle Farming in South Africa Exposed: What Actually Work" aria-label="Play video: Cattle Farming in South Africa Exposed: What Actually Work"><img src="https://i.ytimg.com/vi/eLSGQkkgFLc/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Cattle Farming in South Africa Exposed: What Actually Work</p><p class="va">Duratag SA</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="1KFfEjkvXGI" data-t="Early Weaning Calves: Management, Nutrition and Profitability" aria-label="Play video: Early Weaning Calves: Management, Nutrition and Profitability"><img src="https://i.ytimg.com/vi/1KFfEjkvXGI/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Early Weaning Calves: Management, Nutrition and Profitability</p><p class="va">Nebraska Center for Agricultural Profitability</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="QYxUNJ6qm8Y" data-t="Managing a Small Cattle Herd" aria-label="Play video: Managing a Small Cattle Herd"><img src="https://i.ytimg.com/vi/QYxUNJ6qm8Y/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Managing a Small Cattle Herd</p><p class="va">Just a Few Acres Farm</p></div></div></div></div>
+</article>
+<div class="card quiz"><h3>Knowledge check</h3><p class="note">Questions from all lessons. Click an answer to see whether it is right and why.</p>
+<div class="q"><p><strong>1. What is the measure of success in a commercial breeding enterprise?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">Output per cow</button></li><li><button class="opt" data-correct="0">The number of cattle owned</button></li><li><button class="opt" data-correct="0">The size of the bull</button></li><li><button class="opt" data-correct="0">How long cattle have been in the family</button></li></ul><div class="why">A store-of-wealth herd is measured by number; a commercial breeding herd is measured by what each cow actually produces. Thirty cows weaning nine calves is a worse business than twenty weaning fourteen.</div></div>
+<div class="q"><p><strong>2. In the South African comparison cited, what were the commercial and communal calving rates?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">23 percent and 61 percent, in that order</button></li><li><button class="opt" data-correct="0">40 percent and 40 percent</button></li><li><button class="opt" data-correct="1">61 percent commercial against 23 percent communal</button></li><li><button class="opt" data-correct="0">15 percent and 23 percent</button></li></ul><div class="why">Commercial sector 61 percent, communal sector 23 percent in the same country - commercial herds calving roughly 2.7 times as often per cow per year.</div></div>
+<div class="q"><p><strong>3. Why does this course refuse to tell you what a weaner is worth?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Because prices never change</button></li><li><button class="opt" data-correct="1">Because no current, dated African cattle or beef price of adequate quality was available, and a stale number would mislead your planning</button></li><li><button class="opt" data-correct="0">Because the price is a secret</button></li><li><button class="opt" data-correct="0">Because cattle are not sold by weight</button></li></ul><div class="why">Every price in the source material is either historical, from a named study year, or non-African. Teaching one as if it were current would put a false number into a learner&#x27;s business plan or loan application.</div></div>
+<div class="q"><p><strong>4. A farmer keeps a cow that has not calved for three years because selling her would make the herd smaller. What is he doing?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Protecting a valuable bloodline</button></li><li><button class="opt" data-correct="0">Following good commercial practice</button></li><li><button class="opt" data-correct="0">Preparing for drought correctly</button></li><li><button class="opt" data-correct="1">Measuring by herd size while paying the costs of a commercial herd</button></li></ul><div class="why">That cow eats grass, drinks water, needs dip and dewormer and occupies carrying capacity, and returns nothing. Keeping her makes sense only if number, not output, is the measure of success.</div></div>
+<div class="q"><p><strong>5. What does this course say about cattle kept as savings and social security?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">It is a legitimate reason to own cattle, and a productive herd gives up none of that security while also earning cash</button></li><li><button class="opt" data-correct="0">It is a waste of land</button></li><li><button class="opt" data-correct="0">It should be abandoned immediately</button></li><li><button class="opt" data-correct="0">It is the only sensible reason to own cattle</button></li></ul><div class="why">The course does not ask you to stop valuing cattle as security. A cow that weans a calf every year is still there in the drought - she has simply paid you a calf as well.</div></div>
+<div class="q"><p><strong>6. You put 25 cows to the bull and 15 produced a live calf. What is your calving percentage?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">40 percent</button></li><li><button class="opt" data-correct="0">15 percent</button></li><li><button class="opt" data-correct="1">60 percent</button></li><li><button class="opt" data-correct="0">66 percent</button></li></ul><div class="why">15 divided by 25 is 0.6, times 100 is 60 percent. Always divide calves born by cows exposed to the bull, and use the same definition every year.</div></div>
+<div class="q"><p><strong>7. What did the southern Ethiopia dataset show about the range between herds?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">All herds calved at about 55 percent</button></li><li><button class="opt" data-correct="1">Herds ranged from 12 to 83 percent around a 55 percent average</button></li><li><button class="opt" data-correct="0">No herd exceeded 40 percent</button></li><li><button class="opt" data-correct="0">Only exotic breeds calved above 50 percent</button></li></ul><div class="why">The 12 to 83 percent spread inside one survey is the important part: some smallholders were already calving at commercial levels, so the gap is not fixed by geography or poverty alone.</div></div>
+<div class="q"><p><strong>8. Why must a Tuli reproductive rate of 85 percent and a Tuli calving rate of 69 percent not be averaged?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Because 85 is more recent</button></li><li><button class="opt" data-correct="0">Because Tuli is not an African breed</button></li><li><button class="opt" data-correct="0">Because averaging is always wrong in animal science</button></li><li><button class="opt" data-correct="1">Because they come from different sources that may be counting different things, such as conceptions versus weaned calves</button></li></ul><div class="why">Different studies define reproductive terms differently. Averaging two measurements that count different events produces a number that means nothing. Always ask what exactly was counted.</div></div>
+<div class="q"><p><strong>9. Twenty cows move from a 40 percent to a 70 percent calving rate. What happens to costs?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">Costs stay nearly the same while calves rise from 8 to 14</button></li><li><button class="opt" data-correct="0">Costs rise by 75 percent</button></li><li><button class="opt" data-correct="0">Costs double</button></li><li><button class="opt" data-correct="0">Costs fall to zero</button></li></ul><div class="why">The same 20 cows eat the same grass, drink the same water and need the same dip whether they calve or not. That is precisely why raising the calving percentage is a bigger lever than adding cows.</div></div>
+<div class="q"><p><strong>10. How should the country-level calving figures in this lesson be treated?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">As fixed national laws</button></li><li><button class="opt" data-correct="1">As the pattern being reliable - a large, persistent communal-versus-commercial gap - while any single percentage should not be treated as a fixed law</button></li><li><button class="opt" data-correct="0">As irrelevant to your own herd</button></li><li><button class="opt" data-correct="0">As targets your herd must hit this year</button></li></ul><div class="why">They come from a review summarising underlying studies that were not individually re-verified. The direction of the evidence is consistent and trustworthy; the exact decimal for any one country is not.</div></div>
+<div class="q"><p><strong>11. Which constraint does the sourced review describe as probably the single most important limit on productivity?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Poor bull genetics</button></li><li><button class="opt" data-correct="0">Lack of formal education</button></li><li><button class="opt" data-correct="1">Inadequate dry-season grazing and feed</button></li><li><button class="opt" data-correct="0">Distance to the abattoir</button></li></ul><div class="why">Dry-season feed is named as probably the most important constraint. It is also the point in the year where calving percentage, weaning weight and rebreeding are all most at risk at once.</div></div>
+<div class="q"><p><strong>12. Why does using a cow for draught power and household milk reduce calving efficiency?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">Because a cow doing several jobs at once is not free to be managed purely for calf production</button></li><li><button class="opt" data-correct="0">Because ploughing causes abortion in every case</button></li><li><button class="opt" data-correct="0">Because milk and calves cannot both be produced by any cow</button></li><li><button class="opt" data-correct="0">Because it is illegal in most countries</button></li></ul><div class="why">The review states directly that cattle serving multiple functions competes with optimising any single output. It is a real cost to count honestly, not a practice to pretend away.</div></div>
+<div class="q"><p><strong>13. In the Zimbabwe urea-treated stover study, what caused the technique to fail in practice?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">The cattle refused to eat it</button></li><li><button class="opt" data-correct="0">It reduced liveweight gain</button></li><li><button class="opt" data-correct="0">It caused disease</button></li><li><button class="opt" data-correct="1">Labour demand, lack of extension follow-up and difficulty accessing urea</button></li></ul><div class="why">Adopters reported excellent results - 97 percent higher intake, 87.8 percent better liveweight gain - but only 38.8 percent of trained farmers kept using it, for reasons that were practical rather than biological.</div></div>
+<div class="q"><p><strong>14. Which two constraints are largely inside a smallholder&#x27;s own control?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Land tenure and market structure</button></li><li><button class="opt" data-correct="1">Dry-season feed planning and animal health management</button></li><li><button class="opt" data-correct="0">Rainfall and national disease policy</button></li><li><button class="opt" data-correct="0">Beef export prices and veterinary law</button></li></ul><div class="why">Dry-season planning and health management are farm-level decisions. Land tenure, market structure and the wider disease environment cannot be fixed by one farmer alone, and honest teaching says so.</div></div>
+<div class="q"><p><strong>15. What three tests should you apply before choosing an improvement to adopt?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Cost, colour and convenience</button></li><li><button class="opt" data-correct="0">Whether the extension officer likes it, whether it is new, and whether neighbours use it</button></li><li><button class="opt" data-correct="1">Whether it works biologically, whether you can do it with the labour and cash you have, and whether you can sustain it without outside help</button></li><li><button class="opt" data-correct="0">Whether it is cheap, quick and popular</button></li></ul><div class="why">The stover study shows a biologically sound technique failing on labour and input access. An improvement you sustain for five years beats a better one you abandon after one season.</div></div>
+<div class="q"><p><strong>16. Roughly how many LSU is a mature 320 kg Nguni-type cow?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">1.0 LSU</button></li><li><button class="opt" data-correct="1">0.7 LSU</button></li><li><button class="opt" data-correct="0">0.12 LSU</button></li><li><button class="opt" data-correct="0">2.0 LSU</button></li></ul><div class="why">One LSU is a 450 kg animal, so a smaller-framed 320 kg cow is about 0.7 LSU. Ten such cows load the grazing like about 7 standard animals, not 10.</div></div>
+<div class="q"><p><strong>17. What is the correct equation for a breeding herd&#x27;s physical output?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">Cows exposed multiplied by calving percentage, calf survival to weaning and average weaning weight</button></li><li><button class="opt" data-correct="0">Number of cattle multiplied by their age</button></li><li><button class="opt" data-correct="0">Total herd weight divided by hectares</button></li><li><button class="opt" data-correct="0">Calves born minus calves sold</button></li></ul><div class="why">Because the four terms multiply rather than add, weakness in any one of them drags the whole answer down. Each term gets its own module in this course.</div></div>
+<div class="q"><p><strong>18. Which of a barren cow&#x27;s four costs is largest and hardest to see?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">The dip cost</button></li><li><button class="opt" data-correct="0">The vaccination cost</button></li><li><button class="opt" data-correct="0">The labour cost</button></li><li><button class="opt" data-correct="1">The grazing cost, because she occupies carrying capacity a productive animal could use and no money changes hands</button></li></ul><div class="why">No cash leaves your hand for grass, so the cost feels like nothing. But she eats roughly 4,900 kg of dry matter a year on the LSU planning rule, and that grazing had to be grown.</div></div>
+<div class="q"><p><strong>19. Twenty cows go from a 40 to a 70 percent calving rate at 190 kg per weaned calf. What happens to output?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">It rises from 1,520 kg to 1,900 kg</button></li><li><button class="opt" data-correct="0">It stays the same because the cows are the same</button></li><li><button class="opt" data-correct="1">It rises from 1,520 kg to 2,660 kg, an increase of 75 percent</button></li><li><button class="opt" data-correct="0">It roughly doubles to 3,040 kg</button></li></ul><div class="why">8 calves at 190 kg is 1,520 kg; 14 calves at 190 kg is 2,660 kg. Same cows, same land, nearly the same costs - which is exactly why calving percentage is the main lever.</div></div>
+<div class="q"><p><strong>20. Why does this course not use the 3 percent intake rule to build you a feed ration?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Because the rule is false</button></li><li><button class="opt" data-correct="0">Because cattle do not eat dry matter</button></li><li><button class="opt" data-correct="1">Because ration formulation belongs to the separate Cattle and Steer Feed Formulation course, and the 3 percent figure is a planning estimate rather than a ration calculation</button></li><li><button class="opt" data-correct="0">Because rations are illegal without a permit</button></li></ul><div class="why">The 3 percent figure is a general order-of-magnitude planning rule, useful for judging grazing load. Building an actual balanced ration is a different subject with its own course on this platform.</div></div>
+<div class="q"><p><strong>21. What is a cow&#x27;s revenue in a year she does not wean a calf?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">Zero</button></li><li><button class="opt" data-correct="0">About half a normal year</button></li><li><button class="opt" data-correct="0">Whatever her manure is worth</button></li><li><button class="opt" data-correct="0">The same as a productive cow, delayed by a year</button></li></ul><div class="why">A cow-calf enterprise sells weaned calves. No calf means no revenue that year, while every variable cost of keeping her was still paid in full.</div></div>
+<div class="q"><p><strong>22. Which of these is a fixed cost of the whole enterprise rather than a variable cost per cow?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Dip and acaricide</button></li><li><button class="opt" data-correct="0">Dewormer</button></li><li><button class="opt" data-correct="1">The handling facility, spread over the years it will last</button></li><li><button class="opt" data-correct="0">The calf&#x27;s ear tag</button></li></ul><div class="why">The kraal and crush cost roughly the same whether you run nineteen cows or twenty-one. Keeping fixed and variable costs separate is what lets you answer whether one particular cow is worth keeping.</div></div>
+<div class="q"><p><strong>23. Why should family labour be given a value in a herd costing?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Because tax authorities require it everywhere</button></li><li><button class="opt" data-correct="0">Because it is the largest cost on every farm</button></li><li><button class="opt" data-correct="0">Because banks refuse loans without it</button></li><li><button class="opt" data-correct="1">Because that time has other real uses, and leaving it out makes the enterprise look more profitable than it truly is</button></li></ul><div class="why">No cash changes hands, so the cost feels like nothing. But the same hours could go to paid work, another crop, school or rest, so a costing that prices them at zero is not honest with you.</div></div>
+<div class="q"><p><strong>24. Twenty cows cost the same to dip and dose all year. What happens to cost per weaned calf if calves rise from 8 to 14?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">It rises, because more calves need more treatment</button></li><li><button class="opt" data-correct="1">It falls by roughly 43 percent with no reduction in spending</button></li><li><button class="opt" data-correct="0">It stays exactly the same</button></li><li><button class="opt" data-correct="0">It cannot be calculated without a scale</button></li></ul><div class="why">The same total cost is spread over more calves. This is the money-side view of the same arithmetic that drove the kilogram-side gain in the previous lesson.</div></div>
+<div class="q"><p><strong>25. Why are the East Coast fever control cost figures quoted in this lesson not prices you should plan with?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Because East Coast fever does not occur in Africa</button></li><li><button class="opt" data-correct="0">Because control is always free through government programmes</button></li><li><button class="opt" data-correct="1">Because they are historical study figures from named countries and years, shown only to illustrate how wide the cost range is</button></li><li><button class="opt" data-correct="0">Because they are in US dollars</button></li></ul><div class="why">They date from specific studies in specific places. Their teaching value is the method - compare annual control cost against expected loss from doing nothing - not the number.</div></div>
+<div class="q"><p><strong>26. What happens when you add cattle to land already at its carrying capacity?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Total output rises in proportion to the extra animals</button></li><li><button class="opt" data-correct="1">Total output falls over time, because overgrazing damages the grass&#x27;s ability to recover</button></li><li><button class="opt" data-correct="0">Nothing changes</button></li><li><button class="opt" data-correct="0">The grass grows faster under heavier grazing</button></li></ul><div class="why">Overgrazing removes the most palatable species first and shifts the pasture toward poorer grasses, bush and bare ground. The delay between cause and effect is why most people miss the connection.</div></div>
+<div class="q"><p><strong>27. Why does this course give no hectares-per-LSU figure for African rangeland?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Because the figure is confidential</button></li><li><button class="opt" data-correct="0">Because LSU is not used in Africa</button></li><li><button class="opt" data-correct="0">Because all African rangeland has the same capacity</button></li><li><button class="opt" data-correct="1">Because the source consulted warns such regional benchmarks are unreliable, since capacity depends on veld condition, species, rainfall and grazing history</button></li></ul><div class="why">A book number for a whole biome can mislead a farmer badly. The right answer comes from an on-farm veld condition assessment or your local extension office.</div></div>
+<div class="q"><p><strong>28. A farmer&#x27;s herd is genuinely below the carrying capacity of his land. What should he do?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">Both add cows and raise output per cow - they are not in competition at that point</button></li><li><button class="opt" data-correct="0">Only add cows</button></li><li><button class="opt" data-correct="0">Only improve management and never grow the herd</button></li><li><button class="opt" data-correct="0">Sell the land</button></li></ul><div class="why">The case for choosing improvement over expansion rests on the carrying-capacity ceiling. Below that ceiling the ceiling is not binding, so the two strategies do not conflict.</div></div>
+<div class="q"><p><strong>29. Which improvement lever does the course put first?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Buying a scale</button></li><li><button class="opt" data-correct="0">Building a new kraal</button></li><li><button class="opt" data-correct="1">Bull management and a defined breeding season</button></li><li><button class="opt" data-correct="0">Buying exotic breeding stock</button></li></ul><div class="why">Half the calf crop comes from the bull, and an outnumbered, unsound or year-round bull quietly caps the calving percentage of the whole herd. It also costs nothing extra to define a season.</div></div>
+<div class="q"><p><strong>30. Is bush encroachment simply bad luck?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Yes, it is caused by rainfall alone</button></li><li><button class="opt" data-correct="1">No - it is frequently the slow-motion consequence of stocking above carrying capacity, and reversing it is an investment</button></li><li><button class="opt" data-correct="0">Yes, and nothing can be done about it</button></li><li><button class="opt" data-correct="0">No - it improves grazing over time</button></li></ul><div class="why">Overgrazing removes the grass competition that would suppress woody seedlings, and the thickening bush then further reduces grazing, feeding the spiral. Clearing restores lost capacity but is not free.</div></div>
+</div>
+<div class="card"><h3>Module 1 capstone</h3><p>Build a Herd Business File for your own cattle before you change anything else on the farm. Step 1: count your breeding cows - every female old enough to have been served by a bull in the last year - and write the number down. Do not count calves, heifers too young to breed, oxen or the bull. Step 2: count how many of those cows produced a live calf in the last twelve months. Divide the calves by the cows and multiply by 100. That is your calving percentage, and it is the single most important number about your business. Step 3: write it beside the sourced comparison figures: roughly 40 percent average across African communal herds, 23 percent in one South African communal survey against 61 percent in the commercial sector of the same country, and 15 percent in one Venda survey. Say plainly where you sit. Step 4: list every cow that did not calve. For each one, write what you think went wrong: not served, served and did not hold, aborted, calf died, or unknown. Step 5: price your variable costs for one year - dip, dewormer, vaccination, any bought feed, your share of the bull, and water - from this month&#x27;s local prices, with the supplier and the date beside each. Step 6: work out your cost per weaned calf by dividing the whole year&#x27;s variable cost by the number of calves you actually weaned. Step 7: write one page saying what that number tells you and which single cow you would sell first.</p>
+<p><button class="btn" onclick="rasMarkDone(1,this)">Mark module 1 complete</button></p></div>
+
+<div id="ras-assignment"></div>
+
+<div class="pager">
+<span></span>
+<a class="btn" href="cattle-farming-module-2.html">Next Module →</a>
 </div>
 
-<div class="section">
-<h2>🎥 Video Lessons</h2>
-<div class="video-container"><h3>1. Module 1 Introduction & Overview</h3><div class="ras-vid" data-yt="uxJoILIbO5A" data-title="Revolutionizing Dairy Farming in Kenya: Advanced Techniques &amp; Expert Insights" role="button" tabindex="0" aria-label="Play: Revolutionizing Dairy Farming in Kenya: Advanced Techniques &amp; Expert Insights"><img loading="lazy" src="https://i.ytimg.com/vi/uxJoILIbO5A/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>AIM Agriculture Farm</b>Revolutionizing Dairy Farming in Kenya: Advanced Techniques &amp; Expert Insights</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cattle+farming+Module+1+Introduction+&amp;+Overview" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
-<div class="video-container"><h3>2. Practical Skills & Best Practices</h3><div class="ras-vid" data-yt="1A0PoOtY3nU" data-title="Ethiopia VCA: Commercializing Smallholder Dairy Production" role="button" tabindex="0" aria-label="Play: Ethiopia VCA: Commercializing Smallholder Dairy Production"><img loading="lazy" src="https://i.ytimg.com/vi/1A0PoOtY3nU/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Fintrac</b>Ethiopia VCA: Commercializing Smallholder Dairy Production</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cattle+farming+Practical+Skills+&amp;+Best+Practices" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
-<div class="video-container"><h3>3. Problem-Solving & Troubleshooting</h3><div class="ras-vid" data-yt="jJIsjbKIQQU" data-title="Dairy Farming in East Africa. Why Kenya is the leader? //Documentary" role="button" tabindex="0" aria-label="Play: Dairy Farming in East Africa. Why Kenya is the leader? //Documentary"><img loading="lazy" src="https://i.ytimg.com/vi/jJIsjbKIQQU/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Kilimo Faida TV</b>Dairy Farming in East Africa. Why Kenya is the leader? //Documentary</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cattle+farming+Problem-Solving+&amp;+Troubleshooting" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
-<div class="video-container"><h3>4. Case Studies & Real-World Examples</h3><div class="ras-vid" data-yt="1A0PoOtY3nU" data-title="Ethiopia VCA: Commercializing Smallholder Dairy Production" role="button" tabindex="0" aria-label="Play: Ethiopia VCA: Commercializing Smallholder Dairy Production"><img loading="lazy" src="https://i.ytimg.com/vi/1A0PoOtY3nU/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Fintrac</b>Ethiopia VCA: Commercializing Smallholder Dairy Production</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cattle+farming+Case+Studies+&amp;+Real-World+Examples" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
-<div class="video-container"><h3>5. Implementation & Action Planning</h3><div class="ras-vid" data-yt="jJIsjbKIQQU" data-title="Dairy Farming in East Africa. Why Kenya is the leader? //Documentary" role="button" tabindex="0" aria-label="Play: Dairy Farming in East Africa. Why Kenya is the leader? //Documentary"><img loading="lazy" src="https://i.ytimg.com/vi/jJIsjbKIQQU/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Kilimo Faida TV</b>Dairy Farming in East Africa. Why Kenya is the leader? //Documentary</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cattle+farming+Implementation+&amp;+Action+Planning" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
-</div>
+<div class="disclaim"><strong>Price check, always.</strong> Before you buy ingredients, equipment, or commit to a supplier, call three suppliers and compare prices. Prices and ingredient availability vary widely by region and season. This course teaches the method. You confirm the local numbers with your own research and with your veterinarian or animal nutritionist.</div>
+</div></main>
 
-<div class="section">
-<h2>📊 Key Reference Table</h2>
-<table>
-<thead><tr><th>Concept</th><th>Key Details</th><th>Your Farm Application</th></tr></thead>
-<tbody>
-<tr><td>Best Practice 1</td><td>Proven method for success</td><td>How to implement on your farm</td></tr>
-<tr><td>Best Practice 2</td><td>Common problem solution</td><td>Troubleshooting guide</td></tr>
-<tr><td>Best Practice 3</td><td>Optimization strategy</td><td>Performance improvement steps</td></tr>
-<tr><td>Best Practice 4</td><td>Cost efficiency method</td><td>Profitability enhancement</td></tr>
-</tbody>
-</table>
-</div>
-
-<div class="section">
-<h2>💡 Module 1: 6 Core Concepts</h2>
-<div class="concept">
-<h3>Concept 1: Foundational Knowledge</h3>
-<p>Understand the basic principles that underlie successful Cattle Farming. This foundation helps you make better decisions and troubleshoot problems effectively. Practice applying this concept on a small scale before expanding.</p>
-</div>
-<div class="concept">
-<h3>Concept 2: Practical Implementation</h3>
-<p>Learn specific techniques and methods proven to work in real farming situations. These practical skills are what successful farmers use daily. Document your implementation process and results.</p>
-</div>
-<div class="concept">
-<h3>Concept 3: Monitoring & Measurement</h3>
-<p>Develop systems to track your results. Data-driven decisions lead to better outcomes. Keep simple records of inputs, outputs, and results. Use this information to optimize constantly.</p>
-</div>
-<div class="concept">
-<h3>Concept 4: Problem-Solving</h3>
-<p>Learn systematic approaches to solving problems that arise on your farm. Most issues have solutions that others have already discovered. Apply proven troubleshooting methods.</p>
-</div>
-<div class="concept">
-<h3>Concept 5: Optimization & Scaling</h3>
-<p>Once you master the basics, learn how to optimize for better results and profitability. Understand what changes when you scale your operation from small to large.</p>
-</div>
-<div class="concept">
-<h3>Concept 6: Sustainability & Long-Term Success</h3>
-<p>Build a farming operation that remains profitable and sustainable for years. Balance short-term profit with long-term health of your land, animals, and business.</p>
-</div>
-</div>
-
-<div class="section">
-<div class="quiz-section">
-<h2>🎯 Module 1 Knowledge Check</h2>
-<div class="quiz-question">
-<p>1. What is the most important skill to master in this module?</p>
-<div class="quiz-option"><input type="radio" name="q1" value="a" id="q1a"><label for="q1a">a) Understanding core principles and applying them to your farm</label></div>
-<div class="quiz-option"><input type="radio" name="q1" value="b" id="q1b"><label for="q1b">b) Memorizing technical details</label></div>
-<div class="quiz-option"><input type="radio" name="q1" value="c" id="q1c"><label for="q1c">c) Following procedures exactly</label></div>
-<button onclick="checkAnswer(this)" data-q="q1" data-a="a" data-f="Correct! Applying principles to your specific situation is more valuable than memorizing details.">Check Answer</button>
-<div id="feedback-q1" class="feedback"></div>
-</div>
-<div class="quiz-question">
-<p>2. How should you approach learning in this module?</p>
-<div class="quiz-option"><input type="radio" name="q2" value="a" id="q2a"><label for="q2a">a) Watch videos passively</label></div>
-<div class="quiz-option"><input type="radio" name="q2" value="b" id="q2b"><label for="q2b">b) Take notes, experiment on your farm, track results, adjust</label></div>
-<div class="quiz-option"><input type="radio" name="q2" value="c" id="q2c"><label for="q2c">c) Read the materials once</label></div>
-<button onclick="checkAnswer(this)" data-q="q2" data-a="b" data-f="Correct! Active learning through experimentation produces the best results.">Check Answer</button>
-<div id="feedback-q2" class="feedback"></div>
-</div>
-<div class="quiz-question">
-<p>3. What makes farming knowledge valuable?</p>
-<div class="quiz-option"><input type="radio" name="q3" value="a" id="q3a"><label for="q3a">a) How you apply it to solve real problems on your farm</label></div>
-<div class="quiz-option"><input type="radio" name="q3" value="b" id="q3b"><label for="q3b">b) How much you memorize</label></div>
-<div class="quiz-option"><input type="radio" name="q3" value="c" id="q3c"><label for="q3c">c) Academic credentials</label></div>
-<button onclick="checkAnswer(this)" data-q="q3" data-a="a" data-f="Correct! The real value of knowledge is how it improves your farming results.">Check Answer</button>
-<div id="feedback-q3" class="feedback"></div>
-</div>
-</div>
-</div>
-
-<div class="section">
-<div class="project-section">
-<h2>🚀 Capstone Project: 8-Phase Implementation Plan</h2>
-<div class="project-item">
-<h4>Phase 1: Research & Planning</h4>
-<p>Study the module content. Research your local context: prices, climate, available resources. Document current state of your farm operation. What are you doing now? What could improve?</p>
-</div>
-<div class="project-item">
-<h4>Phase 2: Learning & Preparation</h4>
-<p>Complete all video lessons. Take detailed notes. Highlight key techniques. Prepare equipment and resources. Identify any knowledge gaps and address them.</p>
-</div>
-<div class="project-item">
-<h4>Phase 3: Small-Scale Testing</h4>
-<p>Test new techniques on a small part of your farm. Document exact details: date, materials used, conditions, results. Start small to reduce risk. Learn from early results.</p>
-</div>
-<div class="project-item">
-<h4>Phase 4: Measurement & Monitoring</h4>
-<p>Track results carefully. Keep records: inputs (cost, time, materials), outputs (yield, quality, revenue). Compare with your baseline. Did results improve?</p>
-</div>
-<div class="project-item">
-<h4>Phase 5: Problem-Solving & Adjustment</h4>
-<p>When problems arise (they will), troubleshoot systematically. Review module concepts. Ask: what changed? What could I do differently? Implement adjustments and test again.</p>
-</div>
-<div class="project-item">
-<h4>Phase 6: Expansion & Scaling</h4>
-<p>Once proven on small scale, expand to larger area. Scale gradually. Document challenges at each scale. Train any helpers on new methods.</p>
-</div>
-<div class="project-item">
-<h4>Phase 7: Optimization & Profitability</h4>
-<p>Now that system works, optimize for profit. Reduce unnecessary costs. Maximize output quality. Calculate return on investment. Document which practices are most profitable.</p>
-</div>
-<div class="project-item">
-<h4>Phase 8: Sharing & Mentoring</h4>
-<p>Share what you learned with other farmers. Help them implement successfully. Your experience becomes valuable. Document successful stories and lessons learned.</p>
-</div>
-</div>
-</div>
-
-<div class="nav-buttons">
-<a href="cattle-farming-course.html">↑ Back to Cattle Farming Course</a>
-</div>
-</div>
-</div>
+<footer><div class="wrap">Cattle Farming — Module 1 of 12 · 4,660 words · rise AFRICA skills</div></footer>
 
 <script>
-var PROGRESS_KEY = 'cattle-farming-module-1';
-
-function checkAnswer(el){
-  var q = el.dataset.q, a = el.dataset.a, f = el.dataset.f || '';
-  var sel = document.querySelector('input[name="' + q + '"]:checked');
-  var box = document.getElementById('feedback-' + q);
-  if(!sel){ if(box){ box.className='feedback show incorrect';
-            box.textContent='Please select an answer first.'; } return; }
-  var right = (sel.value === a);
-  if(box){
-    box.className = 'feedback show ' + (right ? 'correct' : 'incorrect');
-    box.textContent = (right ? '\u2713 ' : '\u2717 ') + f;
-  }
-  updateProgress();
-}
-function updateProgress(){
-  var groups = {};
-  document.querySelectorAll('input[type="radio"]').forEach(function(r){ groups[r.name]=1; });
-  var total = Object.keys(groups).length;
-  var done  = {};
-  document.querySelectorAll('input[type="radio"]:checked').forEach(function(r){ done[r.name]=1; });
-  var pct = total ? (Object.keys(done).length / total) * 100 : 0;
-  var bar = document.getElementById('progressFill');
-  if(bar) bar.style.width = pct + '%';
-  try { localStorage.setItem(PROGRESS_KEY, String(pct)); } catch(e){}
-}
-window.addEventListener('load', function(){
-  var saved = null;
-  try { saved = localStorage.getItem(PROGRESS_KEY); } catch(e){}
-  var bar = document.getElementById('progressFill');
-  if(saved && bar) bar.style.width = saved + '%';
-  document.querySelectorAll('input[type="radio"]').forEach(function(r){
-    r.addEventListener('change', updateProgress);
+(function() {
+  var KEY="raskills.cattle-farming.progress";
+  function load() { try { return JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e) { return {}; } }
+  function save(o) { try { localStorage.setItem(KEY, JSON.stringify(o)); } catch(e) { } }
+  window.rasMarkDone = function(n, btn) { var p = load(); p["m" + n] = true; save(p); if (btn) { btn.textContent = "Module complete"; btn.classList.add("ghost"); } };
+  window.rasProgress = load;
+})();
+document.querySelectorAll(".opt").forEach(function(btn) {
+  btn.addEventListener("click", function() {
+    var correct = this.getAttribute("data-correct") === "1";
+    this.classList.add(correct ? "right" : "wrong");
+    var why = this.closest(".q").querySelector(".why");
+    if (why) why.classList.add("show");
+    this.closest(".opts").querySelectorAll(".opt").forEach(function(o) { o.style.pointerEvents = "none"; });
+  });
+});
+document.querySelectorAll(".vthumb").forEach(function(el) {
+  el.addEventListener("click", function() {
+    if (this.getAttribute("data-on")) return;
+    var iframe = document.createElement("iframe");
+    iframe.src = "https://www.youtube.com/embed/" + this.getAttribute("data-yt");
+    iframe.allow = "accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture";
+    iframe.allowFullscreen = true;
+    this.innerHTML = ""; this.appendChild(iframe); this.setAttribute("data-on", "1");
   });
 });
 </script>
+<script src="/assignment-submit.js"></script>
 </body>
 </html>

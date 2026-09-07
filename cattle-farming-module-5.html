@@ -1,302 +1,348 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Module 5 - Cattle Farming</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Module 5: Grazing and Rangeland - Cattle Farming</title>
+<meta name="description" content="Grass is the cheapest feed your herd will ever eat, and the land that grows it is the one asset you cannot buy more of. This module teaches the arithmetic of carrying capacity and stocking rate, how to count animals of different sizes in Large Stock Units, what one animal actually removes from your land in a year, why grass needs rest, how bush encroachment quietly steals grazing, and how to read the condition of your own veld instead of trusting a book number. It is about the feed base of the herd, not about mixing a ration - that is the Feed Formulation course.">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: #f9f9f9; }
-.container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-.header { background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%); color: white; padding: 30px; border-radius: 10px; margin-bottom: 30px; }
-.header h1 { font-size: 2.5em; margin-bottom: 10px; }
-.content { background: white; padding: 30px; border-radius: 10px; }
-.section { margin-bottom: 40px; }
-.section h2 { color: #1a1a2e; font-size: 1.8em; margin-bottom: 20px; border-bottom: 3px solid #0f3460; padding-bottom: 10px; }
-.learning-objectives { background: #e8f4f8; padding: 20px; border-left: 5px solid #0f3460; border-radius: 5px; }
-.learning-objectives li { margin-bottom: 8px; }
-.video-container { background: #f5f5f5; padding: 15px; margin-bottom: 15px; border-radius: 5px; border-left: 4px solid #0f3460; }
-.video-container h3 { color: #1a1a2e; margin-bottom: 10px; }
-iframe { width: 100%; height: 300px; border-radius: 5px; border: none; margin-top: 10px; }
-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-th { background: #1a1a2e; color: white; padding: 12px; text-align: left; }
-td { padding: 12px; border-bottom: 1px solid #ddd; }
-.concept { background: #fafafa; padding: 15px; margin-bottom: 15px; border-radius: 5px; border-left: 4px solid #0f3460; }
-.concept h3 { color: #1a1a2e; margin-bottom: 8px; font-size: 1.1em; }
-.concept p { font-size: 0.95em; }
-.quiz-section { background: #e8f4f8; padding: 20px; border-radius: 5px; border: 2px solid #0f3460; }
-.quiz-question { margin-bottom: 20px; background: white; padding: 15px; border-radius: 5px; }
-.quiz-option { margin-left: 20px; margin-bottom: 8px; }
-button { background: #0f3460; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px; }
-button:hover { background: #1a1a2e; }
-.feedback { margin-top: 10px; padding: 10px; border-radius: 5px; display: none; }
-.feedback.show { display: block; }
-.feedback.correct { background: #c8e6c9; border-left: 4px solid #27ae60; }
-.feedback.incorrect { background: #ffcdd2; border-left: 4px solid #c62828; }
-.project-section { background: #e8f4f8; padding: 20px; border-radius: 5px; }
-.project-item { background: white; padding: 15px; margin: 15px 0; border-radius: 5px; border-left: 4px solid #0f3460; }
-.project-item h4 { color: #1a1a2e; margin-bottom: 8px; }
-.progress-bar { background: #e0e0e0; height: 10px; border-radius: 5px; overflow: hidden; margin-bottom: 20px; }
-.progress-fill { height: 100%; background: linear-gradient(90deg, #1a1a2e, #0f3460); width: 0%; }}
-.nav-buttons { display: flex; gap: 10px; margin-top: 30px; justify-content: center; flex-wrap: wrap; }
-.nav-buttons a { display: inline-block; padding: 12px 30px; background: #1a1a2e; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; }
-.nav-buttons a:hover { background: #0f3460; }
+:root{
+  --ink:#1d1a16; --ink-soft:#4a443c; --muted:#6f6759;
+  --paper:#fbf8f3; --card:#ffffff; --line:#e5ddd0;
+  --brand:#5c4a2a; --brand-soft:#f6ece5; --accent:#256b4a; --accent-soft:#e9f2ed;
+  --warn:#8a6d12; --warn-soft:#fbf3d9;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased}
+a{color:var(--brand)}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px}
+header.top{background:var(--ink);color:#f6f1e8;padding:14px 0}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-weight:700;letter-spacing:.02em;font-size:15px}
+.brand span{color:#cfae6a}
+header.top a{color:#e8d9c6;text-decoration:none;font-size:14px}
+header.top a:hover{color:#fff}
+.hero{background:linear-gradient(180deg,#2a241d,#3b332a);color:#f7f2e9;padding:38px 0 34px}
+.hero .kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#cfae6a;margin:0 0 10px}
+.hero h1{margin:0 0 10px;font-size:30px;line-height:1.25}
+.hero p{margin:0;color:#d9d0c2;max-width:60ch}
+.crumbs{font-size:13px;color:#b9ae9d;margin-bottom:14px}
+.crumbs a{color:#e8d9c6;text-decoration:none}
+main{padding:30px 0 60px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin:0 0 22px}
+h2{font-size:22px;margin:34px 0 12px;line-height:1.3}
+h3{font-size:18px;margin:0 0 6px}
+h4{font-size:15px;margin:18px 0 6px;color:var(--ink)}
+p{margin:0 0 12px}
+ul,ol{margin:0 0 12px;padding-left:22px}
+li{margin:0 0 6px}
+table{width:100%;border-collapse:collapse;margin:0 0 14px;font-size:14.5px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--brand-soft)}
+.lesson{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin:0 0 20px}
+.lesson-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+.lnum{background:var(--brand);color:#fff;font-size:12px;font-weight:700;border-radius:999px;
+  padding:3px 10px;letter-spacing:.04em;white-space:nowrap}
+.read{font-size:13px;color:var(--muted)}
+.objectives{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
+  padding:12px 14px;margin:14px 0 18px;font-size:14.5px}
+.objectives strong{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.objectives ul{margin:0;padding-left:18px}
+.body{margin-top:4px}
+.numbers{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin:18px 0}
+.num{background:var(--warn-soft);border:1px solid #eadfb8;border-radius:10px;padding:12px 14px}
+.num .k{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--warn);font-weight:700}
+.num .v{font-size:17px;font-weight:700;margin:3px 0}
+.num .n{font-size:12.5px;color:var(--muted);line-height:1.45}
+.action{border:1px dashed var(--brand);background:var(--brand-soft);border-radius:10px;padding:12px 14px;margin-top:16px;font-size:15px}
+.action strong{color:var(--brand)}
+.quiz .q{border-top:1px solid var(--line);padding-top:16px;margin-top:16px}
+.quiz .q:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.opts{list-style:none;padding:0;margin:8px 0 0}
+.opts li{margin:0 0 6px}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:9px;
+  padding:9px 12px;font:inherit;font-size:15px;cursor:pointer;color:var(--ink)}
+.opt:hover{border-color:var(--brand)}
+.opt.right{background:var(--accent-soft);border-color:var(--accent);font-weight:600}
+.opt.wrong{background:#fdeceb;border-color:#c2513f}
+.why{display:none;margin-top:8px;font-size:14.5px;color:var(--ink-soft);background:#f3efe8;border-radius:8px;padding:10px 12px}
+.why.show{display:block}
+.toc{font-size:14.5px}
+.toc a{display:block;padding:6px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.toc a:hover{color:var(--brand)}
+.vgrid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:14px}
+.vcard{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+.vthumb{position:relative;display:block;width:100%;aspect-ratio:16/9;border:0;padding:0;margin:0;cursor:pointer;
+  background:#111 center/cover no-repeat;overflow:hidden}
+.vthumb img{width:100%;height:100%;object-fit:cover;display:block}
+.vthumb iframe{width:100%;height:100%;border:0;display:block}
+.vthumb::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.18)}
+.vthumb[data-on]::after{display:none}
+.vplay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;
+  width:54px;height:38px;border-radius:9px;background:rgba(20,20,20,.82);display:flex;align-items:center;justify-content:center}
+.vthumb[data-on] .vplay{display:none}
+.vplay span{display:block;width:0;height:0;border-left:15px solid #fff;border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:3px}
+.vthumb:hover .vplay{background:#c4302b}
+.vmeta{padding:11px 13px}
+.vmeta .vt{font-weight:600;font-size:14.5px;line-height:1.35;margin:0 0 4px}
+.vmeta .va{font-size:12.5px;color:var(--muted);margin:0 0 6px}
+.vmeta .vw{font-size:13px;color:var(--ink-soft);margin:0}
+.vnote{background:#f3efe8;border-radius:8px;padding:11px 13px;font-size:13.5px;color:var(--ink-soft);margin:0}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:26px;flex-wrap:wrap}
+.btn{display:inline-block;background:var(--brand);color:#fff;text-decoration:none;padding:11px 18px;border-radius:10px;font-weight:600;font-size:15px}
+.note{font-size:13.5px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:24px 0 40px;font-size:13.5px;color:var(--muted)}
+.disclaim{background:#f3efe8;border-radius:10px;padding:14px 16px;font-size:13.5px;color:var(--ink-soft);margin-top:18px}
+@media(max-width:560px){.hero h1{font-size:24px}.lesson{padding:18px}}
+
 </style>
-<!--ras-video-v2-->
-<style>
-.ras-vid{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:8px;overflow:hidden;margin:14px 0;cursor:pointer;border:1px solid rgba(201,162,39,.35)}
-.ras-vid img{width:100%;height:100%;object-fit:cover;display:block;opacity:.82;transition:opacity .2s,transform .3s}
-.ras-vid:hover img{opacity:1;transform:scale(1.03)}
-.ras-vid .ras-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
-.ras-vid .ras-play span{width:64px;height:64px;border-radius:50%;background:rgba(201,162,39,.94);color:#111;display:flex;align-items:center;justify-content:center;font-size:26px;padding-left:5px;box-shadow:0 4px 18px rgba(0,0,0,.5)}
-.ras-vid:hover .ras-play span{background:#e0c050}
-.ras-vid .ras-meta{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 9px;background:linear-gradient(transparent,rgba(0,0,0,.88));color:#fff;font-size:.8rem;line-height:1.35;pointer-events:none}
-.ras-vid .ras-meta b{color:#c9a227;display:block;font-size:.72rem;font-weight:700;margin-bottom:2px}
-.ras-vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.ras-vid.ras-dead{cursor:default;background:#14141f}
-.ras-vid .ras-fallback{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:18px;color:#ddd;font-size:.85rem}
-.ras-vid.ras-dead .ras-fallback{display:flex}
-.ras-vid.ras-dead img,.ras-vid.ras-dead .ras-play,.ras-vid.ras-dead .ras-meta{display:none}
-.ras-vid .ras-fallback a{background:#c9a227;color:#111;font-weight:700;padding:.55rem 1.1rem;border-radius:6px;text-decoration:none;font-size:.82rem}
-</style>
-<script>
-(function(){
-  function play(box){
-    if(box.dataset.on||box.classList.contains('ras-dead'))return;
-    box.dataset.on=1;
-    var f=document.createElement('iframe');
-    f.src='https://www.youtube-nocookie.com/embed/'+box.dataset.yt+
-          '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
-    f.allow='accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture';
-    f.allowFullscreen=true;f.loading='eager';f.title=box.dataset.title||'Video lesson';
-    box.appendChild(f);
-  }
-  function init(){
-    document.querySelectorAll('.ras-vid').forEach(function(box){
-      var img=box.querySelector('img');
-      // Self-heal: a 404 thumbnail means the video is deleted or private.
-      // Swap to a topic search so a student never meets a blocked embed.
-      if(img){img.addEventListener('error',function(){box.classList.add('ras-dead');});}
-      box.addEventListener('click',function(){play(box);});
-      box.addEventListener('keydown',function(e){
-        if(e.key==='Enter'||e.key===' '){e.preventDefault();play(box);}
-      });
-    });
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
-  else init();
-})();
-</script>
-<!--ras-social-meta-->
-<link rel="canonical" href="https://www.riseafricaskills.com/cattle-farming-module-5.html">
-<meta property="og:site_name" content="rise AFRICA skills">
-<meta property="og:locale" content="en_ZW">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://www.riseafricaskills.com/cattle-farming-module-5.html">
-<meta property="og:title" content="Module 5 - Cattle Farming — rise AFRICA skills">
-<meta property="og:description" content="Module 5 - Cattle Farming — a practical, fact-based course from rise AFRICA skills. Start with minimal equipment and scale as profits grow. Videos, assessments and a capstone project. From $8, lifetime access.">
-<meta property="og:image" content="https://www.riseafricaskills.com/og-image.png">
-<meta property="og:image:secure_url" content="https://www.riseafricaskills.com/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="rise AFRICA skills — learn practical skills, start your business">
-<meta property="og:image:type" content="image/png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@riseafricaskills">
-<meta name="twitter:creator" content="@riseafricaskills">
-<meta name="twitter:title" content="Module 5 - Cattle Farming — rise AFRICA skills">
-<meta name="twitter:description" content="Module 5 - Cattle Farming — a practical, fact-based course from rise AFRICA skills. Start with minimal equipment and scale as profits grow. Videos, assessments and a capstone project. From $8, lifetime access.">
-<meta name="twitter:image" content="https://www.riseafricaskills.com/og-image.png">
-<meta name="twitter:image:alt" content="rise AFRICA skills">
-<meta name="description" content="Fact-based practical training for African entrepreneurs. 128 courses in farming, food processing, trades, technology and business - start from zero capital. From $8 with lifetime access.">
-<meta name="robots" content="index,follow,max-image-preview:large">
-<meta name="theme-color" content="#0f0f1a">
-<meta name="author" content="rise AFRICA skills">
-<link rel="icon" href="/og-image.png" type="image/png">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Course", "name": "Module 5 - Cattle Farming", "description": "Module 5 - Cattle Farming — a practical, fact-based course from rise AFRICA skills. Start with minimal equipment and scale as profits grow. Videos, assessments and a capstone project. From $8, lifetime access.", "url": "https://www.riseafricaskills.com/cattle-farming-module-5.html", "provider": {"@type": "EducationalOrganization", "name": "rise AFRICA skills", "url": "https://www.riseafricaskills.com/"}, "inLanguage": "en"}</script>
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="/course-lock.js"></script>
 </head>
 <body>
-<div class="container">
-<div class="header">
-<h1>🌾 Cattle Farming</h1>
-<p>Module 5: Comprehensive Farming Skills</p>
-</div>
-<div class="content">
-<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="/course-lock.js"></script>
+<script>
+window.RAS_COURSE_SLUG  = "cattle-farming";
+window.RAS_MODULE_NUM   = 5;
+window.RAS_MODULE_TITLE = "Grazing and Rangeland";
+window.RAS_WHATSAPP     = "263773001353";
+</script>
+<header class="top"><div class="wrap">
+<div class="brand">rise <span>AFRICA</span> skills</div>
+<nav><a href="cattle-farming-lessons.html">Course contents</a> &nbsp;|&nbsp; <a href="video-library.html">Video library</a> &nbsp;|&nbsp; <a href="index.html">Home</a></nav>
+</div></header>
 
-<div class="section learning-objectives">
-<h2>📚 Learning Objectives</h2>
-<ul>
-<li>Master Module 5 practical skills for Cattle Farming</li>
-<li>Apply evidence-based farming techniques</li>
-<li>Solve real problems on your farm</li>
-<li>Implement sustainable practices</li>
-<li>Track results and optimize operations</li>
-</ul>
+<section class="hero"><div class="wrap">
+<div class="crumbs"><a href="cattle-farming-lessons.html">Cattle Farming</a> / Module 5 of 12</div>
+<p class="kicker">Module 5</p>
+<h1>🐄 Grazing and Rangeland</h1>
+<p>Grass is the cheapest feed your herd will ever eat, and the land that grows it is the one asset you cannot buy more of. This module teaches the arithmetic of carrying capacity and stocking rate, how to count animals of different sizes in Large Stock Units, what one animal actually removes from your land in a year, why grass needs rest, how bush encroachment quietly steals grazing, and how to read the condition of your own veld instead of trusting a book number. It is about the feed base of the herd, not about mixing a ration - that is the Feed Formulation course.</p>
+</div></section>
+
+<main><div class="wrap">
+<div class="card"><h3>What you will be able to do after this module</h3><ul>
+<li>Explain the difference between carrying capacity and stocking rate in your own words</li><li>Convert cattle, goats and sheep of different sizes into Large Stock Units</li><li>Calculate daily and annual dry matter demand for a herd from its LSU total</li><li>Explain why a grazed grass plant needs a rest period to recover</li><li>Describe how overgrazing and bush thickening reinforce each other</li><li>Assess the condition of a piece of veld using species, bare ground and litter cover</li>
+</ul></div>
+<div class="card toc"><h3>The six lessons</h3>
+<a href="#lesson-1">1. Carrying Capacity and Stocking Rate</a>
+<a href="#lesson-2">2. Counting Your Herd in Large Stock Units</a>
+<a href="#lesson-3">3. What One Animal Removes From Your Land in a Year</a>
+<a href="#lesson-4">4. Rotational Grazing and the Rest Period</a>
+<a href="#lesson-5">5. Bush Encroachment - Grazing You Lose Without Noticing</a>
+<a href="#lesson-6">6. Reading Your Own Veld</a>
+</div>
+<article class="lesson" id="lesson-1">
+<div class="lesson-head"><span class="lnum">Lesson 5.1</span><span class="read">~12 min</span></div>
+<h2 style="margin-top:6px">Carrying Capacity and Stocking Rate</h2>
+<div class="objectives"><strong>In this lesson</strong><ul><li>Explain the difference between carrying capacity and stocking rate in your own words</li><li>Describe what overstocking does to the land&#x27;s ability to feed animals in future years</li><li>Identify the right local authority to give you a stocking rate for your own land</li></ul></div>
+<div class="body">
+<p>Two words sound the same and mean completely different things. Getting them apart is the beginning of managing grazing.</p>
+<p>Carrying capacity is what the land can support, on the grass and browse it grows by itself, without the land losing productive ability over time. Stocking rate is what you have actually put on it. Carrying capacity belongs to the land. Stocking rate belongs to you. You choose the second one every year, whether you think about it or not.</p>
+<p>When stocking rate is above carrying capacity, something specific happens, and it is worth understanding rather than just fearing. Grass plants that are bitten off keep being bitten off before they can grow new leaf. A grass plant feeds itself with its leaves. Take the leaves away repeatedly and the plant has to spend its root reserves to push out new ones. Do that often enough and the roots shrink, the plant weakens, and eventually it dies and leaves bare soil where it stood.</p>
+<p>Which plants die first? Not the ones you would want. The most palatable, most productive, most nutritious grasses are the ones cattle choose first and return to most often. So overgrazing does not thin the veld evenly - it picks off your best species and leaves the tough, unpalatable, low-value ones behind. Over years, the composition of the pasture changes. The land looks green from a distance and feeds fewer animals than it did.</p>
+<p>This is why overstocking is not a mistake you can fix next year by selling a few animals. You are not just taking too much grass this season. You are reducing how much grass the land can grow in every season that follows. That is the meaning of the phrase &quot;without the land itself degrading&quot; in the definition of carrying capacity.</p>
+<p>Now the hard part, and this course is going to be honest with you rather than give you a comfortable number. You want to know how many hectares one cow needs. This course does not give you that figure, and the reason is not laziness.</p>
+<p>The South African rangeland source consulted for this course explicitly warns that regional benchmark figures for hectares per Large Stock Unit are unreliable and can mislead a farmer. Carrying capacity depends on the actual condition of your veld, on which grass species are growing there, on the rainfall in that particular year, and on how that specific piece of land has been grazed in the past. Two neighbouring farms in the same rainfall zone can have genuinely different carrying capacities because one was rested and one was hammered for twenty years. A single number for &quot;savanna&quot; or &quot;semi-arid rangeland&quot; flattens all of that and gives you false confidence.</p>
+<p>So no hectares-per-LSU figure for any named African region or biome was retrieved for this course in a form worth teaching as a target. That gap is real and it is stated plainly here rather than filled with a plausible-sounding number that could cost you your grazing.</p>
+<p>What you do instead is get the number from someone standing on your land. The right authority is your nearest agricultural extension office, a government rangeland or veld officer, or an agricultural college or research station in your district. What they should do is a veld or rangeland condition assessment - looking at what species are present, how much bare ground there is, how much litter covers the soil, and what the grazing history has been - and give you a stocking rate for your farm, not for your region.</p>
+<p>That visit is free or cheap in most countries and it is the single highest-value piece of technical advice a cattle keeper can get. Ask for it before the rains, so you can plan the year, and ask them to write it down with the date, because you will want to compare it against the same assessment in five years.</p>
+<p>One more thing to hold in your head. Carrying capacity is not fixed forever. It rises when veld condition improves and falls when it degrades. Your management is one of the things that decides which direction it moves. A farmer who improves veld condition has literally manufactured extra grazing, on the same hectares, without buying land.</p>
+</div>
+<div class="numbers"><div class="num"><div class="k">Carrying capacity</div><div class="v">what the land can support without degrading</div><div class="n">A property of the land itself, set by veld condition, species composition, rainfall and grazing history - it rises and falls with how you manage</div></div><div class="num"><div class="k">Stocking rate</div><div class="v">what you have actually put on the land</div><div class="n">Your decision, made every year whether or not you think about it. The gap between this and carrying capacity is where degradation starts</div></div><div class="num"><div class="k">Hectares per Large Stock Unit for African regions</div><div class="v">not available - obtain locally</div><div class="n">The source consulted warns regional benchmark figures are unreliable and can mislead. Get a farm-specific figure from an extension or rangeland officer</div></div><div class="num"><div class="k">Large Stock Unit reference animal</div><div class="v">a 450 kg bovine</div><div class="n">The South African convention used throughout this module for comparing animals of different sizes and species on the same land</div></div></div>
+<div class="action"><strong>Do this today:</strong> find the telephone number or office location of your nearest agricultural extension officer or rangeland officer, write it in your notebook, and ask them what is involved in getting a veld condition assessment on your own land.</div>
+<div class="card"><h3>Recommended viewing</h3><p class="vnote"><strong>These are free videos made by other people, not by rise AFRICA skills.</strong> Each one was checked against YouTube and is on topic. The written lessons are the course. Treat these as useful extra watching.</p><div class="vgrid"><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="QYxUNJ6qm8Y" data-t="Managing a Small Cattle Herd" aria-label="Play video: Managing a Small Cattle Herd"><img src="https://i.ytimg.com/vi/QYxUNJ6qm8Y/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Managing a Small Cattle Herd</p><p class="va">Just a Few Acres Farm</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="eLSGQkkgFLc" data-t="Cattle Farming in South Africa Exposed: What Actually Work" aria-label="Play video: Cattle Farming in South Africa Exposed: What Actually Work"><img src="https://i.ytimg.com/vi/eLSGQkkgFLc/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Cattle Farming in South Africa Exposed: What Actually Work</p><p class="va">Duratag SA</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="OXMA4YPmwv8" data-t="Zambeef&#x27;s Mbala Smallholder Cattle Development Project" aria-label="Play video: Zambeef&#x27;s Mbala Smallholder Cattle Development Project"><img src="https://i.ytimg.com/vi/OXMA4YPmwv8/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Zambeef&#x27;s Mbala Smallholder Cattle Development Project</p><p class="va">Langmead &amp; Baker Ltd</p></div></div></div></div>
+</article>
+<article class="lesson" id="lesson-2">
+<div class="lesson-head"><span class="lnum">Lesson 5.2</span><span class="read">~12 min</span></div>
+<h2 style="margin-top:6px">Counting Your Herd in Large Stock Units</h2>
+<div class="objectives"><strong>In this lesson</strong><ul><li>Convert cattle, goats and sheep of different sizes into Large Stock Units</li><li>Calculate the total grazing load on a piece of land from a mixed herd</li><li>Explain why a smaller-framed indigenous cow places a lighter load on the same hectare</li></ul></div>
+<div class="body">
+<p>A five-month-old calf and a mature bull both count as one animal in a head count. They do not eat the same amount of grass. Neither does a goat. If you plan grazing by head count, you are planning with a broken measuring stick.</p>
+<p>The tool that fixes this is the Large Stock Unit, or LSU. The convention used in the South African system, and the one this course uses, defines one LSU as a 450 kg bovine animal, or the equivalent in another species based on how much it eats. Every animal on the land is then expressed as a fraction or multiple of that reference animal, and the fractions add up to a single number for the whole herd.</p>
+<p>The worked examples from the source are these. A mature Bonsmara cow at 450 kg is exactly 1.0 LSU - she is the reference animal. A smaller-framed mature Nguni cow at roughly 320 kg counts as about 0.7 LSU. A mixed flock of small stock, sheep and goats, counts at roughly 0.12 to 0.14 LSU per animal.</p>
+<p>Now do the arithmetic on a real mixed smallholding. Say you run 12 mature Nguni-type cows, and your neighbour&#x27;s 30 goats come onto the same grazing.</p>
+<ol><li>Cows: 12 multiplied by 0.7 equals 8.4 LSU.</li><li>Goats: 30 multiplied by 0.13, taking the middle of the small stock range, equals 3.9 LSU.</li><li>Total load on the land: 8.4 plus 3.9 equals 12.3 LSU.</li></ol>
+<p>Read what that tells you. Your head count on that land is 42 animals. Your grazing load is 12.3 LSU. And roughly a third of your grazing load is goats you do not own and are not counting at all. A great many overgrazing problems on communal and shared land are exactly this: the load is real, but nobody is adding it up, because everyone is counting only their own animals and only by head.</p>
+<p>Here is the consequence that connects straight back to breed choice. A herd of smaller-framed indigenous cows genuinely places a lighter load on the same hectare than the same number of larger-framed exotic or crossbred cows, because each animal represents a smaller fraction of an LSU. Twenty Nguni-type cows at 0.7 LSU each is 14 LSU. Twenty 450 kg composite cows is 20 LSU. That is a real, arithmetic difference of nearly a third in grazing demand, from the same head count, on the same land.</p>
+<p>This is not an argument that small is always better. A bigger cow weans a heavier calf, and heavier calves are what you sell. It is an argument that the two must be compared honestly: if you upgrade your herd to larger-framed animals and do not reduce numbers, you have increased your stocking rate without adding a single head, and the land will show it before your record book does.</p>
+<p>A few practical points about using LSU on a real farm.</p>
+<ul><li>Young stock are not full LSU. A weaner is not a mature cow. The source consulted does not give a table of LSU values by age class for African cattle, so where you need a value for growing animals, ask your extension officer for the conversion table used in your country. Do not invent one.</li><li>Weigh or estimate, do not guess. If you have no scale, a flexible tape around the heart girth, just behind the front legs, read against a conversion formula or chart, gives an estimate typically within about ten percent of true liveweight - good enough to place an animal in an LSU band.</li><li>Count everything that grazes. Draught oxen, the bull, dry cows, replacement heifers, other people&#x27;s stock, and any small stock. If it eats grass on that land, it is part of the load.</li><li>Recount when the herd changes. Your LSU total changes every time you sell, buy, calve or wean, and the grazing does not know you have not updated your figure.</li></ul>
+<p>The LSU total is one of the few numbers a cattle keeper can calculate exactly, on their own, with no equipment. It is worth doing properly, because every grazing decision in the rest of this module and the next one is built on it.</p>
+</div>
+<div class="numbers"><div class="num"><div class="k">One Large Stock Unit</div><div class="v">a 450 kg bovine animal</div><div class="n">The South African convention, or the metabolic equivalent in another species. All other animals are expressed as a fraction of this reference</div></div><div class="num"><div class="k">Mature Bonsmara cow at 450 kg</div><div class="v">1.0 LSU</div><div class="n">The worked reference example from the source - a full-sized composite cow is exactly the standard animal</div></div><div class="num"><div class="k">Mature Nguni cow at about 320 kg</div><div class="v">about 0.7 LSU</div><div class="n">A smaller-framed indigenous cow places roughly seven-tenths of the load of the reference animal on the same hectare</div></div><div class="num"><div class="k">Sheep or goat</div><div class="v">about 0.12-0.14 LSU per animal</div><div class="n">For a mixed small stock flock. On shared grazing this is often the uncounted portion of the real load on the land</div></div></div>
+<div class="action"><strong>Do this today:</strong> write down every animal that grazes your land, including small stock and any that are not yours, convert each to Large Stock Units using 1.0 for a 450 kg bovine and about 0.13 for a goat or sheep, and add them up. Write that total on the front page of your notebook.</div>
+<div class="card"><h3>Recommended viewing</h3><p class="vnote"><strong>These are free videos made by other people, not by rise AFRICA skills.</strong> Each one was checked against YouTube and is on topic. The written lessons are the course. Treat these as useful extra watching.</p><div class="vgrid"><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="QYxUNJ6qm8Y" data-t="Managing a Small Cattle Herd" aria-label="Play video: Managing a Small Cattle Herd"><img src="https://i.ytimg.com/vi/QYxUNJ6qm8Y/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Managing a Small Cattle Herd</p><p class="va">Just a Few Acres Farm</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="eLSGQkkgFLc" data-t="Cattle Farming in South Africa Exposed: What Actually Work" aria-label="Play video: Cattle Farming in South Africa Exposed: What Actually Work"><img src="https://i.ytimg.com/vi/eLSGQkkgFLc/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Cattle Farming in South Africa Exposed: What Actually Work</p><p class="va">Duratag SA</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="OXMA4YPmwv8" data-t="Zambeef&#x27;s Mbala Smallholder Cattle Development Project" aria-label="Play video: Zambeef&#x27;s Mbala Smallholder Cattle Development Project"><img src="https://i.ytimg.com/vi/OXMA4YPmwv8/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Zambeef&#x27;s Mbala Smallholder Cattle Development Project</p><p class="va">Langmead &amp; Baker Ltd</p></div></div></div></div>
+</article>
+<article class="lesson" id="lesson-3">
+<div class="lesson-head"><span class="lnum">Lesson 5.3</span><span class="read">~12 min</span></div>
+<h2 style="margin-top:6px">What One Animal Removes From Your Land in a Year</h2>
+<div class="objectives"><strong>In this lesson</strong><ul><li>Calculate daily and annual dry matter demand for a herd from its LSU total</li><li>Explain what dry matter means and why grass is measured that way</li><li>Compare a herd&#x27;s annual grass demand against the output the land produces</li></ul></div>
+<div class="body">
+<p>You now know how many Large Stock Units your land carries. The next question is what each one takes out of the ground, because that is the figure that turns a grazing plan from a feeling into arithmetic.</p>
+<p>First, the unit. Grass is mostly water, and the amount of water in it swings enormously between a green flush after rain and a dry standing stem in September. So feed is measured as dry matter - what would be left if you dried the grass completely. Ten kilograms of green grass and ten kilograms of dry grass are not the same amount of feed at all, and dry matter is how you compare them fairly.</p>
+<p>The planning rule from the South African source is this: one Large Stock Unit needs approximately three percent of its body weight in dry matter per day.</p>
+<p>For the 450 kg reference animal, that works out as follows.</p>
+<ol><li>Three percent of 450 kg is 0.03 multiplied by 450, which is 13.5 kg of dry matter per day.</li><li>Over a year: 13.5 multiplied by 365 gives approximately 4,900 kg of dry matter per year, which is close to five tonnes.</li></ol>
+<p>Say that out loud. One mature cow removes something like five tonnes of dry grass from your land every year. Not five tonnes of green grass - five tonnes of dry matter, which as growing green grass is a far larger heap.</p>
+<p>Now scale it to the herd you counted in the last lesson. Twelve Nguni-type cows plus thirty goats came to 12.3 LSU.</p>
+<ol><li>Daily: 12.3 multiplied by 13.5 kg equals about 166 kg of dry matter every single day.</li><li>Annually: 12.3 multiplied by 4,900 kg equals about 60,000 kg, or roughly 60 tonnes of dry matter a year.</li></ol>
+<p>Sixty tonnes. That is what your land has to grow, every year, just to hold that herd steady. Write that number down, because it changes how the land looks when you walk it.</p>
+<p>Now the caveats, and they matter. This three percent figure is a general estimation rule quoted by the source. It is not a measured African rangeland figure for any one grass species or region. It is an order-of-magnitude planning tool, not a precise calculation. It also says nothing about the quality of what the animal eats - protein, energy, minerals - which is the subject of the separate Feed Formulation course, not this one. A cow can fill her rumen with dry, stemmy winter grass, hit her three percent, and still lose condition, because quantity and quality are different problems.</p>
+<p>What the figure is genuinely good for is three things.</p>
+<p>First, seeing whether a plan is even physically possible. If you are told your land grows a certain tonnage, and your herd demands sixty tonnes, you can see the answer before the cattle do.</p>
+<p>Second, planning conserved feed for the dry season, which is the next module. If you know a cow eats about 13.5 kg of dry matter a day, you can work out how many days a stack of hay or a field of standing grass will feed her, instead of hoping.</p>
+<p>Third, understanding output per hectare. A South African trial measured weaner output per hectare of 115 kg for conventionally weaned calves and 91 kg for early-weaned calves on the same land - a direct measure of what the land actually produced in saleable calf. That is the number that matters commercially: not how many cattle you have, but how many kilograms of weaner each hectare gave you.</p>
+<p>Hold those two ideas together. The land has a demand side, roughly 4,900 kg of dry matter per LSU per year, and a supply side, the kilograms of weaner it returns per hectare. Overstocking raises the demand and lowers the supply at the same time - more mouths taking from a pasture that grows less each year. That is why herd size alone is such a poor measure of a cattle business, and why a smaller herd on well-managed veld regularly beats a larger herd on damaged veld.</p>
+<p>One last practical use. When you are deciding whether to keep an unproductive cow through another season, you now have a real cost to put against her. She will eat about five tonnes of dry matter, drink water every day, occupy a share of your carrying capacity, and cost you dipping and labour. If she is not going to wean a calf, that is what she costs, and it is not a small number.</p>
+</div>
+<div class="numbers"><div class="num"><div class="k">Daily dry matter intake</div><div class="v">about 3 percent of body weight per LSU</div><div class="n">A general estimation rule quoted by the source, not a measured African rangeland figure - an order-of-magnitude planning tool only</div></div><div class="num"><div class="k">Daily dry matter for one LSU</div><div class="v">about 13.5 kg per day</div><div class="n">Three percent of the 450 kg reference animal. Use it to work out how many days a stack of conserved feed will last</div></div><div class="num"><div class="k">Annual dry matter for one LSU</div><div class="v">about 4,900 kg per year</div><div class="n">Close to five tonnes of dry matter per mature animal per year, derived from the daily figure. This is what one cow removes from your land annually</div></div><div class="num"><div class="k">Weaner output per hectare, South African trial</div><div class="v">115 kg/ha conventional weaning, 91 kg/ha early weaning</div><div class="n">One Bonsmara trial on one set of pastures. It shows the supply side - kilograms of saleable weaner per hectare - not a target for your own land</div></div></div>
+<div class="action"><strong>Do this today:</strong> take the LSU total you calculated in the last lesson, multiply it by 13.5 kg to get your herd&#x27;s daily dry matter demand, then multiply by 4,900 kg to get the annual demand. Write both figures next to your LSU total.</div>
+<div class="card"><h3>Recommended viewing</h3><p class="vnote"><strong>These are free videos made by other people, not by rise AFRICA skills.</strong> Each one was checked against YouTube and is on topic. The written lessons are the course. Treat these as useful extra watching.</p><div class="vgrid"><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="oI8zzFxFQUk" data-t="Beef Cattle Nutrition 101" aria-label="Play video: Beef Cattle Nutrition 101"><img src="https://i.ytimg.com/vi/oI8zzFxFQUk/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Beef Cattle Nutrition 101</p><p class="va">Maryland Beef Extension</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="TDqGTM0RXl4" data-t="Mineral Nutrition for Beef Cattle" aria-label="Play video: Mineral Nutrition for Beef Cattle"><img src="https://i.ytimg.com/vi/TDqGTM0RXl4/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Mineral Nutrition for Beef Cattle</p><p class="va">Maryland Beef Extension</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="QH10DNDwQgQ" data-t="Feeding Weaned Calves the Right Way (12–14% Protein, Intake, Daily Gain)" aria-label="Play video: Feeding Weaned Calves the Right Way (12–14% Protein, Intake, Daily Gain)"><img src="https://i.ytimg.com/vi/QH10DNDwQgQ/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Feeding Weaned Calves the Right Way (12–14% Protein, Intake, Daily Gain)</p><p class="va">Pride Ranch</p></div></div></div></div>
+</article>
+<article class="lesson" id="lesson-4">
+<div class="lesson-head"><span class="lnum">Lesson 5.4</span><span class="read">~12 min</span></div>
+<h2 style="margin-top:6px">Rotational Grazing and the Rest Period</h2>
+<div class="objectives"><strong>In this lesson</strong><ul><li>Explain why a grazed grass plant needs a rest period to recover</li><li>Contrast continuous grazing with a rotation in terms of what happens to the best species</li><li>Design a simple two or three block rotation for your own land</li></ul></div>
+<div class="body">
+<p>Continuous grazing means the herd walks the whole farm every day, all season, for years. It feels efficient. It is the single most damaging grazing pattern there is, and understanding why comes down to one plant, not one paddock.</p>
+<p>A grass plant rebuilds itself from two places: the leaf area still standing, which catches sunlight, and the root reserves stored underground. When an animal bites the plant, both go to work - the plant pulls on its reserves to push out new leaf. That takes time. If it is left alone, it regrows leaf, refills its roots, and ends up stronger than before. If it is bitten again while it is still spending reserves, it starts the cycle again from a weaker position. Bite it often enough, and it never gets ahead. The roots shrink, the plant thins, and eventually it dies.</p>
+<p>That is the whole biological argument for rest, and it is why rotational grazing exists. The point of a rotation is not to move cattle around. The point is to give grass a period with no animals on it.</p>
+<p>Now the second half of the argument, which is about which plants get bitten. Cattle are selective. They walk past tough, unpalatable grass to reach sweet, leafy, nutritious grass. Under continuous grazing your best species are grazed hardest and most often, and the worthless ones are grazed rarely or never. The competition is rigged against exactly the plants you want. Over years the pasture composition shifts toward unpalatable, low-productivity grasses, then toward bare ground and erosion. Rotation removes that rigging for part of the year, because during the rest period the good species get the same chance to recover as the bad ones.</p>
+<p>There is a third benefit that is easy to overlook. Concentrating cattle on one area at a time also concentrates their dung and urine on that area, which fertilises it. Spread the same herd thinly over the whole farm every day and the manure is spread just as thinly, doing far less good anywhere.</p>
+<p>Now the honest gap. You want to know how many days of rest and how many paddocks. This course does not give you those numbers, and the reason is the same as in Lesson 1: no specific recommended rest period in days, and no recommended number of paddocks, for African rangeland was retrieved for this course from a source of adequate quality. The correct interval depends heavily on rainfall, on the grass species present, and on the season - the same rest that is generous in a wet January is nowhere near enough in a dry August, because the plant is barely growing. A single number would be wrong most of the time.</p>
+<p>What you can do without that number is a great deal.</p>
+<p>First, split the land. Even two blocks are transformative compared with one. Two blocks means every piece of your land gets a period of the year with nothing on it. Three or four blocks is better. You do not need expensive fencing to start - herding, natural boundaries, thorn barriers, a river, a ridge, or an agreement with neighbours on a communal grazing area can all define a block.</p>
+<p>Second, move on what the grass tells you, not on the calendar. Watch the grass, not the date. Move the herd off a block when the good grasses have been grazed down but before they are being bitten into their crowns and before bare ground appears between plants. Move them back on only when the good grasses have regrown real leaf, not just a green tinge. Write down the dates you moved and what the grass looked like. After two seasons, you have a rest period for your own land, in your own rainfall, that no book could have given you.</p>
+<p>Third, rest the same block at a different time each year. A block always rested in the dry season never gets to set seed. Rotating which block gets the wet-season rest lets each part of the farm reseed itself over time.</p>
+<p>Fourth, keep the plan simple enough to actually run. A written rotation of three blocks that your family follows every week beats an elaborate twelve-paddock plan on paper that nobody keeps to. The best grazing system is the one that gets used.</p>
+</div>
+<div class="numbers"><div class="num"><div class="k">Recommended rest period for African rangeland</div><div class="v">not available - measure your own</div><div class="n">No specific rest period in days was retrieved from a source of adequate quality. It depends on rainfall, species and season - record your own move dates and grass condition for two seasons</div></div><div class="num"><div class="k">Recommended number of paddocks</div><div class="v">not available - obtain locally</div><div class="n">No sourced figure for African rangeland was retrieved. Ask your extension officer, and note that even two blocks is a large improvement on continuous grazing</div></div><div class="num"><div class="k">Daily dry matter per LSU</div><div class="v">about 13.5 kg</div><div class="n">Use this to estimate how long a block will feed the herd before it must be rested, from your LSU total and your own judgement of the grass on it</div></div><div class="num"><div class="k">Large Stock Unit reference animal</div><div class="v">a 450 kg bovine</div><div class="n">Convert the herd to LSU before planning any rotation, so that a block&#x27;s load is measured in grazing demand rather than head count</div></div></div>
+<div class="action"><strong>Do this today:</strong> divide your grazing land into at least two blocks on a sketch, using whatever boundaries already exist - a river, a road, a ridge, a fence - and write down which block the cattle will graze first and which one will rest.</div>
+<div class="card"><h3>Recommended viewing</h3><p class="vnote"><strong>These are free videos made by other people, not by rise AFRICA skills.</strong> Each one was checked against YouTube and is on topic. The written lessons are the course. Treat these as useful extra watching.</p><div class="vgrid"><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="QYxUNJ6qm8Y" data-t="Managing a Small Cattle Herd" aria-label="Play video: Managing a Small Cattle Herd"><img src="https://i.ytimg.com/vi/QYxUNJ6qm8Y/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Managing a Small Cattle Herd</p><p class="va">Just a Few Acres Farm</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="eLSGQkkgFLc" data-t="Cattle Farming in South Africa Exposed: What Actually Work" aria-label="Play video: Cattle Farming in South Africa Exposed: What Actually Work"><img src="https://i.ytimg.com/vi/eLSGQkkgFLc/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Cattle Farming in South Africa Exposed: What Actually Work</p><p class="va">Duratag SA</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="OXMA4YPmwv8" data-t="Zambeef&#x27;s Mbala Smallholder Cattle Development Project" aria-label="Play video: Zambeef&#x27;s Mbala Smallholder Cattle Development Project"><img src="https://i.ytimg.com/vi/OXMA4YPmwv8/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Zambeef&#x27;s Mbala Smallholder Cattle Development Project</p><p class="va">Langmead &amp; Baker Ltd</p></div></div></div></div>
+</article>
+<article class="lesson" id="lesson-5">
+<div class="lesson-head"><span class="lnum">Lesson 5.5</span><span class="read">~12 min</span></div>
+<h2 style="margin-top:6px">Bush Encroachment - Grazing You Lose Without Noticing</h2>
+<div class="objectives"><strong>In this lesson</strong><ul><li>Describe how overgrazing and bush thickening reinforce each other</li><li>Recognise bush encroachment as a management consequence rather than bad luck</li><li>Evaluate bush thinning as an investment in restoring lost carrying capacity</li></ul></div>
+<div class="body">
+<p>Some grazing is lost in a drought and everyone sees it. Some is lost a little at a time, over twenty years, while the farm looks greener every season. That second kind is bush encroachment, and it is one of the most widely documented rangeland degradation problems in southern Africa, particularly in Namibia.</p>
+<p>Bush encroachment is the thickening of woody shrub and small-tree cover at the expense of the grass layer. The land does not turn to desert. It turns to thicket. From a distance, more green. On the ground, less grass, and eventually so much woody cover that cattle cannot move through it or find enough to eat in it.</p>
+<p>The mechanism is the part worth understanding, because it explains why this is a management problem and not simply weather.</p>
+<p>Healthy grass competes with woody seedlings. A dense grass sward takes water and light near the soil surface and makes it hard for tree and shrub seedlings to establish. Now overgraze that land. The grass thins, and bare gaps open between plants. Those gaps are exactly where woody seedlings can get established, because the competition that used to suppress them is gone. The shrubs grow. As they grow, they shade the ground and take water from deeper down, and the grass beneath them grows even less. Less grass means still less competition against the next generation of woody seedlings.</p>
+<p>That is a spiral, and the literature describes it exactly that way: overgrazing is both a cause and a consequence of bush thickening. Each turn of the cycle makes the next turn easier. This is why encroachment tends to accelerate rather than level off, and why a farm can go from open grassland to unusable thicket within one person&#x27;s working life.</p>
+<p>So the honest framing this course gives you is this. Bush encroachment is frequently the visible, slow-motion consequence of a stocking rate that exceeded the land&#x27;s carrying capacity for a sustained period. It is not bad luck and it is not an act of nature. It is the record of grazing decisions, written on the land in wood.</p>
+<p>Can it be reversed? Yes, partly, through bush thinning or clearing. But the literature is clear about how to think about that: bush thinning is an investment in restoring lost carrying capacity, not a free fix. It costs labour, or machinery, or both, and the bush frequently regrows if the underlying overstocking is not corrected. Clearing land and then putting the same excessive herd back on it simply restarts the spiral with your money spent.</p>
+<p>Now the gap. You want to know how much grazing capacity is lost to encroachment in your country, and whether clearing pays for itself. Specific quantitative figures on the scale of grazing-capacity loss to bush encroachment in any named country, and the costs and benefits of bush thinning as a restoration technique, were referenced in the literature searched for this course but were not independently retrieved and verified to a standard worth teaching as a number. That gap is stated here rather than filled with an invented figure that could justify a large investment you cannot recover.</p>
+<p>What you can do without those numbers is measure your own encroachment, and it is genuinely easy.</p>
+<p>Pick three fixed points on your land that you can find again - a corner post, a large rock, a particular tree, a borehole. Stand at each one, always facing the same way, and photograph or carefully describe what you see: how much of the view is grass, how much is bush, and how tall the bush is. Do it in the same month every year. Write the date on each record.</p>
+<p>After five years you have something no book can give you: a record of whether the woody cover on your own farm is thickening, holding or opening up. That evidence is what turns an argument with yourself, or with a neighbour on communal land, into a fact.</p>
+<p>One further practical point. If you decide to clear, clear where the return is greatest - near water, on the better soils, on ground you can actually rotate afterwards - and reduce your stocking rate at the same time. Clearing plus continued overstocking is money spent on a spiral you have not stopped turning.</p>
+</div>
+<div class="numbers"><div class="num"><div class="k">Grazing capacity lost to bush encroachment</div><div class="v">not available - measure your own</div><div class="n">Country-level figures were referenced in the literature searched but not verified to a standard worth teaching. Use fixed photo points on your own land instead</div></div><div class="num"><div class="k">Cost and benefit of bush thinning</div><div class="v">not available - cost it locally</div><div class="n">No verified cost-benefit figure was retrieved. The literature treats thinning as an investment in restoring lost capacity, not a free fix, and bush regrows if overstocking continues</div></div><div class="num"><div class="k">Bush encroachment relationship</div><div class="v">both a cause and a consequence of overgrazing</div><div class="n">Thin grass lets woody seedlings establish; the resulting bush cuts grass further. A self-reinforcing spiral documented in the southern African literature, particularly Namibia</div></div><div class="num"><div class="k">Fixed photo point record interval</div><div class="v">the same month every year</div><div class="n">Three fixed points, same direction, same month, dated. After about five years this is the only evidence you will have of whether woody cover is thickening on your own land</div></div></div>
+<div class="action"><strong>Do this today:</strong> choose three fixed points on your grazing land that you can find again in five years, stand at each facing the same direction, and photograph or write down exactly what you see - how much grass, how much bush, and how tall. Date every record.</div>
+<div class="card"><h3>Recommended viewing</h3><p class="vnote"><strong>These are free videos made by other people, not by rise AFRICA skills.</strong> Each one was checked against YouTube and is on topic. The written lessons are the course. Treat these as useful extra watching.</p><div class="vgrid"><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="QYxUNJ6qm8Y" data-t="Managing a Small Cattle Herd" aria-label="Play video: Managing a Small Cattle Herd"><img src="https://i.ytimg.com/vi/QYxUNJ6qm8Y/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Managing a Small Cattle Herd</p><p class="va">Just a Few Acres Farm</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="eLSGQkkgFLc" data-t="Cattle Farming in South Africa Exposed: What Actually Work" aria-label="Play video: Cattle Farming in South Africa Exposed: What Actually Work"><img src="https://i.ytimg.com/vi/eLSGQkkgFLc/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Cattle Farming in South Africa Exposed: What Actually Work</p><p class="va">Duratag SA</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="OXMA4YPmwv8" data-t="Zambeef&#x27;s Mbala Smallholder Cattle Development Project" aria-label="Play video: Zambeef&#x27;s Mbala Smallholder Cattle Development Project"><img src="https://i.ytimg.com/vi/OXMA4YPmwv8/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Zambeef&#x27;s Mbala Smallholder Cattle Development Project</p><p class="va">Langmead &amp; Baker Ltd</p></div></div></div></div>
+</article>
+<article class="lesson" id="lesson-6">
+<div class="lesson-head"><span class="lnum">Lesson 5.6</span><span class="read">~12 min</span></div>
+<h2 style="margin-top:6px">Reading Your Own Veld</h2>
+<div class="objectives"><strong>In this lesson</strong><ul><li>Assess the condition of a piece of veld using species, bare ground and litter cover</li><li>Link veld type to the tick species present on it</li><li>Keep a grazing record that turns observations into a stocking decision</li></ul></div>
+<div class="body">
+<p>Everything in this module has pointed to one conclusion: the number you need cannot be given to you in a book, because it depends on the land under your own feet. This lesson is about how to look at that land properly.</p>
+<p>A veld condition assessment, which is what an extension or rangeland officer does, is built on things you can see without any equipment. Learn to see them yourself and you will understand the officer&#x27;s advice instead of just receiving it.</p>
+<p>What to look for, walking slowly across a block.</p>
+<p>1. Which grasses are there. Learn the names of the four or five grasses on your own land that cattle eat eagerly, and the four or five they walk past. You do not need a botany book - ask an old herder, ask your extension officer, ask a neighbour who has farmed the place for decades. Then, every year, notice which group is spreading. A shift from the eaten group toward the walked-past group is the earliest warning of overgrazing, and it appears years before bare ground does.</p>
+<p>2. How much bare ground there is. Look straight down at your boots and move across the block in a straight line, stopping every ten paces. Is there a plant, plant litter, or bare soil under your toe? Count fifty stops and you have a percentage of bare ground for that block. Repeat in the same month each year. Rising bare ground is the clearest single sign that stocking rate is above carrying capacity.</p>
+<p>3. How much dead plant litter is lying on the soil. Litter protects soil from raindrop impact and from the sun, holds moisture, and feeds the soil. Land grazed to the bone has no litter. Litter cover is a good sign.</p>
+<p>4. Signs of moving water. Small channels, pedestals of soil under grass tufts with the ground washed away around them, sheet erosion on slopes, silt fans at the bottom. These say your soil is leaving the farm.</p>
+<p>5. Woody cover, using the fixed photo points from the last lesson.</p>
+<p>There is a further reason to know your veld type, and it connects straight into the health module. Tick populations are not the same on all rangeland. A South African study across sampled rangelands found *Rhipicephalus appendiculatus*, the brown ear tick that carries East Coast fever, at a prevalence of 71.1 percent; *Rhipicephalus evertsi evertsi* at 40.2 percent; *Rhipicephalus decoloratus*, the blue tick, at 29.2 percent; and *Hyalomma* species at 19.0 percent, occurring exclusively on sour rangeland types.</p>
+<p>Read that last part carefully. One whole tick genus turned up only on one veld type in that study. Those are rangeland and tick-population prevalence figures from specific South African rangelands, not per-animal tick counts and not a national picture. But the lesson generalises: the veld you graze partly determines the ticks your cattle meet, and therefore the diseases they are exposed to. When you plan a rotation, you are also, without meaning to, planning your herd&#x27;s tick exposure. That is worth discussing with your veterinarian or animal-health technician alongside the dipping calendar.</p>
+<p>Now the record that pulls this together. A grazing record is one page per block, per year, and it holds only a few things.</p>
+<ul><li>The dates the herd entered and left the block, every time.</li><li>The LSU total in the herd on those dates.</li><li>What the grass looked like when they entered and when they left, in your own words.</li><li>Bare ground percentage from your fifty-stop count, once a year in the same month.</li><li>Rainfall, if you can measure it - even a plastic rain gauge or a marked tin gives you the single most important explanatory variable for why a year was good or bad.</li><li>Anything unusual: fire, a neighbour&#x27;s herd coming through, a borehole failure.</li></ul>
+<p>After three years this record answers questions no advisor can answer for you. How long does this particular block really take to recover in a normal year? What did my land do in a drought year at my stocking rate? Is my bare ground going up or down? Am I gaining or losing the grasses my cattle actually want?</p>
+<p>That is what reading your own veld means. Not a single opinion on a single day, but a comparison across years that you own and nobody else has.</p>
+</div>
+<div class="numbers"><div class="num"><div class="k">Brown ear tick prevalence, sampled South African rangelands</div><div class="v">71.1 percent</div><div class="n">Rhipicephalus appendiculatus, the vector of East Coast fever. A rangeland population prevalence figure from specific South African rangelands, not a per-animal tick count</div></div><div class="num"><div class="k">Hyalomma species prevalence</div><div class="v">19.0 percent, on sour rangeland only</div><div class="n">In that study Hyalomma occurred exclusively on sour rangeland types - direct evidence that veld type shapes which ticks your cattle meet</div></div><div class="num"><div class="k">Other tick prevalences in the same study</div><div class="v">R. evertsi evertsi 40.2 percent, R. decoloratus 29.2 percent</div><div class="n">The blue tick R. decoloratus is the main vector of babesiosis. These are rangeland prevalence figures from one South African study, not national averages</div></div><div class="num"><div class="k">Bare ground count method</div><div class="v">50 stops, every 10 paces, same month each year</div><div class="n">A free measurement anyone can make. Rising bare ground year on year is the clearest sign that stocking rate is above carrying capacity</div></div></div>
+<div class="action"><strong>Do this today:</strong> walk one straight line across one grazing block, stopping every ten paces fifty times, and record whether there is a plant, litter or bare soil under your toe. Write the percentage of bare ground, the block name and the date.</div>
+<div class="card"><h3>Recommended viewing</h3><p class="vnote"><strong>These are free videos made by other people, not by rise AFRICA skills.</strong> Each one was checked against YouTube and is on topic. The written lessons are the course. Treat these as useful extra watching.</p><div class="vgrid"><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="QYxUNJ6qm8Y" data-t="Managing a Small Cattle Herd" aria-label="Play video: Managing a Small Cattle Herd"><img src="https://i.ytimg.com/vi/QYxUNJ6qm8Y/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Managing a Small Cattle Herd</p><p class="va">Just a Few Acres Farm</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="eLSGQkkgFLc" data-t="Cattle Farming in South Africa Exposed: What Actually Work" aria-label="Play video: Cattle Farming in South Africa Exposed: What Actually Work"><img src="https://i.ytimg.com/vi/eLSGQkkgFLc/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Cattle Farming in South Africa Exposed: What Actually Work</p><p class="va">Duratag SA</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="OXMA4YPmwv8" data-t="Zambeef&#x27;s Mbala Smallholder Cattle Development Project" aria-label="Play video: Zambeef&#x27;s Mbala Smallholder Cattle Development Project"><img src="https://i.ytimg.com/vi/OXMA4YPmwv8/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Zambeef&#x27;s Mbala Smallholder Cattle Development Project</p><p class="va">Langmead &amp; Baker Ltd</p></div></div></div></div>
+</article>
+<div class="card quiz"><h3>Knowledge check</h3><p class="note">Questions from all lessons. Click an answer to see whether it is right and why.</p>
+<div class="q"><p><strong>1. What is the difference between carrying capacity and stocking rate?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">They are two words for the same thing</button></li><li><button class="opt" data-correct="0">Carrying capacity is measured in hectares and stocking rate in kilograms</button></li><li><button class="opt" data-correct="1">Carrying capacity is what the land can support without degrading; stocking rate is what you actually put on it</button></li><li><button class="opt" data-correct="0">Stocking rate applies only to communal land</button></li></ul><div class="why">Carrying capacity belongs to the land and is set by its condition, species and rainfall. Stocking rate is the farmer&#x27;s own decision, made every year.</div></div>
+<div class="q"><p><strong>2. Which grass species suffer first when land is overstocked?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">The most palatable and productive ones, because cattle choose them first and return to them most often</button></li><li><button class="opt" data-correct="0">The tough unpalatable ones, because cattle eat them last</button></li><li><button class="opt" data-correct="0">All species equally</button></li><li><button class="opt" data-correct="0">Only the ones near water</button></li></ul><div class="why">Cattle graze selectively. The best grasses get bitten most often, lose root reserves and die out first, shifting the pasture toward low-value species while the land still looks green.</div></div>
+<div class="q"><p><strong>3. Why does this course refuse to give you a hectares-per-LSU figure?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Because the figure is a trade secret</button></li><li><button class="opt" data-correct="0">Because carrying capacity is the same everywhere in Africa</button></li><li><button class="opt" data-correct="0">Because cattle numbers are regulated</button></li><li><button class="opt" data-correct="1">Because the source consulted warns regional benchmark figures are unreliable, and no African biome figure was retrieved worth teaching as a target</button></li></ul><div class="why">Actual capacity depends on your own veld condition, species composition, that year&#x27;s rainfall and past grazing history. A regional average hides all of that and can mislead you into overstocking.</div></div>
+<div class="q"><p><strong>4. Who is the right person to give you a stocking rate for your land?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">The cattle buyer at the market</button></li><li><button class="opt" data-correct="1">An extension or rangeland officer doing a veld condition assessment on your farm</button></li><li><button class="opt" data-correct="0">A neighbour with a similar herd</button></li><li><button class="opt" data-correct="0">The seller of your last bull</button></li></ul><div class="why">A stocking rate is only meaningful when it comes from an assessment of your specific veld - species present, bare ground, litter cover and grazing history - not from a regional book figure.</div></div>
+<div class="q"><p><strong>5. Why is overstocking not a mistake you can simply correct next season?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Because cattle cannot be sold quickly</button></li><li><button class="opt" data-correct="0">Because the fences will already be broken</button></li><li><button class="opt" data-correct="1">Because it reduces how much grass the land can grow in every following season, not only this one</button></li><li><button class="opt" data-correct="0">Because rainfall never repeats</button></li></ul><div class="why">Repeated grazing drains root reserves and kills the best plants, leaving bare soil and a poorer species mix. The lost capacity carries forward into future years.</div></div>
+<div class="q"><p><strong>6. How is one Large Stock Unit defined in the system used in this course?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">One adult animal of any species</button></li><li><button class="opt" data-correct="1">A 450 kg bovine animal, or its equivalent in another species</button></li><li><button class="opt" data-correct="0">One cow plus her calf</button></li><li><button class="opt" data-correct="0">One hectare of grazing</button></li></ul><div class="why">The LSU exists so animals of different sizes and species can be added together on the same land. The 450 kg bovine is the reference against which everything else is a fraction.</div></div>
+<div class="q"><p><strong>7. You graze 12 Nguni-type cows at 0.7 LSU and 30 goats at 0.13 LSU. What is the total grazing load?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">42 LSU</button></li><li><button class="opt" data-correct="0">8.4 LSU</button></li><li><button class="opt" data-correct="0">3.9 LSU</button></li><li><button class="opt" data-correct="1">About 12.3 LSU</button></li></ul><div class="why">12 times 0.7 is 8.4, and 30 times 0.13 is 3.9. Together that is 12.3 LSU from a head count of 42 animals - and roughly a third of the load is small stock.</div></div>
+<div class="q"><p><strong>8. Why does a herd of smaller-framed indigenous cows place a lighter load on the same hectare?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">Because each animal represents a smaller fraction of an LSU</button></li><li><button class="opt" data-correct="0">Because indigenous cattle do not graze at night</button></li><li><button class="opt" data-correct="0">Because they walk further to water</button></li><li><button class="opt" data-correct="0">Because they are counted differently by law</button></li></ul><div class="why">Twenty cows at 0.7 LSU is 14 LSU against 20 LSU for twenty 450 kg cows - nearly a third less grazing demand from the same head count.</div></div>
+<div class="q"><p><strong>9. What happens if you upgrade to larger-framed cows and keep the same head count?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Nothing changes on the land</button></li><li><button class="opt" data-correct="0">Grazing demand falls because bigger cows eat more efficiently</button></li><li><button class="opt" data-correct="1">You have raised your stocking rate without adding a single head</button></li><li><button class="opt" data-correct="0">The carrying capacity of the land rises to match</button></li></ul><div class="why">Stocking rate is measured in LSU, not in heads. Heavier animals are more LSU each, so the load on the veld goes up even though the head count is unchanged.</div></div>
+<div class="q"><p><strong>10. Where should you get LSU values for growing young stock?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Estimate them as half a cow</button></li><li><button class="opt" data-correct="0">Use the goat figure</button></li><li><button class="opt" data-correct="0">Assume they are the same as mature cows</button></li><li><button class="opt" data-correct="1">From the conversion table used by your own country&#x27;s extension service</button></li></ul><div class="why">No LSU-by-age-class table for African cattle was retrieved for this course, so the honest answer is to ask your extension officer rather than invent a fraction.</div></div>
+<div class="q"><p><strong>11. Why is grazing demand measured in dry matter rather than in green grass?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Because dry grass is more nutritious</button></li><li><button class="opt" data-correct="1">Because the water content of grass swings enormously, so dry matter is the only fair way to compare feeds</button></li><li><button class="opt" data-correct="0">Because cattle prefer dry grass</button></li><li><button class="opt" data-correct="0">Because scales cannot weigh wet grass</button></li></ul><div class="why">Green flush after rain and a dry standing stem contain vastly different amounts of water. Dry matter strips the water out so ten kilograms of one can be compared with ten of the other.</div></div>
+<div class="q"><p><strong>12. Roughly how much dry matter does one Large Stock Unit need per day?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">About 1.5 kg</button></li><li><button class="opt" data-correct="0">About 45 kg</button></li><li><button class="opt" data-correct="1">About 13.5 kg</button></li><li><button class="opt" data-correct="0">About 4.5 kg</button></li></ul><div class="why">Three percent of the 450 kg reference animal is 13.5 kg of dry matter a day, which comes to roughly 4,900 kg over a year.</div></div>
+<div class="q"><p><strong>13. Your herd totals 12.3 LSU. Roughly what is its annual dry matter demand?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">About 60 tonnes</button></li><li><button class="opt" data-correct="0">About 6 tonnes</button></li><li><button class="opt" data-correct="0">About 600 tonnes</button></li><li><button class="opt" data-correct="0">About 12 tonnes</button></li></ul><div class="why">12.3 multiplied by 4,900 kg is about 60,000 kg, or 60 tonnes of dry matter a year that your land must grow just to hold that herd steady.</div></div>
+<div class="q"><p><strong>14. What is the three percent of body weight figure NOT good for?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Planning how long a stack of conserved feed will last</button></li><li><button class="opt" data-correct="0">Comparing herd demand against land supply</button></li><li><button class="opt" data-correct="0">Estimating annual demand per animal</button></li><li><button class="opt" data-correct="1">Deciding whether the diet is balanced for protein and energy</button></li></ul><div class="why">It is a quantity rule, not a quality rule. An animal can fill up on stemmy dry grass and still lose condition. Balancing protein and energy is Feed Formulation course territory.</div></div>
+<div class="q"><p><strong>15. Why does overstocking hurt from both directions at once?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Because cattle prices fall when herds are large</button></li><li><button class="opt" data-correct="1">Because it raises demand for grass while lowering how much the pasture can grow each year</button></li><li><button class="opt" data-correct="0">Because water becomes more expensive</button></li><li><button class="opt" data-correct="0">Because larger herds need more labour</button></li></ul><div class="why">More mouths take more dry matter, while degradation kills the best grasses and reduces future production. Demand rises and supply falls at the same time.</div></div>
+<div class="q"><p><strong>16. What is the actual purpose of a rest period in rotational grazing?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">To let the soil dry out</button></li><li><button class="opt" data-correct="0">To keep cattle from wandering</button></li><li><button class="opt" data-correct="0">To reduce tick numbers on the pasture</button></li><li><button class="opt" data-correct="1">To let grass plants regrow leaf and refill root reserves before being bitten again</button></li></ul><div class="why">A grazed plant spends root reserves to push out new leaf. Without a rest it never gets ahead, the roots shrink, and the plant eventually dies.</div></div>
+<div class="q"><p><strong>17. Under continuous grazing, why does the pasture shift toward low-value species?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">Because cattle graze the palatable species hardest and most often, so the best plants are worn out while the worthless ones are left alone</button></li><li><button class="opt" data-correct="0">Because unpalatable species grow faster in all conditions</button></li><li><button class="opt" data-correct="0">Because rain favours tough grasses</button></li><li><button class="opt" data-correct="0">Because cattle spread the seed of poor species</button></li></ul><div class="why">Cattle are selective. Continuous grazing rigs the competition against exactly the plants you want, and over years the composition of the veld changes.</div></div>
+<div class="q"><p><strong>18. Why does this course not give you a rest period in days?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Because rest periods are set by law</button></li><li><button class="opt" data-correct="1">Because no sourced figure for African rangeland was retrieved, and the right interval depends on rainfall, species and season</button></li><li><button class="opt" data-correct="0">Because rest periods do not matter</button></li><li><button class="opt" data-correct="0">Because all African rangeland recovers in the same time</button></li></ul><div class="why">A rest that is generous in a wet month is far too short in a dry one, because the plant is barely growing. A single number would be wrong most of the time.</div></div>
+<div class="q"><p><strong>19. What should tell you when to move the herd off a block?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">A fixed number of days on the calendar</button></li><li><button class="opt" data-correct="1">The condition of the grass - grazed down but not bitten into the crowns, with no bare ground opening up</button></li><li><button class="opt" data-correct="0">When the water point runs dry</button></li><li><button class="opt" data-correct="0">When the cattle start lying down</button></li></ul><div class="why">Watch the grass, not the date. Recording the move dates alongside what the grass looked like builds a rest period for your own land over two seasons.</div></div>
+<div class="q"><p><strong>20. What extra benefit comes from concentrating cattle on one block at a time?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Cattle gain weight faster in groups</button></li><li><button class="opt" data-correct="0">Ticks are diluted across more animals</button></li><li><button class="opt" data-correct="1">Their dung and urine are concentrated on that area, fertilising it</button></li><li><button class="opt" data-correct="0">It reduces the water requirement</button></li></ul><div class="why">A herd spread thinly over the whole farm every day spreads its manure just as thinly. Concentrating them puts fertility where you want it, block by block.</div></div>
+<div class="q"><p><strong>21. What is bush encroachment?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">The spread of alien weeds through a crop</button></li><li><button class="opt" data-correct="0">Cattle breaking through boundary fences into bushland</button></li><li><button class="opt" data-correct="1">The thickening of woody shrub and small-tree cover at the expense of the grass layer</button></li><li><button class="opt" data-correct="0">The loss of trees from rangeland</button></li></ul><div class="why">The land does not become bare - it becomes thicket. It can look greener from a distance while carrying far fewer cattle than it once did.</div></div>
+<div class="q"><p><strong>22. Why does bush encroachment tend to accelerate rather than level off?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">Because it is a spiral - thin grass lets woody seedlings establish, and the resulting bush suppresses the grass further</button></li><li><button class="opt" data-correct="0">Because rainfall increases over time</button></li><li><button class="opt" data-correct="0">Because cattle spread tree seed as they graze</button></li><li><button class="opt" data-correct="0">Because shrubs live longer than grasses</button></li></ul><div class="why">Overgrazing is both cause and consequence. Each turn of the cycle removes more of the grass competition that would have suppressed the next generation of seedlings.</div></div>
+<div class="q"><p><strong>23. How should bush thinning be understood?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">As a free way to gain grazing</button></li><li><button class="opt" data-correct="0">As a once-off cure regardless of stocking rate</button></li><li><button class="opt" data-correct="0">As a government responsibility</button></li><li><button class="opt" data-correct="1">As an investment in restoring lost carrying capacity that fails if overstocking continues</button></li></ul><div class="why">Clearing costs labour or machinery, and the bush regrows if the underlying stocking rate is not corrected. Clearing plus continued overstocking simply restarts the spiral with your money spent.</div></div>
+<div class="q"><p><strong>24. Why does this course give no figure for grazing capacity lost to encroachment?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Because the loss is negligible</button></li><li><button class="opt" data-correct="1">Because country-level figures were referenced in the literature but not verified to a standard worth teaching as a number</button></li><li><button class="opt" data-correct="0">Because encroachment does not affect grazing</button></li><li><button class="opt" data-correct="0">Because the figure is confidential</button></li></ul><div class="why">An unverified figure could justify a large clearing investment you cannot recover. The course teaches you to measure your own encroachment with fixed photo points instead.</div></div>
+<div class="q"><p><strong>25. What makes fixed photo points a useful tool?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">They prove ownership of land</button></li><li><button class="opt" data-correct="0">They replace a veld condition assessment</button></li><li><button class="opt" data-correct="1">Taken from the same spot, facing the same way, in the same month each year, they show whether woody cover on your own land is thickening</button></li><li><button class="opt" data-correct="0">They measure grass dry matter directly</button></li></ul><div class="why">Consistency is what makes the comparison valid. After about five years they give evidence about your own farm that no published figure can supply.</div></div>
+<div class="q"><p><strong>26. What is the earliest warning sign of overgrazing on a block of veld?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Cattle losing weight</button></li><li><button class="opt" data-correct="1">A shift in species from the grasses cattle eat eagerly toward the ones they walk past</button></li><li><button class="opt" data-correct="0">Bare soil appearing between plants</button></li><li><button class="opt" data-correct="0">Erosion channels forming</button></li></ul><div class="why">The species shift appears years before bare ground does. By the time soil is exposed, the change has been running for a long time already.</div></div>
+<div class="q"><p><strong>27. In the South African rangeland study, which tick genus occurred exclusively on sour rangeland types?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Rhipicephalus decoloratus</button></li><li><button class="opt" data-correct="0">Rhipicephalus evertsi evertsi</button></li><li><button class="opt" data-correct="0">Rhipicephalus appendiculatus</button></li><li><button class="opt" data-correct="1">Hyalomma species</button></li></ul><div class="why">Hyalomma was found at 19.0 percent prevalence and only on sour rangeland in that study, which is direct evidence that the veld you graze shapes the ticks your cattle meet.</div></div>
+<div class="q"><p><strong>28. Why does plant litter on the soil matter?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">It protects soil from raindrop impact and sun, holds moisture and feeds the soil</button></li><li><button class="opt" data-correct="0">It shows cattle are not eating enough</button></li><li><button class="opt" data-correct="0">It attracts ticks</button></li><li><button class="opt" data-correct="0">It prevents seed germination</button></li></ul><div class="why">Litter cover is a good sign. Land grazed to the bone has none, which leaves the soil exposed to rain and heat.</div></div>
+<div class="q"><p><strong>29. How is the fifty-stop bare ground count done?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">By digging fifty holes across the block</button></li><li><button class="opt" data-correct="0">By counting fifty cattle and where they graze</button></li><li><button class="opt" data-correct="1">By walking a straight line, stopping every ten paces fifty times and recording whether plant, litter or bare soil is under your toe</button></li><li><button class="opt" data-correct="0">By photographing fifty spots</button></li></ul><div class="why">It costs nothing, takes under an hour, and repeated in the same month each year it gives a trend line for bare ground on your own land.</div></div>
+<div class="q"><p><strong>30. What should a grazing record contain?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Only the rainfall figures</button></li><li><button class="opt" data-correct="1">Entry and exit dates per block, the herd LSU total, grass condition, annual bare ground count, rainfall and unusual events</button></li><li><button class="opt" data-correct="0">Only the number of cattle owned</button></li><li><button class="opt" data-correct="0">The market price of weaners</button></li></ul><div class="why">After three years that record answers questions no advisor can answer for you - how long your blocks really take to recover, and whether bare ground is rising or falling at your stocking rate.</div></div>
+</div>
+<div class="card"><h3>Module 5 capstone</h3><p>Build a Grazing Plan for your own land, in your own numbers, before the next rains. Step 1: walk the boundary of every piece of land your cattle graze, whether you own it, rent it or share it, and sketch it on one page with the water points, the fences or natural boundaries, and the areas you know are bare, eroded or bushed. Step 2: list every animal that grazes that land - your own cattle, your goats and sheep, and any neighbour&#x27;s stock that comes on - and convert each one to Large Stock Units using the 450 kg reference animal. Add them up. That total, not your head count, is the load your land is carrying. Step 3: multiply your total LSU by roughly 4,900 kg of dry matter a year to see, in kilograms, how much grass your land is being asked to grow. Step 4: go to your nearest agricultural extension office or a rangeland officer and ask them to help you assess the condition of your veld and give you a stocking rate for your own land, in your own rainfall zone. Write down what they say and the date. Step 5: divide the land into at least two blocks and write a simple rotation on paper - which block is grazed, which is resting, and what event will tell you to move. Step 6: mark three fixed spots on the ground, photograph or describe them, and write one page comparing your stocking rate against the advice you were given, with what you will change this season.</p>
+<p><button class="btn" onclick="rasMarkDone(5,this)">Mark module 5 complete</button></p></div>
+
+<div id="ras-assignment"></div>
+
+<div class="pager">
+<a class="btn" href="cattle-farming-module-4.html">← Previous</a>
+<a class="btn" href="cattle-farming-module-6.html">Next Module →</a>
 </div>
 
-<div class="section">
-<h2>🎥 Video Lessons</h2>
-<div class="video-container"><h3>1. Module 5 Introduction & Overview</h3><div class="ras-vid" data-yt="jJIsjbKIQQU" data-title="Dairy Farming in East Africa. Why Kenya is the leader? //Documentary" role="button" tabindex="0" aria-label="Play: Dairy Farming in East Africa. Why Kenya is the leader? //Documentary"><img loading="lazy" src="https://i.ytimg.com/vi/jJIsjbKIQQU/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Kilimo Faida TV</b>Dairy Farming in East Africa. Why Kenya is the leader? //Documentary</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cattle+farming+Module+5+Introduction+&amp;+Overview" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
-<div class="video-container"><h3>2. Practical Skills & Best Practices</h3><div class="ras-vid" data-yt="eLSGQkkgFLc" data-title="Cattle Farming in South Africa Exposed: What Actually Work" role="button" tabindex="0" aria-label="Play: Cattle Farming in South Africa Exposed: What Actually Work"><img loading="lazy" src="https://i.ytimg.com/vi/eLSGQkkgFLc/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Duratag SA</b>Cattle Farming in South Africa Exposed: What Actually Work</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cattle+farming+Practical+Skills+&amp;+Best+Practices" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
-<div class="video-container"><h3>3. Problem-Solving & Troubleshooting</h3><div class="ras-vid" data-yt="uxJoILIbO5A" data-title="Revolutionizing Dairy Farming in Kenya: Advanced Techniques &amp; Expert Insights" role="button" tabindex="0" aria-label="Play: Revolutionizing Dairy Farming in Kenya: Advanced Techniques &amp; Expert Insights"><img loading="lazy" src="https://i.ytimg.com/vi/uxJoILIbO5A/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>AIM Agriculture Farm</b>Revolutionizing Dairy Farming in Kenya: Advanced Techniques &amp; Expert Insights</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cattle+farming+Problem-Solving+&amp;+Troubleshooting" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
-<div class="video-container"><h3>4. Case Studies & Real-World Examples</h3><div class="ras-vid" data-yt="1A0PoOtY3nU" data-title="Ethiopia VCA: Commercializing Smallholder Dairy Production" role="button" tabindex="0" aria-label="Play: Ethiopia VCA: Commercializing Smallholder Dairy Production"><img loading="lazy" src="https://i.ytimg.com/vi/1A0PoOtY3nU/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Fintrac</b>Ethiopia VCA: Commercializing Smallholder Dairy Production</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cattle+farming+Case+Studies+&amp;+Real-World+Examples" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
-<div class="video-container"><h3>5. Implementation & Action Planning</h3><div class="ras-vid" data-yt="jJIsjbKIQQU" data-title="Dairy Farming in East Africa. Why Kenya is the leader? //Documentary" role="button" tabindex="0" aria-label="Play: Dairy Farming in East Africa. Why Kenya is the leader? //Documentary"><img loading="lazy" src="https://i.ytimg.com/vi/jJIsjbKIQQU/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Kilimo Faida TV</b>Dairy Farming in East Africa. Why Kenya is the leader? //Documentary</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cattle+farming+Implementation+&amp;+Action+Planning" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
-</div>
+<div class="disclaim"><strong>Price check, always.</strong> Before you buy ingredients, equipment, or commit to a supplier, call three suppliers and compare prices. Prices and ingredient availability vary widely by region and season. This course teaches the method. You confirm the local numbers with your own research and with your veterinarian or animal nutritionist.</div>
+</div></main>
 
-<div class="section">
-<h2>📊 Key Reference Table</h2>
-<table>
-<thead><tr><th>Concept</th><th>Key Details</th><th>Your Farm Application</th></tr></thead>
-<tbody>
-<tr><td>Best Practice 1</td><td>Proven method for success</td><td>How to implement on your farm</td></tr>
-<tr><td>Best Practice 2</td><td>Common problem solution</td><td>Troubleshooting guide</td></tr>
-<tr><td>Best Practice 3</td><td>Optimization strategy</td><td>Performance improvement steps</td></tr>
-<tr><td>Best Practice 4</td><td>Cost efficiency method</td><td>Profitability enhancement</td></tr>
-</tbody>
-</table>
-</div>
-
-<div class="section">
-<h2>💡 Module 5: 6 Core Concepts</h2>
-<div class="concept">
-<h3>Concept 1: Foundational Knowledge</h3>
-<p>Understand the basic principles that underlie successful Cattle Farming. This foundation helps you make better decisions and troubleshoot problems effectively. Practice applying this concept on a small scale before expanding.</p>
-</div>
-<div class="concept">
-<h3>Concept 2: Practical Implementation</h3>
-<p>Learn specific techniques and methods proven to work in real farming situations. These practical skills are what successful farmers use daily. Document your implementation process and results.</p>
-</div>
-<div class="concept">
-<h3>Concept 3: Monitoring & Measurement</h3>
-<p>Develop systems to track your results. Data-driven decisions lead to better outcomes. Keep simple records of inputs, outputs, and results. Use this information to optimize constantly.</p>
-</div>
-<div class="concept">
-<h3>Concept 4: Problem-Solving</h3>
-<p>Learn systematic approaches to solving problems that arise on your farm. Most issues have solutions that others have already discovered. Apply proven troubleshooting methods.</p>
-</div>
-<div class="concept">
-<h3>Concept 5: Optimization & Scaling</h3>
-<p>Once you master the basics, learn how to optimize for better results and profitability. Understand what changes when you scale your operation from small to large.</p>
-</div>
-<div class="concept">
-<h3>Concept 6: Sustainability & Long-Term Success</h3>
-<p>Build a farming operation that remains profitable and sustainable for years. Balance short-term profit with long-term health of your land, animals, and business.</p>
-</div>
-</div>
-
-<div class="section">
-<div class="quiz-section">
-<h2>🎯 Module 5 Knowledge Check</h2>
-<div class="quiz-question">
-<p>1. What is the most important skill to master in this module?</p>
-<div class="quiz-option"><input type="radio" name="q1" value="a" id="q1a"><label for="q1a">a) Understanding core principles and applying them to your farm</label></div>
-<div class="quiz-option"><input type="radio" name="q1" value="b" id="q1b"><label for="q1b">b) Memorizing technical details</label></div>
-<div class="quiz-option"><input type="radio" name="q1" value="c" id="q1c"><label for="q1c">c) Following procedures exactly</label></div>
-<button onclick="checkAnswer(this)" data-q="q1" data-a="a" data-f="Correct! Applying principles to your specific situation is more valuable than memorizing details.">Check Answer</button>
-<div id="feedback-q1" class="feedback"></div>
-</div>
-<div class="quiz-question">
-<p>2. How should you approach learning in this module?</p>
-<div class="quiz-option"><input type="radio" name="q2" value="a" id="q2a"><label for="q2a">a) Watch videos passively</label></div>
-<div class="quiz-option"><input type="radio" name="q2" value="b" id="q2b"><label for="q2b">b) Take notes, experiment on your farm, track results, adjust</label></div>
-<div class="quiz-option"><input type="radio" name="q2" value="c" id="q2c"><label for="q2c">c) Read the materials once</label></div>
-<button onclick="checkAnswer(this)" data-q="q2" data-a="b" data-f="Correct! Active learning through experimentation produces the best results.">Check Answer</button>
-<div id="feedback-q2" class="feedback"></div>
-</div>
-<div class="quiz-question">
-<p>3. What makes farming knowledge valuable?</p>
-<div class="quiz-option"><input type="radio" name="q3" value="a" id="q3a"><label for="q3a">a) How you apply it to solve real problems on your farm</label></div>
-<div class="quiz-option"><input type="radio" name="q3" value="b" id="q3b"><label for="q3b">b) How much you memorize</label></div>
-<div class="quiz-option"><input type="radio" name="q3" value="c" id="q3c"><label for="q3c">c) Academic credentials</label></div>
-<button onclick="checkAnswer(this)" data-q="q3" data-a="a" data-f="Correct! The real value of knowledge is how it improves your farming results.">Check Answer</button>
-<div id="feedback-q3" class="feedback"></div>
-</div>
-</div>
-</div>
-
-<div class="section">
-<div class="project-section">
-<h2>🚀 Capstone Project: 8-Phase Implementation Plan</h2>
-<div class="project-item">
-<h4>Phase 1: Research & Planning</h4>
-<p>Study the module content. Research your local context: prices, climate, available resources. Document current state of your farm operation. What are you doing now? What could improve?</p>
-</div>
-<div class="project-item">
-<h4>Phase 2: Learning & Preparation</h4>
-<p>Complete all video lessons. Take detailed notes. Highlight key techniques. Prepare equipment and resources. Identify any knowledge gaps and address them.</p>
-</div>
-<div class="project-item">
-<h4>Phase 3: Small-Scale Testing</h4>
-<p>Test new techniques on a small part of your farm. Document exact details: date, materials used, conditions, results. Start small to reduce risk. Learn from early results.</p>
-</div>
-<div class="project-item">
-<h4>Phase 4: Measurement & Monitoring</h4>
-<p>Track results carefully. Keep records: inputs (cost, time, materials), outputs (yield, quality, revenue). Compare with your baseline. Did results improve?</p>
-</div>
-<div class="project-item">
-<h4>Phase 5: Problem-Solving & Adjustment</h4>
-<p>When problems arise (they will), troubleshoot systematically. Review module concepts. Ask: what changed? What could I do differently? Implement adjustments and test again.</p>
-</div>
-<div class="project-item">
-<h4>Phase 6: Expansion & Scaling</h4>
-<p>Once proven on small scale, expand to larger area. Scale gradually. Document challenges at each scale. Train any helpers on new methods.</p>
-</div>
-<div class="project-item">
-<h4>Phase 7: Optimization & Profitability</h4>
-<p>Now that system works, optimize for profit. Reduce unnecessary costs. Maximize output quality. Calculate return on investment. Document which practices are most profitable.</p>
-</div>
-<div class="project-item">
-<h4>Phase 8: Sharing & Mentoring</h4>
-<p>Share what you learned with other farmers. Help them implement successfully. Your experience becomes valuable. Document successful stories and lessons learned.</p>
-</div>
-</div>
-</div>
-
-<div class="nav-buttons">
-<a href="cattle-farming-course.html">↑ Back to Cattle Farming Course</a>
-</div>
-</div>
-</div>
+<footer><div class="wrap">Cattle Farming — Module 5 of 12 · 4,306 words · rise AFRICA skills</div></footer>
 
 <script>
-var PROGRESS_KEY = 'cattle-farming-module-5';
-
-function checkAnswer(el){
-  var q = el.dataset.q, a = el.dataset.a, f = el.dataset.f || '';
-  var sel = document.querySelector('input[name="' + q + '"]:checked');
-  var box = document.getElementById('feedback-' + q);
-  if(!sel){ if(box){ box.className='feedback show incorrect';
-            box.textContent='Please select an answer first.'; } return; }
-  var right = (sel.value === a);
-  if(box){
-    box.className = 'feedback show ' + (right ? 'correct' : 'incorrect');
-    box.textContent = (right ? '\u2713 ' : '\u2717 ') + f;
-  }
-  updateProgress();
-}
-function updateProgress(){
-  var groups = {};
-  document.querySelectorAll('input[type="radio"]').forEach(function(r){ groups[r.name]=1; });
-  var total = Object.keys(groups).length;
-  var done  = {};
-  document.querySelectorAll('input[type="radio"]:checked').forEach(function(r){ done[r.name]=1; });
-  var pct = total ? (Object.keys(done).length / total) * 100 : 0;
-  var bar = document.getElementById('progressFill');
-  if(bar) bar.style.width = pct + '%';
-  try { localStorage.setItem(PROGRESS_KEY, String(pct)); } catch(e){}
-}
-window.addEventListener('load', function(){
-  var saved = null;
-  try { saved = localStorage.getItem(PROGRESS_KEY); } catch(e){}
-  var bar = document.getElementById('progressFill');
-  if(saved && bar) bar.style.width = saved + '%';
-  document.querySelectorAll('input[type="radio"]').forEach(function(r){
-    r.addEventListener('change', updateProgress);
+(function() {
+  var KEY="raskills.cattle-farming.progress";
+  function load() { try { return JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e) { return {}; } }
+  function save(o) { try { localStorage.setItem(KEY, JSON.stringify(o)); } catch(e) { } }
+  window.rasMarkDone = function(n, btn) { var p = load(); p["m" + n] = true; save(p); if (btn) { btn.textContent = "Module complete"; btn.classList.add("ghost"); } };
+  window.rasProgress = load;
+})();
+document.querySelectorAll(".opt").forEach(function(btn) {
+  btn.addEventListener("click", function() {
+    var correct = this.getAttribute("data-correct") === "1";
+    this.classList.add(correct ? "right" : "wrong");
+    var why = this.closest(".q").querySelector(".why");
+    if (why) why.classList.add("show");
+    this.closest(".opts").querySelectorAll(".opt").forEach(function(o) { o.style.pointerEvents = "none"; });
+  });
+});
+document.querySelectorAll(".vthumb").forEach(function(el) {
+  el.addEventListener("click", function() {
+    if (this.getAttribute("data-on")) return;
+    var iframe = document.createElement("iframe");
+    iframe.src = "https://www.youtube.com/embed/" + this.getAttribute("data-yt");
+    iframe.allow = "accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture";
+    iframe.allowFullscreen = true;
+    this.innerHTML = ""; this.appendChild(iframe); this.setAttribute("data-on", "1");
   });
 });
 </script>
+<script src="/assignment-submit.js"></script>
 </body>
 </html>

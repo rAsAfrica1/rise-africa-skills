@@ -1,302 +1,347 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Module 4 - Cattle Farming</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Module 4: The Calf Crop - Cattle Farming</title>
+<meta name="description" content="A cow-calf enterprise does not sell milk and does not, in most smallholder systems, finish its own animals. What it sells is a weaned calf, and the kilograms weaned per year are the entire physical output of the breeding herd. This module builds the equation behind that output - cows exposed, calving percentage, calf survival and weaning weight - and works through the calving season, the leak between birth and weaning, the sourced early-weaning trade-off, and how to estimate weight without owning a scale.">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: #f9f9f9; }
-.container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-.header { background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%); color: white; padding: 30px; border-radius: 10px; margin-bottom: 30px; }
-.header h1 { font-size: 2.5em; margin-bottom: 10px; }
-.content { background: white; padding: 30px; border-radius: 10px; }
-.section { margin-bottom: 40px; }
-.section h2 { color: #1a1a2e; font-size: 1.8em; margin-bottom: 20px; border-bottom: 3px solid #0f3460; padding-bottom: 10px; }
-.learning-objectives { background: #e8f4f8; padding: 20px; border-left: 5px solid #0f3460; border-radius: 5px; }
-.learning-objectives li { margin-bottom: 8px; }
-.video-container { background: #f5f5f5; padding: 15px; margin-bottom: 15px; border-radius: 5px; border-left: 4px solid #0f3460; }
-.video-container h3 { color: #1a1a2e; margin-bottom: 10px; }
-iframe { width: 100%; height: 300px; border-radius: 5px; border: none; margin-top: 10px; }
-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-th { background: #1a1a2e; color: white; padding: 12px; text-align: left; }
-td { padding: 12px; border-bottom: 1px solid #ddd; }
-.concept { background: #fafafa; padding: 15px; margin-bottom: 15px; border-radius: 5px; border-left: 4px solid #0f3460; }
-.concept h3 { color: #1a1a2e; margin-bottom: 8px; font-size: 1.1em; }
-.concept p { font-size: 0.95em; }
-.quiz-section { background: #e8f4f8; padding: 20px; border-radius: 5px; border: 2px solid #0f3460; }
-.quiz-question { margin-bottom: 20px; background: white; padding: 15px; border-radius: 5px; }
-.quiz-option { margin-left: 20px; margin-bottom: 8px; }
-button { background: #0f3460; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px; }
-button:hover { background: #1a1a2e; }
-.feedback { margin-top: 10px; padding: 10px; border-radius: 5px; display: none; }
-.feedback.show { display: block; }
-.feedback.correct { background: #c8e6c9; border-left: 4px solid #27ae60; }
-.feedback.incorrect { background: #ffcdd2; border-left: 4px solid #c62828; }
-.project-section { background: #e8f4f8; padding: 20px; border-radius: 5px; }
-.project-item { background: white; padding: 15px; margin: 15px 0; border-radius: 5px; border-left: 4px solid #0f3460; }
-.project-item h4 { color: #1a1a2e; margin-bottom: 8px; }
-.progress-bar { background: #e0e0e0; height: 10px; border-radius: 5px; overflow: hidden; margin-bottom: 20px; }
-.progress-fill { height: 100%; background: linear-gradient(90deg, #1a1a2e, #0f3460); width: 0%; }}
-.nav-buttons { display: flex; gap: 10px; margin-top: 30px; justify-content: center; flex-wrap: wrap; }
-.nav-buttons a { display: inline-block; padding: 12px 30px; background: #1a1a2e; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; }
-.nav-buttons a:hover { background: #0f3460; }
+:root{
+  --ink:#1d1a16; --ink-soft:#4a443c; --muted:#6f6759;
+  --paper:#fbf8f3; --card:#ffffff; --line:#e5ddd0;
+  --brand:#5c4a2a; --brand-soft:#f6ece5; --accent:#256b4a; --accent-soft:#e9f2ed;
+  --warn:#8a6d12; --warn-soft:#fbf3d9;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased}
+a{color:var(--brand)}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px}
+header.top{background:var(--ink);color:#f6f1e8;padding:14px 0}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-weight:700;letter-spacing:.02em;font-size:15px}
+.brand span{color:#cfae6a}
+header.top a{color:#e8d9c6;text-decoration:none;font-size:14px}
+header.top a:hover{color:#fff}
+.hero{background:linear-gradient(180deg,#2a241d,#3b332a);color:#f7f2e9;padding:38px 0 34px}
+.hero .kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#cfae6a;margin:0 0 10px}
+.hero h1{margin:0 0 10px;font-size:30px;line-height:1.25}
+.hero p{margin:0;color:#d9d0c2;max-width:60ch}
+.crumbs{font-size:13px;color:#b9ae9d;margin-bottom:14px}
+.crumbs a{color:#e8d9c6;text-decoration:none}
+main{padding:30px 0 60px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin:0 0 22px}
+h2{font-size:22px;margin:34px 0 12px;line-height:1.3}
+h3{font-size:18px;margin:0 0 6px}
+h4{font-size:15px;margin:18px 0 6px;color:var(--ink)}
+p{margin:0 0 12px}
+ul,ol{margin:0 0 12px;padding-left:22px}
+li{margin:0 0 6px}
+table{width:100%;border-collapse:collapse;margin:0 0 14px;font-size:14.5px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--brand-soft)}
+.lesson{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin:0 0 20px}
+.lesson-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+.lnum{background:var(--brand);color:#fff;font-size:12px;font-weight:700;border-radius:999px;
+  padding:3px 10px;letter-spacing:.04em;white-space:nowrap}
+.read{font-size:13px;color:var(--muted)}
+.objectives{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
+  padding:12px 14px;margin:14px 0 18px;font-size:14.5px}
+.objectives strong{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.objectives ul{margin:0;padding-left:18px}
+.body{margin-top:4px}
+.numbers{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin:18px 0}
+.num{background:var(--warn-soft);border:1px solid #eadfb8;border-radius:10px;padding:12px 14px}
+.num .k{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--warn);font-weight:700}
+.num .v{font-size:17px;font-weight:700;margin:3px 0}
+.num .n{font-size:12.5px;color:var(--muted);line-height:1.45}
+.action{border:1px dashed var(--brand);background:var(--brand-soft);border-radius:10px;padding:12px 14px;margin-top:16px;font-size:15px}
+.action strong{color:var(--brand)}
+.quiz .q{border-top:1px solid var(--line);padding-top:16px;margin-top:16px}
+.quiz .q:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.opts{list-style:none;padding:0;margin:8px 0 0}
+.opts li{margin:0 0 6px}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:9px;
+  padding:9px 12px;font:inherit;font-size:15px;cursor:pointer;color:var(--ink)}
+.opt:hover{border-color:var(--brand)}
+.opt.right{background:var(--accent-soft);border-color:var(--accent);font-weight:600}
+.opt.wrong{background:#fdeceb;border-color:#c2513f}
+.why{display:none;margin-top:8px;font-size:14.5px;color:var(--ink-soft);background:#f3efe8;border-radius:8px;padding:10px 12px}
+.why.show{display:block}
+.toc{font-size:14.5px}
+.toc a{display:block;padding:6px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.toc a:hover{color:var(--brand)}
+.vgrid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:14px}
+.vcard{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+.vthumb{position:relative;display:block;width:100%;aspect-ratio:16/9;border:0;padding:0;margin:0;cursor:pointer;
+  background:#111 center/cover no-repeat;overflow:hidden}
+.vthumb img{width:100%;height:100%;object-fit:cover;display:block}
+.vthumb iframe{width:100%;height:100%;border:0;display:block}
+.vthumb::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.18)}
+.vthumb[data-on]::after{display:none}
+.vplay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;
+  width:54px;height:38px;border-radius:9px;background:rgba(20,20,20,.82);display:flex;align-items:center;justify-content:center}
+.vthumb[data-on] .vplay{display:none}
+.vplay span{display:block;width:0;height:0;border-left:15px solid #fff;border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:3px}
+.vthumb:hover .vplay{background:#c4302b}
+.vmeta{padding:11px 13px}
+.vmeta .vt{font-weight:600;font-size:14.5px;line-height:1.35;margin:0 0 4px}
+.vmeta .va{font-size:12.5px;color:var(--muted);margin:0 0 6px}
+.vmeta .vw{font-size:13px;color:var(--ink-soft);margin:0}
+.vnote{background:#f3efe8;border-radius:8px;padding:11px 13px;font-size:13.5px;color:var(--ink-soft);margin:0}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:26px;flex-wrap:wrap}
+.btn{display:inline-block;background:var(--brand);color:#fff;text-decoration:none;padding:11px 18px;border-radius:10px;font-weight:600;font-size:15px}
+.note{font-size:13.5px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:24px 0 40px;font-size:13.5px;color:var(--muted)}
+.disclaim{background:#f3efe8;border-radius:10px;padding:14px 16px;font-size:13.5px;color:var(--ink-soft);margin-top:18px}
+@media(max-width:560px){.hero h1{font-size:24px}.lesson{padding:18px}}
+
 </style>
-<!--ras-video-v2-->
-<style>
-.ras-vid{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:8px;overflow:hidden;margin:14px 0;cursor:pointer;border:1px solid rgba(201,162,39,.35)}
-.ras-vid img{width:100%;height:100%;object-fit:cover;display:block;opacity:.82;transition:opacity .2s,transform .3s}
-.ras-vid:hover img{opacity:1;transform:scale(1.03)}
-.ras-vid .ras-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
-.ras-vid .ras-play span{width:64px;height:64px;border-radius:50%;background:rgba(201,162,39,.94);color:#111;display:flex;align-items:center;justify-content:center;font-size:26px;padding-left:5px;box-shadow:0 4px 18px rgba(0,0,0,.5)}
-.ras-vid:hover .ras-play span{background:#e0c050}
-.ras-vid .ras-meta{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 9px;background:linear-gradient(transparent,rgba(0,0,0,.88));color:#fff;font-size:.8rem;line-height:1.35;pointer-events:none}
-.ras-vid .ras-meta b{color:#c9a227;display:block;font-size:.72rem;font-weight:700;margin-bottom:2px}
-.ras-vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.ras-vid.ras-dead{cursor:default;background:#14141f}
-.ras-vid .ras-fallback{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:18px;color:#ddd;font-size:.85rem}
-.ras-vid.ras-dead .ras-fallback{display:flex}
-.ras-vid.ras-dead img,.ras-vid.ras-dead .ras-play,.ras-vid.ras-dead .ras-meta{display:none}
-.ras-vid .ras-fallback a{background:#c9a227;color:#111;font-weight:700;padding:.55rem 1.1rem;border-radius:6px;text-decoration:none;font-size:.82rem}
-</style>
-<script>
-(function(){
-  function play(box){
-    if(box.dataset.on||box.classList.contains('ras-dead'))return;
-    box.dataset.on=1;
-    var f=document.createElement('iframe');
-    f.src='https://www.youtube-nocookie.com/embed/'+box.dataset.yt+
-          '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
-    f.allow='accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture';
-    f.allowFullscreen=true;f.loading='eager';f.title=box.dataset.title||'Video lesson';
-    box.appendChild(f);
-  }
-  function init(){
-    document.querySelectorAll('.ras-vid').forEach(function(box){
-      var img=box.querySelector('img');
-      // Self-heal: a 404 thumbnail means the video is deleted or private.
-      // Swap to a topic search so a student never meets a blocked embed.
-      if(img){img.addEventListener('error',function(){box.classList.add('ras-dead');});}
-      box.addEventListener('click',function(){play(box);});
-      box.addEventListener('keydown',function(e){
-        if(e.key==='Enter'||e.key===' '){e.preventDefault();play(box);}
-      });
-    });
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
-  else init();
-})();
-</script>
-<!--ras-social-meta-->
-<link rel="canonical" href="https://www.riseafricaskills.com/cattle-farming-module-4.html">
-<meta property="og:site_name" content="rise AFRICA skills">
-<meta property="og:locale" content="en_ZW">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://www.riseafricaskills.com/cattle-farming-module-4.html">
-<meta property="og:title" content="Module 4 - Cattle Farming — rise AFRICA skills">
-<meta property="og:description" content="Module 4 - Cattle Farming — a practical, fact-based course from rise AFRICA skills. Start with minimal equipment and scale as profits grow. Videos, assessments and a capstone project. From $8, lifetime access.">
-<meta property="og:image" content="https://www.riseafricaskills.com/og-image.png">
-<meta property="og:image:secure_url" content="https://www.riseafricaskills.com/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="rise AFRICA skills — learn practical skills, start your business">
-<meta property="og:image:type" content="image/png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@riseafricaskills">
-<meta name="twitter:creator" content="@riseafricaskills">
-<meta name="twitter:title" content="Module 4 - Cattle Farming — rise AFRICA skills">
-<meta name="twitter:description" content="Module 4 - Cattle Farming — a practical, fact-based course from rise AFRICA skills. Start with minimal equipment and scale as profits grow. Videos, assessments and a capstone project. From $8, lifetime access.">
-<meta name="twitter:image" content="https://www.riseafricaskills.com/og-image.png">
-<meta name="twitter:image:alt" content="rise AFRICA skills">
-<meta name="description" content="Fact-based practical training for African entrepreneurs. 128 courses in farming, food processing, trades, technology and business - start from zero capital. From $8 with lifetime access.">
-<meta name="robots" content="index,follow,max-image-preview:large">
-<meta name="theme-color" content="#0f0f1a">
-<meta name="author" content="rise AFRICA skills">
-<link rel="icon" href="/og-image.png" type="image/png">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Course", "name": "Module 4 - Cattle Farming", "description": "Module 4 - Cattle Farming — a practical, fact-based course from rise AFRICA skills. Start with minimal equipment and scale as profits grow. Videos, assessments and a capstone project. From $8, lifetime access.", "url": "https://www.riseafricaskills.com/cattle-farming-module-4.html", "provider": {"@type": "EducationalOrganization", "name": "rise AFRICA skills", "url": "https://www.riseafricaskills.com/"}, "inLanguage": "en"}</script>
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="/course-lock.js"></script>
 </head>
 <body>
-<div class="container">
-<div class="header">
-<h1>🌾 Cattle Farming</h1>
-<p>Module 4: Comprehensive Farming Skills</p>
-</div>
-<div class="content">
-<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="/course-lock.js"></script>
+<script>
+window.RAS_COURSE_SLUG  = "cattle-farming";
+window.RAS_MODULE_NUM   = 4;
+window.RAS_MODULE_TITLE = "The Calf Crop";
+window.RAS_WHATSAPP     = "263773001353";
+</script>
+<header class="top"><div class="wrap">
+<div class="brand">rise <span>AFRICA</span> skills</div>
+<nav><a href="cattle-farming-lessons.html">Course contents</a> &nbsp;|&nbsp; <a href="video-library.html">Video library</a> &nbsp;|&nbsp; <a href="index.html">Home</a></nav>
+</div></header>
 
-<div class="section learning-objectives">
-<h2>📚 Learning Objectives</h2>
-<ul>
-<li>Master Module 4 practical skills for Cattle Farming</li>
-<li>Apply evidence-based farming techniques</li>
-<li>Solve real problems on your farm</li>
-<li>Implement sustainable practices</li>
-<li>Track results and optimize operations</li>
-</ul>
+<section class="hero"><div class="wrap">
+<div class="crumbs"><a href="cattle-farming-lessons.html">Cattle Farming</a> / Module 4 of 12</div>
+<p class="kicker">Module 4</p>
+<h1>🐄 The Calf Crop</h1>
+<p>A cow-calf enterprise does not sell milk and does not, in most smallholder systems, finish its own animals. What it sells is a weaned calf, and the kilograms weaned per year are the entire physical output of the breeding herd. This module builds the equation behind that output - cows exposed, calving percentage, calf survival and weaning weight - and works through the calving season, the leak between birth and weaning, the sourced early-weaning trade-off, and how to estimate weight without owning a scale.</p>
+</div></section>
+
+<main><div class="wrap">
+<div class="card"><h3>What you will be able to do after this module</h3><ul>
+<li>State the four-term equation for total kilograms weaned per year</li><li>Explain why year-round calving defeats group management</li><li>Separate pre-natal from post-natal calf loss and their causes</li><li>Read the sourced early-weaning trial in full</li><li>Take a heart-girth measurement correctly</li><li>Combine your four terms into a single kilograms-weaned figure</li>
+</ul></div>
+<div class="card toc"><h3>The six lessons</h3>
+<a href="#lesson-1">1. Weaning Weight Is the Product</a>
+<a href="#lesson-2">2. A Calving Season, Not a Calving Year</a>
+<a href="#lesson-3">3. The Leak Between Calving and Weaning</a>
+<a href="#lesson-4">4. Weaning Age and the Trade-off You Cannot Escape</a>
+<a href="#lesson-5">5. Weighing a Calf Without a Scale</a>
+<a href="#lesson-6">6. Reading Your Own Calf Crop</a>
+</div>
+<article class="lesson" id="lesson-1">
+<div class="lesson-head"><span class="lnum">Lesson 4.1</span><span class="read">~12 min</span></div>
+<h2 style="margin-top:6px">Weaning Weight Is the Product</h2>
+<div class="objectives"><strong>In this lesson</strong><ul><li>State the four-term equation for total kilograms weaned per year</li><li>Identify which term is weakest on your own farm</li><li>Explain why kilograms weaned, not head count, measures a beef herd</li></ul></div>
+<div class="body">
+<p>Ask most cattle owners how their herd is doing and they will tell you how many cattle they have. That is the wrong number, and this lesson replaces it.</p>
+<p>A cow-calf enterprise does not sell milk. Milk is the Dairy Production course, and this course does not teach it. In most smallholder systems it also does not finish its own animals to slaughter weight - that is the separate Steer Fattening course. What a cow-calf enterprise actually produces and sells is a weaned calf.</p>
+<p>So the entire physical output of your breeding herd, for a whole year of grass, water, labour, dipping and risk, is this: the weight of the calves you wean, multiplied by the number of calves you wean. Kilograms of weaner. Nothing else you did that year is output. Everything else was input.</p>
+<p>Here is the equation, and it is worth learning by heart:</p>
+<p>Total kilograms weaned per year = number of cows exposed to the bull, multiplied by calving percentage, multiplied by calf survival rate to weaning, multiplied by average weaning weight per surviving calf.</p>
+<p>Four terms, multiplied. Not added. That is the important part, and it is where the power of the equation is, so slow down here.</p>
+<p>When numbers are multiplied, a weakness anywhere pulls down everything. A herd can have plenty of cows, a decent calving rate and good weaning weights, and still produce almost nothing if calf survival collapses. Working on your best term barely moves the result. Working on your worst term moves it a lot. That is why the first job is to find out which of your four terms is weakest, and the only way to do that is to measure all four.</p>
+<p>Work through it with real numbers. Take twenty cows. At a 40 percent calving rate - roughly the continental communal average from Module 3 - eight calves are born. Say seven survive to weaning. At an average weaning weight in the range of the sourced Tuli figure of 189.7 kilograms, call it 190, that herd produced about 1,330 kilograms of weaner for the year. From twenty cows, a bull, a full year of grazing and all the labour that went with it.</p>
+<p>Now change one term. Raise the calving rate to 70 percent, which is inside the range of the commercial figures in Module 3. Fourteen calves born, say twelve weaned, still at 190 kilograms each. That is about 2,280 kilograms. Nearly three-quarters more output, from the same twenty cows, the same land, the same bull and very nearly the same costs.</p>
+<p>That weaning weight of 190 kilograms is not a target and must not be read as one. It is a real sourced figure for one indigenous breed, used here so the arithmetic has honest numbers in it rather than invented ones. Your own average will be whatever your own calves weigh, and the whole point of the exercise is to find that out.</p>
+<p>Notice what the equation does to the way you think about a big herd. Cow numbers are only the first term of four. Adding cows to land already at its carrying capacity does not raise output, because the extra animals eat grass the existing cows needed, and every term after the first gets worse. A herd of thirty poorly performing cows can wean fewer kilograms than twenty well-managed ones, while eating more, and that is the single most common expensive mistake in African cattle-keeping.</p>
+<p>There is one more reason to think in kilograms rather than head. Buyers, in the end, are buying meat. A weaner sold by eye at a village sale and a weaner sold across a weighbridge are the same animal, but only one of those transactions rewards you for the extra twenty kilograms you worked all year to put on him. Module 10 deals with marketing properly. What matters here is that the thing you are producing is weight, and if you do not know what weight you produced, you cannot know whether anything you tried worked.</p>
+<p>The rest of this module takes the four terms one at a time. The calving season sets up everything downstream. Calf survival is the leak between birth and weaning. Weaning age and weight carry a real trade-off against the cow&#x27;s next pregnancy. And the last lesson shows you how to measure weaning weight with a tape when you do not own a scale, so that none of this has to stay theoretical.</p>
+</div>
+<div class="numbers"><div class="num"><div class="k">The core equation</div><div class="v">cows exposed x calving percentage x survival to weaning x average weaning weight</div><div class="n">The four terms are multiplied, not added, so a weakness in any one of them pulls down the whole result. Fix the weakest term, not the one you find most interesting</div></div><div class="num"><div class="k">Worked example at 40 percent calving</div><div class="v">20 cows, 8 born, 7 weaned at about 190 kg = about 1,330 kg</div><div class="n">The 190 kg comes from the sourced Tuli weaning weight of 189.7 kg, used so the arithmetic has an honest number in it. It is not a target for your herd</div></div><div class="num"><div class="k">Same herd at 70 percent calving</div><div class="v">14 born, 12 weaned = about 2,280 kg</div><div class="n">Nearly three-quarters more output from the same 20 cows, the same land, the same bull and very nearly the same cost. This is the whole commercial case for the module</div></div><div class="num"><div class="k">What a cow-calf herd sells</div><div class="v">weaned calves, measured in kilograms</div><div class="n">Not milk, which is the Dairy course, and not finished animals, which is the Steer Fattening course. If you do not know the weight you produced, you cannot know whether anything you tried worked</div></div></div>
+<div class="action"><strong>Do this today:</strong> write the four terms of the equation on one page - cows exposed, calving percentage, survival to weaning, average weaning weight - and fill in every one you can from memory or from your notebook. The ones you cannot fill in are exactly the ones you have been managing blind.</div>
+<div class="card"><h3>Recommended viewing</h3><p class="vnote"><strong>These are free videos made by other people, not by rise AFRICA skills.</strong> Each one was checked against YouTube and is on topic. The written lessons are the course. Treat these as useful extra watching.</p><div class="vgrid"><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="iwsOGuB5mG4" data-t="Rumen Development and Weaning in Dairy Calves" aria-label="Play video: Rumen Development and Weaning in Dairy Calves"><img src="https://i.ytimg.com/vi/iwsOGuB5mG4/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Rumen Development and Weaning in Dairy Calves</p><p class="va">Milk Products</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="1KFfEjkvXGI" data-t="Early Weaning Calves: Management, Nutrition and Profitability" aria-label="Play video: Early Weaning Calves: Management, Nutrition and Profitability"><img src="https://i.ytimg.com/vi/1KFfEjkvXGI/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Early Weaning Calves: Management, Nutrition and Profitability</p><p class="va">Nebraska Center for Agricultural Profitability</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="eLSGQkkgFLc" data-t="Cattle Farming in South Africa Exposed: What Actually Work" aria-label="Play video: Cattle Farming in South Africa Exposed: What Actually Work"><img src="https://i.ytimg.com/vi/eLSGQkkgFLc/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Cattle Farming in South Africa Exposed: What Actually Work</p><p class="va">Duratag SA</p></div></div></div></div>
+</article>
+<article class="lesson" id="lesson-2">
+<div class="lesson-head"><span class="lnum">Lesson 4.2</span><span class="read">~12 min</span></div>
+<h2 style="margin-top:6px">A Calving Season, Not a Calving Year</h2>
+<div class="objectives"><strong>In this lesson</strong><ul><li>Explain why year-round calving defeats group management</li><li>Match the cow&#x27;s peak feed demand to your grass supply</li><li>Identify the correct local authority for calving-season timing</li></ul></div>
+<div class="body">
+<p>In Module 3 you learned to put the bull in and take him out. This lesson is about the consequence of that, nine months later: calves arriving in a block instead of scattered through the year.</p>
+<p>A bull running with the herd all year produces calves in all twelve months. That feels harmless. It is not, and here is exactly what it costs you.</p>
+<p>You cannot manage a group that has no group. Calves of the same age can be weaned together, vaccinated together, dosed together, castrated together, and taken to market together, in one handling, on one day. Calves born across twelve months mean twelve separate small jobs, each needing you to catch and handle one animal, each with its own trip to the kraal or the dip. The labour cost per calf is far higher, and in practice what actually happens is that the jobs get skipped. The calf born in the awkward month is the calf that never got its clostridial vaccination.</p>
+<p>You also cannot sell a group. A buyer offered one calf takes it or leaves it, and sets the price. A buyer offered eight calves of similar age and type is looking at a lot worth travelling for, and you are in a different negotiation. Module 10 goes into that properly, but the batch begins here, with the bull.</p>
+<p>The cow&#x27;s side matters just as much. A cow needs a focused period after calving to regain condition before she is rebred - the body-condition argument from Module 3. Scattered calving means every cow is at a different stage at once, so you can never feed, supplement or manage the herd as a group with a shared purpose. Some cows need feed urgently while others do not, and you cannot tell which by looking across the kraal.</p>
+<p>And the biggest reason of all is grass. A cow&#x27;s feed demand is not flat across the year. It peaks when she is feeding a calf and rebuilding herself for the next pregnancy. Your grass supply is not flat either - it grows hard in the rains and disappears in the dry season. If those two curves line up, the cow gets what she needs when she needs it, from the cheapest feed there is, which is grass that grew by itself. If they do not line up, you either buy feed or you watch her lose condition, fail to rebreed, and wean a light calf.</p>
+<p>So the standard approach is to time the mating period so that calving falls in the season of best grass growth, and the cow&#x27;s peak milk demand coincides with peak forage availability. Get that right and the grass does the work you would otherwise pay for.</p>
+<p>Now the honest limit of this course. No specific recommended calving-season length or calendar timing for any named African region was obtained for this course, and none will be invented here. Your correct answer depends on when your rains actually arrive, how long they last, which grasses grow on your land, and how severe your dry season is. A month that is right in one district can be wrong two hundred kilometres away. That figure must come from your national extension service, your district livestock officer, or a well-run commercial ranch near you. Ask them plainly: in this district, which month should my cows calve, and how many weeks should the bull be with them.</p>
+<p>While you wait for that answer, there is something useful you can do on your own, because you already have the information. Write down, month by month, when your grass is at its best and when it is at its worst on your own land, from your own memory of the last few years. Then write down which months your calves were actually born in last year. Put the two lists side by side. If your calves are arriving in your worst grass months, you have found a real problem and you did not need any outside figure to find it.</p>
+<p>Two cautions before you act. First, moving a calving season takes more than one year. Cows calve where their last pregnancy put them, and you shift the herd gradually by controlling bull dates, not by one decision. Second, as Module 3 warned, a tighter season demands more of your cows and your bull. If your cows are thin and your bull untested, a short season will cut your calving percentage rather than raise it. Tighten in step with their condition, not ahead of it.</p>
+</div>
+<div class="numbers"><div class="num"><div class="k">Calving-season timing and length for African regions</div><div class="v">not available - obtain from your national extension service</div><div class="n">No recommended timing or season length for any named African region was obtained for this course. It depends on your rainfall, grasses and dry-season length, and can differ between nearby districts</div></div><div class="num"><div class="k">The principle behind timing</div><div class="v">align calving so peak milk demand meets peak forage</div><div class="n">Grass that grows by itself is the cheapest feed you will ever have. Lining the cow&#x27;s demand up with it is the difference between free feed and bought feed</div></div><div class="num"><div class="k">Cost of scattered calving</div><div class="v">twelve separate handling jobs instead of one batch</div><div class="n">Weaning, vaccination, dosing, castration and marketing all become one-animal-at-a-time tasks. In practice they get skipped, and the calf born in the awkward month is the one that misses out</div></div><div class="num"><div class="k">Speed of change</div><div class="v">more than one year to move a calving season</div><div class="n">Cows calve where their last pregnancy put them, so the shift comes gradually through bull dates. Tighten in step with cow condition and bull soundness, never ahead of them</div></div></div>
+<div class="action"><strong>Do this today:</strong> draw twelve boxes for the twelve months. Mark in each box whether your grass is good, fair or poor in that month. Then mark which months your calves were born last year. Look at the two rows together - that picture is your calving-season problem, drawn from your own land.</div>
+<div class="card"><h3>Recommended viewing</h3><p class="vnote"><strong>These are free videos made by other people, not by rise AFRICA skills.</strong> Each one was checked against YouTube and is on topic. The written lessons are the course. Treat these as useful extra watching.</p><div class="vgrid"><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="0U-ijajCalM" data-t="Tues Management Of the Cow Herd" aria-label="Play video: Tues Management Of the Cow Herd"><img src="https://i.ytimg.com/vi/0U-ijajCalM/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Tues Management Of the Cow Herd</p><p class="va">Beef Reproduction Task Force</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="EJ9Sa7CCg3w" data-t="Calf Rearing: Rumen Development" aria-label="Play video: Calf Rearing: Rumen Development"><img src="https://i.ytimg.com/vi/EJ9Sa7CCg3w/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Calf Rearing: Rumen Development</p><p class="va">Teagasc</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="QYxUNJ6qm8Y" data-t="Managing a Small Cattle Herd" aria-label="Play video: Managing a Small Cattle Herd"><img src="https://i.ytimg.com/vi/QYxUNJ6qm8Y/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Managing a Small Cattle Herd</p><p class="va">Just a Few Acres Farm</p></div></div></div></div>
+</article>
+<article class="lesson" id="lesson-3">
+<div class="lesson-head"><span class="lnum">Lesson 4.3</span><span class="read">~12 min</span></div>
+<h2 style="margin-top:6px">The Leak Between Calving and Weaning</h2>
+<div class="objectives"><strong>In this lesson</strong><ul><li>Separate pre-natal from post-natal calf loss and their causes</li><li>Read the sourced Tuli wastage figures in context</li><li>Record calving and weaning as two distinct events</li></ul></div>
+<div class="body">
+<p>A calf can be born alive and never reach weaning. It can also be conceived and never be born. Both are losses, both cost you a full year of a cow&#x27;s keep, and they have completely different causes - which is why the single most useful thing in this lesson costs nothing but a second column in your notebook.</p>
+<p>Here are the sourced figures, from the Zimbabwe Tuli data you met in Module 2. In that comparison, Tuli was the best performer of the breeds tested:</p>
+<ul><li>Pre-natal calf wastage: 6 percent, the lowest of the breeds compared</li><li>Post-natal calf wastage: 1.5 percent, also the lowest</li><li>Overall mortality across all ages: 7 percent, against Afrikaner 8 percent and Tswana 12 percent</li></ul>
+<p>Read that properly. Even the best breed in that comparison lost calves both before and after birth. This is not a problem that exists only in badly run herds. It is a permanent feature of cattle production, and the question is not whether you lose calves but how many, and where.</p>
+<p>Where matters enormously, because the two kinds of loss point at different problems and different spending.</p>
+<p>Loss before birth - a cow that was pregnant and does not produce a live calf - points toward cow nutrition, disease, and bull fertility. A cow in poor condition through the dry season can lose a pregnancy. Several infectious diseases cause abortion, and if abortions are happening in more than one cow you need a veterinarian rather than a theory, because some of those diseases also infect people. Bull problems can show as apparent conception that does not hold.</p>
+<p>Loss after birth - a live calf that dies before weaning - points toward calving difficulty, mothering ability, milk supply, predation, and calf-specific disease and parasite exposure. A heifer having her first calf may struggle to deliver it. A cow may not have enough milk, or may not accept her calf. Predators take newborn calves. And young calves are vulnerable to disease and parasites in ways adult cattle are not, which is where the health calendar comes in - a South African example of a vaccination programme starts calves at around three months of age, when the immunity they got from their mother&#x27;s first milk has waned, but the vaccines and timing that apply to you are set by your national veterinary authority and your local disease picture, so ask them rather than copying another country&#x27;s list.</p>
+<p>Now the practical point that follows from all of this. If your only record is calves weaned against cows served, you cannot tell these two losses apart. You will see a low number, and you will guess. You may spend money on tick control when your problem was a cow-condition problem in the dry season, or on supplementary feed when your problem was predation at calving.</p>
+<p>So record calving and weaning as two separate events. Three columns per cow per year, no more: served, calved, weaned. The gap between the first and the second is your pre-natal loss. The gap between the second and the third is your post-natal loss. That is the whole system, and it fits on one page of a school exercise book.</p>
+<p>When you have that, you can go one step further and record why, in a word or two, for each loss. Born dead. Died at two weeks. Taken by a predator. Dam had no milk. After two seasons, the pattern in that column tells you where your money should go, and it will be better evidence than anything anyone can tell you about herds in general, because it is about your herd on your land.</p>
+<p>One caution about breed comparison. It is tempting to look at the Tuli figures and conclude that buying Tuli cattle solves calf losses. Those figures come from one comparison, in one country, in particular herds and years. They tell you that an adapted indigenous breed had low wastage under those conditions. They do not tell you what your own losses would be, and they cannot, because most of what determines calf survival on your farm is management and environment rather than breed alone. Use the figures as evidence that low wastage is achievable, and use your own records to find out what is actually happening to your calves.</p>
+</div>
+<div class="numbers"><div class="num"><div class="k">Tuli pre-natal wastage</div><div class="v">6 percent</div><div class="n">The lowest of the breeds compared in that Zimbabwe dataset. Loss before birth points toward cow nutrition, disease and bull fertility rather than calf care</div></div><div class="num"><div class="k">Tuli post-natal wastage</div><div class="v">1.5 percent</div><div class="n">Also the lowest of the compared breeds. Loss after birth points toward calving difficulty, mothering ability, milk supply, predation and calf disease</div></div><div class="num"><div class="k">Overall mortality, all ages</div><div class="v">Tuli 7 percent, Afrikaner 8 percent, Tswana 12 percent</div><div class="n">One comparison, one country, particular herds and years. Evidence that low wastage is achievable in an adapted breed, not a prediction of your own losses</div></div><div class="num"><div class="k">The record that separates them</div><div class="v">three columns - served, calved, weaned</div><div class="n">The gap between served and calved is pre-natal loss; between calved and weaned is post-natal loss. Without the split you will guess, and may spend money fixing the wrong problem</div></div></div>
+<div class="action"><strong>Do this today:</strong> rule three columns in your notebook headed served, calved, weaned, and put one row for every cow you own. Fill in what you know from last season, even if there are gaps. Those gaps are the measurement you have been missing.</div>
+<div class="card"><h3>Recommended viewing</h3><p class="vnote"><strong>These are free videos made by other people, not by rise AFRICA skills.</strong> Each one was checked against YouTube and is on topic. The written lessons are the course. Treat these as useful extra watching.</p><div class="vgrid"><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="EJ9Sa7CCg3w" data-t="Calf Rearing: Rumen Development" aria-label="Play video: Calf Rearing: Rumen Development"><img src="https://i.ytimg.com/vi/EJ9Sa7CCg3w/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Calf Rearing: Rumen Development</p><p class="va">Teagasc</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="mD_edEna56s" data-t="Developing the rumen for optimum calf health" aria-label="Play video: Developing the rumen for optimum calf health"><img src="https://i.ytimg.com/vi/mD_edEna56s/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Developing the rumen for optimum calf health</p><p class="va">AHDB Dairy</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="QYxUNJ6qm8Y" data-t="Managing a Small Cattle Herd" aria-label="Play video: Managing a Small Cattle Herd"><img src="https://i.ytimg.com/vi/QYxUNJ6qm8Y/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Managing a Small Cattle Herd</p><p class="va">Just a Few Acres Farm</p></div></div></div></div>
+</article>
+<article class="lesson" id="lesson-4">
+<div class="lesson-head"><span class="lnum">Lesson 4.4</span><span class="read">~12 min</span></div>
+<h2 style="margin-top:6px">Weaning Age and the Trade-off You Cannot Escape</h2>
+<div class="objectives"><strong>In this lesson</strong><ul><li>Read the sourced early-weaning trial in full</li><li>Explain why a heavier weaner can still cost you a calf</li><li>Judge when early weaning is the right emergency tool</li></ul></div>
+<div class="body">
+<p>Leave the calf on the cow longer and it weans heavier. Take the calf off earlier and the cow rebreeds sooner. You cannot have both, and this lesson gives you the clearest measured version of that trade-off in the whole course.</p>
+<p>The trial was done in South Africa on Bonsmara cattle, with 152 cow-calf pairs, comparing early weaning at 90 days against conventional weaning at 205 days. Here is what it found:</p>
+<ul><li>Weaning weight, adjusted to 205 days: early 210.4 kg, conventional 237.1 kg</li><li>Average daily gain to 205 days: early 889 grams a day, conventional 992 grams</li><li>Dam weight at calving: early 380.2 kg, conventional 481.2 kg</li><li>Pregnancy rate at rebreeding: early 94 percent (71 of 76 dams), conventional 84 percent (64 of 76)</li><li>Calving interval: early 347.6 days, conventional 419.3 days</li><li>Weaner output per hectare: early 91 kg, conventional 115 kg</li></ul>
+<p>Work through what those rows are telling you, because the answer is not the one most people expect.</p>
+<p>Weaning early cost each calf about 27 kilograms of weaning weight and about 103 grams a day of growth. That is a real loss on the animal you are selling, and it is exactly what you would expect - a calf taken off milk early has to grow on forage sooner.</p>
+<p>But look at what it bought the cow. Her pregnancy rate rose from 84 to 94 percent, and her calving interval fell by roughly 72 days, from 419 down to 348. That is nearly two and a half months. A 419-day interval means a cow slipping about six weeks later every year until she eventually misses a season. A 348-day interval means she is comfortably back inside a twelve-month cycle. The reason is the mechanism from Module 3: a dam no longer nursing a calf stops competing with her own next pregnancy for the same body reserves, regains condition, and returns to oestrus sooner.</p>
+<p>So far this looks like a clear argument for early weaning. Now read the last row, which is the one that matters commercially, and the reason this lesson is not a recommendation.</p>
+<p>Per hectare of land, conventional weaning still produced more total weaner - 115 kilograms per hectare against 91. In this trial, the rebreeding benefit of early weaning did not outweigh its weaning-weight cost once both were expressed per unit of land. The calves were worth more than the improvement in the cows.</p>
+<p>That is an uncomfortable, honest result, and it is why this course will not tell you to wean at any particular age. This is one trial, on one breed, on one set of pastures, in one country. It proves the trade-off exists and shows its direction and rough size. It does not prove what the right weaning age is on your farm, and anyone who tells you it does is over-reading it.</p>
+<p>But there is one situation where the arithmetic changes completely, and you should know it before you need it. Early weaning is a recognised drought-management tool. In a genuine dry-season feed crisis, the choice is not between a 210 kg calf and a 237 kg calf on good pasture. It is between a cow that keeps nursing and goes into the next season thin, empty and possibly dying, and a cow relieved of her calf who survives in condition to breed again. A nursing cow is carrying a load she may not be able to afford.</p>
+<p>In that situation the weaning-weight cost is worth paying, because you are no longer optimising - you are preventing a collapse. The trial&#x27;s baseline pasture conditions are simply not the situation you are in.</p>
+<p>Two practical cautions. First, an early-weaned calf still has to eat, and a 90-day calf coming off milk needs better feed than the veld usually offers in the season you are likely to be doing this. What that feed should actually be is a ration question, and ration formulation belongs to the separate Cattle and Steer Feed Formulation course. This course will point you there rather than half-teach it. Second, notice the dam weights in the trial: 380 kg against 481 kg at calving. Those groups of cows were in very different condition, which is part of the result rather than a side note, and it is a reminder that weaning decisions and cow condition are the same conversation.</p>
+<p>The rule to carry away: know the trade-off, watch your cows&#x27; condition and your grass, and treat early weaning as a tool you reach for deliberately, not a default setting.</p>
+</div>
+<div class="numbers"><div class="num"><div class="k">Weaning weight, 90 days against 205 days</div><div class="v">210.4 kg early against 237.1 kg conventional</div><div class="n">Adjusted to 205 days, in a South African Bonsmara trial of 152 cow-calf pairs. Early weaning cost about 27 kg per calf and about 103 g a day of growth</div></div><div class="num"><div class="k">Dam rebreeding</div><div class="v">94 percent pregnant early against 84 percent conventional</div><div class="n">71 of 76 dams against 64 of 76. A dam no longer nursing stops competing with her own next pregnancy for the same body reserves</div></div><div class="num"><div class="k">Calving interval</div><div class="v">347.6 days early against 419.3 days conventional</div><div class="n">Roughly 72 days shorter. A 419-day interval means slipping about six weeks a year until a season is missed; 348 days sits comfortably inside a twelve-month cycle</div></div><div class="num"><div class="k">Weaner output per hectare</div><div class="v">91 kg early against 115 kg conventional</div><div class="n">Per unit of land, conventional weaning still won in this trial. One trial, one breed, one set of pastures - evidence of the trade-off, not a recommended weaning age</div></div></div>
+<div class="action"><strong>Do this today:</strong> write down the age in months at which your calves actually stopped suckling last year - not when you planned to wean them, but when they really came off. If you do not know, that is your answer, and finding it out is the first step to managing it.</div>
+<div class="card"><h3>Recommended viewing</h3><p class="vnote"><strong>These are free videos made by other people, not by rise AFRICA skills.</strong> Each one was checked against YouTube and is on topic. The written lessons are the course. Treat these as useful extra watching.</p><div class="vgrid"><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="1KFfEjkvXGI" data-t="Early Weaning Calves: Management, Nutrition and Profitability" aria-label="Play video: Early Weaning Calves: Management, Nutrition and Profitability"><img src="https://i.ytimg.com/vi/1KFfEjkvXGI/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Early Weaning Calves: Management, Nutrition and Profitability</p><p class="va">Nebraska Center for Agricultural Profitability</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="iwsOGuB5mG4" data-t="Rumen Development and Weaning in Dairy Calves" aria-label="Play video: Rumen Development and Weaning in Dairy Calves"><img src="https://i.ytimg.com/vi/iwsOGuB5mG4/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Rumen Development and Weaning in Dairy Calves</p><p class="va">Milk Products</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="0U-ijajCalM" data-t="Tues Management Of the Cow Herd" aria-label="Play video: Tues Management Of the Cow Herd"><img src="https://i.ytimg.com/vi/0U-ijajCalM/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Tues Management Of the Cow Herd</p><p class="va">Beef Reproduction Task Force</p></div></div></div></div>
+</article>
+<article class="lesson" id="lesson-5">
+<div class="lesson-head"><span class="lnum">Lesson 4.5</span><span class="read">~12 min</span></div>
+<h2 style="margin-top:6px">Weighing a Calf Without a Scale</h2>
+<div class="objectives"><strong>In this lesson</strong><ul><li>Take a heart-girth measurement correctly</li><li>Apply the sourced girth formula and state its limits</li><li>Use estimated weights for dosing and for sale negotiation</li></ul></div>
+<div class="body">
+<p>Almost everything in this module depends on knowing what your calves weigh, and almost nobody reading it owns a livestock scale. This lesson fixes that with a tape measure.</p>
+<p>The method is called heart-girth measurement. You run a flexible tape all the way around the animal&#x27;s body just behind the front legs, over the deepest part of the chest, and read the circumference in centimetres. That measurement relates closely to body weight, because a bigger-bodied animal is a heavier animal, and a formula or a conversion chart turns the reading into an estimated weight.</p>
+<p>Doing it properly matters more than the formula does. Have the animal standing square on level ground, not on a slope and not with legs splayed. Take the tape snug against the coat but not tight enough to squeeze. Read it at the same point on the animal every time. Measure at a consistent time in relation to feeding and drinking, because a full animal measures differently from an empty one. And do it in a crush or with the animal properly restrained - Module 8 covers handling safety, and a person crouching beside a loose animal with a tape is exactly the situation that gets people hurt.</p>
+<p>Here is the sourced formula. A Kenyan study of crossbred dairy cattle on smallholder farms produced this relationship:</p>
+<p>Liveweight in kilograms = 4.277 multiplied by heart girth in centimetres, minus 393.13.</p>
+<p>Its adjusted R squared was 0.705, and its prediction error was about 26 kilograms, roughly 11 percent of mean liveweight. It was valid for animals in the 100 to 450 kilogram range, regardless of age or breed group within that dataset.</p>
+<p>Now read the caveats, because they are large and they matter. That study was done on crossbred dairy cattle, not beef cattle. The coefficients in a girth formula are specific to the herd and breed it was built from, so they should not be assumed to transfer with the same accuracy to an indigenous beef breed of a different frame size without local validation. A separate line of research develops girth-based weight algorithms specifically for African smallholder cattle, but that paper&#x27;s formula and accuracy figures were not obtained for this course. If you want a beef-specific, locally validated formula, it must come from that literature or from your national livestock research institute - it is not in here.</p>
+<p>So what should you actually do? Use the practical teaching point, which holds regardless of which exact formula you use: a flexible tape around the heart girth, read against a conversion chart or formula, gives an estimate typically within about 10 percent of true liveweight. That is good enough for three real jobs.</p>
+<p>First, tracking a calf&#x27;s growth over time. Here accuracy hardly matters, because you are comparing the same animal measured the same way month after month. If the girth is not increasing, that calf is not growing, and you know it months before it becomes visible as a light weaner. This is the single most valuable use of a tape and it costs nothing.</p>
+<p>Second, dosing. Dewormers and acaricides are given by body weight, and the two ways farmers get this wrong are both expensive. Underdosing wastes the product, fails to control the parasite, and contributes to the drug resistance that is a documented and growing problem in African parasite populations. Overdosing wastes money and can harm the animal. A tape estimate puts you in the right dose band instead of guessing by eye, and Module 7 deals with the resistance problem in full.</p>
+<p>Third, negotiation. If you know your weaner is around 180 kilograms rather than having no idea, you are arguing from a figure. But be clear about the limit here. A tape estimate is not a substitute for a weighbridge at the point of sale, where real money depends on a true weight. Use the tape to know what you have and to judge whether an offer is fair. Use a proper scale wherever the sale is actually settled on weight, and Module 10 explains why weight-based selling matters so much.</p>
+<p>One last habit that turns this from a trick into a system. Write every measurement down against the animal&#x27;s number and the date. A single girth reading is nearly useless. The same calf measured every month is a growth curve, and a growth curve tells you whether your grazing, your health programme and your weaning decisions are working - which is the whole reason for measuring anything.</p>
+</div>
+<div class="numbers"><div class="num"><div class="k">Sourced girth formula</div><div class="v">liveweight kg = 4.277 x heart girth cm - 393.13</div><div class="n">From a Kenyan study of crossbred dairy cattle on smallholder farms. Adjusted R squared 0.705, valid for animals of 100-450 kg in that dataset</div></div><div class="num"><div class="k">Prediction error</div><div class="v">about 26 kg, roughly 11 percent of mean liveweight</div><div class="n">Good enough to track growth and choose a dose band, not good enough to settle a sale. The coefficients are herd and breed specific</div></div><div class="num"><div class="k">Beef-specific African formula</div><div class="v">not available - obtain from the smallholder-cattle algorithm literature or your research institute</div><div class="n">A separate line of research develops girth-based algorithms specifically for African smallholder cattle, but its formula and accuracy figures were not obtained for this course</div></div><div class="num"><div class="k">General accuracy of a girth tape</div><div class="v">typically within about 10 percent of true liveweight</div><div class="n">Enough for tracking growth over time, for correct dosing, and for arguing from a figure at a sale. It is not a substitute for a weighbridge where real money depends on true weight</div></div></div>
+<div class="action"><strong>Do this today:</strong> get a flexible tape, restrain one calf safely, and measure right around the body just behind the front legs. Write the number, the calf&#x27;s identity and today&#x27;s date in your notebook. Do the same calf again in one month, and you will have started a growth record.</div>
+<div class="card"><h3>Recommended viewing</h3><p class="vnote"><strong>These are free videos made by other people, not by rise AFRICA skills.</strong> Each one was checked against YouTube and is on topic. The written lessons are the course. Treat these as useful extra watching.</p><div class="vgrid"><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="QYxUNJ6qm8Y" data-t="Managing a Small Cattle Herd" aria-label="Play video: Managing a Small Cattle Herd"><img src="https://i.ytimg.com/vi/QYxUNJ6qm8Y/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Managing a Small Cattle Herd</p><p class="va">Just a Few Acres Farm</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="iwsOGuB5mG4" data-t="Rumen Development and Weaning in Dairy Calves" aria-label="Play video: Rumen Development and Weaning in Dairy Calves"><img src="https://i.ytimg.com/vi/iwsOGuB5mG4/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Rumen Development and Weaning in Dairy Calves</p><p class="va">Milk Products</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="QH10DNDwQgQ" data-t="Feeding Weaned Calves the Right Way (12–14% Protein, Intake, Daily Gain)" aria-label="Play video: Feeding Weaned Calves the Right Way (12–14% Protein, Intake, Daily Gain)"><img src="https://i.ytimg.com/vi/QH10DNDwQgQ/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Feeding Weaned Calves the Right Way (12–14% Protein, Intake, Daily Gain)</p><p class="va">Pride Ranch</p></div></div></div></div>
+</article>
+<article class="lesson" id="lesson-6">
+<div class="lesson-head"><span class="lnum">Lesson 4.6</span><span class="read">~12 min</span></div>
+<h2 style="margin-top:6px">Reading Your Own Calf Crop</h2>
+<div class="objectives"><strong>In this lesson</strong><ul><li>Combine your four terms into a single kilograms-weaned figure</li><li>Test which term would add most output on your farm</li><li>Set one measurable target for next season</li></ul></div>
+<div class="body">
+<p>You now have all four terms of the equation and a way to measure the last one. This lesson puts them together into a single number for your own herd, and shows you how to decide where to spend your effort next season.</p>
+<p>Start by writing the four terms for last year:</p>
+<ol><li>Cows and heifers exposed to a bull</li><li>Calving percentage - calves born divided by that number</li><li>Survival to weaning - calves weaned divided by calves born</li><li>Average weaning weight, weighed or tape-estimated</li></ol>
+<p>Multiply all four. What comes out is your total kilograms of weaner for the year. Most cattle owners have never seen this figure for their own herd, and seeing it once changes how you think about everything else.</p>
+<p>Now do something more useful than admiring it. Recalculate it three times, changing one term at a time, and see which change adds the most kilograms.</p>
+<p>Say you had 20 cows, a 45 percent calving rate, 90 percent survival, and 170 kg average weaning weight. That is 20 times 0.45 times 0.90 times 170, which comes to about 1,377 kilograms.</p>
+<p>Now test three improvements:</p>
+<ul><li>Calving up ten points to 55 percent: 20 times 0.55 times 0.90 times 170 is about 1,683 kg. That is about 306 kg more.</li><li>Survival up ten points to 100 percent, which is the best possible: 20 times 0.45 times 1.00 times 170 is about 1,530 kg. About 153 kg more.</li><li>Weaning weight up 20 kg to 190: 20 times 0.45 times 0.90 times 190 is about 1,539 kg. About 162 kg more.</li></ul>
+<p>On that farm, calving percentage is worth roughly twice as much as either of the other two. That is not a universal result - it comes out that way because the calving rate is the weakest term in that example. Run it with your own numbers and you may get a different answer, and that answer is the whole point. It tells you where your next season&#x27;s effort belongs.</p>
+<p>This is why the multiplication in Lesson 1 matters. Attacking your strongest term feels productive and changes very little. Attacking your weakest term is usually uncomfortable, because it is weak for a reason, and it is where the kilograms are.</p>
+<p>A word on the fourth term specifically. Weaning weight is the term most farmers instinctively reach for, because it is visible - a big calf looks like success. But look at what actually drives it. It is driven by the dam&#x27;s milk, which is driven by her condition and by grass. It is driven by the calf&#x27;s own grazing after a few weeks of age, which is grass again. And it is driven by the calf being free of the parasites and diseases that pull growth down. Very little of it is driven by anything you can buy quickly. That is why this course spends more of its effort on the first three terms, where the levers are faster and cheaper.</p>
+<p>Now set a target. A useful target has three parts: a number, a date, and a measurement you will actually take. Not &quot;improve the calf crop&quot; but &quot;raise calving percentage from 45 to 55 percent by next weaning, measured from my served-calved-weaned columns&quot;. Write it on the front page of your notebook where you will see it.</p>
+<p>Then pick the one action that serves it, from what you already know. If calving percentage is your weak term, it is the bull ratio, the bull&#x27;s soundness, a defined breeding season and pregnancy testing from Module 3. If survival is your weak term, it is the split record from Lesson 3, and then whatever that record shows you - calving supervision, a health calendar with your veterinary authority, or predator control. If weaning weight is your weak term, it is cow condition and grass, which means dry-season feed planning.</p>
+<p>Finally, be realistic about how fast any of this moves. A change you make to bull management this season shows up as calves nine months later and as weaner kilograms nine months after that. You will not know whether this year&#x27;s decision worked until well into next year. That is exactly why the records matter, and why guessing from memory does not work - by the time the result arrives, nobody remembers accurately what was done.</p>
+<p>One calf crop measured properly is worth more to you than ten years of impressions. Start this season.</p>
+</div>
+<div class="numbers"><div class="num"><div class="k">Worked baseline</div><div class="v">20 cows x 45 percent x 90 percent survival x 170 kg = about 1,377 kg</div><div class="n">A teaching example using placeholder figures, not a benchmark. The exercise only means anything when you substitute your own four measured terms</div></div><div class="num"><div class="k">Ten points more calving</div><div class="v">about 1,683 kg, a gain of roughly 306 kg</div><div class="n">In this example the calving term is the weakest, so improving it pays most. Run your own numbers - your weakest term may be a different one</div></div><div class="num"><div class="k">Twenty kilograms more weaning weight</div><div class="v">about 1,539 kg, a gain of roughly 162 kg</div><div class="n">Roughly half the gain of the calving improvement in this example. Weaning weight is the term farmers reach for first because a big calf is visible, not because it pays best</div></div><div class="num"><div class="k">How long before you know</div><div class="v">a bull decision shows as calves in 9 months and as weaner kilograms about 9 months after that</div><div class="n">You cannot judge this season&#x27;s decision until well into next year, which is exactly why written records beat memory</div></div></div>
+<div class="action"><strong>Do this today:</strong> multiply your four terms together and write the answer down - that is your herd&#x27;s total kilograms of weaner for last year. Then write one target for next season with a number, a date and the measurement you will take to check it.</div>
+<div class="card"><h3>Recommended viewing</h3><p class="vnote"><strong>These are free videos made by other people, not by rise AFRICA skills.</strong> Each one was checked against YouTube and is on topic. The written lessons are the course. Treat these as useful extra watching.</p><div class="vgrid"><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="iwsOGuB5mG4" data-t="Rumen Development and Weaning in Dairy Calves" aria-label="Play video: Rumen Development and Weaning in Dairy Calves"><img src="https://i.ytimg.com/vi/iwsOGuB5mG4/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Rumen Development and Weaning in Dairy Calves</p><p class="va">Milk Products</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="1KFfEjkvXGI" data-t="Early Weaning Calves: Management, Nutrition and Profitability" aria-label="Play video: Early Weaning Calves: Management, Nutrition and Profitability"><img src="https://i.ytimg.com/vi/1KFfEjkvXGI/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Early Weaning Calves: Management, Nutrition and Profitability</p><p class="va">Nebraska Center for Agricultural Profitability</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="eLSGQkkgFLc" data-t="Cattle Farming in South Africa Exposed: What Actually Work" aria-label="Play video: Cattle Farming in South Africa Exposed: What Actually Work"><img src="https://i.ytimg.com/vi/eLSGQkkgFLc/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Cattle Farming in South Africa Exposed: What Actually Work</p><p class="va">Duratag SA</p></div></div></div></div>
+</article>
+<div class="card quiz"><h3>Knowledge check</h3><p class="note">Questions from all lessons. Click an answer to see whether it is right and why.</p>
+<div class="q"><p><strong>1. What are the four terms of the kilograms-weaned equation?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Herd size, breed, rainfall and price</button></li><li><button class="opt" data-correct="1">Cows exposed, calving percentage, survival to weaning, and average weaning weight</button></li><li><button class="opt" data-correct="0">Births, deaths, sales and purchases</button></li><li><button class="opt" data-correct="0">Cows, bulls, calves and heifers</button></li></ul><div class="why">They are multiplied together, which is why a weakness in any single one drags down the total output of the whole herd for the year.</div></div>
+<div class="q"><p><strong>2. Why does it matter that the four terms are multiplied rather than added?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">It makes the arithmetic harder</button></li><li><button class="opt" data-correct="0">It means only the first term matters</button></li><li><button class="opt" data-correct="1">It means a weakness anywhere pulls the whole result down, so the weakest term is where effort pays</button></li><li><button class="opt" data-correct="0">It means all four are equally important always</button></li></ul><div class="why">A herd with plenty of cows and good weaning weights can still produce almost nothing if calf survival collapses. Improving your strongest term barely moves the answer.</div></div>
+<div class="q"><p><strong>3. How should the 190 kg weaning weight in the worked example be read?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">As a target every farmer should hit</button></li><li><button class="opt" data-correct="0">As the average for all African cattle</button></li><li><button class="opt" data-correct="0">As a minimum acceptable weight</button></li><li><button class="opt" data-correct="1">As a real sourced Tuli figure used so the arithmetic has honest numbers, not as a target</button></li></ul><div class="why">The sourced Tuli weaning weight is 189.7 kg. It is used to keep the example truthful. Your own average is whatever your own calves weigh, and finding that out is the point.</div></div>
+<div class="q"><p><strong>4. Why can thirty poorly managed cows wean fewer kilograms than twenty well-managed ones?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">Because cow numbers are only the first of four multiplied terms, and adding animals to land at its carrying capacity worsens every term after it</button></li><li><button class="opt" data-correct="0">Because large herds are always badly managed</button></li><li><button class="opt" data-correct="0">Because buyers prefer small herds</button></li><li><button class="opt" data-correct="0">Because bulls cannot serve thirty cows</button></li></ul><div class="why">The extra animals eat grass the existing cows needed, so calving percentage, survival and weaning weight all fall while costs rise. It is the most common expensive mistake in African cattle-keeping.</div></div>
+<div class="q"><p><strong>5. Which course covers finishing a weaned animal to slaughter weight?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">This one</button></li><li><button class="opt" data-correct="1">The separate Steer Fattening course</button></li><li><button class="opt" data-correct="0">The Dairy Production course</button></li><li><button class="opt" data-correct="0">No course covers it</button></li></ul><div class="why">This course stops at weaning and at the marketing of the weaner or the culled cow. Ration formulation belongs to the Cattle and Steer Feed Formulation course, and milking to Dairy Production.</div></div>
+<div class="q"><p><strong>6. What is the main feeding reason to control when your cows calve?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Calves born in the dry season are a different colour</button></li><li><button class="opt" data-correct="1">So the cow&#x27;s peak feed demand while milking lines up with your peak grass growth</button></li><li><button class="opt" data-correct="0">So all calves are born at night</button></li><li><button class="opt" data-correct="0">To reduce the number of bulls needed</button></li></ul><div class="why">Grass that grows by itself is the cheapest feed there is. When the two curves line up, the veld does work you would otherwise have to buy feed to do.</div></div>
+<div class="q"><p><strong>7. What happens in practice to management jobs in a year-round calving herd?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">They cost the same as in a batch herd</button></li><li><button class="opt" data-correct="0">They are done more carefully because each animal gets attention</button></li><li><button class="opt" data-correct="1">They get skipped, because each becomes a separate one-animal task</button></li><li><button class="opt" data-correct="0">They are done by the buyer</button></li></ul><div class="why">Weaning, vaccination, dosing, castration and marketing all become twelve small jobs instead of one. The calf born in the awkward month is the one that misses its vaccination.</div></div>
+<div class="q"><p><strong>8. What calving month does this course recommend for your district?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">None - no timing or season length for any named African region was obtained, and it must come from your extension service or district livestock officer</button></li><li><button class="opt" data-correct="0">The first month of the rains, everywhere</button></li><li><button class="opt" data-correct="0">Mid dry season</button></li><li><button class="opt" data-correct="0">Whichever month is coolest</button></li></ul><div class="why">The right month depends on when your rains arrive, which grasses grow on your land and how hard your dry season is. It can differ between districts two hundred kilometres apart.</div></div>
+<div class="q"><p><strong>9. What can you work out about your own calving season without any outside figure?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">The exact optimum mating date</button></li><li><button class="opt" data-correct="0">Nothing useful</button></li><li><button class="opt" data-correct="0">Your herd&#x27;s genetic potential</button></li><li><button class="opt" data-correct="1">Whether your calves are currently arriving in your worst grass months, by listing grass quality by month against birth months</button></li></ul><div class="why">You already hold both pieces of information. Putting them side by side finds a real, actionable problem using only your own memory of your own land.</div></div>
+<div class="q"><p><strong>10. Why does moving a calving season take more than one year?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">Because cows calve where their last pregnancy put them, so the herd shifts gradually through controlled bull dates</button></li><li><button class="opt" data-correct="0">Because bulls need retraining</button></li><li><button class="opt" data-correct="0">Because extension approval takes a season</button></li><li><button class="opt" data-correct="0">Because calves must be sold first</button></li></ul><div class="why">You control the next mating, not the last one. Shifting gradually also protects you from tightening a season faster than your cows&#x27; condition and your bull&#x27;s soundness can support.</div></div>
+<div class="q"><p><strong>11. What was the sourced Tuli pre-natal calf wastage figure?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">1.5 percent</button></li><li><button class="opt" data-correct="1">6 percent</button></li><li><button class="opt" data-correct="0">12 percent</button></li><li><button class="opt" data-correct="0">7 percent</button></li></ul><div class="why">Post-natal wastage was 1.5 percent and overall mortality across all ages was 7 percent, against Afrikaner 8 and Tswana 12. Both wastage figures were the lowest of the breeds compared.</div></div>
+<div class="q"><p><strong>12. Loss of a calf before birth points mainly toward which causes?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Predation and mothering ability</button></li><li><button class="opt" data-correct="1">Cow nutrition, disease and bull fertility</button></li><li><button class="opt" data-correct="0">Weaning age</button></li><li><button class="opt" data-correct="0">Tick burden on the calf</button></li></ul><div class="why">A cow in poor condition can lose a pregnancy, several infectious diseases cause abortion, and bull problems can show as conception that does not hold. Predation and mothering belong to post-natal loss.</div></div>
+<div class="q"><p><strong>13. Why must calving and weaning be recorded as two separate events?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Because the government requires it</button></li><li><button class="opt" data-correct="0">Because buyers ask for both</button></li><li><button class="opt" data-correct="1">Because a single figure cannot tell pre-natal from post-natal loss, and the two need completely different spending to fix</button></li><li><button class="opt" data-correct="0">Because it makes the calving percentage look better</button></li></ul><div class="why">Without the split you may buy tick control when the problem was cow condition in the dry season, or feed when the problem was predation at calving.</div></div>
+<div class="q"><p><strong>14. Several cows in your herd abort in one season. What is the correct response?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Wait a year and see</button></li><li><button class="opt" data-correct="0">Assume it was the weather</button></li><li><button class="opt" data-correct="0">Cull all of them immediately</button></li><li><button class="opt" data-correct="1">Get a veterinarian, because some abortion-causing diseases also infect people</button></li></ul><div class="why">Multiple abortions is a herd-level signal, not individual bad luck, and this is one of the places where the animal health question is also a human health question.</div></div>
+<div class="q"><p><strong>15. Should you buy Tuli cattle to solve calf losses?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">Not on that evidence alone - those figures come from particular herds and years, and most of what determines survival on your farm is management and environment</button></li><li><button class="opt" data-correct="0">Yes, the figures prove it</button></li><li><button class="opt" data-correct="0">Yes, if you can afford them</button></li><li><button class="opt" data-correct="0">No, breed never matters</button></li></ul><div class="why">The figures show low wastage is achievable in an adapted breed under those conditions. Your own three-column record tells you what is actually happening to your calves.</div></div>
+<div class="q"><p><strong>16. In the sourced trial, what did early weaning at 90 days cost per calf?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">About 72 kg of weaning weight</button></li><li><button class="opt" data-correct="1">About 27 kg of weaning weight and about 103 g a day of growth</button></li><li><button class="opt" data-correct="0">Nothing measurable</button></li><li><button class="opt" data-correct="0">About 10 percent of pregnancy rate</button></li></ul><div class="why">Weaning weights adjusted to 205 days were 210.4 kg early against 237.1 kg conventional. A calf taken off milk early has to grow on forage sooner.</div></div>
+<div class="q"><p><strong>17. What did early weaning buy the dams?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">A calving interval of 419 days</button></li><li><button class="opt" data-correct="0">Heavier calves</button></li><li><button class="opt" data-correct="1">Pregnancy rate up from 84 to 94 percent and calving interval down from 419 to 348 days</button></li><li><button class="opt" data-correct="0">A higher weight at calving</button></li></ul><div class="why">Roughly 72 days shorter interval and ten percentage points more dams in calf, because a dam no longer nursing regains condition and returns to oestrus sooner.</div></div>
+<div class="q"><p><strong>18. Why is this trial not a recommendation to wean early?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Because the trial was too small</button></li><li><button class="opt" data-correct="0">Because early weaning is illegal in some countries</button></li><li><button class="opt" data-correct="0">Because Bonsmara are unusual cattle</button></li><li><button class="opt" data-correct="1">Because per hectare, conventional weaning still produced more weaner - 115 kg against 91 kg - and it is one trial on one breed and one set of pastures</button></li></ul><div class="why">The rebreeding benefit did not outweigh the weaning-weight cost per unit of land in this dataset. The trial proves the trade-off exists and shows its direction, not the right age for your farm.</div></div>
+<div class="q"><p><strong>19. When does the arithmetic of early weaning change completely?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">In a genuine dry-season feed crisis, where the real choice is a thin, empty, possibly dying cow against a cow relieved of her calf</button></li><li><button class="opt" data-correct="0">When calf prices are high</button></li><li><button class="opt" data-correct="0">When the bull is young</button></li><li><button class="opt" data-correct="0">When the herd is large</button></li></ul><div class="why">Early weaning is a recognised drought-management tool. In that situation you are preventing a collapse rather than optimising, so the weaning-weight cost is worth paying.</div></div>
+<div class="q"><p><strong>20. Where does this course send you for the feed an early-weaned calf needs?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Nowhere - feed the calf grass</button></li><li><button class="opt" data-correct="0">The Dairy Production course</button></li><li><button class="opt" data-correct="1">The separate Cattle and Steer Feed Formulation course, because ration formulation is its subject</button></li><li><button class="opt" data-correct="0">The marketing module</button></li></ul><div class="why">A 90-day calf off milk needs better feed than the veld usually offers in that season. Building an actual balanced ration is a different course, and this one will not half-teach it.</div></div>
+<div class="q"><p><strong>21. Where do you place the tape for a heart-girth measurement?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Around the belly at its widest point</button></li><li><button class="opt" data-correct="0">Around the neck</button></li><li><button class="opt" data-correct="1">All the way around the body just behind the front legs, over the deepest part of the chest</button></li><li><button class="opt" data-correct="0">From nose to tail along the back</button></li></ul><div class="why">Take it snug against the coat but not tight, with the animal standing square on level ground, and read it at the same point every time so your readings are comparable.</div></div>
+<div class="q"><p><strong>22. What is the sourced Kenyan girth formula?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">Liveweight = 4.277 x heart girth - 393.13</button></li><li><button class="opt" data-correct="0">Liveweight = heart girth divided by 2</button></li><li><button class="opt" data-correct="0">Liveweight = 3 x heart girth</button></li><li><button class="opt" data-correct="0">Liveweight = heart girth x body length</button></li></ul><div class="why">Its adjusted R squared was 0.705 and its prediction error about 26 kg, roughly 11 percent of mean liveweight, valid for animals of 100 to 450 kg in that dataset.</div></div>
+<div class="q"><p><strong>23. Why must that formula be used cautiously on an indigenous beef breed?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Because indigenous cattle cannot be measured</button></li><li><button class="opt" data-correct="1">Because it was built on crossbred dairy cattle, and girth formula coefficients are specific to the herd and breed they came from</button></li><li><button class="opt" data-correct="0">Because tapes stretch</button></li><li><button class="opt" data-correct="0">Because beef cattle have no heart girth</button></li></ul><div class="why">A beef-specific, African-validated formula was not obtained for this course. Use the general principle and get a locally validated formula from your national research institute if you need one.</div></div>
+<div class="q"><p><strong>24. Why does dosing by tape estimate matter beyond saving money?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">It makes the animal calmer</button></li><li><button class="opt" data-correct="0">It is a legal requirement everywhere</button></li><li><button class="opt" data-correct="0">It improves meat quality</button></li><li><button class="opt" data-correct="1">Underdosing fails to control the parasite and contributes to the documented, growing problem of drug resistance</button></li></ul><div class="why">Both errors are expensive. Overdosing wastes product and can harm the animal; underdosing breeds resistance in the parasite population, which Module 7 covers in full.</div></div>
+<div class="q"><p><strong>25. What is the single most valuable use of a girth tape?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Settling the price at a sale</button></li><li><button class="opt" data-correct="0">Replacing a weighbridge</button></li><li><button class="opt" data-correct="1">Tracking the same calf month after month, because a flat girth reading tells you it is not growing long before that shows as a light weaner</button></li><li><button class="opt" data-correct="0">Comparing your cattle to other farms</button></li></ul><div class="why">For tracking one animal over time, absolute accuracy hardly matters because you are comparing like with like. It is the cheapest early-warning system a herd owner can have.</div></div>
+<div class="q"><p><strong>26. What do you get by multiplying cows exposed, calving percentage, survival to weaning and average weaning weight?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Your gross profit</button></li><li><button class="opt" data-correct="1">Your total kilograms of weaner produced for the year</button></li><li><button class="opt" data-correct="0">Your herd&#x27;s carrying capacity</button></li><li><button class="opt" data-correct="0">Your stocking rate</button></li></ul><div class="why">It is the entire physical output of the breeding herd for the year. Most cattle owners have never calculated it for their own herd, and seeing it once changes how they think about the rest.</div></div>
+<div class="q"><p><strong>27. In the worked example, which improvement added the most kilograms?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">Ten points of calving percentage, adding about 306 kg</button></li><li><button class="opt" data-correct="0">Twenty kilograms of weaning weight, adding about 162 kg</button></li><li><button class="opt" data-correct="0">Ten points of survival, adding about 153 kg</button></li><li><button class="opt" data-correct="0">All three added the same</button></li></ul><div class="why">It came out that way because calving percentage was the weakest term in that example. Run the same test with your own numbers and your answer may be different - that is the point of the exercise.</div></div>
+<div class="q"><p><strong>28. Why does attacking your strongest term feel productive but change little?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Because strong terms cannot improve</button></li><li><button class="opt" data-correct="0">Because the four terms are added together</button></li><li><button class="opt" data-correct="1">Because the terms are multiplied, so the result is held down by whichever term is weakest</button></li><li><button class="opt" data-correct="0">Because measurement is unreliable</button></li></ul><div class="why">Multiplication means a weakness anywhere caps the whole result. The weak term is usually weak for a reason and is uncomfortable to fix, which is exactly why it is where the kilograms are.</div></div>
+<div class="q"><p><strong>29. What makes a target useful rather than vague?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Writing it in a diary</button></li><li><button class="opt" data-correct="0">Telling a neighbour about it</button></li><li><button class="opt" data-correct="0">Making it ambitious</button></li><li><button class="opt" data-correct="1">Giving it a number, a date and a measurement you will actually take</button></li></ul><div class="why">Raise calving percentage from 45 to 55 by next weaning, measured from the served-calved-weaned columns, is a target you can check. Improve the calf crop is not.</div></div>
+<div class="q"><p><strong>30. Why can you not judge this season&#x27;s bull decision until well into next year?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Because bulls change slowly</button></li><li><button class="opt" data-correct="1">Because the decision shows as calves nine months later and as weaner kilograms about nine months after that</button></li><li><button class="opt" data-correct="0">Because prices change</button></li><li><button class="opt" data-correct="0">Because pregnancy testing takes a year</button></li></ul><div class="why">The lag is why written records beat memory. By the time the result arrives, nobody remembers accurately what was actually done, and impressions fill in the gap wrongly.</div></div>
+</div>
+<div class="card"><h3>Module 4 capstone</h3><p>Build a Calf Crop Account for last year, then a plan for next year. Step 1: write down the number of cows and heifers you exposed to a bull. Step 2: write down how many calves were born alive to them. Step 3: write down how many of those calves were still alive at weaning. Step 4: for every calf you weaned, write its weight if you have one, or a heart-girth tape estimate if you do not, and work out an average. Step 5: multiply cows exposed, by calving percentage, by survival to weaning, by average weaning weight. That single figure is your total kilograms weaned for the year, and it is the real output of your whole herd. Step 6: now recalculate the same figure three times, changing one term at a time - ten percentage points more calving, ten percentage points better survival, and twenty kilograms more weaning weight - and see which change adds the most kilograms on your farm. Step 7: write down which of the three you will attack this season, and the one specific thing you will do about it. Step 8: write the month you want your cows to calve in, and the name of the extension officer or experienced local farmer you will ask to confirm it against your rainfall pattern.</p>
+<p><button class="btn" onclick="rasMarkDone(4,this)">Mark module 4 complete</button></p></div>
+
+<div id="ras-assignment"></div>
+
+<div class="pager">
+<a class="btn" href="cattle-farming-module-3.html">← Previous</a>
+<a class="btn" href="cattle-farming-module-5.html">Next Module →</a>
 </div>
 
-<div class="section">
-<h2>🎥 Video Lessons</h2>
-<div class="video-container"><h3>1. Module 4 Introduction & Overview</h3><div class="ras-vid" data-yt="1A0PoOtY3nU" data-title="Ethiopia VCA: Commercializing Smallholder Dairy Production" role="button" tabindex="0" aria-label="Play: Ethiopia VCA: Commercializing Smallholder Dairy Production"><img loading="lazy" src="https://i.ytimg.com/vi/1A0PoOtY3nU/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Fintrac</b>Ethiopia VCA: Commercializing Smallholder Dairy Production</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cattle+farming+Module+4+Introduction+&amp;+Overview" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
-<div class="video-container"><h3>2. Practical Skills & Best Practices</h3><div class="ras-vid" data-yt="uxJoILIbO5A" data-title="Revolutionizing Dairy Farming in Kenya: Advanced Techniques &amp; Expert Insights" role="button" tabindex="0" aria-label="Play: Revolutionizing Dairy Farming in Kenya: Advanced Techniques &amp; Expert Insights"><img loading="lazy" src="https://i.ytimg.com/vi/uxJoILIbO5A/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>AIM Agriculture Farm</b>Revolutionizing Dairy Farming in Kenya: Advanced Techniques &amp; Expert Insights</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cattle+farming+Practical+Skills+&amp;+Best+Practices" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
-<div class="video-container"><h3>3. Problem-Solving & Troubleshooting</h3><div class="ras-vid" data-yt="uxJoILIbO5A" data-title="Revolutionizing Dairy Farming in Kenya: Advanced Techniques &amp; Expert Insights" role="button" tabindex="0" aria-label="Play: Revolutionizing Dairy Farming in Kenya: Advanced Techniques &amp; Expert Insights"><img loading="lazy" src="https://i.ytimg.com/vi/uxJoILIbO5A/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>AIM Agriculture Farm</b>Revolutionizing Dairy Farming in Kenya: Advanced Techniques &amp; Expert Insights</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cattle+farming+Problem-Solving+&amp;+Troubleshooting" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
-<div class="video-container"><h3>4. Case Studies & Real-World Examples</h3><div class="ras-vid" data-yt="yRNe7chOLW4" data-title="Dairy farming is opening up entrepreneurship opportunities in Africa" role="button" tabindex="0" aria-label="Play: Dairy farming is opening up entrepreneurship opportunities in Africa"><img loading="lazy" src="https://i.ytimg.com/vi/yRNe7chOLW4/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>CGTN Africa</b>Dairy farming is opening up entrepreneurship opportunities in Africa</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cattle+farming+Case+Studies+&amp;+Real-World+Examples" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
-<div class="video-container"><h3>5. Implementation & Action Planning</h3><div class="ras-vid" data-yt="1A0PoOtY3nU" data-title="Ethiopia VCA: Commercializing Smallholder Dairy Production" role="button" tabindex="0" aria-label="Play: Ethiopia VCA: Commercializing Smallholder Dairy Production"><img loading="lazy" src="https://i.ytimg.com/vi/1A0PoOtY3nU/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Fintrac</b>Ethiopia VCA: Commercializing Smallholder Dairy Production</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=cattle+farming+Implementation+&amp;+Action+Planning" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
-</div>
+<div class="disclaim"><strong>Price check, always.</strong> Before you buy ingredients, equipment, or commit to a supplier, call three suppliers and compare prices. Prices and ingredient availability vary widely by region and season. This course teaches the method. You confirm the local numbers with your own research and with your veterinarian or animal nutritionist.</div>
+</div></main>
 
-<div class="section">
-<h2>📊 Key Reference Table</h2>
-<table>
-<thead><tr><th>Concept</th><th>Key Details</th><th>Your Farm Application</th></tr></thead>
-<tbody>
-<tr><td>Best Practice 1</td><td>Proven method for success</td><td>How to implement on your farm</td></tr>
-<tr><td>Best Practice 2</td><td>Common problem solution</td><td>Troubleshooting guide</td></tr>
-<tr><td>Best Practice 3</td><td>Optimization strategy</td><td>Performance improvement steps</td></tr>
-<tr><td>Best Practice 4</td><td>Cost efficiency method</td><td>Profitability enhancement</td></tr>
-</tbody>
-</table>
-</div>
-
-<div class="section">
-<h2>💡 Module 4: 6 Core Concepts</h2>
-<div class="concept">
-<h3>Concept 1: Foundational Knowledge</h3>
-<p>Understand the basic principles that underlie successful Cattle Farming. This foundation helps you make better decisions and troubleshoot problems effectively. Practice applying this concept on a small scale before expanding.</p>
-</div>
-<div class="concept">
-<h3>Concept 2: Practical Implementation</h3>
-<p>Learn specific techniques and methods proven to work in real farming situations. These practical skills are what successful farmers use daily. Document your implementation process and results.</p>
-</div>
-<div class="concept">
-<h3>Concept 3: Monitoring & Measurement</h3>
-<p>Develop systems to track your results. Data-driven decisions lead to better outcomes. Keep simple records of inputs, outputs, and results. Use this information to optimize constantly.</p>
-</div>
-<div class="concept">
-<h3>Concept 4: Problem-Solving</h3>
-<p>Learn systematic approaches to solving problems that arise on your farm. Most issues have solutions that others have already discovered. Apply proven troubleshooting methods.</p>
-</div>
-<div class="concept">
-<h3>Concept 5: Optimization & Scaling</h3>
-<p>Once you master the basics, learn how to optimize for better results and profitability. Understand what changes when you scale your operation from small to large.</p>
-</div>
-<div class="concept">
-<h3>Concept 6: Sustainability & Long-Term Success</h3>
-<p>Build a farming operation that remains profitable and sustainable for years. Balance short-term profit with long-term health of your land, animals, and business.</p>
-</div>
-</div>
-
-<div class="section">
-<div class="quiz-section">
-<h2>🎯 Module 4 Knowledge Check</h2>
-<div class="quiz-question">
-<p>1. What is the most important skill to master in this module?</p>
-<div class="quiz-option"><input type="radio" name="q1" value="a" id="q1a"><label for="q1a">a) Understanding core principles and applying them to your farm</label></div>
-<div class="quiz-option"><input type="radio" name="q1" value="b" id="q1b"><label for="q1b">b) Memorizing technical details</label></div>
-<div class="quiz-option"><input type="radio" name="q1" value="c" id="q1c"><label for="q1c">c) Following procedures exactly</label></div>
-<button onclick="checkAnswer(this)" data-q="q1" data-a="a" data-f="Correct! Applying principles to your specific situation is more valuable than memorizing details.">Check Answer</button>
-<div id="feedback-q1" class="feedback"></div>
-</div>
-<div class="quiz-question">
-<p>2. How should you approach learning in this module?</p>
-<div class="quiz-option"><input type="radio" name="q2" value="a" id="q2a"><label for="q2a">a) Watch videos passively</label></div>
-<div class="quiz-option"><input type="radio" name="q2" value="b" id="q2b"><label for="q2b">b) Take notes, experiment on your farm, track results, adjust</label></div>
-<div class="quiz-option"><input type="radio" name="q2" value="c" id="q2c"><label for="q2c">c) Read the materials once</label></div>
-<button onclick="checkAnswer(this)" data-q="q2" data-a="b" data-f="Correct! Active learning through experimentation produces the best results.">Check Answer</button>
-<div id="feedback-q2" class="feedback"></div>
-</div>
-<div class="quiz-question">
-<p>3. What makes farming knowledge valuable?</p>
-<div class="quiz-option"><input type="radio" name="q3" value="a" id="q3a"><label for="q3a">a) How you apply it to solve real problems on your farm</label></div>
-<div class="quiz-option"><input type="radio" name="q3" value="b" id="q3b"><label for="q3b">b) How much you memorize</label></div>
-<div class="quiz-option"><input type="radio" name="q3" value="c" id="q3c"><label for="q3c">c) Academic credentials</label></div>
-<button onclick="checkAnswer(this)" data-q="q3" data-a="a" data-f="Correct! The real value of knowledge is how it improves your farming results.">Check Answer</button>
-<div id="feedback-q3" class="feedback"></div>
-</div>
-</div>
-</div>
-
-<div class="section">
-<div class="project-section">
-<h2>🚀 Capstone Project: 8-Phase Implementation Plan</h2>
-<div class="project-item">
-<h4>Phase 1: Research & Planning</h4>
-<p>Study the module content. Research your local context: prices, climate, available resources. Document current state of your farm operation. What are you doing now? What could improve?</p>
-</div>
-<div class="project-item">
-<h4>Phase 2: Learning & Preparation</h4>
-<p>Complete all video lessons. Take detailed notes. Highlight key techniques. Prepare equipment and resources. Identify any knowledge gaps and address them.</p>
-</div>
-<div class="project-item">
-<h4>Phase 3: Small-Scale Testing</h4>
-<p>Test new techniques on a small part of your farm. Document exact details: date, materials used, conditions, results. Start small to reduce risk. Learn from early results.</p>
-</div>
-<div class="project-item">
-<h4>Phase 4: Measurement & Monitoring</h4>
-<p>Track results carefully. Keep records: inputs (cost, time, materials), outputs (yield, quality, revenue). Compare with your baseline. Did results improve?</p>
-</div>
-<div class="project-item">
-<h4>Phase 5: Problem-Solving & Adjustment</h4>
-<p>When problems arise (they will), troubleshoot systematically. Review module concepts. Ask: what changed? What could I do differently? Implement adjustments and test again.</p>
-</div>
-<div class="project-item">
-<h4>Phase 6: Expansion & Scaling</h4>
-<p>Once proven on small scale, expand to larger area. Scale gradually. Document challenges at each scale. Train any helpers on new methods.</p>
-</div>
-<div class="project-item">
-<h4>Phase 7: Optimization & Profitability</h4>
-<p>Now that system works, optimize for profit. Reduce unnecessary costs. Maximize output quality. Calculate return on investment. Document which practices are most profitable.</p>
-</div>
-<div class="project-item">
-<h4>Phase 8: Sharing & Mentoring</h4>
-<p>Share what you learned with other farmers. Help them implement successfully. Your experience becomes valuable. Document successful stories and lessons learned.</p>
-</div>
-</div>
-</div>
-
-<div class="nav-buttons">
-<a href="cattle-farming-course.html">↑ Back to Cattle Farming Course</a>
-</div>
-</div>
-</div>
+<footer><div class="wrap">Cattle Farming — Module 4 of 12 · 4,449 words · rise AFRICA skills</div></footer>
 
 <script>
-var PROGRESS_KEY = 'cattle-farming-module-4';
-
-function checkAnswer(el){
-  var q = el.dataset.q, a = el.dataset.a, f = el.dataset.f || '';
-  var sel = document.querySelector('input[name="' + q + '"]:checked');
-  var box = document.getElementById('feedback-' + q);
-  if(!sel){ if(box){ box.className='feedback show incorrect';
-            box.textContent='Please select an answer first.'; } return; }
-  var right = (sel.value === a);
-  if(box){
-    box.className = 'feedback show ' + (right ? 'correct' : 'incorrect');
-    box.textContent = (right ? '\u2713 ' : '\u2717 ') + f;
-  }
-  updateProgress();
-}
-function updateProgress(){
-  var groups = {};
-  document.querySelectorAll('input[type="radio"]').forEach(function(r){ groups[r.name]=1; });
-  var total = Object.keys(groups).length;
-  var done  = {};
-  document.querySelectorAll('input[type="radio"]:checked').forEach(function(r){ done[r.name]=1; });
-  var pct = total ? (Object.keys(done).length / total) * 100 : 0;
-  var bar = document.getElementById('progressFill');
-  if(bar) bar.style.width = pct + '%';
-  try { localStorage.setItem(PROGRESS_KEY, String(pct)); } catch(e){}
-}
-window.addEventListener('load', function(){
-  var saved = null;
-  try { saved = localStorage.getItem(PROGRESS_KEY); } catch(e){}
-  var bar = document.getElementById('progressFill');
-  if(saved && bar) bar.style.width = saved + '%';
-  document.querySelectorAll('input[type="radio"]').forEach(function(r){
-    r.addEventListener('change', updateProgress);
+(function() {
+  var KEY="raskills.cattle-farming.progress";
+  function load() { try { return JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e) { return {}; } }
+  function save(o) { try { localStorage.setItem(KEY, JSON.stringify(o)); } catch(e) { } }
+  window.rasMarkDone = function(n, btn) { var p = load(); p["m" + n] = true; save(p); if (btn) { btn.textContent = "Module complete"; btn.classList.add("ghost"); } };
+  window.rasProgress = load;
+})();
+document.querySelectorAll(".opt").forEach(function(btn) {
+  btn.addEventListener("click", function() {
+    var correct = this.getAttribute("data-correct") === "1";
+    this.classList.add(correct ? "right" : "wrong");
+    var why = this.closest(".q").querySelector(".why");
+    if (why) why.classList.add("show");
+    this.closest(".opts").querySelectorAll(".opt").forEach(function(o) { o.style.pointerEvents = "none"; });
+  });
+});
+document.querySelectorAll(".vthumb").forEach(function(el) {
+  el.addEventListener("click", function() {
+    if (this.getAttribute("data-on")) return;
+    var iframe = document.createElement("iframe");
+    iframe.src = "https://www.youtube.com/embed/" + this.getAttribute("data-yt");
+    iframe.allow = "accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture";
+    iframe.allowFullscreen = true;
+    this.innerHTML = ""; this.appendChild(iframe); this.setAttribute("data-on", "1");
   });
 });
 </script>
+<script src="/assignment-submit.js"></script>
 </body>
 </html>
