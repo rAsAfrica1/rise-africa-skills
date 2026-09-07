@@ -1,302 +1,333 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Module 2 - Mushroom Farming</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Module 2: What a Mushroom Actually Is - Mushroom Farming</title>
+<meta name="description" content="Every practical decision in mushroom growing follows from one biological fact: a mushroom is the fruit of a much larger organism that lives hidden inside the substrate. This module covers what mycelium is, the six stages of the life cycle in the order you manage them, why fungi can digest straw and wood when almost nothing else can, why contamination is a race between organisms rather than a chemical problem, and how to read what the crop is telling you. Get this module right and the rest of the course stops being a list of rules to memorise and becomes a set of decisions you can reason through.">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: #f9f9f9; }
-.container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-.header { background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%); color: white; padding: 30px; border-radius: 10px; margin-bottom: 30px; }
-.header h1 { font-size: 2.5em; margin-bottom: 10px; }
-.content { background: white; padding: 30px; border-radius: 10px; }
-.section { margin-bottom: 40px; }
-.section h2 { color: #1a1a2e; font-size: 1.8em; margin-bottom: 20px; border-bottom: 3px solid #0f3460; padding-bottom: 10px; }
-.learning-objectives { background: #e8f4f8; padding: 20px; border-left: 5px solid #0f3460; border-radius: 5px; }
-.learning-objectives li { margin-bottom: 8px; }
-.video-container { background: #f5f5f5; padding: 15px; margin-bottom: 15px; border-radius: 5px; border-left: 4px solid #0f3460; }
-.video-container h3 { color: #1a1a2e; margin-bottom: 10px; }
-iframe { width: 100%; height: 300px; border-radius: 5px; border: none; margin-top: 10px; }
-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-th { background: #1a1a2e; color: white; padding: 12px; text-align: left; }
-td { padding: 12px; border-bottom: 1px solid #ddd; }
-.concept { background: #fafafa; padding: 15px; margin-bottom: 15px; border-radius: 5px; border-left: 4px solid #0f3460; }
-.concept h3 { color: #1a1a2e; margin-bottom: 8px; font-size: 1.1em; }
-.concept p { font-size: 0.95em; }
-.quiz-section { background: #e8f4f8; padding: 20px; border-radius: 5px; border: 2px solid #0f3460; }
-.quiz-question { margin-bottom: 20px; background: white; padding: 15px; border-radius: 5px; }
-.quiz-option { margin-left: 20px; margin-bottom: 8px; }
-button { background: #0f3460; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px; }
-button:hover { background: #1a1a2e; }
-.feedback { margin-top: 10px; padding: 10px; border-radius: 5px; display: none; }
-.feedback.show { display: block; }
-.feedback.correct { background: #c8e6c9; border-left: 4px solid #27ae60; }
-.feedback.incorrect { background: #ffcdd2; border-left: 4px solid #c62828; }
-.project-section { background: #e8f4f8; padding: 20px; border-radius: 5px; }
-.project-item { background: white; padding: 15px; margin: 15px 0; border-radius: 5px; border-left: 4px solid #0f3460; }
-.project-item h4 { color: #1a1a2e; margin-bottom: 8px; }
-.progress-bar { background: #e0e0e0; height: 10px; border-radius: 5px; overflow: hidden; margin-bottom: 20px; }
-.progress-fill { height: 100%; background: linear-gradient(90deg, #1a1a2e, #0f3460); width: 0%; }}
-.nav-buttons { display: flex; gap: 10px; margin-top: 30px; justify-content: center; flex-wrap: wrap; }
-.nav-buttons a { display: inline-block; padding: 12px 30px; background: #1a1a2e; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; }
-.nav-buttons a:hover { background: #0f3460; }
+:root{
+  --ink:#1d1a16; --ink-soft:#4a443c; --muted:#6f6759;
+  --paper:#fbf8f3; --card:#ffffff; --line:#e5ddd0;
+  --brand:#6b4a3a; --brand-soft:#f6ece5; --accent:#256b4a; --accent-soft:#e9f2ed;
+  --warn:#8a6d12; --warn-soft:#fbf3d9;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased}
+a{color:var(--brand)}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px}
+header.top{background:var(--ink);color:#f6f1e8;padding:14px 0}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-weight:700;letter-spacing:.02em;font-size:15px}
+.brand span{color:#d9a98f}
+header.top a{color:#e8d9c6;text-decoration:none;font-size:14px}
+header.top a:hover{color:#fff}
+.hero{background:linear-gradient(180deg,#2a241d,#3b332a);color:#f7f2e9;padding:38px 0 34px}
+.hero .kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#d9a98f;margin:0 0 10px}
+.hero h1{margin:0 0 10px;font-size:30px;line-height:1.25}
+.hero p{margin:0;color:#d9d0c2;max-width:60ch}
+.crumbs{font-size:13px;color:#b9ae9d;margin-bottom:14px}
+.crumbs a{color:#e8d9c6;text-decoration:none}
+main{padding:30px 0 60px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin:0 0 22px}
+h2{font-size:22px;margin:34px 0 12px;line-height:1.3}
+h3{font-size:18px;margin:0 0 6px}
+h4{font-size:15px;margin:18px 0 6px;color:var(--ink)}
+p{margin:0 0 12px}
+ul,ol{margin:0 0 12px;padding-left:22px}
+li{margin:0 0 6px}
+table{width:100%;border-collapse:collapse;margin:0 0 14px;font-size:14.5px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--brand-soft)}
+.lesson{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin:0 0 20px}
+.lesson-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+.lnum{background:var(--brand);color:#fff;font-size:12px;font-weight:700;border-radius:999px;
+  padding:3px 10px;letter-spacing:.04em;white-space:nowrap}
+.read{font-size:13px;color:var(--muted)}
+.objectives{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
+  padding:12px 14px;margin:14px 0 18px;font-size:14.5px}
+.objectives strong{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.objectives ul{margin:0;padding-left:18px}
+.body{margin-top:4px}
+.numbers{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin:18px 0}
+.num{background:var(--warn-soft);border:1px solid #eadfb8;border-radius:10px;padding:12px 14px}
+.num .k{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--warn);font-weight:700}
+.num .v{font-size:17px;font-weight:700;margin:3px 0}
+.num .n{font-size:12.5px;color:var(--muted);line-height:1.45}
+.action{border:1px dashed var(--brand);background:var(--brand-soft);border-radius:10px;padding:12px 14px;margin-top:16px;font-size:15px}
+.action strong{color:var(--brand)}
+.quiz .q{border-top:1px solid var(--line);padding-top:16px;margin-top:16px}
+.quiz .q:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.opts{list-style:none;padding:0;margin:8px 0 0}
+.opts li{margin:0 0 6px}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:9px;
+  padding:9px 12px;font:inherit;font-size:15px;cursor:pointer;color:var(--ink)}
+.opt:hover{border-color:var(--brand)}
+.opt.right{background:var(--accent-soft);border-color:var(--accent);font-weight:600}
+.opt.wrong{background:#fdeceb;border-color:#c2513f}
+.why{display:none;margin-top:8px;font-size:14.5px;color:var(--ink-soft);background:#f3efe8;border-radius:8px;padding:10px 12px}
+.why.show{display:block}
+.toc{font-size:14.5px}
+.toc a{display:block;padding:6px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.toc a:hover{color:var(--brand)}
+.vgrid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:14px}
+.vcard{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+.vthumb{position:relative;display:block;width:100%;aspect-ratio:16/9;border:0;padding:0;margin:0;cursor:pointer;
+  background:#111 center/cover no-repeat;overflow:hidden}
+.vthumb img{width:100%;height:100%;object-fit:cover;display:block}
+.vthumb iframe{width:100%;height:100%;border:0;display:block}
+.vthumb::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.18)}
+.vthumb[data-on]::after{display:none}
+.vplay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;
+  width:54px;height:38px;border-radius:9px;background:rgba(20,20,20,.82);display:flex;align-items:center;justify-content:center}
+.vthumb[data-on] .vplay{display:none}
+.vplay span{display:block;width:0;height:0;border-left:15px solid #fff;border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:3px}
+.vthumb:hover .vplay{background:#c4302b}
+.vmeta{padding:11px 13px}
+.vmeta .vt{font-weight:600;font-size:14.5px;line-height:1.35;margin:0 0 4px}
+.vmeta .va{font-size:12.5px;color:var(--muted);margin:0 0 6px}
+.vmeta .vw{font-size:13px;color:var(--ink-soft);margin:0}
+.vnote{background:#f3efe8;border-radius:8px;padding:11px 13px;font-size:13.5px;color:var(--ink-soft);margin:0}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:26px;flex-wrap:wrap}
+.btn{display:inline-block;background:var(--brand);color:#fff;text-decoration:none;padding:11px 18px;border-radius:10px;font-weight:600;font-size:15px}
+.note{font-size:13.5px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:24px 0 40px;font-size:13.5px;color:var(--muted)}
+.disclaim{background:#f3efe8;border-radius:10px;padding:14px 16px;font-size:13.5px;color:var(--ink-soft);margin-top:18px}
+@media(max-width:560px){.hero h1{font-size:24px}.lesson{padding:18px}}
+
 </style>
-<!--ras-video-v2-->
-<style>
-.ras-vid{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:8px;overflow:hidden;margin:14px 0;cursor:pointer;border:1px solid rgba(201,162,39,.35)}
-.ras-vid img{width:100%;height:100%;object-fit:cover;display:block;opacity:.82;transition:opacity .2s,transform .3s}
-.ras-vid:hover img{opacity:1;transform:scale(1.03)}
-.ras-vid .ras-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
-.ras-vid .ras-play span{width:64px;height:64px;border-radius:50%;background:rgba(201,162,39,.94);color:#111;display:flex;align-items:center;justify-content:center;font-size:26px;padding-left:5px;box-shadow:0 4px 18px rgba(0,0,0,.5)}
-.ras-vid:hover .ras-play span{background:#e0c050}
-.ras-vid .ras-meta{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 9px;background:linear-gradient(transparent,rgba(0,0,0,.88));color:#fff;font-size:.8rem;line-height:1.35;pointer-events:none}
-.ras-vid .ras-meta b{color:#c9a227;display:block;font-size:.72rem;font-weight:700;margin-bottom:2px}
-.ras-vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.ras-vid.ras-dead{cursor:default;background:#14141f}
-.ras-vid .ras-fallback{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:18px;color:#ddd;font-size:.85rem}
-.ras-vid.ras-dead .ras-fallback{display:flex}
-.ras-vid.ras-dead img,.ras-vid.ras-dead .ras-play,.ras-vid.ras-dead .ras-meta{display:none}
-.ras-vid .ras-fallback a{background:#c9a227;color:#111;font-weight:700;padding:.55rem 1.1rem;border-radius:6px;text-decoration:none;font-size:.82rem}
-</style>
-<script>
-(function(){
-  function play(box){
-    if(box.dataset.on||box.classList.contains('ras-dead'))return;
-    box.dataset.on=1;
-    var f=document.createElement('iframe');
-    f.src='https://www.youtube-nocookie.com/embed/'+box.dataset.yt+
-          '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
-    f.allow='accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture';
-    f.allowFullscreen=true;f.loading='eager';f.title=box.dataset.title||'Video lesson';
-    box.appendChild(f);
-  }
-  function init(){
-    document.querySelectorAll('.ras-vid').forEach(function(box){
-      var img=box.querySelector('img');
-      // Self-heal: a 404 thumbnail means the video is deleted or private.
-      // Swap to a topic search so a student never meets a blocked embed.
-      if(img){img.addEventListener('error',function(){box.classList.add('ras-dead');});}
-      box.addEventListener('click',function(){play(box);});
-      box.addEventListener('keydown',function(e){
-        if(e.key==='Enter'||e.key===' '){e.preventDefault();play(box);}
-      });
-    });
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
-  else init();
-})();
-</script>
-<!--ras-social-meta-->
-<link rel="canonical" href="https://www.riseafricaskills.com/mushroom-farming-module-2.html">
-<meta property="og:site_name" content="rise AFRICA skills">
-<meta property="og:locale" content="en_ZW">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://www.riseafricaskills.com/mushroom-farming-module-2.html">
-<meta property="og:title" content="Module 2 - Mushroom Farming — rise AFRICA skills">
-<meta property="og:description" content="Module 2 - Mushroom Farming — a practical, fact-based course from rise AFRICA skills. Start with minimal equipment and scale as profits grow. Videos, assessments and a capstone project. From $8, lifetime access.">
-<meta property="og:image" content="https://www.riseafricaskills.com/og-image.png">
-<meta property="og:image:secure_url" content="https://www.riseafricaskills.com/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="rise AFRICA skills — learn practical skills, start your business">
-<meta property="og:image:type" content="image/png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@riseafricaskills">
-<meta name="twitter:creator" content="@riseafricaskills">
-<meta name="twitter:title" content="Module 2 - Mushroom Farming — rise AFRICA skills">
-<meta name="twitter:description" content="Module 2 - Mushroom Farming — a practical, fact-based course from rise AFRICA skills. Start with minimal equipment and scale as profits grow. Videos, assessments and a capstone project. From $8, lifetime access.">
-<meta name="twitter:image" content="https://www.riseafricaskills.com/og-image.png">
-<meta name="twitter:image:alt" content="rise AFRICA skills">
-<meta name="description" content="Fact-based practical training for African entrepreneurs. 128 courses in farming, food processing, trades, technology and business - start from zero capital. From $8 with lifetime access.">
-<meta name="robots" content="index,follow,max-image-preview:large">
-<meta name="theme-color" content="#0f0f1a">
-<meta name="author" content="rise AFRICA skills">
-<link rel="icon" href="/og-image.png" type="image/png">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Course", "name": "Module 2 - Mushroom Farming", "description": "Module 2 - Mushroom Farming — a practical, fact-based course from rise AFRICA skills. Start with minimal equipment and scale as profits grow. Videos, assessments and a capstone project. From $8, lifetime access.", "url": "https://www.riseafricaskills.com/mushroom-farming-module-2.html", "provider": {"@type": "EducationalOrganization", "name": "rise AFRICA skills", "url": "https://www.riseafricaskills.com/"}, "inLanguage": "en"}</script>
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="/course-lock.js"></script>
 </head>
 <body>
-<div class="container">
-<div class="header">
-<h1>🌾 Mushroom Farming</h1>
-<p>Module 2: Comprehensive Farming Skills</p>
-</div>
-<div class="content">
-<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="/course-lock.js"></script>
+<script>
+window.RAS_COURSE_SLUG  = "mushroom-farming";
+window.RAS_MODULE_NUM   = 2;
+window.RAS_MODULE_TITLE = "What a Mushroom Actually Is";
+window.RAS_WHATSAPP     = "263773001353";
+</script>
+<header class="top"><div class="wrap">
+<div class="brand">rise <span>AFRICA</span> skills</div>
+<nav><a href="mushroom-farming-lessons.html">Course contents</a> &nbsp;|&nbsp; <a href="video-library.html">Video library</a> &nbsp;|&nbsp; <a href="index.html">Home</a></nav>
+</div></header>
 
-<div class="section learning-objectives">
-<h2>📚 Learning Objectives</h2>
-<ul>
-<li>Master Module 2 practical skills for Mushroom Farming</li>
-<li>Apply evidence-based farming techniques</li>
-<li>Solve real problems on your farm</li>
-<li>Implement sustainable practices</li>
-<li>Track results and optimize operations</li>
-</ul>
+<section class="hero"><div class="wrap">
+<div class="crumbs"><a href="mushroom-farming-lessons.html">Mushroom Farming</a> / Module 2 of 12</div>
+<p class="kicker">Module 2</p>
+<h1>🍄 What a Mushroom Actually Is</h1>
+<p>Every practical decision in mushroom growing follows from one biological fact: a mushroom is the fruit of a much larger organism that lives hidden inside the substrate. This module covers what mycelium is, the six stages of the life cycle in the order you manage them, why fungi can digest straw and wood when almost nothing else can, why contamination is a race between organisms rather than a chemical problem, and how to read what the crop is telling you. Get this module right and the rest of the course stops being a list of rules to memorise and becomes a set of decisions you can reason through.</p>
+</div></section>
+
+<main><div class="wrap">
+<div class="card"><h3>What you will be able to do after this module</h3><ul>
+<li>Explain in one sentence what a mushroom is in relation to the mycelium</li><li>List the six stages of the fungal life cycle in sequence</li><li>Trace a fruiting problem back to a mycelial-health decision made earlier</li><li>Explain what lignin is and why breaking it down is commercially valuable</li><li>Explain contamination as competition for the same nutrient source</li><li>Diagnose long thin stems and small caps as a fresh-air problem</li>
+</ul></div>
+<div class="card toc"><h3>The six lessons</h3>
+<a href="#lesson-1">1. A Mushroom Is a Fruit, Not a Plant</a>
+<a href="#lesson-2">2. The Life Cycle in the Order You Manage It</a>
+<a href="#lesson-3">3. You Are Growing Mycelium, Not Mushrooms</a>
+<a href="#lesson-4">4. White Rot: Why Fungi Can Eat Wood</a>
+<a href="#lesson-5">5. Contamination Is a Race, Not a Chemical Problem</a>
+<a href="#lesson-6">6. Reading What the Crop Is Telling You</a>
+</div>
+<article class="lesson" id="lesson-1">
+<div class="lesson-head"><span class="lnum">Lesson 2.1</span><span class="read">~12 min</span></div>
+<h2 style="margin-top:6px">A Mushroom Is a Fruit, Not a Plant</h2>
+<div class="objectives"><strong>In this lesson</strong><ul><li>Explain in one sentence what a mushroom is in relation to the mycelium</li><li>Describe how mycelium feeds by external digestion</li><li>State why the mushroom you sell is not the organism you are farming</li></ul></div>
+<div class="body">
+<p>If you learn one sentence in this whole course, learn this one. A mushroom is the reproductive fruiting body of a much larger living organism - the mycelium - that lives inside the substrate and is usually invisible.</p>
+<p>Think of an apple tree. The apple is not the tree. It is a structure the tree builds for one purpose, to carry seeds away, and it appears only when the tree is mature and the season is right. The mushroom is to the mycelium what the apple is to the apple tree. It is built for one purpose, spore dispersal, and it appears only when the organism is mature and something triggers reproduction.</p>
+<p>So what is the mycelium? When a spore lands somewhere suitable and germinates, it grows fine, thread-like filaments called hyphae. Those hyphae branch, and they fuse with each other, and together they form a mat. That mat is the mycelium, and it is the feeding and growing body of the fungus. In your bag it looks like a spreading white fuzz, and then like a solid white block once it has run through the whole substrate.</p>
+<p>Now here is the part that changes how you work. Mycelium does not eat the way an animal eats. An animal swallows food and digests it inside a gut. A fungus does the opposite: it secretes enzymes out into the material around it, digests the substrate externally, and then absorbs the digested nutrients back through the walls of its hyphae.</p>
+<p>That one fact has three practical consequences you will meet again and again.</p>
+<p>First, the fungus is in direct chemical contact with everything in the substrate. There is no gut wall between the organism and the material. So the moisture, the pH, the particle size and the nutrition of the substrate are not background details. They are the organism&#x27;s working conditions.</p>
+<p>Second, external digestion is slow and it is competitive. The enzymes are released into a material that other organisms are also living in and also want. Which brings us to the whole discipline of Lesson 5.</p>
+<p>Third, and this is the one growers most often miss: you are not growing a mushroom. You are growing mycelium, and harvesting its fruit. Every input decision you make - substrate nutrition, moisture, sterility, temperature - is actually a decision about mycelial health, not about the mushroom itself. When your mushrooms come out small, thin and few, the problem almost never started at the mushroom. It started days or weeks earlier, in the health of the mycelium, in a bag that was too wet, too dry, too cold or already carrying a competitor.</p>
+<p>This is also why an experienced grower spends so much attention on a bag that has no mushrooms on it at all. During spawn run there is nothing to sell and nothing to pick, and that is exactly the period in which the crop is being decided. The Botswana guide describes spawn running taking 14 to 35 days, with an average of 28. The MushWorld handbook describes substantial colonisation in 12 to 15 days and complete spread through the bag by 20 to 21 days at 25 degrees Celsius. In the Ethiopian trial, colonisation took 14 days on cotton seed hull and 19.67 days on sawdust. That spread is real and it reflects genuine differences in substrate, spawn rate, temperature and strain, not one source being wrong.</p>
+<p>For several weeks, then, your entire crop is an invisible organism eating quietly inside a bag. Your job in that period is to keep it warm, dark, undisturbed and uncontaminated, and to look at it every day so that you notice, early, if it is not advancing the way your own past bags advanced.</p>
+<p>One last thing about the fruit itself. Spores are the fungus&#x27;s escape mechanism, not part of your crop. A mature mushroom left too long releases spores continuously, which is both a food-safety concern and a facility-contamination concern. That is one more reason to harvest at the right stage rather than let mushrooms over-mature on the shelf - a topic this course returns to, but which you can already see follows directly from what a mushroom is for.</p>
+</div>
+<div class="numbers"><div class="num"><div class="k">Spawn run duration, Botswana guide</div><div class="v">14 to 35 days, average 28</div><div class="n">At 25 to 30 degrees Celsius in complete darkness. The wide range reflects real differences in substrate, spawn rate and temperature, not error</div></div><div class="num"><div class="k">Spawn run duration, MushWorld handbook</div><div class="v">12 to 15 days substantial, 20 to 21 days complete</div><div class="n">At 25 degrees Celsius. Faster than the Botswana range, which shows how much the figure depends on conditions rather than on one true value</div></div><div class="num"><div class="k">Colonisation by substrate, Ethiopian trial</div><div class="v">14 days on cotton seed hull, 19.67 days on sawdust</div><div class="n">Same trial, same conditions, different substrate. Substrate choice is itself one of the biggest levers on how fast spawn run finishes</div></div><div class="num"><div class="k">How the fungus feeds</div><div class="v">external digestion</div><div class="n">Enzymes are secreted into the substrate and the digested nutrients absorbed back. There is no gut wall, so substrate condition is the organism&#x27;s working condition</div></div></div>
+<div class="action"><strong>Do this today:</strong> find any colonised or partly colonised bag, or any rotting log or straw pile near you, and look closely for white threads running through the material. That white is mycelium - the organism you will actually be farming.</div>
+<div class="card"><h3>Recommended viewing</h3><p class="vnote"><strong>These are free videos made by other people, not by rise AFRICA skills.</strong> Each one was checked against YouTube and is on topic. The written lessons are the course. Treat these as useful extra watching.</p><div class="vgrid"><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="ZCWpdMvPpps" data-t="How to Easily Grow Oyster Mushrooms at Home" aria-label="Play video: How to Easily Grow Oyster Mushrooms at Home"><img src="https://i.ytimg.com/vi/ZCWpdMvPpps/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">How to Easily Grow Oyster Mushrooms at Home</p><p class="va">Von Malegowski</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="dftyka4UlrQ" data-t="How to Grow Oyster Mushrooms on Straw: Introduction Part 1 of 5" aria-label="Play video: How to Grow Oyster Mushrooms on Straw: Introduction Part 1 of 5"><img src="https://i.ytimg.com/vi/dftyka4UlrQ/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">How to Grow Oyster Mushrooms on Straw: Introduction Part 1 of 5</p><p class="va">cornellsmallfarms</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="XfdYDZbGMeQ" data-t="Growing Oyster Mushrooms Indoors - SPAWN &amp; SAWDUST BLOCK PRODUCTION (2 of 5)" aria-label="Play video: Growing Oyster Mushrooms Indoors - SPAWN &amp; SAWDUST BLOCK PRODUCTION (2 of 5)"><img src="https://i.ytimg.com/vi/XfdYDZbGMeQ/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Growing Oyster Mushrooms Indoors - SPAWN &amp; SAWDUST BLOCK PRODUCTION (2 of 5)</p><p class="va">cornellsmallfarms</p></div></div></div></div>
+</article>
+<article class="lesson" id="lesson-2">
+<div class="lesson-head"><span class="lnum">Lesson 2.2</span><span class="read">~12 min</span></div>
+<h2 style="margin-top:6px">The Life Cycle in the Order You Manage It</h2>
+<div class="objectives"><strong>In this lesson</strong><ul><li>List the six stages of the fungal life cycle in sequence</li><li>Match each stage to the grower action it requires</li><li>Explain why pinning timings must state which clock they are counted from</li></ul></div>
+<div class="body">
+<p>The life cycle has six stages, and the useful way to learn them is in the order you manage them, because each stage is a different job for you.</p>
+<p>Stage one: spore. The fungal equivalent of a seed, microscopic, released from the gills of a mature mushroom. You will almost never work with spores directly. They are how the fungus reproduces in the wild and how a laboratory starts a new culture, and that is a specialist job.</p>
+<p>Stage two: germination and mycelium. A spore germinates into hyphae, the hyphae branch and fuse into the mat called mycelium. This is the feeding and growing body, and it is what your business is really cultivating.</p>
+<p>Stage three: spawn. This is mycelium a grower has deliberately grown through a clean carrier material, usually grain, so it can be handled, transported and mixed into a much larger volume of substrate. Spawn is the mushroom farmer&#x27;s equivalent of seed and seedling combined. Sorghum grain is named in the tropical Africa cultivation review as the popular spawn substrate, with sawdust popular for the fruiting substrate - one material for the seed stock, a different cheaper bulk material for the crop.</p>
+<p>Stage four: spawn run, also called colonisation. Mycelium from the spawn grows out through the whole substrate mass, converting it from loose raw material into a solid, white, bound block. Your job here is warmth, darkness, no disturbance and no contamination. The Botswana guide gives 14 to 35 days with an average of 28, at 25 to 30 degrees Celsius and in complete darkness with the bag covered in black plastic. MushWorld gives 12 to 15 days to substantial colonisation and 20 to 21 days to complete spread at 25 degrees. The Nigerian trial measured 14.3 to 25.0 days depending on species and substrate, at 26 plus or minus 1 degree.</p>
+<p>Stage five: pinning, or primordia formation. Once the substrate is fully colonised, the mycelium can be pushed into reproducing. The trigger is a combination: full colonisation, a drop in temperature relative to the spawn-run temperature, exposure to light, and a large increase in fresh air. The MushWorld handbook puts pin formation at a temperature roughly 10 degrees Celsius lower than the mycelial growth temperature. This is where you stop doing nothing and start actively changing the environment. MushWorld gives 4 to 5 days from full colonisation to visible pins.</p>
+<p>Stage six: fruiting, the flush. Pins that survive develop into full-sized mushrooms over a few days. The Botswana guide describes pinhead to mature mushroom taking a further 3 to 4 days, with the mushroom roughly doubling in size daily during that window. That doubling is why a bag can look almost empty in the morning and need harvesting the following afternoon, and why you check fruiting bags at least once a day.</p>
+<p>A batch does not fruit only once. After a flush is harvested, the mycelium recovers over roughly a week to ten days and can fruit again at a reduced yield. MushWorld says most growers take three flushes from a single substrate batch. Each flush is smaller than the one before it until the substrate is exhausted, which shows as declining mushroom size, longer intervals, and eventually no further pinning. Plan your sales calendar around a front-loaded, tapering harvest, not an even one.</p>
+<p>Now a trap you must not fall into. Pinning timings in the literature are reported from two different starting points. Some sources count from full colonisation, some from the original spawning date. MushWorld&#x27;s 4 to 5 days is from full colonisation. The Ethiopian trial&#x27;s figures are from spawning: cotton seed 17 days, sawdust 29 days, wheat straw 32.66 days. The Kenyan trial is also from spawning: maize cobs 19 days, sawdust 22 days, coconut fibre 23 days, against a 28-day control. The Nigerian trial gives primordia at 18 to 25 days from spawning.</p>
+<p>If you compare your own crop against a number counted from a different clock, you will wrongly conclude you are running badly late or suspiciously early. Whenever you write a timing in your records or read one in a book, state which clock it is on.</p>
+</div>
+<div class="numbers"><div class="num"><div class="k">Full colonisation to visible pins</div><div class="v">4 to 5 days</div><div class="n">MushWorld handbook, counted from full colonisation - not from spawning. Always state which clock a timing figure is on</div></div><div class="num"><div class="k">Pinhead to mature mushroom</div><div class="v">3 to 4 days, roughly doubling in size daily</div><div class="n">Botswana guide. The doubling rate is why fruiting bags need checking at least once a day or mushrooms over-mature</div></div><div class="num"><div class="k">Pinning temperature relative to spawn run</div><div class="v">roughly 10 degrees Celsius lower</div><div class="n">MushWorld handbook. The temperature drop is one of four triggers, alongside full colonisation, light and a large increase in fresh air</div></div><div class="num"><div class="k">Flushes per substrate batch</div><div class="v">most growers take three</div><div class="n">MushWorld handbook, with roughly a week to ten days of recovery between flushes and each flush smaller than the one before</div></div></div>
+<div class="action"><strong>Do this today:</strong> draw the six stages down a page, and next to each one write in your own words the single job you have to do at that stage. Pin it up where you prepare substrate.</div>
+<div class="card"><h3>Recommended viewing</h3><p class="vnote"><strong>These are free videos made by other people, not by rise AFRICA skills.</strong> Each one was checked against YouTube and is on topic. The written lessons are the course. Treat these as useful extra watching.</p><div class="vgrid"><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="ZCWpdMvPpps" data-t="How to Easily Grow Oyster Mushrooms at Home" aria-label="Play video: How to Easily Grow Oyster Mushrooms at Home"><img src="https://i.ytimg.com/vi/ZCWpdMvPpps/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">How to Easily Grow Oyster Mushrooms at Home</p><p class="va">Von Malegowski</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="dftyka4UlrQ" data-t="How to Grow Oyster Mushrooms on Straw: Introduction Part 1 of 5" aria-label="Play video: How to Grow Oyster Mushrooms on Straw: Introduction Part 1 of 5"><img src="https://i.ytimg.com/vi/dftyka4UlrQ/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">How to Grow Oyster Mushrooms on Straw: Introduction Part 1 of 5</p><p class="va">cornellsmallfarms</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="_M9T3ZT-aPs" data-t="New to growing oyster mushrooms? Start here!" aria-label="Play video: New to growing oyster mushrooms? Start here!"><img src="https://i.ytimg.com/vi/_M9T3ZT-aPs/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">New to growing oyster mushrooms? Start here!</p><p class="va">Little Acre</p></div></div></div></div>
+</article>
+<article class="lesson" id="lesson-3">
+<div class="lesson-head"><span class="lnum">Lesson 2.3</span><span class="read">~11 min</span></div>
+<h2 style="margin-top:6px">You Are Growing Mycelium, Not Mushrooms</h2>
+<div class="objectives"><strong>In this lesson</strong><ul><li>Trace a fruiting problem back to a mycelial-health decision made earlier</li><li>State the sourced moisture range for substrate and why it matters to mycelium</li><li>Explain why the invisible weeks decide the visible ones</li></ul></div>
+<div class="body">
+<p>This lesson takes the sentence from Lesson 1 and turns it into a way of working. You are growing mycelium and harvesting its fruit. So every problem you see in the fruit is a question about the mycelium.</p>
+<p>Start with moisture, because it is the parameter that matters most day to day. The sourced targets for substrate moisture before pasteurisation and inoculation cluster closely. The Botswana guide&#x27;s preparation method targets 70 percent. The MushWorld handbook gives 60 to 75 percent substrate moisture, with 35 to 45 percent moisture in the finished packed log. Both the Ethiopian and Nigerian substrate trials brought their substrates to 65 to 70 percent at the point of sterilisation.</p>
+<p>Why does that band matter to the organism? Because mycelium lives in the water film around substrate particles and it also needs air. Too wet and you drown it - the spaces between particles fill with water, oxygen cannot reach the hyphae, and you create exactly the conditions that favour bacterial soft rot and stem and butt rot organisms. Too dry and colonisation stalls, because the enzymes the fungus secretes need water to work in, and you get small, thin fruiting bodies at the end.</p>
+<p>There is one place where a moisture number is tied directly to a disease outcome in the sourced literature. Substrate moisture below 62 percent at spawning is named as a specific precondition for bacterial blotch. Note honestly that this comes from temperate button-mushroom cropping in United States extension literature, not from an African trial. But it is a real example of the general rule: a substrate condition set weeks earlier decides what disease appears later.</p>
+<p>The field test taught everywhere in the trade is the squeeze test. Take a handful of prepared substrate and squeeze. It should hold together and release only a few drops of water between your fingers. If water streams out, it is too wet. If it does not clump at all, it is too dry. Be clear about what kind of knowledge that is. No source in this course&#x27;s evidence base quantified the test with a drop count or a measured standard, so treat it as a trained hand and eye skill you build with practice, not a numeric rule. What makes it reliable is doing it on every batch and connecting what your hand felt to how that batch performed.</p>
+<p>Now apply the same thinking to the other inputs.</p>
+<p>Temperature. Spawn running wants 25 to 30 degrees Celsius in the Botswana guide, and MushWorld gives 25 degrees for spawn running specifically. A bag running cold is not resting. It is being outpaced - it colonises slowly, which gives every competitor organism in the substrate more time to establish before the crop mycelium has claimed the space.</p>
+<p>Darkness. Spawn running is done in the dark, with the bag covered in black plastic in the Botswana method, to encourage vegetative colonisation rather than premature pinning. A bag that pins before it is fully colonised has diverted energy into fruit while most of its food supply is still unclaimed.</p>
+<p>Nutrition. Oyster mushroom wants less nitrogen and more carbon than button mushroom compost, which has an optimal carbon to nitrogen ratio of about 17. The handbook&#x27;s exact numeric target for oyster mushroom&#x27;s ideal ratio was not captured in this course&#x27;s evidence base, and you should be suspicious of any single number quoted for it elsewhere unless a source is named. What you can rely on is the direction, which is enough to make good decisions.</p>
+<p>Here is the habit that puts all this to work. When a batch disappoints, do not start your investigation at the mushroom. Start at your record for that batch and walk forward: what was the dry weight, how wet did I get it, how was it treated, what did the spawn look like, when did it colonise compared to my other batches, when did it pin. The answer is nearly always sitting in the invisible weeks, in a bag that was quietly running slower or wetter than the ones that worked.</p>
+</div>
+<div class="numbers"><div class="num"><div class="k">Substrate moisture target</div><div class="v">65 to 70 percent in the African trials; 70 percent in the Botswana method</div><div class="n">MushWorld gives a wider 60 to 75 percent, with 35 to 45 percent in the finished packed log. Sources cluster tightly, which is a sign the band is real</div></div><div class="num"><div class="k">Moisture linked to bacterial blotch</div><div class="v">below 62 percent at spawning</div><div class="n">From temperate United States button-mushroom extension literature, not an African trial. It is a real example of a preparation condition deciding a later disease</div></div><div class="num"><div class="k">Spawn-run temperature</div><div class="v">25 to 30 degrees Celsius</div><div class="n">Botswana guide; MushWorld gives 25 degrees specifically. A bag running cold colonises slowly, which gives competitors more time to establish</div></div><div class="num"><div class="k">Agaricus compost C:N ratio</div><div class="v">about 17</div><div class="n">MushWorld handbook. Oyster mushroom wants a higher ratio than this - more carbon, less nitrogen - but the handbook&#x27;s exact oyster figure was not captured, so treat any single quoted number with suspicion</div></div></div>
+<div class="action"><strong>Do this today:</strong> take a handful of any damp organic material - straw, sawdust, compost - and squeeze it hard. Notice exactly what &quot;holds together and releases a few drops&quot; feels like in your own hand. That feel is a skill you are building.</div>
+<div class="card"><h3>Recommended viewing</h3><p class="vnote"><strong>These are free videos made by other people, not by rise AFRICA skills.</strong> Each one was checked against YouTube and is on topic. The written lessons are the course. Treat these as useful extra watching.</p><div class="vgrid"><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="wpJWLLv1--w" data-t="SUPER LOW TECH OYSTER MUSHROOMS (and market garden update)" aria-label="Play video: SUPER LOW TECH OYSTER MUSHROOMS (and market garden update)"><img src="https://i.ytimg.com/vi/wpJWLLv1--w/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">SUPER LOW TECH OYSTER MUSHROOMS (and market garden update)</p><p class="va">Richard Perkins</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="j6Z7FvaKRjM" data-t="Making Mushroom Substrate - Oyster Mushroom Bags" aria-label="Play video: Making Mushroom Substrate - Oyster Mushroom Bags"><img src="https://i.ytimg.com/vi/j6Z7FvaKRjM/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Making Mushroom Substrate - Oyster Mushroom Bags</p><p class="va">Oak and Spore Mushroom Farm</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="ZCWpdMvPpps" data-t="How to Easily Grow Oyster Mushrooms at Home" aria-label="Play video: How to Easily Grow Oyster Mushrooms at Home"><img src="https://i.ytimg.com/vi/ZCWpdMvPpps/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">How to Easily Grow Oyster Mushrooms at Home</p><p class="va">Von Malegowski</p></div></div></div></div>
+</article>
+<article class="lesson" id="lesson-4">
+<div class="lesson-head"><span class="lnum">Lesson 2.4</span><span class="read">~11 min</span></div>
+<h2 style="margin-top:6px">White Rot: Why Fungi Can Eat Wood</h2>
+<div class="objectives"><strong>In this lesson</strong><ul><li>Explain what lignin is and why breaking it down is commercially valuable</li><li>Identify which cultivated species in this course are white-rot fungi</li><li>Describe the business as a waste-conversion transaction</li></ul></div>
+<div class="body">
+<p>This lesson explains the one biological ability that makes your whole business possible, and it is worth understanding properly rather than just accepting.</p>
+<p>The cultivated species in this course - Pleurotus, the oyster mushrooms, and Agaricus, the button mushroom - belong to a broad functional group that mycologists call white-rot fungi. What defines that group is a specific capability: they secrete enzymes that break down lignin.</p>
+<p>Lignin is the tough structural polymer that makes wood and straw rigid. It is what stops a maize stalk from flopping over and what makes a plank hard. It is also, from the point of view of almost every other organism on earth, indigestible. Most bacteria cannot break it down. Animals certainly cannot. That is why straw, maize cobs, sawdust and cotton waste sit around being burned, dumped or left to rot slowly - not because nobody wants free biomass, but because almost nothing can eat it.</p>
+<p>A white-rot fungus can. It converts that same material into an edible, protein-containing food.</p>
+<p>Stop and look at what you have just been told, because it is the commercial argument in a single line. Your input is a material that has almost no value precisely because nothing else can digest it. Your output is a fresh food that hotels, greengrocers and households pay for. The fungus performs the conversion. You provide the conditions.</p>
+<p>The nutritional side of the output is real, and worth knowing for marketing - but it must be quoted carefully. Pleurotus ostreatus is measured at 30 to 35 percent protein on a dry-weight basis, with selenium up to 25.8 micrograms per 100 g and beta-glucans, a fibre-type bioactive compound, up to 7.8 percent of dry weight.</p>
+<p>Now the warning attached to those numbers, because getting it wrong will damage your reputation with exactly the customer who cares. Those protein figures are on a dry-weight basis. Fresh mushroom is 85 to 95 percent water. So a 100 g fresh serving does not contain 30 to 35 g of protein. It contains roughly that share of whatever the small dry-matter fraction of the fresh weight amounts to. Never quote a dry-weight percentage to a customer as if it were a fresh-weight figure. It is a common and easily corrected error, and a health-conscious buyer who checks it will not trust anything else you tell them.</p>
+<p>What you can say honestly is that mushrooms are a notable source of plant-based protein and micronutrients relative to their cost and growing footprint. That claim is defensible, and it does not need an inflated number to be persuasive.</p>
+<p>Understanding external digestion of lignin also explains why so much of this course is about substrate detail. The fungus is running a chemical process into the material itself. How quickly and completely that process proceeds is what determines colonisation speed, resistance to contamination, and final yield. That is why substrate choice moved biological efficiency from under 10 percent to over 100 percent within single African trials. It is not that some substrates are slightly nicer. It is that the digestion process runs at very different rates on different materials.</p>
+<p>Finally, this shapes how you should describe yourself and your business. A grower who thinks &quot;I grow a vegetable&quot; will look for a vegetable grower&#x27;s inputs and a vegetable grower&#x27;s costs. A grower who thinks &quot;I turn local agricultural waste into food and income&quot; is describing the actual biological transaction, and will go looking in the right places - the sawmill, the maize sheller, the bean thresher, the cotton gin - for the input that decides most of their profit. That is not a slogan. It is a more accurate mental model, and it points you at the cheapest input and the biggest lever at the same time.</p>
+</div>
+<div class="numbers"><div class="num"><div class="k">Pleurotus ostreatus protein</div><div class="v">30 to 35 percent on a dry-weight basis</div><div class="n">Never quote this to a customer as a fresh-weight figure - fresh mushroom is 85 to 95 percent water, so a fresh serving contains far less</div></div><div class="num"><div class="k">Pleurotus ostreatus selenium</div><div class="v">up to 25.8 micrograms per 100 g</div><div class="n">Attributed to that species specifically, not to mushrooms as a category. Figures measured on one species should not be generalised to another</div></div><div class="num"><div class="k">Pleurotus ostreatus beta-glucans</div><div class="v">up to 7.8 percent of dry weight</div><div class="n">A fibre-type bioactive compound, again on a dry-weight basis. The honest marketing claim is notable nutrition relative to cost and footprint, not a specific inflated number</div></div><div class="num"><div class="k">BE spread caused by substrate</div><div class="v">under 10 percent to over 100 percent within single trials</div><div class="n">Because the fungus digests the substrate externally, how fast that chemical process runs on a given material decides colonisation speed, contamination resistance and yield</div></div></div>
+<div class="action"><strong>Do this today:</strong> pick up a piece of straw or a wood offcut and try to tear it with your hands. What resists you is lignin. Now write down the three places nearest you where that material is treated as waste.</div>
+<div class="card"><h3>Recommended viewing</h3><p class="vnote"><strong>These are free videos made by other people, not by rise AFRICA skills.</strong> Each one was checked against YouTube and is on topic. The written lessons are the course. Treat these as useful extra watching.</p><div class="vgrid"><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="dftyka4UlrQ" data-t="How to Grow Oyster Mushrooms on Straw: Introduction Part 1 of 5" aria-label="Play video: How to Grow Oyster Mushrooms on Straw: Introduction Part 1 of 5"><img src="https://i.ytimg.com/vi/dftyka4UlrQ/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">How to Grow Oyster Mushrooms on Straw: Introduction Part 1 of 5</p><p class="va">cornellsmallfarms</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="XfdYDZbGMeQ" data-t="Growing Oyster Mushrooms Indoors - SPAWN &amp; SAWDUST BLOCK PRODUCTION (2 of 5)" aria-label="Play video: Growing Oyster Mushrooms Indoors - SPAWN &amp; SAWDUST BLOCK PRODUCTION (2 of 5)"><img src="https://i.ytimg.com/vi/XfdYDZbGMeQ/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Growing Oyster Mushrooms Indoors - SPAWN &amp; SAWDUST BLOCK PRODUCTION (2 of 5)</p><p class="va">cornellsmallfarms</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="ZCWpdMvPpps" data-t="How to Easily Grow Oyster Mushrooms at Home" aria-label="Play video: How to Easily Grow Oyster Mushrooms at Home"><img src="https://i.ytimg.com/vi/ZCWpdMvPpps/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">How to Easily Grow Oyster Mushrooms at Home</p><p class="va">Von Malegowski</p></div></div></div></div>
+</article>
+<article class="lesson" id="lesson-5">
+<div class="lesson-head"><span class="lnum">Lesson 2.5</span><span class="read">~12 min</span></div>
+<h2 style="margin-top:6px">Contamination Is a Race, Not a Chemical Problem</h2>
+<div class="objectives"><strong>In this lesson</strong><ul><li>Explain contamination as competition for the same nutrient source</li><li>Describe how spawn rate and heat treatment change the odds of that race</li><li>Identify green mould and state why control is entirely preventive</li></ul></div>
+<div class="body">
+<p>New growers think of contamination as something dirty that lands on a clean crop, like dust on a table, and they look for something to spray. That model is wrong and it leads to wasted money and wasted batches. Here is the right one.</p>
+<p>Substrate is a nutrient source. Any fungus or bacterium that reaches it can use it. Straw carries organisms. Sawdust carries organisms. The air of your growing room carries spores. What you are doing when you prepare substrate and add spawn is not creating a clean environment - it is trying to give your crop mycelium a head start over every wild competitor that is already there or will arrive.</p>
+<p>Contamination, in other words, is a race between organisms. Everything you do in substrate preparation and spawning is about changing the odds of that race. Once you see it that way, the practices stop being arbitrary rules.</p>
+<p>Heat treatment knocks the competitors back so your mycelium starts ahead. Pasteurisation kills most vegetative pathogens, pest eggs and larvae and weed moulds in bulk substrate, while deliberately leaving some heat-tolerant organisms alive - and those survivors actually help, because they compete against reinvading contaminants once the substrate cools. Sterilisation, which kills essentially everything including heat-resistant bacterial spores, is reserved for grain spawn, because grain is so rich that a single survivor overruns it.</p>
+<p>Spawn rate changes the odds too. A higher spawn rate costs you more in spawn, but it colonises faster and gives the crop a bigger head start. That is a genuine trade-off to reason through against your own spawn cost and your own contamination history. The sources disagree on the right rate, honestly: the Botswana guide says 5 to 10 percent by weight, or 50 to 100 g per kg of substrate, with a wider stated range of 2 to 10 percent by grower preference and budget. MushWorld says 2 percent on a wet-weight basis. The Kenyan golden oyster trial used 5 percent. There is no single settled correct number.</p>
+<p>Even spawn distribution changes the odds. Mixing spawn in layers through the substrate rather than placing it only at the top or bottom gives the mycelium many separate starting points growing outward at once, which finishes colonisation faster than a single starting point that has to travel through the whole mass.</p>
+<p>Spawn quality changes the odds most of all, because contaminated spawn means you have started the race with the competitor already inside the bag and already winning.</p>
+<p>Now meet your main opponent. Green mould, caused by Trichoderma species, is the single most economically damaging contaminant named across the sources. The Botswana guide describes it as fast growing and capable of causing 100 percent losses in an affected batch. Note honestly what that figure is: a general statement of severity from one national guide, not a measured African incidence rate. No African Trichoderma strain, prevalence or loss-rate survey was available.</p>
+<p>You identify it by appearance. It starts as a dense white mycelial growth - which is exactly why beginners miss it - and turns green as it sporulates, spreading fast across the substrate surface. A white patch that turns green is not your crop having a bad day. It is a different organism.</p>
+<p>Control is entirely preventive. There is no practical curative treatment once Trichoderma has established inside a bag. That means correct pasteurisation or sterilisation, clean spawn, clean hands and tools, and prompt removal and safe disposal of any affected bag - away from the growing area, not composted on-site next to your active rooms, because the whole point is to keep its spores out of the air your other bags are breathing.</p>
+<p>One more connection worth making now. Sciarid and phorid flies matter not just because their larvae damage mycelium and mushrooms, but because flies carry mould spores from bag to bag and from contaminated waste back into a clean room. The mushroom sciarid fly has specifically been documented as benefiting from and spreading green mould. Fly control and green-mould control are the same job, not two separate jobs. Be aware that this fly evidence is United States commercial industry literature - no African prevalence or control-trial data for either fly was available.</p>
+</div>
+<div class="numbers"><div class="num"><div class="k">Green mould loss</div><div class="v">up to 100 percent of an affected batch</div><div class="n">Botswana guide&#x27;s severity statement for Trichoderma - a general statement, not a measured African incidence rate. No African prevalence survey was available</div></div><div class="num"><div class="k">Spawn rate, Botswana guide</div><div class="v">5 to 10 percent by weight, 50 to 100 g per kg substrate</div><div class="n">With a wider 2 to 10 percent range by grower preference. Higher rates cost more but colonise faster, giving a bigger head start over competitors</div></div><div class="num"><div class="k">Spawn rate, MushWorld handbook</div><div class="v">2 percent on a wet-weight basis</div><div class="n">Notably lower than the Botswana figure. The sources genuinely disagree, so reason from the trade-off rather than looking for one correct number</div></div><div class="num"><div class="k">Pest and disease evidence base</div><div class="v">essentially non-African</div><div class="n">Fly and disease detail comes from United States commercial and extension literature. Teach the principles; build your own African pattern library from your own records</div></div></div>
+<div class="action"><strong>Do this today:</strong> look at every bag you have and check each one for any patch that is a different colour or texture from the rest. Write down what you find, even if you find nothing. That written &quot;nothing&quot; is your baseline.</div>
+<div class="card"><h3>Recommended viewing</h3><p class="vnote"><strong>These are free videos made by other people, not by rise AFRICA skills.</strong> Each one was checked against YouTube and is on topic. The written lessons are the course. Treat these as useful extra watching.</p><div class="vgrid"><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="xQOGE4jyXe0" data-t="How to Make your own Oyster Mushroom Grow Blocks WITHOUT Sterilization" aria-label="Play video: How to Make your own Oyster Mushroom Grow Blocks WITHOUT Sterilization"><img src="https://i.ytimg.com/vi/xQOGE4jyXe0/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">How to Make your own Oyster Mushroom Grow Blocks WITHOUT Sterilization</p><p class="va">Field &amp; Forest Products Mushrooms</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="j6Z7FvaKRjM" data-t="Making Mushroom Substrate - Oyster Mushroom Bags" aria-label="Play video: Making Mushroom Substrate - Oyster Mushroom Bags"><img src="https://i.ytimg.com/vi/j6Z7FvaKRjM/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Making Mushroom Substrate - Oyster Mushroom Bags</p><p class="va">Oak and Spore Mushroom Farm</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="Xkl7e966qMg" data-t="Oyster Mushroom grain spawn low tek DIY" aria-label="Play video: Oyster Mushroom grain spawn low tek DIY"><img src="https://i.ytimg.com/vi/Xkl7e966qMg/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Oyster Mushroom grain spawn low tek DIY</p><p class="va">SocietyofEnoch</p></div></div></div></div>
+</article>
+<article class="lesson" id="lesson-6">
+<div class="lesson-head"><span class="lnum">Lesson 2.6</span><span class="read">~12 min</span></div>
+<h2 style="margin-top:6px">Reading What the Crop Is Telling You</h2>
+<div class="objectives"><strong>In this lesson</strong><ul><li>Diagnose long thin stems and small caps as a fresh-air problem</li><li>Distinguish between a bag that will not pin and a bag that is not ready to pin</li><li>Use your own batch history as the reference point for what is normal</li></ul></div>
+<div class="body">
+<p>Once you understand the biology, the crop starts talking to you. This lesson teaches you to read four of the clearest signals it sends, and one rule about what to compare them against.</p>
+<p>Signal one: long, thin stems reaching upward, with small, poorly formed caps. Growers call it legging. It is classically caused by too much carbon dioxide during fruiting - not enough fresh air exchange. The mushroom is reaching for airflow. The fix is not water or food; it is opening vents and increasing ventilation.</p>
+<p>Be careful with the numbers here. A commercial carbon-dioxide-monitoring equipment supplier gives 10,000 to 20,000 ppm as typical and acceptable during spawn running, dropping to no more than 1,000 ppm and preferably 500 to 800 ppm during fruiting, with an intermediate 1,200 to 1,500 ppm often cited for early pinning. That is not a peer-reviewed source and it is not African, and no African or peer-reviewed carbon dioxide measurement for an oyster-mushroom growing room was available. So treat those ppm figures as unverified unless you own a meter to check them against. What is safely teachable is the qualitative principle: spawn running tolerates and may even benefit from high carbon dioxide inside a sealed bag, while fruiting needs a large increase in fresh air. And legging is the visual proxy you can act on without owning any equipment at all.</p>
+<p>Signal two: the substrate is fully colonised but will not pin. Work through the biological triggers in order. Is it still too warm, with the spawn-run temperature carried over? Fruiting targets 20 to 26 degrees Celsius against 25 to 30 for spawn running, and pins form at roughly 10 degrees below the mycelial growth temperature. Is there enough fresh air? Is there light? Fruiting requires light, unlike spawn running - indirect daylight through a shaded window or a few hours of low-intensity artificial light is the practical standard, though no specific lux value or light-hours figure for African oyster-mushroom fruiting rooms was available, so this course gives you none. And finally: is it actually fully colonised, or does it merely look white on the outside while the centre is still unclaimed?</p>
+<p>Signal three: pins form but abort, shrivelling before they mature. The likely causes are humidity dropping or fluctuating sharply, a draught blowing directly on young pins, or the substrate surface drying out. The fruiting-room humidity targets are a minimum of 85 percent in the Botswana guide; the Nigerian trial specifically held 92 plus or minus 2 percent during fruiting; MushWorld gives a broader working range of 80 to 95 percent varying across the early, middle and late stages of a flush. The practical method named in the sources is regular misting of the fruiting room floor and walls - not directly onto the mushrooms in a way that leaves standing water sitting on the caps.</p>
+<p>Signal four: caps show water-soaked blotches, or fruiting bodies are discoloured and slimy. This is bacterial blotch, and the precipitating condition is moisture rather than humidity alone. Blotch develops when mushroom caps stay wet for 4 to 6 hours or longer after water is applied, because condensation forms on the cap when the surrounding air is saturated and warmer than the cap. Keeping caps dry through ventilation and careful misting is the primary lever. This is United States extension evidence from button-mushroom cropping, with no African blotch data available.</p>
+<p>Now the rule that makes all four signals more useful. Compare your crop against your own history, not against a book. A batch running unusually slowly compared with your own past batches is an early warning worth investigating - check spawn viability, moisture and temperature - rather than something to simply wait out. The sourced spawn-run figures span 12 to 35 days across four sources, so &quot;slow&quot; cannot mean slower than a published number. It means slower than your last five bags of the same substrate in the same room.</p>
+<p>That is why the record from Module 1 matters biologically and not just commercially. Without it you have no baseline, and without a baseline the crop is talking to you in a language you cannot hear.</p>
+</div>
+<div class="numbers"><div class="num"><div class="k">Fruiting-room humidity</div><div class="v">minimum 85 percent; 92 plus or minus 2 percent in the Nigerian trial</div><div class="n">MushWorld gives a broader 80 to 95 percent varying across the flush. Mist floor and walls, not the caps, to avoid standing water</div></div><div class="num"><div class="k">Fruiting temperature</div><div class="v">20 to 26 degrees Celsius</div><div class="n">Botswana guide, against 25 to 30 for spawn running. Pins form at roughly 10 degrees below the mycelial growth temperature</div></div><div class="num"><div class="k">Time caps stay wet before blotch risk</div><div class="v">4 to 6 hours or longer</div><div class="n">United States extension figure from button-mushroom cropping; no African bacterial-blotch data was available. Ventilation and careful misting are the primary control</div></div><div class="num"><div class="k">Carbon dioxide figures</div><div class="v">unverified - use legging as your visual proxy</div><div class="n">The available ppm figures come from a commercial equipment supplier, with no African or peer-reviewed growing-room measurement retrieved. Long thin stems and small caps tell you the same thing for free</div></div></div>
+<div class="action"><strong>Do this today:</strong> go and look at your fruiting bags, or any mushrooms you can find for sale, and check the stems. Long and thin with a small cap means the grower needed more fresh air. Write down what you saw.</div>
+<div class="card"><h3>Recommended viewing</h3><p class="vnote"><strong>These are free videos made by other people, not by rise AFRICA skills.</strong> Each one was checked against YouTube and is on topic. The written lessons are the course. Treat these as useful extra watching.</p><div class="vgrid"><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="ZCWpdMvPpps" data-t="How to Easily Grow Oyster Mushrooms at Home" aria-label="Play video: How to Easily Grow Oyster Mushrooms at Home"><img src="https://i.ytimg.com/vi/ZCWpdMvPpps/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">How to Easily Grow Oyster Mushrooms at Home</p><p class="va">Von Malegowski</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="wpJWLLv1--w" data-t="SUPER LOW TECH OYSTER MUSHROOMS (and market garden update)" aria-label="Play video: SUPER LOW TECH OYSTER MUSHROOMS (and market garden update)"><img src="https://i.ytimg.com/vi/wpJWLLv1--w/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">SUPER LOW TECH OYSTER MUSHROOMS (and market garden update)</p><p class="va">Richard Perkins</p></div></div><div class="vcard"><div class="vthumb" role="button" tabindex="0" data-yt="XfdYDZbGMeQ" data-t="Growing Oyster Mushrooms Indoors - SPAWN &amp; SAWDUST BLOCK PRODUCTION (2 of 5)" aria-label="Play video: Growing Oyster Mushrooms Indoors - SPAWN &amp; SAWDUST BLOCK PRODUCTION (2 of 5)"><img src="https://i.ytimg.com/vi/XfdYDZbGMeQ/hqdefault.jpg" alt="" loading="lazy"><span class="vplay"><span></span></span></div><div class="vmeta"><p class="vt">Growing Oyster Mushrooms Indoors - SPAWN &amp; SAWDUST BLOCK PRODUCTION (2 of 5)</p><p class="va">cornellsmallfarms</p></div></div></div></div>
+</article>
+<div class="card quiz"><h3>Knowledge check</h3><p class="note">Questions from all lessons. Click an answer to see whether it is right and why.</p>
+<div class="q"><p><strong>1. What is a mushroom, in relation to the organism that produced it?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">The whole organism</button></li><li><button class="opt" data-correct="1">The reproductive fruiting body of the mycelium, which lives in the substrate</button></li><li><button class="opt" data-correct="0">The root of the fungus</button></li><li><button class="opt" data-correct="0">A type of plant that grows without light</button></li></ul><div class="why">The mycelium is the organism. The mushroom is a structure it builds for spore dispersal, in the same relationship an apple has to an apple tree.</div></div>
+<div class="q"><p><strong>2. How does mycelium obtain nutrients?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">By photosynthesis</button></li><li><button class="opt" data-correct="0">By absorbing sunlight through the cap</button></li><li><button class="opt" data-correct="0">By swallowing particles of substrate</button></li><li><button class="opt" data-correct="1">By secreting enzymes into the substrate and absorbing the digested nutrients</button></li></ul><div class="why">Digestion happens outside the organism, in the substrate itself. That is why the substrate&#x27;s moisture, pH and structure are the organism&#x27;s working conditions rather than background details.</div></div>
+<div class="q"><p><strong>3. When your mushrooms come out small and few, where did the problem most likely start?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">Days or weeks earlier, in the health of the mycelium</button></li><li><button class="opt" data-correct="0">In the last hour before harvest</button></li><li><button class="opt" data-correct="0">In the packaging</button></li><li><button class="opt" data-correct="0">In the buyer&#x27;s fridge</button></li></ul><div class="why">You are farming mycelium and harvesting its fruit. Poor fruiting is almost always a symptom of something that went wrong during substrate preparation or spawn run.</div></div>
+<div class="q"><p><strong>4. In the MushWorld handbook, how long does mycelium take to spread completely through a bag at 25 degrees Celsius?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">35 days</button></li><li><button class="opt" data-correct="0">3 to 4 days</button></li><li><button class="opt" data-correct="1">20 to 21 days</button></li><li><button class="opt" data-correct="0">60 days</button></li></ul><div class="why">Substantial colonisation at 12 to 15 days and complete spread by 20 to 21 days. The Botswana guide gives a longer 14 to 35 day range, and both are real figures from different conditions.</div></div>
+<div class="q"><p><strong>5. Why should a mushroom not be left to over-mature on the shelf?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">It becomes poisonous</button></li><li><button class="opt" data-correct="0">It changes species</button></li><li><button class="opt" data-correct="0">It grows back into the substrate</button></li><li><button class="opt" data-correct="1">It releases spores continuously, which is both a food-safety and a facility-contamination concern</button></li></ul><div class="why">Spores are the fungus&#x27;s escape mechanism, not part of your crop. Over-mature mushrooms also lose moisture faster once picked and look worse to a buyer.</div></div>
+<div class="q"><p><strong>6. What are the four triggers that switch mycelium from growing to fruiting?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">Full colonisation, a temperature drop, light, and a large increase in fresh air</button></li><li><button class="opt" data-correct="0">Watering, fertiliser, darkness and heat</button></li><li><button class="opt" data-correct="0">Adding more spawn, adding lime, adding bran and adding water</button></li><li><button class="opt" data-correct="0">Nothing - it happens on a fixed date</button></li></ul><div class="why">All four act together. A fully colonised bag left warm, dark and sealed will simply sit there rather than pin, which is one of the commonest beginner complaints.</div></div>
+<div class="q"><p><strong>7. The MushWorld figure of 4 to 5 days to visible pins is counted from what?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">The spawning date</button></li><li><button class="opt" data-correct="0">The date the substrate was pasteurised</button></li><li><button class="opt" data-correct="1">Full colonisation of the substrate</button></li><li><button class="opt" data-correct="0">The date the bag was bought</button></li></ul><div class="why">Different sources count from different starting points. The Ethiopian and Kenyan pinning figures are counted from spawning, which is why you must always state the clock.</div></div>
+<div class="q"><p><strong>8. How fast does a pinhead grow into a mature mushroom in the Botswana guide?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Over about a month</button></li><li><button class="opt" data-correct="1">Over 3 to 4 days, roughly doubling in size daily</button></li><li><button class="opt" data-correct="0">Within one hour</button></li><li><button class="opt" data-correct="0">Over 14 days</button></li></ul><div class="why">That daily doubling is why a fruiting bag needs checking at least once a day. Miss two days and mushrooms that would have graded well are over-mature and dropping spores.</div></div>
+<div class="q"><p><strong>9. What is spawn?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Dried mushrooms used as seed</button></li><li><button class="opt" data-correct="0">The spores collected from a mature cap</button></li><li><button class="opt" data-correct="0">A chemical that makes substrate fruit</button></li><li><button class="opt" data-correct="1">Mycelium deliberately grown through a clean carrier material so it can be handled and mixed into substrate</button></li></ul><div class="why">Spawn is seed and seedling combined. Sorghum grain is named as the popular spawn carrier in the tropical Africa review, with cheaper bulk material used for the fruiting substrate itself.</div></div>
+<div class="q"><p><strong>10. How should you plan your sales calendar around flushes?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Expect an even harvest every week for months</button></li><li><button class="opt" data-correct="0">Expect one single harvest only</button></li><li><button class="opt" data-correct="1">Expect a front-loaded, tapering harvest, since each flush is smaller than the one before</button></li><li><button class="opt" data-correct="0">Expect the harvest to grow larger with each flush</button></li></ul><div class="why">Most growers take three flushes, with about a week to ten days of recovery in between, and yield declines each time until the substrate is exhausted.</div></div>
+<div class="q"><p><strong>11. What happens to mycelium in a substrate that is too wet?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">It grows faster</button></li><li><button class="opt" data-correct="1">The spaces between particles fill with water, oxygen cannot reach the hyphae, and bacterial rots are favoured</button></li><li><button class="opt" data-correct="0">It produces more spores</button></li><li><button class="opt" data-correct="0">Nothing at all</button></li></ul><div class="why">Mycelium needs both water and air. Waterlogged substrate suffocates it and creates the conditions for bacterial soft rot and stem and butt rot organisms.</div></div>
+<div class="q"><p><strong>12. What moisture level at spawning is named as predisposing a crop to bacterial blotch?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Above 90 percent</button></li><li><button class="opt" data-correct="0">Exactly 70 percent</button></li><li><button class="opt" data-correct="1">Below 62 percent</button></li><li><button class="opt" data-correct="0">Below 20 percent</button></li></ul><div class="why">Below 62 percent at spawning is named in United States button-mushroom extension literature. It is not African evidence, but it shows how a preparation-stage condition sets up a later disease.</div></div>
+<div class="q"><p><strong>13. How should you treat the squeeze test?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">As a precise numeric standard with a fixed drop count</button></li><li><button class="opt" data-correct="1">As a trained hand and eye skill built by doing it on every batch</button></li><li><button class="opt" data-correct="0">As unnecessary once you own a moisture meter</button></li><li><button class="opt" data-correct="0">As a test that only works on straw</button></li></ul><div class="why">No source in this course&#x27;s evidence base quantified the test. Its value comes from repeating it every batch and connecting what your hand felt to how that batch actually performed.</div></div>
+<div class="q"><p><strong>14. Why is spawn running done in complete darkness?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">To save electricity</button></li><li><button class="opt" data-correct="0">Because light kills mycelium</button></li><li><button class="opt" data-correct="0">Because darkness raises the temperature</button></li><li><button class="opt" data-correct="1">To encourage vegetative colonisation rather than premature pinning</button></li></ul><div class="why">A bag that pins before it is fully colonised diverts energy into fruit while most of its food supply is still unclaimed. The Botswana method covers the bag in black plastic during spawn run.</div></div>
+<div class="q"><p><strong>15. What is the known relationship between oyster mushroom and Agaricus C:N ratios?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">They are identical at 17</button></li><li><button class="opt" data-correct="0">Oyster mushroom wants more nitrogen than Agaricus</button></li><li><button class="opt" data-correct="1">Oyster mushroom wants a higher ratio - more carbon, less nitrogen - than Agaricus compost&#x27;s optimum of about 17</button></li><li><button class="opt" data-correct="0">No source says anything about this</button></li></ul><div class="why">The direction is sourced and usable. The exact numeric target for oyster mushroom was not captured in this course&#x27;s evidence base, so be suspicious of a single number quoted elsewhere without a source.</div></div>
+<div class="q"><p><strong>16. What is lignin?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">A type of sugar mushrooms produce</button></li><li><button class="opt" data-correct="1">The tough structural polymer that makes wood and straw rigid, which most organisms cannot digest</button></li><li><button class="opt" data-correct="0">A fertiliser added to substrate</button></li><li><button class="opt" data-correct="0">A disease of oyster mushrooms</button></li></ul><div class="why">Being able to break down lignin is what defines white-rot fungi and what lets them convert low-value agricultural residue into food. It is the biological basis of the whole business.</div></div>
+<div class="q"><p><strong>17. A customer asks how much protein is in 100 g of your fresh mushrooms. What is the honest answer?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">30 to 35 g, because Pleurotus ostreatus is 30 to 35 percent protein</button></li><li><button class="opt" data-correct="1">Far less than 30 g, because the 30 to 35 percent figure is on a dry-weight basis and fresh mushroom is 85 to 95 percent water</button></li><li><button class="opt" data-correct="0">Exactly 7.8 g</button></li><li><button class="opt" data-correct="0">There is no protein in mushrooms</button></li></ul><div class="why">Quoting a dry-weight percentage as a fresh-weight figure is a common overclaim. The defensible statement is that mushrooms are a notable source of protein and micronutrients relative to cost and growing footprint.</div></div>
+<div class="q"><p><strong>18. Which of these are white-rot fungi in this course?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Only Agaricus</button></li><li><button class="opt" data-correct="0">Only Termitomyces</button></li><li><button class="opt" data-correct="0">Neither Pleurotus nor Agaricus</button></li><li><button class="opt" data-correct="1">Both Pleurotus and Agaricus</button></li></ul><div class="why">Both cultivated groups in this course secrete enzymes that break down lignin, which is why both can be grown on agricultural residues rather than on soil nutrients.</div></div>
+<div class="q"><p><strong>19. Why does substrate choice move biological efficiency so dramatically?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Because different substrates weigh different amounts</button></li><li><button class="opt" data-correct="1">Because the fungus digests the substrate externally, and that chemical process runs at very different rates on different materials</button></li><li><button class="opt" data-correct="0">Because some substrates contain mushroom seeds already</button></li><li><button class="opt" data-correct="0">Because heavier substrates hold more spawn</button></li></ul><div class="why">External digestion is the mechanism. Within single African trials, BE ranged from under 10 percent to over 100 percent by substrate alone, under identical conditions.</div></div>
+<div class="q"><p><strong>20. Which self-description points a grower at their biggest profit lever?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">I turn local agricultural waste into food and income</button></li><li><button class="opt" data-correct="0">I grow a vegetable</button></li><li><button class="opt" data-correct="0">I sell imported produce</button></li><li><button class="opt" data-correct="0">I run a laboratory</button></li></ul><div class="why">It is a more accurate description of the biological transaction, and it sends you to the sawmill, sheller, thresher and gin - where the input that decides most of your profit is currently being treated as rubbish.</div></div>
+<div class="q"><p><strong>21. What is the correct mental model for contamination?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Dirt landing on a clean crop, to be sprayed off</button></li><li><button class="opt" data-correct="1">A race between your crop mycelium and every competitor organism for the same nutrient source</button></li><li><button class="opt" data-correct="0">A punishment for bad luck</button></li><li><button class="opt" data-correct="0">A chemical imbalance in the substrate</button></li></ul><div class="why">Substrate is food that any fungus or bacterium can use. Everything you do in preparation and spawning changes the odds of that race, which is why the practices are not arbitrary rules.</div></div>
+<div class="q"><p><strong>22. Why does pasteurisation deliberately leave some organisms alive?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Because full sterilisation is impossible</button></li><li><button class="opt" data-correct="0">Because the survivors are eaten by the mushroom</button></li><li><button class="opt" data-correct="1">Because the surviving heat-tolerant organisms compete against reinvading contaminants once the substrate cools</button></li><li><button class="opt" data-correct="0">Because pasteurisation is simply a failed sterilisation</button></li></ul><div class="why">That competitive population is a feature, not a shortfall. Full sterilisation is reserved for grain spawn, where the medium is rich enough that one survivor overruns it.</div></div>
+<div class="q"><p><strong>23. How does green mould first appear?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">As a black slimy layer</button></li><li><button class="opt" data-correct="0">As green from the very start</button></li><li><button class="opt" data-correct="0">As a bad smell with no visible sign</button></li><li><button class="opt" data-correct="1">As a dense white growth that turns green as it sporulates</button></li></ul><div class="why">It starts white, which is exactly why beginners mistake it for healthy mycelium. A white patch that later turns green is a different organism, and by then it is spreading.</div></div>
+<div class="q"><p><strong>24. What is the correct response to a bag showing green mould?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">Remove it promptly and dispose of it away from the growing area, not composted on-site</button></li><li><button class="opt" data-correct="0">Spray it with any available fungicide</button></li><li><button class="opt" data-correct="0">Add more spawn to the bag</button></li><li><button class="opt" data-correct="0">Move it to a warmer room</button></li></ul><div class="why">There is no practical curative treatment once Trichoderma is established inside a bag. The whole aim is keeping its spores out of the air your other bags are breathing.</div></div>
+<div class="q"><p><strong>25. Why are fly control and green-mould control the same job?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Flies eat green mould</button></li><li><button class="opt" data-correct="1">Flies carry mould spores between bags and from contaminated waste back into clean rooms</button></li><li><button class="opt" data-correct="0">Both are treated with the same chemical</button></li><li><button class="opt" data-correct="0">They are not related at all</button></li></ul><div class="why">The mushroom sciarid fly has been documented as benefiting from and spreading green mould disease. Note that this evidence is United States commercial literature, with no African prevalence data available.</div></div>
+<div class="q"><p><strong>26. Long thin stems with small caps most likely means what?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">The substrate has run out of food</button></li><li><button class="opt" data-correct="0">Too little water</button></li><li><button class="opt" data-correct="1">Too much carbon dioxide during fruiting - not enough fresh air exchange</button></li><li><button class="opt" data-correct="0">The spawn was too old</button></li></ul><div class="why">The mushroom is reaching for airflow. It is the visual proxy you can act on without owning a meter, which matters because the available ppm figures are unverified and non-African.</div></div>
+<div class="q"><p><strong>27. A fully colonised bag will not pin. Which of these is NOT one of the triggers to check?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Whether it is still too warm</button></li><li><button class="opt" data-correct="0">Whether there is enough fresh air</button></li><li><button class="opt" data-correct="0">Whether there is light</button></li><li><button class="opt" data-correct="1">Whether you have added more spawn</button></li></ul><div class="why">The triggers are full colonisation, a temperature drop, light and a large increase in fresh air. Adding more spawn to a colonised bag does nothing, because the substrate is already claimed.</div></div>
+<div class="q"><p><strong>28. What causes bacterial blotch to develop?</strong></p><ul class="opts"><li><button class="opt" data-correct="1">Caps staying wet for 4 to 6 hours or longer after water is applied</button></li><li><button class="opt" data-correct="0">Too much light on the caps</button></li><li><button class="opt" data-correct="0">Substrate that is too dry to colonise</button></li><li><button class="opt" data-correct="0">Harvesting too early</button></li></ul><div class="why">Condensation forms on the cap when the air is saturated and warmer than the cap. Ventilation and misting floor and walls rather than the mushrooms is the primary control.</div></div>
+<div class="q"><p><strong>29. What should &quot;a slow batch&quot; be measured against?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">The 12 to 15 day MushWorld figure only</button></li><li><button class="opt" data-correct="0">The fastest published trial result</button></li><li><button class="opt" data-correct="1">Your own past batches of the same substrate in the same room</button></li><li><button class="opt" data-correct="0">The Botswana 35-day upper figure only</button></li></ul><div class="why">The sourced spawn-run figures span 12 to 35 days across four sources, so no published number defines slow. Your own baseline is what makes the signal readable.</div></div>
+<div class="q"><p><strong>30. Where should you mist to raise fruiting-room humidity?</strong></p><ul class="opts"><li><button class="opt" data-correct="0">Directly onto the caps until water pools on them</button></li><li><button class="opt" data-correct="0">Into the substrate at the base of the bag only</button></li><li><button class="opt" data-correct="1">The floor and walls, avoiding standing water on the caps</button></li><li><button class="opt" data-correct="0">Nowhere - humidity looks after itself</button></li></ul><div class="why">The Botswana guide names misting floor and walls. Standing water sitting on caps is exactly the condition that produces bacterial blotch, so raising humidity and wetting mushrooms are different things.</div></div>
+</div>
+<div class="card"><h3>Module 2 capstone</h3><p>Run a Mycelium Observation Log on one single bag, from spawning to the end of the second flush, and write down what the biology actually did in your own conditions. Step 1: prepare one bag using whatever substrate you have decided to trial, record its dry weight before wetting, and label it with the spawning date. Step 2: from the spawning date, look at the bag every single day and write one line - the date, how far the white mycelium has advanced as a rough fraction of the bag, and anything unusual in colour or smell. Step 3: write down the date the bag became fully white and bound, and count the days from spawning. Compare that count with the sourced ranges in Lesson 2. Step 4: at that point change the conditions - move it to more light, more fresh air, and a cooler spot if you have one - and record the date you made the change. Step 5: record the date the first pins appear, and the number of days from the change. Step 6: record the date of first harvest, the fresh weight, and calculate your BE against the dry weight from Step 1. Step 7: leave the bag, record the rest interval, and repeat for the second flush. Step 8: write half a page saying which stage in your own bag ran slower or faster than the sourced figures, and what you think caused it.</p>
+<p><button class="btn" onclick="rasMarkDone(2,this)">Mark module 2 complete</button></p></div>
+
+<div id="ras-assignment"></div>
+
+<div class="pager">
+<a class="btn" href="mushroom-farming-module-1.html">← Previous</a>
+<a class="btn" href="mushroom-farming-module-3.html">Next Module →</a>
 </div>
 
-<div class="section">
-<h2>🎥 Video Lessons</h2>
-<div class="video-container"><h3>1. Module 2 Introduction & Overview</h3><div class="ras-vid" data-yt="kiVoYdW6KdI" data-title="How to Grow Oyster Mushroom at Home | Mushroom Cultivation" role="button" tabindex="0" aria-label="Play: How to Grow Oyster Mushroom at Home | Mushroom Cultivation"><img loading="lazy" src="https://i.ytimg.com/vi/kiVoYdW6KdI/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Garden ideas</b>How to Grow Oyster Mushroom at Home | Mushroom Cultivation</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=mushroom+farming+Module+2+Introduction+&amp;+Overview" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
-<div class="video-container"><h3>2. Practical Skills & Best Practices</h3><div class="ras-vid" data-yt="ZCWpdMvPpps" data-title="How to Easily Grow Oyster Mushrooms at Home" role="button" tabindex="0" aria-label="Play: How to Easily Grow Oyster Mushrooms at Home"><img loading="lazy" src="https://i.ytimg.com/vi/ZCWpdMvPpps/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Von Malegowski</b>How to Easily Grow Oyster Mushrooms at Home</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=mushroom+farming+Practical+Skills+&amp;+Best+Practices" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
-<div class="video-container"><h3>3. Problem-Solving & Troubleshooting</h3><div class="ras-vid" data-yt="xquey_9Dbdo" data-title="MUSHROOM FARMING" role="button" tabindex="0" aria-label="Play: MUSHROOM FARMING"><img loading="lazy" src="https://i.ytimg.com/vi/xquey_9Dbdo/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Discover JKUAT</b>MUSHROOM FARMING</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=mushroom+farming+Problem-Solving+&amp;+Troubleshooting" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
-<div class="video-container"><h3>4. Case Studies & Real-World Examples</h3><div class="ras-vid" data-yt="Rfon-ikxQMA" data-title="Cylinder System of Oyster Mushroom Cultivation" role="button" tabindex="0" aria-label="Play: Cylinder System of Oyster Mushroom Cultivation"><img loading="lazy" src="https://i.ytimg.com/vi/Rfon-ikxQMA/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>FarmTV</b>Cylinder System of Oyster Mushroom Cultivation</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=mushroom+farming+Case+Studies+&amp;+Real-World+Examples" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
-<div class="video-container"><h3>5. Implementation & Action Planning</h3><div class="ras-vid" data-yt="Rfon-ikxQMA" data-title="Cylinder System of Oyster Mushroom Cultivation" role="button" tabindex="0" aria-label="Play: Cylinder System of Oyster Mushroom Cultivation"><img loading="lazy" src="https://i.ytimg.com/vi/Rfon-ikxQMA/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>FarmTV</b>Cylinder System of Oyster Mushroom Cultivation</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=mushroom+farming+Implementation+&amp;+Action+Planning" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
-</div>
+<div class="disclaim"><strong>Price check, always.</strong> Before you buy ingredients, equipment, or commit to a supplier, call three suppliers and compare prices. Prices and ingredient availability vary widely by region and season. This course teaches the method. You confirm the local numbers with your own research and with your veterinarian or animal nutritionist.</div>
+</div></main>
 
-<div class="section">
-<h2>📊 Key Reference Table</h2>
-<table>
-<thead><tr><th>Concept</th><th>Key Details</th><th>Your Farm Application</th></tr></thead>
-<tbody>
-<tr><td>Best Practice 1</td><td>Proven method for success</td><td>How to implement on your farm</td></tr>
-<tr><td>Best Practice 2</td><td>Common problem solution</td><td>Troubleshooting guide</td></tr>
-<tr><td>Best Practice 3</td><td>Optimization strategy</td><td>Performance improvement steps</td></tr>
-<tr><td>Best Practice 4</td><td>Cost efficiency method</td><td>Profitability enhancement</td></tr>
-</tbody>
-</table>
-</div>
-
-<div class="section">
-<h2>💡 Module 2: 6 Core Concepts</h2>
-<div class="concept">
-<h3>Concept 1: Foundational Knowledge</h3>
-<p>Understand the basic principles that underlie successful Mushroom Farming. This foundation helps you make better decisions and troubleshoot problems effectively. Practice applying this concept on a small scale before expanding.</p>
-</div>
-<div class="concept">
-<h3>Concept 2: Practical Implementation</h3>
-<p>Learn specific techniques and methods proven to work in real farming situations. These practical skills are what successful farmers use daily. Document your implementation process and results.</p>
-</div>
-<div class="concept">
-<h3>Concept 3: Monitoring & Measurement</h3>
-<p>Develop systems to track your results. Data-driven decisions lead to better outcomes. Keep simple records of inputs, outputs, and results. Use this information to optimize constantly.</p>
-</div>
-<div class="concept">
-<h3>Concept 4: Problem-Solving</h3>
-<p>Learn systematic approaches to solving problems that arise on your farm. Most issues have solutions that others have already discovered. Apply proven troubleshooting methods.</p>
-</div>
-<div class="concept">
-<h3>Concept 5: Optimization & Scaling</h3>
-<p>Once you master the basics, learn how to optimize for better results and profitability. Understand what changes when you scale your operation from small to large.</p>
-</div>
-<div class="concept">
-<h3>Concept 6: Sustainability & Long-Term Success</h3>
-<p>Build a farming operation that remains profitable and sustainable for years. Balance short-term profit with long-term health of your land, animals, and business.</p>
-</div>
-</div>
-
-<div class="section">
-<div class="quiz-section">
-<h2>🎯 Module 2 Knowledge Check</h2>
-<div class="quiz-question">
-<p>1. What is the most important skill to master in this module?</p>
-<div class="quiz-option"><input type="radio" name="q1" value="a" id="q1a"><label for="q1a">a) Understanding core principles and applying them to your farm</label></div>
-<div class="quiz-option"><input type="radio" name="q1" value="b" id="q1b"><label for="q1b">b) Memorizing technical details</label></div>
-<div class="quiz-option"><input type="radio" name="q1" value="c" id="q1c"><label for="q1c">c) Following procedures exactly</label></div>
-<button onclick="checkAnswer(this)" data-q="q1" data-a="a" data-f="Correct! Applying principles to your specific situation is more valuable than memorizing details.">Check Answer</button>
-<div id="feedback-q1" class="feedback"></div>
-</div>
-<div class="quiz-question">
-<p>2. How should you approach learning in this module?</p>
-<div class="quiz-option"><input type="radio" name="q2" value="a" id="q2a"><label for="q2a">a) Watch videos passively</label></div>
-<div class="quiz-option"><input type="radio" name="q2" value="b" id="q2b"><label for="q2b">b) Take notes, experiment on your farm, track results, adjust</label></div>
-<div class="quiz-option"><input type="radio" name="q2" value="c" id="q2c"><label for="q2c">c) Read the materials once</label></div>
-<button onclick="checkAnswer(this)" data-q="q2" data-a="b" data-f="Correct! Active learning through experimentation produces the best results.">Check Answer</button>
-<div id="feedback-q2" class="feedback"></div>
-</div>
-<div class="quiz-question">
-<p>3. What makes farming knowledge valuable?</p>
-<div class="quiz-option"><input type="radio" name="q3" value="a" id="q3a"><label for="q3a">a) How you apply it to solve real problems on your farm</label></div>
-<div class="quiz-option"><input type="radio" name="q3" value="b" id="q3b"><label for="q3b">b) How much you memorize</label></div>
-<div class="quiz-option"><input type="radio" name="q3" value="c" id="q3c"><label for="q3c">c) Academic credentials</label></div>
-<button onclick="checkAnswer(this)" data-q="q3" data-a="a" data-f="Correct! The real value of knowledge is how it improves your farming results.">Check Answer</button>
-<div id="feedback-q3" class="feedback"></div>
-</div>
-</div>
-</div>
-
-<div class="section">
-<div class="project-section">
-<h2>🚀 Capstone Project: 8-Phase Implementation Plan</h2>
-<div class="project-item">
-<h4>Phase 1: Research & Planning</h4>
-<p>Study the module content. Research your local context: prices, climate, available resources. Document current state of your farm operation. What are you doing now? What could improve?</p>
-</div>
-<div class="project-item">
-<h4>Phase 2: Learning & Preparation</h4>
-<p>Complete all video lessons. Take detailed notes. Highlight key techniques. Prepare equipment and resources. Identify any knowledge gaps and address them.</p>
-</div>
-<div class="project-item">
-<h4>Phase 3: Small-Scale Testing</h4>
-<p>Test new techniques on a small part of your farm. Document exact details: date, materials used, conditions, results. Start small to reduce risk. Learn from early results.</p>
-</div>
-<div class="project-item">
-<h4>Phase 4: Measurement & Monitoring</h4>
-<p>Track results carefully. Keep records: inputs (cost, time, materials), outputs (yield, quality, revenue). Compare with your baseline. Did results improve?</p>
-</div>
-<div class="project-item">
-<h4>Phase 5: Problem-Solving & Adjustment</h4>
-<p>When problems arise (they will), troubleshoot systematically. Review module concepts. Ask: what changed? What could I do differently? Implement adjustments and test again.</p>
-</div>
-<div class="project-item">
-<h4>Phase 6: Expansion & Scaling</h4>
-<p>Once proven on small scale, expand to larger area. Scale gradually. Document challenges at each scale. Train any helpers on new methods.</p>
-</div>
-<div class="project-item">
-<h4>Phase 7: Optimization & Profitability</h4>
-<p>Now that system works, optimize for profit. Reduce unnecessary costs. Maximize output quality. Calculate return on investment. Document which practices are most profitable.</p>
-</div>
-<div class="project-item">
-<h4>Phase 8: Sharing & Mentoring</h4>
-<p>Share what you learned with other farmers. Help them implement successfully. Your experience becomes valuable. Document successful stories and lessons learned.</p>
-</div>
-</div>
-</div>
-
-<div class="nav-buttons">
-<a href="mushroom-farming-course.html">↑ Back to Mushroom Farming Course</a>
-</div>
-</div>
-</div>
+<footer><div class="wrap">Mushroom Farming — Module 2 of 12 · 4,070 words · rise AFRICA skills</div></footer>
 
 <script>
-var PROGRESS_KEY = 'mushroom-farming-module-2';
-
-function checkAnswer(el){
-  var q = el.dataset.q, a = el.dataset.a, f = el.dataset.f || '';
-  var sel = document.querySelector('input[name="' + q + '"]:checked');
-  var box = document.getElementById('feedback-' + q);
-  if(!sel){ if(box){ box.className='feedback show incorrect';
-            box.textContent='Please select an answer first.'; } return; }
-  var right = (sel.value === a);
-  if(box){
-    box.className = 'feedback show ' + (right ? 'correct' : 'incorrect');
-    box.textContent = (right ? '\u2713 ' : '\u2717 ') + f;
-  }
-  updateProgress();
-}
-function updateProgress(){
-  var groups = {};
-  document.querySelectorAll('input[type="radio"]').forEach(function(r){ groups[r.name]=1; });
-  var total = Object.keys(groups).length;
-  var done  = {};
-  document.querySelectorAll('input[type="radio"]:checked').forEach(function(r){ done[r.name]=1; });
-  var pct = total ? (Object.keys(done).length / total) * 100 : 0;
-  var bar = document.getElementById('progressFill');
-  if(bar) bar.style.width = pct + '%';
-  try { localStorage.setItem(PROGRESS_KEY, String(pct)); } catch(e){}
-}
-window.addEventListener('load', function(){
-  var saved = null;
-  try { saved = localStorage.getItem(PROGRESS_KEY); } catch(e){}
-  var bar = document.getElementById('progressFill');
-  if(saved && bar) bar.style.width = saved + '%';
-  document.querySelectorAll('input[type="radio"]').forEach(function(r){
-    r.addEventListener('change', updateProgress);
+(function() {
+  var KEY="raskills.mushroom-farming.progress";
+  function load() { try { return JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e) { return {}; } }
+  function save(o) { try { localStorage.setItem(KEY, JSON.stringify(o)); } catch(e) { } }
+  window.rasMarkDone = function(n, btn) { var p = load(); p["m" + n] = true; save(p); if (btn) { btn.textContent = "Module complete"; btn.classList.add("ghost"); } };
+  window.rasProgress = load;
+})();
+document.querySelectorAll(".opt").forEach(function(btn) {
+  btn.addEventListener("click", function() {
+    var correct = this.getAttribute("data-correct") === "1";
+    this.classList.add(correct ? "right" : "wrong");
+    var why = this.closest(".q").querySelector(".why");
+    if (why) why.classList.add("show");
+    this.closest(".opts").querySelectorAll(".opt").forEach(function(o) { o.style.pointerEvents = "none"; });
+  });
+});
+document.querySelectorAll(".vthumb").forEach(function(el) {
+  el.addEventListener("click", function() {
+    if (this.getAttribute("data-on")) return;
+    var iframe = document.createElement("iframe");
+    iframe.src = "https://www.youtube.com/embed/" + this.getAttribute("data-yt");
+    iframe.allow = "accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture";
+    iframe.allowFullscreen = true;
+    this.innerHTML = ""; this.appendChild(iframe); this.setAttribute("data-on", "1");
   });
 });
 </script>
+<script src="/assignment-submit.js"></script>
 </body>
 </html>
