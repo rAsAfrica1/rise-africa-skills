@@ -1,5 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220" role="img" aria-labelledby="zt">
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220" role="img" aria-labelledby="zt">
 <title id="zt">Zola, a friendly robot built from a jerry can, bottle caps and wire</title>
+<style>
+  @keyframes zola-blink {
+    0%, 90%, 100% { transform: scaleY(1); }
+    93%, 96%     { transform: scaleY(0.08); }
+  }
+  .zola-eye {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: zola-blink 4.5s ease-in-out infinite;
+  }
+</style>
 <defs>
  <linearGradient id="can" x1="0" y1="0" x2="0" y2="1">
    <stop offset="0" stop-color="#FFC94D"/><stop offset="1" stop-color="#E89A0F"/>
@@ -16,11 +27,17 @@
 <rect x="86" y="26" width="28" height="14" rx="5" fill="#E5397F" stroke="#8A2050" stroke-width="3"/>
 <!-- jerry-can ribs -->
 <path d="M60 52v50M140 52v50" stroke="#C98A12" stroke-width="4" stroke-linecap="round" opacity=".8"/>
-<!-- bottle-cap eyes -->
-<circle cx="80" cy="72" r="17" fill="#FFF8EC" stroke="#8A5C05" stroke-width="3"/>
-<circle cx="120" cy="72" r="17" fill="#FFF8EC" stroke="#8A5C05" stroke-width="3"/>
-<circle cx="83" cy="74" r="8" fill="#14122B"/><circle cx="123" cy="74" r="8" fill="#14122B"/>
-<circle cx="86" cy="71" r="3" fill="#fff"/><circle cx="126" cy="71" r="3" fill="#fff"/>
+<!-- bottle-cap eyes (grouped for blink animation) -->
+<g class="zola-eye">
+  <circle cx="80" cy="72" r="17" fill="#FFF8EC" stroke="#8A5C05" stroke-width="3"/>
+  <circle cx="83" cy="74" r="8" fill="#14122B"/>
+  <circle cx="86" cy="71" r="3" fill="#fff"/>
+</g>
+<g class="zola-eye">
+  <circle cx="120" cy="72" r="17" fill="#FFF8EC" stroke="#8A5C05" stroke-width="3"/>
+  <circle cx="123" cy="74" r="8" fill="#14122B"/>
+  <circle cx="126" cy="71" r="3" fill="#fff"/>
+</g>
 <!-- smile -->
 <path d="M78 98 Q100 112 122 98" stroke="#8A5C05" stroke-width="5" fill="none" stroke-linecap="round"/>
 <!-- tin-can body -->
