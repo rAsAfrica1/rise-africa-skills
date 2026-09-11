@@ -2758,14 +2758,14 @@ setupToolToggle('tglDiary','bodyDiary');
 setupToolToggle('tglCalc','bodyCalc');
 setupToolToggle('tglPlan','bodyPlan');
  
-document.getElementById('navHome').addEventListener('click', function(e){ e.preventDefault(); window.scrollTo({top:0,behavior:'smooth'}); });
-document.getElementById('navPricing').addEventListener('click', function(e){ e.preventDefault(); scrollToId('pricing'); });
-document.getElementById('navCourses').addEventListener('click', function(e){ e.preventDefault(); scrollToId('courses'); });
-document.getElementById('navEnrolled').addEventListener('click', function(e){ e.preventDefault(); scrollToId('enrolled'); });
-document.getElementById('navCalc').addEventListener('click', function(e){ e.preventDefault(); openTool('tglCalc','bodyCalc'); scrollToId('calculator'); });
-document.getElementById('navCal').addEventListener('click', function(e){ e.preventDefault(); openTool('tglPlan','bodyPlan'); scrollToId('calendar'); });
-document.getElementById('navSignUp').addEventListener('click', function(e){ e.preventDefault(); openAuthModal('signup'); });
-document.getElementById('navLogIn').addEventListener('click', function(e){ e.preventDefault(); openAuthModal('login'); });
+(document.getElementById('navHome')||{addEventListener:function(){}}).addEventListener('click', function(e){ e.preventDefault(); window.scrollTo({top:0,behavior:'smooth'}); });
+(document.getElementById('navPricing')||{addEventListener:function(){}}).addEventListener('click', function(e){ e.preventDefault(); scrollToId('pricing'); });
+(document.getElementById('navCourses')||{addEventListener:function(){}}).addEventListener('click', function(e){ e.preventDefault(); scrollToId('courses'); });
+(document.getElementById('navEnrolled')||{addEventListener:function(){}}).addEventListener('click', function(e){ e.preventDefault(); scrollToId('enrolled'); });
+(document.getElementById('navCalc')||{addEventListener:function(){}}).addEventListener('click', function(e){ e.preventDefault(); openTool('tglCalc','bodyCalc'); scrollToId('calculator'); });
+(document.getElementById('navCal')||{addEventListener:function(){}}).addEventListener('click', function(e){ e.preventDefault(); openTool('tglPlan','bodyPlan'); scrollToId('calendar'); });
+(document.getElementById('navSignUp')||{addEventListener:function(){}}).addEventListener('click', function(e){ e.preventDefault(); openAuthModal('signup'); });
+(document.getElementById('navLogIn')||{addEventListener:function(){}}).addEventListener('click', function(e){ e.preventDefault(); openAuthModal('login'); });
  
 // ===== COURSE SEARCH (titles & categories only) =====
 var inpSearch = document.getElementById('inpSearch');
@@ -2797,7 +2797,7 @@ if(modalDesc) modalDesc.textContent = p ? p.textContent : '';
 modalBg.classList.add('on');
 });
 }
-document.getElementById('btnModalX').addEventListener('click', function(){ modalBg.classList.remove('on'); });
+(document.getElementById('btnModalX')||{addEventListener:function(){}}).addEventListener('click', function(){ modalBg.classList.remove('on'); });
 modalBg.addEventListener('click', function(e){ if(e.target === this) this.classList.remove('on'); });
  
 // ===== PRESERVATION CALC =====
@@ -2860,7 +2860,7 @@ document.querySelectorAll('.mtag').forEach(function(tg){ tg.classList.toggle('on
 }
 ['selProduct','selMethod'].forEach(function(id){ var el = document.getElementById(id); if(el) el.addEventListener('change', calcPreserv); });
 ['inpQty','inpTemp'].forEach(function(id){ var el = document.getElementById(id); if(el) el.addEventListener('input', calcPreserv); });
-document.getElementById('methodTags').addEventListener('click', function(e){
+(document.getElementById('methodTags')||{addEventListener:function(){}}).addEventListener('click', function(e){
 var tag = e.target.closest('.mtag');
 if(!tag) return;
 var sel = document.getElementById('selMethod');
@@ -2964,14 +2964,14 @@ localStorage.setItem('studyLog', JSON.stringify(studyLog));
 renderDiary();
 showDiary(dk);
 }
-document.getElementById('btnPrevMonth').addEventListener('click', function(){ curMonth--; if(curMonth < 0){ curMonth = 11; curYear--; } renderDiary(); });
-document.getElementById('btnNextMonth').addEventListener('click', function(){ curMonth++; if(curMonth > 11){ curMonth = 0; curYear++; } renderDiary(); });
+(document.getElementById('btnPrevMonth')||{addEventListener:function(){}}).addEventListener('click', function(){ curMonth--; if(curMonth < 0){ curMonth = 11; curYear--; } renderDiary(); });
+(document.getElementById('btnNextMonth')||{addEventListener:function(){}}).addEventListener('click', function(){ curMonth++; if(curMonth > 11){ curMonth = 0; curYear++; } renderDiary(); });
 renderDiary();
  
 // ===== QR WIDGET (hidden by default — tap 📱 to show) =====
 var qrFloat = document.getElementById('qrFloat');
 var btnQrShow = document.getElementById('btnQrShow');
-document.getElementById('btnQrClose').addEventListener('click', function(){
+(document.getElementById('btnQrClose')||{addEventListener:function(){}}).addEventListener('click', function(){
 qrFloat.classList.add('off');
 btnQrShow.classList.add('on');
 localStorage.setItem('qrHidden', 'true');
