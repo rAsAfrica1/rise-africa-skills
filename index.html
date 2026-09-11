@@ -394,6 +394,36 @@ body.light .nas-block p { color: #3a3630; }
 body.light .nas-block strong, body.light .nas-close strong { color: #000; }
 body.light .nas-close { color: #5a5448; border-top-color: rgba(201,162,39,.4); }
 </style>
+<style id="float-stack-fix">
+/* === Stack floating buttons to prevent overlap === */
+/* QR widget: bottom-left, unchanged */
+/* Support Us: bottom-right, raised above Ask AI */
+.support-us-float{
+  position:fixed !important;
+  bottom:6.5rem !important;
+  right:1.5rem !important;
+  left:auto !important;
+  z-index:9998 !important;
+}
+/* Ask AI: bottom-right, lowest position */
+.chat-fab{
+  bottom:1.5rem !important;
+  right:1.5rem !important;
+  z-index:9997 !important;
+}
+/* WhatsApp (if it floats): position above Support Us */
+.wa-float, .whatsapp-float{
+  bottom:11.5rem !important;
+  right:1.5rem !important;
+  z-index:9999 !important;
+}
+/* Mobile: tighten spacing */
+@media(max-width:480px){
+  .support-us-float{bottom:6rem !important;right:1rem !important;}
+  .chat-fab{bottom:1rem !important;right:1rem !important;}
+  .wa-float,.whatsapp-float{bottom:10.5rem !important;right:1rem !important;}
+}
+</style>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
