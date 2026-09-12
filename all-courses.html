@@ -60,6 +60,60 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     body.light .module ul li { color: #555; }
     body.light .dir-card .name { color: #1a1a1a; }
   </style>
+<style id="theme-light-css">
+body.light {
+  background: #f7f5ee !important;
+  color: #1a1a1a !important;
+}
+body.light .container { background: #ffffff !important; border-color: #e5ddd0 !important; }
+body.light h1 { color: #b8860b !important; }
+body.light .sub { color: #555 !important; }
+body.light .dir-card {
+  background: #fdfbf6 !important;
+  border-color: #e5ddd0 !important;
+  color: #1a1a1a !important;
+}
+body.light .dir-card:hover { border-color: #c9a227 !important; }
+body.light .dir-card .num { color: #b8860b !important; }
+body.light .dir-card .name { color: #1a1a1a !important; }
+body.light .dir-card .cat { color: #666 !important; }
+body.light .module { background: #fdfbf6 !important; border-color: #e5ddd0 !important; }
+body.light .module h3 { color: #b8860b !important; }
+body.light .module li { color: #2a2a2a !important; }
+body.light .description { color: #2a2a2a !important; }
+body.light .meta-item { background: #fdfbf6 !important; border-color: #e5ddd0 !important; }
+body.light .meta-item .label { color: #888 !important; }
+body.light .meta-item .value { color: #1a1a1a !important; }
+body.light .back-link { color: #b8860b !important; }
+body.light .error { color: #c0392b !important; }
+body.light .video-btn { background: #c9a227 !important; color: #fff !important; }
+body.light .btn { color: #fff !important; }
+body.light footer { color: #666 !important; }
+</style>
+
+<a id="themeToggleAC" href="javascript:void(0)" onclick="toggleThemeAC()" title="Toggle light/dark"
+   style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;background:#c9a227;color:#0f0f1a;border-radius:50%;font-size:1.4rem;text-decoration:none;box-shadow:0 4px 18px rgba(0,0,0,.4);font-weight:800;">&#9788;</a>
+
+<script>
+(function(){
+  var saved = localStorage.getItem('theme');
+  if (saved === 'light') { document.body.classList.add('light'); }
+  else if (!saved && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    document.body.classList.add('light');
+  }
+  window.toggleThemeAC = function() {
+    document.body.classList.toggle('light');
+    var isLight = document.body.classList.contains('light');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    var btn = document.getElementById('themeToggleAC');
+    if (btn) btn.innerHTML = isLight ? '&#9790;' : '&#9788;';
+  };
+  document.addEventListener('DOMContentLoaded', function(){
+    var btn = document.getElementById('themeToggleAC');
+    if (btn && document.body.classList.contains('light')) btn.innerHTML = '&#9790;';
+  });
+})();
+</script>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
