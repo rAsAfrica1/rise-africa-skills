@@ -1,88 +1,33 @@
-﻿// Rise Africa Skills - Service Worker v170
-// Network-first for HTML, cache-first for static assets.
-// Bumping CACHE_NAME forces every device to delete old caches on next visit.
-const CACHE_NAME = 'rise-africa-v170';
-const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/og-image.png'
-];
+﻿// KILL SWITCH — removes this service worker and all caches from every device.
+// After this runs, the site loads fresh from the network every time.
+// We can re-add a proper service worker later if needed.
 
-// Install: activate immediately, cache a small set of static assets
-self.addEventListener('install', (event) => {
+self.addEventListener('install', () => {
   self.skipWaiting();
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      console.log('[SW] Caching static assets v170');
-      return cache.addAll(STATIC_ASSETS).catch(() => {});
-    })
-  );
 });
 
-// Activate: delete ALL old caches, take control of open tabs immediately
 self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames
-          .filter((name) => name !== CACHE_NAME)
-          .map((name) => {
-            console.log('[SW] Deleting old cache:', name);
-            return caches.delete(name);
-          })
-      );
-    }).then(() => self.clients.claim())
-  );
-});
+  event.waitUntil((async () => {
+    try {
+      // 1. Delete ALL caches
+      const keys = await caches.keys();
+      await Promise.all(keys.map((k) => caches.delete(k)));
 
-// Fetch strategy:
-// - HTML navigations: network-first, cache fallback (so updates go live instantly)
-// - Static assets (css, js, images, fonts): cache-first, network fallback (for speed)
-self.addEventListener('fetch', (event) => {
-  const req = event.request;
-  if (req.method !== 'GET') return;
+      // 2. Unregister this service worker
+      await self.registration.unregister();
 
-  const url = new URL(req.url);
-  if (url.origin !== self.location.origin) return;
-
-  const isHtml = req.mode === 'navigate' ||
-                 req.destination === 'document' ||
-                 url.pathname.endsWith('.html') ||
-                 url.pathname === '/';
-
-  if (isHtml) {
-    // NETWORK-FIRST: fetch fresh, update cache, fall back to cache if offline
-    event.respondWith(
-      fetch(req)
-        .then((response) => {
-          if (response && response.status === 200) {
-            const clone = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(req, clone));
-          }
-          return response;
-        })
-        .catch(() => caches.match(req).then((cached) => cached || caches.match('/index.html')))
-    );
-    return;
-  }
-
-  // STATIC ASSETS: cache-first
-  event.respondWith(
-    caches.match(req).then((cached) => {
-      if (cached) return cached;
-      return fetch(req).then((response) => {
-        if (response && response.status === 200 && response.type === 'basic') {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(req, clone));
-        }
-        return response;
+      // 3. Force every open tab to reload
+      const clients = await self.clients.matchAll({ type: 'window' });
+      clients.forEach((c) => {
+        try { c.navigate(c.url); } catch (e) {}
       });
-    })
-  );
+    } catch (e) {
+      console.warn('[SW] kill-switch error:', e);
+    }
+  })());
 });
 
-// Message handler: allow pages to force update
-self.addEventListener('message', (event) => {
-  if (event.data === 'SKIP_WAITING') self.skipWaiting();
+// Pass-through: while the SW still exists briefly, just proxy to network
+self.addEventListener('fetch', (event) => {
+  event.respondWith(fetch(event.request).catch(() => caches.match(event.request)));
 });
