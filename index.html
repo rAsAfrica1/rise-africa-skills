@@ -2679,4 +2679,154 @@ document.querySelectorAll('.course-card').forEach(function(cardEl){
   }
 })();
 </script>
+<!-- ===== 31-DAY STUDY CALENDAR ===== -->
+<section id="calendar-section" style="max-width:1100px;margin:3rem auto 2rem;padding:0 1.2rem;">
+  <h2 style="color:var(--gold);font-size:1.6rem;text-align:center;margin:0 0 1.5rem;">📅 31-Day Study Diary</h2>
+  <div class="cal-wrap">
+    <div class="cal-head">
+      <button type="button" id="btnPrevMonth" class="cal-nav" aria-label="Previous month">‹</button>
+      <span id="lblMonth">Month Year</span>
+      <button type="button" id="btnNextMonth" class="cal-nav" aria-label="Next month">›</button>
+    </div>
+    <div class="cal-dow">
+      <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span>
+      <span>Thu</span><span>Fri</span><span>Sat</span>
+    </div>
+    <div class="cal-grid" id="gridCal"></div>
+    <div class="cal-info" id="boxDiary">
+      <p>Click any day to log a study session. Green days = logged.</p>
+    </div>
+  </div>
+</section>
+<style>
+.cal-wrap{background:var(--card, #1e1e32);border:1px solid rgba(201,162,39,.25);border-radius:12px;padding:1.2rem;max-width:640px;margin:0 auto;}
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;font-weight:700;color:var(--gold,#c9a227);font-size:1.2rem;}
+.cal-nav{background:transparent;border:1px solid var(--gold,#c9a227);color:var(--gold,#c9a227);width:40px;height:40px;border-radius:8px;font-size:1.4rem;cursor:pointer;line-height:1;font-family:inherit;}
+.cal-nav:hover{background:var(--gold,#c9a227);color:#0f0f1a;}
+.cal-dow{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:.5rem;color:var(--muted,#9a9ab0);font-size:.72rem;font-weight:700;text-align:center;text-transform:uppercase;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.cal-grid>div{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:8px;background:rgba(255,255,255,.04);color:var(--text,#e8e8e8);font-size:.9rem;}
+.cal-day{cursor:pointer;transition:background .15s, transform .1s;user-select:none;}
+.cal-day:hover{background:rgba(201,162,39,.25);}
+.cal-day.today{border:2px solid var(--gold,#c9a227);font-weight:800;}
+.cal-day.log{background:rgba(76,175,80,.5);color:#fff;font-weight:700;}
+.cal-day.sel{background:var(--gold,#c9a227);color:#0f0f1a;font-weight:800;transform:scale(1.05);}
+.cal-info{margin-top:1rem;padding:1rem 1.2rem;background:rgba(201,162,39,.08);border-left:3px solid var(--gold,#c9a227);border-radius:8px;color:var(--text,#e8e8e8);font-size:.9rem;min-height:70px;}
+.cal-info h4{margin:0 0 .4rem;color:var(--gold,#c9a227);}
+.cal-info button{margin-top:.6rem;padding:.55rem 1.1rem;background:var(--gold,#c9a227);color:#0f0f1a;border:none;border-radius:6px;font-weight:800;cursor:pointer;font-family:inherit;}
+</style>
+<script>
+(function(){
+  "use strict";
+  var monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var today = new Date();
+  var curMonth = today.getMonth();
+  var curYear = today.getFullYear();
+  var selDate = null;
+  var studyLog = {};
+  try { studyLog = JSON.parse(localStorage.getItem('studyLog') || '{}'); } catch(e){}
+
+  var grid = document.getElementById('gridCal');
+  var lbl = document.getElementById('lblMonth');
+  var prevBtn = document.getElementById('btnPrevMonth');
+  var nextBtn = document.getElementById('btnNextMonth');
+  var box = document.getElementById('boxDiary');
+
+  function esc(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  function renderDiary(){
+    if (!grid || !lbl) return;
+    grid.innerHTML = '';
+    lbl.textContent = monthNames[curMonth] + ' ' + curYear;
+    var firstDay = new Date(curYear, curMonth, 1).getDay();
+    var daysInMonth = new Date(curYear, curMonth + 1, 0).getDate();
+    var isCurMonth = today.getMonth() === curMonth && today.getFullYear() === curYear;
+
+    for (var i = 0; i < firstDay; i++){
+      grid.appendChild(document.createElement('div'));
+    }
+    for (var d = 1; d <= daysInMonth; d++){
+      (function(d){
+        var cell = document.createElement('div');
+        cell.className = 'cal-day';
+        cell.textContent = d;
+        var dk = curYear + '-' + String(curMonth+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+        if (isCurMonth && d === today.getDate()) cell.classList.add('today');
+        if (studyLog[dk]) cell.classList.add('log');
+        if (selDate === dk) cell.classList.add('sel');
+        cell.addEventListener('click', function(){
+          grid.querySelectorAll('.cal-day').forEach(function(c){ c.classList.remove('sel'); });
+          cell.classList.add('sel');
+          selDate = dk;
+          showDiary(dk);
+        });
+        grid.appendChild(cell);
+      })(d);
+    }
+  }
+
+  function showDiary(dk){
+    if (!box) return;
+    var logged = studyLog[dk];
+    var dateObj = new Date(dk + 'T00:00:00');
+    var pretty = dateObj.toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric', year:'numeric'});
+    if (logged){
+      box.innerHTML = '<h4>📖 ' + pretty + '</h4>'
+        + '<p><strong>✅ Studied:</strong> ' + esc(logged.course)
+        + '<br><strong>⏱️ Duration:</strong> ' + esc(logged.hours) + ' hours'
+        + '<br><strong>📝 Notes:</strong> ' + esc(logged.notes) + '</p>'
+        + '<button id="btnDelLog">🗑 Remove log</button>';
+    } else {
+      box.innerHTML = '<h4>📖 ' + pretty + '</h4>'
+        + '<p>No study session logged yet.</p>'
+        + '<button id="btnLog">📝 Log Study Session</button>';
+    }
+  }
+
+  function doLog(dk){
+    var course = prompt('Which course did you study?');
+    if (!course) return;
+    var hours = prompt('How many hours?');
+    if (!hours || isNaN(parseFloat(hours))) { alert('Please enter a valid number of hours.'); return; }
+    var notes = prompt('Any notes?') || '';
+    studyLog[dk] = {course: course, hours: hours, notes: notes};
+    try { localStorage.setItem('studyLog', JSON.stringify(studyLog)); } catch(e){}
+    renderDiary();
+    showDiary(dk);
+  }
+
+  function delLog(dk){
+    if (!confirm('Remove the log for ' + dk + '?')) return;
+    delete studyLog[dk];
+    try { localStorage.setItem('studyLog', JSON.stringify(studyLog)); } catch(e){}
+    renderDiary();
+    showDiary(dk);
+  }
+
+  if (box){
+    box.addEventListener('click', function(e){
+      if (e.target.id === 'btnLog' && selDate) doLog(selDate);
+      if (e.target.id === 'btnDelLog' && selDate) delLog(selDate);
+    });
+  }
+  if (prevBtn){
+    prevBtn.addEventListener('click', function(){
+      curMonth--; if (curMonth < 0){ curMonth = 11; curYear--; }
+      renderDiary();
+    });
+  }
+  if (nextBtn){
+    nextBtn.addEventListener('click', function(){
+      curMonth++; if (curMonth > 11){ curMonth = 0; curYear++; }
+      renderDiary();
+    });
+  }
+
+  renderDiary();
+})();
+</script>
 </body>
