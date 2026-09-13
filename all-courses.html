@@ -539,5 +539,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       container.innerHTML = html;
     })();
   </script>
+<script id="dir-filter-fix">
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var cat = params.get('cat');
+  var q = params.get('q');
+  if (!cat && !q) return;
+  var cards = document.querySelectorAll('.dir-card');
+  var visible = 0;
+  cards.forEach(function(card){
+    var text = (card.textContent || '').toLowerCase();
+    var cardCat = '';
+    var catEl = card.querySelector('.cat');
+    if (catEl) cardCat = catEl.textContent.toUpperCase();
+    var show = true;
+    if (cat && cardCat.indexOf(cat.toUpperCase()) === -1) show = false;
+    if (q && text.indexOf(q.toLowerCase()) === -1) show = false;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  var sub = document.querySelector('.sub');
+  if (sub) {
+    var label = 'Showing ' + visible + ' of 170 courses';
+    if (cat) label += ' in ' + cat;
+    if (q) label += ' for "' + q + '"';
+    sub.textContent = label;
+  }
+})();
+</script>
 </body>
 </html>

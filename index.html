@@ -2637,4 +2637,46 @@ document.querySelectorAll('.course-card').forEach(function(cardEl){
 .support-us-label{display:none;}
 @media(min-width:500px){.support-us-label{display:inline;}}
 </style>
+<script id="cat-search-fix">
+(function(){
+  function go(url) { window.location.href = url; }
+
+  // 1. Category tiles -> redirect to filtered directory
+  var cards = document.querySelectorAll('.cat-card');
+  cards.forEach(function(card){
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', function(e){
+      e.preventDefault();
+      var cat = card.getAttribute('data-filter') || 'ALL';
+      if (cat.toUpperCase() === 'ALL') { go('all-courses.html'); }
+      else { go('all-courses.html?cat=' + encodeURIComponent(cat)); }
+    });
+  });
+
+  // 2. Search box -> redirect on Enter
+  var inp = document.getElementById('inpSearch');
+  if (inp) {
+    inp.addEventListener('keypress', function(e){
+      if (e.key === 'Enter') {
+        var q = (inp.value || '').trim();
+        if (q) go('all-courses.html?q=' + encodeURIComponent(q));
+      }
+    });
+  }
+
+  // 3. "Showing all X courses" -> make it a link
+  var cr = document.getElementById('catResults');
+  if (cr && !cr.querySelector('a')) {
+    var txt = (cr.textContent || '').trim();
+    cr.innerHTML = '';
+    var a = document.createElement('a');
+    a.href = 'all-courses.html';
+    a.style.color = 'var(--gold)';
+    a.style.fontWeight = '700';
+    a.style.textDecoration = 'none';
+    a.textContent = txt + ' →';
+    cr.appendChild(a);
+  }
+})();
+</script>
 </body>
