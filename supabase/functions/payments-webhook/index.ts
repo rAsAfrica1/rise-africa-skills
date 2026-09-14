@@ -39,11 +39,11 @@ async function sendCourseEmail(opts) {
   const subject = isGift ? "You've been gifted a course: " + courseName : "Your course is ready: " + courseName;
   const html = '<div style="font-family: Arial, sans-serif; max-width: 560px; margin: 0 auto; padding: 24px;">' +
     '<h2 style="color:#1a1a1a;">' + (isGift ? "You've received a gift" : "You're enrolled!") + '</h2>' +
-    '<p>' + (isGift ? ("Someone thought of you" + (fromNote ? " (" + fromNote + ")" : "") + " and gifted you a course on rise AFRICA skills.") : "Thanks for your payment — your course is ready to start right now.") + '</p>' +
+    '<p>' + (isGift ? ("Someone thought of you" + (fromNote ? " (" + fromNote + ")" : "") + " and gifted you a course on rise AFRICA skills.") : "Thanks for your payment â€” your course is ready to start right now.") + '</p>' +
     '<p style="font-size:18px; font-weight:bold; margin: 20px 0 8px;">' + courseName + '</p>' +
     '<a href="' + courseUrl + '" style="display:inline-block; background:#b8860b; color:#fff; padding:12px 24px; border-radius:6px; text-decoration:none; font-weight:bold;">Start your course</a>' +
     '<p style="margin-top:24px; font-size:13px; color:#666;">If the button does not work, copy this link:<br><a href="' + courseUrl + '">' + courseUrl + '</a></p>' +
-    '<p style="margin-top:24px; font-size:13px; color:#666;">rise AFRICA skills — this is not a certificate, and we never call it one.</p></div>';
+    '<p style="margin-top:24px; font-size:13px; color:#666;">rise AFRICA skills â€” this is not a certificate, and we never call it one.</p></div>';
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: { "Authorization": "Bearer " + RESEND_API_KEY, "Content-Type": "application/json" },
@@ -126,7 +126,7 @@ async function processPurchase(params) {
   const recipient_email = is_gift ? gift_recipient_email : ((metadata && metadata.user_email) || buyerEmail);
 
   if (!course_slug || !recipient_email) {
-    console.warn("Missing course_slug or recipient email — cannot enroll", { course_slug, recipient_email, metadata });
+    console.warn("Missing course_slug or recipient email â€” cannot enroll", { course_slug, recipient_email, metadata });
     return;
   }
 
@@ -175,7 +175,7 @@ async function processPurchase(params) {
     throw enrollInsert.error;
   }
 
-  const courseUrl = SITE_URL + "/" + course_slug + "-course.html";
+  const courseUrl = SITE_URL + "/" + course_slug + "-lessons.html";
   try {
     await sendCourseEmail({ to: recipient_email, courseName: course_name, courseUrl, isGift: is_gift, fromNote: gift_from_name || undefined });
   } catch (emailErr) {
@@ -191,7 +191,7 @@ async function handleCheckout(session) {
     amount: session.amount_total ? session.amount_total / 100 : 0,
     currency: session.currency || "usd",
     metadata: session.metadata,
-    buyerEmail: session.customer_email,
+    buyerEmail: session.customer_email || (session.customer_details && session.customer_details.email) || (session.metadata && session.metadata.user_email) || null,
   });
 }
 

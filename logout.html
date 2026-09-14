@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Signing Out - rise AFRICA skills</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--gold:#c9a227;--darker:#0f0f1a;--card:#1e1e32;--muted:#9a9ab0;--green:#27ae60;--red:#e74c3c;--border:rgba(201,162,39,.2)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--darker);color:#e8e8e8;line-height:1.7;min-height:100vh;display:flex;flex-direction:column}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+header{background:rgba(15,15,26,0.95);border-bottom:1px solid var(--border);padding:.7rem 1rem;display:flex;align-items:center;gap:.6rem}
+.logo-icon{width:34px;height:34px;border-radius:8px;background:var(--gold);color:var(--darker);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem}
+header .brand{font-weight:700;font-size:.95rem}
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:2rem 1rem}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;max-width:420px;width:100%}
+h1{color:var(--gold);font-size:1.5rem;margin-bottom:.5rem;text-align:center}
+.sub{color:var(--muted);font-size:.9rem;text-align:center;margin-bottom:1.5rem}
+label{display:block;font-size:.85rem;color:var(--muted);margin:.9rem 0 .3rem}
+input,select{width:100%;padding:.7rem .9rem;background:var(--darker);border:1px solid var(--border);border-radius:8px;color:#e8e8e8;font-size:.95rem;font-family:inherit}
+input:focus,select:focus{outline:none;border-color:var(--gold)}
+button{width:100%;margin-top:1.2rem;padding:.75rem;background:var(--gold);color:var(--darker);border:none;border-radius:8px;font-weight:700;font-size:.95rem;cursor:pointer;font-family:inherit}
+button:hover{opacity:.9}
+button:disabled{opacity:.5;cursor:not-allowed}
+.msg{margin-top:1rem;padding:.7rem .9rem;border-radius:8px;font-size:.9rem;display:none}
+.msg.err{background:rgba(231,76,60,.12);color:var(--red);border:1px solid rgba(231,76,60,.3);display:block}
+.msg.ok{background:rgba(39,174,96,.12);color:var(--green);border:1px solid rgba(39,174,96,.3);display:block}
+.alt{text-align:center;margin-top:1.2rem;font-size:.9rem;color:var(--muted)}
+footer{border-top:1px solid rgba(255,255,255,.08);padding:1rem;text-align:center;color:var(--muted);font-size:.8rem}
+.remember-row{display:flex;align-items:center;gap:.5rem;margin-top:.9rem}
+.remember-row label{margin:0;flex-shrink:0}
+.remember-row select{flex:1}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo-icon">rAs</div>
+  <div class="brand">rise AFRICA skills</div>
+</header>
+<main>
+  <div class="card">
+    <h1>Signing out...</h1>
+    <p class="sub" id="msg">Please wait.</p>
+  </div>
+</main>
+<footer>© rise AFRICA skills</footer>
+
+<script>
+const SUPABASE_URL = "https://lsvmykrentkbcdrzsaqj.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+(async () => {
+  await supabase.auth.signOut();
+  localStorage.removeItem('ras_session_expiry');
+  document.getElementById('msg').textContent = 'Signed out. Redirecting...';
+  setTimeout(() => { window.location.href = 'login.html'; }, 800);
+})();
+</script>
+</body>
+</html>
