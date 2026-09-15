@@ -1,0 +1,239 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-T2QNRTGJQ3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-T2QNRTGJQ3');
+</script>
+<!-- End Google tag -->
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PFMTN937');</script>
+<!-- End Google Tag Manager -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Fundamentals - Module 3: Neural Networks & Deep Learning</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: #f9f9f9; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: white; padding: 30px; border-radius: 10px; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.2em; opacity: 0.9; }
+        .content { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .section { margin-bottom: 40px; }
+        .section h2 { color: #1a1a2e; font-size: 1.8em; margin-bottom: 20px; border-bottom: 3px solid #0f3460; padding-bottom: 10px; }
+        .learning-objectives { background: #e8f4f8; padding: 20px; border-left: 5px solid #0f3460; margin-bottom: 20px; border-radius: 5px; }
+        .learning-objectives ul { list-style-position: inside; }
+        .learning-objectives li { margin-bottom: 8px; }
+        .video-container { background: #f5f5f5; padding: 15px; margin-bottom: 15px; border-radius: 5px; border-left: 4px solid #0f3460; }
+        .video-container h3 { color: #1a1a2e; margin-bottom: 10px; }
+        iframe { width: 100%; height: 400px; border-radius: 5px; border: none; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th { background: #1a1a2e; color: white; padding: 15px; text-align: left; }
+        td { padding: 12px; border-bottom: 1px solid #ddd; }
+        tr:hover { background: #f5f5f5; }
+        .implementation-step { background: #fafafa; padding: 15px; margin-bottom: 15px; border-radius: 5px; border-left: 4px solid #0f3460; }
+        .implementation-step h3 { color: #1a1a2e; margin-bottom: 8px; }
+        .quiz-section { background: #e8f4f8; padding: 20px; border-radius: 5px; border: 2px solid #0f3460; }
+        .quiz-section h3 { color: #1a1a2e; margin-bottom: 20px; }
+        .quiz-question { margin-bottom: 20px; background: white; padding: 15px; border-radius: 5px; }
+        .quiz-question p { font-weight: bold; margin-bottom: 10px; }
+        .quiz-option { margin-left: 20px; margin-bottom: 8px; }
+        .quiz-option input[type="radio"] { margin-right: 8px; }
+        .feedback { margin-top: 10px; padding: 10px; border-radius: 5px; display: none; }
+        .feedback.show { display: block; }
+        .feedback.correct { background: #c8e6c9; color: #1a4d7a; border-left: 4px solid #0f3460; }
+        .feedback.incorrect { background: #ffcdd2; color: #c62828; border-left: 4px solid #c62828; }
+        .project-section { background: #e8f4f8; padding: 20px; border-radius: 5px; border: 2px solid #0f3460; }
+        .project-section h2 { color: #1a1a2e; }
+        .project-item { background: white; padding: 15px; margin: 15px 0; border-radius: 5px; border-left: 4px solid #0f3460; }
+        .project-item h4 { color: #1a1a2e; margin-bottom: 8px; }
+        .progress-bar { background: #e0e0e0; height: 10px; border-radius: 5px; overflow: hidden; margin-bottom: 20px; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #1a1a2e, #0f3460); width: 0%; transition: width 0.3s; }
+        .next-module { margin-top: 30px; padding: 20px; background: #e8f4f8; border-radius: 5px; text-align: center; }
+        .next-module a { display: inline-block; background: #1a1a2e; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background 0.3s; }
+        .next-module a:hover { background: #0f3460; }
+        @media (max-width: 768px) { .header h1 { font-size: 1.8em; } iframe { height: 300px; } }
+    </style>
+<!--ras-video-v2-->
+<style>
+.ras-vid{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:8px;overflow:hidden;margin:14px 0;cursor:pointer;border:1px solid rgba(201,162,39,.35)}
+.ras-vid img{width:100%;height:100%;object-fit:cover;display:block;opacity:.82;transition:opacity .2s,transform .3s}
+.ras-vid:hover img{opacity:1;transform:scale(1.03)}
+.ras-vid .ras-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.ras-vid .ras-play span{width:64px;height:64px;border-radius:50%;background:rgba(201,162,39,.94);color:#111;display:flex;align-items:center;justify-content:center;font-size:26px;padding-left:5px;box-shadow:0 4px 18px rgba(0,0,0,.5)}
+.ras-vid:hover .ras-play span{background:#e0c050}
+.ras-vid .ras-meta{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 9px;background:linear-gradient(transparent,rgba(0,0,0,.88));color:#fff;font-size:.8rem;line-height:1.35;pointer-events:none}
+.ras-vid .ras-meta b{color:#c9a227;display:block;font-size:.72rem;font-weight:700;margin-bottom:2px}
+.ras-vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ras-vid.ras-dead{cursor:default;background:#14141f}
+.ras-vid .ras-fallback{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:18px;color:#ddd;font-size:.85rem}
+.ras-vid.ras-dead .ras-fallback{display:flex}
+.ras-vid.ras-dead img,.ras-vid.ras-dead .ras-play,.ras-vid.ras-dead .ras-meta{display:none}
+.ras-vid .ras-fallback a{background:#c9a227;color:#111;font-weight:700;padding:.55rem 1.1rem;border-radius:6px;text-decoration:none;font-size:.82rem}
+</style>
+<script>
+(function(){
+  function play(box){
+    if(box.dataset.on||box.classList.contains('ras-dead'))return;
+    box.dataset.on=1;
+    var f=document.createElement('iframe');
+    f.src='https://www.youtube-nocookie.com/embed/'+box.dataset.yt+
+          '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+    f.allow='accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture';
+    f.allowFullscreen=true;f.loading='eager';f.title=box.dataset.title||'Video lesson';
+    box.appendChild(f);
+  }
+  function init(){
+    document.querySelectorAll('.ras-vid').forEach(function(box){
+      var img=box.querySelector('img');
+      // Self-heal: a 404 thumbnail means the video is deleted or private.
+      // Swap to a topic search so a student never meets a blocked embed.
+      if(img){img.addEventListener('error',function(){box.classList.add('ras-dead');});}
+      box.addEventListener('click',function(){play(box);});
+      box.addEventListener('keydown',function(e){
+        if(e.key==='Enter'||e.key===' '){e.preventDefault();play(box);}
+      });
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
+  else init();
+})();
+</script>
+<!--ras-social-meta-->
+<link rel="canonical" href="https://www.riseafricaskills.com/ai-fundamentals-module-3.html">
+<meta property="og:site_name" content="rise AFRICA skills">
+<meta property="og:locale" content="en_ZW">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.riseafricaskills.com/ai-fundamentals-module-3.html">
+<meta property="og:title" content="AI Fundamentals - Module 3: Neural Networks &amp; Deep Learning — rise AFRICA skills">
+<meta property="og:description" content="AI Fundamentals - Module 3: Neural Networks &amp; Deep Learning — a practical, fact-based course from rise AFRICA skills. Start with minimal equipment and scale as profits grow. Videos, assessments and a capstone project. From $8, lifetime access.">
+<meta property="og:image" content="https://www.riseafricaskills.com/og-image.png">
+<meta property="og:image:secure_url" content="https://www.riseafricaskills.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="rise AFRICA skills — learn practical skills, start your business">
+<meta property="og:image:type" content="image/png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@riseafricaskills">
+<meta name="twitter:creator" content="@riseafricaskills">
+<meta name="twitter:title" content="AI Fundamentals - Module 3: Neural Networks &amp; Deep Learning — rise AFRICA skills">
+<meta name="twitter:description" content="AI Fundamentals - Module 3: Neural Networks &amp; Deep Learning — a practical, fact-based course from rise AFRICA skills. Start with minimal equipment and scale as profits grow. Videos, assessments and a capstone project. From $8, lifetime access.">
+<meta name="twitter:image" content="https://www.riseafricaskills.com/og-image.png">
+<meta name="twitter:image:alt" content="rise AFRICA skills">
+<meta name="description" content="Fact-based practical training for African entrepreneurs. 128 courses in farming, food processing, trades, technology and business - start from zero capital. From $8 with lifetime access.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#0f0f1a">
+<meta name="author" content="rise AFRICA skills">
+<link rel="icon" href="/og-image.png" type="image/png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Course", "name": "AI Fundamentals - Module 3: Neural Networks & Deep Learning", "description": "AI Fundamentals - Module 3: Neural Networks & Deep Learning — a practical, fact-based course from rise AFRICA skills. Start with minimal equipment and scale as profits grow. Videos, assessments and a capstone project. From $8, lifetime access.", "url": "https://www.riseafricaskills.com/ai-fundamentals-module-3.html", "provider": {"@type": "EducationalOrganization", "name": "rise AFRICA skills", "url": "https://www.riseafricaskills.com/"}, "inLanguage": "en"}</script>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="/course-lock.js"></script>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PFMTN937"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+    <div class="container">
+        <div class="header">
+            <h1>🤖 AI Fundamentals</h1>
+            <p>Module 3: Neural Networks & Deep Learning</p>
+        </div>
+        <div class="content">
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+            <div class="section">
+                <div class="learning-objectives">
+                    <h2>📚 Learning Objectives</h2>
+                    <ul>
+                        <li>Understand how artificial neural networks mimic the human brain</li>
+                        <li>Learn the structure: neurons, layers, weights, biases, activation functions</li>
+                        <li>Understand backpropagation and how networks learn</li>
+                        <li>Explore different neural network architectures: CNN, RNN, transformers</li>
+                        <li>Learn applications: image recognition, NLP, speech recognition</li>
+                        <li>Understand computational requirements and training challenges</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="section">
+                <h2>🎥 Learning Videos</h2>
+                <div class="video-container"><h3>1. Neural Networks Explained - How They Work</h3><div class="ras-vid" data-yt="asscF9W9tqQ" data-title="How to Grow Maize for High Yields |Expert Free Guide on Maize Farming in Kenya" role="button" tabindex="0" aria-label="Play: How to Grow Maize for High Yields |Expert Free Guide on Maize Farming in Kenya"><img loading="lazy" src="https://i.ytimg.com/vi/asscF9W9tqQ/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Farmworx Kenya</b>How to Grow Maize for High Yields |Expert Free Guide on Maize Farming in Kenya</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=ai+fundamentals+Neural+Networks+Explained+-+How+They+Work" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
+                <div class="video-container"><h3>2. Backpropagation: How Neural Networks Learn</h3><div class="ras-vid" data-yt="VFw1zG_Rz6c" data-title="Maize Farming: The Ultimate Guide to Spacing &amp; Preparation" role="button" tabindex="0" aria-label="Play: Maize Farming: The Ultimate Guide to Spacing &amp; Preparation"><img loading="lazy" src="https://i.ytimg.com/vi/VFw1zG_Rz6c/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Farm With Fred</b>Maize Farming: The Ultimate Guide to Spacing &amp; Preparation</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=ai+fundamentals+Backpropagation:+How+Neural+Networks+Learn" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
+                <div class="video-container"><h3>3. Convolutional Neural Networks (CNN) for Images</h3><div class="ras-vid" data-yt="VFw1zG_Rz6c" data-title="Maize Farming: The Ultimate Guide to Spacing &amp; Preparation" role="button" tabindex="0" aria-label="Play: Maize Farming: The Ultimate Guide to Spacing &amp; Preparation"><img loading="lazy" src="https://i.ytimg.com/vi/VFw1zG_Rz6c/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>Farm With Fred</b>Maize Farming: The Ultimate Guide to Spacing &amp; Preparation</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=ai+fundamentals+Convolutional+Neural+Networks+(CNN)+for+Images" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
+                <div class="video-container"><h3>4. Recurrent Neural Networks (RNN) for Sequences</h3><div class="ras-vid" data-yt="YrAOthMyD3k" data-title="Maize Land Preparation Techniques" role="button" tabindex="0" aria-label="Play: Maize Land Preparation Techniques"><img loading="lazy" src="https://i.ytimg.com/vi/YrAOthMyD3k/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>CSIR-SARI</b>Maize Land Preparation Techniques</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=ai+fundamentals+Recurrent+Neural+Networks+(RNN)+for+Sequences" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
+                <div class="video-container"><h3>5. Transformers & Attention Mechanism - Modern Deep Learning</h3><div class="ras-vid" data-yt="IcKrLwFXwz4" data-title="MAIZE SPACING WHEN PLANTING FOR HIGH YIELDS" role="button" tabindex="0" aria-label="Play: MAIZE SPACING WHEN PLANTING FOR HIGH YIELDS"><img loading="lazy" src="https://i.ytimg.com/vi/IcKrLwFXwz4/hqdefault.jpg" alt=""><div class="ras-play"><span>&#9654;</span></div><div class="ras-meta"><b>THE FARM CHIEF</b>MAIZE SPACING WHEN PLANTING FOR HIGH YIELDS</div><div class="ras-fallback"><div>This lesson's video moved.</div><a href="https://www.youtube.com/results?search_query=ai+fundamentals+Transformers+&amp;+Attention+Mechanism+-+Modern+Deep+Learning" target="_blank" rel="noopener">Find it on YouTube &rarr;</a></div></div></div>
+            </div>
+            <div class="section">
+                <h2>📊 Neural Network Architectures & Applications</h2>
+                <table><thead><tr><th>Architecture</th><th>Structure</th><th>Best For</th><th>Key Example</th><th>Computational Cost</th></tr></thead><tbody>
+                        <tr><td>Feedforward NN</td><td>Input → Hidden Layers → Output</td><td>Basic classification/regression</td><td>Spam detection, credit scoring</td><td>Low-Medium</td></tr>
+                        <tr><td>CNN (Convolutional)</td><td>Convolutional layers find patterns in images</td><td>Image recognition, computer vision</td><td>Facial recognition, medical imaging</td><td>Medium-High</td></tr>
+                        <tr><td>RNN (Recurrent)</td><td>Loops allow processing sequences</td><td>Text, time series, language</td><td>Machine translation, speech recognition</td><td>Medium-High</td></tr>
+                        <tr><td>LSTM/GRU</td><td>RNN variant that remembers long-term context</td><td>Long sequences, dependency learning</td><td>Language models, stock prediction</td><td>Medium-High</td></tr>
+                        <tr><td>Transformer</td><td>Attention mechanism processes all positions simultaneously</td><td>Language (most efficient)</td><td>ChatGPT, BERT, GPT-4</td><td>Very High (billions of parameters)</td></tr>
+                    </tbody></table>
+            </div>
+            <div class="section">
+                <h2>📋 6 Neural Network Concepts</h2>
+                <div class="implementation-step"><h3>Concept 1: Neurons & Activation Functions</h3><p>NEURON: receives multiple inputs, multiplies each by a weight, sums them, applies activation function, produces output. Activation function adds NON-LINEARITY (sigmoid, ReLU, tanh). Without it, deep networks collapse to single linear layer (useless). ReLU (Rectified Linear Unit) most popular: returns max(0, x). Allows network to learn complex patterns.</p></div>
+                <div class="implementation-step"><h3>Concept 2: Layers & Network Depth</h3><p>INPUT LAYER: raw data (e.g., pixel values). HIDDEN LAYERS: learn intermediate representations. OUTPUT LAYER: final prediction. "Deep" learning = many hidden layers (10+, sometimes 100+). Deeper networks can learn more complex patterns BUT require more data and training time. Trade-off: depth vs. generalization.</p></div>
+                <div class="implementation-step"><h3>Concept 3: Backpropagation & Gradient Descent</h3><p>BACKPROPAGATION: algorithm that calculates how much each weight contributed to error. Then adjusts weights to reduce error. Repeated thousands of times (epochs). GRADIENT DESCENT: direction to adjust weights. Think: walk downhill to find valley (minimum error). Learning rate: size of steps (too big = overshoot, too small = slow).</p></div>
+                <div class="implementation-step"><h3>Concept 4: CNNs - Convolutional Layers & Filters</h3><p>CONVOLUTIONAL LAYER: small "filter" scans image looking for patterns (edges, shapes, textures). First layer finds simple edges, second finds shapes, third finds objects. POOLING: reduces image size, keeps important features. Example: 224x224 image → multiple layers → 1000 output classes (ImageNet). Conv layers are FEATURE EXTRACTORS, final layer is CLASSIFIER.</p></div>
+                <div class="implementation-step"><h3>Concept 5: RNNs - Recurrent Connections & Memory</h3><p>RECURRENT: output feeds back as input (has memory of previous steps). Good for sequences where order matters. Problem: VANISHING GRADIENT - gradients get too small, network forgets long-term context. Solution: LSTM (Long Short-Term Memory) and GRU - special cells with gates that control information flow. Modern RNNs can remember 100+ steps.</p></div>
+                <div class="implementation-step"><h3>Concept 6: Transformers & Attention Mechanism</h3><p>ATTENTION: each word attends to all other words, learns relationships. PARALLELIZABLE: unlike RNNs (must process sequentially), transformers process all positions simultaneously = MUCH FASTER training. Key innovation: scaled dot-product attention. This is what powers ChatGPT - transformer architecture with billions of parameters trained on internet-scale data.</p></div>
+            </div>
+            <div class="section">
+                <div class="quiz-section"><h3>🎯 Module 3 Quiz</h3>
+                    <div class="quiz-question"><p>1. What is the purpose of activation functions in neural networks?</p>
+                        <div class="quiz-option"><input type="radio" name="q1" value="a" id="q1a"><label for="q1a">a) Add non-linearity so network can learn complex patterns</label></div>
+                        <div class="quiz-option"><input type="radio" name="q1" value="b" id="q1b"><label for="q1b">b) Make the network faster</label></div>
+                        <div class="quiz-option"><input type="radio" name="q1" value="c" id="q1c"><label for="q1c">c) Prevent overfitting</label></div>
+                        <button onclick="checkAnswer('q1', 'a', 'Correct! Activation functions enable non-linear transformations essential for deep learning.')">Check Answer</button>
+                        <div id="feedback-q1" class="feedback"></div>
+                    </div>
+                    <div class="quiz-question"><p>2. What is backpropagation?</p>
+                        <div class="quiz-option"><input type="radio" name="q2" value="a" id="q2a"><label for="q2a">a) Algorithm that calculates how each weight contributed to error, then adjusts them</label></div>
+                        <div class="quiz-option"><input type="radio" name="q2" value="b" id="q2b"><label for="q2b">b) Going back to check data quality</label></div>
+                        <div class="quiz-option"><input type="radio" name="q2" value="c" id="q2c"><label for="q2c">c) Running the network backwards</label></div>
+                        <button onclick="checkAnswer('q2', 'a', 'Correct! Backpropagation is the core learning algorithm for neural networks.')">Check Answer</button>
+                        <div id="feedback-q2" class="feedback"></div>
+                    </div>
+                    <div class="quiz-question"><p>3. What advantage do transformers have over RNNs?</p>
+                        <div class="quiz-option"><input type="radio" name="q3" value="a" id="q3a"><label for="q3a">a) Parallelizable (faster training) and better long-range dependencies</label></div>
+                        <div class="quiz-option"><input type="radio" name="q3" value="b" id="q3b"><label for="q3b">b) Simpler to understand</label></div>
+                        <div class="quiz-option"><input type="radio" name="q3" value="c" id="q3c"><label for="q3c">c) Use less memory</label></div>
+                        <button onclick="checkAnswer('q3', 'a', 'Correct! Transformers are faster and handle longer sequences better (powers ChatGPT).')">Check Answer</button>
+                        <div id="feedback-q3" class="feedback"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <div class="project-section"><h2>🚀 Real-World Project: Understanding Neural Network Architectures</h2>
+                    <div class="project-item"><h4>Part 1: Image Recognition with CNNs</h4><p>Study a pretrained CNN (ImageNet model). Document: layer-by-layer transformations, what patterns each layer detects, final classification. Test with different images: does it work? Where does it fail?</p></div>
+                    <div class="project-item"><h4>Part 2: NLP with Transformers</h4><p>Explore how transformers process text (ChatGPT architecture). Document: how attention mechanism works, why it's better than RNNs, what this enables. Test with prompts: how good is generation? What limitations?</p></div>
+                    <div class="project-item"><h4>Part 3: Computational Requirements Analysis</h4><p>Research compute needed for different models: ResNet-50 (images) vs GPT-3 (language). Compare: parameters, training time, GPU memory, inference cost. Why do large models require massive compute? Carbon footprint implications?</p></div>
+                    <div class="project-item"><h4>Part 4: From Theory to Practice</h4><p>If you were training a neural network for your problem: what architecture? Why? Estimated parameters? GPU requirements? Training time? This forces you to think practically about deep learning deployment.</p></div>
+                    <div class="project-item"><h4>Part 5: Model Interpretability Challenge</h4><p>"Black box" problem: deep networks are hard to interpret. Research explainability methods: saliency maps, attention visualization, LIME. Demonstrate on image: which pixels matter for classification? Can you understand the model's reasoning?</p></div>
+                    <div class="project-item"><h4>Part 6: Ethics of Foundation Models</h4><p>ChatGPT, GPT-4 etc. trained on internet data. Research: what biases exist? Plagiarism/copyright concerns? Environmental cost? Create report: if you were deploying this, what safeguards needed?</p></div>
+                    <div class="project-item"><h4>Part 7: Practical Implementation</h4><p>Use PyTorch or TensorFlow to implement simple feedforward network. Train on MNIST (handwritten digits). Code task: 3-4 layers, ReLU activation, Adam optimizer. Achieve 95%+ accuracy. Document learning process.</p></div>
+                    <div class="project-item"><h4>Part 8: Scaling & Transfer Learning</h4><p>Research transfer learning: why take pretrained ImageNet model and fine-tune? How does it save time/data? When would you use vs. training from scratch? Create decision tree: your problem → recommend architecture + training approach.</p></div>
+                </div>
+            </div>
+            <div class="next-module"><p>Ready to continue? Move to Module 4: Natural Language Processing & Large Language Models</p><a href="ai-fundamentals-module-4.html">→ Next Module</a></div>
+        </div>
+    </div>
+    <script>
+        function checkAnswer(q, a, f) { const s = document.querySelector(`input[name="${q}"]:checked`); const e = document.getElementById(`feedback-${q}`); if (!s) { alert('Select answer'); return; } e.className = 'feedback show ' + (s.value === a ? 'correct' : 'incorrect'); e.textContent = (s.value === a ? '✓ ' : '✗ Incorrect. ') + f; updateProgress(); }
+        function updateProgress() { const c = document.querySelectorAll('input[type="radio"]:checked').length; const t = document.querySelectorAll('input[type="radio"]').length / 3; const p = (c / t) * 100; document.getElementById('progressFill').style.width = p + '%'; localStorage.setItem('ai3', p); }
+        window.addEventListener('load', () => { const s = localStorage.getItem('ai3'); if (s) document.getElementById('progressFill').style.width = s + '%'; });
+    </script>
+</body>
+</html>
