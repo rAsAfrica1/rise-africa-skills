@@ -1,0 +1,203 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Request a Course — rise AFRICA skills</title>
+<meta name="description" content="Tell us what skill you want to learn. We build courses from learner requests."/>
+<link rel="icon" href="/og-image.png" type="image/png"/>
+<style>
+:root{--gold:#C9A227;--dark:#1a1a1a;--darker:#111;--card:#1e1e1e;--text:#e0e0e0;--muted:#888;--green:#2ecc71;--red:#e74c3c;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--dark);color:var(--text);line-height:1.6}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+header{background:var(--darker);border-bottom:1px solid #333;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem}
+.logo{display:flex;align-items:center;gap:0.75rem;font-size:1.3rem;font-weight:700;color:var(--gold)}
+.logo-icon{width:38px;height:38px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--darker);font-weight:900;font-size:1.1rem}
+.back{color:var(--muted);font-size:0.85rem}
+.back:hover{color:var(--gold)}
+main{max-width:680px;margin:0 auto;padding:2.5rem 1.2rem 4rem}
+h1{color:#fff;font-size:1.9rem;margin-bottom:0.5rem;line-height:1.25}
+.lede{color:var(--gold);font-weight:600;font-size:1.05rem;margin-bottom:1rem}
+.intro{color:var(--muted);font-size:0.95rem;margin-bottom:1.8rem;padding:1rem 1.2rem;background:var(--card);border-left:4px solid var(--gold);border-radius:8px}
+.intro strong{color:#fff}
+form{background:var(--card);border:1px solid #333;border-radius:12px;padding:1.6rem}
+.f{margin-bottom:1.2rem}
+.f label{display:block;color:var(--text);font-size:0.85rem;font-weight:600;margin-bottom:0.35rem}
+.f label .opt{color:var(--muted);font-weight:400}
+.f .help{color:var(--muted);font-size:0.78rem;margin-top:0.3rem;line-height:1.5}
+.f input,.f select,.f textarea{width:100%;padding:0.75rem 0.9rem;background:var(--darker);border:1px solid #444;border-radius:8px;color:var(--text);font-size:0.95rem;font-family:inherit;transition:border-color .2s}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--gold)}
+.f input::placeholder,.f textarea::placeholder{color:#555}
+.f select option{background:var(--darker);color:var(--text)}
+.f textarea{resize:vertical;min-height:90px}
+button{width:100%;padding:0.95rem;background:var(--gold);color:var(--darker);border:none;border-radius:8px;font-weight:700;font-size:1.05rem;cursor:pointer;font-family:inherit;transition:transform .15s,box-shadow .15s}
+button:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(201,162,39,0.35)}
+button:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.ok{display:none;text-align:center;padding:2rem 1rem}
+.ok.on{display:block}
+.ok .big{font-size:3rem;margin-bottom:0.5rem}
+.ok h2{color:var(--gold);margin-bottom:0.5rem;font-size:1.4rem}
+.ok p{color:var(--muted);font-size:0.95rem;margin-bottom:1.2rem}
+.ok a{display:inline-block;background:var(--gold);color:var(--darker);padding:0.7rem 1.4rem;border-radius:8px;font-weight:700;font-size:0.95rem}
+.fine{color:var(--muted);font-size:0.8rem;text-align:center;margin-top:1.5rem;padding:1rem}
+.fine a{color:var(--gold);font-weight:600}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/"><div class="logo-icon">rAs</div><span>rise AFRICA skills</span></a>
+  <a class="back" href="/">← Back to all courses</a>
+</header>
+<main>
+  <h1>Can't find the course you need?</h1>
+  <p class="lede">Tell us what you want to learn. We build courses based on what people actually ask for.</p>
+  <div class="intro">
+    <strong>What happens next.</strong> Every request is read by a person, not a robot. If enough people ask for the same skill, it moves to the top of the build list and you are emailed the moment it is ready. Requesting costs nothing and does not commit you to buying anything.
+  </div>
+  <form id="reqForm">
+    <div class="f">
+      <label>What course do you want? *</label>
+      <input id="fCourse" type="text" placeholder="e.g. Welding and metal fabrication" required/>
+      <p class="help">Be as specific as you can — "goat milk cheese making" helps us more than "farming".</p>
+    </div>
+    <div class="f">
+      <label>Which area does it belong to? <span class="opt">(optional)</span></label>
+      <select id="fArea">
+        <option value="">Choose an area...</option>
+        <option>Agriculture & Livestock</option>
+        <option>Food Processing</option>
+        <option>Food Preservation</option>
+        <option>Cottage Industry</option>
+        <option>Construction & Trades</option>
+        <option>Manufacturing</option>
+        <option>Energy</option>
+        <option>Technology</option>
+        <option>Automotive</option>
+        <option>Chemicals</option>
+        <option>Health</option>
+        <option>Business & Entrepreneurship</option>
+        <option>Languages</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="f">
+      <label>Why do you need it? <span class="opt">(optional, but it helps a lot)</span></label>
+      <textarea id="fWhy" placeholder="e.g. There is no welder in my district and people travel 40km for repairs. I want to start that business."></textarea>
+      <p class="help">Requests that explain a real income opportunity get built first.</p>
+    </div>
+    <div class="f">
+      <label>Your name <span class="opt">(optional)</span></label>
+      <input id="fName" type="text" placeholder="Your name"/>
+    </div>
+    <div class="f">
+      <label>Email *</label>
+      <input id="fEmail" type="email" placeholder="you@email.com" required/>
+    </div>
+    <div class="f">
+      <label>Country <span class="opt">(optional)</span></label>
+      <input id="fCountry" type="text" placeholder="e.g. Zambia"/>
+    </div>
+    <div class="f">
+      <label>WhatsApp <span class="opt">(optional)</span></label>
+      <input id="fPhone" type="tel" placeholder="+260 ..."/>
+    </div>
+    <div class="f">
+      <label>If we build it, would you take it? <span class="opt">(optional)</span></label>
+      <select id="fCommit">
+        <option value="">Prefer not to say</option>
+        <option value="yes">Yes, I would take it</option>
+        <option value="maybe">Maybe, depends on price</option>
+        <option value="no">No</option>
+      </select>
+      <p class="help">An honest answer helps more than a polite one. "No" is a perfectly good answer.</p>
+    </div>
+    <button type="submit" id="fSubmit">Send my request</button>
+  </form>
+  <div class="ok" id="fOk">
+    <div class="big">✅</div>
+    <h2>Request received</h2>
+    <p>Thank you. Your request has been logged. If enough learners ask for the same skill, we build it and email you the moment it is ready.</p>
+    <a href="/">Back to courses</a>
+  </div>
+  <p class="fine">rise AFRICA skills is not a school, college or university. <a href="/#notaschool">Read what we actually are.</a></p>
+</main>
+<script>
+(function(){
+  var SB_URL = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
+  var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc';
+  var form = document.getElementById('reqForm');
+  var btn = document.getElementById('fSubmit');
+  var ok = document.getElementById('fOk');
+  if(!form) return;
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var course = (document.getElementById('fCourse').value||'').trim();
+    var email = (document.getElementById('fEmail').value||'').trim();
+    if(!course){ alert('Please tell us which course you want.'); return; }
+    if(!email || email.indexOf('@') < 0){ alert('Please enter a valid email address.'); return; }
+    var payload = {
+      course: course,
+      area: document.getElementById('fArea').value,
+      why: document.getElementById('fWhy').value,
+      name: document.getElementById('fName').value,
+      email: email,
+      country: document.getElementById('fCountry').value,
+      phone: document.getElementById('fPhone').value,
+      commitment: document.getElementById('fCommit').value,
+      page: 'request-course.html',
+      at: new Date().toISOString()
+    };
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    // Always save to localStorage as a durable fallback
+    try {
+      var all = JSON.parse(localStorage.getItem('courseRequests') || '[]');
+      all.push(payload);
+      localStorage.setItem('courseRequests', JSON.stringify(all));
+    } catch(e){}
+
+    var sent = false;
+    function showOk(){
+      if(sent) return;
+      sent = true;
+      form.style.display = 'none';
+      ok.classList.add('on');
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+    function fail(){
+      if(sent) return;
+      // Fallback: send via WhatsApp so the request is never lost
+      var msg = 'Hi rAs, I want to request a course: ' + course;
+      if(payload.area) msg += ' | Area: ' + payload.area;
+      if(payload.why) msg += ' | Why: ' + payload.why;
+      if(payload.name) msg += ' | From: ' + payload.name;
+      if(payload.email) msg += ' | Email: ' + payload.email;
+      if(payload.country) msg += ' | Country: ' + payload.country;
+      if(payload.commitment) msg += ' | Commitment: ' + payload.commitment;
+      window.open('https://wa.me/263773001353?text=' + encodeURIComponent(msg), '_blank');
+      showOk();
+    }
+    // Try Supabase insert
+    try {
+      fetch(SB_URL + '/rest/v1/course_requests', {
+        method:'POST',
+        headers:{
+          'apikey': SB_KEY,
+          'Authorization': 'Bearer ' + SB_KEY,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(payload)
+      }).then(function(r){
+        if(r.ok){ showOk(); } else { fail(); }
+      }).catch(function(){ fail(); });
+    } catch(e){ fail(); }
+    // Safety timeout: if Supabase doesn't answer in 4s, use WhatsApp fallback
+    setTimeout(function(){ if(!sent) fail(); }, 4000);
+  });
+})();
+</script>
+</body>
+</html>
