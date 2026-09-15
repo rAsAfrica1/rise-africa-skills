@@ -1,541 +1,198 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-T2QNRTGJQ3"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-T2QNRTGJQ3');
-</script>
-<!-- End Google tag -->
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-PFMTN937');</script>
-<!-- End Google Tag Manager -->
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Video Library - rise AFRICA skills</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Video Library — rise AFRICA skills</title>
+<meta name="description" content="Free legal farming, food, trade and business videos from trusted channels. Organised by course topic."/>
+<link rel="icon" href="/og-image.png" type="image/png"/>
 <style>
-:root {
-  --gold: #C9A227;
-  --dark: #1a1a1a;
-  --darker: #111;
-  --card: #1e1e1e;
-  --text: #e0e0e0;
-  --muted: #888;
-  --green: #2ecc71;
-}
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-body {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  background: var(--dark);
-  color: var(--text);
-  line-height: 1.6;
-}
-header {
-  background: var(--darker);
-  border-bottom: 1px solid #333;
-  padding: 1.5rem 2rem;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--gold);
-}
-.logo-icon {
-  width: 32px;
-  height: 32px;
-  background: var(--gold);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--darker);
-  font-weight: 900;
-  font-size: 1rem;
-}
-nav a {
-  color: var(--muted);
-  font-size: 0.85rem;
-  transition: color 0.2s;
-  margin-left: 1.5rem;
-}
-nav a:hover {
-  color: var(--gold);
-}
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-.hero {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-.hero h1 {
-  font-size: 2rem;
-  color: #fff;
-  margin-bottom: 0.5rem;
-}
-.hero p {
-  color: var(--muted);
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
-}
-.filters {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-bottom: 2rem;
-  background: var(--card);
-  padding: 1.5rem;
-  border-radius: 10px;
-}
-.filter-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-.filter-group label {
-  color: var(--gold);
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 600;
-}
-.filter-group select,
-.search-box {
-  background: var(--darker);
-  border: 1px solid #444;
-  border-radius: 6px;
-  color: var(--text);
-  padding: 0.6rem 0.8rem;
-  font-size: 0.9rem;
-}
-.filter-group select:focus,
-.search-box:focus {
-  outline: none;
-  border-color: var(--gold);
-}
-.video-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
-.video-card {
-  background: var(--card);
-  border: 1px solid #2a2a2a;
-  border-radius: 10px;
-  overflow: hidden;
-  transition: all 0.3s;
-  display: flex;
-  flex-direction: column;
-}
-.video-card:hover {
-  border-color: var(--gold);
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(201, 162, 39, 0.15);
-}
-.video-thumb {
-  background: linear-gradient(135deg, #333 0%, #1a1a1a 100%);
-  height: 180px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3rem;
-  position: relative;
-  overflow: hidden;
-}
-.video-thumb::after {
-  content: "▶";
-  position: absolute;
-  font-size: 2rem;
-  color: var(--gold);
-  opacity: 0.8;
-}
-.video-content {
-  padding: 1.2rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-.video-title {
-  color: #fff;
-  font-size: 0.95rem;
-  font-weight: 600;
-  margin-bottom: 0.4rem;
-  line-height: 1.3;
-}
-.video-creator {
-  color: var(--muted);
-  font-size: 0.8rem;
-  margin-bottom: 0.8rem;
-}
-.video-meta {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 0.8rem;
-  flex-wrap: wrap;
-}
-.video-duration {
-  background: var(--darker);
-  color: var(--gold);
-  padding: 0.2rem 0.6rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-.video-species {
-  display: inline-block;
-  background: rgba(46, 204, 113, 0.15);
-  color: #2ecc71;
-  padding: 0.2rem 0.6rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-.video-topics {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-top: auto;
-}
-.topic-tag {
-  background: rgba(201, 162, 39, 0.1);
-  color: var(--gold);
-  padding: 0.3rem 0.6rem;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  border: 1px solid rgba(201, 162, 39, 0.2);
-}
-.play-btn {
-  background: var(--gold);
-  color: var(--darker);
-  border: none;
-  border-radius: 6px;
-  padding: 0.6rem 1.2rem;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 1rem;
-  transition: all 0.2s;
-  font-size: 0.85rem;
-}
-.play-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(201, 162, 39, 0.3);
-}
-.stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin: 3rem 0;
-  text-align: center;
-}
-.stat-box {
-  background: var(--card);
-  border: 1px solid #333;
-  border-radius: 10px;
-  padding: 1.5rem;
-}
-.stat-number {
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: var(--gold);
-  margin-bottom: 0.5rem;
-}
-.stat-label {
-  color: var(--muted);
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-.modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  z-index: 200;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-}
-.modal.active {
-  display: flex;
-}
-.modal-content {
-  background: var(--card);
-  border-radius: 10px;
-  max-width: 800px;
-  width: 100%;
-  padding: 2rem;
-  position: relative;
-  max-height: 90vh;
-  overflow-y: auto;
-}
-.modal-close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: none;
-  border: none;
-  color: var(--muted);
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-.modal-close:hover {
-  color: var(--gold);
-}
-.no-results {
-  text-align: center;
-  padding: 3rem;
-  color: var(--muted);
-}
-.no-results-icon {
-  font-size: 4rem;
-  margin-bottom: 1rem;
-  opacity: 0.5;
-}
-footer {
-  text-align: center;
-  padding: 2rem;
-  border-top: 1px solid #333;
-  color: var(--muted);
-  font-size: 0.85rem;
-}
-footer a {
-  color: var(--gold);
-}
-@media (max-width: 768px) {
-  header { padding: 1rem; flex-direction: column; align-items: flex-start; }
-  .logo { font-size: 1rem; }
-  nav { flex-wrap: wrap; }
-  nav a { margin-left: 0.5rem; }
-  .container { padding: 1rem; }
-  .hero h1 { font-size: 1.5rem; }
-  .filters { grid-template-columns: 1fr; }
-  .video-grid { grid-template-columns: 1fr; }
-}
+:root{--gold:#C9A227;--dark:#1a1a1a;--darker:#111;--card:#1e1e1e;--text:#e0e0e0;--muted:#888;--green:#2ecc71;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--dark);color:var(--text);line-height:1.6}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+header{background:var(--darker);border-bottom:1px solid #333;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem}
+.logo{display:flex;align-items:center;gap:0.75rem;font-size:1.3rem;font-weight:700;color:var(--gold)}
+.logo-icon{width:38px;height:38px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--darker);font-weight:900;font-size:1.1rem}
+.back{color:var(--muted);font-size:0.85rem}
+.back:hover{color:var(--gold)}
+main{max-width:1200px;margin:0 auto;padding:2rem 1.2rem 4rem}
+.hero{text-align:center;margin-bottom:2rem}
+h1{color:#fff;font-size:2rem;margin-bottom:0.4rem}
+.lede{color:var(--gold);font-weight:600;font-size:1.05rem}
+.intro{color:var(--muted);font-size:0.9rem;max-width:780px;margin:0.8rem auto 0;line-height:1.6}
+.filters{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;margin:1.8rem 0 1rem}
+.fbtn{background:var(--card);border:1px solid #333;color:var(--text);padding:0.45rem 1rem;border-radius:20px;font-size:0.8rem;cursor:pointer;font-family:inherit;transition:all .15s}
+.fbtn:hover{border-color:var(--gold);color:var(--gold)}
+.fbtn.on{background:var(--gold);color:var(--darker);border-color:var(--gold);font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.2rem;margin-top:1.5rem}
+.vcard{background:var(--card);border:1px solid #2a2a2a;border-radius:10px;overflow:hidden;transition:border-color .2s,transform .2s}
+.vcard:hover{border-color:var(--gold);transform:translateY(-2px)}
+.thumb{position:relative;width:100%;aspect-ratio:16/9;background:#000;cursor:pointer;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.35);transition:background .2s}
+.thumb:hover .play{background:rgba(0,0,0,0.55)}
+.thumb .play svg{width:60px;height:60px;fill:#fff;opacity:0.9;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.6))}
+.thumb iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vbody{padding:0.9rem 1rem 1rem}
+.vcat{font-size:0.65rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);font-weight:600;margin-bottom:0.3rem}
+.vtitle{color:#fff;font-size:0.95rem;font-weight:600;line-height:1.35;margin-bottom:0.4rem}
+.vdesc{color:var(--muted);font-size:0.8rem;line-height:1.5;margin-bottom:0.5rem}
+.vsource{color:var(--green);font-size:0.72rem;font-weight:600}
+.fine{color:var(--muted);font-size:0.8rem;text-align:center;margin-top:2.5rem;padding:1rem;border-top:1px solid #2a2a2a}
+.fine a{color:var(--gold);font-weight:600}
+.empty{text-align:center;color:var(--muted);padding:3rem 1rem;font-size:0.95rem}
 </style>
 </head>
 <body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PFMTN937"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-
 <header>
-  <div class="logo">
-    <div class="logo-icon">📚</div>
-    <div>Video Library</div>
-  </div>
-  <nav>
-    <a href="index.html">← Back to Home</a>
-  </nav>
+  <a class="logo" href="/"><div class="logo-icon">rAs</div><span>rise AFRICA skills</span></a>
+  <a class="back" href="/">← Back to all courses</a>
 </header>
-
-<div class="container">
+<main>
   <div class="hero">
-    <h1>Verified Educational Videos</h1>
-    <p>High-quality resources for all animal feed formulation courses from university extensions and professional organizations</p>
+    <h1>&#128250; Video Library</h1>
+    <p class="lede">Free, legal videos from trusted farming, food, trade and business channels.</p>
+    <p class="intro">Every video on this page is embedded from the original creator's YouTube channel. We do not host or download the videos. Watch on YouTube, subscribe to the creators who taught you something, and support them. All content remains the property of the original channel.</p>
   </div>
-
-  <div class="filters">
-    <div class="filter-group">
-      <label for="species-filter">Species</label>
-      <select id="species-filter">
-        <option value="">All Species</option>
-        <option value="dog">Dogs</option>
-        <option value="cat">Cats</option>
-        <option value="cattle">Cattle</option>
-        <option value="chicken">Poultry</option>
-        <option value="swine">Swine</option>
-        <option value="fish">Fish</option>
-      </select>
-    </div>
-    <div class="filter-group">
-      <label for="topic-filter">Topic</label>
-      <select id="topic-filter">
-        <option value="">All Topics</option>
-        <option value="nutrition">Nutrition Basics</option>
-        <option value="formulation">Feed Formulation</option>
-        <option value="growth">Growth & Development</option>
-        <option value="health">Health & Disease</option>
-        <option value="management">Management & Production</option>
-      </select>
-    </div>
-    <div class="filter-group">
-      <label for="search-box">Search</label>
-      <input type="text" id="search-box" class="search-box" placeholder="Search by title, creator...">
-    </div>
-  </div>
-
-  <div class="stats">
-    <div class="stat-box">
-      <div class="stat-number">39</div>
-      <div class="stat-label">Verified Videos</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-number">6</div>
-      <div class="stat-label">Species Covered</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-number">7+</div>
-      <div class="stat-label">University Extensions</div>
-    </div>
-  </div>
-
-  <div id="video-grid" class="video-grid"></div>
-  <div id="no-results" class="no-results" style="display:none">
-    <div class="no-results-icon">🔍</div>
-    <p>No videos match your filters. Try adjusting your search.</p>
-  </div>
-</div>
-
-<footer>
-  <p>All videos sourced from university extensions, veterinary institutions, and recognized professional organizations.</p>
-  <p><a href="index.html">rise AFRICA skills</a> © 2026. Learn practical skills. Start your business.</p>
-</footer>
-
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div id="modal-body"></div>
-  </div>
-</div>
-
+  <div class="filters" id="filters"></div>
+  <div class="grid" id="vgrid"></div>
+  <p class="fine">Know a free, legal channel that should be on this list? <a href="request-course.html">Send us a request</a>.</p>
+</main>
 <script>
-const VIDEOS = {"library": [{"id": "oI8zzFxFQUk", "title": "Beef Cattle Nutrition 101", "creator": "University Extension", "topics": ["cattle-nutrition", "beef-fundamentals", "nutrient-requirements"], "species": ["cattle"], "duration_minutes": 15, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Educational video from university extension on fundamentals of beef cattle nutrition including nutrient requirements"}, {"id": "TDqGTM0RXl4", "title": "Mineral Nutrition for Beef Cattle", "creator": "University Extension", "topics": ["cattle-minerals", "grass-tetany", "calcium-phosphorus"], "species": ["cattle"], "duration_minutes": 12, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Covers mineral nutrition including macro minerals, grass tetany prevention, calcium-phosphorus ratios"}, {"id": "1Ok9dOqwwc8", "title": "CSU Veterinary Teaching Hospital | Small Animal Nutrition", "creator": "Colorado State University Veterinary Teaching Hospital", "topics": ["dog-nutrition", "cat-nutrition", "nutrient-requirements", "aafco"], "species": ["dog", "cat"], "duration_minutes": 20, "verified": true, "verified_date": "2026-08-31", "verified_notes": "University veterinary hospital course on small animal nutrition, covers amino acids, minerals, AAFCO standards"}, {"id": "D5Yg7bq61Eo", "title": "How To Read Pet Food Labels", "creator": "Veterinary Education Channel", "topics": ["pet-food-labels", "ingredient-analysis", "aafco-statement"], "species": ["dog", "cat"], "duration_minutes": 8, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Practical guide to reading and interpreting pet food labels and AAFCO statements"}, {"id": "FQMeg-82MDs", "title": "How To Read Pet Food Labels With Holistic Veterinarian Dr", "creator": "Holistic Veterinary Medicine", "topics": ["pet-food-labels", "ingredient-quality", "nutrition-analysis"], "species": ["dog", "cat"], "duration_minutes": 10, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Veterinarian-led explanation of pet food labeling requirements and how to evaluate ingredients"}, {"id": "sbBQLSR8ViA", "title": "Healthy Aging: Nutritional Recommendations for Senior Dogs and Cats", "creator": "Veterinary Nutrition Education", "topics": ["senior-nutrition", "geriatric-pets", "dietary-requirements", "kidney-disease"], "species": ["dog", "cat"], "duration_minutes": 22, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Addresses nutritional changes for aging pets including protein levels, fat content, and disease-specific diets"}, {"id": "rAkIfj6paF4", "title": "Veterinarian SOUNDS THE ALARM on RAW Pet Food", "creator": "Veterinary Health Expert", "topics": ["raw-diet-risks", "food-safety", "bacterial-contamination", "nutritional-balance"], "species": ["dog", "cat"], "duration_minutes": 9, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Veterinarian discussing evidence-based concerns about raw pet food diets including safety and nutritional completeness"}, {"id": "mh-xaRfVgfY", "title": "What Is AAFCO For Prescription Pet Food?", "creator": "Ask A Pet Vet", "topics": ["aafco-standards", "therapeutic-diets", "pet-food-regulation"], "species": ["dog", "cat"], "duration_minutes": 6, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Explains AAFCO standards for therapeutic prescription pet foods and regulatory requirements"}, {"id": "HCE2EkMUqcc", "title": "Options for Feeding Healthy Pets", "creator": "Veterinary Nutrition Expert", "topics": ["pet-nutrition", "feeding-options", "commercial-vs-homemade"], "species": ["dog", "cat"], "duration_minutes": 15, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Overview of different feeding approaches for companion animals including commercial, home-prepared options"}, {"id": "Za74ueOdA3s", "title": "Poultry Nutrition and Health", "creator": "University Poultry Extension", "topics": ["poultry-nutrition", "growth-requirements", "layer-requirements", "broiler-nutrition"], "species": ["chicken"], "duration_minutes": 18, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Comprehensive poultry nutrition covering both broiler and layer requirements, feed formulation basics"}, {"id": "2Xi7YVT0nuY", "title": "Dr. Rob Shirley: Advancing Poultry Nutrition Science", "creator": "Poultry Research Institution", "topics": ["poultry-nutrition", "amino-acids", "mineral-nutrition", "feed-efficiency"], "species": ["chicken"], "duration_minutes": 25, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Research-based overview of modern poultry nutrition science including amino acid requirements and heat stress"}, {"id": "virWk0dLa-M", "title": "Understanding Poultry Nutrition: What to Feed Your Birds for Optimal Health", "creator": "Poultry Education Resource", "topics": ["poultry-nutrition", "feed-formulation", "macro-nutrients", "health-optimization"], "species": ["chicken"], "duration_minutes": 14, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Practical guide to poultry nutrition covering nutrient requirements for different growth stages"}, {"id": "aOZQ6UFvdiQ", "title": "Unlocking Farmer Success: Customize Poultry Nutrition Today!", "creator": "Poultry Production Specialist", "topics": ["feed-formulation", "customized-nutrition", "production-optimization", "cost-efficiency"], "species": ["chicken"], "duration_minutes": 16, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Addresses customizing poultry diets for specific production goals and farm conditions"}, {"id": "34ZuwKZw7AM", "title": "Feed and Nutrition for Free Range Poultry", "creator": "Sustainable Poultry Extension", "topics": ["free-range-nutrition", "forage-supplementation", "pasture-based-systems", "mineral-balance"], "species": ["chicken"], "duration_minutes": 13, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Covers nutritional considerations for pasture-raised and free-range poultry production systems"}, {"id": "GQu2oRhcHEU", "title": "Pearson's Square Method of Poultry Feed Formulation", "creator": "Feed Formulation Educator", "topics": ["feed-formulation", "formulation-mathematics", "nutrient-balancing", "ingredient-mixing"], "species": ["chicken"], "duration_minutes": 11, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Teaches Pearson's Square method for balancing feed ingredients to meet nutrient requirements"}, {"id": "2PN8-3NPb1M", "title": "Nutrition for hyper-prolific sows - Dr. Peter Theil - Iowa Swine", "creator": "Iowa State University Extension", "topics": ["sow-nutrition", "lactation", "gestation", "reproductive-performance"], "species": ["swine"], "duration_minutes": 19, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Research-based discussion of nutrition for high-producing sows during gestation and lactation phases"}, {"id": "mlLuyf18h8A", "title": "Smarter Swine Nutrition: Improving Gut Health While Reducing Antibiotics", "creator": "Swine Nutrition Specialist", "topics": ["gut-health", "post-weaning-nutrition", "antibiotic-reduction", "dietary-strategies"], "species": ["swine"], "duration_minutes": 17, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Addresses post-weaning diarrhea prevention and gut health through nutritional management strategies"}, {"id": "cSfN_A-R388", "title": "Aquaculture Nutrition in Transition: Efficiency, Health and Sustainability", "creator": "Aquaculture Research Institution", "topics": ["fish-nutrition", "feed-efficiency", "sustainability", "species-requirements"], "species": ["fish"], "duration_minutes": 28, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Webinar on fish nutrition covering efficiency, health outcomes, and sustainable aquaculture feed practices"}, {"id": "vsRRlFsN-pY", "title": "How to make fish feed? Part 2 Step by step production process", "creator": "Aquaculture Practical Education", "topics": ["fish-feed-formulation", "feed-production", "ingredient-processing", "quality-control"], "species": ["fish"], "duration_minutes": 12, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Practical demonstration of fish feed production including ingredient preparation and quality checks"}, {"id": "edihkPcf5A0", "title": "Critical Insights in Aquaculture: What does an Aquaculture Nutritionalist do?", "creator": "Aquaculture Education Program", "topics": ["aquaculture-nutrition", "feed-formulation", "species-specific-nutrition", "professional-role"], "species": ["fish"], "duration_minutes": 14, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Overview of aquaculture nutritionist role and species-specific nutritional requirements"}, {"id": "BhcdxTM-Wpk", "title": "Fish Nutrition (Introduction)", "creator": "Aquaculture Education Channel", "topics": ["fish-nutrition-basics", "nutrient-requirements", "feed-efficiency", "species-differences"], "species": ["fish"], "duration_minutes": 10, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Introductory overview of fish nutrition fundamentals covering macro and micronutrient requirements"}, {"id": "Ps841me_nJ8", "title": "How to make fish feed? Explanation video, Feed formulation", "creator": "Aquaculture Technical Education", "topics": ["fish-feed-formulation", "ingredient-selection", "nutrient-balancing", "feed-production"], "species": ["fish"], "duration_minutes": 11, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Detailed explanation of fish feed formulation process including ingredient selection and nutrient balance"}, {"id": "ZgBZnhKAb1w", "title": "Cracking the code of aquaculture nutrition, one species at a time - The short of it", "creator": "Aquaculture Nutrition Research", "topics": ["species-specific-nutrition", "tilapia-nutrition", "nutrient-requirements", "feed-optimization"], "species": ["fish"], "duration_minutes": 6, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Overview of species-specific nutritional requirements in aquaculture including tilapia applications"}, {"id": "wKykGoHoejA", "title": "Webinar 4: Feeding the future: Marine Finfish Nutrition and Local Feed Opportunities", "creator": "Aquaculture Research Program", "topics": ["marine-finfish-nutrition", "sustainable-feed", "local-ingredients", "feed-economics"], "species": ["fish"], "duration_minutes": 32, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Research webinar on marine finfish nutrition and sustainable local feed ingredient opportunities"}, {"id": "AAdIzKa2y-c", "title": "Obligate Carnivore Explained: Cat Nutrition Myths Busted", "creator": "Veterinary Nutrition Expert", "topics": ["taurine", "obligate-carnivore", "feline-nutrition", "amino-acids"], "species": ["cat"], "duration_minutes": 1, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Short video explaining feline obligate carnivory and taurine requirements, debunking nutrition myths"}, {"id": "ohChO2hVM-Q", "title": "AAFCO: Pet Food Labeling Explained Simply", "creator": "AAFCO (Association of American Feed Control Officials)", "topics": ["aafco-standards", "pet-food-labeling", "regulatory-requirements", "label-reading"], "species": ["dog", "cat"], "duration_minutes": 1, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Official AAFCO explanation of pet food label standards and requirements"}, {"id": "aZHl52IDpAM", "title": "Understanding the AAFCO Statement on Pet Food", "creator": "AAFCO Education", "topics": ["aafco-statement", "nutritional-adequacy", "pet-food-standards", "label-interpretation"], "species": ["dog", "cat"], "duration_minutes": 1, "verified": true, "verified_date": "2026-08-31", "verified_notes": "AAFCO official short explaining how to read and interpret AAFCO adequacy statements on pet food"}, {"id": "9jU9nNBlqwc", "title": "BEST PUPPY FOOD: Top 5 Vet-Approved Formulas for HEALTHY Growth & Development", "creator": "Veterinary Nutrition Expert", "topics": ["puppy-nutrition", "growth-phase", "nutrient-requirements", "protein-calcium", "large-breed"], "species": ["dog"], "duration_minutes": 11, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Veterinarian-approved puppy food guide covering growth phase nutrition, protein, calcium requirements for different breeds"}, {"id": "w3Cj4KubRQM", "title": "Feeding Large Breed Puppies", "creator": "Dog Nutrition Educator", "topics": ["large-breed-puppy", "growth-nutrition", "calcium-phosphorus", "developmental-orthopedic-disease"], "species": ["dog"], "duration_minutes": 9, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Covers specific nutritional requirements for large breed puppies including calcium-phosphorus balance to prevent growth disorders"}, {"id": "k60Zik5WQoE", "title": "When to change your large breed puppy to adult diets", "creator": "Veterinary Nutrition Guide", "topics": ["puppy-to-adult-transition", "growth-phase-completion", "nutrient-adjustment"], "species": ["dog"], "duration_minutes": 7, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Discusses appropriate timing and nutritional changes for transitioning large breed puppies to adult diets"}, {"id": "sjZoZGlOlZ8", "title": "Next Level Giant Breed Puppy + Growth", "creator": "Giant Breed Nutrition Specialist", "topics": ["giant-breed", "puppy-growth", "metabolic-requirements", "joint-health"], "species": ["dog"], "duration_minutes": 13, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Advanced puppy nutrition for giant breeds including metabolic considerations and joint support during growth"}, {"id": "iwsOGuB5mG4", "title": "Rumen Development and Weaning in Dairy Calves", "creator": "Dairy Extension Program", "topics": ["rumen-development", "calf-weaning", "starter-feed", "forage-introduction"], "species": ["cattle"], "duration_minutes": 16, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Covers rumen microbial development, starter feed formulation, and proper weaning management for dairy calves"}, {"id": "EJ9Sa7CCg3w", "title": "Calf Rearing: Rumen Development", "creator": "Cattle Nutrition Extension", "topics": ["rumen-development", "microbial-fermentation", "calf-starter", "transition-feeding"], "species": ["cattle"], "duration_minutes": 12, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Educational video on rumen development physiology, calf starter feed nutrition, and transition to forage"}, {"id": "mD_edEna56s", "title": "Developing the rumen for optimum calf health", "creator": "Dairy Cattle Nutrition", "topics": ["rumen-health", "grain-introduction", "forage-quality", "calf-starter-formulation"], "species": ["cattle"], "duration_minutes": 14, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Focuses on optimizing rumen development through proper grain and forage introduction strategies in calves"}, {"id": "1KFfEjkvXGI", "title": "Early Weaning Calves: Management, Nutrition and Profitability", "creator": "Dairy Management Extension", "topics": ["early-weaning", "calf-nutrition", "milk-replacer", "transition-management", "economics"], "species": ["cattle"], "duration_minutes": 15, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Comprehensive guide to early weaning including milk replacer nutrition, solid feed introduction, and production economics"}, {"id": "QH10DNDwQgQ", "title": "Feeding Weaned Calves the Right Way (12-14% Protein)", "creator": "Cattle Nutrition Guide", "topics": ["weaned-calf-feeding", "protein-requirements", "mineral-balance", "starter-rations"], "species": ["cattle"], "duration_minutes": 8, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Specific guidance on weaned calf nutrition including appropriate protein levels, mineral requirements, and feed formulation"}, {"id": "5CCLJqszC84", "title": "When to Change Broiler Feed Key Stages Explained", "creator": "Poultry Production Educator", "topics": ["broiler-phases", "starter-grower-finisher", "feed-changeover", "nutrient-progression"], "species": ["chicken"], "duration_minutes": 9, "verified": true, "verified_date": "2026-08-31", "verified_notes": "Explains broiler feed phase changes (starter to grower to finisher) and optimal timing for nutrient transitions"}], "summary": {"total_videos_verified": 39, "species_covered": ["dog", "cat", "cattle", "chicken", "swine", "fish"], "topics_covered": ["dog-nutrition", "cat-nutrition", "taurine", "obligate-carnivore", "pet-food-labels", "aafco-standards", "senior-nutrition", "raw-diet-risks", "puppy-nutrition", "growth-phase", "large-breed-puppy", "giant-breed", "cattle-nutrition", "cattle-minerals", "grass-tetany", "beef-fundamentals", "rumen-development", "calf-weaning", "calf-starter", "poultry-nutrition", "feed-formulation", "broiler-nutrition", "broiler-phases", "layer-requirements", "heat-stress", "swine-nutrition", "post-weaning-diarrhea", "sow-lactation", "fish-nutrition", "aquaculture-nutrition", "tilapia-nutrition", "water-quality"], "credible_sources_used": ["University Extension Services", "University Veterinary Teaching Hospitals", "AAFCO (Official Standards Organization)", "Iowa State University", "Colorado State University", "Poultry Research Institutions", "Aquaculture Research Programs"], "verification_method": "Search and validation from educational institution and professional organization sources", "notes": "All videos sourced from university extensions, veterinary institutions, and recognized professional organizations. Videos were found through systematic searches for credible educational content. While direct YouTube playback verification was rate-limited, all video IDs and titles come from official search results from these credible institutions."}};
+(function(){
+  // VIDEO LIST
+  // id = YouTube video ID. c = category. t = title. d = description. s = source channel.
+  // To add a video: copy one line, change id, c, t, d, s.
+  var V = [
+    // ---- PIG FARMING ----
+    {id:"", c:"PIG FARMING", t:"Pig Farming Academy TV — Channel", d:"436 videos on real pig farming: breeding, feeding, housing, health. Watch on their channel.", s:"Свинарство для людей (Pig Farming Academy TV)", url:"https://www.youtube.com/channel/UCiuQWRX2NnAUyIVN25DtKHg"},
+    {id:"", c:"PIG FARMING", t:"MSU Extension — Raising Outdoor Pasture Pigs", d:"Free video series: feeding, housing, land, manure, seasonal, water management. English + Spanish.", s:"MSU Extension Animal Ag", url:"https://www.youtube.com/user/MSUExtensionAnimalAg"},
 
-function formatDuration(mins) {
-  if (mins < 60) return mins + ' min';
-  const hours = Math.floor(mins / 60);
-  const remainder = mins % 60;
-  return remainder ? hours + 'h ' + remainder + 'm' : hours + 'h';
-}
+    // ---- POULTRY ----
+    {id:"5hyqdWMtLGY", c:"POULTRY", t:"Shamba Shape Up — Chicken Rearing and Solar Pump", d:"East African TV series on real smallholder chicken farming, market access and solar.", s:"Shamba Shape Up (AKZ TV)"},
+    {id:"Hxv6bpNgqt0", c:"POULTRY", t:"Free Range Chicken Farming Guide", d:"A practical walkthrough of starting free-range poultry. 8 minutes.", s:"FO Video Library"},
 
-function speciesLabel(s) {
-  const labels = {
-    'dog': '🐕 Dog', 'cat': '🐈 Cat', 'cattle': '🐄 Cattle',
-    'chicken': '🐔 Poultry', 'swine': '🐷 Swine', 'fish': '🐠 Fish'
-  };
-  return labels[s] || s;
-}
+    // ---- GOATS ----
+    {id:"", c:"GOATS", t:"Goat Farming — Breed, Feed, Vaccinate", d:"Full free video course from Aga Khan Foundation Learning Hub. Hindi with subtitles.", s:"AKF Learning Hub", url:"https://akflearninghub.org"},
 
-function renderVideos(videos) {
-  const grid = document.getElementById('video-grid');
-  const noResults = document.getElementById('no-results');
+    // ---- FISH ----
+    {id:"", c:"FISH", t:"Small-Scale Pond Aquaculture — Video Series", d:"Free series on building and running a pond aquaculture business. English and Khmer.", s:"ZHAW IUNR"},
+    {id:"", c:"FISH", t:"Good Aquaculture Practice — Video Playlist", d:"Pre-stocking, stocking and post-stocking management. Made for training sessions.", s:"WorldFish Center", url:"https://www.youtube.com/playlist?list=PL_5s5CPGqCKQbo6I_9_R6lmNEK3oAdd2k"},
 
-  if (videos.length === 0) {
-    grid.innerHTML = '';
-    noResults.style.display = 'block';
-    return;
-  }
+    // ---- CATTLE & DAIRY ----
+    {id:"ZhzNciMiMos", c:"CATTLE", t:"Sustainable Livestock Production — Forage Tutorial", d:"Improved forages and livestock practices. Swahili with English subtitles.", s:"ICAR / ILRI"},
+    {id:"", c:"DAIRY", t:"Small Scale Dairy School — Free Videos", d:"Basic dairy cattle management in English, plus Chichewa versions for Malawi.", s:"Small Scale Dairy School", url:"https://www.youtube.com/@smallscaledairyschool"},
 
-  noResults.style.display = 'none';
-  grid.innerHTML = videos.map((v, idx) => `
-    <div class="video-card">
-      <div class="video-thumb"></div>
-      <div class="video-content">
-        <div class="video-title">${v.title}</div>
-        <div class="video-creator">${v.creator}</div>
-        <div class="video-meta">
-          <span class="video-duration">⏱ ${formatDuration(v.duration_minutes)}</span>
-          ${v.species.map(sp => '<span class="video-species">' + speciesLabel(sp) + '</span>').join('')}
-        </div>
-        <div class="video-topics">
-          ${(v.topics || []).slice(0, 3).map(t => '<span class="topic-tag">' + t.replace('-', ' ') + '</span>').join('')}
-        </div>
-        <button class="play-btn" onclick="openVideo(${idx})">Watch on YouTube →</button>
-      </div>
-    </div>
-  `).join('');
-}
+    // ---- BEES ----
+    {id:"Mim4xCLiGZc", c:"BEES", t:"Beekeeping — Training Film 1", d:"Practical beekeeping for African conditions. Free from a European development programme.", s:"ENABEL Beekeeping Films"},
+    {id:"kJ1JSHIB52s", c:"BEES", t:"How to Keep Bees — Full Course", d:"11-minute practical beekeeping course in French.", s:"FO Video Library"},
 
-function openVideo(idx) {
-  const v = VIDEOS.library[idx];
-  const url = 'https://www.youtube.com/watch?v=' + v.id;
-  const modal = document.getElementById('modal');
-  const body = document.getElementById('modal-body');
-  body.innerHTML = `
-    <h2 style="color: var(--gold); margin-bottom: 1rem;">${v.title}</h2>
-    <div style="background: var(--darker); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-      <p><strong>Creator:</strong> ${v.creator}</p>
-      <p><strong>Duration:</strong> ${formatDuration(v.duration_minutes)}</p>
-      <p><strong>Species:</strong> ${v.species.map(speciesLabel).join(', ')}</p>
-      <p><strong>Topics:</strong> ${v.topics.join(', ')}</p>
-      ${v.verified_notes ? '<p><strong>Notes:</strong> ' + v.verified_notes + '</p>' : ''}
-    </div>
-    <a href="${url}" target="_blank" style="display: inline-block; background: var(--gold); color: var(--darker); padding: 0.8rem 1.6rem; border-radius: 6px; font-weight: 600; text-decoration: none; margin-bottom: 1rem;">Open on YouTube</a>
-    <p style="color: var(--muted); font-size: 0.85rem; margin-top: 1rem;">Video ID: ${v.id}</p>
-  `;
-  modal.classList.add('active');
-}
+    // ---- MUSHROOMS ----
+    {id:"", c:"MUSHROOMS", t:"Grow Your Own Mushrooms — Free Workshop", d:"Substrate prep, alkaline bath, fruiting. From an hour-long free community workshop.", s:"GroCycle / Community Garden"},
 
-function closeModal() {
-  document.getElementById('modal').classList.remove('active');
-}
+    // ---- RABBITS ----
+    {id:"Q7lxlEsOmyg", c:"RABBITS", t:"Why Start Rabbit Farming", d:"Practical reasons, economics, and what to consider before you start.", s:"Rabbitweed Saf"},
+    {id:"", c:"RABBITS", t:"GenrAb Rabbit Farm — Full Walkthrough", d:"Breed selection, cage construction, feeding, marketing rabbits, manure and urine.", s:"GenrAb"},
 
-function filterVideos() {
-  const species = document.getElementById('species-filter').value;
-  const topic = document.getElementById('topic-filter').value;
-  const search = document.getElementById('search-box').value.toLowerCase();
+    // ---- FOOD PRESERVATION ----
+    {id:"", c:"FOOD PRESERVATION", t:"Master Food Preserver — Canning Playlist", d:"Approved canning method videos from a US university extension programme.", s:"University Extension", url:"https://www.youtube.com/playlist?list=PLlyGxXr5CUt2WWUsoYoRXbczbPKFbr5xT"},
+    {id:"", c:"FOOD PRESERVATION", t:"Canning and Preserving: Pick, Pack and Preserve", d:"University extension series on preserving fruits and vegetables properly.", s:"Alabama Cooperative Extension"},
 
-  const topicMap = {
-    'nutrition': ['nutrition', 'nutrient', 'requirement'],
-    'formulation': ['formulation', 'feed', 'recipe', 'ingredient'],
-    'growth': ['growth', 'development', 'puppy', 'kitten', 'broiler'],
-    'health': ['health', 'disease', 'deficiency', 'allergy'],
-    'management': ['management', 'production', 'housing', 'economics']
-  };
+    // ---- SOLAR ----
+    {id:"", c:"SOLAR", t:"Resilient Solar + Storage — Video Series", d:"How to size a solar and battery storage system. Free, self-paced. English + Spanish.", s:"Clean Energy Group"},
+    {id:"", c:"SOLAR", t:"Solar PV Design, Installation and Code — Free Course", d:"Industry expert Sean White on solar PV basics, design, installation and code.", s:"Building Performance Association"},
 
-  const filtered = VIDEOS.library.filter(v => {
-    const matchSpecies = !species || v.species.includes(species);
-    const matchTopic = !topic || topicMap[topic].some(t =>
-      v.title.toLowerCase().includes(t) ||
-      v.topics.some(top => top.toLowerCase().includes(t))
-    );
-    const matchSearch = !search ||
-      v.title.toLowerCase().includes(search) ||
-      v.creator.toLowerCase().includes(search) ||
-      v.topics.some(t => t.toLowerCase().includes(search));
+    // ---- WELDING ----
+    {id:"", c:"WELDING", t:"Strike-Arc Academy — How to Weld Series", d:"10-part free video series for new welders. Electrode, TIG, MIG basics.", s:"Strike-Arc (South Africa)"},
 
-    return matchSpecies && matchTopic && matchSearch;
+    // ---- BAKING ----
+    {id:"yePMpoyXwys", c:"BAKING", t:"No-Knead Bread — African Home Baker", d:"A South African baker shares a simple no-knead bread method.", s:"Steve's Bread / YouTube"},
+
+    // ---- BUSINESS ----
+    {id:"", c:"BUSINESS", t:"Agripreneurship in African Agribusiness — Free Platform", d:"7 modules, 25 units, 63 explanatory videos, all free. For new agripreneurs.", s:"Agripreneurship Alliance"},
+
+    // ---- FOOD PROCESSING / SAWBO ----
+    {id:"", c:"FOOD PROCESSING", t:"SAWBO — Scientific Animations Without Borders", d:"200+ short animated training videos in 300+ languages. Agriculture, health, nutrition.", s:"SAWBO (Purdue University)", url:"https://sawbo-animations.org"}
+  ];
+
+  var filters = document.getElementById('filters');
+  var grid = document.getElementById('vgrid');
+  if(!grid) return;
+
+  var cats = [];
+  V.forEach(function(v){ if(cats.indexOf(v.c) < 0) cats.push(v.c); });
+  cats.sort();
+
+  var allBtn = document.createElement('button');
+  allBtn.className = 'fbtn on';
+  allBtn.textContent = 'All (' + V.length + ')';
+  allBtn.dataset.cat = 'ALL';
+  filters.appendChild(allBtn);
+  cats.forEach(function(c){
+    var b = document.createElement('button');
+    b.className = 'fbtn';
+    var n = V.filter(function(v){ return v.c === c; }).length;
+    b.textContent = c + ' (' + n + ')';
+    b.dataset.cat = c;
+    filters.appendChild(b);
   });
 
-  renderVideos(filtered);
-}
+  filters.addEventListener('click', function(e){
+    var b = e.target.closest('.fbtn');
+    if(!b) return;
+    filters.querySelectorAll('.fbtn').forEach(function(x){ x.classList.remove('on'); });
+    b.classList.add('on');
+    var c = b.dataset.cat;
+    grid.querySelectorAll('.vcard').forEach(function(card){
+      card.style.display = (c === 'ALL' || card.dataset.cat === c) ? '' : 'none';
+    });
+  });
 
-document.getElementById('species-filter').addEventListener('change', filterVideos);
-document.getElementById('topic-filter').addEventListener('change', filterVideos);
-document.getElementById('search-box').addEventListener('input', filterVideos);
+  function esc(s){
+    return String(s).replace(/[&<>"']/g, function(ch){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch];
+    });
+  }
 
-// Initial render
-renderVideos(VIDEOS.library);
+  V.forEach(function(v){
+    var card = document.createElement('div');
+    card.className = 'vcard';
+    card.dataset.cat = v.c;
+
+    var thumbHtml;
+    if(v.id){
+      var yt = 'https://www.youtube-nocookie.com/embed/' + v.id + '?rel=0&modestbranding=1';
+      var img = 'https://img.youtube.com/vi/' + v.id + '/hqdefault.jpg';
+      thumbHtml = '<div class="thumb" data-yt="' + yt + '">' +
+        '<img loading="lazy" src="' + img + '" alt="' + esc(v.t) + '"/>' +
+        '<div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>' +
+        '</div>';
+    } else {
+      thumbHtml = '<div class="thumb" style="display:flex;align-items:center;justify-content:center;background:#0f0f1a;">' +
+        '<a href="' + esc(v.url||'#') + '" target="_blank" rel="noopener" style="color:var(--gold);font-weight:800;font-size:0.9rem;text-align:center;padding:1rem;">&#127916; Open full playlist on YouTube →</a>' +
+        '</div>';
+    }
+
+    card.innerHTML = thumbHtml +
+      '<div class="vbody">' +
+        '<div class="vcat">' + esc(v.c) + '</div>' +
+        '<div class="vtitle">' + esc(v.t) + '</div>' +
+        '<div class="vdesc">' + esc(v.d) + '</div>' +
+        '<div class="vsource">&#127916; ' + esc(v.s) + '</div>' +
+      '</div>';
+
+    grid.appendChild(card);
+  });
+
+  grid.addEventListener('click', function(e){
+    var t = e.target.closest('.thumb');
+    if(!t || !t.dataset.yt) return;
+    if(t.querySelector('iframe')) return;
+    t.innerHTML = '<iframe src="' + t.dataset.yt + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+  });
+})();
 </script>
-
 </body>
 </html>
