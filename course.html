@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Course — rise AFRICA skills</title>
+<link rel="icon" href="/og-image.png" type="image/png"/>
+<style>
+:root{--gold:#C9A227;--dark:#1a1a1a;--darker:#111;--card:#1e1e1e;--text:#e0e0e0;--muted:#888;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--dark);color:var(--text);line-height:1.6;min-height:100vh}
+header{background:var(--darker);border-bottom:1px solid #333;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem}
+.logo{display:flex;align-items:center;gap:0.75rem;font-size:1.3rem;font-weight:700;color:var(--gold)}
+.logo-icon{width:38px;height:38px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--darker);font-weight:900;font-size:1.1rem}
+.back{color:var(--muted);font-size:0.85rem;text-decoration:none}
+.back:hover{color:var(--gold)}
+.gate{max-width:600px;margin:0 auto;padding:4rem 1.2rem;text-align:center}
+.gate .icon{font-size:3.5rem;margin-bottom:0.5rem}
+.gate h1{color:var(--gold);font-size:1.7rem;margin-bottom:0.6rem}
+.gate p{color:var(--muted);font-size:1rem;margin-bottom:1.4rem;line-height:1.6}
+.gate a.btn{display:inline-block;background:var(--gold);color:var(--darker);font-weight:800;padding:1rem 2rem;border-radius:50px;font-size:1rem;text-decoration:none;margin:0.3rem;}
+.gate a.btn.alt{background:transparent;color:var(--gold);border:2px solid var(--gold)}
+iframe{width:100%;height:calc(100vh - 70px);border:0;background:#1a1a1a;display:none}
+iframe.on{display:block}
+.spin{color:var(--muted);font-size:0.95rem;padding:3rem;text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/"><div class="logo-icon">rAs</div><span>rise AFRICA skills</span></a>
+  <a class="back" href="/">← Back to all courses</a>
+</header>
+<div id="msg" class="gate"><div class="spin">Loading...</div></div>
+<iframe id="frame"></iframe>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+  var SUPA = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
+  var KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc';
+
+  // Courses that do not require payment
+  var FREE = ['arabic-language','chinese-language','russian-language','shona-language','swahili-language','spanish-language'];
+
+  var sb = null;
+  try { sb = supabase.createClient(SUPA, KEY); } catch(e){}
+  var msg = document.getElementById('msg');
+  var frame = document.getElementById('frame');
+
+  var params = new URLSearchParams(window.location.search);
+  var filePath = (params.get('f') || '').replace(/\.html$/,'');
+  if(!filePath){
+    msg.innerHTML = '<div class="icon">❓</div><h1>No course specified</h1><p>Open a course from the homepage.</p><a class="btn" href="/">Back to all courses</a>';
+    return;
+  }
+
+  var slug = filePath.replace(/-lessons$/,'').replace(/-module-\d+$/,'').replace(/-course$/,'');
+  var pretty = slug.replace(/-/g,' ').replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+  var isFree = FREE.indexOf(slug) >= 0;
+
+  function showContent(html){
+    msg.style.display = 'none';
+    frame.srcdoc = html;
+    frame.classList.add('on');
+  }
+
+  function locked(notLoggedIn){
+    var actions = notLoggedIn
+      ? '<a class="btn" href="my-courses.html">Log in or create account</a>'
+      : '<a class="btn" href="enroll.html?course=' + encodeURIComponent(slug) + '&tier=course">Pay $8 to unlock</a>' +
+        '<a class="btn alt" href="https://wa.me/263773001353?text=' + encodeURIComponent('Hi rAs, I want to pay for ' + slug + ' by EcoCash') + '">Pay by EcoCash</a>';
+    msg.innerHTML = '<div class="icon">🔒</div><h1>' + pretty + ' is locked</h1><p>Pay once, $8, to unlock all modules and lifetime access.</p>' + actions;
+    msg.style.display = 'block';
+    frame.classList.remove('on');
+  }
+
+  function fetchContent(){
+    // Free courses: no login, no payment
+    if(!sb) throw new Error('no client');
+    return sb.from('course_content').select('html').eq('file_path', filePath).maybeSingle();
+  }
+
+  if(!sb){
+    msg.innerHTML = '<div class="icon">⚠️</div><h1>Cannot reach the server</h1><p>Check your connection and reload.</p>';
+    return;
+  }
+
+  if(isFree){
+    // No payment check at all
+    fetchContent().then(function(q){
+      if(q.error || !q.data){
+        msg.innerHTML = '<div class="icon">📄</div><h1>Course not found</h1><p>' + pretty + ' has not been uploaded yet.</p><a class="btn" href="/">Back to all courses</a>';
+        return;
+      }
+      showContent(q.data.html);
+    }).catch(function(){
+      msg.innerHTML = '<div class="icon">⚠️</div><h1>Cannot reach the server</h1>';
+    });
+    return;
+  }
+
+  // Paid courses: require login + payment
+  sb.auth.getSession().then(function(res){
+    var session = res && res.data && res.data.session;
+    if(!session || !session.user){ locked(true); return; }
+    fetchContent().then(function(q){
+      if(q.error || !q.data){ locked(false); return; }
+      showContent(q.data.html);
+    }).catch(function(){ locked(false); });
+  }).catch(function(){ locked(true); });
+})();
+</script>
+</body>
+</html>
