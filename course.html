@@ -37,7 +37,6 @@ iframe.on{display:block}
   var SUPA = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
   var KEY  = 'sb_publishable_zAO9Nei4xwd_aCdqF0tNlg_Be2SYl5K';
   var FREE = ['arabic-language','chinese-language','russian-language','shona-language','swahili-language'];
-  var LOCAL_DIR = '_course_files_offline/';
 
   var sb = null;
   try { sb = supabase.createClient(SUPA, KEY); } catch(e){}
@@ -76,32 +75,19 @@ iframe.on{display:block}
     frame.classList.remove('on');
   }
 
-  function fetchFromSupabase(){
-    if(!sb) return Promise.reject(new Error('no client'));
-    return sb.from('course_content').select('html').eq('file_path', filePath).maybeSingle();
-  }
-
-  // For free courses: try the local file first, then Supabase as fallback.
-  function loadFree(){
-    fetch(LOCAL_DIR + filePath + '.html')
-      .then(function(r){
-        if(!r.ok) throw new Error('HTTP ' + r.status);
-        return r.text();
-      })
-      .then(function(html){
-        showContent(html);
-      })
-      .catch(function(){
-        // Local file missing — try Supabase
-        if(!sb){ notFound(); return; }
-        fetchFromSupabase().then(function(q){
-          if(q.error || !q.data){ notFound(); return; }
-          showContent(q.data.html);
-        }).catch(notFound);
+  // Raw REST query — same call your browser just proved works.
+  function fetchContent(){
+    var url = SUPA + '/rest/v1/course_content?select=html&file_path=eq.'
+            + encodeURIComponent(filePath)
+            + '&apikey=' + encodeURIComponent(KEY);
+    return fetch(url)
+      .then(function(r){ return r.json(); })
+      .then(function(rows){
+        if(!rows || !rows.length || !rows[0] || !rows[0].html) return null;
+        return rows[0].html;
       });
   }
 
-  // Intercept clicks inside the iframe so next-module links route through the gate.
   frame.addEventListener('load', function(){
     try {
       var fdoc = frame.contentDocument || frame.contentWindow.document;
@@ -121,16 +107,21 @@ iframe.on{display:block}
     } catch(e){}
   });
 
-  if(isFree){ loadFree(); return; }
+  if(isFree){
+    fetchContent().then(function(html){
+      if(!html){ notFound(); return; }
+      showContent(html);
+    }).catch(function(){ notFound(); });
+    return;
+  }
 
-  // Paid courses: lock unless signed in.
   if(!sb){ locked(true); return; }
   sb.auth.getSession().then(function(res){
     var session = res && res.data && res.data.session;
     if(!session || !session.user){ locked(true); return; }
-    fetchFromSupabase().then(function(q){
-      if(q.error || !q.data){ locked(false); return; }
-      showContent(q.data.html);
+    fetchContent().then(function(html){
+      if(!html){ locked(false); return; }
+      showContent(html);
     }).catch(function(){ locked(false); });
   }).catch(function(){ locked(true); });
 })();
