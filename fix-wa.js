@@ -9,12 +9,12 @@ if (re.test(ch)) {
   fs.writeFileSync('course.html', ch);
   console.log('course.html: gate now has two payment buttons');
 } else {
-  console.log('course.html: pattern not found — skipped');
+  console.log('course.html: pattern not found');
   const i = ch.indexOf('Pay by EcoCash');
   if (i >= 0) console.log('  context: ' + ch.substring(Math.max(0, i - 200), i + 20));
 }
 
-// === 2 & 3. course-info.html + all-courses.html — duplicate payment lines ===
+// === 2 & 3. course-info.html and all-courses.html — duplicate payment lines ===
 for (const file of ['course-info.html', 'all-courses.html']) {
   let c = fs.readFileSync(file, 'utf8');
   const lines = c.split('\n');
