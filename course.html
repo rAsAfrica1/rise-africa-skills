@@ -93,6 +93,13 @@ iframe.on{display:block}
         var el = document.getElementById('rAs-preview-list');
         if (!el) return;
         if (!rows || !rows.length) { el.innerHTML = 'Module list will appear here.'; return; }
+        /* rAs-sort-fix: sort modules numerically */
+        rows.sort(function(a,b){
+          var na = parseInt((a.file_path.match(/-module-(\d+)$/)||[0,0])[1],10) || 0;
+          var nb = parseInt((b.file_path.match(/-module-(\d+)$/)||[0,0])[1],10) || 0;
+          if (na !== nb) return na - nb;
+          return (a.file_path||'').localeCompare(b.file_path||'');
+        });
         var titles = rows.map(function(r){
           var p = r.file_path || '';
           var m = p.match(/-module-(\d+)$/);
