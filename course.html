@@ -55,6 +55,7 @@ iframe.on{display:block}
   var isFree = FREE.indexOf(slug) >= 0;
 
   function showContent(html){
+    html = String(html).replace(/<script[^>]*course-lock\.js[^>]*><\/script>/gi, '');
     msg.style.display = 'none';
     frame.srcdoc = html;
     frame.classList.add('on');
