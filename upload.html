@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>rAs Upload Tool</title>
+<style>
+body{font-family:system-ui;background:#111;color:#eee;padding:2rem;max-width:760px;margin:0 auto}
+h1{color:#d4a017}
+input,button{font-size:1rem;padding:0.7rem;margin:0.4rem 0;width:100%;box-sizing:border-box;background:#222;color:#eee;border:1px solid #444;border-radius:6px}
+button{background:#d4a017;color:#111;font-weight:700;cursor:pointer;border:none;padding:1rem;margin-top:1rem}
+button:hover{background:#e0b030}
+.log{background:#000;padding:1rem;border-radius:6px;font-family:monospace;white-space:pre-wrap;max-height:420px;overflow:auto;font-size:0.85rem;line-height:1.5}
+.ok{color:#2ecc71}.fail{color:#e74c3c}.info{color:#3498db}
+label{display:block;margin-top:1.2rem;color:#aaa;font-size:0.9rem}
+</style>
+</head>
+<body>
+<h1>rAs Upload Tool</h1>
+<p style="color:#888">Paste your key, select the module files, click Upload.</p>
+
+<label>1. Secret key (sb_secret_... or eyJ...)</label>
+<input id="key" type="password" placeholder="Paste secret key here">
+
+<label>2. Select the module HTML files (all of them at once)</label>
+<input id="files" type="file" multiple accept=".html">
+
+<button onclick="go()">Upload to Supabase</button>
+
+<div class="log" id="log">Ready.</div>
+
+<script>
+const SUPA='https://lsvmykrentkbcdrzsaqj.supabase.co';
+const logEl=document.getElementById('log');
+function log(m,c){const d=document.createElement('div');if(c)d.className=c;d.textContent=m;logEl.appendChild(d);logEl.scrollTop=logEl.scrollHeight;}
+async function go(){
+  const key=document.getElementById('key').value.trim();
+  const files=document.getElementById('files').files;
+  logEl.innerHTML='';
+  if(key.length<20){log('STOP: key only '+key.length+' chars','fail');return;}
+  if(!files.length){log('STOP: no files selected','fail');return;}
+  log('Key: '+key.substring(0,14)+'... length '+key.length,'info');
+  log('Files: '+files.length,'info');log('','');
+  let ok=0,fail=0;
+  for(const f of files){
+    const slug=f.name.replace(/\.html?$/i,'');
+    const html=await f.text();
+    try{
+      const r=await fetch(SUPA+'/rest/v1/course_content',{method:'POST',
+        headers:{apikey:key,Authorization:'Bearer '+key,'Content-Type':'application/json',Prefer:'resolution=merge-duplicates'},
+        body:JSON.stringify({file_path:slug,html})});
+      if(r.ok){log('OK   '+slug+'   ('+html.length+' chars)','ok');ok++;}
+      else{const t=await r.text();log('FAIL '+slug+' : '+r.status+' '+t,'fail');fail++;}
+    }catch(e){log('FAIL '+slug+' : '+e.message,'fail');fail++;}
+  }
+  log('','');log('Done. OK: '+ok+'  FAIL: '+fail, ok>0?'ok':'fail');
+}
+</script>
+</body>
+</html>
+
