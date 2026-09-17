@@ -29,26 +29,25 @@ const json = JSON.stringify(course);
 
 // 1. all-courses.html
 let ac = fs.readFileSync('all-courses.html','utf8');
-if (ac.indexOf('"welding-fundamentals"') < 0) {
+if (ac.indexOf('"welding-fundamentals"') >= 0) {
+  console.log('all-courses: already present');
+} else {
   const anchor = '"Prepare a loan application"]]}';
   const p = ac.indexOf(anchor);
   if (p < 0) { console.log('all-courses: anchor not found'); }
   else {
     const at = p + anchor.length;
-    const objEnd = ac.indexOf('};', at);
-    if (objEnd < 0) { console.log('all-courses: close not found'); }
-    else if (!/^\s*$/.test(ac.substring(at, objEnd))) { console.log('all-courses: unexpected content'); }
-    else {
-      ac = ac.substring(0, at) + ',\n    "welding-fundamentals":' + json + ac.substring(at);
-      fs.writeFileSync('all-courses.html', ac);
-      console.log('all-courses: added (size ' + ac.length + ')');
-    }
+    ac = ac.substring(0, at) + ',\n    "welding-fundamentals":' + json + ac.substring(at);
+    fs.writeFileSync('all-courses.html', ac);
+    console.log('all-courses: added (size ' + ac.length + ')');
   }
-} else console.log('all-courses: already present');
+}
 
 // 2. course-info.html
 let ci = fs.readFileSync('course-info.html','utf8');
-if (ci.indexOf('"welding-fundamentals"') < 0) {
+if (ci.indexOf('"welding-fundamentals"') >= 0) {
+  console.log('course-info: already present');
+} else {
   const m = ci.match(/var\s+(\w+)\s*=\s*\{/);
   if (!m) { console.log('course-info: no object'); }
   else {
@@ -70,7 +69,7 @@ if (ci.indexOf('"welding-fundamentals"') < 0) {
       console.log('course-info: added (size ' + ci.length + ')');
     }
   }
-} else console.log('course-info: already present');
+}
 
 // 3. index.html card
 let ix = fs.readFileSync('index.html','utf8');
@@ -89,12 +88,12 @@ if (ix.indexOf('172. Welding Fundamentals') >= 0) {
       const insertAt = c2 + 6;
       const card = '\n\n<div class="course-card" data-cat="VOCATIONAL">\n  <div class="course-category">VOCATIONAL</div>\n  <h3>172. Welding Fundamentals</h3>\n  <p>&#11088; FLAGSHIP COURSE &#8212; Twelve modules, seventy-two written lessons. Safety, physics, the four processes, equipment, consumables, metal identification, running a bead, joint types, out-of-position work, distortion, defects, and finishing.</p>\n  <div class="price-check">&#9989; Iron-Clad Price Check: Call 3 suppliers before you buy.</div>\n  <div class="card-actions">\n    <button class="card-btn" data-price="8" data-tier="course" onclick="openEnroll(this)">$8.00 Course</button>\n    <button class="card-btn cert" data-price="10" data-tier="cert" onclick="openEnroll(this)">$10.00 +Record</button>\n    <button class="card-btn print" data-price="3.50" data-tier="print" onclick="openEnroll(this)">$3.50 Print</button>\n    <button class="card-btn gift" data-tier="gift" onclick="openEnroll(this)">&#127873; Gift</button>\n    <a class="card-btn open" href="course.html?f=welding-fundamentals-module-1" target="_blank">&#128214; Open Course</a>\n  </div>\n</div>';
       ix = ix.substring(0, insertAt) + card + ix.substring(insertAt);
-      ix = ix.replace(/>171</div><div class="stat-label">Practical Courses/,'>172</div><div class="stat-label">Practical Courses');
-      ix = ix.replace(/Looking for all 171 courses\?/,'Looking for all 172 courses?');
-      ix = ix.replace(/View All 171 Courses/g,'View All 172 Courses');
-      ix = ix.replace(/placeholder="Search 171 courses\.\.\."/,'placeholder="Search 172 courses..."');
-      ix = ix.replace(/>171 complete courses/,'>172 complete courses');
-      ix = ix.replace(/Showing all 171 courses/g,'Showing all 172 courses');
+      ix = ix.split('>171</div><div class="stat-label">Practical Courses').join('>172</div><div class="stat-label">Practical Courses');
+      ix = ix.split('Looking for all 171 courses?').join('Looking for all 172 courses?');
+      ix = ix.split('View All 171 Courses').join('View All 172 Courses');
+      ix = ix.split('placeholder="Search 171 courses..."').join('placeholder="Search 172 courses..."');
+      ix = ix.split('>171 complete courses').join('>172 complete courses');
+      ix = ix.split('Showing all 171 courses').join('Showing all 172 courses');
       fs.writeFileSync('index.html', ix);
       console.log('index: card + counter updated (size ' + ix.length + ')');
     }
