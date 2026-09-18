@@ -1,0 +1,417 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 7 — Troubleshooting | Jam Making | rise AFRICA skills</title>
+<style>
+:root{--bg:#0d0d0f;--bg2:#16161a;--bg3:#1c1c21;--gold:#d4af37;--gold2:#f0d27a;--tx:#f2f2f0;--tx2:#a8a8a4;--bd:#2a2a2f;--warn:#c9a227;--danger:#c0504d;--ok:#2e9e6b}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;line-height:1.7}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px}
+header{border-bottom:1px solid var(--bd);padding:16px 0;background:var(--bg2);position:sticky;top:0;z-index:10}
+.hd{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font-size:18px;font-weight:800;letter-spacing:-.5px;text-decoration:none}
+.logo .a{color:var(--gold)}.logo .w{color:var(--tx)}
+.nav{font-size:13px;color:var(--tx2);text-decoration:none}
+.ribbon{background:rgba(212,175,55,.08);border-bottom:1px solid var(--bd);padding:10px 0;font-size:12px;color:var(--tx2);text-align:center}
+.ribbon a{color:var(--gold)}
+.mtag{display:inline-block;background:var(--gold);color:#12120f;font-size:11px;font-weight:800;letter-spacing:.08em;padding:4px 10px;border-radius:4px;margin:40px 0 14px}
+h1{font-size:32px;font-weight:800;line-height:1.2;margin-bottom:12px}
+.intro{color:var(--tx2);font-size:16px;margin-bottom:8px}
+.outcomes{background:var(--bg2);border:1px solid var(--bd);border-left:3px solid var(--gold);border-radius:8px;padding:20px 22px;margin:28px 0 46px}
+.outcomes h3{font-size:13px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.outcomes ul{list-style:none}.outcomes li{padding-left:20px;position:relative;margin-bottom:7px;font-size:14px;color:var(--tx2)}
+.outcomes li:before{content:'→';position:absolute;left:0;color:var(--gold)}
+.lesson{border-top:1px solid var(--bd);padding-top:36px;margin-top:46px}
+.lnum{font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--gold);text-transform:uppercase}
+h2{font-size:25px;font-weight:800;margin:8px 0 18px;line-height:1.25}
+h3{font-size:18px;font-weight:700;margin:30px 0 12px;color:var(--gold2)}
+h4{font-size:15px;font-weight:700;margin:22px 0 8px}
+p{margin-bottom:16px;font-size:15.5px}
+ul,ol{margin:0 0 18px 22px}li{margin-bottom:9px;font-size:15.5px}
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px}
+th{background:var(--bg3);color:var(--gold);text-align:left;padding:11px;border:1px solid var(--bd);font-weight:700}
+td{padding:11px;border:1px solid var(--bd);color:var(--tx2);vertical-align:top}
+.box{background:var(--bg2);border:1px solid var(--bd);border-radius:8px;padding:18px 20px;margin:22px 0}
+.box.warn{border-left:3px solid var(--warn);background:rgba(201,162,39,.07)}
+.box.danger{border-left:3px solid var(--danger);background:rgba(192,80,77,.09)}
+.box.gap{border-left:3px solid #7a7a86}
+.box h4{margin-top:0;color:var(--gold)}
+.box.warn h4{color:var(--warn)}
+.box.danger h4{color:#f0a9a7}
+.diagram{background:var(--bg2);border:1px solid var(--bd);border-radius:8px;padding:20px;margin:24px 0;text-align:center}
+.diagram svg{max-width:100%;height:auto}
+.diagram p{font-size:13px;color:var(--tx2);margin:12px 0 0}
+.task{background:var(--bg2);border:1px solid var(--gold);border-radius:10px;padding:24px;margin:34px 0}
+.task h3{margin-top:0;color:var(--gold)}
+.quiz{background:var(--bg2);border:1px solid var(--bd);border-radius:10px;padding:24px;margin:46px 0}
+.q{margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--bd)}
+.q:last-child{border:none}
+.q p{font-weight:600;margin-bottom:8px}
+.q ol{margin-left:20px}.q li{font-size:14.5px;color:var(--tx2)}
+details{margin-top:8px}
+summary{cursor:pointer;color:var(--gold);font-size:13px;font-weight:600}
+details p{margin:8px 0 0;font-size:14px;color:var(--tx2)}
+.pager{display:flex;justify-content:space-between;border-top:1px solid var(--bd);padding:26px 0;margin-top:50px;font-size:14px}
+.pager a{color:var(--gold);text-decoration:none}
+footer{border-top:1px solid var(--bd);padding:24px 0;font-size:12px;color:var(--tx2);text-align:center}
+footer a{color:var(--gold)}
+.video-wrap{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:8px;overflow:hidden;margin:14px 0;border:1px solid rgba(212,175,55,.3)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+@media(max-width:600px){h1{font-size:25px}h2{font-size:21px}}
+</style>
+</head>
+<body>
+
+
+<header><div class="wrap hd">
+  <a class="logo" href="index.html"><span class="w">rise</span> <span class="a">AFRICA</span> <span class="w">skills</span></a>
+  <a class="nav" href="jam-making-lessons.html">&larr; All modules</a>
+</div></header>
+
+<div class="ribbon">rise AFRICA skills is not a school, college or university. <a href="index.html#notaschool">Read what we actually are</a>.</div>
+
+<div class="wrap">
+
+<span class="mtag">JAM MAKING · MODULE 7 OF 12</span>
+<h1>Troubleshooting</h1>
+<p class="intro">Everything that can go wrong with jam, why it happens, and what to do about it. The diagnostic reference you will come back to.</p>
+
+<div class="outcomes">
+<h3>By the end of this module you will be able to</h3>
+<ul>
+<li>Diagnose any common jam fault by symptom</li>
+<li>Fix what can be fixed and know what cannot</li>
+<li>Understand the underlying cause of each fault, so you prevent it next time</li>
+<li>Recognise the difference between a cosmetic fault and a food safety risk</li>
+<li>Write useful batch records that make future diagnosis possible</li>
+<li>Build a personal troubleshooting list for your own recipes and fruit</li>
+</ul>
+</div>
+
+<div class="lesson">
+<span class="lnum">Lesson 7.1</span>
+<h2>Setting problems — too runny, too stiff</h2>
+
+<p>Set problems are the most common jam fault. Almost all of them come back to one of the four conditions in Module 3: sugar, acid, pectin, or temperature.</p>
+
+<h3>Jam is runny</h3>
+
+<table>
+<tr><th>Reason</th><th>Test</th><th>Fix</th></tr>
+<tr><td><strong>Under-cooked</strong> — did not reach set temperature</td><td>Retest with a fresh batch on a frozen plate</td><td>Return to pot, bring back to boil, cook until set point</td></tr>
+<tr><td><strong>Not enough acid</strong> — pectin will not gel without acid</td><td>Taste: is the jam sweet but "flat"?</td><td>Add 1 tbsp lemon juice per kg of fruit, boil 5 minutes</td></tr>
+<tr><td><strong>Not enough pectin</strong> — fruit was low-pectin or over-ripe</td><td>Was the fruit fully ripe? Was it strawberry, pear, or melon?</td><td>Add commercial pectin following packet instructions</td></tr>
+<tr><td><strong>Too much water in fruit</strong> — fruit was very ripe or from a rainy season</td><td>Did the pot take much longer than 25 minutes to reach set?</td><td>Cook longer at a hard boil; next time add lemon earlier</td></tr>
+<tr><td><strong>Wrong temperature reached</strong> — did not reach 104°C at sea level, or altitude not adjusted</td><td>Was your thermometer calibrated? Did you subtract 1°C per 300m of altitude?</td><td>Recalibrate, adjust for altitude, cook to the correct set point</td></tr>
+</table>
+
+<div class="box warn">
+<h4>The "add pectin" trap</h4>
+<p>Adding pectin to fix a runny jam only works if the problem was pectin. If the problem was under-cooking, you have now got a runny jam with extra pectin that will set hard the moment you cook it properly. Diagnose first, then add.</p>
+</div>
+
+<h3>Jam is too stiff or rubbery</h3>
+
+<table>
+<tr><th>Reason</th><th>Fix</th></tr>
+<tr><td>Over-cooked — passed the set point by 3°C or more</td><td>Cannot be fixed. Use as a jam to slice for toast or to fill cakes.</td></tr>
+<tr><td>Too much pectin</td><td>Cannot be fixed. Next time reduce pectin by 25%.</td></tr>
+<tr><td>Too little water in the fruit (very dry fruit, very ripe fruit)</td><td>Cannot be fixed. Next time add a little water during the fruit-cooking stage.</td></tr>
+</table>
+
+</div>
+
+<div class="lesson">
+<span class="lnum">Lesson 7.2</span>
+<h2>Texture and appearance problems</h2>
+
+<h3>Fruit floats to the top of the jar</h3>
+
+<p>The single most common sign of a beginner's jam. The fruit pieces separate from the liquid and rise to the top of the jar.</p>
+
+<table>
+<tr><th>Reason</th><th>Fix next time</th></tr>
+<tr><td>Fruit was not cooked before sugar was added</td><td>Cook fruit gently first (Stage 1 of Module 4), then add sugar</td></tr>
+<tr><td>Jar was filled too quickly after cooking</td><td>Wait 5 minutes, stir once, wait 5 more minutes before filling</td></tr>
+<tr><td>Sugar was added all at once and the mixture was boiled hard before the fruit softened</td><td>Add sugar slowly, dissolve fully before the hard boil</td></tr>
+</table>
+
+<p>Traditional fix (used by European jam makers): warm the fruit and sugar together overnight in a covered pot, then cook the next morning. The sugar draws the juice out of the fruit slowly and the mixture stays homogeneous.</p>
+
+<h3>Jam is grainy or crunchy</h3>
+
+<p>Undissolved sugar crystals in the finished jam.</p>
+
+<table>
+<tr><th>Reason</th><th>Fix next time</th></tr>
+<tr><td>Sugar was not fully dissolved before boiling</td><td>Stir gently over low heat until the mixture is completely clear before raising the heat</td></tr>
+<tr><td>Jam was stirred during the hard boil</td><td>Do not stir while the jam is at a rolling boil — the crystals form a seed</td></tr>
+<tr><td>Jam was stirred during cooling</td><td>Do not stir once the jam has started to cool; wait until it is lukewarm before the final stir</td></tr>
+<tr><td>Sugar crystals from the side of the pot fell back into the mixture</td><td>Brush down the sides of the pot with a wet pastry brush during cooking</td></tr>
+</table>
+
+<h3>Jam is discoloured</h3>
+
+<table>
+<tr><th>Reason</th><th>Fix next time</th></tr>
+<tr><td>Over-cooked</td><td>Reduce cooking time; aim for the set point, not beyond</td></tr>
+<tr><td>Exposed to air during storage</td><td>Check headspace and jar seals</td></tr>
+<tr><td>Old fruit or fruit from poor storage</td><td>Use fresh fruit, buy at harvest, freeze promptly</td></tr>
+<tr><td>Metal contamination — reactive pot or lid</td><td>Use stainless steel, enamel, or tinned copper pot; check lids are food-safe</td></tr>
+<tr><td>Fruit oxidised during preparation (apples, pears, bananas)</td><td>Toss cut fruit in lemon juice immediately</td></tr>
+</table>
+
+<h3>Jam has scum or foam</h3>
+
+<p>A pale foam on the surface. Not harmful but unprofessional.</p>
+
+<ul>
+<li><strong>Cause:</strong> denatured proteins and air bubbles from the boiling fruit</li>
+<li><strong>Fix:</strong> skim off with a slotted spoon after cooking stops and before filling</li>
+<li><strong>Prevention:</strong> add a small knob of butter (about 10g per kg of jam) near the end of cooking — it stops the foam forming</li>
+</ul>
+
+</div>
+
+<div class="lesson">
+<span class="lnum">Lesson 7.3</span>
+<h2>Sealing and shelf-life problems</h2>
+
+<h3>Lid does not seal</h3>
+
+<table>
+<tr><th>Reason</th><th>Fix</th></tr>
+<tr><td>Jam on the jar rim prevented a clean seal</td><td>Wipe the rim carefully with a hot damp cloth before capping</td></tr>
+<tr><td>Old or damaged lid</td><td>Use a new lid with a sound gasket</td></tr>
+<tr><td>Headspace too small — jam touched the lid</td><td>Refill with 5–6mm headspace</td></tr>
+<tr><td>Headspace too large — too much air</td><td>Refill to the correct headspace</td></tr>
+<tr><td>Lid screwed too tight or too loose</td><td>Snug, not brutal. Let the vacuum do the work.</td></tr>
+<tr><td>Sudden temperature change during cooling</td><td>Cool at room temperature, not in the fridge or a draught</td></tr>
+</table>
+
+<p><strong>If a jar does not seal:</strong> refrigerate and use within 2–3 weeks, or empty back into a pot, reheat to set temperature, and refill into a fresh sterilised jar with a new lid.</p>
+
+<h3>Jar leaks during storage</h3>
+
+<table>
+<tr><th>Reason</th><th>Fix</th></tr>
+<tr><td>Seal failed after cooling</td><td>Check seals within 24 hours; refrigerate or reprocess failed jars</td></tr>
+<tr><td>Cracked jar</td><td>Discard. The jam inside is contaminated.</td></tr>
+<tr><td>Lid not tight enough when stored</td><td>Check lids are snug before storing</td></tr>
+<tr><td>Stacking jars</td><td>Do not stack unsealed jars. Once sealed and cool, stacking is fine.</td></tr>
+</table>
+
+<h3>Mould on the surface during storage</h3>
+
+<div class="box danger">
+<h4>Mould means discard the whole jar</h4>
+<p>Mould on the surface of jam means mycotoxins have spread invisibly through the entire jar. Scraping off the mould and eating the rest is not safe. Discard the whole jar. Wash the jar and lid thoroughly before reusing (or discard the lid if the gasket is compromised).</p>
+</div>
+
+<table>
+<tr><th>Reason</th><th>Fix next time</th></tr>
+<tr><td>Unsterile jar or lid</td><td>Follow Module 5 sterilisation properly</td></tr>
+<tr><td>Seal failure</td><td>Check seals within 24 hours; do not store unsealed jars</td></tr>
+<tr><td>Not enough sugar</td><td>Standard 1:1 ratio prevents mould; do not reduce sugar without adding pectin</td></tr>
+<tr><td>Too much headspace</td><td>Fill to 5–6mm headspace</td></tr>
+<tr><td>Stored in a warm, humid place</td><td>Cool, dark, dry storage</td></tr>
+</table>
+
+<h3>Fermentation — alcoholic or yeasty smell</h3>
+
+<p>Yeasts have survived and are fermenting the sugars in the jam. Signs: alcohol smell, fizzing, bubble formation, sometimes a yeasty taste.</p>
+
+<div class="box danger">
+<h4>Discard the jar</h4>
+<p>Fermenting jam is not salvageable. Do not try to re-boil it, do not taste it to see if it is "still OK." Yeast fermentation has changed the chemistry of the jam and produced alcohol. Discard.</p>
+</div>
+
+<table>
+<tr><th>Reason</th><th>Fix next time</th></tr>
+<tr><td>Not enough sugar</td><td>Standard 1:1 ratio</td></tr>
+<tr><td>Under-cooked — did not reach set point</td><td>Cook to the correct temperature for your altitude</td></tr>
+<tr><td>Unsterile jars or lids</td><td>Follow Module 5 sterilisation</td></tr>
+<tr><td>Seal failure during storage</td><td>Check seals at 24 hours</td></tr>
+<tr><td>Stored in a warm place</td><td>Cool, dark storage below 20°C</td></tr>
+</table>
+
+</div>
+
+<div class="lesson">
+<span class="lnum">Lesson 7.4</span>
+<h2>Flavour problems</h2>
+
+<h3>Jam tastes flat or "just sweet"</h3>
+
+<ul>
+<li><strong>Cause:</strong> not enough acid; over-cooked (aromatics destroyed); fruit not ripe enough when picked</li>
+<li><strong>Fix:</strong> add lemon juice; taste before bottling and adjust</li>
+<li><strong>Prevention:</strong> use fully ripe fruit for flavour, add 1 tbsp lemon juice per kg, cook for the shortest time that reaches set</li>
+</ul>
+
+<h3>Jam tastes bitter or metallic</h3>
+
+<ul>
+<li><strong>Cause:</strong> reactive pot (aluminium, unlined copper); seeds from citrus cooked too long (white pith is bitter); over-cooked caramelised sugars</li>
+<li><strong>Fix:</strong> usually cannot be rescued. Next time use stainless steel or enamel, remove citrus pith and seeds promptly, and cook faster.</li>
+</ul>
+
+<h3>Jam tastes too sour</h3>
+
+<ul>
+<li><strong>Cause:</strong> too much lemon juice or citric acid; fruit under-ripe</li>
+<li><strong>Fix:</strong> cannot easily fix without unbalancing the set. Next time reduce the acid by half.</li>
+</ul>
+
+<h3>Jam tastes fermented or "off"</h3>
+
+<p>Discard. Do not taste further. This is a sign of spoilage.</p>
+
+<h3>Jam has a caramel or burnt taste</h3>
+
+<ul>
+<li><strong>Cause:</strong> over-cooked; scorched bottom of pot; heat too high</li>
+<li><strong>Prevention:</strong> cook at a steady hard boil, not maximum heat; stir gently; use a heavy-bottomed pot</li>
+</ul>
+
+</div>
+
+<div class="lesson">
+<span class="lnum">Lesson 7.5</span>
+<h2>Cosmetic vs safety faults</h2>
+
+<p>Not every fault is a food safety problem. This table helps you decide what is a quality issue versus what makes the jam unsafe to sell or eat.</p>
+
+<table>
+<tr><th>Fault</th><th>Category</th><th>What to do</th></tr>
+<tr><td>Floating fruit</td><td>Cosmetic</td><td>Sell as-is, or stir before use. Not unsafe.</td></tr>
+<tr><td>Grainy texture</td><td>Cosmetic</td><td>Sell as-is. Not unsafe.</td></tr>
+<tr><td>Foam on surface</td><td>Cosmetic</td><td>Skim. Sell as-is.</td></tr>
+<tr><td>Slightly dark colour</td><td>Cosmetic</td><td>Sell as-is.</td></tr>
+<tr><td>Too runny</td><td>Quality</td><td>Can be sold as "jam sauce" or reprocessed. Not unsafe if cooked properly.</td></tr>
+<tr><td>Too stiff</td><td>Quality</td><td>Sell with a note. Not unsafe.</td></tr>
+<tr><td>Unsealed lid at 24 hours</td><td><strong>Safety</strong></td><td>Refrigerate and use within 2–3 weeks, or reprocess. Do not store on shelf.</td></tr>
+<tr><td>Mould on surface</td><td><strong>Safety</strong></td><td>Discard whole jar.</td></tr>
+<tr><td>Fermentation signs</td><td><strong>Safety</strong></td><td>Discard whole jar.</td></tr>
+<tr><td>Bulging lid</td><td><strong>Safety</strong></td><td>Discard whole jar.</td></tr>
+<tr><td>Fizzy texture on opening</td><td><strong>Safety</strong></td><td>Discard whole jar.</td></tr>
+<tr><td>Off smell on opening</td><td><strong>Safety</strong></td><td>Discard whole jar.</td></tr>
+</table>
+
+<div class="box warn">
+<h4>When in doubt — discard</h4>
+<p>You cannot sell a jam you are not sure about. If a jar looks, smells, or tastes wrong, discard it. A single jar is worth $2–3. A customer who gets sick from your jam is a reputational and legal problem you cannot recover from easily.</p>
+</div>
+
+</div>
+
+<div class="lesson">
+<span class="lnum">Lesson 7.6</span>
+<h2>Building your own troubleshooting log</h2>
+
+<p>The best jam maker in your kitchen is your own experience — but only if you write it down. This is how the fault tables in this module become specific to your fruit, your water, your pot, and your altitude.</p>
+
+<h3>What to record for every batch</h3>
+
+<ol>
+<li><strong>Date and batch number</strong></li>
+<li><strong>Fruit:</strong> variety, source, ripeness stage, weight before and after prep (yield %)</li>
+<li><strong>Sugar weight and ratio used</strong></li>
+<li><strong>Acid:</strong> lemon juice or citric acid quantity</li>
+<li><strong>Pectin:</strong> none, natural (via fruit mix), or commercial (how much)</li>
+<li><strong>Cooking:</strong> time to dissolve sugar, time to reach set, temperature at set</li>
+<li><strong>Set test result:</strong> which test used, and how it looked</li>
+<li><strong>Filling:</strong> number of jars, jar size, filling temperature, headspace measurement</li>
+<li><strong>Water bath:</strong> yes/no, processing time</li>
+<li><strong>Seal check result:</strong> how many sealed, how many failed</li>
+<li><strong>Tasting notes:</strong> one week after making, taste and note if the flavour has developed</li>
+<li><strong>Repeat notes:</strong> would you make this again? What would you change?</li>
+</ol>
+
+<h3>Why this matters more than the fault tables</h3>
+
+<p>This module gives you the diagnostic framework. Your log gives you the specific answers for your kitchen. After 20 batches, you will know:</p>
+
+<ul>
+<li>Your local fruit's actual pectin content (varies by variety and season)</li>
+<li>The exact temperature your jam sets at (adjusts for your altitude, thermometer, and pot)</li>
+<li>Which jar brand seals reliably for you</li>
+<li>How long your jam takes to cook on your stove with your pot</li>
+<li>Which flavour combinations your customers ask for most</li>
+</ul>
+
+<p>No book — including this one — can tell you those. Only your own records can.</p>
+
+<div class="box gap">
+<h4>The 5-minute habit</h4>
+<p>Write the batch record while the jam is cooling. Not later. Not tomorrow. The 5 minutes you spend now saves you from repeating the same mistake three months later. Successful food producers all keep records. It is not bureaucracy — it is the memory that makes you better.</p>
+</div>
+
+</div>
+
+<div class="task">
+<h3>Practical assignment — Module 7</h3>
+<p><strong>Deliberately create three faults, then diagnose them.</strong></p>
+<ol>
+<li><strong>Under-cook a small batch.</strong> Make a jam and stop cooking at 100°C instead of 104°C. Jar it. Note what happens when it cools. Record the fault in your log with the actual temperature reached.</li>
+<li><strong>Make a batch without lemon juice.</strong> Use a low-pectin fruit (strawberry or pear). Note whether it sets. Record the fault and the cause.</li>
+<li><strong>Deliberately under-sterilise one jar.</strong> Fill one jar that has been washed but not boiled, alongside properly sterilised jars. Store all of them together for two weeks. Note which jar develops a problem first.</li>
+<li><strong>Write a full batch record</strong> for each of the three deliberate failures. This is the template for all future batches.</li>
+<li><strong>Photograph each fault.</strong> These are your visual references.</li>
+<li><strong>Fix attempt.</strong> Take the runny batch and try to fix it (lemon juice and 5 minutes more cooking, then pectin if needed). Note whether the fix worked.</li>
+<li><strong>Two weeks later:</strong> check all the jars. Note which are fine and which have failed. This is your first real shelf-stability test.</li>
+</ol>
+<p>Points 1, 2 and 6 carry the most marks. Points 1 and 2 make the fault tables real. Point 6 tests whether you can actually diagnose and fix in real time.</p>
+</div>
+
+<div class="quiz">
+<h3>Module 7 knowledge check</h3>
+
+<div class="q">
+<p>1. Your jam is runny. What is the FIRST thing to check?</p>
+<ol type="a"><li>Add more pectin</li><li>Test whether it reached the set temperature — under-cooking is the most common cause</li><li>Add more sugar</li><li>Re-sterilise the jars</li></ol>
+<details><summary>Show answer</summary><p><strong>b.</strong> Under-cooking is the most common cause of runny jam. Before adding pectin (which fixes a different problem), check whether the jam reached the set point. If it did not, simply cook it longer.</p></details>
+</div>
+
+<div class="q">
+<p>2. Why should you discard a jar with mould on the surface, not just scrape it off?</p>
+<ol type="a"><li>The jam tastes bad</li><li>Mycotoxins spread invisibly through the whole jar — you cannot see them but they are there</li><li>Mould is harmless but ugly</li><li>You could scrape it off safely</li></ol>
+<details><summary>Show answer</summary><p><strong>b.</strong> Mould produces mycotoxins that diffuse through the water content of the jam. The visible mould is just the surface growth; the toxins are everywhere. Scraping off the mould does not make the rest safe.</p></details>
+</div>
+
+<div class="q">
+<p>3. What causes "floating fruit" in a jar of jam?</p>
+<ol type="a"><li>The sugar was too fine</li><li>The fruit was not cooked before sugar was added, or the jar was filled before the jam had time to thicken slightly</li><li>The jar was too cold</li><li>The fruit was over-ripe</li></ol>
+<details><summary>Show answer</summary><p><strong>b.</strong> Floating fruit means the pieces separate from the liquid. It happens when fruit is not cooked first (Stage 1 of Module 4) or when jars are filled immediately after cooking, before the jam has thickened slightly during the 5-minute rest.</p></details>
+</div>
+
+<div class="q">
+<p>4. A jar has a bulging lid three months into storage. What does this indicate?</p>
+<ol type="a"><li>It is fine to eat</li><li>Gas is being produced inside — likely fermentation or bacterial activity. Discard the whole jar.</li><li>The lid was screwed too tight</li><li>The jam has set harder than expected</li></ol>
+<details><summary>Show answer</summary><p><strong>b.</strong> A bulging lid means gas production inside the jar — a sign of spoilage. Discard the whole jar without opening or tasting. Do not attempt to rescue it.</p></details>
+</div>
+
+<div class="q">
+<p>5. Why should you write a batch record while the jam is cooling, not later?</p>
+<ol type="a"><li>It is required by law</li><li>So you capture the actual details of this batch — temperature, timings, yield — before you forget them, which is what makes you better at jam making over time</li><li>It saves time</li><li>It prevents the jam from spoiling</li></ol>
+<details><summary>Show answer</summary><p><strong>b.</strong> Records written from memory a week later are unreliable. Written while the jam cools, they capture what actually happened — and after 20 batches they become the most valuable document in your kitchen, because they reflect your specific fruit, water, pot and altitude.</p></details>
+</div>
+</div>
+
+<div class="pager">
+  <a href="jam-making-module-6.html">← Module 6 — Water Bath Canning Safety</a>
+  <a href="jam-making-module-8.html">Module 8 — Packaging, Labelling and Branding →</a>
+</div>
+
+</div>
+
+<footer><div class="wrap">
+  rise AFRICA skills is not a school, college or university. <a href="index.html#notaschool">Read what we actually are</a>.<br>
+  This module teaches diagnosis and repair of jam faults. Food safety decisions and shelf-life labelling requirements come from your local public health authority.
+</div></footer>
+
+</body>
+</html>
+

@@ -1,198 +1,131 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Video Library — rise AFRICA skills</title>
-<meta name="description" content="Free legal farming, food, trade and business videos from trusted channels. Organised by course topic."/>
-<link rel="icon" href="/og-image.png" type="image/png"/>
 <style>
-:root{--gold:#C9A227;--dark:#1a1a1a;--darker:#111;--card:#1e1e1e;--text:#e0e0e0;--muted:#888;--green:#2ecc71;}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--dark);color:var(--text);line-height:1.6}
-a{color:var(--gold);text-decoration:none}
-a:hover{text-decoration:underline}
-header{background:var(--darker);border-bottom:1px solid #333;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem}
-.logo{display:flex;align-items:center;gap:0.75rem;font-size:1.3rem;font-weight:700;color:var(--gold)}
-.logo-icon{width:38px;height:38px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--darker);font-weight:900;font-size:1.1rem}
-.back{color:var(--muted);font-size:0.85rem}
-.back:hover{color:var(--gold)}
-main{max-width:1200px;margin:0 auto;padding:2rem 1.2rem 4rem}
-.hero{text-align:center;margin-bottom:2rem}
-h1{color:#fff;font-size:2rem;margin-bottom:0.4rem}
-.lede{color:var(--gold);font-weight:600;font-size:1.05rem}
-.intro{color:var(--muted);font-size:0.9rem;max-width:780px;margin:0.8rem auto 0;line-height:1.6}
-.filters{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;margin:1.8rem 0 1rem}
-.fbtn{background:var(--card);border:1px solid #333;color:var(--text);padding:0.45rem 1rem;border-radius:20px;font-size:0.8rem;cursor:pointer;font-family:inherit;transition:all .15s}
-.fbtn:hover{border-color:var(--gold);color:var(--gold)}
-.fbtn.on{background:var(--gold);color:var(--darker);border-color:var(--gold);font-weight:700}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.2rem;margin-top:1.5rem}
-.vcard{background:var(--card);border:1px solid #2a2a2a;border-radius:10px;overflow:hidden;transition:border-color .2s,transform .2s}
-.vcard:hover{border-color:var(--gold);transform:translateY(-2px)}
-.thumb{position:relative;width:100%;aspect-ratio:16/9;background:#000;cursor:pointer;overflow:hidden}
-.thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.thumb .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.35);transition:background .2s}
-.thumb:hover .play{background:rgba(0,0,0,0.55)}
-.thumb .play svg{width:60px;height:60px;fill:#fff;opacity:0.9;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.6))}
-.thumb iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.vbody{padding:0.9rem 1rem 1rem}
-.vcat{font-size:0.65rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);font-weight:600;margin-bottom:0.3rem}
-.vtitle{color:#fff;font-size:0.95rem;font-weight:600;line-height:1.35;margin-bottom:0.4rem}
-.vdesc{color:var(--muted);font-size:0.8rem;line-height:1.5;margin-bottom:0.5rem}
-.vsource{color:var(--green);font-size:0.72rem;font-weight:600}
-.fine{color:var(--muted);font-size:0.8rem;text-align:center;margin-top:2.5rem;padding:1rem;border-top:1px solid #2a2a2a}
-.fine a{color:var(--gold);font-weight:600}
-.empty{text-align:center;color:var(--muted);padding:3rem 1rem;font-size:0.95rem}
+  body { font-family: system-ui, -apple-system, sans-serif; max-width: 1100px; margin: 0 auto; padding: 1rem 1.2rem 3rem; background:#fafaf7; color:#222; line-height:1.5; }
+  h1 { margin: 0 0 .3rem; }
+  .intro { color:#555; margin-bottom: 1.5rem; font-size:.95rem; }
+  .filters { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom: 1.5rem; }
+  .filters button { padding:.45rem .9rem; border:1px solid #ccc; background:#fff; border-radius:20px; cursor:pointer; font-size:.85rem; font-family:inherit; }
+  .filters button.active { background:#2a7; color:#fff; border-color:#2a7; }
+  .filters button:hover:not(.active) { border-color:#2a7; color:#2a7; }
+  .grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap:1.2rem; }
+  .card { background:#fff; border:1px solid #e5e5e5; border-radius:10px; padding:1rem 1.1rem; display:flex; flex-direction:column; }
+  .card .cat { font-size:.68rem; color:#2a7; font-weight:700; letter-spacing:.06em; }
+  .card h3 { font-size:1rem; margin:.35rem 0 .5rem; line-height:1.3; }
+  .card p { font-size:.88rem; color:#555; margin:0 0 .8rem; flex-grow:1; }
+  .card a.watch { display:inline-block; font-size:.85rem; color:#2a7; text-decoration:none; font-weight:600; }
+  .card a.watch:hover { text-decoration:underline; }
+  .card .channel { font-size:.75rem; color:#888; margin-top:.6rem; }
+  .footer { margin-top:3rem; padding-top:1.5rem; border-top:1px solid #e5e5e5; font-size:.85rem; color:#666; text-align:center; }
+  .footer a { color:#2a7; }
 </style>
 </head>
 <body>
-<header>
-  <a class="logo" href="/"><div class="logo-icon">rAs</div><span>rise AFRICA skills</span></a>
-  <a class="back" href="/">← Back to all courses</a>
-</header>
-<main>
-  <div class="hero">
-    <h1>&#128250; Video Library</h1>
-    <p class="lede">Free, legal videos from trusted farming, food, trade and business channels.</p>
-    <p class="intro">Every video on this page is embedded from the original creator's YouTube channel. We do not host or download the videos. Watch on YouTube, subscribe to the creators who taught you something, and support them. All content remains the property of the original channel.</p>
-  </div>
-  <div class="filters" id="filters"></div>
-  <div class="grid" id="vgrid"></div>
-  <p class="fine">Know a free, legal channel that should be on this list? <a href="request-course.html">Send us a request</a>.</p>
-</main>
+
+
+<h1>📺 Video Library</h1>
+<p class="intro">
+Free, legal videos from trusted farming, food, trade, artisan and business channels.
+Every video is embedded from the original creator's YouTube channel. We do not host or download the videos.
+Watch on YouTube, subscribe to the creators who taught you something, and support them.
+All content remains the property of the original channel.
+</p>
+
+<div class="filters" id="filters"></div>
+<div class="grid" id="grid"></div>
+
+<div class="footer">
+  Know a free, legal channel that should be on this list?
+  <a href="https://wa.me/263776881941" target="_blank" rel="noopener">Send us a request.</a>
+</div>
+
 <script>
-(function(){
-  // VIDEO LIST
-  // id = YouTube video ID. c = category. t = title. d = description. s = source channel.
-  // To add a video: copy one line, change id, c, t, d, s.
-  var V = [
-    // ---- PIG FARMING ----
-    {id:"", c:"PIG FARMING", t:"Pig Farming Academy TV — Channel", d:"436 videos on real pig farming: breeding, feeding, housing, health. Watch on their channel.", s:"Свинарство для людей (Pig Farming Academy TV)", url:"https://www.youtube.com/channel/UCiuQWRX2NnAUyIVN25DtKHg"},
-    {id:"", c:"PIG FARMING", t:"MSU Extension — Raising Outdoor Pasture Pigs", d:"Free video series: feeding, housing, land, manure, seasonal, water management. English + Spanish.", s:"MSU Extension Animal Ag", url:"https://www.youtube.com/user/MSUExtensionAnimalAg"},
+const videos = [
+  { cat:"PIG FARMING", title:"Pig Farming Academy TV", desc:"436 videos on real pig farming: breeding, feeding, housing, health.", channel:"Pig Farming Academy TV", url:"https://www.youtube.com/results?search_query=Pig+Farming+Academy+TV" },
+  { cat:"PIG FARMING", title:"Raising Outdoor Pasture Pigs", desc:"Free video series: feeding, housing, land, manure, seasonal, water management. English + Spanish.", channel:"MSU Extension", url:"https://www.youtube.com/results?search_query=MSU+Extension+pasture+pigs" },
 
-    // ---- POULTRY ----
-    {id:"5hyqdWMtLGY", c:"POULTRY", t:"Shamba Shape Up — Chicken Rearing and Solar Pump", d:"East African TV series on real smallholder chicken farming, market access and solar.", s:"Shamba Shape Up (AKZ TV)"},
-    {id:"Hxv6bpNgqt0", c:"POULTRY", t:"Free Range Chicken Farming Guide", d:"A practical walkthrough of starting free-range poultry. 8 minutes.", s:"FO Video Library"},
+  { cat:"POULTRY", title:"Chicken Rearing and Solar Pump", desc:"East African TV series on real smallholder chicken farming, market access and solar.", channel:"Shamba Shape Up", url:"https://www.youtube.com/results?search_query=Shamba+Shape+Up+chicken" },
+  { cat:"POULTRY", title:"Free Range Chicken Farming Guide", desc:"A practical walkthrough of starting free-range poultry. 8 minutes.", channel:"FO Video Library", url:"https://www.youtube.com/results?search_query=free+range+chicken+farming+guide" },
 
-    // ---- GOATS ----
-    {id:"", c:"GOATS", t:"Goat Farming — Breed, Feed, Vaccinate", d:"Full free video course from Aga Khan Foundation Learning Hub. Hindi with subtitles.", s:"AKF Learning Hub", url:"https://akflearninghub.org"},
+  { cat:"GOATS", title:"Goat Farming — Breed, Feed, Vaccinate", desc:"Full free video course from Aga Khan Foundation Learning Hub. Hindi with subtitles.", channel:"AKF Learning Hub", url:"https://www.youtube.com/results?search_query=Aga+Khan+Foundation+goat+farming" },
 
-    // ---- FISH ----
-    {id:"", c:"FISH", t:"Small-Scale Pond Aquaculture — Video Series", d:"Free series on building and running a pond aquaculture business. English and Khmer.", s:"ZHAW IUNR"},
-    {id:"", c:"FISH", t:"Good Aquaculture Practice — Video Playlist", d:"Pre-stocking, stocking and post-stocking management. Made for training sessions.", s:"WorldFish Center", url:"https://www.youtube.com/playlist?list=PL_5s5CPGqCKQbo6I_9_R6lmNEK3oAdd2k"},
+  { cat:"FISH", title:"Small-Scale Pond Aquaculture", desc:"Free series on building and running a pond aquaculture business. English and Khmer.", channel:"ZHAW IUNR", url:"https://www.youtube.com/results?search_query=small+scale+pond+aquaculture" },
+  { cat:"FISH", title:"Good Aquaculture Practice", desc:"Pre-stocking, stocking and post-stocking management. Made for training sessions.", channel:"WorldFish Center", url:"https://www.youtube.com/results?search_query=WorldFish+good+aquaculture+practice" },
 
-    // ---- CATTLE & DAIRY ----
-    {id:"ZhzNciMiMos", c:"CATTLE", t:"Sustainable Livestock Production — Forage Tutorial", d:"Improved forages and livestock practices. Swahili with English subtitles.", s:"ICAR / ILRI"},
-    {id:"", c:"DAIRY", t:"Small Scale Dairy School — Free Videos", d:"Basic dairy cattle management in English, plus Chichewa versions for Malawi.", s:"Small Scale Dairy School", url:"https://www.youtube.com/@smallscaledairyschool"},
+  { cat:"CATTLE", title:"Sustainable Livestock Production — Forage", desc:"Improved forages and livestock practices. Swahili with English subtitles.", channel:"ILRI", url:"https://www.youtube.com/results?search_query=ILRI+forage+livestock" },
 
-    // ---- BEES ----
-    {id:"Mim4xCLiGZc", c:"BEES", t:"Beekeeping — Training Film 1", d:"Practical beekeeping for African conditions. Free from a European development programme.", s:"ENABEL Beekeeping Films"},
-    {id:"kJ1JSHIB52s", c:"BEES", t:"How to Keep Bees — Full Course", d:"11-minute practical beekeeping course in French.", s:"FO Video Library"},
+  { cat:"DAIRY", title:"Small Scale Dairy School", desc:"Basic dairy cattle management in English, plus Chichewa versions for Malawi.", channel:"Small Scale Dairy School", url:"https://www.youtube.com/results?search_query=small+scale+dairy+school" },
 
-    // ---- MUSHROOMS ----
-    {id:"", c:"MUSHROOMS", t:"Grow Your Own Mushrooms — Free Workshop", d:"Substrate prep, alkaline bath, fruiting. From an hour-long free community workshop.", s:"GroCycle / Community Garden"},
+  { cat:"BEES", title:"Beekeeping — Training Film 1", desc:"Practical beekeeping for African conditions. Free from a European development programme.", channel:"ENABEL Beekeeping Films", url:"https://www.youtube.com/results?search_query=ENABEL+beekeeping" },
+  { cat:"BEES", title:"How to Keep Bees — Full Course", desc:"11-minute practical beekeeping course in French.", channel:"FO Video Library", url:"https://www.youtube.com/results?search_query=how+to+keep+bees+full+course" },
 
-    // ---- RABBITS ----
-    {id:"Q7lxlEsOmyg", c:"RABBITS", t:"Why Start Rabbit Farming", d:"Practical reasons, economics, and what to consider before you start.", s:"Rabbitweed Saf"},
-    {id:"", c:"RABBITS", t:"GenrAb Rabbit Farm — Full Walkthrough", d:"Breed selection, cage construction, feeding, marketing rabbits, manure and urine.", s:"GenrAb"},
+  { cat:"MUSHROOMS", title:"Grow Your Own Mushrooms — Workshop", desc:"Substrate prep, alkaline bath, fruiting. From an hour-long free community workshop.", channel:"GroCycle", url:"https://www.youtube.com/results?search_query=GroCycle+grow+your+own+mushrooms" },
 
-    // ---- FOOD PRESERVATION ----
-    {id:"", c:"FOOD PRESERVATION", t:"Master Food Preserver — Canning Playlist", d:"Approved canning method videos from a US university extension programme.", s:"University Extension", url:"https://www.youtube.com/playlist?list=PLlyGxXr5CUt2WWUsoYoRXbczbPKFbr5xT"},
-    {id:"", c:"FOOD PRESERVATION", t:"Canning and Preserving: Pick, Pack and Preserve", d:"University extension series on preserving fruits and vegetables properly.", s:"Alabama Cooperative Extension"},
+  { cat:"RABBITS", title:"Why Start Rabbit Farming", desc:"Practical reasons, economics, and what to consider before you start.", channel:"Rabbitweed Saf", url:"https://www.youtube.com/results?search_query=why+start+rabbit+farming" },
+  { cat:"RABBITS", title:"Rabbit Farm — Full Walkthrough", desc:"Breed selection, cage construction, feeding, marketing rabbits, manure and urine.", channel:"GenrAb", url:"https://www.youtube.com/results?search_query=rabbit+farm+full+walkthrough" },
 
-    // ---- SOLAR ----
-    {id:"", c:"SOLAR", t:"Resilient Solar + Storage — Video Series", d:"How to size a solar and battery storage system. Free, self-paced. English + Spanish.", s:"Clean Energy Group"},
-    {id:"", c:"SOLAR", t:"Solar PV Design, Installation and Code — Free Course", d:"Industry expert Sean White on solar PV basics, design, installation and code.", s:"Building Performance Association"},
+  { cat:"FOOD PRESERVATION", title:"Master Food Preserver — Canning Playlist", desc:"Approved canning method videos from a US university extension programme.", channel:"University Extension", url:"https://www.youtube.com/results?search_query=master+food+preserver+canning" },
+  { cat:"FOOD PRESERVATION", title:"Canning and Preserving: Pick, Pack and Preserve", desc:"University extension series on preserving fruits and vegetables properly.", channel:"Alabama Cooperative Extension", url:"https://www.youtube.com/results?search_query=canning+and+preserving+pick+pack+preserve" },
 
-    // ---- WELDING ----
-    {id:"", c:"WELDING", t:"Strike-Arc Academy — How to Weld Series", d:"10-part free video series for new welders. Electrode, TIG, MIG basics.", s:"Strike-Arc (South Africa)"},
+  { cat:"SOLAR", title:"Resilient Solar + Storage", desc:"How to size a solar and battery storage system. Free, self-paced. English + Spanish.", channel:"Clean Energy Group", url:"https://www.youtube.com/results?search_query=resilient+solar+storage" },
+  { cat:"SOLAR", title:"Solar PV Design, Installation and Code", desc:"Industry expert Sean White on solar PV basics, design, installation and code.", channel:"Building Performance Association", url:"https://www.youtube.com/results?search_query=Sean+White+solar+PV+design+installation" },
 
-    // ---- BAKING ----
-    {id:"yePMpoyXwys", c:"BAKING", t:"No-Knead Bread — African Home Baker", d:"A South African baker shares a simple no-knead bread method.", s:"Steve's Bread / YouTube"},
+  { cat:"WELDING", title:"Strike-Arc Academy — How to Weld", desc:"10-part free video series for new welders. Electrode, TIG, MIG basics.", channel:"Strike-Arc (South Africa)", url:"https://www.youtube.com/results?search_query=Strike+Arc+how+to+weld" },
 
-    // ---- BUSINESS ----
-    {id:"", c:"BUSINESS", t:"Agripreneurship in African Agribusiness — Free Platform", d:"7 modules, 25 units, 63 explanatory videos, all free. For new agripreneurs.", s:"Agripreneurship Alliance"},
+  { cat:"BAKING", title:"No-Knead Bread — African Home Baker", desc:"A South African baker shares a simple no-knead bread method.", channel:"Steve's Bread", url:"https://www.youtube.com/results?search_query=no+knead+bread+African+home+baker" },
 
-    // ---- FOOD PROCESSING / SAWBO ----
-    {id:"", c:"FOOD PROCESSING", t:"SAWBO — Scientific Animations Without Borders", d:"200+ short animated training videos in 300+ languages. Agriculture, health, nutrition.", s:"SAWBO (Purdue University)", url:"https://sawbo-animations.org"}
-  ];
+  { cat:"BUSINESS", title:"Agripreneurship in African Agribusiness", desc:"7 modules, 25 units, 63 explanatory videos, all free. For new agripreneurs.", channel:"Agripreneurship Alliance", url:"https://www.youtube.com/results?search_query=agripreneurship+African+agribusiness" },
 
-  var filters = document.getElementById('filters');
-  var grid = document.getElementById('vgrid');
-  if(!grid) return;
+  { cat:"FOOD PROCESSING", title:"SAWBO — Scientific Animations Without Borders", desc:"200+ short animated training videos in 300+ languages. Agriculture, health, nutrition.", channel:"SAWBO (Purdue University)", url:"https://www.youtube.com/results?search_query=SAWBO+scientific+animations" },
 
-  var cats = [];
-  V.forEach(function(v){ if(cats.indexOf(v.c) < 0) cats.push(v.c); });
-  cats.sort();
+  { cat:"COTTAGE INDUSTRY", title:"Shea Butter and Black Soap Production", desc:"Shea butter and African black soap production in Ghana.", channel:"Baraka Shea Butter", url:"https://www.youtube.com/results?search_query=shea+butter+black+soap+production+Ghana" },
+  { cat:"COTTAGE INDUSTRY", title:"Natural Beauty and Homemade Products", desc:"Ghanaian natural beauty and homemade product tutorials.", channel:"Awaku Beauty TV", url:"https://www.youtube.com/results?search_query=Awaku+Beauty+natural+products" },
+  { cat:"COTTAGE INDUSTRY", title:"Hand-Dipped Candle Making", desc:"Traditional beeswax candle making technique.", channel:"FO Video Library", url:"https://www.youtube.com/results?search_query=hand+dipped+candle+making" },
 
-  var allBtn = document.createElement('button');
-  allBtn.className = 'fbtn on';
-  allBtn.textContent = 'All (' + V.length + ')';
-  allBtn.dataset.cat = 'ALL';
-  filters.appendChild(allBtn);
-  cats.forEach(function(c){
-    var b = document.createElement('button');
-    b.className = 'fbtn';
-    var n = V.filter(function(v){ return v.c === c; }).length;
-    b.textContent = c + ' (' + n + ')';
-    b.dataset.cat = c;
-    filters.appendChild(b);
-  });
+  { cat:"ARTISAN", title:"African Pottery Forming and Firing", desc:"Traditional Southern African pot-making process.", channel:"African Pottery", url:"https://www.youtube.com/results?search_query=African+pottery+forming+firing" },
+  { cat:"ARTISAN", title:"Bolga Basket Weaving", desc:"Ghanaian elephant grass basket weaving technique.", channel:"Bolgatanga Baskets", url:"https://www.youtube.com/results?search_query=Bolga+basket+weaving" },
+  { cat:"ARTISAN", title:"Maasai Beadwork", desc:"Traditional Kenyan and Tanzanian bead jewellery.", channel:"Maasai Beadwork", url:"https://www.youtube.com/results?search_query=Maasai+beadwork" },
+  { cat:"ARTISAN", title:"Ghanaian Recycled Glass Beads", desc:"Recycled glass bead production in Ghana.", channel:"Ghanaian Beads", url:"https://www.youtube.com/results?search_query=Ghanaian+recycled+glass+beads" },
+  { cat:"ARTISAN", title:"Woodturning and Woodworking Projects", desc:"Woodturning and woodworking projects for beginners.", channel:"AntzCreations", url:"https://www.youtube.com/results?search_query=AntzCreations+woodturning" },
+  { cat:"ARTISAN", title:"Furniture and Home Maintenance", desc:"Furniture making and home maintenance from South Africa.", channel:"Remedial DIY", url:"https://www.youtube.com/results?search_query=Remedial+DIY+furniture" },
 
-  filters.addEventListener('click', function(e){
-    var b = e.target.closest('.fbtn');
-    if(!b) return;
-    filters.querySelectorAll('.fbtn').forEach(function(x){ x.classList.remove('on'); });
-    b.classList.add('on');
-    var c = b.dataset.cat;
-    grid.querySelectorAll('.vcard').forEach(function(card){
-      card.style.display = (c === 'ALL' || card.dataset.cat === c) ? '' : 'none';
-    });
-  });
+  { cat:"BIOGAS", title:"Biogas Basics — Full Training", desc:"6+ hours of biogas training for smallholders.", channel:"Jürgen Kube", url:"https://www.youtube.com/results?search_query=biogas+basics+full+training" },
+  { cat:"BIOGAS", title:"SABIA Biogas Workshop Series", desc:"Understanding biogas for African smallholders.", channel:"SABIA", url:"https://www.youtube.com/results?search_query=SABIA+biogas+workshop" }
+];
 
-  function esc(s){
-    return String(s).replace(/[&<>"']/g, function(ch){
-      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch];
-    });
-  }
+const cats = ["All", ...new Set(videos.map(v => v.cat))];
+const filterBox = document.getElementById("filters");
 
-  V.forEach(function(v){
-    var card = document.createElement('div');
-    card.className = 'vcard';
-    card.dataset.cat = v.c;
+function render(list) {
+  document.getElementById("grid").innerHTML = list.map(v => `
+    <div class="card">
+      <div class="cat">${v.cat}</div>
+      <h3>${v.title}</h3>
+      <p>${v.desc}</p>
+      <a class="watch" href="${v.url}" target="_blank" rel="noopener">🎬 Watch on YouTube</a>
+      <div class="channel">${v.channel}</div>
+    </div>
+  `).join("");
+}
 
-    var thumbHtml;
-    if(v.id){
-      var yt = 'https://www.youtube-nocookie.com/embed/' + v.id + '?rel=0&modestbranding=1';
-      var img = 'https://img.youtube.com/vi/' + v.id + '/hqdefault.jpg';
-      thumbHtml = '<div class="thumb" data-yt="' + yt + '">' +
-        '<img loading="lazy" src="' + img + '" alt="' + esc(v.t) + '"/>' +
-        '<div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>' +
-        '</div>';
-    } else {
-      thumbHtml = '<div class="thumb" style="display:flex;align-items:center;justify-content:center;background:#0f0f1a;">' +
-        '<a href="' + esc(v.url||'#') + '" target="_blank" rel="noopener" style="color:var(--gold);font-weight:800;font-size:0.9rem;text-align:center;padding:1rem;">&#127916; Open full playlist on YouTube →</a>' +
-        '</div>';
-    }
+cats.forEach((c, i) => {
+  const b = document.createElement("button");
+  b.textContent = c === "All" ? `All (${videos.length})` : `${c} (${videos.filter(v => v.cat === c).length})`;
+  if (i === 0) b.classList.add("active");
+  b.onclick = () => {
+    document.querySelectorAll(".filters button").forEach(x => x.classList.remove("active"));
+    b.classList.add("active");
+    render(c === "All" ? videos : videos.filter(v => v.cat === c));
+  };
+  filterBox.appendChild(b);
+});
 
-    card.innerHTML = thumbHtml +
-      '<div class="vbody">' +
-        '<div class="vcat">' + esc(v.c) + '</div>' +
-        '<div class="vtitle">' + esc(v.t) + '</div>' +
-        '<div class="vdesc">' + esc(v.d) + '</div>' +
-        '<div class="vsource">&#127916; ' + esc(v.s) + '</div>' +
-      '</div>';
-
-    grid.appendChild(card);
-  });
-
-  grid.addEventListener('click', function(e){
-    var t = e.target.closest('.thumb');
-    if(!t || !t.dataset.yt) return;
-    if(t.querySelector('iframe')) return;
-    t.innerHTML = '<iframe src="' + t.dataset.yt + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-  });
-})();
+render(videos);
 </script>
 </body>
 </html>
+

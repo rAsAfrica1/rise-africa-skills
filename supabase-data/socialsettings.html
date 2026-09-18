@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Media Settings — rise AFRICA skills</title>
+    <title>Social Media Settings â€” rise AFRICA skills</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -245,14 +245,15 @@
     </style>
 </head>
 <body>
+
     <div class="container">
         <header>
-            <h1>🌐 Social Media Sharing Settings</h1>
+            <h1>ðŸŒ Social Media Sharing Settings</h1>
             <p class="subtitle">Enable/disable platforms for QR code sharing</p>
         </header>
 
         <div class="info-box">
-            <h3>📱 Social Platform Management</h3>
+            <h3>ðŸ“± Social Platform Management</h3>
             <p>Toggle which social platforms appear in your QR sharing menu. Enabled platforms will show up when users click "Share QR" on any course or referral page. Choose your 40 favorite channels to maximize reach!</p>
         </div>
 
@@ -275,61 +276,61 @@
         </div>
 
         <div class="controls">
-            <button class="btn btn-primary" onclick="enableAll()">✅ Enable All (40)</button>
-            <button class="btn btn-secondary" onclick="disableAll()">⊘ Disable All</button>
-            <button class="btn btn-secondary" onclick="saveSettings()">💾 Save Settings</button>
+            <button class="btn btn-primary" onclick="enableAll()">âœ… Enable All (40)</button>
+            <button class="btn btn-secondary" onclick="disableAll()">âŠ˜ Disable All</button>
+            <button class="btn btn-secondary" onclick="saveSettings()">ðŸ’¾ Save Settings</button>
         </div>
 
         <div class="social-grid" id="socialGrid"></div>
 
         <div class="footer">
-            <p>✓ Settings auto-save to browser. QR sharing menu updates in real-time.</p>
+            <p>âœ“ Settings auto-save to browser. QR sharing menu updates in real-time.</p>
         </div>
     </div>
 
     <script>
         // 40+ Social Platforms with icons and metadata
         const SOCIAL_PLATFORMS = [
-            { id: 'whatsapp', name: 'WhatsApp', icon: '💬', color: '#25D366', category: 'Messaging' },
-            { id: 'telegram', name: 'Telegram', icon: '📱', color: '#0088cc', category: 'Messaging' },
-            { id: 'facebook', name: 'Facebook', icon: '👍', color: '#1877F2', category: 'Social' },
-            { id: 'messenger', name: 'Messenger', icon: '💌', color: '#0084FF', category: 'Messaging' },
-            { id: 'twitter', name: 'Twitter/X', icon: '𝕏', color: '#000000', category: 'Social' },
-            { id: 'linkedin', name: 'LinkedIn', icon: '💼', color: '#0A66C2', category: 'Professional' },
-            { id: 'instagram', name: 'Instagram', icon: '📷', color: '#E4405F', category: 'Social' },
-            { id: 'tiktok', name: 'TikTok', icon: '🎵', color: '#000000', category: 'Social' },
-            { id: 'youtube', name: 'YouTube', icon: '▶️', color: '#FF0000', category: 'Video' },
-            { id: 'snapchat', name: 'Snapchat', icon: '👻', color: '#FFFC00', category: 'Social' },
-            { id: 'pinterest', name: 'Pinterest', icon: '📌', color: '#E60023', category: 'Social' },
-            { id: 'reddit', name: 'Reddit', icon: '🔴', color: '#FF4500', category: 'Community' },
-            { id: 'tumblr', name: 'Tumblr', icon: '🔷', color: '#36465D', category: 'Social' },
-            { id: 'viber', name: 'Viber', icon: '📞', color: '#7B519F', category: 'Messaging' },
-            { id: 'signal', name: 'Signal', icon: '🔐', color: '#3A76F0', category: 'Messaging' },
-            { id: 'email', name: 'Email', icon: '✉️', color: '#EA4335', category: 'Communication' },
-            { id: 'sms', name: 'SMS/Text', icon: '💭', color: '#333333', category: 'Communication' },
-            { id: 'skype', name: 'Skype', icon: '☁️', color: '#00A4EF', category: 'Communication' },
-            { id: 'zoom', name: 'Zoom', icon: '📹', color: '#0B5CFF', category: 'Communication' },
-            { id: 'discord', name: 'Discord', icon: '🎮', color: '#5865F2', category: 'Community' },
-            { id: 'slack', name: 'Slack', icon: '⚡', color: '#E01E5A', category: 'Communication' },
-            { id: 'wechat', name: 'WeChat', icon: '🔗', color: '#09B83E', category: 'Messaging' },
-            { id: 'qq', name: 'QQ', icon: '👥', color: '#EB1C1C', category: 'Messaging' },
-            { id: 'line', name: 'LINE', icon: '🟢', color: '#00B900', category: 'Messaging' },
-            { id: 'kakao', name: 'Kakao Talk', icon: '🟨', color: '#FFE812', category: 'Messaging' },
-            { id: 'viber', name: 'Viber', icon: '☎️', color: '#7B519F', category: 'Messaging' },
-            { id: 'nextdoor', name: 'Nextdoor', icon: '🏘️', color: '#76C043', category: 'Community' },
-            { id: 'quora', name: 'Quora', icon: '❓', color: '#B92B27', category: 'Community' },
-            { id: 'medium', name: 'Medium', icon: '📝', color: '#000000', category: 'Blogging' },
-            { id: 'substack', name: 'Substack', icon: '📬', color: '#FF6719', category: 'Blogging' },
-            { id: 'hashnode', name: 'Hashnode', icon: '🔷', color: '#2D3748', category: 'Blogging' },
-            { id: 'dev', name: 'Dev.to', icon: '👨‍💻', color: '#0A0A0A', category: 'Blogging' },
-            { id: 'twitch', name: 'Twitch', icon: '🎬', color: '#9146FF', category: 'Video' },
-            { id: 'vimeo', name: 'Vimeo', icon: '🎥', color: '#1AB7EA', category: 'Video' },
-            { id: 'tiktok-shop', name: 'TikTok Shop', icon: '🛍️', color: '#000000', category: 'Commerce' },
-            { id: 'shopify', name: 'Shopify', icon: '🏪', color: '#96C41C', category: 'Commerce' },
-            { id: 'etsy', name: 'Etsy', icon: '🎁', color: '#F1641E', category: 'Commerce' },
-            { id: 'opensea', name: 'OpenSea', icon: '🌊', color: '#2081E4', category: 'Web3' },
-            { id: 'bluesky', name: 'Bluesky', icon: '🦋', color: '#1185FE', category: 'Social' },
-            { id: 'mastodon', name: 'Mastodon', icon: '🐘', color: '#6364FF', category: 'Social' },
+            { id: 'whatsapp', name: 'WhatsApp', icon: 'ðŸ’¬', color: '#25D366', category: 'Messaging' },
+            { id: 'telegram', name: 'Telegram', icon: 'ðŸ“±', color: '#0088cc', category: 'Messaging' },
+            { id: 'facebook', name: 'Facebook', icon: 'ðŸ‘', color: '#1877F2', category: 'Social' },
+            { id: 'messenger', name: 'Messenger', icon: 'ðŸ’Œ', color: '#0084FF', category: 'Messaging' },
+            { id: 'twitter', name: 'Twitter/X', icon: 'ð•', color: '#000000', category: 'Social' },
+            { id: 'linkedin', name: 'LinkedIn', icon: 'ðŸ’¼', color: '#0A66C2', category: 'Professional' },
+            { id: 'instagram', name: 'Instagram', icon: 'ðŸ“·', color: '#E4405F', category: 'Social' },
+            { id: 'tiktok', name: 'TikTok', icon: 'ðŸŽµ', color: '#000000', category: 'Social' },
+            { id: 'youtube', name: 'YouTube', icon: 'â–¶ï¸', color: '#FF0000', category: 'Video' },
+            { id: 'snapchat', name: 'Snapchat', icon: 'ðŸ‘»', color: '#FFFC00', category: 'Social' },
+            { id: 'pinterest', name: 'Pinterest', icon: 'ðŸ“Œ', color: '#E60023', category: 'Social' },
+            { id: 'reddit', name: 'Reddit', icon: 'ðŸ”´', color: '#FF4500', category: 'Community' },
+            { id: 'tumblr', name: 'Tumblr', icon: 'ðŸ”·', color: '#36465D', category: 'Social' },
+            { id: 'viber', name: 'Viber', icon: 'ðŸ“ž', color: '#7B519F', category: 'Messaging' },
+            { id: 'signal', name: 'Signal', icon: 'ðŸ”', color: '#3A76F0', category: 'Messaging' },
+            { id: 'email', name: 'Email', icon: 'âœ‰ï¸', color: '#EA4335', category: 'Communication' },
+            { id: 'sms', name: 'SMS/Text', icon: 'ðŸ’­', color: '#333333', category: 'Communication' },
+            { id: 'skype', name: 'Skype', icon: 'â˜ï¸', color: '#00A4EF', category: 'Communication' },
+            { id: 'zoom', name: 'Zoom', icon: 'ðŸ“¹', color: '#0B5CFF', category: 'Communication' },
+            { id: 'discord', name: 'Discord', icon: 'ðŸŽ®', color: '#5865F2', category: 'Community' },
+            { id: 'slack', name: 'Slack', icon: 'âš¡', color: '#E01E5A', category: 'Communication' },
+            { id: 'wechat', name: 'WeChat', icon: 'ðŸ”—', color: '#09B83E', category: 'Messaging' },
+            { id: 'qq', name: 'QQ', icon: 'ðŸ‘¥', color: '#EB1C1C', category: 'Messaging' },
+            { id: 'line', name: 'LINE', icon: 'ðŸŸ¢', color: '#00B900', category: 'Messaging' },
+            { id: 'kakao', name: 'Kakao Talk', icon: 'ðŸŸ¨', color: '#FFE812', category: 'Messaging' },
+            { id: 'viber', name: 'Viber', icon: 'â˜Žï¸', color: '#7B519F', category: 'Messaging' },
+            { id: 'nextdoor', name: 'Nextdoor', icon: 'ðŸ˜ï¸', color: '#76C043', category: 'Community' },
+            { id: 'quora', name: 'Quora', icon: 'â“', color: '#B92B27', category: 'Community' },
+            { id: 'medium', name: 'Medium', icon: 'ðŸ“', color: '#000000', category: 'Blogging' },
+            { id: 'substack', name: 'Substack', icon: 'ðŸ“¬', color: '#FF6719', category: 'Blogging' },
+            { id: 'hashnode', name: 'Hashnode', icon: 'ðŸ”·', color: '#2D3748', category: 'Blogging' },
+            { id: 'dev', name: 'Dev.to', icon: 'ðŸ‘¨â€ðŸ’»', color: '#0A0A0A', category: 'Blogging' },
+            { id: 'twitch', name: 'Twitch', icon: 'ðŸŽ¬', color: '#9146FF', category: 'Video' },
+            { id: 'vimeo', name: 'Vimeo', icon: 'ðŸŽ¥', color: '#1AB7EA', category: 'Video' },
+            { id: 'tiktok-shop', name: 'TikTok Shop', icon: 'ðŸ›ï¸', color: '#000000', category: 'Commerce' },
+            { id: 'shopify', name: 'Shopify', icon: 'ðŸª', color: '#96C41C', category: 'Commerce' },
+            { id: 'etsy', name: 'Etsy', icon: 'ðŸŽ', color: '#F1641E', category: 'Commerce' },
+            { id: 'opensea', name: 'OpenSea', icon: 'ðŸŒŠ', color: '#2081E4', category: 'Web3' },
+            { id: 'bluesky', name: 'Bluesky', icon: 'ðŸ¦‹', color: '#1185FE', category: 'Social' },
+            { id: 'mastodon', name: 'Mastodon', icon: 'ðŸ˜', color: '#6364FF', category: 'Social' },
         ];
 
         // Initialize
@@ -403,7 +404,7 @@
                 localStorage.setItem(`social-${platform.id}`, isEnabled ? 'true' : 'false');
             });
 
-            alert('✅ Settings saved! QR sharing menu will update with your enabled platforms.');
+            alert('âœ… Settings saved! QR sharing menu will update with your enabled platforms.');
             console.log('Social settings saved:', getEnabledPlatforms());
         }
 
@@ -430,3 +431,4 @@
     </script>
 </body>
 </html>
+
