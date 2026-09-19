@@ -433,6 +433,38 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       }
 
       var course = D[courseKey];
+      // Fallback matching: try trimmed/variant keys if exact match failed
+      if (!course) {
+        var _vf = [courseKey];
+        var _sfx = ['-formulation','-making','-production','-farming','-course','-business','-training','-types','-systems'];
+        for (var _a = 0; _a < _sfx.length; _a++) {
+          var _s = _sfx[_a];
+          if (courseKey.length > _s.length && courseKey.slice(-_s.length) === _s) {
+            _vf.push(courseKey.slice(0, -_s.length));
+          }
+        }
+        var _vn = _vf.length;
+        for (var _b = 0; _b < _vn; _b++) {
+          _vf.push(_vf[_b].replace(/-and-/g, '-'));
+        }
+        for (var _i = 0; _i < _vf.length && !course; _i++) {
+          if (D[_vf[_i]]) course = D[_vf[_i]];
+        }
+      }
+      if (!course) {
+        var _strip = function(s){ return s.replace(/([a-z])s\b/g, '$1'); };
+        var _tgt = _strip(courseKey);
+        var _ks = Object.keys(D);
+        for (var _j = 0; _j < _ks.length && !course; _j++) {
+          if (_strip(_ks[_j]) === _tgt) course = D[_ks[_j]];
+        }
+      }
+      if (!course) {
+        var _ks2 = Object.keys(D);
+        for (var _k = 0; _k < _ks2.length && !course; _k++) {
+          if (_ks2[_k].length >= 6 && courseKey.indexOf(_ks2[_k]) === 0) course = D[_ks2[_k]];
+        }
+      }
       if (!course) {
         container.innerHTML = '<div class="error">Course not found. <a href="?">View all courses</a> or go back to the <a href="/" style="color:#C9A227;">homepage</a>.</div>';
         return;
@@ -519,5 +551,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </script>
 </body>
 </html>
+
 
 
