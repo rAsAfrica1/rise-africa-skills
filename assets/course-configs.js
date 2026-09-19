@@ -203,3 +203,93 @@ window.COURSE_CONFIGS["buildings-for-preservation-10-methods-"] = {
   "unit": { "name": "Small preservation structure", "variableCost": 900, "price": 1800 },
   "volume": { "monthly": 2 }
 };
+
+window.COURSE_CONFIGS["fish-pond-construction"] = {
+  "title": "Fish Pond Construction",
+  "note": "Small-scale pond aquaculture setup. Adjust to your local prices.",
+  "startup": [
+    { "item": "Excavation (1 hectare pond)", "qty": 1, "unit": 1800 },
+    { "item": "Liner (HDPE 1mm, 2000 m²)", "qty": 1, "unit": 2400 },
+    { "item": "Inlet/outlet pipes + valves", "qty": 1, "unit": 450 },
+    { "item": "Aerator (1 HP paddle wheel)", "qty": 2, "unit": 550 },
+    { "item": "Water pump + plumbing", "qty": 1, "unit": 700 },
+    { "item": "Test kit (pH, DO, ammonia)", "qty": 1, "unit": 220 },
+    { "item": "First stocking: tilapia fingerlings", "qty": 5000, "unit": 0.12 },
+    { "item": "Initial feed (50kg bags)", "qty": 30, "unit": 32 }
+  ],
+  "monthlyFixed": [
+    { "item": "Feed (grow-out)", "amount": 620 },
+    { "item": "Electricity (aerators)", "amount": 180 },
+    { "item": "Labor (1 worker)", "amount": 150 },
+    { "item": "Water testing + meds", "amount": 40 }
+  ],
+  "unit": { "name": "kg of harvested tilapia", "variableCost": 1.8, "price": 3.5 },
+  "volume": { "monthly": 350 }
+};
+
+window.COURSE_CONFIGS["beehive-construction"] = {
+  "title": "Beehive Construction",
+  "note": "Building and selling beehives plus honey production from your own hives.",
+  "startup": [
+    { "item": "Timber (pine, per hive)", "qty": 30, "unit": 18 },
+    { "item": "Wire, nails, hinges", "qty": 1, "unit": 180 },
+    { "item": "Table saw + hand tools", "qty": 1, "unit": 650 },
+    { "item": "Frames + foundation sheets", "qty": 300, "unit": 2.5 },
+    { "item": "Protective suits", "qty": 4, "unit": 45 },
+    { "item": "Smoker + hive tool", "qty": 2, "unit": 30 },
+    { "item": "Bee colonies (starter)", "qty": 10, "unit": 65 },
+    { "item": "Workshop rent deposit", "qty": 1, "unit": 200 }
+  ],
+  "monthlyFixed": [
+    { "item": "Workshop rent", "amount": 120 },
+    { "item": "Transport", "amount": 60 },
+    { "item": "Electricity", "amount": 40 }
+  ],
+  "unit": { "name": "Complete beehive (sold)", "variableCost": 32, "price": 75 },
+  "volume": { "monthly": 25 }
+};
+
+window.COURSE_CONFIGS["cold-room-for-410-beasts"] = {
+  "title": "Cold Room for 410 Beasts",
+  "note": "Cold storage service — slaughterhouse chilled room running at capacity.",
+  "startup": [
+    { "item": "Cold room panels (100mm, 12 m²)", "qty": 1, "unit": 4200 },
+    { "item": "Condensing unit (5 HP)", "qty": 2, "unit": 1800 },
+    { "item": "Evaporators + piping", "qty": 2, "unit": 750 },
+    { "item": "Racking (stainless)", "qty": 1, "unit": 1200 },
+    { "item": "Temperature monitoring", "qty": 1, "unit": 350 },
+    { "item": "Backup generator (10 kVA)", "qty": 1, "unit": 2500 },
+    { "item": "Installation + electrical", "qty": 1, "unit": 1400 }
+  ],
+  "monthlyFixed": [
+    { "item": "Electricity (main load)", "amount": 850 },
+    { "item": "Generator fuel (backup)", "amount": 200 },
+    { "item": "Maintenance + refrigerant", "amount": 180 },
+    { "item": "Labor (1 attendant)", "amount": 220 },
+    { "item": "Insurance", "amount": 90 }
+  ],
+  "unit": { "name": "Carcass stored per day (per beast)", "variableCost": 3.5, "price": 9.0 },
+  "volume": { "monthly": 410 }
+};
+
+window.COURSE_CONFIGS["pizza-oven-construction-wood-fired-12-pizza"] = {
+  "title": "Pizza Oven Construction",
+  "note": "Building and selling wood-fired pizza ovens, plus running a pizza service from a demo oven.",
+  "startup": [
+    { "item": "Fire bricks (250 pcs)", "qty": 1, "unit": 380 },
+    { "item": "Refractory mortar + cement", "qty": 1, "unit": 220 },
+    { "item": "Insulation (ceramic fibre)", "qty": 1, "unit": 180 },
+    { "item": "Chimney pipe + cap", "qty": 1, "unit": 150 },
+    { "item": "Stone base materials", "qty": 1, "unit": 260 },
+    { "item": "Tools (trowels, levels)", "qty": 1, "unit": 200 },
+    { "item": "Pizza peels + serving kit", "qty": 1, "unit": 130 }
+  ],
+  "monthlyFixed": [
+    { "item": "Workshop rent", "amount": 100 },
+    { "item": "Fuel (wood for curing + demo)", "amount": 80 },
+    { "item": "Transport + delivery", "amount": 60 },
+    { "item": "Marketing", "amount": 40 }
+  ],
+  "unit": { "name": "Completed oven (sold to customer)", "variableCost": 1100, "price": 2200 },
+  "volume": { "monthly": 2 }
+};
