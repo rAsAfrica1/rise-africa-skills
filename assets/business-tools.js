@@ -32,7 +32,7 @@
 
   function render(el, cfg) {
     const inputs = { startup: {}, fixed: {}, openingCash: 0, growth: 0, loanAmount: 0, loanRate: 12, loanTerm: 12 };
-    const state = computeModel(cfg, inputs);
+    let state = computeModel(cfg, inputs);
 
     el.innerHTML = "<h2>💼 Business Plan Calculator — " + cfg.title + "</h2>" +
       "<p class='note'>" + (cfg.note || "Adjust any number below. All figures update instantly.") + "</p>" +
@@ -150,3 +150,4 @@
     render(el, cfg);
   });
 })();
+
