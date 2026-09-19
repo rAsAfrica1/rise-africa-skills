@@ -1,0 +1,385 @@
+﻿{
+  "course": "Wind Turbine Basics",
+  "module_number": 7,
+  "module_title": "Electrical Systems and Grid Integration",
+  "lessons": [
+    {
+      "title": "AC vs. DC Power in Wind Turbines",
+      "body": "In a wind turbine, the generator produces alternating current (AC) because the rotor spins a magnetic field past coils of wire. But the frequency of that AC depends on rotor speed, which changes with wind. For example, a 2 MW turbine might produce 50 Hz at 15 rpm, but only 30 Hz at 9 rpm. That variable-frequency AC cannot go directly to the grid. So most modern turbines convert the generator's AC to direct current (DC) first, then back to AC at a fixed 50 Hz (or 60 Hz). This is called a full converter. In smaller or older turbines, you might see a fixed-speed induction generator that produces AC directly, but it wastes energy and stresses the gearbox. In Africa, where grid frequency is often 50 Hz (except Liberia, which uses 60 Hz), matching frequency is critical. Off-grid systems, like those in rural Kenya or Nigeria, often use DC for battery storage and then an inverter to produce AC for lights, phones, and small motors. For a 5 kW home system, you might have a 48 V DC battery bank and a 5 kW inverter. The key takeaway: AC is good for long-distance transmission and running standard appliances; DC is good for storage and electronics. In wind turbines, you'll find both: AC from the generator, DC in the converter's intermediate circuit, and AC again for the grid. Tools like a clamp meter (e.g., Fluke 376) can measure both AC and DC current. Always check whether your turbine's output is AC or DC before connecting anything.",
+      "body_word_count": 360
+    },
+    {
+      "title": "Transformers and Power Converters",
+      "body": "A transformer changes voltage levels using electromagnetic induction. In a wind turbine, you'll typically find a step-up transformer inside the nacelle or at the tower base. For a 2 MW turbine generating at 690 V AC, the transformer steps that up to 33 kV for collection within the wind farm. Why? Because higher voltage means lower current for the same power, which reduces losses in cables. For example, 2 MW at 690 V draws about 2,900 A, but at 33 kV it's only 35 A. That's why you can use thinner, cheaper cables. Power converters, on the other hand, change AC to DC and back. They use power electronics like IGBTs (insulated-gate bipolar transistors) to switch thousands of times per second. A typical converter for a 2 MW turbine might be rated at 2.2 MVA and have an efficiency of 98%. In Africa, where grid voltage can fluctuate, a robust transformer with a tap changer is essential. For small off-grid turbines, you might use a 48 V DC to 230 V AC inverter (e.g., Victron Phoenix) instead of a full converter. When maintaining transformers, check oil levels and look for leaks. For converters, check cooling fans and clean dust filters. Always use a multimeter to verify voltage before touching terminals. Remember: transformers only work with AC, while converters handle both AC and DC. If you see a device with a big iron core and coils, it's a transformer. If it has circuit boards and heat sinks, it's a converter.",
+      "body_word_count": 370
+    },
+    {
+      "title": "Grid Codes and Interconnection Requirements",
+      "body": "Grid codes are rules set by the national utility or regulator that tell you how your wind turbine must behave when connected to the grid. In South Africa, the grid code (NRS 097-2-1) requires small-scale embedded generation to disconnect within 2 seconds if the grid fails, to protect line workers. In Kenya, the Energy Regulatory Commission has similar rules. For a wind farm above 1 MW, you'll need to meet fault ride-through, voltage regulation, and frequency response requirements. For example, in Nigeria, the grid code says a generator must stay connected during voltage dips down to 0% for 150 milliseconds. That's hard for a simple turbine, so you need a converter with ride-through capability. Interconnection also means protection: you'll need circuit breakers, fuses, and relays to isolate your turbine if something goes wrong. A common device is a reverse-power relay, which trips if your turbine starts drawing power from the grid instead of supplying it. In Africa, many grids are weak, so utilities often require a power quality study before you connect. You might need to limit harmonics (using filters) and flicker (using soft-start). For off-grid systems, there is no grid code, but you still need safety: use a changeover switch to disconnect from the grid if you have a hybrid system. Always get a copy of your local grid codeâit's usually free online from the utility. If you can't find it, ask the utility's interconnection office. Not following it can get your system disconnected or fined.",
+      "body_word_count": 390
+    },
+    {
+      "title": "Voltage and Frequency Ride-Through",
+      "body": "Ride-through means your turbine stays connected and keeps running when the grid voltage or frequency goes outside normal ranges for a short time. Normal grid voltage might be 230 V Â±10% (so 207â253 V) and frequency 50 Hz Â±1% (49.5â50.5 Hz). But faults happen: a tree falls on a line, voltage drops to 0 V for 100 ms. If your turbine trips immediately, the grid loses generation and might collapse. So grid codes require ride-through. For voltage, a typical requirement is to stay connected for a dip to 20% of nominal for 0.5 seconds. For frequency, you might need to ride through 47â52 Hz for a few seconds. How do you achieve this? The turbine's converter controls the generator so it doesn't draw huge currents during a dip. It also has an energy storage element (like a DC-link capacitor) to ride through short interruptions. In Africa, weak grids have more frequent voltage sags, so ride-through is especially important. For small off-grid systems, ride-through is not required, but you might want a UPS (uninterruptible power supply) to keep critical loads running. To test ride-through, you need a grid simulator or a programmable AC source (e.g., Chroma 61500). You can also monitor with a power quality analyzer (e.g., Fluke 1777). If your turbine trips too often, check the ride-through settings in the converter software. Sometimes you can adjust them, but only if the grid code allows. Never disable protection entirelyâthat's dangerous.",
+      "body_word_count": 380
+    },
+    {
+      "title": "Reactive Power and Voltage Support",
+      "body": "Reactive power (measured in VARs) does not do useful work like heating or turning motors, but it is needed to maintain voltage in AC systems. Think of it as the pressure that pushes real power (watts) through the lines. Wind turbines can produce or absorb reactive power using their power converters. This helps keep grid voltage stable. For example, if voltage drops because of a heavy load, the turbine can inject reactive power to boost it. Grid codes often require wind farms to provide reactive power at a power factor between 0.95 leading and 0.95 lagging. That means for a 10 MW farm, you need about 3.3 MVAR of reactive power capability. In Africa, where transmission lines are long and voltage often sags, reactive power support is valuable. Utilities may even pay for it. For small off-grid systems, reactive power is less of an issue, but if you run induction motors (like a water pump), you might need capacitors to provide reactive power locally. A common tool is a power factor meter (e.g., Fluke 43B) to measure it. To adjust reactive power, you change the converter's settings. Some turbines have a separate STATCOM (static synchronous compensator) for more dynamic support. Remember: too much reactive power can overvoltage the grid, so you must control it carefully. Always follow the grid code's reactive power curve, which shows how much you must provide at different voltages. If you don't, the utility can penalize you or disconnect you.",
+      "body_word_count": 370
+    },
+    {
+      "title": "Energy Storage Integration",
+      "body": "Energy storage helps wind turbines by smoothing output, storing excess energy, and providing grid services. In Africa, where grid reliability is often low, storage is a game-changer. The most common storage for wind is lithium-ion batteries. For a 1 MW turbine, you might pair it with a 500 kWh battery (e.g., Tesla Powerpack or BYD). That battery can store energy when wind is strong and release it when wind drops or during peak demand. For off-grid systems, lead-acid batteries are cheaper upfront but have shorter life. A 48 V, 200 Ah lead-acid bank gives about 9.6 kWh, enough for a small home. When integrating storage, you need a bidirectional inverter/charger (e.g., Victron MultiPlus) to manage charging and discharging. You also need a battery management system (BMS) to prevent overcharge and overdischarge. For grid-connected systems, storage can provide frequency regulation: when frequency drops, the battery injects power within milliseconds. That's faster than a turbine can respond. In South Africa, Eskom has a battery storage program for wind farms. For a small wind system, you can use a charge controller (e.g., MidNite Classic) to charge batteries from the turbine's DC output. Always size your battery for at least one day of autonomy. For a 1 kW turbine, a 10 kWh battery is reasonable. Monitor state of charge with a shunt (e.g., Victron BMV-712). Never connect a battery directly to a turbine without a controllerâvoltage spikes will destroy it. Storage adds cost but improves reliability and can generate extra revenue from grid services.",
+      "body_word_count": 390
+    }
+  ],
+  "quiz": [
+    {
+      "q": "Why do most modern wind turbines convert generator AC to DC and back to AC?",
+      "options": [
+        "A) To reduce the cost of the generator",
+        "B) To match the variable frequency of the generator to the fixed grid frequency",
+        "C) To increase the voltage for transmission",
+        "D) To eliminate the need for a transformer"
+      ],
+      "answer": "B",
+      "explanation": "The generator produces variable-frequency AC, so conversion to DC and back allows output at a fixed grid frequency."
+    },
+    {
+      "q": "What is the typical grid frequency in most African countries?",
+      "options": [
+        "A) 60 Hz",
+        "B) 50 Hz",
+        "C) 400 Hz",
+        "D) 0 Hz (DC)"
+      ],
+      "answer": "B",
+      "explanation": "Most of Africa uses 50 Hz, except Liberia which uses 60 Hz."
+    },
+    {
+      "q": "What tool can measure both AC and DC current in a wind turbine system?",
+      "options": [
+        "A) Clamp meter",
+        "B) Voltmeter only",
+        "C) Ohmmeter",
+        "D) Megger"
+      ],
+      "answer": "A",
+      "explanation": "A clamp meter like the Fluke 376 can measure both AC and DC current without breaking the circuit."
+    },
+    {
+      "q": "In a 2 MW turbine generating at 690 V, what is the approximate current?",
+      "options": [
+        "A) 35 A",
+        "B) 290 A",
+        "C) 2,900 A",
+        "D) 29,000 A"
+      ],
+      "answer": "C",
+      "explanation": "Power = voltage Ã current, so 2,000,000 W / 690 V â 2,900 A."
+    },
+    {
+      "q": "What is the main purpose of a transformer in a wind turbine?",
+      "options": [
+        "A) Convert AC to DC",
+        "B) Step up voltage to reduce current and losses",
+        "C) Store energy",
+        "D) Control frequency"
+      ],
+      "answer": "B",
+      "explanation": "Transformers increase voltage to reduce current, which lowers resistive losses in cables."
+    },
+    {
+      "q": "Which device changes AC to DC and back using IGBTs?",
+      "options": [
+        "A) Transformer",
+        "B) Power converter",
+        "C) Circuit breaker",
+        "D) Capacitor bank"
+      ],
+      "answer": "B",
+      "explanation": "Power converters use IGBTs to switch and convert between AC and DC."
+    },
+    {
+      "q": "What should you check on a transformer during maintenance?",
+      "options": [
+        "A) Oil level and leaks",
+        "B) Fan speed",
+        "C) Software version",
+        "D) Battery voltage"
+      ],
+      "answer": "A",
+      "explanation": "Transformer maintenance includes checking oil level and looking for leaks."
+    },
+    {
+      "q": "In South Africa, what does NRS 097-2-1 require for small-scale embedded generation?",
+      "options": [
+        "A) Disconnect within 2 seconds if grid fails",
+        "B) Provide reactive power at all times",
+        "C) Operate at 60 Hz",
+        "D) Use only DC output"
+      ],
+      "answer": "A",
+      "explanation": "NRS 097-2-1 requires disconnection within 2 seconds of grid failure to protect line workers."
+    },
+    {
+      "q": "What is a reverse-power relay used for?",
+      "options": [
+        "A) To trip if the turbine draws power from the grid",
+        "B) To increase voltage",
+        "C) To store energy",
+        "D) To measure wind speed"
+      ],
+      "answer": "A",
+      "explanation": "A reverse-power relay prevents the turbine from consuming grid power when it should be generating."
+    },
+    {
+      "q": "Why might a utility require a power quality study before connecting a wind farm?",
+      "options": [
+        "A) To check harmonics and flicker",
+        "B) To measure wind speed",
+        "C) To test battery capacity",
+        "D) To calculate gearbox ratio"
+      ],
+      "answer": "A",
+      "explanation": "Power quality studies ensure the turbine does not introduce harmful harmonics or flicker into the grid."
+    },
+    {
+      "q": "What does ride-through mean for a wind turbine?",
+      "options": [
+        "A) Staying connected during short voltage or frequency disturbances",
+        "B) Shutting down immediately during a fault",
+        "C) Increasing output during high winds",
+        "D) Converting AC to DC"
+      ],
+      "answer": "A",
+      "explanation": "Ride-through is the ability to remain connected and operational during brief grid disturbances."
+    },
+    {
+      "q": "What is a typical voltage ride-through requirement for a wind farm?",
+      "options": [
+        "A) Stay connected for a dip to 20% for 0.5 seconds",
+        "B) Disconnect at 90% voltage",
+        "C) Operate only at 100% voltage",
+        "D) Trip at 49 Hz"
+      ],
+      "answer": "A",
+      "explanation": "Many grid codes require turbines to ride through voltage dips to 20% of nominal for 0.5 seconds."
+    },
+    {
+      "q": "What is the normal frequency range for a 50 Hz grid?",
+      "options": [
+        "A) 49.5â50.5 Hz",
+        "B) 47â52 Hz",
+        "C) 45â55 Hz",
+        "D) 50â60 Hz"
+      ],
+      "answer": "A",
+      "explanation": "Normal operation is typically Â±1%, so 49.5â50.5 Hz."
+    },
+    {
+      "q": "What device can test ride-through capability?",
+      "options": [
+        "A) Grid simulator",
+        "B) Multimeter",
+        "C) Clamp meter",
+        "D) Megger"
+      ],
+      "answer": "A",
+      "explanation": "A grid simulator or programmable AC source can create voltage and frequency disturbances to test ride-through."
+    },
+    {
+      "q": "What is reactive power measured in?",
+      "options": [
+        "A) Watts",
+        "B) VARs",
+        "C) Volts",
+        "D) Amperes"
+      ],
+      "answer": "B",
+      "explanation": "Reactive power is measured in volt-amperes reactive (VARs)."
+    },
+    {
+      "q": "Why is reactive power important for voltage support?",
+      "options": [
+        "A) It maintains voltage levels in AC systems",
+        "B) It does useful work like heating",
+        "C) It stores energy",
+        "D) It converts AC to DC"
+      ],
+      "answer": "A",
+      "explanation": "Reactive power helps maintain voltage by providing the pressure needed for real power flow."
+    },
+    {
+      "q": "What power factor range might a grid code require for a wind farm?",
+      "options": [
+        "A) 0.95 leading to 0.95 lagging",
+        "B) 0.5 leading to 0.5 lagging",
+        "C) 1.0 only",
+        "D) 0.8 leading to 1.0 lagging"
+      ],
+      "answer": "A",
+      "explanation": "Many grid codes require reactive power capability at a power factor between 0.95 leading and 0.95 lagging."
+    },
+    {
+      "q": "What tool measures power factor?",
+      "options": [
+        "A) Power factor meter",
+        "B) Voltmeter",
+        "C) Ohmmeter",
+        "D) Megger"
+      ],
+      "answer": "A",
+      "explanation": "A power factor meter, like the Fluke 43B, measures the ratio of real power to apparent power."
+    },
+    {
+      "q": "What is a common energy storage technology for wind turbines?",
+      "options": [
+        "A) Lithium-ion batteries",
+        "B) Flywheels",
+        "C) Compressed air",
+        "D) All of the above"
+      ],
+      "answer": "D",
+      "explanation": "All are used, but lithium-ion is most common for new wind integration."
+    },
+    {
+      "q": "What is the role of a battery management system (BMS)?",
+      "options": [
+        "A) Prevent overcharge and overdischarge",
+        "B) Convert AC to DC",
+        "C) Step up voltage",
+        "D) Measure wind speed"
+      ],
+      "answer": "A",
+      "explanation": "A BMS monitors and protects the battery from overcharge and overdischarge."
+    },
+    {
+      "q": "What is a bidirectional inverter/charger used for in storage integration?",
+      "options": [
+        "A) Manage charging and discharging of batteries",
+        "B) Only charge batteries",
+        "C) Only discharge batteries",
+        "D) Convert DC to DC"
+      ],
+      "answer": "A",
+      "explanation": "It can both charge the battery from the turbine and discharge to supply loads."
+    },
+    {
+      "q": "Why is energy storage valuable in Africa?",
+      "options": [
+        "A) It improves reliability on weak grids",
+        "B) It is required by all grid codes",
+        "C) It reduces turbine cost",
+        "D) It eliminates the need for transformers"
+      ],
+      "answer": "A",
+      "explanation": "Storage helps smooth output and provide backup during frequent grid outages."
+    },
+    {
+      "q": "What is the typical DC voltage of a small off-grid battery bank?",
+      "options": [
+        "A) 12 V",
+        "B) 48 V",
+        "C) 120 V",
+        "D) 690 V"
+      ],
+      "answer": "B",
+      "explanation": "48 V is common for small off-grid systems due to safety and efficiency."
+    },
+    {
+      "q": "What happens if you connect a battery directly to a wind turbine without a controller?",
+      "options": [
+        "A) Voltage spikes may destroy the battery",
+        "B) The turbine will stop",
+        "C) The battery will overcharge",
+        "D) Both A and C"
+      ],
+      "answer": "D",
+      "explanation": "Without a controller, voltage spikes and overcharging can damage the battery."
+    },
+    {
+      "q": "What is the purpose of a charge controller in a small wind system?",
+      "options": [
+        "A) Regulate voltage to safely charge batteries",
+        "B) Convert AC to DC",
+        "C) Step up voltage",
+        "D) Measure wind speed"
+      ],
+      "answer": "A",
+      "explanation": "A charge controller prevents overcharging and manages the charging process."
+    },
+    {
+      "q": "What is one grid service that energy storage can provide?",
+      "options": [
+        "A) Frequency regulation",
+        "B) Voltage transformation",
+        "C) Reactive power absorption",
+        "D) Both A and C"
+      ],
+      "answer": "D",
+      "explanation": "Storage can provide frequency regulation and reactive power support."
+    },
+    {
+      "q": "What is the typical efficiency of a modern power converter?",
+      "options": [
+        "A) 80%",
+        "B) 90%",
+        "C) 98%",
+        "D) 100%"
+      ],
+      "answer": "C",
+      "explanation": "Modern converters can achieve around 98% efficiency."
+    },
+    {
+      "q": "What is the main advantage of DC over AC in off-grid systems?",
+      "options": [
+        "A) Easier to store in batteries",
+        "B) Travels longer distances",
+        "C) Can be transformed easily",
+        "D) Runs standard appliances directly"
+      ],
+      "answer": "A",
+      "explanation": "DC is used for battery storage because batteries store DC."
+    },
+    {
+      "q": "What is a common tool for monitoring battery state of charge?",
+      "options": [
+        "A) Shunt",
+        "B) Transformer",
+        "C) Circuit breaker",
+        "D) Relay"
+      ],
+      "answer": "A",
+      "explanation": "A shunt, like the Victron BMV-712, measures current to estimate state of charge."
+    },
+    {
+      "q": "What does a tap changer on a transformer do?",
+      "options": [
+        "A) Adjusts the turns ratio to regulate voltage",
+        "B) Converts AC to DC",
+        "C) Measures current",
+        "D) Stores energy"
+      ],
+      "answer": "A",
+      "explanation": "A tap changer changes the transformer's turns ratio to adjust output voltage."
+    },
+    {
+      "q": "What is the main safety concern with grid interconnection?",
+      "options": [
+        "A) Backfeeding power during a grid outage",
+        "B) Overvoltage",
+        "C) Underfrequency",
+        "D) All of the above"
+      ],
+      "answer": "A",
+      "explanation": "Backfeeding can injure line workers, so anti-islanding protection is required."
+    }
+  ],
+  "videos": [
+    "wind turbine AC DC converter explained",
+    "grid code interconnection wind farm Africa",
+    "battery storage integration wind turbine"
+  ]
+}
