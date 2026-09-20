@@ -293,3 +293,26 @@ window.COURSE_CONFIGS["pizza-oven-construction-wood-fired-12-pizza"] = {
   "unit": { "name": "Completed oven (sold to customer)", "variableCost": 1100, "price": 2200 },
   "volume": { "monthly": 2 }
 };
+
+window.COURSE_CONFIGS["aluminium-welding-fundamentals"] = {
+  "title": "Aluminium Welding Fundamentals",
+  "note": "Small welding workshop doing aluminium gates, frames and repairs.",
+  "startup": [
+    { "item": "TIG welder (AC/DC, 200A)", "qty": 1, "unit": 1400 },
+    { "item": "MIG welder with spool gun", "qty": 1, "unit": 950 },
+    { "item": "Argon gas cylinder + regulator", "qty": 1, "unit": 280 },
+    { "item": "Cutting saw + angle grinder", "qty": 1, "unit": 350 },
+    { "item": "Stainless brushes, clamps, tools", "qty": 1, "unit": 220 },
+    { "item": "Welding table + jigs", "qty": 1, "unit": 400 },
+    { "item": "PPE (helmet, gloves, apron)", "qty": 1, "unit": 180 },
+    { "item": "Initial aluminium stock", "qty": 1, "unit": 500 }
+  ],
+  "monthlyFixed": [
+    { "item": "Workshop rent", "amount": 150 },
+    { "item": "Electricity", "amount": 120 },
+    { "item": "Gas refills + consumables", "amount": 180 },
+    { "item": "Transport", "amount": 60 }
+  ],
+  "unit": { "name": "Aluminium gate or frame (typical job)", "variableCost": 90, "price": 220 },
+  "volume": { "monthly": 12 }
+};
