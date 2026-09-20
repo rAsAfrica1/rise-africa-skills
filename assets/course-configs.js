@@ -226,4 +226,8 @@ window.COURSE_CONFIGS["aluminium-welding-fundamentals"] = {
   ],
   "unit": { "name": "Aluminium gate or frame (job)", "variableCost": 90, "price": 220 },
   "volume": { "monthly": 12 }
-};
+};window.COURSE_CONFIGS = window.COURSE_CONFIGS || {};
+
+window.COURSE_CONFIGS['pork-processing-full'] = {...};
+
+window.COURSE_CONFIGS['wind-turbine-basics'] = {...};
