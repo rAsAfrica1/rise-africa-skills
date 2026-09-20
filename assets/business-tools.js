@@ -1,6 +1,21 @@
 ﻿(function () {
   const fmt = (n) => "$" + Math.round(n).toLocaleString();
 
+  // Register service worker for offline use
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').catch(function(){});
+  }
+
+  function loadSaved(slug) {
+    try { const r = localStorage.getItem('rAs-calc-' + slug); return r ? JSON.parse(r) : null; } catch(e) { return null; }
+  }
+  function saveAll(slug, inputs) {
+    try { localStorage.setItem('rAs-calc-' + slug, JSON.stringify(inputs)); } catch(e) {}
+  }
+  function clearSaved(slug) {
+    try { localStorage.removeItem('rAs-calc-' + slug); } catch(e) {}
+  }
+
   function computeModel(cfg, inputs) {
     const startup = cfg.startup.reduce((s, r) => s + (inputs.startup[r.item] ?? r.qty * r.unit), 0);
     const monthlyFixed = cfg.monthlyFixed.reduce((s, r) => s + (inputs.fixed[r.item] ?? r.amount), 0);
@@ -30,12 +45,31 @@
     return { startup, monthlyFixed, contribution, monthlyRevenue, monthlyNet, breakEvenUnits, loanPayment, rows, balance };
   }
 
-  function render(el, cfg) {
-    const inputs = { startup: {}, fixed: {}, openingCash: 0, growth: 0, loanAmount: 0, loanRate: 12, loanTerm: 12 };
+  function render(el, cfg, slug) {
+    const saved = loadSaved(slug) || {};
+    const inputs = {
+      startup: saved.startup || {},
+      fixed: saved.fixed || {},
+      openingCash: saved.openingCash ?? 0,
+      growth: saved.growth ?? 0,
+      loanAmount: saved.loanAmount ?? 0,
+      loanRate: saved.loanRate ?? 12,
+      loanTerm: saved.loanTerm ?? 12,
+      varCost: saved.varCost,
+      price: saved.price,
+      units: saved.units
+    };
     let state = computeModel(cfg, inputs);
 
-    el.innerHTML = "<h2>💼 Business Plan Calculator — " + cfg.title + "</h2>" +
-      "<p class='note'>" + (cfg.note || "Adjust any number below. All figures update instantly.") + "</p>" +
+    el.innerHTML =
+      "<div class='bt-bar'>" +
+        "<h2>\uD83D\uDCBC Business Plan Calculator \u2014 " + cfg.title + "</h2>" +
+        "<div class='bt-actions'>" +
+          "<button class='bt-btn' id='btReset' type='button'>\u21BA Reset</button>" +
+          "<button class='bt-btn' id='btPrint' type='button'>\uD83D\uDDA8\uFE0F Print</button>" +
+        "</div>" +
+      "</div>" +
+      "<p class='note'>" + (cfg.note || "Adjust any number \u2014 every figure updates instantly. Your numbers are saved on this device.") + "</p>" +
       "<div class='tabs'>" +
         "<button class='tab active' data-tab='startup'>Startup Costs</button>" +
         "<button class='tab' data-tab='operating'>Operating</button>" +
@@ -56,15 +90,24 @@
       el.querySelector("[data-panel='" + t.dataset.tab + "']").classList.add('active');
     });
 
+    el.querySelector('#btReset').onclick = function(){
+      if (confirm('Reset all numbers to the default values?')) {
+        clearSaved(slug);
+        render(el, cfg, slug);
+      }
+    };
+    el.querySelector('#btPrint').onclick = function(){ window.print(); };
+
     function redraw() {
       state = computeModel(cfg, inputs);
+      saveAll(slug, inputs);
       drawStartup(); drawOperating(); drawPricing(); drawCashflow(); drawLoan();
     }
 
     function drawStartup() {
       const p = el.querySelector('[data-panel=startup]');
       let rows = cfg.startup.map(r => "<tr><td>" + r.item + "</td>" +
-        "<td><input type='number' value='" + r.qty + "' data-start-qty='" + r.item + "' min='0'></td>" +
+        "<td><input type='number' value='" + (inputs.startup[r.item] !== undefined ? (r.qty ? inputs.startup[r.item] / r.unit : r.qty) : r.qty) + "' data-start-qty='" + r.item + "' min='0'></td>" +
         "<td><input type='number' value='" + r.unit + "' data-start-unit='" + r.item + "' min='0' step='0.01'></td>" +
         "<td>" + fmt(inputs.startup[r.item] ?? r.qty * r.unit) + "</td></tr>").join("");
       p.innerHTML = "<h3>One-time startup costs</h3><table><thead><tr><th>Item</th><th>Qty</th><th>Unit cost</th><th>Subtotal</th></tr></thead><tbody>" +
@@ -88,7 +131,7 @@
     function drawOperating() {
       const p = el.querySelector('[data-panel=operating]');
       let rows = cfg.monthlyFixed.map(r => "<tr><td>" + r.item + "</td>" +
-        "<td><input type='number' value='" + r.amount + "' data-fixed='" + r.item + "' min='0' step='0.01'></td></tr>").join("");
+        "<td><input type='number' value='" + (inputs.fixed[r.item] ?? r.amount) + "' data-fixed='" + r.item + "' min='0' step='0.01'></td></tr>").join("");
       p.innerHTML = "<h3>Monthly fixed costs</h3><table><thead><tr><th>Item</th><th>Monthly</th></tr></thead><tbody>" +
         rows + "<tr class='row-total'><td>Total monthly fixed</td><td>" + fmt(state.monthlyFixed) + "</td></tr></tbody></table>" +
         "<p class='note'>Growth per month: <input type='number' value='" + inputs.growth + "' data-growth step='0.5'> %</p>";
@@ -107,7 +150,7 @@
         "<div class='kpi'><div class='label'>Contribution / unit</div><div class='value'>" + fmt(state.contribution) + "</div></div>" +
         "<div class='kpi'><div class='label'>Monthly revenue</div><div class='value'>" + fmt(state.monthlyRevenue) + "</div></div>" +
         "<div class='kpi " + (state.monthlyNet < 0 ? 'bad' : '') + "'><div class='label'>Monthly profit</div><div class='value'>" + fmt(state.monthlyNet) + "</div></div>" +
-        "<div class='kpi " + (state.breakEvenUnits > (inputs.units ?? cfg.volume.monthly) ? 'warn' : '') + "'><div class='label'>Break-even units</div><div class='value'>" + (isFinite(state.breakEvenUnits) ? state.breakEvenUnits : '—') + "</div></div>" +
+        "<div class='kpi " + (state.breakEvenUnits > (inputs.units ?? cfg.volume.monthly) ? 'warn' : '') + "'><div class='label'>Break-even units</div><div class='value'>" + (isFinite(state.breakEvenUnits) ? state.breakEvenUnits : '\u2014') + "</div></div>" +
         "</div>";
       p.querySelector('[data-var]').oninput = e => { inputs.varCost = +e.target.value; redraw(); };
       p.querySelector('[data-price]').oninput = e => { inputs.price = +e.target.value; redraw(); };
@@ -123,8 +166,7 @@
         "<td class='" + (r.balance < 0 ? 'neg' : 'pos') + "'><strong>" + fmt(r.balance) + "</strong></td></tr>").join("");
       p.innerHTML = "<h3>12-month cash flow forecast</h3><div class='cf-table'><table><thead><tr>" +
         "<th>Month</th><th>Units</th><th>Revenue</th><th>Variable</th><th>Fixed</th><th>Loan</th><th>Net</th><th>Balance</th>" +
-        "</tr></thead><tbody>" + rows + "</tbody></table></div>" +
-        "<p class='note'>Balance = cumulative cash. Negative means you need more capital or sales.</p>";
+        "</tr></thead><tbody>" + rows + "</tbody></table></div>";
     }
 
     function drawLoan() {
@@ -134,7 +176,7 @@
         "<tr><td>Annual interest rate (%)</td><td><input type='number' value='" + inputs.loanRate + "' data-loan-rate min='0' step='0.1'></td></tr>" +
         "<tr><td>Term (months)</td><td><input type='number' value='" + inputs.loanTerm + "' data-loan-term min='1'></td></tr>" +
         "<tr class='row-total'><td>Monthly payment</td><td>" + fmt(state.loanPayment) + "</td></tr>" +
-        "</tbody></table><p class='note'>Only borrow what your monthly profit can repay.</p>";
+        "</tbody></table>";
       p.querySelector('[data-loan-amt]').oninput = e => { inputs.loanAmount = +e.target.value; redraw(); };
       p.querySelector('[data-loan-rate]').oninput = e => { inputs.loanRate = +e.target.value; redraw(); };
       p.querySelector('[data-loan-term]').oninput = e => { inputs.loanTerm = +e.target.value; redraw(); };
@@ -147,7 +189,6 @@
     const slug = el.dataset.course;
     const cfg = window.COURSE_CONFIGS && window.COURSE_CONFIGS[slug];
     if (!cfg) { el.innerHTML = "<p class='note'>Calculator config missing for " + slug + ".</p>"; return; }
-    render(el, cfg);
+    render(el, cfg, slug);
   });
 })();
-

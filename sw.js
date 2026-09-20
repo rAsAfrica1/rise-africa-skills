@@ -1,33 +1,28 @@
-﻿// KILL SWITCH — removes this service worker and all caches from every device.
-// After this runs, the site loads fresh from the network every time.
-// We can re-add a proper service worker later if needed.
+﻿const CACHE = 'ras-v1';
+const FILES = [
+  '/assets/business-tools.js',
+  '/assets/business-tools.css',
+  '/assets/course-configs.js'
+];
 
-self.addEventListener('install', () => {
+self.addEventListener('install', e => {
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).catch(()=>{}));
   self.skipWaiting();
 });
 
-self.addEventListener('activate', (event) => {
-  event.waitUntil((async () => {
-    try {
-      // 1. Delete ALL caches
-      const keys = await caches.keys();
-      await Promise.all(keys.map((k) => caches.delete(k)));
-
-      // 2. Unregister this service worker
-      await self.registration.unregister();
-
-      // 3. Force every open tab to reload
-      const clients = await self.clients.matchAll({ type: 'window' });
-      clients.forEach((c) => {
-        try { c.navigate(c.url); } catch (e) {}
-      });
-    } catch (e) {
-      console.warn('[SW] kill-switch error:', e);
-    }
-  })());
+self.addEventListener('activate', e => {
+  e.waitUntil(self.clients.claim());
 });
 
-// Pass-through: while the SW still exists briefly, just proxy to network
-self.addEventListener('fetch', (event) => {
-  event.respondWith(fetch(event.request).catch(() => caches.match(event.request)));
+self.addEventListener('fetch', e => {
+  const url = new URL(e.request.url);
+  if (url.pathname.startsWith('/assets/')) {
+    e.respondWith(
+      caches.match(e.request).then(r => r || fetch(e.request).then(resp => {
+        const copy = resp.clone();
+        caches.open(CACHE).then(c => c.put(e.request, copy)).catch(()=>{});
+        return resp;
+      }).catch(() => caches.match(e.request)))
+    );
+  }
 });
