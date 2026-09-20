@@ -316,3 +316,25 @@ window.COURSE_CONFIGS["aluminium-welding-fundamentals"] = {
   "unit": { "name": "Aluminium gate or frame (typical job)", "variableCost": 90, "price": 220 },
   "volume": { "monthly": 12 }
 };
+
+window.COURSE_CONFIGS["cold-room-for-10-beasts"] = {
+  "title": "Cold Room for 4-10 Beasts",
+  "note": "Small walk-in cold room for a butcher or small abattoir.",
+  "startup": [
+    { "item": "Cold room panels (100mm, 6 m2)", "qty": 1, "unit": 1400 },
+    { "item": "Condensing unit (2 HP)", "qty": 1, "unit": 700 },
+    { "item": "Evaporator + piping", "qty": 1, "unit": 400 },
+    { "item": "Stainless racking (4 tiers)", "qty": 1, "unit": 450 },
+    { "item": "Temperature monitor + alarm", "qty": 1, "unit": 180 },
+    { "item": "Electrical + installation", "qty": 1, "unit": 550 },
+    { "item": "Door seals + fittings", "qty": 1, "unit": 120 }
+  ],
+  "monthlyFixed": [
+    { "item": "Electricity", "amount": 220 },
+    { "item": "Maintenance + refrigerant", "amount": 70 },
+    { "item": "Labor (part-time)", "amount": 120 },
+    { "item": "Insurance + misc", "amount": 40 }
+  ],
+  "unit": { "name": "Carcass stored per day", "variableCost": 2.0, "price": 5.5 },
+  "volume": { "monthly": 300 }
+};
