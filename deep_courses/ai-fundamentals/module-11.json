@@ -1,0 +1,368 @@
+﻿{
+  "course": "AI Fundamentals",
+  "module_number": 11,
+  "module_title": "Reinforcement Learning",
+  "lessons": [
+    {
+      "title": "Markov Decision Processes",
+      "body": "A Markov Decision Process (MDP) is the mathematical framework for sequential decision-making. Imagine a maize farmer in Kenya deciding when to plant, irrigate, or harvest. Each decision affects future yields and costs. An MDP has five parts: states (e.g., soil moisture, crop growth stage), actions (plant, irrigate, wait), transition probabilities (how likely rain is), rewards (profit from harvest), and a discount factor (how much you value future rewards vs. today's). The key assumption is the Markov property: the next state depends only on the current state and action, not on history. In practice, you might model a small farm with 10 states (dry, moist, wet, etc.) and 3 actions. Transition probabilities come from historical weather dataâfor example, 60% chance of rain in April. Rewards are in Kenyan shillings: a good harvest might yield KES 50,000, while over-irrigation costs KES 5,000. To solve an MDP, you compute an optimal policyâa mapping from states to actions that maximizes expected discounted reward. The discount factor (often 0.9) means a reward today is worth more than the same reward next year. Tools like Python's `pymdptoolbox` or simple dynamic programming can solve small MDPs. For African agriculture, MDPs help optimize irrigation schedules, livestock feeding, or even mobile money savings. Start by listing states and actions for a problem you know, like a boda boda driver choosing routes to avoid traffic. Estimate transition probabilities from experience, assign rewards (fuel cost vs. time saved), and use value iteration to find the best policy. This hands-on approach makes MDPs practical, not theoretical."
+    },
+    {
+      "title": "Q-Learning",
+      "body": "Q-Learning is a model-free reinforcement learning algorithm that learns the value of taking an action in a given state without needing a model of the environment. It's like a trader in Lagos learning the best days to buy and sell tomatoes at Mile 12 market. The algorithm maintains a Q-table: rows are states (e.g., 'Monday morning', 'Friday evening'), columns are actions ('buy', 'sell', 'hold'). Each cell holds a Q-valueâthe expected future reward. Initially all zeros. The agent explores: it picks an action, observes the reward (profit or loss), and updates the Q-value using the formula: Q(s,a) = Q(s,a) + Î± [r + Î³ max Q(s',a') - Q(s,a)]. Here Î± is the learning rate (e.g., 0.1), Î³ is the discount factor (e.g., 0.9), r is the immediate reward (e.g., KES 500 profit), and s' is the next state. Over many episodes (e.g., 1000 trading days), the Q-table converges to optimal values. You can implement Q-Learning in Python with just a dictionary for Q-table and a loop. For a tomato trader, states could be price levels (low, medium, high) and inventory (empty, some, full). Actions: buy 10 crates, sell 10 crates, wait. Rewards: profit minus storage cost. Use epsilon-greedy exploration: with probability 0.1, try a random action; otherwise, pick the best known action. After training, the trader can follow the learned policy: 'If price is low and inventory is empty, buy.' Real numbers: a trader might start with KES 10,000, aim for 5% daily profit, and after 500 episodes see average daily profit rise from KES 200 to KES 600. Q-Learning works well for small state spaces. For larger problems, you need function approximation. But for many African small businessesâmanaging a fleet of boda bodas, optimizing a solar micro-grid, or scheduling a maize millâQ-Learning with a simple table can deliver quick wins."
+    },
+    {
+      "title": "Deep Q-Networks (DQN)",
+      "body": "When the number of states becomes hugeâlike pixels in a video game or sensor readings from a farmâa Q-table is impossible. Deep Q-Networks (DQN) replace the table with a neural network that takes the state as input and outputs Q-values for each action. Imagine a drone monitoring a 100-hectare farm in Ghana. The state could be a 64x64 image of the field; actions are 'spray pesticide', 'irrigate', 'do nothing'. DQN uses a convolutional neural network (CNN) to process the image and predict Q-values. The key tricks that make DQN stable are experience replay and a target network. Experience replay stores transitions (state, action, reward, next state) in a buffer of, say, 10,000 samples. During training, you randomly sample mini-batches of 32 to break correlation. The target network is a copy of the main network, updated every 1,000 steps, to compute the target Q-value: r + Î³ max Q_target(s',a'). You train the main network to minimize the mean squared error between predicted Q and target Q using an optimizer like Adam with learning rate 0.0001. In practice, you can use Python libraries like TensorFlow or PyTorch. For a farm drone, you'd collect data by flying randomly for 10 hours, storing images and rewards (e.g., +10 for healthy crop, -5 for pest damage). After 50,000 training steps, the drone learns to spray only when pest probability is high. DQN has been used in African contexts for wildlife poaching detection (using drone imagery) and optimizing solar panel cleaning schedules. Start with a simple environment like OpenAI Gym's CartPole to learn DQN, then adapt to your problem. Real numbers: a DQN for a 4-action farm drone might need 200,000 frames and 12 hours of GPU training on a Google Colab notebook. The result: 30% less pesticide use and 15% higher yield."
+    },
+    {
+      "title": "Policy Gradient Methods",
+      "body": "Policy gradient methods directly learn a policyâa probability distribution over actionsâwithout using a Q-table. Instead of asking 'what is the value of this action?', they adjust the policy parameters to increase the probability of actions that lead to higher rewards. Think of a football coach in Senegal training a team. The coach doesn't compute exact values for every pass; instead, they try a strategy, see if it wins, and tweak the playbook. In policy gradients, the policy is often a neural network that outputs action probabilities. The agent runs an episode, collects rewards, and computes the gradient of expected reward with respect to policy parameters. The update rule is: Î¸ â Î¸ + Î± âÎ¸ log ÏÎ¸(a|s) * G, where G is the return (sum of discounted rewards). A common variant is REINFORCE, which uses Monte Carlo returns. For a real African example, consider a mobile money agent deciding how much cash to keep. States: day of week, location, historical demand. Actions: cash amount (e.g., KES 5,000, 10,000, 20,000). Reward: profit from transactions minus penalty for running out. A policy network with two hidden layers of 64 units can learn a stochastic policy. You train by running 1,000 simulated days, using Adam optimizer with learning rate 0.01. The advantage is that policy gradients handle continuous actions (e.g., how much water to release from a dam) and can learn stochastic policies, which is useful when the environment is unpredictable. The downside is high variance; you can reduce it with baselines (e.g., subtract average reward). In practice, use libraries like Stable Baselines3 in Python. For an irrigation system in Ethiopia, a policy gradient agent learned to release water based on soil moisture and weather forecast, achieving 20% water savings. Start with a simple gridworld to understand the mechanics, then apply to your business problem."
+    },
+    {
+      "title": "Actor-Critic Methods",
+      "body": "Actor-Critic methods combine the strengths of policy gradients (the actor) and value-based methods (the critic). The actor is a policy network that decides actions; the critic is a value network that evaluates how good those actions are. The critic provides a baseline to reduce variance, making learning faster and more stable. Imagine a small manufacturing business in Nigeria producing garri. The actor decides how much cassava to process each day; the critic estimates the expected profit from that decision. The actor updates its policy using the critic's feedback: if the critic says the action was better than expected, increase its probability. The critic updates its value estimate using the actual reward. A popular algorithm is Advantage Actor-Critic (A2C), which uses the advantage function A(s,a) = Q(s,a) - V(s). You can implement A2C with two neural networks sharing some layers. For a garri producer, state could be current cassava price, inventory, and machine status; actions are production levels (e.g., 0, 50, 100 kg). Reward is profit minus spoilage cost. Train with 10,000 episodes, using a learning rate of 0.001 for both networks. In Africa, actor-critic has been used for energy management in microgridsâbalancing solar, battery, and diesel generator. For example, a microgrid in Tanzania used A2C to decide when to charge batteries, reducing diesel use by 40%. The key is to tune the entropy bonus (encourages exploration) and the discount factor (0.99 for long-term planning). Tools: TensorFlow Agents or PyTorch. Start with a simple continuous control task like Pendulum, then adapt. Actor-Critic is more sample-efficient than pure policy gradients, making it suitable for real-world African businesses where data is limited. Always normalize rewards and use gradient clipping to avoid instability."
+    },
+    {
+      "title": "Applications in Games and Robotics",
+      "body": "Reinforcement learning has achieved superhuman performance in games and is transforming robotics, with direct applications for African innovators. In games, DeepMind's AlphaGo beat world champions using policy gradients and Monte Carlo tree search. But you don't need a supercomputer. You can train an RL agent to play classic games like Pong or Snake using OpenAI Gym and a laptop. For example, a DQN can learn to play Atari Breakout in 10 million frames (about 2 days on a GPU). In Africa, game developers in Kenya and South Africa are using RL to create adaptive difficulty in mobile games, increasing player retention by 25%. In robotics, RL enables robots to learn manipulation and locomotion. A robot arm in a South African factory can learn to pick and place objects using a policy gradient method like PPO (Proximal Policy Optimization). You can simulate the task in PyBullet or MuJoCo, then transfer to a real robot. For agriculture, a drone can learn to navigate between rows of maize using actor-critic, avoiding obstacles with a depth camera. Real numbers: a small drone with a Raspberry Pi 4 and a camera can run a trained DQN at 10 frames per second for real-time weed detection, reducing herbicide use by 30%. In wildlife conservation, RL agents control drones to patrol for poachers in Kruger National Park, learning optimal search patterns. To get started, use Google Colab with free GPU, install `gym` and `stable-baselines3`, and train an agent on CartPole or LunarLander. Then, for robotics, use ROS 2 with Gazebo simulation. The key is to start simple: define your state (sensor readings), actions (motor commands), and reward (task success). African startups like Zipline (drone delivery) and Aerobotics (crop monitoring) already use RL for path planning. With open-source tools, you can build a prototype for your own communityâwhether it's a robot sorting plastic waste in Accra or a game teaching financial literacy in Nairobi."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What are the five components of a Markov Decision Process?",
+      "options": [
+        "A) States, actions, rewards, policy, value",
+        "B) States, actions, transition probabilities, rewards, discount factor",
+        "C) States, actions, Q-table, learning rate, discount factor",
+        "D) States, actions, neural network, optimizer, loss"
+      ],
+      "answer": "B",
+      "explanation": "An MDP is defined by states, actions, transition probabilities, rewards, and a discount factor."
+    },
+    {
+      "q": "In Q-Learning, what does the Q-value represent?",
+      "options": [
+        "A) The immediate reward of an action",
+        "B) The probability of taking an action",
+        "C) The expected future reward of taking an action in a state",
+        "D) The total reward of an episode"
+      ],
+      "answer": "C",
+      "explanation": "Q(s,a) estimates the expected discounted return from taking action a in state s and following the optimal policy thereafter."
+    },
+    {
+      "q": "Which of the following is a key trick used in Deep Q-Networks to stabilize training?",
+      "options": [
+        "A) Using a Q-table",
+        "B) Experience replay and target network",
+        "C) Policy gradients",
+        "D) Monte Carlo returns"
+      ],
+      "answer": "B",
+      "explanation": "Experience replay breaks correlation, and a target network provides stable targets."
+    },
+    {
+      "q": "What does the policy gradient update rule directly adjust?",
+      "options": [
+        "A) The Q-values",
+        "B) The transition probabilities",
+        "C) The policy parameters to increase probability of high-reward actions",
+        "D) The reward function"
+      ],
+      "answer": "C",
+      "explanation": "Policy gradients update the policy parameters in the direction that increases expected reward."
+    },
+    {
+      "q": "In Actor-Critic methods, what is the role of the critic?",
+      "options": [
+        "A) To select actions",
+        "B) To evaluate the actor's actions by estimating value",
+        "C) To store experiences",
+        "D) To compute the policy gradient"
+      ],
+      "answer": "B",
+      "explanation": "The critic estimates the value function, providing a baseline to reduce variance in the actor's updates."
+    },
+    {
+      "q": "Which of these is a real-world application of reinforcement learning in Africa?",
+      "options": [
+        "A) Optimizing irrigation schedules",
+        "B) Training a model to classify images",
+        "C) Predicting stock prices",
+        "D) Translating languages"
+      ],
+      "answer": "A",
+      "explanation": "RL is used for sequential decision-making like irrigation, where actions affect future states."
+    },
+    {
+      "q": "What is the Markov property?",
+      "options": [
+        "A) The next state depends on all past states",
+        "B) The next state depends only on the current state and action",
+        "C) The reward depends only on the action",
+        "D) The policy is deterministic"
+      ],
+      "answer": "B",
+      "explanation": "The Markov property states that the future is independent of the past given the present."
+    },
+    {
+      "q": "In Q-Learning, what is the learning rate Î±?",
+      "options": [
+        "A) How much to discount future rewards",
+        "B) How much to explore",
+        "C) How much to update the Q-value based on new information",
+        "D) The number of episodes"
+      ],
+      "answer": "C",
+      "explanation": "Î± controls the step size of the Q-value update."
+    },
+    {
+      "q": "What is the purpose of epsilon in epsilon-greedy exploration?",
+      "options": [
+        "A) To control the discount factor",
+        "B) To balance exploration and exploitation",
+        "C) To set the learning rate",
+        "D) To define the reward"
+      ],
+      "answer": "B",
+      "explanation": "Epsilon is the probability of taking a random action, encouraging exploration."
+    },
+    {
+      "q": "Which library is commonly used to implement DQN in Python?",
+      "options": [
+        "A) Scikit-learn",
+        "B) TensorFlow or PyTorch",
+        "C) Pandas",
+        "D) Matplotlib"
+      ],
+      "answer": "B",
+      "explanation": "Deep Q-Networks require neural networks, typically built with TensorFlow or PyTorch."
+    },
+    {
+      "q": "What is experience replay in DQN?",
+      "options": [
+        "A) Storing transitions and sampling random mini-batches",
+        "B) Replaying the same episode multiple times",
+        "C) Using a target network",
+        "D) Updating the policy directly"
+      ],
+      "answer": "A",
+      "explanation": "Experience replay stores transitions in a buffer and samples them randomly to break correlation."
+    },
+    {
+      "q": "In policy gradient methods, what does the return G represent?",
+      "options": [
+        "A) The immediate reward",
+        "B) The sum of discounted rewards from a state",
+        "C) The average reward",
+        "D) The Q-value"
+      ],
+      "answer": "B",
+      "explanation": "G is the cumulative discounted reward from a given time step."
+    },
+    {
+      "q": "What is a common baseline used in policy gradients to reduce variance?",
+      "options": [
+        "A) The average reward",
+        "B) The Q-value",
+        "C) The state value function",
+        "D) The action probability"
+      ],
+      "answer": "C",
+      "explanation": "Subtracting a state value baseline reduces variance without introducing bias."
+    },
+    {
+      "q": "Which algorithm is an example of an Actor-Critic method?",
+      "options": [
+        "A) Q-Learning",
+        "B) REINFORCE",
+        "C) A2C (Advantage Actor-Critic)",
+        "D) DQN"
+      ],
+      "answer": "C",
+      "explanation": "A2C uses an actor for policy and a critic for value estimation."
+    },
+    {
+      "q": "In Actor-Critic, what is the advantage function?",
+      "options": [
+        "A) Q(s,a) - V(s)",
+        "B) V(s) - Q(s,a)",
+        "C) Q(s,a) + V(s)",
+        "D) V(s) / Q(s,a)"
+      ],
+      "answer": "A",
+      "explanation": "The advantage measures how much better taking action a is compared to the average."
+    },
+    {
+      "q": "What is a benefit of policy gradient methods over Q-Learning?",
+      "options": [
+        "A) They can handle continuous action spaces",
+        "B) They always converge faster",
+        "C) They don't need a neural network",
+        "D) They require less data"
+      ],
+      "answer": "A",
+      "explanation": "Policy gradients naturally handle continuous actions by outputting a distribution."
+    },
+    {
+      "q": "Which of these is a real-world robotics application of RL in Africa?",
+      "options": [
+        "A) Drone navigation for crop monitoring",
+        "B) Self-driving cars in Lagos",
+        "C) Humanoid robots in homes",
+        "D) Autonomous ships"
+      ],
+      "answer": "A",
+      "explanation": "Drones for agriculture are an emerging RL application in Africa."
+    },
+    {
+      "q": "What is the discount factor Î³?",
+      "options": [
+        "A) The learning rate",
+        "B) How much future rewards are valued relative to immediate rewards",
+        "C) The exploration rate",
+        "D) The number of states"
+      ],
+      "answer": "B",
+      "explanation": "Î³ between 0 and 1 determines the present value of future rewards."
+    },
+    {
+      "q": "In Q-Learning, what does the update rule use to compute the target?",
+      "options": [
+        "A) The current Q-value only",
+        "B) The immediate reward plus the discounted maximum Q-value of the next state",
+        "C) The average reward",
+        "D) The policy gradient"
+      ],
+      "answer": "B",
+      "explanation": "The target is r + Î³ max Q(s',a'), representing the best possible future value."
+    },
+    {
+      "q": "What is the main challenge of using Q-Learning with large state spaces?",
+      "options": [
+        "A) The Q-table becomes too large",
+        "B) The rewards are too small",
+        "C) The discount factor is too high",
+        "D) The learning rate is too low"
+      ],
+      "answer": "A",
+      "explanation": "A table for millions of states is impractical, requiring function approximation like DQN."
+    },
+    {
+      "q": "Which of these is a practical step to start with RL for a small business?",
+      "options": [
+        "A) Define states, actions, and rewards for your problem",
+        "B) Immediately build a deep neural network",
+        "C) Collect millions of data points",
+        "D) Hire a team of PhDs"
+      ],
+      "answer": "A",
+      "explanation": "Starting with a clear problem formulation is essential before choosing an algorithm."
+    },
+    {
+      "q": "What is the role of the actor in Actor-Critic?",
+      "options": [
+        "A) To estimate the value function",
+        "B) To select actions based on the policy",
+        "C) To store experiences",
+        "D) To compute the reward"
+      ],
+      "answer": "B",
+      "explanation": "The actor is the policy network that outputs action probabilities."
+    },
+    {
+      "q": "Which of these is a common library for RL in Python?",
+      "options": [
+        "A) Stable Baselines3",
+        "B) Django",
+        "C) Flask",
+        "D) React"
+      ],
+      "answer": "A",
+      "explanation": "Stable Baselines3 provides implementations of RL algorithms like PPO, A2C, and DQN."
+    },
+    {
+      "q": "What is the purpose of a target network in DQN?",
+      "options": [
+        "A) To provide stable Q-value targets during training",
+        "B) To explore the environment",
+        "C) To store the replay buffer",
+        "D) To compute the policy gradient"
+      ],
+      "answer": "A",
+      "explanation": "The target network is a slowly-updated copy that stabilizes the learning targets."
+    },
+    {
+      "q": "In the context of MDPs, what is a policy?",
+      "options": [
+        "A) A mapping from states to actions",
+        "B) A mapping from actions to rewards",
+        "C) A mapping from states to values",
+        "D) A mapping from rewards to states"
+      ],
+      "answer": "A",
+      "explanation": "A policy tells the agent which action to take in each state."
+    },
+    {
+      "q": "Which of these is an example of a continuous action space?",
+      "options": [
+        "A) Choosing left or right",
+        "B) Selecting a move in chess",
+        "C) Adjusting the water flow rate",
+        "D) Picking a card from a deck"
+      ],
+      "answer": "C",
+      "explanation": "Continuous actions can take any real value, like a flow rate."
+    },
+    {
+      "q": "What is the main advantage of Actor-Critic over pure policy gradients?",
+      "options": [
+        "A) Lower variance and faster learning",
+        "B) Simpler implementation",
+        "C) No need for a neural network",
+        "D) Requires less memory"
+      ],
+      "answer": "A",
+      "explanation": "The critic provides a baseline that reduces variance, leading to more stable updates."
+    },
+    {
+      "q": "In Q-Learning, what is the exploration-exploitation trade-off?",
+      "options": [
+        "A) Balancing trying new actions vs. using known good actions",
+        "B) Balancing learning rate vs. discount factor",
+        "C) Balancing rewards vs. costs",
+        "D) Balancing states vs. actions"
+      ],
+      "answer": "A",
+      "explanation": "Exploration discovers better actions; exploitation uses current knowledge to maximize reward."
+    },
+    {
+      "q": "Which of these is a real-world application of RL in African agriculture?",
+      "options": [
+        "A) Optimizing fertilizer application",
+        "B) Predicting crop disease from images",
+        "C) Sorting maize by size",
+        "D) Measuring soil pH"
+      ],
+      "answer": "A",
+      "explanation": "RL can optimize sequential decisions like when and how much fertilizer to apply."
+    },
+    {
+      "q": "What is the output of a policy network in policy gradient methods?",
+      "options": [
+        "A) Q-values for each action",
+        "B) A probability distribution over actions",
+        "C) The state value",
+        "D) The reward"
+      ],
+      "answer": "B",
+      "explanation": "The policy network outputs action probabilities, from which actions are sampled."
+    }
+  ],
+  "videos": [
+    "Reinforcement Learning basics for beginners",
+    "Q-Learning tutorial Python example",
+    "Deep Q-Network DQN explained with code"
+  ]
+}

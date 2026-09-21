@@ -1,0 +1,218 @@
+﻿{
+  "course": "Robotics",
+  "module_number": 11,
+  "module_title": "Human-Robot Interaction",
+  "lessons": [
+    {
+      "title": "Social Robotics and Anthropomorphism",
+      "body": "Social robots are designed to interact with humans in a natural, interpersonal way. In Africa, social robots are emerging in sectors like healthcare, education, and customer service. For example, in Rwanda, robots are used in COVID-19 treatment centers to reduce human exposure. Anthropomorphism means attributing human-like qualities to robots. This can make robots more relatable, but it can also create unrealistic expectations. When designing a social robot for an African context, consider local languages, gestures, and cultural norms. A robot that greets with a handshake might be appropriate in some cultures but not others. \n\nStart by defining the robot's role. Is it a receptionist, a teacher's assistant, or a health worker? Then choose the level of anthropomorphism. A robot with a screen face can display simple emotions like happiness or sadness using emojis. Simple LED lights can indicate attention. For voice, use a local accent and language. For instance, a robot in Kenya might speak Swahili and English. Keep movements slow and predictable to avoid fear. \n\nPractical steps: Use a humanoid robot kit like the EZ-Robot JD or a simpler platform like Arduino with a display. Program basic social behaviors: waving, nodding, and speaking greetings. Test with users from the target community. Gather feedback on whether the robot feels friendly or creepy. Adjust accordingly. Remember, over-anthropomorphism can lead to the 'uncanny valley' effect, where robots that look almost human but not quite cause discomfort. In African markets, where trust is crucial, a balance between human-like and machine-like features is often best. \n\nCosts: A basic social robot can be built for under $500 using a Raspberry Pi, servo motors, and a speaker. For a more advanced version, expect $2000-$5000. Training: You can learn social robotics through online courses like Coursera's 'Social Robotics' or local makerspaces in Lagos, Nairobi, or Cape Town. \n\nCase study: In Ethiopia, a social robot named 'Selam' was developed to teach children about hygiene. It used Amharic speech and local songs. The robot increased handwashing rates by 40% in schools. This shows the power of culturally adapted social robots."
+    },
+    {
+      "title": "Speech Recognition and Synthesis",
+      "body": "Speech recognition allows robots to understand spoken commands, while speech synthesis enables them to speak. In Africa, where many languages are spoken, building robust speech systems is challenging but possible. Popular tools include Google Speech-to-Text, Mozilla DeepSpeech, and CMU Sphinx. For synthesis, you can use eSpeak, Festival, or Google Text-to-Speech. These tools support some African languages like Swahili, Zulu, and Amharic, but coverage is limited. \n\nTo add speech recognition to your robot, start with a microphone array like the ReSpeaker 4-Mic Array ($25) for Raspberry Pi. Use Python libraries like SpeechRecognition or PyAudio. For offline recognition, train a model using DeepSpeech with a dataset of your target language. The Common Voice project by Mozilla has crowdsourced datasets for many African languages. For synthesis, you can use pre-recorded phrases or concatenative synthesis. For example, record a native speaker saying common phrases, then stitch them together. \n\nPractical project: Build a voice-controlled robot that responds to commands like 'stop', 'go', 'turn left', 'turn right' in Swahili. Use a Raspberry Pi, a motor driver, and a speaker. Program the robot to listen for keywords using a simple speech recognizer. When it hears 'simama' (stop), it halts. When it hears 'songa mbele' (go forward), it moves. Test in a quiet room first, then in a noisy environment. \n\nChallenges: Background noise, accents, and code-switching (mixing languages) can reduce accuracy. To improve, use noise-cancelling microphones and train with diverse speakers. For synthesis, ensure the voice sounds natural and respectful. In many African cultures, a robotic voice that is too monotone may be perceived as rude. Add intonation and pauses. \n\nResources: The African Language Technology Initiative (ALT) provides datasets and tools. You can also join local hackathons like the Deep Learning Indaba to collaborate. Cost: A basic speech-enabled robot can be built for under $300. With cloud services, expect ongoing costs for API calls. For offline, initial training may cost $100-$500 in computing time. \n\nCase study: In South Africa, a robot named 'Lwazi' was used to help children with speech therapy. It recognized isiZulu words and provided feedback. The project improved pronunciation scores by 30%."
+    },
+    {
+      "title": "Gesture and Emotion Recognition",
+      "body": "Gestures and emotions are key to natural human-robot interaction. In Africa, gestures vary widely: a nod may mean agreement in some cultures but just acknowledgment in others. Emotion recognition uses cameras and sensors to detect facial expressions, body language, and voice tone. Tools include OpenCV for gesture recognition and Affectiva or Microsoft Azure Face API for emotion detection. \n\nFor gesture recognition, start with a simple webcam and OpenCV. Use Haar cascades or deep learning models like MediaPipe to detect hand movements. For example, you can program a robot to follow a pointing finger. Use a Raspberry Pi with a Pi Camera ($30) and run MediaPipe Hands. The robot can then turn its head or move in the pointed direction. For emotion recognition, use a camera to capture facial expressions. Pre-trained models can classify happy, sad, angry, surprised, etc. However, these models are often trained on Western faces and may not work well on African faces. You may need to fine-tune with local data. \n\nPractical steps: Collect a dataset of African faces showing different emotions. Use a smartphone to record 100-200 images per emotion. Label them and train a simple convolutional neural network (CNN) using TensorFlow. This can achieve 80% accuracy with enough data. For gestures, define a set of commands: open palm = stop, thumbs up = start, wave = come here. Program your robot to respond accordingly. \n\nChallenges: Lighting conditions, occlusions (e.g., hijabs or headwraps), and cultural differences in expression. For example, in some African cultures, direct eye contact is considered rude, so a robot that stares may be uncomfortable. Design the robot to look slightly away when speaking. \n\nCosts: A basic gesture recognition setup costs around $100 (Raspberry Pi, camera, servos). Emotion recognition with cloud APIs may cost $1-$5 per 1000 calls. Offline training requires a GPU, which can be rented for $0.50-$2 per hour. \n\nCase study: In Nigeria, a robot named 'Ola' was used in autism therapy to recognize gestures and emotions of children. It used a local dataset of Nigerian faces and improved social interaction in 70% of cases."
+    },
+    {
+      "title": "Safety in Collaborative Workspaces",
+      "body": "Collaborative robots (cobots) are designed to work alongside humans safely. In African factories, cobots are increasingly used for tasks like assembly, packaging, and quality control. Safety is critical to prevent injuries. Key standards include ISO 10218 and ISO/TS 15066, which specify safety requirements for industrial robots and collaborative operations. \n\nTo ensure safety, cobots use sensors to detect human presence. Common sensors include force-torque sensors, capacitive skin, and vision systems. For example, a cobot arm can stop immediately if it detects unexpected contact. You can implement a simple safety system using ultrasonic sensors and emergency stop buttons. For a low-cost cobot, use a robot arm like the Dobot Magician ($1500) or build your own with stepper motors and a force sensor. \n\nPractical steps: Design your workspace with clear boundaries. Use floor markings to indicate the robot's operating area. Install light curtains or laser scanners to detect intrusion. Program the robot to slow down or stop when a human is within 1 meter. For hand-guided operations, use a force sensor to allow the human to guide the robot. Always include a physical emergency stop button that cuts power immediately. \n\nRisk assessment: Identify potential hazards: pinch points, sharp edges, and heavy payloads. Evaluate the likelihood and severity of injury. Implement protective measures: padding, reduced speed, and limited force. For example, the robot's maximum force should not exceed 140 N in quasi-static contact and 80 N in transient contact, per ISO/TS 15066. \n\nTraining: Workers must be trained on safe interaction. In Africa, where occupational safety regulations may be less enforced, it's crucial to establish internal safety protocols. Conduct regular drills. \n\nCosts: A basic safety system with sensors and relays costs $200-$500. A full cobot safety package can be $5000+. \n\nCase study: In Kenya, a food processing plant installed cobots for packaging. After implementing safety sensors and training, accidents dropped to zero and productivity increased by 25%. The key was involving workers in the design of safety measures."
+    },
+    {
+      "title": "Teleoperation and Haptic Interfaces",
+      "body": "Teleoperation allows a human to control a robot from a distance. Haptic interfaces provide touch feedback, making the control more intuitive. In Africa, teleoperation is useful for dangerous tasks like mining, bomb disposal, and deep-sea exploration. It also enables remote healthcare and education. \n\nTo build a basic teleoperation system, you need a robot, a communication link, and a control interface. For the robot, use a platform like Arduino or Raspberry Pi with motors and sensors. For communication, use Wi-Fi, Bluetooth, or radio waves. For long distances, use the internet with a protocol like MQTT or WebRTC. For the control interface, a smartphone or joystick works. For haptic feedback, use a vibration motor or a force-feedback joystick like the Logitech G29 ($300). \n\nPractical project: Build a teleoperated robot car that you control with your phone. Use an ESP32 camera module for video streaming. Add a vibration motor that buzzes when the robot's ultrasonic sensor detects an obstacle. This gives you a sense of touch. For more advanced haptics, use a servo motor to create resistance on a joystick when the robot pushes against something. \n\nChallenges: Latency (delay) can make control difficult. Aim for less than 200 ms delay. Use a local network or 4G/5G where available. In rural Africa, connectivity may be poor, so design for low bandwidth. Send only essential data. \n\nApplications: In South Africa, teleoperated robots are used in mines to inspect dangerous areas. In Nigeria, a teleoperated robot was used to deliver medicines in a hospital, reducing nurse exposure to infectious diseases. \n\nCosts: A basic teleoperated robot with haptic feedback can be built for under $500. A professional system with force feedback can cost $10,000+. \n\nTraining: Practice with simple tasks first: driving, picking up objects. Then move to complex tasks. Always have a fail-safe: if communication is lost, the robot should stop. \n\nCase study: In Ghana, a teleoperated robot named 'AfriBot' was used to teach students in remote villages. A teacher in Accra controlled the robot in a classroom 200 km away. The robot had a haptic glove that let the teacher feel the texture of objects, making the lesson interactive."
+    },
+    {
+      "title": "Lab: Programming a Voice-Controlled Robot",
+      "body": "In this lab, you will build a voice-controlled robot using a Raspberry Pi, a microphone, and a motor driver. The robot will respond to voice commands in English and Swahili. You will learn to integrate speech recognition, motor control, and basic AI. \n\nMaterials: Raspberry Pi 4 ($35), USB microphone ($10), L298N motor driver ($5), 2 DC motors with wheels ($10), chassis ($10), battery pack ($15), speaker ($5). Total cost: ~$90. \n\nStep 1: Set up the Raspberry Pi. Install Raspbian OS. Connect the motor driver to the GPIO pins. Connect the motors to the driver. Connect the microphone and speaker. \n\nStep 2: Install Python libraries: SpeechRecognition, PyAudio, RPi.GPIO, and gTTS (Google Text-to-Speech). For offline recognition, you can use Vosk, which supports Swahili. \n\nStep 3: Write a Python script. The script listens for commands: 'forward', 'backward', 'left', 'right', 'stop' in English, and 'mbele', 'nyuma', 'kushoto', 'kulia', 'simama' in Swahili. When a command is recognized, the robot moves accordingly. Use PWM to control speed. \n\nStep 4: Add feedback. When the robot receives a command, it speaks back 'Sawa' (OK) or 'I am moving forward'. Use gTTS to generate speech. \n\nStep 5: Test. Place the robot on a flat surface. Speak clearly. Adjust the microphone sensitivity. If recognition fails, check background noise. Train the recognizer with your voice by adding keywords. \n\nStep 6: Enhance. Add obstacle avoidance using an ultrasonic sensor. If an obstacle is detected, the robot says 'Kizuizi mbele' (Obstacle ahead) and stops. \n\nTroubleshooting: If motors don't move, check wiring and power. If speech recognition is slow, use a lighter model or reduce the vocabulary. For Swahili, use the Vosk small model (50 MB). \n\nSafety: Keep the robot on the floor to avoid falls. Use a battery, not mains power, to prevent shocks. \n\nAssessment: Your robot should correctly respond to at least 8 out of 10 voice commands. Submit a video demonstration. \n\nThis lab gives you hands-on experience with HRI. You can expand it to control a robotic arm or add computer vision. Share your project on the rise AFRICA skills platform for feedback."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is anthropomorphism in social robotics?",
+      "options": ["A) Making robots look like animals", "B) Attributing human-like qualities to robots", "C) Making robots speak only English", "D) Designing robots for industrial use"],
+      "answer": "B",
+      "explanation": "Anthropomorphism means attributing human characteristics to non-human entities like robots."
+    },
+    {
+      "q": "Which African country used robots in COVID-19 treatment centers?",
+      "options": ["A) Nigeria", "B) Kenya", "C) Rwanda", "D) South Africa"],
+      "answer": "C",
+      "explanation": "Rwanda deployed robots in COVID-19 treatment centers to reduce human exposure."
+    },
+    {
+      "q": "What is the 'uncanny valley' effect?",
+      "options": ["A) A valley where robots are tested", "B) Discomfort when a robot looks almost human but not quite", "C) A type of robot sensor", "D) A programming language"],
+      "answer": "B",
+      "explanation": "The uncanny valley is the feeling of unease when a robot appears almost human but not perfectly."
+    },
+    {
+      "q": "Which tool is commonly used for speech recognition on Raspberry Pi?",
+      "options": ["A) SpeechRecognition", "B) OpenCV", "C) MediaPipe", "D) TensorFlow"],
+      "answer": "A",
+      "explanation": "SpeechRecognition is a Python library for speech recognition."
+    },
+    {
+      "q": "What does speech synthesis enable a robot to do?",
+      "options": ["A) Understand spoken commands", "B) Speak", "C) See gestures", "D) Move"],
+      "answer": "B",
+      "explanation": "Speech synthesis is the artificial production of human speech."
+    },
+    {
+      "q": "Which project provides crowdsourced datasets for African languages?",
+      "options": ["A) Common Voice", "B) Google Speech", "C) CMU Sphinx", "D) eSpeak"],
+      "answer": "A",
+      "explanation": "Mozilla's Common Voice project has datasets for many African languages."
+    },
+    {
+      "q": "What is a challenge for speech recognition in Africa?",
+      "options": ["A) Too many microphones", "B) Code-switching", "C) Lack of electricity", "D) Robots are too fast"],
+      "answer": "B",
+      "explanation": "Code-switching, or mixing languages, reduces speech recognition accuracy."
+    },
+    {
+      "q": "Which library is used for gesture recognition with a webcam?",
+      "options": ["A) OpenCV", "B) PyAudio", "C) gTTS", "D) RPi.GPIO"],
+      "answer": "A",
+      "explanation": "OpenCV is a computer vision library used for gesture recognition."
+    },
+    {
+      "q": "Why might emotion recognition models fail on African faces?",
+      "options": ["A) They are trained on Western faces", "B) African faces are too different", "C) Cameras don't work in Africa", "D) Emotions are not expressed"],
+      "answer": "A",
+      "explanation": "Many emotion recognition models are trained on Western datasets and may not generalize well."
+    },
+    {
+      "q": "What gesture might mean 'stop' in a robot command set?",
+      "options": ["A) Thumbs up", "B) Open palm", "C) Wave", "D) Pointing"],
+      "answer": "B",
+      "explanation": "An open palm is commonly used to signal stop."
+    },
+    {
+      "q": "What is a cultural consideration for gesture recognition in Africa?",
+      "options": ["A) Direct eye contact is always polite", "B) Gestures have universal meanings", "C) Some gestures may be offensive", "D) Robots should mimic all gestures"],
+      "answer": "C",
+      "explanation": "Gestures can have different meanings across cultures, so robots must be designed carefully."
+    },
+    {
+      "q": "Which sensor is commonly used for safety in collaborative robots?",
+      "options": ["A) Ultrasonic sensor", "B) Force-torque sensor", "C) Temperature sensor", "D) Light sensor"],
+      "answer": "B",
+      "explanation": "Force-torque sensors detect contact and help robots stop safely."
+    },
+    {
+      "q": "What does ISO/TS 15066 specify?",
+      "options": ["A) Robot speed limits", "B) Safety requirements for collaborative robots", "C) Robot programming languages", "D) Battery standards"],
+      "answer": "B",
+      "explanation": "ISO/TS 15066 provides safety requirements for collaborative robot systems."
+    },
+    {
+      "q": "What is the maximum quasi-static contact force allowed by ISO/TS 15066?",
+      "options": ["A) 80 N", "B) 140 N", "C) 200 N", "D) 50 N"],
+      "answer": "B",
+      "explanation": "The standard sets a limit of 140 N for quasi-static contact."
+    },
+    {
+      "q": "What is a key step in ensuring safety in a collaborative workspace?",
+      "options": ["A) Remove all guards", "B) Conduct risk assessment", "C) Increase robot speed", "D) Ignore human presence"],
+      "answer": "B",
+      "explanation": "Risk assessment identifies hazards and helps implement protective measures."
+    },
+    {
+      "q": "Which country used cobots in a food processing plant to improve safety?",
+      "options": ["A) Nigeria", "B) Kenya", "C) Ghana", "D) Egypt"],
+      "answer": "B",
+      "explanation": "Kenya installed cobots in food processing and reduced accidents."
+    },
+    {
+      "q": "What does teleoperation allow a human to do?",
+      "options": ["A) Control a robot from a distance", "B) Teach a robot to dance", "C) Build a robot without tools", "D) Program a robot in Python"],
+      "answer": "A",
+      "explanation": "Teleoperation means controlling a robot remotely."
+    },
+    {
+      "q": "What is a haptic interface?",
+      "options": ["A) A screen for viewing robot data", "B) A device that provides touch feedback", "C) A type of microphone", "D) A wireless communication protocol"],
+      "answer": "B",
+      "explanation": "Haptic interfaces simulate the sense of touch."
+    },
+    {
+      "q": "What is a common communication protocol for teleoperation over the internet?",
+      "options": ["A) MQTT", "B) HDMI", "C) USB", "D) VGA"],
+      "answer": "A",
+      "explanation": "MQTT is a lightweight messaging protocol suitable for remote control."
+    },
+    {
+      "q": "What is the recommended maximum latency for teleoperation?",
+      "options": ["A) 1 second", "B) 200 ms", "C) 5 seconds", "D) 10 ms"],
+      "answer": "B",
+      "explanation": "Latency should be under 200 ms for responsive control."
+    },
+    {
+      "q": "In which African country was a teleoperated robot used to deliver medicines?",
+      "options": ["A) Nigeria", "B) South Africa", "C) Kenya", "D) Ghana"],
+      "answer": "A",
+      "explanation": "Nigeria used a teleoperated robot in a hospital to reduce infection risk."
+    },
+    {
+      "q": "What is a fail-safe for a teleoperated robot if communication is lost?",
+      "options": ["A) Continue moving", "B) Stop", "C) Speed up", "D) Spin in circles"],
+      "answer": "B",
+      "explanation": "The robot should stop to prevent accidents when communication fails."
+    },
+    {
+      "q": "What is the total cost of materials for the voice-controlled robot lab?",
+      "options": ["A) $50", "B) $90", "C) $200", "D) $500"],
+      "answer": "B",
+      "explanation": "The listed materials total approximately $90."
+    },
+    {
+      "q": "Which Python library is used for text-to-speech in the lab?",
+      "options": ["A) gTTS", "B) SpeechRecognition", "C) PyAudio", "D) OpenCV"],
+      "answer": "A",
+      "explanation": "gTTS (Google Text-to-Speech) converts text to speech."
+    },
+    {
+      "q": "What Swahili command means 'stop'?",
+      "options": ["A) Simama", "B) Mbele", "C) Nyuma", "D) Kushoto"],
+      "answer": "A",
+      "explanation": "'Simama' means stop in Swahili."
+    },
+    {
+      "q": "What does the robot say when it detects an obstacle?",
+      "options": ["A) 'Sawa'", "B) 'Kizuizi mbele'", "C) 'Karibu'", "D) 'Asante'"],
+      "answer": "B",
+      "explanation": "'Kizuizi mbele' means 'obstacle ahead' in Swahili."
+    },
+    {
+      "q": "Why should the robot be powered by a battery in the lab?",
+      "options": ["A) To prevent shocks", "B) To make it faster", "C) To reduce cost", "D) To improve speech recognition"],
+      "answer": "A",
+      "explanation": "Using a battery avoids mains voltage and reduces shock risk."
+    },
+    {
+      "q": "What is the assessment for the lab?",
+      "options": ["A) Write a report", "B) Correctly respond to 8 out of 10 voice commands", "C) Build a robot from scratch", "D) Pass a written exam"],
+      "answer": "B",
+      "explanation": "The lab requires the robot to respond correctly to at least 8 of 10 commands."
+    },
+    {
+      "q": "Which library is used for offline speech recognition in Swahili?",
+      "options": ["A) Vosk", "B) gTTS", "C) PyAudio", "D) RPi.GPIO"],
+      "answer": "A",
+      "explanation": "Vosk supports offline speech recognition in multiple languages including Swahili."
+    },
+    {
+      "q": "What is a benefit of adding obstacle avoidance to the voice-controlled robot?",
+      "options": ["A) It makes the robot cheaper", "B) It prevents collisions", "C) It improves speech recognition", "D) It reduces power consumption"],
+      "answer": "B",
+      "explanation": "Obstacle avoidance prevents the robot from hitting objects, improving safety."
+    }
+  ],
+  "videos": [
+    "social robot Africa",
+    "speech recognition Raspberry Pi Swahili",
+    "collaborative robot safety Africa"
+  ]
+}

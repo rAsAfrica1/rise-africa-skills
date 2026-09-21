@@ -1,0 +1,218 @@
+﻿{
+  "course": "Cold Storage",
+  "module_number": 5,
+  "module_title": "Control Systems and Monitoring",
+  "lessons": [
+    {
+      "title": "Thermostats and Sensors",
+      "body": "A thermostat is the brain of your cold room. It reads temperature and switches the compressor on or off. In Africa, power can be unstable, so choose a thermostat that works with 220V and has a wide voltage range. The most common types are mechanical (like a dial) and digital (like the Dixell XR series or Elitech STC-8080). Digital ones are more accurate and let you set a differentialâthe gap between cut-in and cut-out temperatures. For example, if you want to hold 4Â°C, set cut-out at 3Â°C and cut-in at 5Â°C. That 2Â°C differential prevents the compressor from short-cycling.\n\nSensors are the eyes. The most common are NTC thermistors (10kÎ© at 25Â°C) and PT100. NTC is cheap and good enough for most cold rooms. PT100 is more accurate for vaccines or pharmaceuticals. Place the sensor where it measures the air returning to the evaporator, not near the door or fan. Use a stainless steel probe with a waterproof cable. In dusty or humid areas, protect the cable with conduit. Calibrate sensors every 6 months with an ice bath: 0Â°C in crushed ice and water. If the reading is off by more than 0.5Â°C, replace the sensor.\n\nWiring matters. Use shielded cable for sensor wires to avoid interference from compressors. Keep sensor wires away from power cables. For a typical 3m x 3m cold room, one sensor in the return air is enough. For larger rooms, use two or three sensors and average them. If you use a thermostat with a defrost timer, set defrost cycles to 2-4 times a day, depending on humidity. In coastal areas like Mombasa or Lagos, humidity is high, so you might need 4 defrosts per day. Always install a backup thermostat or a high-temperature alarm to protect your stock.\n\nTesting: Use a calibrated thermometer to check the thermostat reading. Put the thermometer next to the sensor for 10 minutes. If they differ by more than 1Â°C, adjust the thermostat offset. For digital thermostats, there is usually a parameter for calibration. Keep a logbook of temperatures twice a day. This simple habit catches problems early."
+    },
+    {
+      "title": "Programmable Logic Controllers (PLCs)",
+      "body": "A PLC is a rugged computer that controls machines. In cold storage, it can manage compressors, fans, defrost, lights, and alarms. Unlike a simple thermostat, a PLC can handle many inputs and outputs. For example, a small PLC like the Siemens S7-1200 or Allen-Bradley Micro810 can control a whole cold room. In Africa, you can find used PLCs in industrial areas or order from suppliers in South Africa, Kenya, or Nigeria. They run on 24V DC or 220V AC. Always use a surge protector because power spikes are common.\n\nPLC programming uses ladder logicâa visual language that looks like electrical relays. You can learn the basics online for free. A simple program: if temperature sensor reads above 5Â°C, turn on compressor; if below 3Â°C, turn off. Add a delay to prevent rapid cycling. For defrost, use a timer: every 6 hours, turn off compressor and turn on defrost heater for 15 minutes, then wait 5 minutes before restarting compressor. PLCs can also monitor door switches: if door open for more than 5 minutes, sound an alarm.\n\nInputs are sensors (temperature, pressure, door switches) and outputs are relays that switch contactors for motors, heaters, and alarms. Use a 24V DC power supply for sensors and PLC logic. For outputs, use relays rated for the loadâcompressors need a contactor, not direct PLC output. Wiring: keep high-voltage wires separate from low-voltage signal wires. Use ferrules on wire ends for secure connections. Label every wire. In dusty environments, put the PLC in an IP65 enclosure.\n\nMaintenance: Check backup battery every year. Clean the PLC fan and vents. Keep a copy of the program on a USB stick. If the PLC fails, you can replace it and reload the program. For small cold rooms, a PLC might be overkillâa thermostat and defrost timer are cheaper. But for multi-compressor systems or blast freezers, a PLC pays for itself by reducing energy waste and preventing breakdowns. Training: many technical colleges in Africa offer short courses on PLCs. Start with ladder logic and basic wiring."
+    },
+    {
+      "title": "Building Management Systems (BMS)",
+      "body": "A Building Management System (BMS) is a computer-based system that monitors and controls all building servicesâHVAC, cold rooms, lighting, and securityâfrom one screen. In cold storage, a BMS lets you see temperatures, compressor status, and energy use across multiple rooms. It uses sensors, controllers, and a network. Popular BMS brands include Honeywell, Johnson Controls, and Schneider Electric. In Africa, BMS is common in large warehouses, supermarkets, and pharmaceutical stores. For a small business, a simple BMS can be built with a Raspberry Pi and open-source software like OpenHAB or Home Assistant.\n\nHow it works: Sensors send data to controllers (like PLCs or dedicated BMS controllers). The controllers communicate over a network (usually Modbus, BACnet, or Ethernet) to a central computer. The computer runs software that displays trends, sends alarms, and logs data. You can access it remotely via internet. For example, a BMS can alert you by SMS if a cold room temperature rises above 8Â°C. It can also start a backup generator if power fails.\n\nInstallation: Start with a small system. Use Modbus RTU over RS-485 for sensorsâit's cheap and reliable. Connect your existing thermostats if they have communication ports. For new installations, use sensors with Modbus output. Set up a local network with a router. The BMS computer should be on a UPS. In areas with frequent power cuts, use a 12V battery backup. The BMS software can be configured to send email or SMS alerts using a GSM modem.\n\nBenefits: You can monitor multiple sites from your phone. You can schedule defrost and compressor run times to match off-peak electricity tariffs. You can generate reports on energy consumption. For compliance, you can log temperatures for audits. Maintenance: Keep the computer updated, check network cables, and calibrate sensors yearly. Training: learn basic networking and Modbus. Many online tutorials are available. For African conditions, choose equipment that handles voltage fluctuations and dust. A BMS is an investment, but it reduces labor and spoilage."
+    },
+    {
+      "title": "Remote Monitoring and Alarms",
+      "body": "Remote monitoring lets you check your cold room from anywhere using your phone or computer. In Africa, where power and internet can be unreliable, you need a system that works with GSM (cell phone network) and battery backup. The simplest solution is a GSM temperature alarm. Devices like the Elitech RC-5 or Sensaphone 1800 can call or text you if temperature goes out of range. They use a SIM card and run on 12V DC with a rechargeable battery. Cost: about $100-$200. Installation: mount the unit outside the cold room, connect the sensor inside, and plug into power. Set high and low limitsâfor example, high 8Â°C, low 0Â°C. When triggered, it sends SMS to up to 5 numbers.\n\nFor more advanced monitoring, use a Wi-Fi or Ethernet module like the ESP8266 with a temperature sensor. You can program it to send data to a free cloud service like ThingSpeak or Blynk. Then you can see graphs on your phone. If internet is down, the device can store data locally and upload when back online. For areas without internet, use GSM. A Raspberry Pi with a GSM hat can do the same. You can also set up a local alarm siren and flashing light.\n\nAlarms should be loud enough to hear over machinery. Use a 110dB siren. For night monitoring, connect the alarm to a auto-dialer that calls your phone. Test the system monthly. Change backup batteries every 2 years. In dusty areas, clean sensors and alarm covers. If you have multiple cold rooms, use a central alarm panel that shows which room is in alarm.\n\nPower backup: Use a small UPS for the monitoring device. A 12V 7Ah battery can run a GSM alarm for 24 hours. For longer outages, use a solar panel with charge controller. In sunny Africa, a 20W solar panel is enough. Remote monitoring reduces spoilage by catching problems early. For example, if a compressor fails at night, you get an SMS and can call a technician. Without it, you might lose thousands of dollars of produce. Keep a log of all alarms and responses."
+    },
+    {
+      "title": "Data Logging and Analysis",
+      "body": "Data logging means recording temperature, humidity, and other conditions over time. It helps you prove compliance, spot trends, and save energy. In Africa, many cold rooms use paper logs, but digital loggers are better. A simple USB temperature logger like the Elitech RC-5 costs about $30. It records every 10 minutes and stores up to 32,000 points. You plug it into a computer to download data. For real-time logging, use a device with a display and SD card, like the Extech SD800. It logs to Excel format.\n\nWhat to log: Air temperature (return and supply), product temperature (with a probe), door openings, compressor run time, and defrost cycles. For vaccines, log temperature every 5 minutes. For food, every 15 minutes is enough. Place loggers in the warmest and coldest spots. In a cold room, the warmest spot is near the door, the coldest near the evaporator. Use at least two loggers. For humidity, use a capacitive sensor like the DHT22. Humidity should be 85-95% for most produce.\n\nAnalysis: Download data weekly. Look for patterns: Does temperature rise after defrost? Does it spike when door opens? Are there long compressor run times? If temperature fluctuates more than 2Â°C, adjust thermostat differential or check for air leaks. If compressor runs constantly, the room might be overloaded or the condenser dirty. Use Excel to make graphs. Calculate average temperature, minimum, maximum, and standard deviation. For energy, log compressor current with a CT sensor. Compare energy use per day. A sudden increase means a problem.\n\nRecord keeping: Save data for at least 2 years. For food safety audits, you need records. In Kenya, the Kenya Bureau of Standards requires temperature logs for meat and dairy. Use a simple notebook to note any alarms or maintenance. Backup digital data to a USB drive or cloud. Train staff to check loggers daily. If a logger fails, replace battery or unit. Data logging is cheap insurance against spoilage and fines."
+    },
+    {
+      "title": "Energy Management Systems",
+      "body": "Energy is a major cost in cold storage. In Africa, electricity prices are high and power is often unreliable. An Energy Management System (EMS) helps you reduce consumption and costs. The simplest EMS is a power meter that shows how much electricity your cold room uses. You can buy a clamp meter like the Fluke 305 for $150 and measure current on the main cable. Multiply by voltage to get watts. For continuous monitoring, install a kWh meter like the Schneider iEM3255. It logs energy use and can send data to a computer.\n\nKey strategies: 1) Shift compressor run time to off-peak hours. If your utility has time-of-use tariffs, run the cold room colder at night (e.g., -2Â°C instead of 2Â°C) and let it drift up during peak. This uses cheaper electricity. 2) Maintain condensers. Dirty condensers increase energy use by 20%. Clean them monthly. 3) Use variable speed drives (VSDs) on compressors and fans. A VSD can cut energy by 30% by matching speed to load. 4) Insulate pipes and doors. Add door curtains or strip curtains. 5) Use LED lights inside cold rooms. They produce less heat. 6) Install a solar system. A 3kW solar array with batteries can run a small cold room. In sunny areas, payback is 3-5 years.\n\nMonitoring: Use a BMS or PLC to track energy. Set alarms for abnormal consumption. For example, if energy use increases by 15% in a day, check for a fault. Log energy daily. Calculate your energy per kg of product stored. Compare month to month. If you store 10 tons and use 1000 kWh per month, that's 100 kWh per ton. Try to reduce it. \n\nMaintenance: Check compressor contacts, tighten electrical connections, and clean filters. Use a thermal camera to find hot spots. In dusty environments, clean condenser coils every two weeks. Train staff to turn off lights and close doors. An EMS is not just technologyâit's a habit. Start with a simple energy log. After one month, you will see where you can save. Many African utilities offer rebates for energy-efficient equipment. Check with your local power company."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is the main function of a thermostat in a cold room?",
+      "options": ["A) To measure humidity", "B) To control compressor on/off based on temperature", "C) To log data", "D) To provide backup power"],
+      "answer": "B",
+      "explanation": "Thermostats switch the compressor to maintain set temperature."
+    },
+    {
+      "q": "Which sensor type is most common for cold room temperature measurement?",
+      "options": ["A) PT100", "B) NTC thermistor", "C) Thermocouple", "D) Infrared"],
+      "answer": "B",
+      "explanation": "NTC thermistors are cheap and accurate enough for most cold rooms."
+    },
+    {
+      "q": "What is the recommended differential setting for a cold room thermostat?",
+      "options": ["A) 0.5Â°C", "B) 2Â°C", "C) 5Â°C", "D) 10Â°C"],
+      "answer": "B",
+      "explanation": "A 2Â°C differential prevents short-cycling of the compressor."
+    },
+    {
+      "q": "How often should you calibrate temperature sensors?",
+      "options": ["A) Every week", "B) Every month", "C) Every 6 months", "D) Every 5 years"],
+      "answer": "C",
+      "explanation": "Calibration every 6 months ensures accuracy."
+    },
+    {
+      "q": "What is the ice bath method used for?",
+      "options": ["A) Cleaning sensors", "B) Calibrating sensors at 0Â°C", "C) Testing compressor", "D) Measuring humidity"],
+      "answer": "B",
+      "explanation": "Ice bath provides a known 0Â°C reference for calibration."
+    },
+    {
+      "q": "What does PLC stand for?",
+      "options": ["A) Power Line Control", "B) Programmable Logic Controller", "C) Pressure Level Control", "D) Personal Logic Computer"],
+      "answer": "B",
+      "explanation": "PLC is a programmable logic controller used for automation."
+    },
+    {
+      "q": "Which programming language is commonly used for PLCs?",
+      "options": ["A) Python", "B) Ladder logic", "C) Java", "D) HTML"],
+      "answer": "B",
+      "explanation": "Ladder logic is the most common PLC programming language."
+    },
+    {
+      "q": "What is a typical input to a PLC in cold storage?",
+      "options": ["A) Compressor contactor", "B) Temperature sensor", "C) Alarm siren", "D) Defrost heater"],
+      "answer": "B",
+      "explanation": "Temperature sensors provide input signals to the PLC."
+    },
+    {
+      "q": "Why should PLC outputs use relays?",
+      "options": ["A) To increase voltage", "B) To isolate high-voltage loads from the PLC", "C) To reduce cost", "D) To improve speed"],
+      "answer": "B",
+      "explanation": "Relays protect the PLC from high currents and voltages."
+    },
+    {
+      "q": "What is a common communication protocol for PLCs and BMS?",
+      "options": ["A) USB", "B) Modbus", "C) HDMI", "D) Bluetooth"],
+      "answer": "B",
+      "explanation": "Modbus is widely used in industrial control systems."
+    },
+    {
+      "q": "What does BMS stand for?",
+      "options": ["A) Building Management System", "B) Basic Monitoring System", "C) Binary Management System", "D) Backup Management System"],
+      "answer": "A",
+      "explanation": "BMS stands for Building Management System."
+    },
+    {
+      "q": "What is a key benefit of a BMS in cold storage?",
+      "options": ["A) Increases compressor speed", "B) Central monitoring and control of multiple rooms", "C) Replaces all sensors", "D) Eliminates need for power"],
+      "answer": "B",
+      "explanation": "BMS allows centralized monitoring and control."
+    },
+    {
+      "q": "Which network is commonly used for BMS sensors?",
+      "options": ["A) RS-485", "B) HDMI", "C) USB", "D) VGA"],
+      "answer": "A",
+      "explanation": "RS-485 is a robust network for industrial sensors."
+    },
+    {
+      "q": "What is a typical BMS alert method?",
+      "options": ["A) Fax", "B) SMS", "C) Morse code", "D) Radio"],
+      "answer": "B",
+      "explanation": "SMS alerts are common for remote monitoring."
+    },
+    {
+      "q": "Why is a UPS important for a BMS computer?",
+      "options": ["A) To increase speed", "B) To provide backup power during outages", "C) To cool the computer", "D) To connect to internet"],
+      "answer": "B",
+      "explanation": "UPS keeps the BMS running during power cuts."
+    },
+    {
+      "q": "What is the simplest remote monitoring device for a cold room?",
+      "options": ["A) GSM temperature alarm", "B) PLC", "C) BMS", "D) Data logger"],
+      "answer": "A",
+      "explanation": "GSM alarms are simple and work without internet."
+    },
+    {
+      "q": "What should you set for a high-temperature alarm in a cold room storing produce at 4Â°C?",
+      "options": ["A) 2Â°C", "B) 4Â°C", "C) 8Â°C", "D) 12Â°C"],
+      "answer": "C",
+      "explanation": "8Â°C is a typical high alarm limit for 4Â°C storage."
+    },
+    {
+      "q": "How often should you test your remote alarm system?",
+      "options": ["A) Daily", "B) Monthly", "C) Yearly", "D) Never"],
+      "answer": "B",
+      "explanation": "Monthly testing ensures the alarm works when needed."
+    },
+    {
+      "q": "What is a good backup power source for a GSM alarm in sunny Africa?",
+      "options": ["A) Diesel generator", "B) Solar panel with battery", "C) Wind turbine", "D) Main grid only"],
+      "answer": "B",
+      "explanation": "Solar with battery is reliable and cost-effective."
+    },
+    {
+      "q": "What does a data logger record?",
+      "options": ["A) Only temperature", "B) Temperature and other conditions over time", "C) Only humidity", "D) Only power"],
+      "answer": "B",
+      "explanation": "Data loggers record multiple parameters over time."
+    },
+    {
+      "q": "How often should you log temperature for vaccines?",
+      "options": ["A) Every hour", "B) Every 5 minutes", "C) Every day", "D) Every week"],
+      "answer": "B",
+      "explanation": "Vaccines require frequent logging for safety."
+    },
+    {
+      "q": "Where should you place a data logger in a cold room?",
+      "options": ["A) Near the door", "B) Near the evaporator", "C) In both warmest and coldest spots", "D) Outside the room"],
+      "answer": "C",
+      "explanation": "Placing loggers in extreme spots gives a complete picture."
+    },
+    {
+      "q": "What does a sudden increase in compressor run time indicate?",
+      "options": ["A) Good efficiency", "B) A problem like dirty condenser or air leak", "C) Normal operation", "D) Low humidity"],
+      "answer": "B",
+      "explanation": "Increased run time often signals a fault or inefficiency."
+    },
+    {
+      "q": "How long should you keep temperature logs for food safety?",
+      "options": ["A) 1 month", "B) 6 months", "C) 2 years", "D) 10 years"],
+      "answer": "C",
+      "explanation": "Most regulations require at least 2 years of records."
+    },
+    {
+      "q": "What is an Energy Management System (EMS) used for?",
+      "options": ["A) To increase energy consumption", "B) To monitor and reduce energy use", "C) To replace compressors", "D) To measure humidity"],
+      "answer": "B",
+      "explanation": "EMS helps track and optimize energy consumption."
+    },
+    {
+      "q": "What is a simple tool to measure energy use of a cold room?",
+      "options": ["A) Thermometer", "B) Clamp meter", "C) Hygrometer", "D) Anemometer"],
+      "answer": "B",
+      "explanation": "Clamp meter measures current, which can be used to calculate power."
+    },
+    {
+      "q": "Which strategy saves energy by using cheaper off-peak electricity?",
+      "options": ["A) Running compressor during peak", "B) Shifting compressor run time to off-peak", "C) Turning off compressor at night", "D) Using more defrost cycles"],
+      "answer": "B",
+      "explanation": "Off-peak operation reduces electricity costs."
+    },
+    {
+      "q": "How much can dirty condensers increase energy use?",
+      "options": ["A) 5%", "B) 10%", "C) 20%", "D) 50%"],
+      "answer": "C",
+      "explanation": "Dirty condensers can increase energy use by about 20%."
+    },
+    {
+      "q": "What is a benefit of using VSDs on compressors?",
+      "options": ["A) Increase energy use", "B) Reduce energy use by matching speed to load", "C) Increase noise", "D) Reduce lifespan"],
+      "answer": "B",
+      "explanation": "VSDs adjust motor speed to load, saving energy."
+    },
+    {
+      "q": "What is a good maintenance practice for energy efficiency?",
+      "options": ["A) Ignore door seals", "B) Clean condenser coils monthly", "C) Use incandescent lights", "D) Run compressor continuously"],
+      "answer": "B",
+      "explanation": "Clean condenser coils improve heat transfer and reduce energy."
+    }
+  ],
+  "videos": [
+    "how to wire a cold room thermostat",
+    "PLC ladder logic for cold storage",
+    "GSM temperature alarm setup"
+  ]
+}

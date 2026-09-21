@@ -1,0 +1,218 @@
+﻿{
+  "course": "AI Fundamentals",
+  "module_number": 2,
+  "module_title": "Mathematical Foundations for AI",
+  "lessons": [
+    {
+      "title": "Linear Algebra: Vectors and Matrices",
+      "body": "Imagine you run a small shop in Accra and want to predict sales. You have data: daily temperature, rainfall, day of week. Each day's data can be written as a list of numbers, like [32, 0, 3] for 32Â°C, no rain, Wednesday. That list is a vector. A vector is just an ordered list of numbers. In AI, we use vectors to represent everything: a customer's age, income, and purchase history; a photo's pixel values; a word's meaning. For example, a customer profile might be [25, 5000, 2] meaning age 25, income 5000 Ghana cedis, 2 previous purchases.\n\nWhen you have many such vectors, you stack them into a matrix. A matrix is a rectangular grid of numbers. If you have 100 customers and 3 features each, you get a 100x3 matrix. You can think of it as a table. In Python, using the NumPy library, you can create a matrix like this: `import numpy as np; data = np.array([[25, 5000, 2], [30, 7000, 1], ...])`. NumPy is free and runs on any laptop.\n\nWhy do we care? Because AI models learn patterns by doing math on these matrices. For instance, to find the average customer, you can compute the mean of each column. To find how similar two customers are, you can compute the dot product of their vectors. The dot product multiplies corresponding numbers and sums them: [1,2,3] dot [4,5,6] = 1*4 + 2*5 + 3*6 = 32. A higher dot product means more similarity.\n\nIn Africa, you can use this to analyze mobile money transactions. Each transaction is a vector: [amount, hour, sender_age, receiver_age]. Stack thousands into a matrix and you can detect fraud by looking for outliers. Tools like Google Colab (free) let you run Python code in the cloud, no powerful computer needed. Start by loading a CSV of your business data with pandas, convert to NumPy arrays, and compute basic statistics. This is the first step to building any AI model."
+    },
+    {
+      "title": "Matrix Operations and Transformations",
+      "body": "Once you have data in a matrix, you need to do operations on it. The most common are addition, multiplication, and transposition. Addition is simple: add corresponding elements. But multiplication is where the power lies. To multiply two matrices, you take the dot product of rows of the first with columns of the second. For example, if you have a 2x3 matrix A and a 3x2 matrix B, the result is 2x2. In Python with NumPy: `C = np.dot(A, B)` or `C = A @ B`. This is used everywhere in AI.\n\nConsider a practical case: You run a maize farm in Kenya and want to predict yield based on rainfall and fertilizer. You have historical data: for each season, rainfall (mm) and fertilizer (kg) as a 1x2 vector. You also have weights that tell you how much each factor contributes to yield. Multiplying the input vector by a weight matrix gives you a predicted yield. This is exactly what a neural network does: it multiplies inputs by weights, adds a bias, and applies a function.\n\nAnother key operation is transposition, which flips rows and columns. If you have a matrix of customer features (rows=customers, columns=features), transposing gives features as rows. This is useful for certain calculations. Also, matrix inversion solves systems of equations, like finding the best-fit line in linear regression. But inversion is computationally heavy; for large matrices, we use iterative methods.\n\nIn Africa, you can apply these operations to optimize transportation routes. For example, a delivery company in Lagos has a matrix of distances between 10 hubs. By multiplying this distance matrix with a vector of package volumes, you can estimate fuel costs. Tools like NumPy and pandas make this easy. Even on a smartphone, you can run Python via Termux or Pydroid. Start by practicing with small matrices: create a 3x3 matrix of your monthly expenses, multiply by a vector of inflation rates, and see the impact. This hands-on approach builds intuition."
+    },
+    {
+      "title": "Probability Basics for AI",
+      "body": "Probability is the language of uncertainty. In AI, we rarely know things for sure. For example, a mobile money fraud detector doesn't know if a transaction is fraudulent; it assigns a probability, like 0.85. Probability is a number between 0 and 1, where 0 means impossible and 1 means certain. You calculate it by counting outcomes. If you flip a fair coin, probability of heads is 0.5. In business, if 20 out of 100 customers default on a loan, the probability of default is 0.2.\n\nThere are two key rules: the sum rule and the product rule. The sum rule says the probability of either of two mutually exclusive events is the sum of their probabilities. For example, if probability of rain tomorrow is 0.3 and probability of no rain is 0.7, they sum to 1. The product rule says the probability of two independent events both happening is the product. If probability of a customer buying is 0.4 and probability of them paying on time is 0.9, then both is 0.4*0.9=0.36.\n\nConditional probability is crucial: P(A|B) is the probability of A given B. For instance, P(fraud | transaction amount > 1000) might be higher. Bayes' theorem lets you update probabilities with new evidence: P(A|B) = P(B|A)*P(A)/P(B). This is used in spam filters and medical diagnosis. In Africa, you can use Bayes to diagnose crop diseases from leaf images: start with prior probability of disease, then update based on symptoms.\n\nIn practice, you'll use Python's `scipy.stats` or `numpy.random` to simulate probabilities. For example, simulate 1000 days of sales with a 30% chance of high demand: `np.random.choice([0,1], size=1000, p=[0.7,0.3])`. This helps you understand risk. For a small business, you can calculate the probability of running out of stock given average demand and variability. Start by listing possible outcomes and counting frequencies from your own sales data. This builds a foundation for more advanced AI like Bayesian networks."
+    },
+    {
+      "title": "Statistics: Descriptive and Inferential",
+      "body": "Statistics helps you summarize data and make decisions. Descriptive statistics describe your data: mean (average), median (middle value), mode (most frequent), and standard deviation (spread). For example, if your daily sales in a week are [100, 150, 200, 120, 180, 90, 160] Ghana cedis, the mean is 142.86, median is 150, and standard deviation is about 38.5. These tell you typical sales and how much they vary. In Python, use `np.mean(sales)`, `np.median(sales)`, `np.std(sales)`.\n\nInferential statistics goes further: it uses a sample to make conclusions about a larger population. For instance, you survey 100 customers in Nairobi and find 60% prefer mobile money. You can infer that between 50% and 70% of all customers prefer it, with 95% confidence. This is a confidence interval. Hypothesis testing checks if a difference is real. If you test a new fertilizer on 20 plots and get 10% higher yield, a t-test tells you if that's likely due to chance.\n\nIn AI, we use statistics to evaluate models. For example, after training a model to predict loan defaults, you calculate accuracy, precision, and recall on a test set. Precision is the fraction of predicted defaults that are correct. Recall is the fraction of actual defaults you caught. These are descriptive statistics of model performance. Inferential statistics help you decide if your model is significantly better than a simple rule.\n\nFor African entrepreneurs, statistics can answer questions like: Is there a significant difference in sales between weekdays and weekends? Use a t-test. Or: What is the correlation between rainfall and crop yield? Use Pearson correlation. Tools like Python's `scipy.stats` and `statsmodels` make this easy. Even Excel can do basic statistics. Start by collecting data on your business, compute mean and standard deviation, and plot a histogram. This will give you insights to make data-driven decisions."
+    },
+    {
+      "title": "Calculus: Derivatives and Gradients",
+      "body": "Calculus is about change. In AI, we need to know how changing a model's parameters affects its error. That's where derivatives come in. A derivative measures how much a function changes when its input changes slightly. For example, if profit P depends on price x, the derivative dP/dx tells you how profit changes if you increase price by 1 unit. If dP/dx is positive, increasing price increases profit; if negative, it decreases.\n\nIn AI, we have many parameters, so we use gradients. A gradient is a vector of partial derivatives, one for each parameter. If you have a model with weights w1, w2, and a loss function L, the gradient is [âL/âw1, âL/âw2]. It points in the direction of steepest increase of L. To minimize loss, we move in the opposite direction: w_new = w_old - learning_rate * gradient. This is gradient descent.\n\nConsider a simple linear model: predicted sales = w * advertising_spend. You have data: spend 100, sales 500; spend 200, sales 800. You want to find w that minimizes error. The loss is mean squared error: L = (1/n) * sum((actual - w*spend)^2). The derivative dL/dw = (1/n) * sum(-2*spend*(actual - w*spend)). You can compute this in Python and update w iteratively. Start with w=0, learning rate=0.001, and after many steps, w converges to about 3.5 (since 500/100=5, 800/200=4, average ~4.5, but with more data it adjusts).\n\nIn Africa, you can use this to optimize pricing for a kiosk. If you know how demand changes with price (derivative), you can set price to maximize profit. Tools like Python's `sympy` for symbolic derivatives or `autograd` for automatic differentiation make it easy. Even without coding, you can approximate derivatives by calculating change in output over change in input. Practice with small datasets: compute gradient of loss for a linear model by hand, then code it. This understanding is the backbone of training neural networks."
+    },
+    {
+      "title": "Optimization: Gradient Descent",
+      "body": "Gradient descent is the workhorse of AI. It's an algorithm to find the minimum of a function. Imagine you're on a hilly landscape in the Rift Valley, blindfolded, and want to reach the lowest point. You feel the slope under your feet and take a step downhill. Repeat until you reach a flat area. In AI, the landscape is the loss function, and the slope is the gradient. You update parameters in the opposite direction of the gradient.\n\nThe key parameters are the learning rate (step size) and the number of iterations. If the learning rate is too small, you take forever; too large, you might overshoot and never converge. A common starting point is 0.01 or 0.001. You also need to decide when to stop: when the gradient is near zero or after a fixed number of steps. In practice, you use stochastic gradient descent (SGD) or mini-batch gradient descent, where you compute the gradient on a subset of data to speed up.\n\nLet's apply this to a real problem: predicting maize yield from rainfall. You have 100 data points. Model: yield = w * rainfall + b. Loss = mean squared error. Initialize w=0, b=0. Compute gradients: âL/âw = average(-2*rainfall*(yield - (w*rainfall+b))), âL/âb = average(-2*(yield - (w*rainfall+b))). Update: w = w - lr * âL/âw, b = b - lr * âL/âb. Repeat 1000 times with lr=0.0001. You'll see w and b converge. In Python, you can code this in 20 lines using NumPy. Libraries like TensorFlow and PyTorch automate this, but understanding the math helps you debug.\n\nIn Africa, you can use gradient descent to optimize supply chain costs. For example, minimize total cost = holding cost + ordering cost + transport cost by adjusting order quantities. Or optimize a mobile money agent's cash balance to minimize shortages. Start with simple linear regression on your business data. Use Google Colab to run the code. Plot the loss over iterations to see it decrease. This hands-on practice will demystify AI training."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is a vector in linear algebra?",
+      "options": ["A) A single number", "B) An ordered list of numbers", "C) A rectangular grid of numbers", "D) A mathematical operation"],
+      "answer": "B",
+      "explanation": "A vector is an ordered list of numbers, like [1,2,3], used to represent data points."
+    },
+    {
+      "q": "In Python, which library is commonly used for matrix operations?",
+      "options": ["A) Matplotlib", "B) NumPy", "C) Pandas", "D) Scikit-learn"],
+      "answer": "B",
+      "explanation": "NumPy provides efficient array and matrix operations, essential for linear algebra."
+    },
+    {
+      "q": "What does the dot product of two vectors measure?",
+      "options": ["A) Their difference", "B) Their similarity", "C) Their sum", "D) Their product"],
+      "answer": "B",
+      "explanation": "The dot product multiplies corresponding elements and sums them; a higher value indicates greater similarity."
+    },
+    {
+      "q": "If you have a matrix of 100 customers and 3 features, what is its shape?",
+      "options": ["A) 3x100", "B) 100x3", "C) 100x100", "D) 3x3"],
+      "answer": "B",
+      "explanation": "The matrix has 100 rows (customers) and 3 columns (features), so shape is 100x3."
+    },
+    {
+      "q": "What is the result of multiplying a 2x3 matrix by a 3x2 matrix?",
+      "options": ["A) 2x2", "B) 3x3", "C) 2x3", "D) 3x2"],
+      "answer": "A",
+      "explanation": "Matrix multiplication of (m x n) and (n x p) yields (m x p); here 2x3 and 3x2 gives 2x2."
+    },
+    {
+      "q": "What does transposing a matrix do?",
+      "options": ["A) Adds a constant", "B) Flips rows and columns", "C) Multiplies by itself", "D) Inverts it"],
+      "answer": "B",
+      "explanation": "Transposition swaps rows and columns, so element (i,j) becomes (j,i)."
+    },
+    {
+      "q": "In a neural network, what operation is used to combine inputs with weights?",
+      "options": ["A) Addition", "B) Matrix multiplication", "C) Subtraction", "D) Division"],
+      "answer": "B",
+      "explanation": "Matrix multiplication is used to compute weighted sums of inputs in neural networks."
+    },
+    {
+      "q": "What is the probability of an event that is certain?",
+      "options": ["A) 0", "B) 0.5", "C) 1", "D) 100"],
+      "answer": "C",
+      "explanation": "Probability ranges from 0 to 1, with 1 indicating certainty."
+    },
+    {
+      "q": "If P(A)=0.3 and P(B)=0.4, and A and B are mutually exclusive, what is P(A or B)?",
+      "options": ["A) 0.12", "B) 0.7", "C) 0.1", "D) 0.5"],
+      "answer": "B",
+      "explanation": "For mutually exclusive events, P(A or B) = P(A) + P(B) = 0.3 + 0.4 = 0.7."
+    },
+    {
+      "q": "What does conditional probability P(A|B) represent?",
+      "options": ["A) Probability of A and B", "B) Probability of A given B", "C) Probability of B given A", "D) Probability of A or B"],
+      "answer": "B",
+      "explanation": "P(A|B) is the probability of event A occurring given that event B has occurred."
+    },
+    {
+      "q": "Which theorem allows updating probabilities with new evidence?",
+      "options": ["A) Pythagorean theorem", "B) Bayes' theorem", "C) Central limit theorem", "D) Binomial theorem"],
+      "answer": "B",
+      "explanation": "Bayes' theorem updates the probability of a hypothesis based on new evidence."
+    },
+    {
+      "q": "What is the mean of the data set [2, 4, 6, 8]?",
+      "options": ["A) 4", "B) 5", "C) 6", "D) 20"],
+      "answer": "B",
+      "explanation": "Mean = (2+4+6+8)/4 = 20/4 = 5."
+    },
+    {
+      "q": "Which measure of central tendency is most affected by outliers?",
+      "options": ["A) Mean", "B) Median", "C) Mode", "D) Range"],
+      "answer": "A",
+      "explanation": "The mean is sensitive to extreme values, while median and mode are more robust."
+    },
+    {
+      "q": "What does standard deviation measure?",
+      "options": ["A) Central tendency", "B) Spread of data", "C) Skewness", "D) Correlation"],
+      "answer": "B",
+      "explanation": "Standard deviation quantifies the amount of variation or dispersion in a set of data."
+    },
+    {
+      "q": "In inferential statistics, what is a confidence interval?",
+      "options": ["A) A range of values likely to contain the population parameter", "B) The exact value of a parameter", "C) A measure of correlation", "D) The probability of an event"],
+      "answer": "A",
+      "explanation": "A confidence interval gives a range of plausible values for an unknown population parameter."
+    },
+    {
+      "q": "What does a t-test help determine?",
+      "options": ["A) Correlation", "B) If a difference is statistically significant", "C) Mean of a sample", "D) Standard deviation"],
+      "answer": "B",
+      "explanation": "A t-test assesses whether the means of two groups are statistically different from each other."
+    },
+    {
+      "q": "What is a derivative?",
+      "options": ["A) The area under a curve", "B) The rate of change of a function", "C) The maximum of a function", "D) The sum of a series"],
+      "answer": "B",
+      "explanation": "A derivative measures how a function changes as its input changes."
+    },
+    {
+      "q": "What does a gradient vector represent?",
+      "options": ["A) The direction of steepest ascent", "B) The direction of steepest descent", "C) The minimum of a function", "D) The maximum of a function"],
+      "answer": "A",
+      "explanation": "The gradient points in the direction of the greatest rate of increase of the function."
+    },
+    {
+      "q": "In gradient descent, how do you update a parameter w?",
+      "options": ["A) w = w + learning_rate * gradient", "B) w = w - learning_rate * gradient", "C) w = w * learning_rate", "D) w = w / learning_rate"],
+      "answer": "B",
+      "explanation": "You move opposite to the gradient to minimize the loss: w = w - learning_rate * gradient."
+    },
+    {
+      "q": "What is the loss function in a linear regression model?",
+      "options": ["A) Mean squared error", "B) Accuracy", "C) Precision", "D) Recall"],
+      "answer": "A",
+      "explanation": "Linear regression typically uses mean squared error as the loss function to minimize."
+    },
+    {
+      "q": "What is the purpose of a learning rate in gradient descent?",
+      "options": ["A) To control the step size", "B) To compute the gradient", "C) To initialize weights", "D) To measure error"],
+      "answer": "A",
+      "explanation": "The learning rate determines the size of the steps taken during each iteration of gradient descent."
+    },
+    {
+      "q": "What is stochastic gradient descent (SGD)?",
+      "options": ["A) Using all data for each update", "B) Using one random data point for each update", "C) Using a subset of data for each update", "D) Using no data"],
+      "answer": "B",
+      "explanation": "SGD updates parameters using a single randomly chosen training example at each iteration."
+    },
+    {
+      "q": "In the context of AI, what does optimization refer to?",
+      "options": ["A) Finding the best parameters to minimize loss", "B) Maximizing accuracy", "C) Minimizing data", "D) Maximizing speed"],
+      "answer": "A",
+      "explanation": "Optimization in AI is the process of adjusting model parameters to minimize the loss function."
+    },
+    {
+      "q": "Which of the following is a common tool for automatic differentiation in Python?",
+      "options": ["A) NumPy", "B) Pandas", "C) TensorFlow", "D) Matplotlib"],
+      "answer": "C",
+      "explanation": "TensorFlow (and PyTorch) provide automatic differentiation for gradient computation."
+    },
+    {
+      "q": "What is the shape of a matrix that has 5 rows and 2 columns?",
+      "options": ["A) 2x5", "B) 5x2", "C) 5x5", "D) 2x2"],
+      "answer": "B",
+      "explanation": "The shape is given as rows x columns, so 5x2."
+    },
+    {
+      "q": "If you have a vector [3, 4], what is its dot product with [1, 2]?",
+      "options": ["A) 7", "B) 10", "C) 11", "D) 12"],
+      "answer": "C",
+      "explanation": "Dot product = 3*1 + 4*2 = 3 + 8 = 11."
+    },
+    {
+      "q": "What is the probability of rolling a 3 on a fair six-sided die?",
+      "options": ["A) 1/6", "B) 1/3", "C) 1/2", "D) 1"],
+      "answer": "A",
+      "explanation": "There is one favorable outcome out of six equally likely outcomes."
+    },
+    {
+      "q": "Which statistic is the middle value when data is ordered?",
+      "options": ["A) Mean", "B) Median", "C) Mode", "D) Range"],
+      "answer": "B",
+      "explanation": "The median is the middle value in an ordered data set."
+    },
+    {
+      "q": "What does a positive derivative indicate?",
+      "options": ["A) Function is decreasing", "B) Function is increasing", "C) Function is constant", "D) Function has a maximum"],
+      "answer": "B",
+      "explanation": "A positive derivative means the function is increasing as the input increases."
+    },
+    {
+      "q": "In gradient descent, what happens if the learning rate is too large?",
+      "options": ["A) Convergence is slow", "B) It may overshoot and diverge", "C) It converges quickly", "D) It has no effect"],
+      "answer": "B",
+      "explanation": "A large learning rate can cause the algorithm to overshoot the minimum and fail to converge."
+    }
+  ],
+  "videos": [
+    "linear algebra for machine learning africa",
+    "probability and statistics for AI beginners",
+    "gradient descent explained with python"
+  ]
+}

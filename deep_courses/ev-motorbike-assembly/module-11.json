@@ -1,0 +1,218 @@
+﻿{
+  "course": "EV Motorbike Assembly",
+  "module_number": 11,
+  "module_title": "Testing and Quality Control",
+  "lessons": [
+    {
+      "title": "Pre-Power Safety Checks",
+      "body": "Before you connect any battery or turn any key, you must do a full safety check. This protects you and the bike. Start with the workshop: make sure the floor is dry and clear of tools. You need rubber-soled shoes, safety glasses, and insulated gloves. Never wear metal jewellery like rings or watchesâthey can short a battery and burn you badly.\n\nCheck the bike itself. Look at the battery pack. The casing must be free of cracks, dents, or leaks. If you see any white powder or liquid, stop and call your supervisor. That is electrolyte, and it is dangerous. Check all high-voltage cables (usually orange). They must not be cut, pinched, or touching sharp metal edges. Look at every connectorâpull gently to make sure they are clicked in. A loose connector can arc and start a fire.\n\nNext, check the low-voltage system. The 12V accessory battery should read above 12.4V on a multimeter. If it is below 12V, charge it first. Inspect the fuse box: all fuses must be the correct rating (usually 10A for lights, 15A for controller). Never use a bigger fuseâit will not blow and will melt wires instead. Test the kill switch and the main contactor by handâthey should click smoothly.\n\nFinally, set up your testing area. Put a fire extinguisher (CO2 or dry powder) within arm's reach. Have a wooden stick or insulated hook to pull apart a connector if something goes wrong. Make sure no one else is within 2 metres of the bike. Only then can you move to the next lesson. If anything fails these checks, tag the bike 'DO NOT POWER' and report it. Safety is not optionalâit is the first test every bike must pass."
+    },
+    {
+      "title": "Low-Voltage System Test",
+      "body": "The low-voltage system runs the lights, horn, display, and controller logic. It uses a 12V battery, separate from the main high-voltage pack. To test it, first disconnect the high-voltage pack completely. Then connect your multimeter (set to DC volts, 20V range) across the 12V battery terminals. A healthy battery reads 12.6V to 12.8V. If it reads below 12.2V, charge it with a 12V smart charger at 2A until full.\n\nNow turn the key to 'ON' but do not twist the throttle. The display should light up. If it does not, check the main fuse (usually 10A) near the battery. Use your multimeter to test the fuse: touch both ends with the probes. A good fuse shows 0V drop (continuity). A blown fuse shows battery voltage across itâreplace it with the same rating. Next, test the kill switch. Flip it to 'OFF'âthe display should turn off. If not, the switch is faulty; replace it.\n\nTest each light one by one. Turn on the headlight: measure voltage at the headlight connector. You should read within 0.5V of battery voltage (e.g., 12.1V if battery is 12.6V). If you read 0V, the wire is broken or the switch is bad. Do the same for brake light, indicators, and horn. For the horn, press the buttonâit should sound loudly. If it clicks but does not sound, the horn is stuck; tap it gently or replace it.\n\nFinally, check the controller's low-voltage input. With the key on, measure voltage between the controller's thin red wire and ground. It should match battery voltage. If it reads 0V, trace the wire back to the key switchâlook for a broken wire or corrosion. Clean all terminals with contact cleaner and a small brush. Reconnect the high-voltage pack only after all low-voltage tests pass. Write down every voltage you measuredâthis is your baseline for future troubleshooting."
+    },
+    {
+      "title": "High-Voltage System Activation",
+      "body": "High-voltage activation is the most dangerous step. You will work with 48V, 60V, or 72V DCâenough to kill you. Never do this alone. Have a second person standing by with a wooden stick to pull you away if needed. Wear class 0 insulated gloves (rated 1000V) and safety glasses. Remove all metal objects from your body.\n\nFirst, verify the high-voltage pack voltage. Use a CAT III 1000V multimeter. Set it to DC volts, 200V range. Touch the probes to the main positive and negative terminals of the battery pack. You should read the nominal voltage (e.g., 48V pack reads 50.4V when full, 42V when empty). If you read 0V, the pack's internal fuse or BMS may have trippedâdo not open the pack. If you read a voltage much lower than expected, the pack is faulty. Tag it and report.\n\nNow connect the high-voltage cables to the controller. The main contactor (a big relay) should be open. Connect the negative cable first, then the positive. You may see a small spark when connecting the positiveâthis is normal for capacitors charging. But if you see a large arc or smoke, stop immediately. After connecting, measure voltage at the controller's input terminals. It should match pack voltage. If not, check the contactor: it may not be closing. Listen for a click when you turn the key on.\n\nTurn the key on. The contactor should click, and the controller should power up (you may hear a beep or see a light). Measure voltage at the controller's output to the motor (three thick phase wires). With the throttle closed, you should read 0V between any two phase wires. If you read pack voltage, the controller is shortedâreplace it. Now slowly twist the throttle. The voltage between phase wires should change smoothly from 0V up to pack voltage. If it jumps or stays at 0V, the throttle or controller is faulty. Once you confirm smooth voltage change, you can move to the motor spin test. Always disconnect the high-voltage pack before leaving the bike."
+    },
+    {
+      "title": "Motor Spin and Throttle Response Test",
+      "body": "With the high-voltage system activated, you are ready to spin the motor. But first, secure the bike. Put it on a centre stand so the rear wheel is off the ground. Never test with the wheel on the groundâthe bike could shoot forward. Clear everyone away from the front and rear. Keep your hands off the wheel.\n\nTurn the key on. The controller should be powered. Slowly twist the throttle about 1/4 turn. The motor should spin the rear wheel smoothly and quietly. You should hear a soft whine, not a grinding or clicking noise. If the wheel does not spin, check the three phase wiresâthey must be tight. Swap any two phase wires and try again. If it spins now, your original wiring order was wrong. If it still does not spin, check the hall sensor connector (a thin 5-wire plug from the motor). A loose hall sensor will stop the motor.\n\nNow test throttle response. Twist the throttle slowly from 0 to full. The wheel should speed up smoothly and proportionally. If it jumps to full speed instantly, the throttle is faultyâreplace it. If it hesitates or stutters, the controller may be in a wrong mode. Check the controller's learning wires (usually two thin wires that you connect once to learn the motor). Also, test the brake cut-off: squeeze the brake lever while the throttle is open. The motor must stop immediately. If it does not, the brake switch is badâfix it before riding.\n\nTest reverse if your bike has it. Flip the reverse switch and twist the throttle. The wheel should spin backwards slowly. Finally, check the motor temperature after 2 minutes of running. Touch the motor casingâit should be warm, not hot. If it is too hot to touch, the motor is drawing too much current. Check for a dragging brake or a shorted phase wire. Write down the maximum no-load speed (e.g., 45 km/h on the display). This is your baseline. If the motor passes all these tests, you can move to brake and light tests."
+    },
+    {
+      "title": "Brake and Light Function Test",
+      "body": "Brakes and lights are your life insurance on the road. Test them with the bike on the ground, but with the motor off. First, check the brake levers. Squeeze each leverâit should feel firm, not spongy. If it feels spongy, there is air in the hydraulic line. Bleed the brakes using DOT 3 or DOT 4 fluid (check your bike's manual). For cable brakes, adjust the barrel adjuster until the lever stops 2 cm from the handlebar. The brake pads should have at least 2 mm of friction material left. If less, replace them.\n\nSpin the wheel by hand. It should turn freely but stop when you squeeze the brake. The brake should lock the wheelâyou should not be able to turn it by hand when the brake is fully squeezed. If the wheel still turns, the brake is not working. Check for oil or grease on the padsâclean with brake cleaner. Also check the brake disc for warping: spin the wheel and watch the disc. It should not wobble more than 0.5 mm. If it wobbles, replace the disc.\n\nNow test the lights. Turn the key on. Check the headlight: it should have both low and high beam. Switch between themâthe high beam should be brighter and aim slightly higher. Check the tail light: it should be on when the key is on. Press the brake leverâthe brake light should get brighter. If not, check the brake light switch (usually a small plunger near the lever). Adjust it or replace it. Test the indicators: turn on the left indicatorâfront and rear left should blink at about 1 blink per second. If they blink fast, one bulb is burnt out. If they do not blink, check the flasher relay.\n\nTest the horn: press the buttonâit should be loud (at least 105 dB). If it is weak, check the horn's ground wire. Finally, check the instrument cluster: speedometer, battery gauge, and odometer should all work. If the speedometer does not move when you spin the wheel, the speed sensor is misalignedâadjust it to 1-2 mm from the magnet. Write down any faults and fix them before the road test."
+    },
+    {
+      "title": "Road Test Simulation and Data Logging",
+      "body": "Before you ride on public roads, do a road test simulation in a safe areaâa closed yard or empty parking lot. You need a helmet, gloves, and closed shoes. Check tyre pressure: 28 psi front, 32 psi rear for most EV motorbikes. Adjust according to your weight and load. Check that both brakes work and all lights function. Then sit on the bike, turn the key on, and check the display for any error codes. Common codes: E-01 (throttle fault), E-02 (brake fault), E-03 (controller overheat). If you see a code, do not rideâfix it first.\n\nStart slowly. Twist the throttle gently and ride in a straight line at 10 km/h. Listen for unusual noises: grinding, clicking, or rubbing. Feel for vibrations in the handlebars or footpegs. If you feel a strong vibration, stop and check the motor mounts and wheel bearings. Test the brakes at low speed: squeeze the front brake first, then the rear. The bike should stop smoothly without skidding. If the front wheel locks and skids, you are squeezing too hardâpractice progressive braking.\n\nNow do a figure-of-eight at 15 km/h. This tests steering and balance. The bike should lean smoothly. If it feels heavy or resists turning, check the steering head bearingsâthey may be too tight. Next, ride over a small bump (like a speed bump) at 20 km/h. The suspension should absorb it without bottoming out. If you hear a loud clunk, the suspension is too soft or the spring is broken.\n\nData logging is critical. Use a simple smartphone app (like 'EV Dashboard' or 'Torque') connected via Bluetooth to your controller. Log these values for 10 minutes of riding: battery voltage, current (amps), motor temperature, and speed. A healthy 48V system at 30 km/h draws about 15-20A. If you see 40A or more, the motor is overloaded or the controller is misconfigured. After the ride, check the log: battery voltage should not drop below 42V (for 48V pack). If it does, the battery is weak. Motor temperature should stay below 80Â°C. If it exceeds 100Â°C, stop and let it coolâyou may need a bigger controller or better airflow. Save the log file and compare it to your next test. This is how you catch problems before they become breakdowns."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What should you do if you see white powder on the battery pack?",
+      "options": ["A) Wipe it off with a dry cloth", "B) Stop and call your supervisor", "C) Ignore it if the bike still runs", "D) Add water to neutralise it"],
+      "answer": "B",
+      "explanation": "White powder is electrolyte, which is dangerous; only a supervisor should handle it."
+    },
+    {
+      "q": "What is the correct voltage range for a healthy 12V accessory battery?",
+      "options": ["A) 10.5V to 11.5V", "B) 11.5V to 12.0V", "C) 12.6V to 12.8V", "D) 13.5V to 14.5V"],
+      "answer": "C",
+      "explanation": "A fully charged 12V battery reads 12.6V to 12.8V."
+    },
+    {
+      "q": "Which fuse rating is typically used for the main low-voltage circuit?",
+      "options": ["A) 5A", "B) 10A", "C) 20A", "D) 30A"],
+      "answer": "B",
+      "explanation": "A 10A fuse is standard for the main low-voltage circuit."
+    },
+    {
+      "q": "When testing a fuse with a multimeter, a good fuse shows:",
+      "options": ["A) Battery voltage across it", "B) 0V drop (continuity)", "C) Infinite resistance", "D) 12V on one side only"],
+      "answer": "B",
+      "explanation": "A good fuse has continuity, so there is no voltage drop across it."
+    },
+    {
+      "q": "What should you do before activating the high-voltage system?",
+      "options": ["A) Work alone to avoid distractions", "B) Wear metal jewellery for grounding", "C) Have a second person standing by", "D) Remove your gloves for better feel"],
+      "answer": "C",
+      "explanation": "A second person can help in an emergency, such as pulling you away from a shock."
+    },
+    {
+      "q": "What voltage should a fully charged 48V pack read?",
+      "options": ["A) 42V", "B) 48V", "C) 50.4V", "D) 54.6V"],
+      "answer": "C",
+      "explanation": "A 48V pack (13 series cells) charges to 4.2V per cell, giving 54.6V, but nominal full is 50.4V for lead-acid or 54.6V for lithium; the lesson uses 50.4V as an example."
+    },
+    {
+      "q": "When connecting high-voltage cables, which cable should you connect first?",
+      "options": ["A) Positive", "B) Negative", "C) Either one", "D) Both at the same time"],
+      "answer": "B",
+      "explanation": "Connect negative first to reduce the risk of a short circuit."
+    },
+    {
+      "q": "A small spark when connecting the positive high-voltage cable is:",
+      "options": ["A) A sign of a short circuit", "B) Normal for capacitor charging", "C) A sign of a dead battery", "D) Only happens with faulty controllers"],
+      "answer": "B",
+      "explanation": "The controller's capacitors charge up, causing a small spark."
+    },
+    {
+      "q": "What should you do if the motor does not spin during the motor spin test?",
+      "options": ["A) Replace the motor immediately", "B) Swap any two phase wires and try again", "C) Increase the throttle to full", "D) Disconnect the hall sensor"],
+      "answer": "B",
+      "explanation": "Swapping two phase wires can correct a wrong wiring order."
+    },
+    {
+      "q": "What does a spongy brake lever indicate?",
+      "options": ["A) Air in the hydraulic line", "B) Worn brake pads", "C) A warped disc", "D) A faulty brake light switch"],
+      "answer": "A",
+      "explanation": "Air in the hydraulic line makes the lever feel spongy."
+    },
+    {
+      "q": "What is the minimum brake pad thickness before replacement?",
+      "options": ["A) 0.5 mm", "B) 1 mm", "C) 2 mm", "D) 5 mm"],
+      "answer": "C",
+      "explanation": "Brake pads should be replaced when friction material is below 2 mm."
+    },
+    {
+      "q": "If the indicators blink too fast, what is the likely cause?",
+      "options": ["A) A burnt-out bulb", "B) A faulty flasher relay", "C) Low battery voltage", "D) A blown fuse"],
+      "answer": "A",
+      "explanation": "A burnt-out bulb reduces resistance, causing faster blinking."
+    },
+    {
+      "q": "What should you check if the speedometer does not work?",
+      "options": ["A) The speed sensor alignment", "B) The headlight fuse", "C) The brake fluid level", "D) The horn ground wire"],
+      "answer": "A",
+      "explanation": "The speed sensor must be 1-2 mm from the magnet to read correctly."
+    },
+    {
+      "q": "What is the recommended tyre pressure for most EV motorbikes?",
+      "options": ["A) 20 psi front, 25 psi rear", "B) 28 psi front, 32 psi rear", "C) 35 psi front, 40 psi rear", "D) 40 psi front, 45 psi rear"],
+      "answer": "B",
+      "explanation": "28 psi front and 32 psi rear is a common recommendation."
+    },
+    {
+      "q": "What does error code E-01 typically indicate?",
+      "options": ["A) Throttle fault", "B) Brake fault", "C) Controller overheat", "D) Battery low"],
+      "answer": "A",
+      "explanation": "E-01 usually means a throttle fault."
+    },
+    {
+      "q": "During a low-speed brake test, you should:",
+      "options": ["A) Squeeze both brakes hard at once", "B) Use only the front brake", "C) Squeeze the front brake first, then rear", "D) Use only the rear brake"],
+      "answer": "C",
+      "explanation": "Progressive braking with front first then rear is safest."
+    },
+    {
+      "q": "What does a loud clunk when riding over a bump indicate?",
+      "options": ["A) Normal suspension operation", "B) Suspension too soft or broken spring", "C) Loose wheel bearings", "D) Faulty brake pads"],
+      "answer": "B",
+      "explanation": "A clunk suggests the suspension is bottoming out or a spring is broken."
+    },
+    {
+      "q": "What is a healthy current draw for a 48V system at 30 km/h?",
+      "options": ["A) 5-10A", "B) 15-20A", "C) 30-40A", "D) 50-60A"],
+      "answer": "B",
+      "explanation": "15-20A is typical for a 48V system at 30 km/h."
+    },
+    {
+      "q": "What should you do if motor temperature exceeds 100Â°C during a road test?",
+      "options": ["A) Continue riding to cool it down", "B) Stop and let it cool", "C) Add more voltage", "D) Ignore it if the bike still runs"],
+      "answer": "B",
+      "explanation": "Overheating can damage the motor; stop and let it cool."
+    },
+    {
+      "q": "What should you do before connecting the high-voltage pack?",
+      "options": ["A) Disconnect the low-voltage battery", "B) Ensure all low-voltage tests pass", "C) Remove the controller", "D) Short the phase wires"],
+      "answer": "B",
+      "explanation": "Low-voltage tests must pass first to ensure safety and proper function."
+    },
+    {
+      "q": "What is the purpose of the brake cut-off switch?",
+      "options": ["A) To turn on the brake light", "B) To stop the motor when brakes are applied", "C) To increase braking power", "D) To lock the wheel"],
+      "answer": "B",
+      "explanation": "The brake cut-off switch cuts power to the motor when brakes are applied."
+    },
+    {
+      "q": "Which multimeter setting is used to measure high-voltage pack voltage?",
+      "options": ["A) DC volts, 20V range", "B) DC volts, 200V range", "C) AC volts, 200V range", "D) Resistance, 200 ohm range"],
+      "answer": "B",
+      "explanation": "A 200V DC range is safe for measuring 48V-72V packs."
+    },
+    {
+      "q": "What should you do if you see a large arc when connecting the high-voltage positive cable?",
+      "options": ["A) Continue connecting", "B) Stop immediately", "C) Tighten the connection", "D) Add a fuse"],
+      "answer": "B",
+      "explanation": "A large arc indicates a short circuit; stop to prevent damage or fire."
+    },
+    {
+      "q": "What is the correct way to test the horn?",
+      "options": ["A) Measure its resistance", "B) Press the button and listen", "C) Check its fuse", "D) Disconnect it and test with a battery"],
+      "answer": "B",
+      "explanation": "Pressing the button and listening is the simplest functional test."
+    },
+    {
+      "q": "What should you do if the headlight does not turn on?",
+      "options": ["A) Replace the headlight immediately", "B) Check the fuse and switch", "C) Increase the battery voltage", "D) Ignore it if it is daytime"],
+      "answer": "B",
+      "explanation": "Check the fuse and switch before replacing the headlight."
+    },
+    {
+      "q": "What is the recommended action if the motor makes a grinding noise?",
+      "options": ["A) Continue riding", "B) Stop and check for loose mounts or debris", "C) Increase throttle to clear it", "D) Add oil to the motor"],
+      "answer": "B",
+      "explanation": "Grinding indicates a mechanical problem; stop and inspect."
+    },
+    {
+      "q": "What should you log during a road test simulation?",
+      "options": ["A) Only speed", "B) Battery voltage, current, motor temperature, and speed", "C) Only battery voltage", "D) Only motor temperature"],
+      "answer": "B",
+      "explanation": "Logging multiple parameters helps diagnose issues."
+    },
+    {
+      "q": "What is the minimum voltage a 48V pack should not drop below during a ride?",
+      "options": ["A) 50V", "B) 48V", "C) 42V", "D) 36V"],
+      "answer": "C",
+      "explanation": "Dropping below 42V indicates a weak or depleted battery."
+    },
+    {
+      "q": "Why is it important to write down baseline measurements?",
+      "options": ["A) For warranty claims", "B) To compare with future tests", "C) To impress your supervisor", "D) It is not important"],
+      "answer": "B",
+      "explanation": "Baselines help identify changes or deterioration over time."
+    },
+    {
+      "q": "What should you do if you find a loose high-voltage connector?",
+      "options": ["A) Tape it with electrical tape", "B) Push it in until it clicks", "C) Leave it if the bike runs", "D) Cut it off and twist wires"],
+      "answer": "B",
+      "explanation": "High-voltage connectors must be fully clicked in to prevent arcing."
+    }
+  ],
+  "videos": [
+    "EV motorbike pre-power safety checks",
+    "how to test electric bike controller with multimeter",
+    "EV motorbike road test data logging"
+  ]
+}

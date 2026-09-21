@@ -1,0 +1,218 @@
+﻿{
+  "course": "Cattle and Steer Feed Formulation",
+  "module_number": 4,
+  "module_title": "Formulation Basics and Mathematical Methods",
+  "lessons": [
+    {
+      "title": "Pearson square and algebraic methods for two-ingredient mixes",
+      "body": "The Pearson square is a simple tool to mix two ingredients to hit a target nutrient level, like protein. Suppose you want a 16% crude protein (CP) mix using maize (9% CP) and soybean meal (44% CP). Draw a square: put 16 in the centre. Top left: 9 (maize). Bottom left: 44 (soybean meal). Difference across diagonals: 44 - 16 = 28 parts maize; 16 - 9 = 7 parts soybean meal. Total parts = 35. So maize is 28/35 = 80%, soybean meal is 7/35 = 20%. For 100 kg feed: 80 kg maize, 20 kg soybean meal. This gives 0.8*9 + 0.2*44 = 7.2 + 8.8 = 16% CP. Always check your math.\n\nFor three or more ingredients, use algebra. Let x = kg of maize, y = kg of soybean meal, z = kg of limestone. You need two equations: x + y + z = 100 (total weight) and 0.09x + 0.44y + 0z = 16 (protein). But you have three unknowns and two equations; you need a third constraint, like fixing limestone at 2 kg. Then x + y = 98 and 0.09x + 0.44y = 16. Solve: from first, x = 98 - y. Substitute: 0.09(98 - y) + 0.44y = 16 â 8.82 - 0.09y + 0.44y = 16 â 0.35y = 7.18 â y = 20.51 kg. Then x = 77.49 kg. So mix: 77.49 kg maize, 20.51 kg soybean meal, 2 kg limestone. Check protein: 0.09*77.49 + 0.44*20.51 = 6.97 + 9.02 = 15.99% â 16%.\n\nIn Africa, common ingredients are maize, sorghum, cottonseed cake, sunflower cake, and urea. Always use locally available feeds. For example, in Kenya, use maize and cottonseed cake (36% CP) to make 14% CP: Pearson square: 14 centre, 9 top left (maize), 36 bottom left. Differences: 36-14=22 parts maize, 14-9=5 parts cottonseed cake. Total 27 parts. Maize = 22/27 = 81.5%, cottonseed = 5/27 = 18.5%. For 50 kg: 40.75 kg maize, 9.25 kg cottonseed cake. Thatâs a practical mix for growing steers.\n\nRemember: Pearson square only works for two ingredients and one nutrient. For more nutrients (energy, fibre, minerals), use simultaneous equations or linear programming. Always weigh ingredients accurately using a scale, not volume. Mix thoroughly. Store in dry place."
+    },
+    {
+      "title": "Simultaneous equations for multi-ingredient formulations",
+      "body": "When you have more than two ingredients, you need simultaneous equations. Suppose you want 100 kg of feed with 16% CP and 2.5% fat, using maize (9% CP, 4% fat), soybean meal (44% CP, 1% fat), and fishmeal (60% CP, 8% fat). Let x = kg maize, y = kg soybean meal, z = kg fishmeal. You have three equations: x + y + z = 100 (total weight); 0.09x + 0.44y + 0.60z = 16 (protein); 0.04x + 0.01y + 0.08z = 2.5 (fat). Solve by substitution or elimination. From first: x = 100 - y - z. Substitute into protein: 0.09(100 - y - z) + 0.44y + 0.60z = 16 â 9 - 0.09y - 0.09z + 0.44y + 0.60z = 16 â 0.35y + 0.51z = 7. Substitute into fat: 0.04(100 - y - z) + 0.01y + 0.08z = 2.5 â 4 - 0.04y - 0.04z + 0.01y + 0.08z = 2.5 â -0.03y + 0.04z = -1.5 â 0.03y - 0.04z = 1.5. Now solve: from protein, y = (7 - 0.51z)/0.35. Plug into fat: 0.03*(7 - 0.51z)/0.35 - 0.04z = 1.5 â (0.21 - 0.0153z)/0.35 - 0.04z = 1.5 â 0.6 - 0.0437z - 0.04z = 1.5 â -0.0837z = 0.9 â z = -10.75. Negative, impossible. So adjust targets: reduce fat to 2% or add a fourth ingredient like limestone (0% CP, 0% fat). This shows you can't always hit exact targets with few ingredients.\n\nIn practice, use more ingredients to give flexibility. For example, add wheat bran (15% CP, 3% fat) and limestone. Then you have more variables than equations, so infinite solutions. You then choose the cheapest mix or use linear programming. For manual work, fix two ingredients and solve for two others. For instance, fix 2 kg limestone and 5 kg fishmeal, then solve for maize and soybean meal to meet 16% CP in 100 kg: x + y = 93; 0.09x + 0.44y + 0.60*5 = 16 â 0.09x + 0.44y = 13 â solve: from x = 93 - y, 0.09(93 - y) + 0.44y = 13 â 8.37 - 0.09y + 0.44y = 13 â 0.35y = 4.63 â y = 13.23 kg, x = 79.77 kg. So mix: 79.77 kg maize, 13.23 kg soybean meal, 5 kg fishmeal, 2 kg limestone. Check protein: 0.09*79.77 + 0.44*13.23 + 0.60*5 = 7.18 + 5.82 + 3 = 16%. Good.\n\nAlways check that all ingredients sum to 100 kg and nutrients meet targets. Use a calculator or spreadsheet. In Africa, fishmeal may be expensive; replace with cottonseed cake or sunflower cake. Adjust equations accordingly."
+    },
+    {
+      "title": "Linear programming concepts for least-cost formulation",
+      "body": "Linear programming (LP) is a mathematical method to find the cheapest mix of ingredients that meets nutrient requirements. You need: (1) a list of available ingredients with their nutrient composition and cost per kg; (2) nutrient requirements (e.g., 16% CP, 2.5% fat, 0.8% calcium); (3) limits on ingredients (e.g., maize max 70%, fishmeal max 5%). The LP solver then calculates the exact amounts of each ingredient to minimize total cost while meeting all constraints.\n\nFor example, you have maize (9% CP, cost $0.30/kg), soybean meal (44% CP, $0.60/kg), fishmeal (60% CP, $1.20/kg), limestone (0% CP, $0.10/kg). You want 100 kg with at least 16% CP and at least 0.8% calcium. Limestone is 38% calcium. You also limit fishmeal to 5 kg max. The LP might choose: maize 62 kg, soybean meal 30 kg, fishmeal 5 kg, limestone 3 kg. Cost = 62*0.30 + 30*0.60 + 5*1.20 + 3*0.10 = 18.6 + 18 + 6 + 0.3 = $42.90. Protein: 0.09*62 + 0.44*30 + 0.60*5 + 0*3 = 5.58 + 13.2 + 3 = 21.78% (exceeds 16%, but that's okay if cost is minimized? Actually LP minimizes cost, so it might use less protein if cheaper. But if protein is a minimum constraint, it will meet exactly or exceed if cheaper. Here, it might reduce soybean meal and add more maize if protein allows? But protein min is 16, so it could use less soybean meal. Let's recalc: if maize 70 kg, soybean 26 kg, fishmeal 4 kg, limestone 3 kg: protein = 6.3 + 11.44 + 2.4 = 20.14% still high. To get exactly 16, need less protein. Actually, LP would find cheapest combination that meets 16% CP. Since maize is cheaper, it will use as much maize as possible but protein constraint limits maize. So it will use maize up to the point where protein from other ingredients meets 16. So the solution above might not be optimal. The LP solver does this automatically.\n\nIn Africa, you can use free software like LP Solver in Excel (Solver add-in) or online tools. For small-scale, you can use the Pearson square for two ingredients, but LP is better for many ingredients. Start by listing all ingredients and their costs. Then set constraints. The LP will give you the least-cost formula. Always check that the formula is practical: does it mix well? Are ingredients available? Adjust limits accordingly.\n\nRemember: LP only works if you have accurate nutrient and cost data. Update regularly. Use local ingredients to reduce cost."
+    },
+    {
+      "title": "Using spreadsheet software for feed formulation",
+      "body": "Spreadsheet software like Microsoft Excel or Google Sheets is a powerful tool for feed formulation. You can set up a simple linear programming model using the Solver add-in. First, create a table with ingredients in rows and columns for cost per kg, nutrient composition (CP, fat, fibre, calcium, etc.), and maximum/minimum limits. For example, list maize, soybean meal, fishmeal, limestone, and salt. In separate cells, enter the target nutrient levels for 100 kg of feed.\n\nNext, create a column for the amount of each ingredient (in kg). Initially, put any number (e.g., 10 kg each). Then create formulas to calculate total weight (sum of all ingredient amounts), total cost (sum of amount * cost), and total nutrients (sum of amount * nutrient % for each nutrient). For instance, protein = SUMPRODUCT(amount_range, protein_range). Then use Solver: set objective to minimize total cost, by changing ingredient amounts. Add constraints: total weight = 100; total protein >= 16; total fat >= 2.5; total calcium >= 0.8; each ingredient amount >= 0 and <= its limit. Solver will find the optimal amounts.\n\nFor example, in Excel: A1:A5 ingredients, B1:B5 cost, C1:C5 protein %, D1:D5 amount (initially 10). E1 = SUM(D1:D5) total weight. F1 = SUMPRODUCT(B1:B5,D1:D5) total cost. G1 = SUMPRODUCT(C1:C5,D1:D5)/E1 protein %. Then Solver: Set Objective F1 to Min, By Changing D1:D5, Subject to: E1 = 100, G1 >= 0.16, D1:D5 >= 0, D1:D5 <= limits. Run Solver. It will adjust amounts. For instance, it might give maize 65 kg, soybean meal 25 kg, fishmeal 5 kg, limestone 3 kg, salt 2 kg. Cost $40.50. Protein 16.2%.\n\nIn Africa, you can use free Google Sheets with Solver add-on (OpenSolver). Or use Excel on a computer. If no computer, use a calculator and the algebraic methods. But spreadsheet saves time and reduces errors. Practice with simple examples. Start with two ingredients, then add more. Always verify results manually. Save your spreadsheet as a template for future use. Adjust ingredient costs and nutrient values as they change. This is a key skill for commercial feed production."
+    },
+    {
+      "title": "Setting nutrient constraints and ingredient limits",
+      "body": "Nutrient constraints are the minimum or maximum levels of nutrients your feed must meet. For cattle and steers, key nutrients are crude protein (CP), total digestible nutrients (TDN), fibre (crude fibre), fat, calcium, phosphorus, and sometimes vitamins and minerals. For example, a growing steer may need 12-16% CP, 60-70% TDN, and 0.5-0.8% calcium. You set these as constraints in your formulation. If you are using Pearson square or algebra, you target one nutrient at a time. With linear programming, you set all constraints simultaneously.\n\nIngredient limits are the maximum or minimum amounts of each ingredient you can use. For example, you might limit maize to 70% because too much maize can cause acidosis. Limit fishmeal to 5% due to cost and taste. Limit cottonseed cake to 20% because of gossypol toxicity. Limit urea to 1% for safety. These limits are based on nutritional knowledge and practical experience. In Africa, common limits: maize max 70%, soybean meal max 30%, fishmeal max 10%, limestone max 3%, salt max 0.5%. Always check local recommendations.\n\nTo set constraints in a spreadsheet, you add rows for each nutrient with target values and rows for each ingredient with min/max. For example, in Excel, you have a cell for protein target (e.g., 16). Then in Solver, you add constraint that protein cell >= 16. For ingredient limits, you add constraints that each amount cell <= max limit and >= min limit (often 0). You can also set a minimum for some ingredients, like at least 2% limestone to provide calcium.\n\nWhen constraints are too tight, no solution exists. For example, if you require 20% CP but only have maize and limestone, impossible. So you must have enough protein sources. Also, if you set maximum limits too low, you may not meet nutrient needs. So balance. Start with realistic targets based on animal requirements. Use tables from FAO or local extension services. For steers in Africa, a typical feedlot diet might be 70% maize, 15% cottonseed cake, 10% wheat bran, 3% molasses, 2% limestone and salt. That gives about 14% CP. Adjust as needed.\n\nAlways test your formulated feed with animals if possible. Observe weight gain and health. Adjust constraints accordingly. Keep records."
+    },
+    {
+      "title": "Evaluating and adjusting formulated diets",
+      "body": "After you formulate a diet, you must evaluate it. First, check that all nutrients meet the requirements. Calculate the actual nutrient levels from the ingredient amounts. For example, if your mix has 65 kg maize (9% CP), 20 kg soybean meal (44% CP), 10 kg wheat bran (15% CP), 3 kg limestone (0% CP), 2 kg salt (0% CP), then total CP = 0.09*65 + 0.44*20 + 0.15*10 = 5.85 + 8.8 + 1.5 = 16.15%. That meets 16% target. Check other nutrients: fat, fibre, calcium, phosphorus. Use a feed composition table.\n\nSecond, evaluate cost. Calculate cost per kg of feed. Compare with alternative formulas. If cost is too high, adjust ingredients. For example, replace part of soybean meal with cottonseed cake (36% CP) if cheaper. But watch for gossypol; limit cottonseed cake to 20%. Use linear programming to find least-cost. If no computer, try manual adjustments: reduce expensive ingredients and increase cheaper ones, then recalculate nutrients.\n\nThird, evaluate practicality. Can you mix the ingredients easily? Are they available locally? For example, fishmeal may be scarce in inland areas. Use local protein sources like groundnut cake, sunflower cake, or brewers grains. Check if the feed is palatable. Cattle may refuse feed with too much urea or fishmeal. Start with small amounts and observe.\n\nFourth, test with animals. Feed the formulated diet to a few steers for 2-4 weeks. Monitor feed intake, weight gain, and health. If weight gain is below target, increase energy or protein. If animals have diarrhoea, reduce maize or add fibre. If they are off-feed, check for toxins or poor mixing. Adjust the formula accordingly. Keep records of feed ingredients, costs, and animal performance.\n\nFinally, remember that formulation is iterative. What works in one season may not work in another due to ingredient availability and price changes. Re-evaluate regularly. Use simple tools like Pearson square for quick adjustments. For example, if maize price rises, you might switch to sorghum or cassava. Always aim for the cheapest balanced diet that meets animal needs. In Africa, using locally available by-products can reduce cost significantly. Share your formulas with other farmers for feedback."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is the main purpose of the Pearson square method?",
+      "options": ["A) To formulate feeds with three or more ingredients", "B) To balance two ingredients to meet a target nutrient level", "C) To calculate the cost of feed ingredients", "D) To determine the amino acid profile of feed"],
+      "answer": "B",
+      "explanation": "The Pearson square is used to mix two ingredients to achieve a desired nutrient concentration, such as crude protein."
+    },
+    {
+      "q": "In a Pearson square, if you want 16% CP using maize (9% CP) and soybean meal (44% CP), what are the parts of maize and soybean meal?",
+      "options": ["A) 28 parts maize, 7 parts soybean meal", "B) 7 parts maize, 28 parts soybean meal", "C) 16 parts maize, 16 parts soybean meal", "D) 44 parts maize, 9 parts soybean meal"],
+      "answer": "A",
+      "explanation": "The differences across the diagonal give 44-16=28 parts maize and 16-9=7 parts soybean meal."
+    },
+    {
+      "q": "If you need 100 kg of feed with 16% CP using maize (9% CP) and soybean meal (44% CP), how many kg of maize are needed?",
+      "options": ["A) 80 kg", "B) 20 kg", "C) 28 kg", "D) 72 kg"],
+      "answer": "A",
+      "explanation": "Maize proportion is 28/35 = 0.8, so 0.8*100 = 80 kg."
+    },
+    {
+      "q": "When using algebraic methods for three ingredients, how many equations do you need to solve for three unknowns?",
+      "options": ["A) One", "B) Two", "C) Three", "D) Four"],
+      "answer": "C",
+      "explanation": "To solve for three unknowns, you need three independent equations, such as total weight and two nutrient constraints."
+    },
+    {
+      "q": "In the example with maize, soybean meal, and limestone, if limestone is fixed at 2 kg, what is the equation for total weight?",
+      "options": ["A) x + y = 100", "B) x + y = 98", "C) x + y + z = 100", "D) x + y = 102"],
+      "answer": "B",
+      "explanation": "Since limestone is 2 kg, the sum of maize and soybean meal must be 98 kg to total 100 kg."
+    },
+    {
+      "q": "What is a key limitation of the Pearson square method?",
+      "options": ["A) It cannot be used with maize", "B) It only works for two ingredients and one nutrient", "C) It requires a computer", "D) It only works for minerals"],
+      "answer": "B",
+      "explanation": "The Pearson square is limited to two ingredients and a single nutrient target."
+    },
+    {
+      "q": "In simultaneous equations, if you get a negative solution for an ingredient amount, what does it mean?",
+      "options": ["A) The math is wrong", "B) The constraints are impossible to meet with the chosen ingredients", "C) You need to add more of that ingredient", "D) The feed will be toxic"],
+      "answer": "B",
+      "explanation": "A negative amount indicates that the nutrient targets cannot be achieved with the given ingredients and fixed amounts, so you must adjust targets or add more ingredients."
+    },
+    {
+      "q": "Which of the following is a common protein source in African cattle feed?",
+      "options": ["A) Limestone", "B) Maize", "C) Cottonseed cake", "D) Salt"],
+      "answer": "C",
+      "explanation": "Cottonseed cake is a widely used protein source in Africa, though it must be limited due to gossypol."
+    },
+    {
+      "q": "What is the main goal of linear programming in feed formulation?",
+      "options": ["A) To maximize protein content", "B) To minimize cost while meeting nutrient requirements", "C) To use as many ingredients as possible", "D) To calculate the Pearson square"],
+      "answer": "B",
+      "explanation": "Linear programming finds the least-cost combination of ingredients that satisfies all nutrient and ingredient constraints."
+    },
+    {
+      "q": "In linear programming, what are constraints?",
+      "options": ["A) The cost of ingredients", "B) The nutrient requirements and ingredient limits", "C) The number of ingredients", "D) The mixing time"],
+      "answer": "B",
+      "explanation": "Constraints are the conditions that the solution must meet, such as minimum protein and maximum maize inclusion."
+    },
+    {
+      "q": "Which software can be used for linear programming in feed formulation?",
+      "options": ["A) Microsoft Word", "B) Excel Solver", "C) PowerPoint", "D) Notepad"],
+      "answer": "B",
+      "explanation": "Excel Solver is a commonly used tool for linear programming, including least-cost feed formulation."
+    },
+    {
+      "q": "What is a typical maximum limit for fishmeal in cattle feed?",
+      "options": ["A) 1%", "B) 5%", "C) 20%", "D) 50%"],
+      "answer": "B",
+      "explanation": "Fishmeal is often limited to around 5% due to cost and potential taste issues."
+    },
+    {
+      "q": "Why is it important to set a maximum limit for maize in cattle feed?",
+      "options": ["A) Maize is too expensive", "B) Too much maize can cause acidosis", "C) Maize lacks energy", "D) Maize is toxic"],
+      "answer": "B",
+      "explanation": "High levels of maize can lead to rumen acidosis, so limits are set to maintain rumen health."
+    },
+    {
+      "q": "In a spreadsheet, which function can calculate total protein from ingredient amounts and protein percentages?",
+      "options": ["A) SUM", "B) AVERAGE", "C) SUMPRODUCT", "D) COUNT"],
+      "answer": "C",
+      "explanation": "SUMPRODUCT multiplies corresponding elements in arrays and returns the sum of those products, ideal for nutrient calculations."
+    },
+    {
+      "q": "What is the first step in using Solver for feed formulation?",
+      "options": ["A) Set the objective to minimize cost", "B) Enter all ingredient data and nutrient targets", "C) Run Solver", "D) Check the results"],
+      "answer": "B",
+      "explanation": "Before using Solver, you must input the ingredient composition, costs, and nutrient requirements into the spreadsheet."
+    },
+    {
+      "q": "What does a negative value in the 'amount' column after running Solver indicate?",
+      "options": ["A) The solution is optimal", "B) The constraints are infeasible", "C) The cost is too low", "D) The nutrient levels are too high"],
+      "answer": "B",
+      "explanation": "Negative amounts are not physically possible, so Solver may indicate infeasibility; you need to relax constraints."
+    },
+    {
+      "q": "Which nutrient is typically set as a minimum constraint for growing steers?",
+      "options": ["A) Crude fibre", "B) Crude protein", "C) Moisture", "D) Ash"],
+      "answer": "B",
+      "explanation": "Crude protein is a key nutrient for growth and is often set as a minimum requirement."
+    },
+    {
+      "q": "What is the purpose of ingredient limits in feed formulation?",
+      "options": ["A) To increase cost", "B) To ensure nutritional balance and avoid toxicity", "C) To make the feed more palatable", "D) To reduce the number of ingredients"],
+      "answer": "B",
+      "explanation": "Limits prevent excessive use of ingredients that could cause health issues or nutrient imbalances."
+    },
+    {
+      "q": "If a formulated diet has 16.15% CP and the target is 16%, what should you do?",
+      "options": ["A) Reject the diet", "B) Accept it as it meets the requirement", "C) Add more maize", "D) Add more limestone"],
+      "answer": "B",
+      "explanation": "Slightly exceeding the protein target is acceptable and often necessary to meet minimum constraints."
+    },
+    {
+      "q": "Why is it important to evaluate the cost of a formulated diet?",
+      "options": ["A) To ensure it is the cheapest possible", "B) To ensure it is affordable and competitive", "C) To impress other farmers", "D) To use more ingredients"],
+      "answer": "B",
+      "explanation": "Cost evaluation helps determine if the diet is economically viable for the farmer."
+    },
+    {
+      "q": "What should you do if cattle refuse a newly formulated feed?",
+      "options": ["A) Force them to eat", "B) Check for palatability issues and adjust ingredients", "C) Add more urea", "D) Increase the protein level"],
+      "answer": "B",
+      "explanation": "Palatability problems may require reducing or removing certain ingredients like fishmeal or urea."
+    },
+    {
+      "q": "Which of the following is a practical adjustment if maize is expensive?",
+      "options": ["A) Use more limestone", "B) Replace some maize with sorghum or cassava", "C) Increase fishmeal", "D) Add more salt"],
+      "answer": "B",
+      "explanation": "Sorghum and cassava are alternative energy sources that can reduce cost when maize is expensive."
+    },
+    {
+      "q": "What is the role of a feed composition table?",
+      "options": ["A) To list ingredient prices", "B) To provide nutrient content of ingredients", "C) To calculate Pearson square", "D) To mix feed"],
+      "answer": "B",
+      "explanation": "Feed composition tables give the nutrient profiles of various feedstuffs, essential for formulation."
+    },
+    {
+      "q": "In the algebraic method, if you have three ingredients and want to meet two nutrient targets, what is a common approach?",
+      "options": ["A) Fix one ingredient amount and solve for the other two", "B) Use Pearson square", "C) Ignore one nutrient", "D) Use linear programming"],
+      "answer": "A",
+      "explanation": "Fixing one ingredient reduces the number of unknowns, allowing you to solve for the remaining two using two equations."
+    },
+    {
+      "q": "What does TDN stand for in cattle nutrition?",
+      "options": ["A) Total Digestible Nutrients", "B) Total Daily Nutrition", "C) Typical Diet Nutrient", "D) Total Dry Matter"],
+      "answer": "A",
+      "explanation": "TDN is a measure of the energy value of feed, representing total digestible nutrients."
+    },
+    {
+      "q": "Which of the following is a common mineral supplement in cattle feed?",
+      "options": ["A) Maize", "B) Limestone", "C) Soybean meal", "D) Molasses"],
+      "answer": "B",
+      "explanation": "Limestone is a source of calcium and is commonly used as a mineral supplement."
+    },
+    {
+      "q": "What is gossypol and why is it a concern?",
+      "options": ["A) A vitamin in maize", "B) A toxic compound in cottonseed cake", "C) A type of protein", "D) A mineral in limestone"],
+      "answer": "B",
+      "explanation": "Gossypol is a toxic compound found in cottonseed that can harm cattle if consumed in excess, so limits are set."
+    },
+    {
+      "q": "In spreadsheet formulation, what does the Solver 'Set Objective' do?",
+      "options": ["A) Sets the target nutrient level", "B) Sets the cell to be minimized or maximized", "C) Sets the ingredient limits", "D) Sets the number of iterations"],
+      "answer": "B",
+      "explanation": "The objective cell is typically total cost, which you want to minimize."
+    },
+    {
+      "q": "What is a key advantage of using linear programming over manual methods?",
+      "options": ["A) It is easier to do by hand", "B) It can handle many ingredients and constraints simultaneously", "C) It requires no data", "D) It always gives the same result"],
+      "answer": "B",
+      "explanation": "Linear programming can optimize complex formulations with multiple ingredients and constraints, which is difficult manually."
+    },
+    {
+      "q": "After formulating a diet, what is the final step before feeding to cattle?",
+      "options": ["A) Mix and feed immediately", "B) Verify nutrient levels and cost, then test with a few animals", "C) Sell it", "D) Store for a year"],
+      "answer": "B",
+      "explanation": "Verification and small-scale testing help ensure the diet is safe, effective, and practical before large-scale use."
+    }
+  ],
+  "videos": [
+    "Pearson square feed formulation cattle",
+    "linear programming feed formulation Excel",
+    "cattle feed formulation Africa"
+  ]
+}

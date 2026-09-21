@@ -1,0 +1,218 @@
+﻿{
+  "course": "Petrol and Diesel Engine Fundamentals: 0 to 12 Litres",
+  "module_number": 8,
+  "module_title": "Engine Management and Electronics",
+  "lessons": [
+    {
+      "title": "ECU Inputs: Sensors and Actuators",
+      "body": "The Engine Control Unit (ECU) is the brain of your engine. It reads signals from sensors, decides what to do, and then commands actuators to make changes. Think of sensors as the ECU's eyes and ears, and actuators as its hands. Common sensors include the Mass Air Flow (MAF) sensor, Manifold Absolute Pressure (MAP) sensor, Throttle Position Sensor (TPS), Oxygen (O2) sensor, coolant temperature sensor, and crankshaft/camshaft position sensors. Actuators include fuel injectors, ignition coils, idle air control valves, and various solenoids.\n\nIn Africa, heat, dust, and poor fuel quality can quickly damage sensors. For example, a dirty MAF sensor in a Toyota Hilux 2.5D4D will cause black smoke and poor fuel economy. You can clean it with MAF cleaner spray (not brake cleaner!) and a soft brush. A faulty coolant temperature sensor might make the engine hard to start when cold. Always check sensor wiring for cracks or corrosionâespecially near the exhaust manifold where heat is intense.\n\nTesting sensors: Use a multimeter to check resistance and voltage. For a TPS, you should see a smooth voltage change from about 0.5V at idle to 4.5V at full throttle. For a MAP sensor, check reference voltage (usually 5V) and signal voltage with a vacuum pump. A crankshaft position sensor should produce an AC voltage pulse when cranking; if not, the engine won't start.\n\nActuators can be tested by applying 12V briefly (for injectors, use a noid light or listen for clicking). A stuck-open injector will flood the cylinder; a stuck-closed one will cause a misfire. In many African workshops, you can use a simple 12V test light and a paperclip to check circuits. Remember: always disconnect the battery before unplugging sensors to avoid damaging the ECU.\n\nKeep a notebook of sensor values for a known-good engine. That baseline will help you diagnose faults quickly when a vehicle comes in with a complaint."
+    },
+    {
+      "title": "Ignition Systems: Conventional to Coil-on-Plug",
+      "body": "Ignition systems have evolved from contact points to modern coil-on-plug (COP). In older engines (like a Toyota 3Y or Nissan A15), a single coil sends high voltage through a distributor to spark plugs. The distributor has points or an electronic pickup, a rotor, and a cap. Common problems: worn points (gap 0.4-0.5mm), cracked cap, carbon tracking, and faulty condenser. In Africa, moisture and dust cause misfires; clean and dry the cap, and apply dielectric grease.\n\nElectronic ignition (EI) replaced points with a reluctor wheel and pickup coil. You still have a distributor but no points. The ECU controls timing. A faulty ignition module (often inside the distributor) causes no-start or rough running. Test for spark at the coil wire; if weak, check module and coil resistance (primary 0.5-1.5 ohms, secondary 8,000-15,000 ohms).\n\nDistributorless ignition (waste spark) uses two coils for four cylinders. Each coil fires two plugs simultaneouslyâone on compression, one on exhaust. This system (common on Opel and some Ford) has no distributor. If one plug fails, both cylinders misfire. Check coil pack resistance and plug wires (resistance should be 5,000-10,000 ohms per foot).\n\nCoil-on-plug (COP) is the modern standard. Each plug has its own coil, often under a cover. The ECU triggers each coil individually. COP coils fail due to heat and vibration, especially in African heat. Symptoms: misfire under load, check engine light flashing. Test COP coils with a spark tester or swap with a known-good cylinder. Primary resistance is typically 0.5-1.0 ohm; secondary 5,000-15,000 ohms. A quick test: unplug the coil and listen for a change in idle; if no change, that cylinder is dead.\n\nWhen replacing spark plugs, use the correct heat range and gap (e.g., 0.8mm for many African-market Toyotas). Iridium plugs last longer but cost more. Always apply anti-seize on plug threads in aluminium heads."
+    },
+    {
+      "title": "Fuel Injection Control Strategies",
+      "body": "Fuel injection replaced carburettors for better efficiency and emissions. The ECU calculates fuel based on air mass, engine speed, temperature, and oxygen feedback. Two main strategies: speed-density (uses MAP sensor) and mass-air-flow (uses MAF sensor). Most African vehicles use either. For example, a Toyota Corolla 1.6 uses a MAF; a Nissan Hardbody 2.4 uses a MAP.\n\nIn speed-density, the ECU estimates air mass from MAP, RPM, and intake air temperature. A vacuum leak leans the mixture, causing a lean misfire. In MAF systems, a dirty MAF under-reports air, so the ECU injects less fuelâengine runs lean. Clean MAF with dedicated cleaner. Never touch the hot wire.\n\nInjection modes: sequential (each injector fires individually), batch (injectors fire in groups), and simultaneous (all at once). Sequential is most efficient but requires a cam sensor to know which cylinder is on compression. If cam sensor fails, the ECU may revert to batch modeâengine still runs but less efficiently.\n\nFuel trim is the ECU's short-term and long-term adjustment to mixture. Short-term trim (STFT) changes instantly; long-term trim (LTFT) learns over time. Normal trims are within Â±10%. If LTFT is +25%, the engine is running leanâlook for vacuum leaks, weak fuel pump, or dirty injectors. If -25%, it's richâcheck fuel pressure regulator or leaking injectors.\n\nIn Africa, fuel quality is a major issue. Dirty fuel clogs injectors. Use a fuel pressure gauge to test: typical port injection runs 2.5-3.5 bar (36-50 psi). If low, change fuel filter and check pump. You can clean injectors ultrasonically or use a fuel additive. For diesel, common rail systems run up to 1,800 barânever crack injector lines while running; high pressure can inject fuel into your skin."
+    },
+    {
+      "title": "On-Board Diagnostics (OBD) and Fault Codes",
+      "body": "OBD is your engine's self-diagnosis system. Since 1996, most vehicles use OBD-II (16-pin D-shaped connector under the dash). In Africa, many older vehicles have manufacturer-specific systems (e.g., Toyota's TE1 or Nissan's Consult). You can buy a cheap OBD-II Bluetooth adapter (ELM327) for about $10 and use a phone app like Torque or Car Scanner. For older vehicles, a paperclip or LED blink code reader works.\n\nWhen the check engine light (CEL) comes on, the ECU stores a Diagnostic Trouble Code (DTC). Codes are like P0301 (misfire cylinder 1), P0171 (system too lean), P0420 (catalyst efficiency low). The first letter: P=powertrain, B=body, C=chassis, U=network. The first digit after P: 0=generic, 1=manufacturer-specific. Always write down freeze frame dataâit shows engine conditions when the fault occurred (RPM, load, temperature).\n\nTo read codes without a scanner, locate the diagnostic connector (often in engine bay). For Toyota pre-OBD-II, short terminals TE1 and E1 with a paperclip, turn ignition on, and count flashes of the CEL. For example, code 12 = one flash, pause, two flashes. Nissan uses a similar method with a screw on the ECU. Get a repair manual for your vehicle.\n\nAfter repairs, clear codes by disconnecting the battery for 30 seconds or using the scanner. Drive the vehicle through a \"drive cycle\" to reset readiness monitors. If the code returns, the fault is still present. Common African issues: P0300 (random misfire) from bad plugs or coils; P0401 (EGR flow insufficient) from carbon buildup; P0087 (fuel rail pressure too low) from clogged diesel filter.\n\nDon't just replace parts based on the code. A P0171 might be a vacuum leak, not a bad O2 sensor. Always verify with live data."
+    },
+    {
+      "title": "Data Logging and Live Sensor Analysis",
+      "body": "Live data is the real-time view of what the ECU sees. A scan tool or app can display sensor values as the engine runs. This is far more powerful than just reading codes. For example, a P0300 misfire code might be caused by a lean condition; live data shows fuel trims at +25% and O2 sensor switching slowly. That points to a vacuum leak or weak fuel pump.\n\nKey parameters to monitor: RPM, coolant temperature, intake air temperature, MAF (g/s), MAP (kPa), throttle position (%), short-term and long-term fuel trims, O2 sensor voltage (should switch 0.1-0.9V rapidly), ignition advance, and injector pulse width (ms). On a warm idle, a 1.6L engine might show MAF 2-5 g/s, MAP 30-40 kPa, O2 switching 1-2 times per second. If O2 stays low (0.1-0.3V), it's lean; if high (0.8-0.9V), rich.\n\nData logging means recording these values over time. Many apps let you export to CSV and graph them. This is useful for intermittent faults. For example, a vehicle that cuts out at 3,000 RPM: log RPM, throttle, and fuel trim. If fuel trim goes lean just before the cut, suspect fuel delivery. If ignition advance drops to zero, suspect crank sensor.\n\nIn Africa, where road tests are common, mount your phone safely and have a helper watch data. You can also use a multimeter with min/max recording for sensors like TPS. Check for glitches: a TPS that jumps from 1.5V to 4.5V instantly indicates a dead spot. A MAP sensor that reads 100 kPa at idle (should be 30-40) means a bad sensor or wiring.\n\nPractice on a known-good vehicle first. Record idle, 2,000 RPM, and a snap throttle. Then compare to a faulty vehicle. The differences will teach you more than any textbook."
+    },
+    {
+      "title": "Using Scan Tools and Oscilloscopes",
+      "body": "A scan tool is essential for modern engine work. Basic OBD-II scanners cost $20-$100 and read codes, live data, and freeze frames. Higher-end tools (e.g., Autel, Launch) do bidirectional controls, relearns, and manufacturer-specific codes. In Africa, many workshops use Chinese clones like Delphi or Autocom. They work, but update software carefully.\n\nFor older vehicles without OBD-II, you need a manufacturer-specific scanner or a blink code reader. For example, a Toyota 22RE uses a check engine light and a diagnostic box. You can make a simple LED blink reader with a 330-ohm resistor and an LED. Plug into TE1 and E1, turn ignition on, and count flashes.\n\nAn oscilloscope (scope) shows electrical signals as a graph over time. It's invaluable for diagnosing sensors and actuators that a multimeter can't catch. A basic USB scope (e.g., Hantek 6022BE) costs about $60 and works with a laptop. Use it to check crankshaft position sensors (should show a sine wave or square wave), injector pulse (should show a sharp drop to 0V then back to 12V), and ignition coils (primary and secondary waveforms).\n\nFor example, a no-start on a Nissan 1.6: connect the scope to the crank sensor. If no signal while cranking, the sensor or wiring is bad. If signal is weak, check air gap (typically 0.5-1.5mm). For injectors, a scope can show if the ECU is grounding the injector. If you see 12V constant but no pulse, the ECU driver may be faulty.\n\nIn dusty African conditions, scope leads and connectors must be clean. Always calibrate your scope and set the time base correctly. Start with 10ms/div and 5V/div for most sensors. Practice on a running engine to see normal patterns. Record screenshots for comparison. A scope turns you from a parts changer into a true diagnostician."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is the primary function of the ECU in an engine management system?",
+      "options": ["A) To store fuel", "B) To read sensors and control actuators", "C) To filter air", "D) To ignite the spark plugs directly"],
+      "answer": "B",
+      "explanation": "The ECU reads sensor inputs and commands actuators to control engine operation."
+    },
+    {
+      "q": "Which sensor measures the amount of air entering the engine?",
+      "options": ["A) Oxygen sensor", "B) Coolant temperature sensor", "C) Mass Air Flow (MAF) sensor", "D) Throttle Position Sensor"],
+      "answer": "C",
+      "explanation": "The MAF sensor directly measures the mass of air entering the engine."
+    },
+    {
+      "q": "What is a common symptom of a dirty MAF sensor?",
+      "options": ["A) Black smoke and poor fuel economy", "B) Engine overheating", "C) Brake failure", "D) Transmission slipping"],
+      "answer": "A",
+      "explanation": "A dirty MAF under-reports air, causing a rich condition with black smoke and poor economy."
+    },
+    {
+      "q": "When testing a Throttle Position Sensor (TPS), what voltage range is typical at idle and full throttle?",
+      "options": ["A) 0V to 12V", "B) 0.5V to 4.5V", "C) 5V to 0V", "D) 1V to 2V"],
+      "answer": "B",
+      "explanation": "Most TPS sensors output about 0.5V at idle and 4.5V at wide open throttle."
+    },
+    {
+      "q": "Which actuator is responsible for delivering fuel into the engine?",
+      "options": ["A) Ignition coil", "B) Fuel injector", "C) Idle air control valve", "D) Oxygen sensor"],
+      "answer": "B",
+      "explanation": "Fuel injectors are actuators that spray fuel into the intake or cylinder."
+    },
+    {
+      "q": "In a conventional ignition system with a distributor, what component fires the spark plugs?",
+      "options": ["A) Coil-on-plug", "B) Distributor cap and rotor", "C) Crankshaft sensor", "D) ECU directly"],
+      "answer": "B",
+      "explanation": "The distributor cap and rotor distribute high voltage from the coil to each spark plug."
+    },
+    {
+      "q": "What is a common cause of misfire in a distributorless ignition system (waste spark)?",
+      "options": ["A) Faulty spark plug wires", "B) Low coolant", "C) Dirty oil", "D) Worn brake pads"],
+      "answer": "A",
+      "explanation": "In waste spark systems, faulty plug wires can cause misfires on two cylinders."
+    },
+    {
+      "q": "What is the primary advantage of coil-on-plug (COP) ignition?",
+      "options": ["A) Cheaper to manufacture", "B) Eliminates spark plug wires and improves reliability", "C) Uses less fuel", "D) Requires no maintenance"],
+      "answer": "B",
+      "explanation": "COP eliminates high-voltage spark plug wires, reducing misfire sources and improving reliability."
+    },
+    {
+      "q": "Which fuel injection strategy uses a MAP sensor to estimate air mass?",
+      "options": ["A) Mass air flow", "B) Speed-density", "C) Sequential", "D) Batch"],
+      "answer": "B",
+      "explanation": "Speed-density systems calculate air mass from MAP, RPM, and intake air temperature."
+    },
+    {
+      "q": "What does a long-term fuel trim (LTFT) of +25% indicate?",
+      "options": ["A) Engine running rich", "B) Engine running lean", "C) Normal operation", "D) Faulty oxygen sensor"],
+      "answer": "B",
+      "explanation": "Positive fuel trim means the ECU is adding fuel to compensate for a lean condition."
+    },
+    {
+      "q": "What is the typical fuel pressure for a port fuel injection system?",
+      "options": ["A) 0.5-1.0 bar", "B) 2.5-3.5 bar", "C) 10-15 bar", "D) 100-200 bar"],
+      "answer": "B",
+      "explanation": "Port fuel injection typically operates at 2.5-3.5 bar (36-50 psi)."
+    },
+    {
+      "q": "What does OBD-II stand for?",
+      "options": ["A) On-Board Diagnostics II", "B) Off-Board Diagnostics II", "C) On-Board Data II", "D) Over-Board Diagnostics II"],
+      "answer": "A",
+      "explanation": "OBD-II is the second generation of On-Board Diagnostics."
+    },
+    {
+      "q": "Which DTC indicates a misfire in cylinder 1?",
+      "options": ["A) P0171", "B) P0301", "C) P0420", "D) P0401"],
+      "answer": "B",
+      "explanation": "P0301 specifically indicates a misfire in cylinder 1."
+    },
+    {
+      "q": "How can you read fault codes on a pre-OBD-II Toyota?",
+      "options": ["A) Use a Bluetooth adapter", "B) Short TE1 and E1 with a paperclip and count CEL flashes", "C) Connect a laptop", "D) Press the accelerator 5 times"],
+      "answer": "B",
+      "explanation": "Shorting TE1 and E1 puts the ECU in diagnostic mode, flashing the check engine light."
+    },
+    {
+      "q": "What is freeze frame data?",
+      "options": ["A) A snapshot of engine conditions when a fault occurred", "B) A video of the engine", "C) The ECU's software version", "D) A list of all possible codes"],
+      "answer": "A",
+      "explanation": "Freeze frame records sensor values at the moment the DTC was set."
+    },
+    {
+      "q": "What should you do after repairing a fault and clearing codes?",
+      "options": ["A) Immediately sell the car", "B) Drive through a drive cycle to reset readiness monitors", "C) Disconnect the battery for a week", "D) Replace the ECU"],
+      "answer": "B",
+      "explanation": "A drive cycle allows the ECU to run its self-tests and set readiness monitors."
+    },
+    {
+      "q": "Which live data parameter indicates a lean condition if it stays low?",
+      "options": ["A) Coolant temperature", "B) O2 sensor voltage", "C) RPM", "D) Throttle position"],
+      "answer": "B",
+      "explanation": "O2 sensor voltage below 0.45V continuously indicates a lean exhaust mixture."
+    },
+    {
+      "q": "What is a normal MAF reading at warm idle for a 1.6L engine?",
+      "options": ["A) 0.5-1.0 g/s", "B) 2-5 g/s", "C) 10-15 g/s", "D) 20-30 g/s"],
+      "answer": "B",
+      "explanation": "A typical 1.6L engine at idle draws about 2-5 grams per second of air."
+    },
+    {
+      "q": "What does a TPS voltage that jumps instantly from 1.5V to 4.5V indicate?",
+      "options": ["A) Normal operation", "B) A dead spot in the sensor", "C) A short to ground", "D) A faulty ECU"],
+      "answer": "B",
+      "explanation": "A sudden jump indicates a worn or dirty spot in the TPS resistive track."
+    },
+    {
+      "q": "Which tool is best for capturing intermittent electrical glitches?",
+      "options": ["A) Multimeter", "B) Oscilloscope", "C) Test light", "D) Scan tool"],
+      "answer": "B",
+      "explanation": "An oscilloscope graphs signals over time, making short glitches visible."
+    },
+    {
+      "q": "What is the typical resistance range for a COP secondary coil?",
+      "options": ["A) 0.5-1.0 ohm", "B) 5,000-15,000 ohms", "C) 100-200 ohms", "D) 1-2 ohms"],
+      "answer": "B",
+      "explanation": "COP secondary resistance is usually between 5,000 and 15,000 ohms."
+    },
+    {
+      "q": "What does a crankshaft position sensor produce when the engine is cranking?",
+      "options": ["A) A constant 5V", "B) An AC voltage pulse", "C) A DC voltage of 12V", "D) No signal"],
+      "answer": "B",
+      "explanation": "A magnetic crankshaft sensor generates an AC voltage as teeth pass the coil."
+    },
+    {
+      "q": "Which fuel injection mode fires each injector individually?",
+      "options": ["A) Simultaneous", "B) Batch", "C) Sequential", "D) Grouped"],
+      "answer": "C",
+      "explanation": "Sequential injection fires each injector just before its cylinder's intake stroke."
+    },
+    {
+      "q": "What is a common cause of P0401 (EGR flow insufficient)?",
+      "options": ["A) Carbon buildup in EGR passages", "B) Low tire pressure", "C) Bad spark plugs", "D) Faulty MAF sensor"],
+      "answer": "A",
+      "explanation": "Carbon deposits restrict EGR flow, triggering P0401."
+    },
+    {
+      "q": "What should you do before unplugging a sensor on a modern vehicle?",
+      "options": ["A) Disconnect the battery", "B) Turn on the air conditioning", "C) Rev the engine", "D) Nothing special"],
+      "answer": "A",
+      "explanation": "Disconnecting the battery prevents accidental short circuits that can damage the ECU."
+    },
+    {
+      "q": "Which scanner feature allows you to command actuators on and off?",
+      "options": ["A) Live data", "B) Bidirectional controls", "C) Freeze frame", "D) Readiness monitors"],
+      "answer": "B",
+      "explanation": "Bidirectional controls let the scan tool command actuators for testing."
+    },
+    {
+      "q": "What is the purpose of a noid light?",
+      "options": ["A) To test injector pulse", "B) To check spark", "C) To measure fuel pressure", "D) To read codes"],
+      "answer": "A",
+      "explanation": "A noid light plugs into an injector connector and flashes when the injector is pulsed."
+    },
+    {
+      "q": "What does a MAP sensor reading of 100 kPa at idle indicate?",
+      "options": ["A) Normal", "B) A vacuum leak", "C) A faulty sensor or wiring", "D) High altitude"],
+      "answer": "C",
+      "explanation": "At idle, MAP should be low (30-40 kPa); 100 kPa indicates atmospheric pressure, so the sensor is likely bad."
+    },
+    {
+      "q": "Why is it important to use the correct spark plug gap?",
+      "options": ["A) To save fuel", "B) To ensure proper ignition and prevent misfire", "C) To reduce engine noise", "D) To increase oil life"],
+      "answer": "B",
+      "explanation": "Incorrect gap can cause weak spark, misfire, and poor performance."
+    },
+    {
+      "q": "What is the first step when diagnosing a check engine light?",
+      "options": ["A) Replace the O2 sensor", "B) Read the fault codes", "C) Clear the codes", "D) Disconnect the battery"],
+      "answer": "B",
+      "explanation": "Reading codes gives you a starting point for diagnosis."
+    }
+  ],
+  "videos": [
+    "how to test ECU sensors with multimeter",
+    "coil on plug ignition testing oscilloscope",
+    "OBD2 live data fuel trim explained"
+  ]
+}

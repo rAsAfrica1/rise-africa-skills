@@ -1,0 +1,224 @@
+﻿{
+  "course": "Robotics",
+  "module_number": 12,
+  "module_title": "Advanced Robotics and Capstone",
+  "lessons": [
+    {
+      "title": "Swarm Robotics and Multi-Robot Systems",
+      "body": "Swarm robotics uses many simple robots that work together to do a big task, like a team of ants. In Africa, this is useful for farming, search and rescue, and environmental monitoring. For example, you can build a swarm of 10 small robots using Arduino Nano, nRF24L01 radio modules, and cheap DC motors. Each robot follows simple rules: stay close to neighbors, avoid collisions, and move toward a goal. You program them in C++ with the Arduino IDE. A good starting project is a swarm that spreads out to cover a field and reports soil moisture. Each robot has a soil moisture sensor (like the capacitive v1.2) and sends data back to a base station via LoRa (e.g., SX1278). The base station runs Python on a Raspberry Pi and displays a map. Key challenges: communication range (LoRa gives 2-5 km in open fields), power (use 18650 lithium batteries), and coordination (use a simple flocking algorithm like Reynolds' boids). For a capstone, you could simulate a swarm in Webots or CoppeliaSim before building. Real-world African examples: using swarm robots for locust detection in the Sahel, or for mapping informal settlements after floods. Start with 3 robots, then scale up. Remember: swarm intelligence means no single leader; each robot follows local rules. Test your swarm in an open area like a football field. Measure how long it takes to cover 100 square meters. With good code, 5 robots can cover that in under 10 minutes.",
+      "body_word_count": 300
+    },
+    {
+      "title": "Reinforcement Learning for Robotics",
+      "body": "Reinforcement learning (RL) teaches a robot by giving rewards for good actions. Instead of programming every move, you let the robot try, fail, and learn. In Africa, RL is used for agricultural robots that learn to pick ripe tomatoes or navigate uneven terrain. You need a simulation environment like OpenAI Gym or PyBullet, and a robot model (e.g., a 2-wheeled rover). Use Python with libraries like Stable Baselines3. Start with a simple task: train a robot to reach a target while avoiding obstacles. Define a reward: +100 for reaching goal, -1 for each step, -50 for hitting an obstacle. Use Q-learning or PPO (Proximal Policy Optimization). Training takes time: on a laptop with an Intel i5, 100,000 steps might take 2 hours. For real robots, use a Raspberry Pi 4 with a Google Coral USB accelerator for faster inference. Transfer learning helps: train in simulation, then fine-tune on the real robot. A practical project: build a line-following robot that learns to handle gaps and intersections. Use a camera (Pi Camera v2) and a CNN to process images. Reward it for staying on the line. After 50,000 episodes, it can generalize to new tracks. Challenges: sample efficiency (RL needs many trials), safety (don't let the robot break), and sim-to-real gap. Mitigate by adding noise to simulation. For African conditions, consider dusty environments and variable lighting. Use domain randomization: vary textures, lighting, and camera angles during training. This makes the policy robust. Start with a small robot like the Elegoo Tumbller. Document your reward function and hyperparameters. A good capstone: an RL-based robot that sorts plastic waste for recycling.",
+      "body_word_count": 300
+    },
+    {
+      "title": "Soft Robotics and Bio-Inspired Design",
+      "body": "Soft robotics uses flexible materials like silicone, rubber, and fabric instead of rigid metal. This makes robots safer for handling delicate crops, fish, or human patients. In Africa, soft robots can help in agriculture (picking fruits), healthcare (rehabilitation gloves), and mining (inspecting tight spaces). You can build a soft gripper using silicone rubber (e.g., Smooth-On Ecoflex 00-30) and a 3D-printed mold. The gripper has air channels; when you pump air in with a syringe or small compressor, it bends and grips. A simple project: make a soft pneumatic gripper that can pick a tomato without bruising it. You need: Ecoflex, a mold (design in Fusion 360, print in PLA), a syringe, and tubing. Casting takes 4 hours to cure. Then attach to a robot arm (like the Arduino-controlled Braccio). Control air pressure with a solenoid valve and an Arduino. Bio-inspired design means copying nature: gecko feet for climbing, elephant trunk for flexible manipulation, snake scales for friction. For example, a snake robot with passive wheels can move through rubble. Use a series of servo motors (e.g., SG90) and a flexible spine made of spring steel. Program a sine wave gait in Arduino. Another idea: a fish-inspired robot for water quality monitoring in Lake Victoria. Use a flexible tail and a DC motor with a cam. Soft robots are cheap: a gripper costs under $20. But they are hard to model and control. Use PID control for pressure. Test with different objects: eggs, mangoes, plastic bottles. For a capstone, combine soft and rigid: a soft gripper on a rigid arm. Document your casting process and pressure-to-bend relationship. Share your mold files on GitHub.",
+      "body_word_count": 300
+    },
+    {
+      "title": "Cloud Robotics and IoT Integration",
+      "body": "Cloud robotics means your robot uses internet services for heavy computing, storage, and coordination. IoT integration connects sensors and actuators to the cloud. In Africa, where local computing power may be limited, cloud robotics lets you use Google Cloud, AWS, or Azure for tasks like image recognition or path planning. For example, a robot in Nairobi can send camera images to a cloud server, which runs a machine learning model and sends back commands. You need a stable internet connection: use a 4G LTE dongle (e.g., Huawei E3372) or a smartphone hotspot. The robot has a Raspberry Pi 4 with a camera. It captures an image, compresses it (JPEG quality 70), and uploads via MQTT to a cloud broker (e.g., HiveMQ or Mosquitto on a VPS). The cloud runs a Python script with TensorFlow Lite to detect objects (e.g., ripe mangoes). It publishes results back to the robot. Latency: with 4G, round-trip time is 100-300 ms. That's fine for slow-moving robots. For real-time control, use edge computing: run a small model on the robot and only send summary data to the cloud. IoT platforms like ThingsBoard or Blynk let you monitor robot status from a phone. A practical project: a solar-powered robot that monitors soil moisture and temperature in a farm, sending data to the cloud every 15 minutes. Use ESP32 with WiFi, DHT22 sensor, and a capacitive soil sensor. Store data in Google Sheets via IFTTT or use Firebase. For a capstone, build a fleet of 3 robots that share a map via the cloud. Each robot updates the map with its sensor data. Use ROS2 with a cloud bridge (e.g., rosbridge). Challenges: data costs (use narrowband IoT or LoRaWAN where possible), security (use TLS and API keys), and power. Document your cloud architecture and costs.",
+      "body_word_count": 300
+    },
+    {
+      "title": "Capstone Project Design and Planning",
+      "body": "The capstone is your chance to build a complete robot that solves a real African problem. Start by choosing a problem: crop disease detection, waste sorting, water quality monitoring, or assistive robotics. Define clear objectives: what will the robot do? For example: 'A robot that autonomously navigates a maize field and identifies fall armyworm damage using a camera.' Write a project charter: scope, deliverables, timeline, budget, and team roles. Use a Gantt chart (free tools: GanttProject or Trello). Break the project into phases: research (1 week), design (1 week), build (2 weeks), test (1 week), document (1 week). Budget: list every component. A typical capstone costs $150-$300. Example: Raspberry Pi 4 ($35), Pi Camera ($25), 4WD chassis ($20), motor driver ($10), 18650 batteries ($15), sensors ($30), 3D printing filament ($20). Source locally: check Kenyan or Nigerian electronics shops like Nerokas or Jumia. For design, use Fusion 360 (free for students) or FreeCAD. Draw a system diagram: sensors -> microcontroller -> actuators, with power and communication. Write pseudocode for main behaviors. Plan for testing: define success metrics. For the maize robot: 90% accuracy in detecting damaged leaves, 80% field coverage in 10 minutes. Consider safety: avoid sharp blades, use low voltage. Plan for failure: what if the camera fails? Add a backup. Document everything in a GitHub repository. Use a README, schematics, and code comments. For the demo, prepare a 5-minute presentation and a live demo. Record a video backup. Get feedback from a mentor or local farmer. Remember: a simple robot that works is better than a complex one that doesn't. Start with a minimum viable product (MVP) and add features if time allows.",
+      "body_word_count": 300
+    },
+    {
+      "title": "Capstone Project Implementation and Demo",
+      "body": "Now you build. Follow your plan but stay flexible. Start with the mechanical assembly: mount motors, wheels, and chassis. Solder connections neatly; use heat shrink. Test each subsystem separately: power, motors, sensors, camera. Write modular code: one file for motor control, one for sensors, one for main loop. Use version control (Git) and commit daily. For the maize robot example, here's a step-by-step: 1) Assemble 4WD chassis with 4 DC motors and L298N driver. 2) Connect Raspberry Pi 4 to camera and motor driver via GPIO. 3) Install Raspbian, OpenCV, and Python. 4) Write a Python script that captures an image every 2 seconds, runs a TensorFlow Lite model (trained on 500 images of healthy and damaged leaves), and if damage is detected, logs GPS coordinates (using a NEO-6M GPS module) and stops to take a close-up. 5) Test in a small plot. Use a power bank for Pi and a separate 12V battery for motors. Expect issues: motor noise, loose wires, overheating. Debug with a multimeter and print statements. For the demo, create a poster and a 3-minute video. Show the robot navigating and detecting a plant. Have a backup plan: if the robot fails, show a video of successful tests. Present your results: accuracy, speed, cost. Discuss limitations and future work. For example: 'Accuracy was 85% in good light, but dropped to 60% in shadows. Future work: add a fill light.' Share your code and design files on GitHub and Hackaday.io. This helps others in Africa build on your work. Celebrate your achievement: you've gone from zero to a working advanced robot. Now you can apply for grants (e.g., from the African Robotics Network) or start a business. Keep iterating.",
+      "body_word_count": 300
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is the main advantage of swarm robotics?",
+      "options": ["A) Each robot is very complex", "B) Many simple robots can do a big task", "C) It requires no communication", "D) It only works indoors"],
+      "answer": "B",
+      "explanation": "Swarm robotics uses many simple robots that cooperate to achieve a goal, similar to ants."
+    },
+    {
+      "q": "Which communication module is recommended for long-range swarm communication in African fields?",
+      "options": ["A) Bluetooth", "B) WiFi", "C) LoRa SX1278", "D) Infrared"],
+      "answer": "C",
+      "explanation": "LoRa provides 2-5 km range in open fields, suitable for agricultural swarms."
+    },
+    {
+      "q": "In swarm robotics, what is a common coordination algorithm?",
+      "options": ["A) PID control", "B) Reynolds' boids", "C) Kalman filter", "D) A* search"],
+      "answer": "B",
+      "explanation": "Reynolds' boids model flocking behavior using separation, alignment, and cohesion rules."
+    },
+    {
+      "q": "What is a key challenge when scaling up a swarm?",
+      "options": ["A) Too much memory", "B) Communication range and power", "C) Robots become too smart", "D) Too many sensors"],
+      "answer": "B",
+      "explanation": "As swarm size grows, maintaining communication and power becomes difficult."
+    },
+    {
+      "q": "Which simulation tool can be used to test swarm behavior before building?",
+      "options": ["A) Webots", "B) Excel", "C) Photoshop", "D) AutoCAD"],
+      "answer": "A",
+      "explanation": "Webots is a robot simulation environment that supports multi-robot systems."
+    },
+    {
+      "q": "What is reinforcement learning?",
+      "options": ["A) Programming every move", "B) Learning by rewards and penalties", "C) Copying human actions", "D) Using pre-built maps"],
+      "answer": "B",
+      "explanation": "RL trains an agent through trial and error using reward signals."
+    },
+    {
+      "q": "Which library is commonly used for RL in Python?",
+      "options": ["A) NumPy", "B) Stable Baselines3", "C) Matplotlib", "D) Flask"],
+      "answer": "B",
+      "explanation": "Stable Baselines3 provides implementations of RL algorithms like PPO and A2C."
+    },
+    {
+      "q": "What is a typical reward for reaching a goal in RL?",
+      "options": ["A) -100", "B) 0", "C) +100", "D) +1"],
+      "answer": "C",
+      "explanation": "A large positive reward encourages the agent to reach the goal."
+    },
+    {
+      "q": "What is the sim-to-real gap?",
+      "options": ["A) Difference between simulation and reality", "B) A type of robot", "C) A communication protocol", "D) A power supply"],
+      "answer": "A",
+      "explanation": "The sim-to-real gap refers to the performance drop when moving from simulation to a real robot."
+    },
+    {
+      "q": "What technique helps make RL policies robust to African conditions?",
+      "options": ["A) Domain randomization", "B) Overfitting", "C) Using only one scenario", "D) Ignoring lighting"],
+      "answer": "A",
+      "explanation": "Domain randomization varies simulation parameters to improve real-world generalization."
+    },
+    {
+      "q": "What material is commonly used in soft robotics?",
+      "options": ["A) Steel", "B) Silicone rubber", "C) Aluminum", "D) Carbon fiber"],
+      "answer": "B",
+      "explanation": "Silicone rubber like Ecoflex is flexible and safe for soft robots."
+    },
+    {
+      "q": "How does a pneumatic soft gripper actuate?",
+      "options": ["A) Electric motor", "B) Air pressure", "C) Magnets", "D) Heat"],
+      "answer": "B",
+      "explanation": "Air pressure inflates channels, causing bending or gripping."
+    },
+    {
+      "q": "Which bio-inspired design is used for climbing?",
+      "options": ["A) Gecko feet", "B) Elephant trunk", "C) Snake scales", "D) Fish tail"],
+      "answer": "A",
+      "explanation": "Gecko feet have microscopic hairs that create van der Waals forces for climbing."
+    },
+    {
+      "q": "What is a challenge of soft robots?",
+      "options": ["A) Too heavy", "B) Hard to model and control", "C) Too expensive", "D) Need high voltage"],
+      "answer": "B",
+      "explanation": "Soft materials have nonlinear behavior, making modeling and control difficult."
+    },
+    {
+      "q": "What is a good application of soft robotics in Africa?",
+      "options": ["A) Picking delicate fruits", "B) Welding metal", "C) Drilling rocks", "D) Cutting trees"],
+      "answer": "A",
+      "explanation": "Soft grippers can handle fruits without bruising, useful in agriculture."
+    },
+    {
+      "q": "What does cloud robotics use for heavy computation?",
+      "options": ["A) Local microcontroller", "B) Cloud servers", "C) A smartphone", "D) A calculator"],
+      "answer": "B",
+      "explanation": "Cloud robotics offloads computation to remote servers via the internet."
+    },
+    {
+      "q": "Which protocol is commonly used for IoT messaging?",
+      "options": ["A) HTTP", "B) MQTT", "C) FTP", "D) SMTP"],
+      "answer": "B",
+      "explanation": "MQTT is lightweight and ideal for IoT devices with limited bandwidth."
+    },
+    {
+      "q": "What is a typical latency for 4G cloud robotics?",
+      "options": ["A) 1-5 ms", "B) 100-300 ms", "C) 1-2 seconds", "D) 10 seconds"],
+      "answer": "B",
+      "explanation": "4G round-trip latency is usually 100-300 ms, acceptable for slow robots."
+    },
+    {
+      "q": "What is edge computing in robotics?",
+      "options": ["A) Running everything in the cloud", "B) Processing data on the robot itself", "C) Using a remote controller", "D) Storing data on a USB"],
+      "answer": "B",
+      "explanation": "Edge computing processes data locally to reduce latency and bandwidth."
+    },
+    {
+      "q": "Which IoT platform can be used to monitor robot status?",
+      "options": ["A) ThingsBoard", "B) Photoshop", "C) Excel", "D) AutoCAD"],
+      "answer": "A",
+      "explanation": "ThingsBoard is an open-source IoT platform for data visualization and monitoring."
+    },
+    {
+      "q": "What is the first step in capstone project design?",
+      "options": ["A) Buy components", "B) Choose a real problem", "C) Write code", "D) Build a robot"],
+      "answer": "B",
+      "explanation": "Identifying a relevant problem ensures the project has purpose and impact."
+    },
+    {
+      "q": "What is a good tool for creating a Gantt chart?",
+      "options": ["A) GanttProject", "B) Instagram", "C) Spotify", "D) Notepad"],
+      "answer": "A",
+      "explanation": "GanttProject is a free tool for project scheduling."
+    },
+    {
+      "q": "What should a capstone budget include?",
+      "options": ["A) Only the robot cost", "B) All components and materials", "C) Only software", "D) Nothing"],
+      "answer": "B",
+      "explanation": "A complete budget lists every component, material, and potential expense."
+    },
+    {
+      "q": "What is a minimum viable product (MVP)?",
+      "options": ["A) A simple working version", "B) The final product", "C) A failed prototype", "D) A design document"],
+      "answer": "A",
+      "explanation": "MVP is the simplest version that delivers core functionality."
+    },
+    {
+      "q": "Why is version control important in capstone?",
+      "options": ["A) To track changes and collaborate", "B) To make code run faster", "C) To reduce cost", "D) To avoid coding"],
+      "answer": "A",
+      "explanation": "Git allows you to track changes, revert, and collaborate with team members."
+    },
+    {
+      "q": "What should you do before integrating subsystems?",
+      "options": ["A) Test each separately", "B) Paint the robot", "C) Write a report", "D) Order more parts"],
+      "answer": "A",
+      "explanation": "Testing subsystems individually helps isolate and fix issues early."
+    },
+    {
+      "q": "Which sensor is used for GPS in the maize robot example?",
+      "options": ["A) DHT22", "B) NEO-6M", "C) L298N", "D) SG90"],
+      "answer": "B",
+      "explanation": "NEO-6M is a common GPS module for location tracking."
+    },
+    {
+      "q": "What is a good backup for a live demo?",
+      "options": ["A) A video recording", "B) A poster", "C) A written report", "D) A second robot"],
+      "answer": "A",
+      "explanation": "A video recording ensures you can show the robot working if live demo fails."
+    },
+    {
+      "q": "Where can you share your capstone code?",
+      "options": ["A) GitHub", "B) Netflix", "C) WhatsApp", "D) TikTok"],
+      "answer": "A",
+      "explanation": "GitHub is a platform for sharing code and collaborating on projects."
+    },
+    {
+      "q": "What should you discuss in your capstone presentation?",
+      "options": ["A) Only successes", "B) Results, limitations, and future work", "C) Only failures", "D) Your favorite food"],
+      "answer": "B",
+      "explanation": "A balanced presentation includes what worked, what didn't, and next steps."
+    }
+  ],
+  "videos": [
+    "swarm robotics Arduino tutorial Africa",
+    "reinforcement learning robot arm Python",
+    "soft robotics gripper DIY silicone"
+  ]
+}

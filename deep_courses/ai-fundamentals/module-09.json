@@ -1,0 +1,218 @@
+﻿{
+  "course": "AI Fundamentals",
+  "module_number": 9,
+  "module_title": "Convolutional Neural Networks (CNNs)",
+  "lessons": [
+    {
+      "title": "Convolutional Layers and Filters",
+      "body": "A convolutional layer is the core building block of a CNN. It uses small filters (also called kernels) that slide over the input image to detect features like edges, curves, and textures. For example, a 3x3 filter moves across a 224x224 pixel image, computing dot products between the filter weights and the pixel values. This produces a feature map that highlights where the filter's pattern appears. In Africa, where many tasks involve identifying crop diseases from leaf photos or detecting defects in textiles, convolutional layers automatically learn relevant features without manual engineering.\n\nEach filter has learnable weights. During training, the network adjusts these weights to minimize error. You typically use multiple filters per layerâsay 32 or 64âeach looking for different patterns. The output depth equals the number of filters. Stride controls how many pixels the filter moves each step; padding adds zeros around the image to preserve size. A common setup: 3x3 filter, stride 1, padding 'same' keeps spatial dimensions unchanged.\n\nIn practice, you can build a convolutional layer in Python using TensorFlow/Keras: `Conv2D(32, (3,3), activation='relu', input_shape=(224,224,3))`. This creates 32 filters of size 3x3. ReLU activation introduces non-linearity. For a maize leaf disease dataset from Kenya with 5,000 images, such a layer might learn to detect yellowing edges or rust spots. The number of parameters per filter is 3x3x3 + 1 bias = 28, so 32 filters give 896 parametersâtiny compared to fully connected layers.\n\nKey hyperparameters: filter size (3x3, 5x5), number of filters, stride, padding. Start with 3x3 filters and double the number of filters as you go deeper. Visualize feature maps using tools like `matplotlib` to see what each filter responds to. On a modest laptop with GPU (e.g., NVIDIA GTX 1650), training a small CNN on 10,000 images takes about 10 minutes per epoch. Use data augmentation (rotation, zoom) to improve generalization. Remember: more filters mean more capacity but also more computation. Balance based on your dataset size and hardware."
+    },
+    {
+      "title": "Pooling Layers",
+      "body": "Pooling layers reduce the spatial size of feature maps, lowering computational load and making the network more robust to small translations. The most common is max pooling with a 2x2 window and stride 2, which halves width and height. For a 224x224 input, after one max pooling you get 112x112. Average pooling takes the mean instead of the max, but max pooling is preferred for sharp features like edges.\n\nWhy pool? It summarizes the presence of features rather than their exact location. In African agriculture, a CNN might detect a cassava mosaic virus lesion anywhere on a leaf. Pooling helps the model recognize the lesion regardless of slight shifts. It also reduces the number of parameters in subsequent layers, speeding up training and reducing overfitting. A typical CNN alternates convolution and pooling: Conv -> ReLU -> Pool -> Conv -> ReLU -> Pool -> Flatten -> Dense.\n\nImplement max pooling in Keras: `MaxPooling2D(pool_size=(2,2))`. Global average pooling is another option that averages each feature map to a single number, often used before the final dense layer to drastically cut parameters. For a 7x7x512 feature map, global average pooling yields 512 values instead of 25,088 (7*7*512). This is common in modern architectures like ResNet.\n\nPractical tip: Don't over-pool. Too much pooling loses spatial information needed for fine-grained tasks like detecting small pests. For a dataset of 5,000 images of tomato leaves, using three 2x2 max pooling layers reduces a 256x256 image to 32x32 before flattening. That's manageable. Monitor validation accuracy: if it plateaus early, try reducing pooling or adding more convolutional layers. On a CPU-only machine (e.g., Intel i5), pooling speeds up training by 30-50% compared to no pooling. Always check that your pooling window doesn't exceed the feature map size. Use `model.summary()` to verify shapes."
+    },
+    {
+      "title": "CNN Architectures: LeNet, AlexNet, VGG",
+      "body": "LeNet-5, created by Yann LeCun in 1998, was designed for handwritten digit recognition (MNIST). It has 7 layers: two convolutional layers (6 and 16 filters, 5x5), two average pooling layers, and three fully connected layers. Input is 32x32 grayscale. LeNet is tinyâabout 60,000 parametersâand trains quickly on a CPU. In Africa, you can use LeNet for reading handwritten forms or digitizing old records. It's a great starting point for understanding CNNs.\n\nAlexNet won the 2012 ImageNet competition, sparking the deep learning boom. It has 8 layers: five convolutional (with 96, 256, 384, 384, 256 filters) and three fully connected. It uses ReLU, dropout, and data augmentation. Input is 227x227 RGB. AlexNet has 60 million parameters and required two GTX 580 GPUs for training. For African learners, AlexNet is too heavy for typical laptops, but you can use a pre-trained version or reduce filters. It's a milestone because it showed that deep CNNs can dramatically outperform traditional methods.\n\nVGG-16 (2014) from Oxford is deeper: 16 layers with only 3x3 convolutions and 2x2 max pooling. It has 138 million parameters. VGG is simple and uniform but computationally expensive. In practice, you rarely train VGG from scratch on small datasets. Instead, use transfer learning. For a project classifying 10,000 images of African fabrics, VGG-16 as a feature extractor works well. You can load it in Keras: `VGG16(weights='imagenet', include_top=False)`. Then add your own dense layers. VGG's small filters capture fine details, but its size means you need a GPU with at least 8GB memory for batch size 32. Consider MobileNet or EfficientNet for mobile deployment in rural areas. Start with LeNet for learning, then move to transfer learning with VGG or ResNet for real applications."
+    },
+    {
+      "title": "Image Augmentation Techniques",
+      "body": "Image augmentation artificially increases your training set by applying random transformations to existing images. This reduces overfitting and improves generalization, especially when you have few imagesâcommon in African contexts where data collection is expensive. For a dataset of 1,000 cassava leaf images, augmentation can effectively create 10,000 variations. Common techniques: rotation (up to 30 degrees), width/height shift (10-20%), zoom (10-20%), horizontal flip, and brightness adjustment.\n\nIn Keras, use `ImageDataGenerator` or `tf.keras.layers.RandomFlip`, `RandomRotation`, etc. Example: `datagen = ImageDataGenerator(rotation_range=20, width_shift_range=0.1, height_shift_range=0.1, zoom_range=0.1, horizontal_flip=True)`. This generates batches of augmented images on the fly. For a maize disease dataset, horizontal flip is safe because leaves can appear either way. But for digit recognition, flipping would make '2' look like '5'âavoid. Similarly, vertical flip might turn a '6' into a '9'. Always consider the semantics.\n\nAdvanced techniques: cutout (randomly mask square patches), mixup (blend two images), and color jitter. Cutout helps the model focus on multiple features. For African wildlife classification (e.g., distinguishing lions from leopards), color jitter simulates different lighting conditions. Use `albumentations` library for more options. Augmentation should be applied only to training data, not validation or test. Monitor training vs validation accuracy: if training accuracy is much higher, increase augmentation.\n\nPractical numbers: With 2,000 images of cocoa pods, adding rotation, shift, and zoom can boost validation accuracy from 75% to 85%. On a CPU, augmentation adds about 20% overhead per epoch. For small datasets (<5,000 images), aggressive augmentation is key. Also, consider synthetic data generation using GANs if you have resources. But start simple: flip, rotate, zoom. Test different combinations using a validation set. Remember: augmentation doesn't create new information; it only helps the model become invariant to those transformations."
+    },
+    {
+      "title": "Transfer Learning",
+      "body": "Transfer learning uses a model pre-trained on a large dataset (like ImageNet with 1.2 million images) as a starting point for your own task. This is powerful when you have limited dataâcommon in Africa. Instead of training from scratch, you leverage learned features (edges, textures, shapes) and only fine-tune the final layers. For example, to classify 5,000 images of African medicinal plants, load a pre-trained VGG16 or ResNet50 without the top classification layer, freeze its weights, and add a new dense layer with 5 outputs (for 5 plant species).\n\nIn Keras: `base_model = VGG16(weights='imagenet', include_top=False, input_shape=(224,224,3))`. Then `for layer in base_model.layers: layer.trainable = False`. Add `GlobalAveragePooling2D()`, then `Dense(5, activation='softmax')`. Compile with Adam optimizer (learning rate 0.0001) and categorical crossentropy. Train for 10-20 epochs. With 5,000 images, this can achieve 90%+ accuracy in under 30 minutes on a GPU. On a CPU, it might take 2-3 hours, but still feasible.\n\nFine-tuning: After initial training, unfreeze the last few convolutional layers and train with a very low learning rate (e.g., 1e-5) to adapt features to your specific domain. This often improves accuracy by 5-10%. For African skin disease classification, fine-tuning the last block of ResNet50 helped capture darker skin tones better. Use a small validation set (20% of data) to monitor overfitting. If validation loss increases, stop early.\n\nPractical considerations: Choose a pre-trained model that matches your input size. MobileNetV2 is lightweight (3.5M parameters) and fast on mobile devicesâideal for field use in agriculture. EfficientNet-B0 is also efficient. Always preprocess images as the original model expected (e.g., VGG uses mean subtraction). In Keras, use `preprocess_input` from the respective module. Transfer learning is the go-to approach for most real-world African AI projects because it saves time, data, and compute. Start with a small dataset, use transfer learning, and iterate."
+    },
+    {
+      "title": "Object Detection with YOLO",
+      "body": "YOLO (You Only Look Once) is a real-time object detection algorithm that predicts bounding boxes and class probabilities in a single pass. Unlike region-based methods (R-CNN), YOLO is fastâup to 45 FPS on a GPUâmaking it suitable for video surveillance, autonomous drones, and mobile apps. In Africa, YOLO can detect crop pests, count livestock, or identify plastic waste in rivers. The latest versions (YOLOv5, YOLOv8) are easy to train with custom datasets.\n\nTo train YOLO on your own data, you need annotated images with bounding boxes. Tools like LabelImg or Roboflow help. For a dataset of 1,000 images of Fall Armyworm on maize, annotate each worm with a box. Then use YOLOv5 from Ultralytics: `git clone https://github.com/ultralytics/yolov5`, install requirements, and run `python train.py --img 640 --batch 16 --epochs 50 --data custom.yaml --weights yolov5s.pt`. The `yolov5s` model is small (7.2M parameters) and trains on a single GPU in a few hours. On a CPU, it's slower but possible with fewer epochs.\n\nYOLO outputs boxes with confidence scores and class IDs. You can deploy the trained model on a Raspberry Pi with a camera for real-time pest detection in the field. Use `torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt')` for inference. For a video feed, process frames at 10 FPS. Accuracy depends on annotation quality and dataset size. Aim for at least 100 instances per class. Data augmentation (mosaic, mixup) is built into YOLOv5 and improves robustness.\n\nPractical tips: Start with a pre-trained YOLO model and fine-tune on your dataset. Use a GPU if available; otherwise, reduce image size to 320x320. For African wildlife, YOLOv8 can detect elephants, giraffes, etc., from drone footage. Evaluate using mAP (mean Average Precision). A good model achieves mAP@0.5 above 0.7. Remember to balance classesâif one pest is rare, oversample it. YOLO is versatile and well-documented, with many African developers sharing tutorials. It's an excellent tool for building practical AI solutions."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is the primary function of a convolutional layer?",
+      "options": ["A) To reduce spatial dimensions", "B) To detect features using filters", "C) To classify images", "D) To normalize pixel values"],
+      "answer": "B",
+      "explanation": "Convolutional layers apply filters to input images to detect features like edges and textures."
+    },
+    {
+      "q": "In a convolutional layer, what does a 3x3 filter mean?",
+      "options": ["A) It processes 3 images at once", "B) It has 3 channels", "C) It covers a 3x3 pixel area", "D) It uses 3 strides"],
+      "answer": "C",
+      "explanation": "A 3x3 filter slides over a 3x3 pixel region of the input to compute dot products."
+    },
+    {
+      "q": "What is the effect of increasing the number of filters in a convolutional layer?",
+      "options": ["A) It reduces the depth of output", "B) It increases the depth of output", "C) It decreases the spatial size", "D) It has no effect on output shape"],
+      "answer": "B",
+      "explanation": "The number of filters determines the depth (number of channels) of the output feature map."
+    },
+    {
+      "q": "Which Keras function creates a convolutional layer?",
+      "options": ["A) Conv2D", "B) Dense", "C) MaxPooling2D", "D) Flatten"],
+      "answer": "A",
+      "explanation": "Conv2D is the Keras layer for 2D convolutions."
+    },
+    {
+      "q": "What is the purpose of padding in a convolutional layer?",
+      "options": ["A) To increase training speed", "B) To preserve spatial dimensions", "C) To add more filters", "D) To reduce overfitting"],
+      "answer": "B",
+      "explanation": "Padding adds zeros around the input to control the output size, often to preserve dimensions."
+    },
+    {
+      "q": "What is the main benefit of pooling layers?",
+      "options": ["A) They increase the number of parameters", "B) They reduce spatial size and computation", "C) They add non-linearity", "D) They perform classification"],
+      "answer": "B",
+      "explanation": "Pooling reduces the spatial dimensions of feature maps, lowering computational load and parameters."
+    },
+    {
+      "q": "Which type of pooling is most common in CNNs?",
+      "options": ["A) Average pooling", "B) Max pooling", "C) Min pooling", "D) Sum pooling"],
+      "answer": "B",
+      "explanation": "Max pooling is widely used because it captures the most prominent features."
+    },
+    {
+      "q": "What does a 2x2 max pooling with stride 2 do to a 224x224 feature map?",
+      "options": ["A) Keeps it 224x224", "B) Reduces to 112x112", "C) Reduces to 56x56", "D) Increases to 448x448"],
+      "answer": "B",
+      "explanation": "A 2x2 window with stride 2 halves both width and height, so 224 becomes 112."
+    },
+    {
+      "q": "What is global average pooling?",
+      "options": ["A) A pooling that averages each feature map to a single value", "B) A pooling that uses a 2x2 window", "C) A pooling that takes the maximum over the entire map", "D) A pooling that is only used in LeNet"],
+      "answer": "A",
+      "explanation": "Global average pooling averages each feature map to one number, often used before dense layers."
+    },
+    {
+      "q": "Why might too much pooling be harmful?",
+      "options": ["A) It increases parameters", "B) It loses spatial information", "C) It slows down training", "D) It causes overfitting"],
+      "answer": "B",
+      "explanation": "Excessive pooling can discard fine spatial details needed for precise tasks."
+    },
+    {
+      "q": "Which architecture was designed for handwritten digit recognition?",
+      "options": ["A) AlexNet", "B) VGG", "C) LeNet", "D) ResNet"],
+      "answer": "C",
+      "explanation": "LeNet-5 was created by Yann LeCun for MNIST digit recognition."
+    },
+    {
+      "q": "How many parameters does AlexNet have approximately?",
+      "options": ["A) 60,000", "B) 60 million", "C) 138 million", "D) 1 billion"],
+      "answer": "B",
+      "explanation": "AlexNet has about 60 million parameters."
+    },
+    {
+      "q": "What is a key characteristic of VGG architecture?",
+      "options": ["A) Uses only 3x3 convolutions", "B) Uses 5x5 convolutions", "C) Has few layers", "D) Uses no pooling"],
+      "answer": "A",
+      "explanation": "VGG is known for its uniform use of 3x3 convolutions and 2x2 max pooling."
+    },
+    {
+      "q": "Why is VGG computationally expensive?",
+      "options": ["A) It has many parameters (138M)", "B) It uses large filters", "C) It has no pooling", "D) It uses only 1x1 convolutions"],
+      "answer": "A",
+      "explanation": "VGG-16 has 138 million parameters, making it heavy to train."
+    },
+    {
+      "q": "Which architecture won the 2012 ImageNet competition?",
+      "options": ["A) LeNet", "B) AlexNet", "C) VGG", "D) YOLO"],
+      "answer": "B",
+      "explanation": "AlexNet's victory in 2012 sparked the deep learning revolution."
+    },
+    {
+      "q": "What is the primary goal of image augmentation?",
+      "options": ["A) To increase training speed", "B) To reduce overfitting", "C) To increase image resolution", "D) To convert to grayscale"],
+      "answer": "B",
+      "explanation": "Augmentation artificially expands the training set, helping the model generalize better and reducing overfitting."
+    },
+    {
+      "q": "Which augmentation technique is safe for classifying leaves but not for digits?",
+      "options": ["A) Rotation", "B) Horizontal flip", "C) Zoom", "D) Brightness adjustment"],
+      "answer": "B",
+      "explanation": "Horizontal flip changes digit orientation (e.g., '2' to '5'), but leaves are symmetric."
+    },
+    {
+      "q": "What does the Keras ImageDataGenerator do?",
+      "options": ["A) Generates synthetic images from scratch", "B) Applies real-time augmentation during training", "C) Only rotates images", "D) Reduces image size"],
+      "answer": "B",
+      "explanation": "ImageDataGenerator applies random transformations on the fly during training."
+    },
+    {
+      "q": "What is cutout augmentation?",
+      "options": ["A) Cropping the center", "B) Masking random square patches", "C) Adding noise", "D) Changing color balance"],
+      "answer": "B",
+      "explanation": "Cutout randomly masks square regions of the image to encourage robustness."
+    },
+    {
+      "q": "Why should augmentation not be applied to validation data?",
+      "options": ["A) It slows down validation", "B) It makes validation metrics unreliable", "C) It increases overfitting", "D) It is not supported by Keras"],
+      "answer": "B",
+      "explanation": "Validation should reflect real-world data; augmentation would distort evaluation."
+    },
+    {
+      "q": "What is transfer learning?",
+      "options": ["A) Training a model from scratch", "B) Using a pre-trained model and fine-tuning", "C) Transferring data between GPUs", "D) Converting models to mobile"],
+      "answer": "B",
+      "explanation": "Transfer learning leverages knowledge from a pre-trained model for a new task."
+    },
+    {
+      "q": "Which pre-trained model is lightweight for mobile deployment?",
+      "options": ["A) VGG16", "B) ResNet50", "C) MobileNetV2", "D) AlexNet"],
+      "answer": "C",
+      "explanation": "MobileNetV2 is designed to be efficient with few parameters, ideal for mobile."
+    },
+    {
+      "q": "In Keras, how do you freeze a pre-trained base model?",
+      "options": ["A) Set layer.trainable = False", "B) Set layer.trainable = True", "C) Remove the layers", "D) Use model.compile()"],
+      "answer": "A",
+      "explanation": "Setting trainable=False prevents weights from updating during training."
+    },
+    {
+      "q": "What is fine-tuning in transfer learning?",
+      "options": ["A) Training all layers from scratch", "B) Unfreezing some layers and training with a low learning rate", "C) Only training the output layer", "D) Using a smaller dataset"],
+      "answer": "B",
+      "explanation": "Fine-tuning involves unfreezing a few top layers and training them with a small learning rate."
+    },
+    {
+      "q": "Why is transfer learning particularly useful in Africa?",
+      "options": ["A) It requires no data", "B) It works well with limited data and compute", "C) It is only for image classification", "D) It is free"],
+      "answer": "B",
+      "explanation": "Transfer learning reduces the need for large datasets and expensive training, common constraints in Africa."
+    },
+    {
+      "q": "What does YOLO stand for?",
+      "options": ["A) You Only Look Once", "B) You Only Learn Once", "C) Yet Another Object Locator", "D) Your Object Localization Optimizer"],
+      "answer": "A",
+      "explanation": "YOLO is an acronym for You Only Look Once, a real-time object detection algorithm."
+    },
+    {
+      "q": "What is the main advantage of YOLO over R-CNN?",
+      "options": ["A) Higher accuracy", "B) Faster inference", "C) Requires less data", "D) Easier to train"],
+      "answer": "B",
+      "explanation": "YOLO processes the entire image in one pass, making it much faster than region-based methods."
+    },
+    {
+      "q": "What annotation format does YOLO require?",
+      "options": ["A) CSV files", "B) Bounding boxes with class labels", "C) Segmentation masks", "D) Keypoints"],
+      "answer": "B",
+      "explanation": "YOLO uses bounding box coordinates and class labels for training."
+    },
+    {
+      "q": "Which tool can be used to annotate images for YOLO?",
+      "options": ["A) LabelImg", "B) Excel", "C) Photoshop", "D) Blender"],
+      "answer": "A",
+      "explanation": "LabelImg is a popular open-source tool for drawing bounding boxes."
+    },
+    {
+      "q": "What metric is commonly used to evaluate object detection models?",
+      "options": ["A) Accuracy", "B) mAP (mean Average Precision)", "C) F1 score", "D) AUC"],
+      "answer": "B",
+      "explanation": "mAP is the standard metric for object detection, considering both classification and localization."
+    }
+  ],
+  "videos": [
+    "Convolutional Neural Networks explained for beginners",
+    "Transfer learning with Keras tutorial",
+    "YOLOv5 custom object detection training"
+  ]
+}

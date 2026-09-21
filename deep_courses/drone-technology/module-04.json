@@ -1,0 +1,218 @@
+﻿{
+  "course": "Drone Technology",
+  "module_number": 4,
+  "module_title": "Flight Dynamics and Control",
+  "lessons": [
+    {
+      "title": "Principles of Flight: Lift, Thrust, Drag, Weight",
+      "body": "Every drone flight boils down to four forces: lift, thrust, drag, and weight. Lift is what pushes the drone up, created by the propellers spinning. Thrust is the forward force from the propellers when you tilt the drone. Drag is air resistance that slows you down. Weight is gravity pulling the drone down. In Africa, where temperatures often exceed 35Â°C, hot air is less dense, so your propellers must spin faster to generate the same lift. This means you might need larger propellers or higher-pitch blades. For example, a DJI Phantom 4 in Nairobi (altitude 1,795m) will have about 15% less lift than at sea level, so reduce payload or increase motor RPM.\n\nTo balance these forces, you control throttle and pitch. When you increase throttle, all motors spin faster, increasing lift. If lift equals weight, the drone hovers. If lift is greater, it climbs. To move forward, you tilt the drone so thrust has a horizontal component. But tilting also increases drag, so you need more thrust to maintain speed. A practical tip: when flying in dusty conditions common in the Sahel, keep your speed below 10 m/s to avoid excessive drag and motor strain.\n\nWeight includes the drone, battery, and any payload like a camera or agricultural sensor. Always check your droneâs maximum takeoff weight. For instance, a typical agricultural drone like the DJI Agras T16 has a max takeoff weight of 42 kg, but in hot climates, reduce that by 10% to maintain control. Lift also depends on propeller efficiency: dirty or chipped propellers reduce lift by up to 20%. So inspect propellers before every flight, especially after landing in sandy areas.\n\nIn practice, you manage these forces through your controller. On a windy day in the Rift Valley, you might need to increase throttle to maintain altitude. When carrying a payload, you must increase throttle to compensate for added weight. Understanding these principles helps you predict how your drone will behave and avoid crashes. Always do a pre-flight check: weigh your payload, check air temperature, and adjust your flight plan accordingly."
+    },
+    {
+      "title": "Pitch, Roll, and Yaw Movements",
+      "body": "Pitch, roll, and yaw are the three rotations that control your droneâs orientation. Pitch is tilting the nose up or down. Roll is tilting the drone left or right. Yaw is rotating the drone left or right around its vertical axis. These movements are controlled by changing the speed of individual motors. On a quadcopter, increasing the rear motors and decreasing the front motors causes pitch forward. Increasing the left motors and decreasing the right motors causes roll right. Yaw is achieved by speeding up two diagonal motors and slowing the other two.\n\nIn Africa, where you often fly in open fields or over uneven terrain, mastering these movements is crucial. For example, when mapping a farm in Ghana, you need to pitch the drone forward to fly a straight line, roll it to adjust for crosswinds, and yaw to change direction. A common mistake is over-controlling: small stick movements go a long way. Practice in an open area like a football field. Start with gentle inputs: move the stick 10% and observe the droneâs response. Most drones have a sensitivity setting; reduce it to 50% for smoother flights.\n\nPitch and roll also affect your camera angle. For aerial photography, you want stable footage. If you pitch too aggressively, the camera tilts, ruining the shot. Use a gimbal to stabilize, but also practice smooth stick movements. Yaw is used for panning shots: rotate slowly to avoid motion blur. In wind, youâll need to combine pitch and roll to hold position. For instance, if wind blows from the left, roll right to counteract.\n\nUnderstanding these movements helps in emergency situations. If you lose GPS, youâll fly in manual mode, relying solely on pitch, roll, and yaw. Practice manual flight in an open area. A good exercise: fly a square pattern, using pitch to go forward, yaw to turn 90 degrees, and repeat. Do this at low altitude (2-3 meters) to build confidence. Remember, in Africa, magnetic interference from power lines or metal structures can affect yaw, so calibrate your compass regularly."
+    },
+    {
+      "title": "Stability and Control Modes",
+      "body": "Stability modes determine how your drone responds to your inputs and external disturbances. The three main modes are GPS hold, altitude hold, and manual. GPS hold uses satellites to lock the droneâs position, so it stays put even in wind. Altitude hold maintains altitude but allows drift horizontally. Manual mode gives you full control but no automatic stabilization. In Africa, GPS hold is essential for mapping and surveying, but GPS signal can be unreliable in urban canyons or under dense tree cover. Always check satellite count: you need at least 10 satellites for stable GPS hold.\n\nAltitude hold is useful when flying indoors or in areas with poor GPS. It uses a barometer to maintain height, but barometers drift with temperature changes. In hot climates, calibrate your barometer before flight. Manual mode is for experienced pilots, often used for racing or flying in strong winds. It requires constant input to keep the drone level. Start in GPS mode, then practice altitude hold, and only attempt manual after 10 hours of flight time.\n\nControl modes also include sport, normal, and cinematic. Sport mode increases stick sensitivity and tilt angles for fast flight, but reduces stability. Normal mode is balanced. Cinematic mode slows everything for smooth video. In African wildlife filming, cinematic mode is preferred to avoid startling animals. For agricultural spraying, normal mode with GPS hold ensures precise coverage.\n\nAnother key mode is headless mode, where the drone moves relative to your position, not its own orientation. This is helpful for beginners but can be confusing. Always return to normal mode for professional work. Finally, failsafe modes: if signal is lost, the drone can hover, land, or return-to-home. Set your failsafe to return-to-home if you have GPS, or land if not. Test failsafe before every mission by turning off the controller at low altitude. In remote areas, a drone that lands safely is better than one that flies away."
+    },
+    {
+      "title": "PID Tuning Basics",
+      "body": "PID stands for Proportional, Integral, Derivative. Itâs a control loop that keeps your drone stable. The proportional term corrects based on current error. The integral term corrects based on past errors. The derivative term predicts future errors. In drone terms, PID tuning adjusts how aggressively the drone corrects for disturbances like wind. Poor tuning causes wobbles, oscillations, or sluggish response. In Africa, where winds can be gusty, proper PID tuning is critical for stable flight.\n\nMost drones come with default PID settings, but they may not suit your specific payload or altitude. For example, adding a heavy camera changes the droneâs inertia, requiring higher P and D values. To tune, start with small adjustments. Use a ground station app like Mission Planner or QGroundControl. For a typical 450mm quadcopter, default P for roll might be 0.15. If the drone oscillates, reduce P by 10%. If it feels sluggish, increase P by 10%. Always tune one axis at a time: roll, then pitch, then yaw.\n\nThe I term is tricky: too high causes slow oscillations (winding up), too low causes drift. Set I to about 50% of P initially. The D term reduces overshoot; increase until you see high-frequency vibrations, then back off. A common method is the âtwitch testâ: hover, then quickly move the stick and release. The drone should return to level within 1-2 oscillations. If it wobbles more, increase D. If it drifts, increase I.\n\nIn hot climates, motor and ESC temperatures rise, affecting PID performance. Tune in the cool of the morning. Also, propellers matter: balanced props reduce vibrations, making tuning easier. Use a prop balancer. After tuning, save your settings and test in different wind conditions. For agricultural drones, tune with a full payload. Remember, PID tuning is iterative; expect to spend 30-60 minutes. Once tuned, your drone will handle like a dream, even in the Harmattan winds."
+    },
+    {
+      "title": "GPS and Return-to-Home Functions",
+      "body": "GPS is a satellite navigation system that gives your drone its position. Itâs essential for stable hovering, waypoint navigation, and return-to-home (RTH). A drone needs at least 6 satellites for basic GPS lock, but 10+ for reliable RTH. In Africa, GPS accuracy can be affected by ionospheric activity, especially near the equator. Always wait for a solid GPS lock (green LED) before takeoff. If youâre flying in a canyon or near tall buildings, GPS signal may drop, so be ready to switch to manual mode.\n\nReturn-to-home is a safety feature that brings the drone back to its takeoff point. It activates automatically if signal is lost, or manually via a switch. RTH has three phases: ascend to a set altitude (e.g., 30m), fly back, then descend. Set your RTH altitude higher than any obstacles. In rural Africa, trees can be 20m tall, so set RTH to 40m. Also, set a home point before takeoff; most drones do this automatically, but verify on your app.\n\nRTH can fail if GPS is lost during flight. In that case, the drone may drift or land. To prevent this, always fly with a clear view of the drone and monitor battery. If battery is low, RTH may not have enough power to return. Set a low-battery failsafe to trigger RTH at 30% battery. Test RTH in an open area: fly 100m away, activate RTH, and observe. It should return within 1-2 meters of home point.\n\nIn Africa, where you might fly from a moving vehicle or boat, RTH is useless because home point changes. Instead, use dynamic home point if supported. Also, magnetic interference from cars or metal structures can cause compass errors, which affect RTH. Calibrate compass before each flight. For mapping missions, RTH is less critical because you fly pre-planned waypoints. But always have a manual override. Remember, RTH is a backup, not a primary flight mode."
+    },
+    {
+      "title": "Flight Modes and Autonomous Navigation",
+      "body": "Flight modes let you control how the drone flies. Common modes include GPS, altitude hold, manual, sport, and waypoint. GPS mode is for stable hovering and position hold. Altitude hold maintains height but allows drift. Manual gives full control. Sport increases speed and agility. Waypoint mode allows autonomous navigation along a pre-set path. In Africa, waypoint mode is used for agricultural spraying, wildlife monitoring, and mapping. For example, a farmer in Kenya can program a drone to fly a grid pattern over a 10-hectare field, spraying pesticides precisely.\n\nTo use waypoint mode, you need a ground control station (GCS) like Mission Planner or DJI Ground Station Pro. Plan your mission on a laptop or tablet, then upload to the drone. Set waypoints with altitude, speed, and actions (e.g., take photo, spray). Ensure waypoints are spaced at least 10m apart for smooth turns. For mapping, use a 70% overlap in photos. Autonomous flights require strong GPS; if GPS fails, the drone may switch to manual or RTH. Always monitor the flight and be ready to take over.\n\nAnother mode is follow-me, where the drone follows a GPS tracker or your phone. This is useful for filming moving subjects, like a safari vehicle. But in areas with weak GPS, follow-me can be erratic. Test it first. Also, orbit mode circles a point of interest, great for inspecting a water tank or building. Set the radius and altitude, and the drone will circle automatically.\n\nIn Africa, autonomous navigation is transforming industries. For example, in Rwanda, drones deliver medical supplies using pre-programmed routes. In South Africa, mines use autonomous drones for stockpile measurement. To master these modes, practice in an open field. Start with simple waypoint missions: a square path at 20m altitude. Then progress to more complex patterns. Always check local regulations: in many African countries, autonomous flights beyond visual line of sight require permits. Stay legal and fly safe."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What are the four forces acting on a drone in flight?",
+      "options": ["A) Lift, thrust, drag, weight", "B) Lift, gravity, thrust, inertia", "C) Thrust, drag, gravity, momentum", "D) Lift, weight, speed, drag"],
+      "answer": "A",
+      "explanation": "The four fundamental forces are lift, thrust, drag, and weight."
+    },
+    {
+      "q": "In hot African climates, how does air density affect lift?",
+      "options": ["A) Hot air is denser, increasing lift", "B) Hot air is less dense, reducing lift", "C) Air density does not affect lift", "D) Hot air increases drag only"],
+      "answer": "B",
+      "explanation": "Hot air is less dense, so propellers must spin faster to generate the same lift."
+    },
+    {
+      "q": "What is the recommended maximum speed when flying in dusty conditions?",
+      "options": ["A) 5 m/s", "B) 10 m/s", "C) 15 m/s", "D) 20 m/s"],
+      "answer": "B",
+      "explanation": "Keeping speed below 10 m/s reduces drag and motor strain in dusty environments."
+    },
+    {
+      "q": "How much can dirty or chipped propellers reduce lift?",
+      "options": ["A) 5%", "B) 10%", "C) 20%", "D) 30%"],
+      "answer": "C",
+      "explanation": "Dirty or chipped propellers can reduce lift by up to 20%."
+    },
+    {
+      "q": "What is the maximum takeoff weight of a DJI Agras T16?",
+      "options": ["A) 20 kg", "B) 30 kg", "C) 42 kg", "D) 50 kg"],
+      "answer": "C",
+      "explanation": "The DJI Agras T16 has a maximum takeoff weight of 42 kg."
+    },
+    {
+      "q": "Which movement tilts the drone's nose up or down?",
+      "options": ["A) Roll", "B) Yaw", "C) Pitch", "D) Throttle"],
+      "answer": "C",
+      "explanation": "Pitch is the rotation that tilts the nose up or down."
+    },
+    {
+      "q": "How is yaw achieved on a quadcopter?",
+      "options": ["A) Speeding up all motors equally", "B) Speeding up two diagonal motors and slowing the other two", "C) Speeding up front motors and slowing rear motors", "D) Speeding up left motors and slowing right motors"],
+      "answer": "B",
+      "explanation": "Yaw is controlled by speeding up two diagonal motors and slowing the other two."
+    },
+    {
+      "q": "What is a common mistake when learning pitch, roll, and yaw?",
+      "options": ["A) Using too little stick input", "B) Over-controlling with large stick movements", "C) Flying too high", "D) Using GPS mode"],
+      "answer": "B",
+      "explanation": "Over-controlling with large stick movements is a common beginner mistake."
+    },
+    {
+      "q": "Why should you calibrate your compass regularly in Africa?",
+      "options": ["A) To improve camera quality", "B) To avoid magnetic interference from power lines and metal structures", "C) To increase battery life", "D) To reduce drag"],
+      "answer": "B",
+      "explanation": "Magnetic interference from power lines and metal structures can affect yaw, so compass calibration is needed."
+    },
+    {
+      "q": "Which stability mode uses satellites to lock the drone's position?",
+      "options": ["A) Altitude hold", "B) Manual", "C) GPS hold", "D) Sport"],
+      "answer": "C",
+      "explanation": "GPS hold uses satellites to lock the drone's position."
+    },
+    {
+      "q": "How many satellites are needed for stable GPS hold?",
+      "options": ["A) 4", "B) 6", "C) 10", "D) 15"],
+      "answer": "C",
+      "explanation": "At least 10 satellites are recommended for stable GPS hold."
+    },
+    {
+      "q": "What does altitude hold use to maintain height?",
+      "options": ["A) GPS", "B) Barometer", "C) Accelerometer", "D) Compass"],
+      "answer": "B",
+      "explanation": "Altitude hold uses a barometer to maintain height."
+    },
+    {
+      "q": "Which control mode is preferred for smooth video in wildlife filming?",
+      "options": ["A) Sport", "B) Normal", "C) Cinematic", "D) Manual"],
+      "answer": "C",
+      "explanation": "Cinematic mode slows everything for smooth video."
+    },
+    {
+      "q": "What does failsafe do if signal is lost?",
+      "options": ["A) Hover, land, or return-to-home", "B) Accelerate forward", "C) Descend rapidly", "D) Spin in place"],
+      "answer": "A",
+      "explanation": "Failsafe can be set to hover, land, or return-to-home."
+    },
+    {
+      "q": "What does PID stand for?",
+      "options": ["A) Proportional, Integral, Derivative", "B) Proportional, Integral, Differential", "C) Primary, Integral, Derivative", "D) Proportional, Instant, Derivative"],
+      "answer": "A",
+      "explanation": "PID stands for Proportional, Integral, Derivative."
+    },
+    {
+      "q": "What happens if the P term in PID is too high?",
+      "options": ["A) Drone becomes sluggish", "B) Drone oscillates", "C) Drone drifts", "D) Drone loses altitude"],
+      "answer": "B",
+      "explanation": "Too high P causes oscillations."
+    },
+    {
+      "q": "What is the recommended initial I value relative to P?",
+      "options": ["A) 10% of P", "B) 25% of P", "C) 50% of P", "D) 100% of P"],
+      "answer": "C",
+      "explanation": "Set I to about 50% of P initially."
+    },
+    {
+      "q": "What does the D term in PID reduce?",
+      "options": ["A) Drift", "B) Overshoot", "C) Oscillations", "D) Battery usage"],
+      "answer": "B",
+      "explanation": "The D term reduces overshoot."
+    },
+    {
+      "q": "When is the best time to tune PID in hot climates?",
+      "options": ["A) Midday", "B) Afternoon", "C) Cool of the morning", "D) Evening"],
+      "answer": "C",
+      "explanation": "Tune in the cool of the morning to avoid temperature effects."
+    },
+    {
+      "q": "What tool helps reduce vibrations for easier PID tuning?",
+      "options": ["A) Prop balancer", "B) Compass", "C) Barometer", "D) GPS"],
+      "answer": "A",
+      "explanation": "A prop balancer reduces vibrations."
+    },
+    {
+      "q": "How many satellites are needed for basic GPS lock?",
+      "options": ["A) 3", "B) 6", "C) 10", "D) 12"],
+      "answer": "B",
+      "explanation": "At least 6 satellites are needed for basic GPS lock."
+    },
+    {
+      "q": "What is the recommended RTH altitude in rural Africa with 20m tall trees?",
+      "options": ["A) 20m", "B) 30m", "C) 40m", "D) 50m"],
+      "answer": "C",
+      "explanation": "Set RTH to 40m to clear 20m tall trees."
+    },
+    {
+      "q": "At what battery percentage should low-battery failsafe trigger RTH?",
+      "options": ["A) 10%", "B) 20%", "C) 30%", "D) 40%"],
+      "answer": "C",
+      "explanation": "Set low-battery failsafe to trigger RTH at 30% battery."
+    },
+    {
+      "q": "Why is RTH useless when flying from a moving vehicle?",
+      "options": ["A) GPS signal is lost", "B) Home point changes", "C) Compass fails", "D) Battery drains faster"],
+      "answer": "B",
+      "explanation": "The home point changes, so RTH would return to the original takeoff point, not the vehicle."
+    },
+    {
+      "q": "What should you do before each flight to prevent compass errors?",
+      "options": ["A) Calibrate compass", "B) Change propellers", "C) Update firmware", "D) Charge battery"],
+      "answer": "A",
+      "explanation": "Calibrate compass before each flight to prevent magnetic interference errors."
+    },
+    {
+      "q": "Which flight mode allows autonomous navigation along a pre-set path?",
+      "options": ["A) GPS", "B) Altitude hold", "C) Waypoint", "D) Sport"],
+      "answer": "C",
+      "explanation": "Waypoint mode allows autonomous navigation along a pre-set path."
+    },
+    {
+      "q": "What is the minimum spacing between waypoints for smooth turns?",
+      "options": ["A) 5m", "B) 10m", "C) 15m", "D) 20m"],
+      "answer": "B",
+      "explanation": "Waypoints should be spaced at least 10m apart for smooth turns."
+    },
+    {
+      "q": "What overlap is recommended for mapping photos?",
+      "options": ["A) 50%", "B) 60%", "C) 70%", "D) 80%"],
+      "answer": "C",
+      "explanation": "Use a 70% overlap in photos for mapping."
+    },
+    {
+      "q": "Which mode circles a point of interest automatically?",
+      "options": ["A) Follow-me", "B) Orbit", "C) Waypoint", "D) Sport"],
+      "answer": "B",
+      "explanation": "Orbit mode circles a point of interest."
+    },
+    {
+      "q": "In which country are drones used to deliver medical supplies using pre-programmed routes?",
+      "options": ["A) Kenya", "B) Rwanda", "C) Nigeria", "D) Egypt"],
+      "answer": "B",
+      "explanation": "Rwanda uses drones for medical supply delivery."
+    }
+  ],
+  "videos": [
+    "drone flight dynamics explained",
+    "PID tuning drone tutorial",
+    "GPS return to home drone setup"
+  ]
+}

@@ -1,0 +1,218 @@
+﻿{
+  "course": "Electronics Assembly",
+  "module_number": 10,
+  "module_title": "Automated Assembly Techniques",
+  "lessons": [
+    {
+      "title": "Introduction to Automated Assembly",
+      "body": "Automated assembly uses machines to place and solder electronic components onto circuit boards. In Africa, small workshops are adopting affordable machines from China, like the Neoden4 pick-and-place, to compete with large factories. A basic automated line costs $15,000 to $50,000, but you can start with a manual stencil printer and a small reflow oven for under $5,000. The key steps are: solder paste printing, component placement, reflow soldering, and inspection. Each step must be controlled to avoid defects.\n\nWhy automate? Speed and consistency. A human can place 300 components per hour; a pick-and-place machine can do 3,000 to 10,000. Automation also reduces errors like wrong polarity or missing parts. But it requires setup: you need a stencil for each board design, a program for the machine, and a temperature profile for the oven. In Africa, power outages are common, so use a UPS or generator for critical machines.\n\nStart small. Many successful African assembly businesses begin with a manual pick-and-place or a used machine. For example, in Nairobi, a workshop uses a $2,000 manual stencil printer and a $500 reflow oven to assemble 50 boards per day. They later added a $8,000 pick-and-place machine. The key is to match your equipment to your production volume. Don't buy a high-speed machine if you only make 10 boards a week.\n\nSafety: Automated machines have moving parts. Always use guards, never reach into a running machine, and train operators on emergency stops. Soldering involves high temperatures (up to 250Â°C) and lead-based pastes may be hazardous. Use lead-free paste where possible and ensure good ventilation.\n\nIn this module, you will learn each step in detail: pick-and-place, solder paste printing, reflow, wave soldering, and automated optical inspection. By the end, you will understand how to set up and run a small automated assembly line suitable for African conditions."
+    },
+    {
+      "title": "Pick-and-Place Machines",
+      "body": "A pick-and-place machine picks electronic components from feeders and places them onto a PCB at high speed. In Africa, common models include the Neoden4, Charmhigh, and used Samsung machines. Prices range from $3,000 for a manual desktop machine to $50,000 for a fully automatic model. For a small workshop, a manual or semi-automatic machine is often enough.\n\nHow it works: The machine has a head with nozzles that pick components from tape reels or trays using vacuum. It then moves to the board and places them. You must program the machine with the component positions and orientations. This is done using CAD data from your PCB design software (like KiCad or Eagle). The machine also needs feeders that match your component packaging (e.g., 8mm tape for resistors).\n\nSetting up: First, mount the feeders and load component reels. Then, teach the machine the board's origin and fiducial marks (small dots on the PCB for alignment). Fiducials are criticalâwithout them, placement will be off. Next, input the pick positions and place positions. Run a test with a few components and adjust as needed. Nozzle selection matters: use a small nozzle for 0402 resistors, a larger one for ICs. Vacuum pressure should be set so components don't drop but also don't stick.\n\nMaintenance: Keep nozzles clean; clogged nozzles cause mispicks. Check belts and rails for debris. In dusty African environments, cover the machine when not in use. Power stability is importantâuse a voltage stabilizer. If you have frequent power cuts, consider a machine with a manual override or a UPS.\n\nCommon defects: Missing components (nozzle clog or empty feeder), wrong orientation (program error), and tombstoning (component stands up during reflow due to uneven paste). Regular inspection after placement catches these early. For beginners, start with a manual machine like the Neoden4, which costs about $5,000 and can place 1,000 components per hour. That's enough for 20-50 boards per day."
+    },
+    {
+      "title": "Solder Paste Printing",
+      "body": "Solder paste printing is the first step in automated assembly. It applies a precise amount of solder paste onto the PCB pads. The paste is a mixture of tiny solder balls and flux. In Africa, you can buy lead-free paste like SAC305 from suppliers in South Africa or import from China. A 500g jar costs about $30 and can print hundreds of boards.\n\nThe tool used is a stencilâa thin metal sheet with laser-cut holes matching the PCB pads. Stencils cost $20 to $100 depending on size and are made from stainless steel. You can order them online from companies like JLCPCB or PCBWay. For prototyping, you can use a mylar stencil, but it wears out quickly.\n\nProcess: Place the PCB on a flat surface. Align the stencil over the board using guide pins or a frame. Apply a line of solder paste at one edge. Use a squeegee (metal or polyurethane) to spread the paste across the stencil at a 45-degree angle. Use firm, even pressure. Lift the stencil straight upâdon't tilt, or paste will smear. The paste should look like small, shiny mounds on each pad.\n\nKey parameters: Squeegee speed (20-50 mm/s), pressure (2-5 kg), and separation speed (slow). Too much pressure causes paste bleed; too little leaves voids. After printing, inspect with a magnifier. Paste should cover at least 75% of each pad. If not, clean the stencil with isopropyl alcohol and reprint.\n\nEnvironment: Solder paste is sensitive to temperature and humidity. Store it in a refrigerator at 2-8Â°C. Let it warm to room temperature for 30 minutes before use to prevent condensation. In hot African climates, work in an air-conditioned room if possible, or at least out of direct sun. Humidity above 60% can make paste sticky and cause clumping.\n\nCommon defects: Bridging (paste between pads), insufficient paste, and smearing. Fix by adjusting squeegee angle, pressure, or stencil cleaning. After printing, place boards quicklyâpaste dries out in 1-2 hours. If you wait too long, components won't stick. For small batches, you can print 10-20 boards at a time and place them immediately."
+    },
+    {
+      "title": "Reflow Oven Operation",
+      "body": "Reflow soldering melts the solder paste to permanently connect components to the PCB. In Africa, small workshops use desktop reflow ovens like the T962 or Puhui T-962, which cost $200 to $500. Larger operations use conveyor ovens, but for up to 100 boards per day, a desktop oven works.\n\nThe reflow process has four stages: preheat, soak, reflow, and cooling. Preheat raises the board to 100-150Â°C to activate flux and avoid thermal shock. Soak holds at 150-180Â°C for 60-90 seconds to evenly heat the board. Reflow spikes to 230-250Â°C for 30-60 seconds to melt the solder. Cooling brings it down to below 100Â°C. The exact profile depends on your paste; check the datasheet. For SAC305 lead-free paste, peak temperature is 245-250Â°C.\n\nProgramming the oven: Most desktop ovens have preset profiles, but you should customize. Use a thermocouple to measure actual board temperature. Place the thermocouple on a test board with a large component. Adjust the oven's time and temperature settings until the profile matches the paste requirements. A common mistake is too fast heating, which causes splattering or tombstoning.\n\nLoading: Place boards on the oven rack with space between them for airflow. Don't overcrowd. For double-sided boards, reflow one side first, then flip and reflow the other using a lower temperature profile or adhesive. After reflow, let boards cool naturally before handling. The solder should be shiny and form a smooth fillet.\n\nSafety: The oven gets very hot. Use gloves and keep flammable materials away. Ensure good ventilationâflux fumes are harmful. In Africa, power fluctuations can affect the profile. Use a voltage stabilizer or UPS. If power fails mid-cycle, the board may be ruined; you can sometimes reflow again, but components may shift.\n\nCommon defects: Cold joints (dull, grainy solder) from insufficient heat; bridging from too much paste; and tombstoning from uneven heating. Adjust profile or paste amount. For beginners, start with a small oven and a simple board like an LED flasher. Practice until you consistently get shiny joints."
+    },
+    {
+      "title": "Wave Soldering",
+      "body": "Wave soldering is used for through-hole components. A wave of molten solder is pumped up to touch the bottom of the PCB as it moves over a conveyor. In Africa, wave soldering is less common than reflow because most modern components are surface-mount. However, for power supplies, connectors, and older designs, it's still useful. A small wave soldering machine costs $2,000 to $10,000, but you can also use a manual wave pot for $200.\n\nThe process: First, insert through-hole components into the PCB. Then, apply flux to the bottom to help solder flow. The board passes over a preheat zone (80-120Â°C), then over the wave. The wave is typically 250Â°C for lead-free solder. Contact time is 2-4 seconds. The solder should form a fillet around each lead. After soldering, the board cools and is cleaned.\n\nKey parameters: Conveyor speed (0.8-1.5 m/min), wave height (half the board thickness), and solder temperature (250-260Â°C for lead-free). Too fast and you get cold joints; too slow and you may damage components. Preheat must be enough to activate flux but not so hot that components are damaged.\n\nSetup: Fill the pot with solder bars (lead-free or leaded). Melt and maintain temperature. Adjust the wave height using the pump speed. Use a titanium finger to check the wave. For small batches, you can use a static wave pot: dip the board manually for 2-3 seconds. This is cheaper but less consistent.\n\nCommon defects: Bridging between pins (especially on fine-pitch connectors), icicles (solder spikes), and insufficient solder. Fix by adjusting flux, preheat, or wave height. After wave soldering, inspect and touch up with a soldering iron if needed.\n\nIn Africa, wave soldering is often used in repair or for making simple boards like power strips. If you do a lot of through-hole work, a wave pot can speed up production. But for most surface-mount designs, reflow is the way to go. Safety: Molten solder is dangerousâwear protective gear and never add wet or cold solder to the pot."
+    },
+    {
+      "title": "Automated Optical Inspection (AOI)",
+      "body": "Automated Optical Inspection (AOI) uses cameras to check PCB quality after soldering. It catches defects like missing components, wrong polarity, tombstoning, and solder bridges. In Africa, AOI machines are expensive ($10,000+), but you can use a desktop AOI like the Mechatronic or a simple camera-based system for $1,000. For small workshops, a good USB microscope ($100) and a trained eye can work, but AOI speeds up inspection and reduces human error.\n\nHow AOI works: The machine takes high-resolution images of the board from different angles. Software compares these to a golden board (a known good board) or to CAD data. It flags differences. You then review the flagged defects on a screen. AOI can inspect at speeds of 10-50 boards per hour, depending on complexity.\n\nSetting up: You need a golden board and a program that defines the inspection criteria. For each component, set the acceptable range for position, orientation, and solder fillet. This takes timeâmaybe 1-2 hours for a new board. But once set, inspection is fast. For low volumes, you can use a manual AOI: a camera on a stand, and you visually compare to a reference. This is cheap but slower.\n\nCommon defects caught: Missing components, wrong value (if marked), reversed polarity, insufficient solder, bridges, and tombstoning. AOI cannot check internal solder joints or hidden leads, so some manual inspection is still needed. After AOI, you may need to rework boards with a soldering iron.\n\nIn Africa, AOI is most useful for complex boards with many fine-pitch components. For simple boards, visual inspection with a magnifier is enough. If you buy an AOI, ensure it works with your board sizes and has good software support. Some machines require a PC and regular updates. Power stability is importantâuse a UPS.\n\nTraining: Teach operators to interpret AOI results. False calls are common; don't reject good boards. Start with a low threshold and adjust. Over time, you'll learn which defects are real. For a small workshop, a $500 AOI camera with free software like OpenCV can be a DIY option, but it requires programming skills. For most, a used commercial AOI is better."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is the first step in automated assembly?",
+      "options": ["A) Pick-and-place", "B) Solder paste printing", "C) Reflow soldering", "D) Wave soldering"],
+      "answer": "B",
+      "explanation": "Solder paste printing is the first step, applying paste to the PCB before component placement."
+    },
+    {
+      "q": "Which machine places components onto a PCB?",
+      "options": ["A) Reflow oven", "B) Wave soldering machine", "C) Pick-and-place machine", "D) Stencil printer"],
+      "answer": "C",
+      "explanation": "Pick-and-place machines pick components from feeders and place them on the board."
+    },
+    {
+      "q": "What is the purpose of fiducial marks on a PCB?",
+      "options": ["A) To align the stencil", "B) To help the pick-and-place machine align the board", "C) To indicate polarity", "D) To test solderability"],
+      "answer": "B",
+      "explanation": "Fiducials are reference points for the machine's vision system to align the board accurately."
+    },
+    {
+      "q": "What is a common nozzle problem in pick-and-place machines?",
+      "options": ["A) Overheating", "B) Clogging from solder paste", "C) Clogging from dust and debris", "D) Melting"],
+      "answer": "C",
+      "explanation": "Dust and debris can clog nozzles, causing mispicks; regular cleaning is needed."
+    },
+    {
+      "q": "What is the typical cost of a desktop pick-and-place machine for small workshops?",
+      "options": ["A) $500", "B) $5,000", "C) $50,000", "D) $500,000"],
+      "answer": "B",
+      "explanation": "A basic desktop machine like the Neoden4 costs around $5,000."
+    },
+    {
+      "q": "What is solder paste made of?",
+      "options": ["A) Solder and glue", "B) Solder and flux", "C) Tin and lead only", "D) Silver and copper"],
+      "answer": "B",
+      "explanation": "Solder paste is a mixture of tiny solder balls and flux."
+    },
+    {
+      "q": "What tool is used to apply solder paste?",
+      "options": ["A) Squeegee", "B) Brush", "C) Roller", "D) Spray gun"],
+      "answer": "A",
+      "explanation": "A squeegee spreads paste across the stencil."
+    },
+    {
+      "q": "How should solder paste be stored?",
+      "options": ["A) In a freezer", "B) In a refrigerator at 2-8Â°C", "C) At room temperature", "D) In an oven"],
+      "answer": "B",
+      "explanation": "Solder paste should be refrigerated to maintain its properties."
+    },
+    {
+      "q": "What is the correct squeegee angle for solder paste printing?",
+      "options": ["A) 30 degrees", "B) 45 degrees", "C) 60 degrees", "D) 90 degrees"],
+      "answer": "B",
+      "explanation": "A 45-degree angle is standard for even paste deposition."
+    },
+    {
+      "q": "What defect occurs when solder paste connects two pads?",
+      "options": ["A) Tombstoning", "B) Bridging", "C) Cold joint", "D) Insufficient paste"],
+      "answer": "B",
+      "explanation": "Bridging is when paste creates an unintended connection between pads."
+    },
+    {
+      "q": "What are the four stages of reflow soldering?",
+      "options": ["A) Preheat, soak, reflow, cooling", "B) Heat, melt, cool, clean", "C) Print, place, reflow, inspect", "D) Flux, solder, wash, dry"],
+      "answer": "A",
+      "explanation": "The reflow profile consists of preheat, soak, reflow, and cooling stages."
+    },
+    {
+      "q": "What is the peak temperature for lead-free reflow soldering?",
+      "options": ["A) 150Â°C", "B) 200Â°C", "C) 245-250Â°C", "D) 300Â°C"],
+      "answer": "C",
+      "explanation": "Lead-free solder like SAC305 requires a peak of 245-250Â°C."
+    },
+    {
+      "q": "What defect is caused by uneven heating during reflow?",
+      "options": ["A) Bridging", "B) Tombstoning", "C) Cold joint", "D) Missing component"],
+      "answer": "B",
+      "explanation": "Tombstoning occurs when one end of a component lifts due to uneven paste or heating."
+    },
+    {
+      "q": "Why is a voltage stabilizer recommended for reflow ovens in Africa?",
+      "options": ["A) To save energy", "B) To prevent damage from power fluctuations", "C) To increase temperature", "D) To reduce fumes"],
+      "answer": "B",
+      "explanation": "Power fluctuations can affect the reflow profile and damage the oven."
+    },
+    {
+      "q": "What should you do if power fails during reflow?",
+      "options": ["A) Immediately remove the board", "B) Restart the cycle", "C) Let it cool and inspect", "D) Add more solder paste"],
+      "answer": "C",
+      "explanation": "Let the board cool and inspect; you may need to reflow again."
+    },
+    {
+      "q": "What is wave soldering primarily used for?",
+      "options": ["A) Surface-mount components", "B) Through-hole components", "C) BGA packages", "D) Fine-pitch ICs"],
+      "answer": "B",
+      "explanation": "Wave soldering is for through-hole components that are inserted into the board."
+    },
+    {
+      "q": "What is the typical contact time for wave soldering?",
+      "options": ["A) 0.5-1 second", "B) 2-4 seconds", "C) 10-15 seconds", "D) 30 seconds"],
+      "answer": "B",
+      "explanation": "Contact time is usually 2-4 seconds for proper solder joint formation."
+    },
+    {
+      "q": "What is a common defect in wave soldering?",
+      "options": ["A) Tombstoning", "B) Bridging", "C) Cold joints", "D) All of the above"],
+      "answer": "D",
+      "explanation": "Bridging, cold joints, and icicles are common wave soldering defects."
+    },
+    {
+      "q": "What is the purpose of flux in wave soldering?",
+      "options": ["A) To clean the board", "B) To help solder flow and prevent oxidation", "C) To cool the solder", "D) To glue components"],
+      "answer": "B",
+      "explanation": "Flux removes oxides and promotes solder wetting."
+    },
+    {
+      "q": "What is a manual wave pot?",
+      "options": ["A) A small pot for dipping boards", "B) A conveyor machine", "C) A reflow oven", "D) A stencil printer"],
+      "answer": "A",
+      "explanation": "A manual wave pot is a static solder pot where boards are dipped by hand."
+    },
+    {
+      "q": "What does AOI stand for?",
+      "options": ["A) Automated Optical Inspection", "B) Automatic Operational Inspection", "C) Advanced Optical Imaging", "D) Automated Operational Integration"],
+      "answer": "A",
+      "explanation": "AOI stands for Automated Optical Inspection."
+    },
+    {
+      "q": "What does AOI compare board images to?",
+      "options": ["A) A golden board", "B) A blueprint", "C) A photograph", "D) A 3D model"],
+      "answer": "A",
+      "explanation": "AOI compares to a golden board or CAD data to detect defects."
+    },
+    {
+      "q": "What defect can AOI NOT detect?",
+      "options": ["A) Missing component", "B) Wrong polarity", "C) Internal solder joint defects", "D) Solder bridge"],
+      "answer": "C",
+      "explanation": "AOI only sees the surface; internal joints require X-ray or other methods."
+    },
+    {
+      "q": "What is a cheap alternative to a commercial AOI for small workshops?",
+      "options": ["A) A magnifying glass", "B) A USB microscope", "C) A smartphone camera", "D) All of the above"],
+      "answer": "D",
+      "explanation": "All can be used for visual inspection, though less automated."
+    },
+    {
+      "q": "What is a golden board?",
+      "options": ["A) A board made of gold", "B) A known good board used as reference", "C) A board with gold plating", "D) A defective board"],
+      "answer": "B",
+      "explanation": "A golden board is a perfect sample for comparison in AOI."
+    },
+    {
+      "q": "Why is power stability important for AOI machines?",
+      "options": ["A) To prevent image distortion", "B) To avoid software crashes", "C) To protect sensitive cameras", "D) All of the above"],
+      "answer": "D",
+      "explanation": "Power fluctuations can affect cameras, computers, and software."
+    },
+    {
+      "q": "What is the typical cost of a used commercial AOI machine?",
+      "options": ["A) $500", "B) $1,000", "C) $10,000+", "D) $100,000"],
+      "answer": "C",
+      "explanation": "Used AOI machines start around $10,000."
+    },
+    {
+      "q": "What is a common false call in AOI?",
+      "options": ["A) Missing component", "B) Rejecting a good board due to minor variation", "C) Wrong polarity", "D) Solder bridge"],
+      "answer": "B",
+      "explanation": "False calls occur when AOI flags acceptable variations as defects."
+    },
+    {
+      "q": "What should you do after AOI flags a defect?",
+      "options": ["A) Scrap the board", "B) Review and rework if needed", "C) Ignore it", "D) Re-run AOI"],
+      "answer": "B",
+      "explanation": "Review flagged defects and rework with a soldering iron if necessary."
+    },
+    {
+      "q": "What is the main advantage of automated assembly over manual?",
+      "options": ["A) Lower cost", "B) Higher speed and consistency", "C) Requires less skill", "D) Uses less power"],
+      "answer": "B",
+      "explanation": "Automation increases speed and consistency, reducing errors."
+    }
+  ],
+  "videos": [
+    "DIY pick and place machine Africa",
+    "solder paste printing tutorial",
+    "reflow oven profile setting"
+  ]
+}

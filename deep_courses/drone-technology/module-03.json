@@ -1,0 +1,218 @@
+﻿{
+  "course": "Drone Technology",
+  "module_number": 3,
+  "module_title": "Drone Assembly and Setup",
+  "lessons": [
+    {
+      "title": "Soldering and Wiring Basics",
+      "body": "Soldering is the most important skill in drone building. You will use it to connect motors, ESCs, power wires, and connectors. A poor solder joint can cause a crash or fire. Start with a 60/40 tin-lead solder, 0.8mm diameter, and a soldering iron with adjustable temperature. Set it to 350Â°C for most joints. Keep a damp sponge or brass wool to clean the tip before every joint. Work in a well-ventilated areaâsolder fumes are harmful.\n\nPrepare your wires: strip 3-4mm of insulation, twist the strands tightly, and tin both the wire and the pad. For a strong joint, heat the pad and wire together for 2-3 seconds, then feed solder until it flows like a shiny volcano. Do not move the joint until it cools. A good joint is smooth and shiny; a bad one is dull, blobby, or cracked. Practice on scrap wire until you can make 10 perfect joints in a row.\n\nUseful tools: a helping hands clamp, flush cutters, wire strippers, and a multimeter. For power connections, use XT60 or XT90 connectorsâthey handle high current. Solder the male connector to the battery wire and female to the PDB or ESC. Always check for shorts with a multimeter before plugging in a battery. In Africa, where power can be unreliable, use a surge protector or a 12V car battery as a soldering power source if needed. Keep your work area clean and free of flammable materials.\n\nAfter soldering, inspect every joint with a magnifying glass. Reheat any suspicious joint. Cover exposed solder joints with heat shrink tubing to prevent short circuits. A 2mm heat shrink works for most wires. Remember: a few minutes of careful soldering saves hours of troubleshooting later."
+    },
+    {
+      "title": "Assembling a Quadcopter Frame",
+      "body": "The frame is the skeleton of your drone. For a beginner, choose a 450mm or 500mm quadcopter frame made of glass fiber or carbon fiber. Carbon fiber is stronger but blocks radio signals, so mount antennas away from it. You will need: frame plates, arms, screws (usually M3), standoffs, and a power distribution board (PDB). Work on a clean, flat surface like a wooden table. Use a 2mm and 2.5mm hex driver.\n\nStart by attaching the four arms to the bottom plate. Most frames have arms that slot into the bottom plate. Use four screws per armâdo not overtighten, as carbon fiber can crack. If your frame uses threadlocker, apply a tiny drop of blue Loctite to each screw. Next, install the PDB on the bottom plate using nylon standoffs. Solder the battery connector (XT60) to the PDB, and also solder the ESC power wires later. Ensure the PDB is oriented so the battery wires exit the back of the frame.\n\nNow attach the top plate using aluminum or nylon standoffs. The top plate protects the electronics. Leave the top plate off until you finish all soldering. Check that all arms are levelâplace a ruler across opposite arms; they should touch evenly. If not, loosen screws and adjust. A twisted frame causes vibration and poor flight.\n\nFinally, install the landing gear or foam pads under the bottom plate. These absorb landing shocks. For African conditions, where you might take off from dusty or grassy ground, add extra foam or plastic skids to keep dirt out of motors. Weigh your frame: a typical 450mm frame with hardware weighs 280-350g. If it's heavier, check for unnecessary parts. A lighter frame flies longer. Double-check every screw before moving to the next step."
+    },
+    {
+      "title": "Mounting Motors and ESCs",
+      "body": "Motors and ESCs (Electronic Speed Controllers) are the power system. For a 450mm quad, use 2212 or 2312 brushless motors with 920-1000KV rating. KV means RPM per volt; lower KV gives more torque for larger props. You will need four motors, four ESCs (30A is common), and M3 screws. Mount motors on the arms with the motor wires pointing toward the center of the frame. Use the screws that came with the motorsâthey are usually M3x5mm. Do not use long screws that can poke into the motor windings and short them out.\n\nSolder the three motor wires to the three ESC wires. Polarity does not matter for brushless motors; if the motor spins the wrong way, swap any two wires later. But keep wire lengths short to reduce electrical noise. Use 16AWG or 18AWG silicone wire for motor-to-ESC connections. After soldering, cover each joint with heat shrink. Mount the ESCs on the arms using zip ties or double-sided foam tape. Make sure the ESC's signal wire (usually a 3-wire servo cable) reaches the flight controller. Label each ESC with its motor number: 1 (front right), 2 (front left), 3 (rear right), 4 (rear left). This matches the flight controller's output.\n\nConnect the ESC power wires to the PDB. Solder the positive (red) and negative (black) wires of each ESC to the corresponding pads on the PDB. Use a multimeter to check for shorts between positive and negative before applying power. For African conditions, add a small piece of foam or tape over the ESC to protect it from dust and moisture. Also, ensure the motor bells spin freelyâif they rub, the motor is misaligned or damaged.\n\nFinally, test each motor with a servo tester or your radio. Without props, spin each motor to confirm it turns smoothly and in the correct direction. If a motor stutters, check the solder joints and ESC calibration. A well-mounted motor and ESC set will run cool and last many flights."
+    },
+    {
+      "title": "Installing Flight Controller and Peripherals",
+      "body": "The flight controller (FC) is the brain. Mount it at the center of the frame, on the top plate or a dedicated FC stack. Use vibration-damping foam or rubber grommetsâvibrations confuse the gyro and cause unstable flight. For a beginner, a F4 or F7 flight controller running Betaflight is ideal. You will also need a receiver, GPS module (optional but useful), and a buzzer. Connect the FC to the PDB with a 5V and ground wire, or use a 4-in-1 ESC if your frame supports it.\n\nWire the ESCs to the FC: each ESC signal wire goes to the corresponding motor output pin (M1-M4). The signal wire is usually white or yellow, with ground (black) and 5V (red) if needed. Do not connect the 5V from all four ESCsâonly one should provide 5V to the FC. Use a multimeter to confirm no shorts. For the receiver, connect it to a UART port (TX to RX, RX to TX, 5V, and ground). Mount the receiver antennas away from carbon fiber and motors, using zip ties to hold them at 90 degrees to each other for better reception.\n\nIf using GPS, mount it on a mast away from the FC and power wires. Connect it to another UART. A buzzer helps find a lost droneâconnect it to the FC's buzzer pins. For African conditions, add a small piece of foam over the barometer (if present) to protect it from wind and dust, but do not block the hole completely. Also, secure all wires with zip ties or tape so they cannot vibrate loose.\n\nAfter mounting, check that the FC arrow points forward. If not, you can adjust orientation in software. Power the FC via USB and connect to Betaflight. Verify that the gyro responds correctly when you move the drone. If the model in the software moves opposite to the real drone, you need to rotate the board or change settings. A properly installed FC is the foundation for stable flight."
+    },
+    {
+      "title": "Connecting Power and Radio Systems",
+      "body": "Power and radio are the lifelines of your drone. Start with the battery: use a 3S or 4S LiPo battery (11.1V or 14.8V) with at least 2200mAh and 30C discharge. For a 450mm quad, a 3S 2200mAh gives about 8-10 minutes of flight. Connect the battery to the PDB via an XT60 connector. Solder the connector carefullyâred to red, black to black. Use a battery strap to secure the battery on top or bottom of the frame. Never short the battery wires; a short can cause a fire. Always check polarity with a multimeter before plugging in.\n\nFor the radio system, you need a transmitter (TX) and receiver (RX). A popular beginner setup is a FlySky FS-i6 or RadioMaster TX12 with a matching receiver. Bind the receiver to the transmitter according to the manual. Then connect the receiver to the flight controller as described in the previous lesson. In Betaflight, configure the receiver protocol (e.g., IBUS, SBUS, or CRSF). Check that all sticks move the correct channels: roll, pitch, throttle, yaw, and aux channels for arming and flight modes.\n\nSet up failsafe: if the radio signal is lost, the drone should cut motors or return to home. In Betaflight, configure failsafe to drop or land. Also, set up a pre-arm switch and an arm switch. For African conditions, where radio interference might be higher in urban areas, use a receiver with diversity or a long-range system like ExpressLRS if you can afford it. Keep antennas away from the frame and motors.\n\nFinally, test the power system without props. Connect the battery and check that the FC, receiver, and ESCs power up. Use a smoke stopper (a device that limits current) for the first power-up to prevent damage from wiring mistakes. If everything works, you are ready to calibrate and fly. Always remove props when testing on the bench."
+    },
+    {
+      "title": "Initial Configuration and Calibration",
+      "body": "Before flying, you must configure and calibrate your drone. Connect the flight controller to your computer via USB and open Betaflight Configurator. First, calibrate the accelerometer: place the drone on a level surface and click 'Calibrate Accelerometer'. Then calibrate the magnetometer if you have a GPS/compass: rotate the drone in all directions as instructed. Next, set up your radio: go to the Receiver tab and ensure all channels move correctly. Adjust endpoints so that sticks reach 1000-2000 with center at 1500. Set arm switch and flight mode switch (e.g., Angle, Horizon, Acro).\n\nConfigure the ESCs: use the Motors tab to test each motor individually. Remove props first! Check that motor 1 spins when you slide the master slider. If a motor spins the wrong direction, swap any two of its three wires or use BLHeliSuite to reverse it. Calibrate ESCs by setting throttle to maximum, powering the ESCs, then lowering throttle to minimum. This teaches the ESC the throttle range. Also, set up battery voltage monitoring: in Betaflight, configure the voltage scale so the displayed voltage matches a multimeter reading. Set a low-voltage alarm at 3.5V per cell.\n\nFor African conditions, adjust PID and filter settings for stability in wind. Start with default PIDs and tune later. Enable 'Air Mode' for better control at low throttle. Set up GPS rescue if you have GPS: configure return-to-home altitude and failsafe. Test the failsafe by turning off your transmitterâthe drone should disarm or return. Finally, check that the drone's orientation in Betaflight matches reality: when you tilt the drone forward, the model should tilt forward.\n\nAfter configuration, do a final check: all screws tight, props balanced, battery charged. Then go to an open field for a test hover. Hover at 1-2 meters for 30 seconds, land, and check motor temperatures. If all is well, you are ready to fly. Remember, a well-configured drone is a safe drone."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is the recommended soldering iron temperature for most drone joints?",
+      "options": ["A) 200Â°C", "B) 350Â°C", "C) 450Â°C", "D) 500Â°C"],
+      "answer": "B",
+      "explanation": "350Â°C is hot enough to melt solder quickly without damaging components."
+    },
+    {
+      "q": "Which solder alloy is commonly recommended for beginners?",
+      "options": ["A) 60/40 tin-lead", "B) 99% tin", "C) lead-free with silver", "D) acid-core solder"],
+      "answer": "A",
+      "explanation": "60/40 tin-lead solder melts at a low temperature and is easy to work with."
+    },
+    {
+      "q": "What should you do before plugging in a battery after soldering power wires?",
+      "options": ["A) Check for shorts with a multimeter", "B) Test with a smoke stopper", "C) Both A and B", "D) Nothing, just plug in"],
+      "answer": "C",
+      "explanation": "Both checking for shorts and using a smoke stopper prevent damage from wiring mistakes."
+    },
+    {
+      "q": "What is the purpose of heat shrink tubing?",
+      "options": ["A) To insulate exposed solder joints", "B) To make wires look neat", "C) To strengthen the wire", "D) To color-code wires"],
+      "answer": "A",
+      "explanation": "Heat shrink tubing insulates and protects solder joints from short circuits."
+    },
+    {
+      "q": "Which frame material blocks radio signals?",
+      "options": ["A) Glass fiber", "B) Carbon fiber", "C) Plastic", "D) Aluminum"],
+      "answer": "B",
+      "explanation": "Carbon fiber is conductive and can block radio signals, so antennas must be mounted away from it."
+    },
+    {
+      "q": "What size hex driver is commonly used for M3 screws in drone frames?",
+      "options": ["A) 1.5mm", "B) 2.0mm", "C) 2.5mm", "D) 3.0mm"],
+      "answer": "C",
+      "explanation": "M3 screws typically require a 2.5mm hex driver."
+    },
+    {
+      "q": "Why should you avoid overtightening screws on a carbon fiber frame?",
+      "options": ["A) It strips the screw head", "B) It can crack the carbon fiber", "C) It adds weight", "D) It causes electrical shorts"],
+      "answer": "B",
+      "explanation": "Carbon fiber can crack if screws are overtightened, weakening the frame."
+    },
+    {
+      "q": "What is the typical weight of a 450mm quadcopter frame with hardware?",
+      "options": ["A) 100-150g", "B) 280-350g", "C) 500-600g", "D) 700-800g"],
+      "answer": "B",
+      "explanation": "A typical 450mm frame with hardware weighs between 280 and 350 grams."
+    },
+    {
+      "q": "What does KV rating on a brushless motor indicate?",
+      "options": ["A) Kilovolts", "B) RPM per volt", "C) Maximum current", "D) Motor weight"],
+      "answer": "B",
+      "explanation": "KV rating indicates the motor's RPM per volt of input, with lower KV for higher torque."
+    },
+    {
+      "q": "Which motor size is commonly used for a 450mm quadcopter?",
+      "options": ["A) 1104", "B) 2212", "C) 4006", "D) 5208"],
+      "answer": "B",
+      "explanation": "2212 or 2312 motors are standard for 450mm frames."
+    },
+    {
+      "q": "How many wires connect a brushless motor to an ESC?",
+      "options": ["A) 2", "B) 3", "C) 4", "D) 5"],
+      "answer": "B",
+      "explanation": "Brushless motors have three phase wires that connect to the ESC."
+    },
+    {
+      "q": "If a brushless motor spins the wrong direction, what should you do?",
+      "options": ["A) Swap any two of the three motor wires", "B) Reverse the battery polarity", "C) Change the ESC", "D) Adjust the transmitter"],
+      "answer": "A",
+      "explanation": "Swapping any two of the three motor wires reverses the motor's rotation direction."
+    },
+    {
+      "q": "Why should you cover ESC solder joints with heat shrink?",
+      "options": ["A) To prevent short circuits", "B) To reduce weight", "C) To improve conductivity", "D) To make them look nice"],
+      "answer": "A",
+      "explanation": "Heat shrink insulates the joints, preventing accidental shorts."
+    },
+    {
+      "q": "What is the purpose of a power distribution board (PDB)?",
+      "options": ["A) To distribute power to ESCs and flight controller", "B) To control motor speed", "C) To receive radio signals", "D) To stabilize the drone"],
+      "answer": "A",
+      "explanation": "The PDB distributes battery power to the ESCs and other components."
+    },
+    {
+      "q": "Where should you mount the flight controller?",
+      "options": ["A) At the center of the frame", "B) On one arm", "C) On top of the battery", "D) Near the receiver"],
+      "answer": "A",
+      "explanation": "The flight controller should be at the center to accurately sense the drone's motion."
+    },
+    {
+      "q": "What is the purpose of vibration-damping foam under the flight controller?",
+      "options": ["A) To reduce gyro noise", "B) To keep it cool", "C) To make it waterproof", "D) To increase weight"],
+      "answer": "A",
+      "explanation": "Vibration damping foam reduces vibrations that can confuse the gyro and cause unstable flight."
+    },
+    {
+      "q": "Which flight controller firmware is commonly used for beginners?",
+      "options": ["A) Betaflight", "B) Arduino", "C) Python", "D) Windows"],
+      "answer": "A",
+      "explanation": "Betaflight is a popular open-source firmware for drone flight controllers."
+    },
+    {
+      "q": "How should receiver antennas be mounted?",
+      "options": ["A) Parallel to each other", "B) At 90 degrees to each other", "C) Wrapped around the frame", "D) Inside the carbon fiber frame"],
+      "answer": "B",
+      "explanation": "Mounting antennas at 90 degrees improves signal diversity and reception."
+    },
+    {
+      "q": "What is the purpose of a buzzer on a drone?",
+      "options": ["A) To help locate a lost drone", "B) To make it fly faster", "C) To stabilize the drone", "D) To charge the battery"],
+      "answer": "A",
+      "explanation": "A buzzer emits sound to help find a crashed or lost drone."
+    },
+    {
+      "q": "What should you do if the flight controller arrow does not point forward?",
+      "options": ["A) Physically rotate the board", "B) Adjust orientation in software", "C) Both A and B", "D) Ignore it"],
+      "answer": "C",
+      "explanation": "You can either rotate the board or set the orientation in software like Betaflight."
+    },
+    {
+      "q": "What is the recommended battery for a 450mm quadcopter?",
+      "options": ["A) 1S 500mAh", "B) 2S 1000mAh", "C) 3S 2200mAh", "D) 6S 5000mAh"],
+      "answer": "C",
+      "explanation": "A 3S 2200mAh LiPo is a common choice for 450mm quadcopters, giving good flight time."
+    },
+    {
+      "q": "What should you always do before plugging in a LiPo battery?",
+      "options": ["A) Check polarity with a multimeter", "B) Charge it fully", "C) Remove the props", "D) Both A and C"],
+      "answer": "D",
+      "explanation": "Always check polarity and remove props before connecting a battery to avoid damage or injury."
+    },
+    {
+      "q": "What is a smoke stopper used for?",
+      "options": ["A) To limit current on first power-up", "B) To extinguish fires", "C) To check battery voltage", "D) To bind the receiver"],
+      "answer": "A",
+      "explanation": "A smoke stopper limits current to prevent damage if there is a wiring short."
+    },
+    {
+      "q": "What does failsafe do on a drone?",
+      "options": ["A) Cuts motors or returns home if signal is lost", "B) Prevents arming", "C) Limits altitude", "D) Balances the props"],
+      "answer": "A",
+      "explanation": "Failsafe is a safety feature that activates when the radio signal is lost."
+    },
+    {
+      "q": "In Betaflight, what should you do before testing motors?",
+      "options": ["A) Remove propellers", "B) Charge the battery", "C) Connect to GPS", "D) Calibrate the compass"],
+      "answer": "A",
+      "explanation": "Always remove propellers before testing motors to prevent injury."
+    },
+    {
+      "q": "What is the correct throttle range for a radio in Betaflight?",
+      "options": ["A) 1000-2000 with center at 1500", "B) 0-100", "C) 500-2500", "D) 800-2200"],
+      "answer": "A",
+      "explanation": "Standard RC throttle range is 1000 to 2000 microseconds with center at 1500."
+    },
+    {
+      "q": "What does calibrating ESCs do?",
+      "options": ["A) Teaches the ESC the throttle range", "B) Sets the motor direction", "C) Balances the props", "D) Adjusts PID settings"],
+      "answer": "A",
+      "explanation": "ESC calibration ensures the ESC recognizes the full throttle range from the flight controller."
+    },
+    {
+      "q": "What low-voltage alarm setting is recommended per LiPo cell?",
+      "options": ["A) 3.0V", "B) 3.5V", "C) 4.2V", "D) 2.5V"],
+      "answer": "B",
+      "explanation": "Setting a low-voltage alarm at 3.5V per cell helps prevent over-discharging the battery."
+    },
+    {
+      "q": "What is 'Air Mode' in Betaflight?",
+      "options": ["A) A mode for better control at low throttle", "B) A mode for altitude hold", "C) A mode for GPS return", "D) A mode for acrobatics"],
+      "answer": "A",
+      "explanation": "Air Mode keeps PID control active at zero throttle, improving stability during flips and low-throttle maneuvers."
+    },
+    {
+      "q": "What should you check after a test hover?",
+      "options": ["A) Motor temperatures", "B) Battery voltage", "C) Screw tightness", "D) All of the above"],
+      "answer": "D",
+      "explanation": "After a test hover, check motor temperatures, battery voltage, and screw tightness for safety and performance."
+    }
+  ],
+  "videos": [
+    "drone soldering basics for beginners",
+    "how to assemble a quadcopter frame step by step",
+    "Betaflight initial setup and calibration tutorial"
+  ]
+}

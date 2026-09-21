@@ -1,0 +1,221 @@
+﻿{
+  "course": "AI Fundamentals",
+  "module_number": 10,
+  "module_title": "Recurrent Neural Networks (RNNs) and NLP",
+  "lessons": [
+    {
+      "title": "RNN Basics and Vanishing Gradient",
+      "body": "Recurrent Neural Networks (RNNs) are a type of neural network designed to work with sequences, like sentences, stock prices, or weather data. Unlike standard networks that treat each input independently, RNNs have a 'memory' that carries information from one step to the next. This makes them perfect for tasks like predicting the next word in a sentence or translating languages. In Africa, RNNs have been used for SMS-based chatbots in local languages and for analyzing mobile money transaction sequences to detect fraud.\n\nImagine you run a small agribusiness in Kenya and want to forecast maize prices based on the past 30 days. You can feed the daily prices into an RNN. At each day, the RNN updates its hidden state, which acts as a summary of all previous days. The output at each step can be a prediction for the next day. In Python, you can build a simple RNN using TensorFlow or PyTorch. For example, with Keras: model = Sequential([SimpleRNN(32, input_shape=(30,1)), Dense(1)]). You would train it on historical price data.\n\nHowever, basic RNNs suffer from the vanishing gradient problem. During training, the network adjusts its weights using backpropagation through time. The gradients (signals used to update weights) are multiplied many times as they flow back through the sequence. If these multiplications are less than 1, the gradients shrink exponentially, becoming tiny. This means the network cannot learn long-range dependencies, like remembering the subject of a sentence from 20 words ago. For example, if you try to predict the last word in 'The maize that the farmer from Kisumu sold at the market was very ...', a basic RNN might forget 'maize' and predict 'small' instead of 'ripe'.\n\nThe vanishing gradient problem becomes severe with sequences longer than 10-20 steps. In practice, you might see the training loss stop decreasing. To mitigate this, you can use techniques like gradient clipping (limiting gradient values to a threshold like 1.0) or use more advanced architectures like LSTMs and GRUs, which we'll cover next. For African languages with long sentences, this is crucial. Start with short sequences (e.g., 5-10 words) to get your model working, then move to LSTMs for longer text."
+    },
+    {
+      "title": "LSTM and GRU Cells",
+      "body": "Long Short-Term Memory (LSTM) and Gated Recurrent Unit (GRU) are improved versions of RNNs that solve the vanishing gradient problem. They use 'gates' to control the flow of information, allowing the network to remember important details over long sequences and forget irrelevant ones. In Africa, LSTMs have been used to predict crop yields from weather data and to translate between languages like Swahili and English.\n\nAn LSTM cell has three gates: input, forget, and output. The forget gate decides what old information to throw away. The input gate decides what new information to store. The output gate decides what to output based on the cell state. The cell state acts like a conveyor belt that carries information across many steps with minimal change, so gradients don't vanish. A GRU is a simpler version with only two gates (reset and update) and no separate cell state. It often performs similarly to LSTM but is faster to train and uses less memory. For many African NLP tasks with limited data, GRUs are a good starting point.\n\nIn practice, you can use LSTMs in Python with Keras: model = Sequential([LSTM(64, input_shape=(30,1)), Dense(1)]). You can stack multiple LSTM layers for more capacity. For text, you first convert words to numbers (tokenization) and then to vectors (embeddings). For example, to build a Swahili sentiment classifier, you might have 5,000 training sentences. You would tokenize them, pad to a fixed length (e.g., 50 words), and feed into an LSTM. With 64 units, training might take a few minutes on a CPU. You can also use bidirectional LSTMs, which read the sequence forwards and backwards, capturing context from both directions.\n\nWhen to use LSTM vs GRU? If your dataset is small (under 10,000 samples), GRU often works well and trains faster. If you have long sequences (over 100 steps), LSTM might be better. In Africa, where data can be scarce, start with GRU. Also, consider using pre-trained embeddings like Word2Vec or GloVe (next lesson) to boost performance. For deployment on low-resource devices, you can quantize your model to reduce size. Tools like TensorFlow Lite can help you run these models on Android phones, enabling offline NLP apps for rural areas."
+    },
+    {
+      "title": "Word Embeddings: Word2Vec and GloVe",
+      "body": "Word embeddings are a way to represent words as dense vectors of real numbers, where similar words are close together in vector space. This is crucial for NLP because machines need numbers, not text. Word2Vec and GloVe are two popular methods to create these embeddings. In Africa, embeddings trained on local languages like Yoruba, Hausa, or Zulu can improve machine translation, sentiment analysis, and chatbots.\n\nWord2Vec, developed by Google, comes in two flavors: Continuous Bag of Words (CBOW) and Skip-gram. CBOW predicts a target word from its context (surrounding words), while Skip-gram predicts context from a target word. Both use a shallow neural network. For example, given the sentence 'The farmer sells maize at the market', CBOW might take ['The', 'farmer', 'sells', 'at', 'the', 'market'] and predict 'maize'. Skip-gram does the reverse. You train Word2Vec on a large corpus of text. In Python, you can use the gensim library: from gensim.models import Word2Vec; model = Word2Vec(sentences, vector_size=100, window=5, min_count=1). Here, vector_size=100 means each word becomes a 100-dimensional vector. After training, you can find similar words: model.wv.most_similar('maize') might return 'corn', 'crop', etc.\n\nGloVe (Global Vectors) is another method that uses matrix factorization on word co-occurrence counts. It captures global statistics better than Word2Vec. You can download pre-trained GloVe vectors (e.g., glove.6B.100d) and use them in your models. However, these are trained on English Wikipedia and may not work well for African languages. For local languages, you can train your own GloVe using the glove-python library or use Word2Vec. A good approach is to start with pre-trained English embeddings if your task is in English, but for Swahili or Amharic, you'll need to train on local text. You can find some African language corpora on platforms like Masakhane or Zindi.\n\nOnce you have embeddings, you use them as the first layer in your RNN. In Keras, you can use an Embedding layer: model.add(Embedding(vocab_size, 100, weights=[embedding_matrix], trainable=False)). Setting trainable=False keeps the embeddings fixed; set it to True to fine-tune them on your task. For small datasets, fine-tuning can cause overfitting, so keep them fixed. For larger datasets, fine-tuning helps. Remember, the quality of your embeddings directly affects your model's performance. Spend time cleaning your text: remove punctuation, lowercase, and handle misspellings common in African social media text (e.g., 'u' for 'you')."
+    },
+    {
+      "title": "Sequence-to-Sequence Models",
+      "body": "Sequence-to-sequence (seq2seq) models are designed to transform one sequence into another, like translating English to Swahili or summarizing a news article. They consist of two parts: an encoder that reads the input sequence and a decoder that produces the output sequence. Both are typically RNNs, LSTMs, or GRUs. In Africa, seq2seq models power translation apps for local languages and chatbots that answer questions about agriculture or health.\n\nThe encoder processes the input step by step, updating its hidden state. The final hidden state is a summary of the entire input, called the context vector. The decoder starts with this context vector and generates the output one word at a time. At each step, it takes the previous word (or a special start token) and its own hidden state to predict the next word. For example, to translate 'I love maize' to Swahili 'Nampenda mahindi', the encoder reads the English words, and the decoder outputs 'Nampenda' then 'mahindi'. In training, you use teacher forcing: feed the actual previous word to the decoder. In inference, you feed the decoder's own prediction.\n\nBuilding a seq2seq model in Python with Keras involves defining an encoder and decoder. A simple version: encoder_inputs = Input(shape=(None,)); encoder_embedding = Embedding(vocab_size, 100)(encoder_inputs); encoder_lstm = LSTM(128, return_state=True); encoder_outputs, state_h, state_c = encoder_lstm(encoder_embedding); encoder_states = [state_h, state_c]. Then decoder_inputs = Input(shape=(None,)); decoder_embedding = Embedding(vocab_size, 100)(decoder_inputs); decoder_lstm = LSTM(128, return_sequences=True, return_state=True); decoder_outputs, _, _ = decoder_lstm(decoder_embedding, initial_state=encoder_states); decoder_dense = Dense(vocab_size, activation='softmax'); decoder_outputs = decoder_dense(decoder_outputs). You then compile with categorical_crossentropy and train on pairs of input-output sequences.\n\nChallenges in Africa include limited parallel corpora for many language pairs. For example, English-Swahili has some data, but English-Yoruba is scarce. You can use transfer learning: train on a high-resource language pair, then fine-tune on the low-resource pair. Also, consider using subword tokenization (e.g., Byte Pair Encoding) to handle rare words and agglutinative languages like Zulu. For deployment, seq2seq models can be large, so use techniques like pruning or quantization. Start with a small dataset (e.g., 10,000 sentence pairs) to validate your pipeline before scaling."
+    },
+    {
+      "title": "Attention Mechanism",
+      "body": "The attention mechanism was introduced to improve seq2seq models by allowing the decoder to focus on relevant parts of the input sequence at each output step. Without attention, the decoder relies solely on the final context vector, which can bottleneck long sequences. With attention, the decoder can look back at all encoder hidden states and weigh them differently. This has revolutionized NLP and is the foundation of Transformers. In Africa, attention has improved translation quality for languages with long sentences and different word orders.\n\nHow does attention work? At each decoder step, you compute a score between the decoder's current hidden state and each encoder hidden state. These scores are normalized with softmax to produce attention weights that sum to 1. Then you compute a weighted sum of the encoder hidden states to get a context vector specific to that step. This context vector is combined with the decoder's hidden state to predict the next word. For example, when translating 'The farmer sells maize' to Swahili, when generating 'mahindi' (maize), the attention weights might focus on the encoder's representation of 'maize'.\n\nIn practice, you can implement attention in Keras using the Attention layer (available in TensorFlow 2.x) or custom code. For a seq2seq model, you modify the decoder to use attention. A simple approach: use Bahdanau attention (additive) or Luong attention (multiplicative). Here's a snippet using TensorFlow's Attention: attention = Attention()([decoder_outputs, encoder_outputs]); decoder_combined_context = Concatenate(axis=-1)([decoder_outputs, attention]); then pass through a Dense layer. Training with attention often converges faster and yields better BLEU scores. For a small English-Swahili dataset, you might see BLEU improve from 0.2 to 0.4.\n\nAttention also provides interpretability: you can visualize which input words the model focuses on when producing each output word. This is useful for debugging and for building trust in African language applications. For low-resource languages, attention helps because the model can learn alignments even with limited data. However, attention adds computational cost. For mobile deployment, you can use lightweight attention variants like hard attention or use pruning. Start by adding attention to your seq2seq model and compare performance. Tools like TensorFlow Addons provide ready-to-use attention layers. Remember to preprocess your data properly: tokenize, pad, and use start/end tokens."
+    },
+    {
+      "title": "Introduction to Transformers",
+      "body": "Transformers are a type of neural network architecture that relies entirely on attention mechanisms, eliminating the need for recurrence. Introduced in 2017, they have become the state-of-the-art for most NLP tasks, including translation, text generation, and sentiment analysis. In Africa, transformers power models like AfroLM and Masakhane's translation systems for local languages. They are faster to train than RNNs because they process sequences in parallel.\n\nThe core idea of a transformer is self-attention: each word in a sequence attends to all other words to compute its representation. This is done in multiple 'heads' (multi-head attention) to capture different types of relationships. A transformer consists of an encoder and a decoder, each with multiple layers. The encoder processes the input sequence, and the decoder generates the output. Unlike RNNs, transformers have no inherent sense of order, so they add positional encodings to the input embeddings to provide sequence order information.\n\nTo use transformers, you don't need to build from scratch. Hugging Face's Transformers library provides pre-trained models like BERT, GPT, and T5. For African languages, you can find models on the Hugging Face Hub, such as 'Davlan/afro-xlmr-base' for multilingual tasks. For example, to do sentiment analysis in Swahili, you can load a pre-trained model and fine-tune on your data: from transformers import pipeline; classifier = pipeline('sentiment-analysis', model='Davlan/afro-xlmr-base'); classifier('Nampenda mahindi'). Fine-tuning requires a dataset of labeled examples. With 1,000 samples, you can achieve good accuracy in a few epochs using a GPU (e.g., on Google Colab).\n\nTransformers are computationally heavy. Training a large model from scratch is expensive, but fine-tuning a pre-trained model is feasible on a single GPU. For deployment in Africa, consider using distilled versions (e.g., DistilBERT) or quantization to reduce size. Also, you can use ONNX Runtime for efficient inference on CPUs. Start by experimenting with pre-trained models for your task. Many African NLP projects are built on transformers, so joining communities like Masakhane can provide resources and support. Remember to handle text preprocessing carefully: transformers use subword tokenization (e.g., WordPiece), so you don't need to tokenize manually. Just feed raw text to the tokenizer."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is the main advantage of RNNs over standard feedforward networks?",
+      "options": ["A) They can process images", "B) They have memory of previous inputs", "C) They are faster to train", "D) They require less data"],
+      "answer": "B",
+      "explanation": "RNNs have a hidden state that carries information across time steps, giving them memory."
+    },
+    {
+      "q": "What problem does the vanishing gradient cause in basic RNNs?",
+      "options": ["A) The model trains too slowly", "B) The model cannot learn long-range dependencies", "C) The model overfits", "D) The model outputs wrong dimensions"],
+      "answer": "B",
+      "explanation": "Vanishing gradients make it hard for the network to learn relationships between distant steps in a sequence."
+    },
+    {
+      "q": "Which technique can help mitigate vanishing gradients?",
+      "options": ["A) Increasing learning rate", "B) Gradient clipping", "C) Adding more layers", "D) Using ReLU activation"],
+      "answer": "B",
+      "explanation": "Gradient clipping limits gradient values to a threshold, preventing them from becoming too small."
+    },
+    {
+      "q": "How many gates does an LSTM cell have?",
+      "options": ["A) 1", "B) 2", "C) 3", "D) 4"],
+      "answer": "C",
+      "explanation": "LSTM has input, forget, and output gates."
+    },
+    {
+      "q": "What is the key difference between GRU and LSTM?",
+      "options": ["A) GRU has more gates", "B) GRU has no cell state", "C) GRU cannot handle long sequences", "D) GRU uses convolution"],
+      "answer": "B",
+      "explanation": "GRU combines the cell state and hidden state, and has only two gates (reset and update)."
+    },
+    {
+      "q": "Which is generally faster to train?",
+      "options": ["A) LSTM", "B) GRU", "C) Both same", "D) Depends on data"],
+      "answer": "B",
+      "explanation": "GRU has fewer parameters and operations, so it often trains faster than LSTM."
+    },
+    {
+      "q": "What is the purpose of word embeddings?",
+      "options": ["A) To reduce vocabulary size", "B) To represent words as dense vectors", "C) To translate languages", "D) To tokenize text"],
+      "answer": "B",
+      "explanation": "Word embeddings map words to continuous vector space where similar words are close."
+    },
+    {
+      "q": "Which Word2Vec architecture predicts context from a target word?",
+      "options": ["A) CBOW", "B) Skip-gram", "C) GloVe", "D) Transformer"],
+      "answer": "B",
+      "explanation": "Skip-gram takes a target word and predicts its surrounding context words."
+    },
+    {
+      "q": "What does the 'vector_size' parameter in Word2Vec control?",
+      "options": ["A) Number of training epochs", "B) Dimension of word vectors", "C) Size of context window", "D) Minimum word count"],
+      "answer": "B",
+      "explanation": "vector_size sets the dimensionality of the embedding vectors."
+    },
+    {
+      "q": "Why might pre-trained GloVe vectors be less effective for African languages?",
+      "options": ["A) They are too large", "B) They are trained on English data", "C) They use too much memory", "D) They are not free"],
+      "answer": "B",
+      "explanation": "GloVe vectors are typically trained on English corpora, so they may not capture African language semantics."
+    },
+    {
+      "q": "In a seq2seq model, what is the role of the encoder?",
+      "options": ["A) Generate output sequence", "B) Summarize input into context vector", "C) Compute attention weights", "D) Tokenize text"],
+      "answer": "B",
+      "explanation": "The encoder processes the input sequence and produces a context vector (final hidden state)."
+    },
+    {
+      "q": "What is teacher forcing in seq2seq training?",
+      "options": ["A) Using a teacher model", "B) Feeding actual previous word to decoder", "C) Forcing the model to learn faster", "D) Using a pre-trained model"],
+      "answer": "B",
+      "explanation": "Teacher forcing means the decoder receives the true previous word as input during training."
+    },
+    {
+      "q": "What challenge is common for seq2seq in African languages?",
+      "options": ["A) Too much data", "B) Limited parallel corpora", "C) Too many GPUs", "D) Simple grammar"],
+      "answer": "B",
+      "explanation": "Many African language pairs lack large parallel datasets for training."
+    },
+    {
+      "q": "Which technique can help with rare words in agglutinative languages?",
+      "options": ["A) Subword tokenization", "B) One-hot encoding", "C) Stemming", "D) Stopword removal"],
+      "answer": "A",
+      "explanation": "Subword tokenization like BPE breaks words into smaller units, handling rare and complex words."
+    },
+    {
+      "q": "What does the attention mechanism allow the decoder to do?",
+      "options": ["A) Focus on relevant input parts", "B) Skip decoding steps", "C) Use less memory", "D) Avoid training"],
+      "answer": "A",
+      "explanation": "Attention computes weights over encoder hidden states, letting the decoder focus on relevant input words."
+    },
+    {
+      "q": "How are attention weights computed?",
+      "options": ["A) By softmax over scores", "B) By sigmoid over scores", "C) By averaging hidden states", "D) By random selection"],
+      "answer": "A",
+      "explanation": "Scores between decoder and encoder states are normalized with softmax to produce weights."
+    },
+    {
+      "q": "Which attention type is additive?",
+      "options": ["A) Luong", "B) Bahdanau", "C) Dot-product", "D) Scaled dot-product"],
+      "answer": "B",
+      "explanation": "Bahdanau attention uses an additive alignment score."
+    },
+    {
+      "q": "What is a benefit of attention for interpretability?",
+      "options": ["A) It shows which input words are important", "B) It reduces model size", "C) It speeds up training", "D) It eliminates bias"],
+      "answer": "A",
+      "explanation": "Attention weights can be visualized to see which input words the model focuses on."
+    },
+    {
+      "q": "What is the main difference between Transformers and RNNs?",
+      "options": ["A) Transformers use recurrence", "B) Transformers use only attention", "C) Transformers are slower", "D) Transformers cannot handle sequences"],
+      "answer": "B",
+      "explanation": "Transformers rely entirely on attention mechanisms, not recurrence."
+    },
+    {
+      "q": "Why do Transformers need positional encodings?",
+      "options": ["A) To add order information", "B) To reduce parameters", "C) To speed up training", "D) To handle images"],
+      "answer": "A",
+      "explanation": "Transformers process sequences in parallel, so positional encodings provide order information."
+    },
+    {
+      "q": "Which library provides pre-trained Transformer models?",
+      "options": ["A) TensorFlow", "B) PyTorch", "C) Hugging Face", "D) Keras"],
+      "answer": "C",
+      "explanation": "Hugging Face's Transformers library offers many pre-trained models."
+    },
+    {
+      "q": "What is a common African language model on Hugging Face?",
+      "options": ["A) BERT", "B) Afro-xlmr", "C) GPT-3", "D) T5"],
+      "answer": "B",
+      "explanation": "Afro-xlmr is a multilingual model fine-tuned for African languages."
+    },
+    {
+      "q": "What is fine-tuning in the context of Transformers?",
+      "options": ["A) Training from scratch", "B) Adapting a pre-trained model to a new task", "C) Pruning the model", "D) Quantizing the model"],
+      "answer": "B",
+      "explanation": "Fine-tuning means continuing training of a pre-trained model on a specific dataset."
+    },
+    {
+      "q": "Which technique reduces Transformer model size for deployment?",
+      "options": ["A) Quantization", "B) Adding layers", "C) Increasing hidden size", "D) Using larger batches"],
+      "answer": "A",
+      "explanation": "Quantization reduces precision of weights, making the model smaller and faster."
+    },
+    {
+      "q": "What tokenization method do Transformers typically use?",
+      "options": ["A) Word-level", "B) Character-level", "C) Subword", "D) Sentence-level"],
+      "answer": "C",
+      "explanation": "Transformers use subword tokenization like WordPiece or BPE."
+    },
+    {
+      "q": "What is the vanishing gradient problem?",
+      "options": ["A) Gradients become too large", "B) Gradients become too small", "C) Gradients become zero", "D) Gradients become negative"],
+      "answer": "B",
+      "explanation": "Vanishing gradients shrink exponentially during backpropagation through time."
+    },
+    {
+      "q": "Which gate in LSTM decides what to forget?",
+      "options": ["A) Input gate", "B) Forget gate", "C) Output gate", "D) Reset gate"],
+      "answer": "B",
+      "explanation": "The forget gate controls what information to discard from the cell state."
+    },
+    {
+      "q": "What is the output of the encoder in a seq2seq model?",
+      "options": ["A) A sequence of words", "B) A context vector", "C) Attention weights", "D) A probability distribution"],
+      "answer": "B",
+      "explanation": "The encoder's final hidden state serves as the context vector for the decoder."
+    },
+    {
+      "q": "What does the attention context vector depend on?",
+      "options": ["A) Only decoder state", "B) Only encoder states", "C) Both decoder and encoder states", "D) Neither"],
+      "answer": "C",
+      "explanation": "Attention weights are computed using both decoder and encoder hidden states."
+    },
+    {
+      "q": "What is a key advantage of Transformers over RNNs?",
+      "options": ["A) Parallel processing", "B) Less memory", "C) Simpler architecture", "D) No need for data"],
+      "answer": "A",
+      "explanation": "Transformers can process all positions in parallel, unlike sequential RNNs."
+    }
+  ],
+  "videos": [
+    "RNN vanishing gradient explained",
+    "LSTM vs GRU tutorial",
+    "Word2Vec and GloVe explained",
+    "Sequence to sequence models tutorial",
+    "Attention mechanism in NLP",
+    "Introduction to Transformers NLP"
+  ]
+}

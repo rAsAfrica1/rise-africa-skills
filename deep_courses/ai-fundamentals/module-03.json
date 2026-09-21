@@ -1,0 +1,224 @@
+﻿{
+  "course": "AI Fundamentals",
+  "module_number": 3,
+  "module_title": "Python for AI",
+  "lessons": [
+    {
+      "title": "Python Basics: Variables and Data Types",
+      "body": "In this lesson, you'll learn how to store and work with data in Python. Start by installing Python from python.org and use IDLE or VS Code. A variable is like a labelled container. For example, `price = 500` stores the number 500 in `price`. Python has several basic data types: integers (whole numbers like 500), floats (decimals like 12.5), strings (text like \"Nairobi\"), and booleans (True/False). You can check a type with `type(price)`. Use meaningful names: `maize_price` is better than `x`. \n\nTo assign values, use `=`. You can also do arithmetic: `total = price * 2` gives 1000. Strings can be joined with `+`: `\"Hello \" + \"Africa\"` gives \"Hello Africa\". For numbers, use `+`, `-`, `*`, `/`. Python follows order of operations. Convert between types: `int(\"100\")` turns string to integer, `str(100)` turns integer to string. This is crucial when reading data from files. \n\nIn African markets, you might track daily sales. Create variables: `tomato_kg = 3.5`, `price_per_kg = 120`, `revenue = tomato_kg * price_per_kg`. Then print: `print(f\"Revenue: {revenue} KES\")`. The f-string inserts variables into text. Practice with real data: your monthly expenses, mobile money transactions, or crop yields. \n\nCommon mistakes: using `=` instead of `==` for comparison, forgetting quotes around strings, mixing numbers and strings without conversion. Always test small pieces. Use `print()` to see values. Python is case-sensitive: `Price` and `price` are different. \n\nExercise: Write a script that stores your name, age, and daily wage. Calculate weekly wage (5 days). Print a sentence like \"Amina, age 25, earns 3500 KES per week.\" This builds the foundation for AI, where data is stored in variables before processing.",
+      "word_count": 312
+    },
+    {
+      "title": "Control Flow and Functions",
+      "body": "Control flow lets your program make decisions. Use `if`, `elif`, and `else`. For example: `if rainfall > 50: print(\"Plant now\") elif rainfall > 20: print(\"Wait\") else: print(\"Irrigate\")`. Indentation (4 spaces) is required. You can also loop with `for` and `while`. `for i in range(5): print(i)` prints 0 to 4. `while count < 10: count += 1` repeats until condition fails. Use `break` to exit early, `continue` to skip an iteration. \n\nFunctions are reusable blocks. Define with `def greet(name): return f\"Hello {name}\"`. Call with `greet(\"Chidi\")`. Functions can take multiple arguments and return multiple values. Use `def calculate_profit(revenue, cost): return revenue - cost`. This avoids repeating code. In AI, functions encapsulate tasks like loading data, training a model, or making predictions. \n\nAfrican context: A farmer might use control flow to decide irrigation based on soil moisture sensor readings. A function could compute the average yield from several plots. Example: `def average_yield(yields): return sum(yields)/len(yields)`. Then `average_yield([2.5, 3.0, 2.8])` returns 2.77. \n\nPractice: Write a function `grade(score)` that returns \"A\" if score >= 80, \"B\" if >= 70, etc. Then loop through a list of scores and print each grade. This teaches both control flow and functions. \n\nRemember: keep functions small and focused. Use descriptive names. Test with different inputs. This is how you build AI pipelines: data flows through functions that clean, transform, and analyze it. Without control flow, your program can't react to data; without functions, it becomes messy. Master these to write efficient Python for AI.",
+      "word_count": 305
+    },
+    {
+      "title": "Data Structures: Lists, Tuples, Dictionaries",
+      "body": "Lists store ordered items: `prices = [120, 150, 90]`. Access with index: `prices[0]` is 120. Add with `append(200)`. Remove with `remove(150)`. Lists are mutable. Tuples are like lists but immutable: `coordinates = (3.5, 7.2)`. Use tuples for fixed data. Dictionaries store key-value pairs: `crop = {\"name\": \"maize\", \"yield\": 2.5}`. Access with `crop[\"name\"]`. Add new key: `crop[\"price\"] = 50`. \n\nIn AI, lists hold datasets, tuples hold shapes or configurations, dictionaries hold parameters. For example, a list of customer transactions: `transactions = [100, 250, 75]`. Sum them with `sum(transactions)`. A dictionary for a machine learning model: `model = {\"type\": \"linear\", \"learning_rate\": 0.01}`. \n\nAfrican example: You run a small shop. Use a list for daily sales: `sales = [1200, 1500, 900, 1800]`. Calculate total: `total = sum(sales)`. Average: `avg = total / len(sales)`. Use a dictionary for inventory: `inventory = {\"rice\": 50, \"beans\": 30, \"oil\": 20}`. Update stock: `inventory[\"rice\"] -= 5`. \n\nNested structures: list of dictionaries: `customers = [{\"name\": \"Amina\", \"spent\": 500}, {\"name\": \"Kofi\", \"spent\": 300}]`. Loop through: `for c in customers: print(c[\"name\"], c[\"spent\"])`. \n\nExercise: Create a list of 5 temperatures. Find max, min, average. Create a dictionary of 3 products with prices. Write a function that takes the dictionary and returns the most expensive product. This builds skills for handling real data in AI.",
+      "word_count": 310
+    },
+    {
+      "title": "NumPy for Numerical Computing",
+      "body": "NumPy is the foundation for numerical AI in Python. Install with `pip install numpy`. Import as `import numpy as np`. The core is the array: `arr = np.array([1, 2, 3])`. Arrays are faster and more memory-efficient than lists for math. Create arrays from lists, or use `np.zeros(5)`, `np.ones((2,3))`, `np.arange(0, 10, 2)`. \n\nOperations are element-wise: `arr * 2` doubles each element. `arr + arr` adds corresponding elements. For matrices, use 2D arrays: `matrix = np.array([[1,2],[3,4]])`. Matrix multiplication: `np.dot(matrix, matrix)`. Statistical functions: `arr.mean()`, `arr.std()`, `arr.max()`. \n\nAfrican context: You have rainfall data for 10 farms: `rainfall = np.array([500, 600, 450, 700, 550, 800, 400, 650, 720, 580])`. Compute average: `rainfall.mean()` gives 595. Find farms with above-average rainfall: `rainfall[rainfall > rainfall.mean()]`. This is boolean indexing. \n\nIn AI, NumPy is used for feature vectors, weight matrices, and gradients. For example, a simple neural network layer: `output = np.dot(inputs, weights) + bias`. Without NumPy, this would be slow loops. \n\nExercise: Create a 3x3 array of random numbers using `np.random.rand(3,3)`. Compute row sums, column means, and overall standard deviation. Then create an array of 100 numbers from a normal distribution with mean 50 and std 10. This prepares you for data manipulation and model building.",
+      "word_count": 305
+    },
+    {
+      "title": "Pandas for Data Manipulation",
+      "body": "Pandas handles tabular data like spreadsheets. Install with `pip install pandas`. Import as `import pandas as pd`. The main objects are Series (1D) and DataFrame (2D). Create a DataFrame from a dictionary: `df = pd.DataFrame({\"crop\": [\"maize\", \"beans\"], \"yield\": [2.5, 1.8]})`. Read CSV: `df = pd.read_csv(\"data.csv\")`. \n\nInspect data: `df.head()`, `df.info()`, `df.describe()`. Select columns: `df[\"crop\"]`. Filter rows: `df[df[\"yield\"] > 2]`. Add a column: `df[\"revenue\"] = df[\"yield\"] * 100`. Group by: `df.groupby(\"crop\")[\"yield\"].mean()`. Handle missing data: `df.dropna()` or `df.fillna(0)`. \n\nAfrican example: You have a CSV of market sales: columns `date`, `product`, `quantity`, `price`. Load it, compute total revenue per product: `df[\"revenue\"] = df[\"quantity\"] * df[\"price\"]; df.groupby(\"product\")[\"revenue\"].sum()`. Find top-selling product. \n\nPandas is essential for AI data preparation: cleaning, merging, reshaping. For instance, merge two DataFrames on a common key: `pd.merge(df1, df2, on=\"id\")`. \n\nExercise: Create a DataFrame with 10 rows of student data: name, age, score. Filter students with score > 70. Add a column \"passed\" (True/False). Compute average score by age group. This mirrors real-world data tasks before feeding into machine learning models.",
+      "word_count": 298
+    },
+    {
+      "title": "Matplotlib and Seaborn for Visualization",
+      "body": "Visualization reveals patterns. Matplotlib is the base library; Seaborn builds on it for statistical plots. Install both: `pip install matplotlib seaborn`. Import: `import matplotlib.pyplot as plt` and `import seaborn as sns`. \n\nBasic line plot: `plt.plot([1,2,3], [4,5,6])`, then `plt.show()`. Add labels: `plt.xlabel(\"Days\")`, `plt.ylabel(\"Sales\")`, `plt.title(\"Weekly Sales\")`. Scatter plot: `plt.scatter(x, y)`. Bar chart: `plt.bar(categories, values)`. Histogram: `plt.hist(data, bins=10)`. \n\nSeaborn simplifies complex plots. Load a dataset: `sns.load_dataset(\"tips\")`. Then `sns.scatterplot(x=\"total_bill\", y=\"tip\", data=tips)`. For distributions: `sns.histplot(data=df, x=\"yield\")`. For relationships: `sns.pairplot(df)`. For correlation heatmap: `sns.heatmap(df.corr(), annot=True)`. \n\nAfrican context: Plot monthly rainfall for a region. Use a bar chart to compare crop yields across farms. A heatmap can show correlations between temperature, rainfall, and yield. \n\nIn AI, visualization helps understand data before modeling and interpret results. For example, plot actual vs predicted values to see model performance. \n\nExercise: Create a DataFrame with 12 months of sales data. Plot a line chart. Then create a bar chart of average sales per quarter. Finally, use Seaborn to make a boxplot of sales by month. Save figures with `plt.savefig(\"plot.png\")`. This equips you to communicate insights from AI projects.",
+      "word_count": 298
+    }
+  ],
+  "quiz": [
+    {
+      "q": "Which of the following is a valid variable name in Python?",
+      "options": ["A) 2nd_price", "B) price_2", "C) price-2", "D) price 2"],
+      "answer": "B",
+      "explanation": "Variable names can contain letters, numbers, and underscores, but cannot start with a number or contain spaces or hyphens."
+    },
+    {
+      "q": "What data type is the value 3.14?",
+      "options": ["A) int", "B) float", "C) string", "D) boolean"],
+      "answer": "B",
+      "explanation": "Numbers with decimal points are floats in Python."
+    },
+    {
+      "q": "What does `type(\"Hello\")` return?",
+      "options": ["A) <class 'int'>", "B) <class 'float'>", "C) <class 'str'>", "D) <class 'bool'>"],
+      "answer": "C",
+      "explanation": "Text enclosed in quotes is a string, so type returns str."
+    },
+    {
+      "q": "Which operator is used for string concatenation?",
+      "options": ["A) +", "B) *", "C) &", "D) ."],
+      "answer": "A",
+      "explanation": "The + operator joins two strings together."
+    },
+    {
+      "q": "What is the output of `print(10 // 3)`?",
+      "options": ["A) 3.33", "B) 3", "C) 4", "D) 1"],
+      "answer": "B",
+      "explanation": "// is floor division, which returns the integer part of the quotient."
+    },
+    {
+      "q": "Which of the following correctly converts the string \"100\" to an integer?",
+      "options": ["A) int(\"100\")", "B) str(100)", "C) float(\"100\")", "D) integer(\"100\")"],
+      "answer": "A",
+      "explanation": "int() converts a string of digits to an integer."
+    },
+    {
+      "q": "What is the correct way to write an if statement in Python?",
+      "options": ["A) if x > 5 { print(\"yes\") }", "B) if x > 5: print(\"yes\")", "C) if (x > 5) then print(\"yes\")", "D) if x > 5 do print(\"yes\")"],
+      "answer": "B",
+      "explanation": "Python uses a colon and indentation for if statements."
+    },
+    {
+      "q": "What does the `range(1, 5)` function produce?",
+      "options": ["A) 1,2,3,4,5", "B) 1,2,3,4", "C) 0,1,2,3,4", "D) 2,3,4,5"],
+      "answer": "B",
+      "explanation": "range(start, stop) includes start but excludes stop."
+    },
+    {
+      "q": "Which keyword is used to define a function?",
+      "options": ["A) function", "B) def", "C) fun", "D) define"],
+      "answer": "B",
+      "explanation": "Functions are defined using the def keyword."
+    },
+    {
+      "q": "What is the output of `def add(a, b): return a + b` then `add(2, 3)`?",
+      "options": ["A) 5", "B) 23", "C) None", "D) Error"],
+      "answer": "A",
+      "explanation": "The function returns the sum of the two arguments, 2+3=5."
+    },
+    {
+      "q": "What does a `while` loop do?",
+      "options": ["A) Runs once", "B) Runs until a condition is false", "C) Runs a fixed number of times", "D) Never runs"],
+      "answer": "B",
+      "explanation": "A while loop repeats as long as its condition remains true."
+    },
+    {
+      "q": "Which statement is used to exit a loop prematurely?",
+      "options": ["A) continue", "B) break", "C) pass", "D) exit"],
+      "answer": "B",
+      "explanation": "break immediately terminates the loop."
+    },
+    {
+      "q": "How do you access the first element of a list `my_list`?",
+      "options": ["A) my_list[1]", "B) my_list[0]", "C) my_list.first()", "D) my_list[-0]"],
+      "answer": "B",
+      "explanation": "Python uses zero-based indexing, so the first element is at index 0."
+    },
+    {
+      "q": "Which method adds an item to the end of a list?",
+      "options": ["A) add()", "B) append()", "C) insert()", "D) push()"],
+      "answer": "B",
+      "explanation": "append() adds a single element to the end of a list."
+    },
+    {
+      "q": "What is the main difference between a list and a tuple?",
+      "options": ["A) Lists are immutable, tuples are mutable", "B) Tuples are immutable, lists are mutable", "C) Both are mutable", "D) Both are immutable"],
+      "answer": "B",
+      "explanation": "Tuples cannot be changed after creation, while lists can."
+    },
+    {
+      "q": "How do you access the value for key \"name\" in a dictionary `d`?",
+      "options": ["A) d[\"name\"]", "B) d.name", "C) d(name)", "D) d->name"],
+      "answer": "A",
+      "explanation": "Dictionary values are accessed using square brackets with the key."
+    },
+    {
+      "q": "What does `len([1, 2, 3])` return?",
+      "options": ["A) 2", "B) 3", "C) 4", "D) 1"],
+      "answer": "B",
+      "explanation": "len() returns the number of items in a list, which is 3."
+    },
+    {
+      "q": "Which NumPy function creates an array of zeros?",
+      "options": ["A) np.zeros(5)", "B) np.empty(5)", "C) np.ones(5)", "D) np.array(0)"],
+      "answer": "A",
+      "explanation": "np.zeros(5) creates an array of five zeros."
+    },
+    {
+      "q": "What is the result of `np.array([1,2,3]) * 2`?",
+      "options": ["A) [1,2,3,1,2,3]", "B) [2,4,6]", "C) [1,4,9]", "D) Error"],
+      "answer": "B",
+      "explanation": "NumPy performs element-wise multiplication, doubling each element."
+    },
+    {
+      "q": "How do you compute the mean of a NumPy array `arr`?",
+      "options": ["A) arr.mean()", "B) arr.average()", "C) mean(arr)", "D) arr.sum()/len(arr)"],
+      "answer": "A",
+      "explanation": "The mean() method returns the arithmetic average of array elements."
+    },
+    {
+      "q": "Which Pandas function reads a CSV file into a DataFrame?",
+      "options": ["A) pd.read_csv()", "B) pd.load_csv()", "C) pd.open_csv()", "D) pd.csv()"],
+      "answer": "A",
+      "explanation": "pd.read_csv() is the standard function to load CSV data."
+    },
+    {
+      "q": "What does `df.head()` do?",
+      "options": ["A) Returns the first 5 rows", "B) Returns the last 5 rows", "C) Returns column names", "D) Returns summary statistics"],
+      "answer": "A",
+      "explanation": "head() displays the first five rows by default."
+    },
+    {
+      "q": "How do you filter rows in a DataFrame `df` where column 'age' > 30?",
+      "options": ["A) df[df['age'] > 30]", "B) df.filter('age' > 30)", "C) df.where('age' > 30)", "D) df.select('age' > 30)"],
+      "answer": "A",
+      "explanation": "Boolean indexing with a condition inside brackets filters rows."
+    },
+    {
+      "q": "Which method groups data by a column and computes an aggregate?",
+      "options": ["A) groupby()", "B) aggregate()", "C) pivot()", "D) merge()"],
+      "answer": "A",
+      "explanation": "groupby() splits data into groups for aggregation."
+    },
+    {
+      "q": "What does `df.dropna()` do?",
+      "options": ["A) Fills missing values", "B) Removes rows with missing values", "C) Replaces NaN with 0", "D) Counts missing values"],
+      "answer": "B",
+      "explanation": "dropna() removes any row that contains a missing value."
+    },
+    {
+      "q": "Which library is used for basic plotting in Python?",
+      "options": ["A) Matplotlib", "B) NumPy", "C) Pandas", "D) Scikit-learn"],
+      "answer": "A",
+      "explanation": "Matplotlib is the foundational plotting library in Python."
+    },
+    {
+      "q": "What does `plt.scatter(x, y)` create?",
+      "options": ["A) Line plot", "B) Bar chart", "C) Scatter plot", "D) Histogram"],
+      "answer": "C",
+      "explanation": "scatter() creates a scatter plot of points."
+    },
+    {
+      "q": "Which Seaborn function creates a heatmap?",
+      "options": ["A) sns.heatmap()", "B) sns.heat()", "C) sns.map()", "D) sns.corr()"],
+      "answer": "A",
+      "explanation": "sns.heatmap() visualizes a matrix as a color-encoded grid."
+    },
+    {
+      "q": "How do you add a title to a Matplotlib plot?",
+      "options": ["A) plt.title(\"My Plot\")", "B) plt.name(\"My Plot\")", "C) plt.label(\"My Plot\")", "D) plt.header(\"My Plot\")"],
+      "answer": "A",
+      "explanation": "plt.title() sets the title of the current plot."
+    },
+    {
+      "q": "What is the purpose of `plt.savefig(\"plot.png\")`?",
+      "options": ["A) Displays the plot", "B) Saves the plot to a file", "C) Closes the plot", "D) Opens a new plot"],
+      "answer": "B",
+      "explanation": "savefig() writes the current figure to a file."
+    }
+  ],
+  "videos": [
+    "Python basics variables data types tutorial for beginners",
+    "NumPy and Pandas for data analysis African context",
+    "Matplotlib and Seaborn visualization tutorial"
+  ]
+}

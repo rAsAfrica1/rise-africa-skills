@@ -1,0 +1,218 @@
+﻿{
+  "course": "Pig Feed Formulation",
+  "module_number": 9,
+  "module_title": "Diet Formulation Techniques and Software",
+  "lessons": [
+    {
+      "title": "Pearson Square and Algebraic Methods for Simple Formulations",
+      "body": "When you only need to mix two ingredients to hit a target nutrient level, the Pearson Square is your fastest tool. Suppose you want a 16% crude protein (CP) grower diet using maize (8.5% CP) and soybean meal (44% CP). Draw a square: put 16 in the centre. Top left: 8.5 (maize). Bottom left: 44 (soybean). Subtract diagonally: 44 - 16 = 28 parts maize; 16 - 8.5 = 7.5 parts soybean. Total parts = 35.5. So maize is 28/35.5 = 78.9%, soybean meal is 7.5/35.5 = 21.1%. That gives a 16% CP mix. In practice, you also need minerals and vitamins, so you'd scale back the maize and soybean to leave 3-5% for a premix. For example, if you want 3% premix, multiply the maize and soybean proportions by 0.97: maize 76.5%, soybean 20.5%, premix 3%. This method works for any two-ingredient blend, like mixing two energy sources to hit a desired fibre level, or two protein sources to hit a lysine target. The algebraic method is similar but uses equations. Let x = kg of maize, y = kg of soybean meal. You want 100 kg of feed with 16% CP: 0.085x + 0.44y = 16 and x + y = 100. Solve: x = 100 - y. Substitute: 0.085(100 - y) + 0.44y = 16 â 8.5 - 0.085y + 0.44y = 16 â 0.355y = 7.5 â y = 21.1 kg, x = 78.9 kg. Same answer. In Africa, where ingredient options are often limited, these hand methods let you formulate on a phone calculator or paper. But remember: they only handle two ingredients and one nutrient. For three or more ingredients or multiple nutrients (energy, lysine, calcium, phosphorus), you need linear programming. Still, mastering Pearson Square builds your intuition for how ingredient proportions affect nutrient levels. Practice with local ingredients: cassava peel meal (2% CP), palm kernel cake (16% CP), fish meal (60% CP). Try mixing maize and fish meal to get 18% CP for creep feed. You'll quickly see how much expensive fish meal is needed, and why least-cost software becomes essential for complex diets."
+    },
+    {
+      "title": "Linear Programming for Least-Cost Formulation",
+      "body": "Linear programming (LP) is the engine behind every least-cost feed formulation. It finds the cheapest combination of ingredients that meets all your nutrient requirements. Imagine you have 10 ingredients and 15 nutrient constraints (energy, protein, lysine, methionine, calcium, phosphorus, etc.). LP solves a system of equations to minimise cost. The maths is done by computer, but you need to understand the inputs. First, you list available ingredients with their nutrient composition and cost per kg. For example, maize: 3,350 kcal ME/kg, 8.5% CP, 0.30% lysine, cost $0.25/kg. Soybean meal: 2,230 kcal ME/kg, 44% CP, 2.8% lysine, cost $0.55/kg. Fish meal: 2,800 kcal ME/kg, 60% CP, 4.5% lysine, cost $1.20/kg. You also set minimum and maximum inclusion levels: maize max 70%, fish meal max 10%, etc. Then you specify the diet's nutrient requirements: 14.5 MJ ME/kg (or 3,400 kcal), 16% CP, 0.85% lysine, 0.65% calcium, 0.55% available phosphorus. The LP algorithm tests thousands of combinations and returns the cheapest mix. In Africa, where ingredient prices fluctuate and some ingredients are scarce, LP helps you adapt quickly. For instance, if soybean meal price jumps 30%, LP will substitute with groundnut cake or sunflower cake, provided you've set correct nutrient values. Free tools like Excel Solver can do small LP problems. For example, in Excel, you set up a spreadsheet with ingredient quantities in cells, calculate total cost and nutrient totals using SUMPRODUCT, then use Solver to minimise cost subject to constraints. Many African feed mills use commercial software like Brill, Format, or Bestmix, but Excel is a great start. The key is accurate data: wrong nutrient values or prices lead to wrong diets. Also, LP doesn't know about palatability, mycotoxins, or anti-nutritional factors unless you set maximum limits. So always review the output. A least-cost diet might use 40% cassava peel meal if you don't restrict it, but that could reduce feed intake. Use LP as a tool, not a black box. Start with simple problems: two ingredients, one nutrient, then add complexity. You'll soon see how LP saves money and improves precision."
+    },
+    {
+      "title": "Using Formulation Software: Features and Best Practices",
+      "body": "Formulation software ranges from free Excel templates to sophisticated programmes like Bestmix, Brill, and Feedsoft. In Africa, many small mills use Excel, while larger operations invest in dedicated software. Key features to look for: a database of local ingredients with nutrient profiles, the ability to set minimum and maximum constraints, least-cost optimisation, and reports showing nutrient levels and costs. Some software includes sensitivity analysis and shadow prices. When choosing software, consider your scale. For a 500-pig farm mixing 2 tonnes per week, Excel with Solver is enough. For a commercial mill producing 50 tonnes per day, you need robust software that handles multiple formulas and inventory. Best practices: First, build your own ingredient database using local lab analyses. Don't rely on NRC values for African ingredients like cassava peel or palm kernel cake; their nutrient content varies widely. Second, update prices weekly. Formulation is only as good as your price data. Third, set realistic constraints. For example, maize max 70% to avoid digestive issues, fish meal max 5% for cost and palatability, limestone max 1.5% for calcium. Fourth, always check the final nutrient profile against your targets. Software may meet lysine but miss methionine. Fifth, save multiple formulas for different scenarios: high-soybean price, low-maize quality, etc. Sixth, train your staff. A common mistake is entering wrong units: ME in MJ/kg vs kcal/kg, or % vs g/kg. Double-check. Seventh, back up your data. In areas with unreliable electricity, use cloud-based software or regular backups. Many software packages offer free trials. Start with a free tool like Excel Solver or OpenSolver. Watch YouTube tutorials on 'least-cost feed formulation Excel'. As you grow, invest in commercial software that includes features like batch scheduling and inventory management. Remember, software doesn't replace your judgement. It's a calculator. You still need to know pig nutrition and local conditions. For example, in hot climates, you might increase electrolyte levels; software won't do that unless you set constraints. So use software to handle the maths, but keep your eyes on the pigs."
+    },
+    {
+      "title": "Setting Nutrient Constraints and Ingredient Restrictions",
+      "body": "Nutrient constraints are the minimum and maximum levels of nutrients you allow in the final diet. Ingredient restrictions are limits on how much of each ingredient you can use. Getting these right is critical for pig performance and cost. Start with nutrient requirements based on pig class: creep feed (7-10 kg), starter (10-20 kg), grower (20-50 kg), finisher (50-100 kg), gestating sow, lactating sow. For each, you need energy (ME or DE), crude protein, lysine, methionine, threonine, tryptophan, calcium, available phosphorus, and sometimes sodium, chloride, and trace minerals. For example, a grower diet might need 14.5 MJ ME/kg, 16% CP, 0.85% lysine, 0.65% calcium, 0.55% available phosphorus. Set these as minimums. You may also set maximums for some nutrients, like crude fibre max 5% for young pigs, or calcium max 1.0% to avoid interference with zinc. Ingredient restrictions: set minimum and maximum inclusion levels. Minimums ensure you use enough of a critical ingredient, like 0.3% salt for sodium, or 0.2% lysine HCl if needed. Maximums prevent problems: maize max 70% (high starch, low fibre), soybean meal max 30% (cost, trypsin inhibitors if under-processed), fish meal max 5% (cost, fishy taint), wheat bran max 20% (bulk, fibre), limestone max 1.5% (palatability). Also consider anti-nutritional factors: raw soybeans max 0% (must be processed), cottonseed meal max 5% for growing pigs (gossypol), cassava peel meal max 10% (cyanide, low energy). In Africa, ingredient availability varies. You might set a maximum for maize at 50% if prices are high, forcing the software to use more cassava or sorghum. But be careful: cassava is low in protein and lysine, so you'll need more soybean or synthetic amino acids. Always run a sensitivity analysis after setting constraints to see which ones are costing you money. For example, if you set fish meal max 5%, but the software wants to use 10%, that constraint is binding and increasing cost. You might relax it if fish meal is cheap. Conversely, if a constraint is not binding, it's not affecting cost. Use shadow prices to identify which constraints to adjust. Start with conservative constraints, then loosen them gradually as you gain confidence. Document your constraints for each diet so you can repeat successful formulas."
+    },
+    {
+      "title": "Sensitivity Analysis and Shadow Prices",
+      "body": "Sensitivity analysis shows how changes in prices or nutrient requirements affect the cost of your feed. Shadow prices (also called dual values) tell you how much the total cost would change if you relaxed a constraint by one unit. For example, if the shadow price for lysine is $0.02 per 0.01% increase, it means adding 0.01% more lysine would increase the diet cost by 2 cents per kg. If the shadow price for maize maximum is -$0.01 per 1% increase, it means allowing 1% more maize would reduce cost by 1 cent per kg. Shadow prices are powerful because they identify which constraints are limiting you. If a constraint has a zero shadow price, it's not binding; you can change it without affecting cost. If it has a high shadow price, it's costing you money. In Africa, where ingredient prices fluctuate, sensitivity analysis helps you decide when to switch ingredients. Suppose soybean meal price rises. You can check the shadow price for soybean meal maximum. If it's high, you might look for alternatives. Or if maize price drops, you can see how much you could save by increasing maize maximum. Most formulation software provides a sensitivity report. In Excel Solver, you can generate a sensitivity report after solving. It shows allowable increases and decreases for objective coefficients (prices) and constraints. Use it to answer questions like: 'If fish meal price increases by 10%, how much will my feed cost increase?' or 'If I reduce crude protein from 16% to 15.5%, how much can I save?' But remember: shadow prices are only valid for small changes. For large changes, you need to re-solve. Also, shadow prices assume linearity; in reality, nutrient responses are not always linear. Still, they are a great guide. Practical tip: Keep a record of shadow prices for your common diets. When prices change, you can quickly estimate the impact without re-running software. For example, if the shadow price for soybean meal is 0.8, and soybean meal price increases by $0.05/kg, the diet cost will increase by about $0.04/kg (0.8 * 0.05). That's 4 cents per kg, or $40 per tonne. That knowledge helps you negotiate prices or adjust your selling price. In small African operations, you might not have software that gives shadow prices, but you can approximate by re-running formulations with small changes. It's worth the effort."
+    },
+    {
+      "title": "Formulating with Variable Ingredient Prices and Availability",
+      "body": "In Africa, ingredient prices and availability change constantly due to harvest seasons, import costs, and currency fluctuations. A formulation that was least-cost last month may be expensive today. To stay profitable, you need to adapt quickly. Start by building a flexible ingredient database. Include alternative energy sources: maize, sorghum, millet, cassava chips, sweet potato chips, and by-products like wheat bran, rice bran, and brewery waste. For protein: soybean meal, groundnut cake, sunflower cake, cottonseed cake, fish meal, and synthetic amino acids. For each, record nutrient composition and current price. Update prices weekly, or even daily if you can. Use a simple spreadsheet to track prices and calculate cost per unit of nutrient, e.g., cost per kg of protein or per MJ of energy. That helps you compare ingredients on a nutrient basis. For example, if fish meal is $1.20/kg with 60% CP, cost per kg CP = $2.00. If soybean meal is $0.55/kg with 44% CP, cost per kg CP = $1.25. Soybean meal is cheaper per unit of protein. But fish meal also provides lysine and methionine, so compare cost per kg of lysine. When prices change, your formulation should change. If maize price spikes, you might replace some maize with cassava chips, but adjust for lower energy and protein. You may need to add more soybean meal and oil to maintain energy. If soybean meal is scarce, use groundnut cake or sunflower cake, but watch for aflatoxin in groundnut and fibre in sunflower. Availability also matters: if an ingredient is not available, set its maximum to zero in your software. Always have a backup formula. For example, Formula A uses maize and soybean meal; Formula B uses cassava and groundnut cake. When you can't get maize, switch to B. In practice, many African farmers use what's available locally. That's fine, but you must balance nutrients. Use a simple hand method or software to check that the mix meets requirements. For example, if you have maize (8.5% CP) and groundnut cake (45% CP), use Pearson Square to make a 16% CP diet: 45-16=29 parts maize, 16-8.5=7.5 parts groundnut cake, total 36.5, so maize 79.5%, groundnut cake 20.5%. Then add 3% mineral-vitamin premix, reducing the others proportionally. That's a practical, low-cost diet. But if groundnut cake price rises, you might switch to sunflower cake (30% CP). Recalculate. The key is to be flexible and to know your nutrient targets. Software makes this easier, but you can do it with a calculator and a good ingredient table. Keep records of what you fed and how pigs performed. That's your best guide."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is the main purpose of the Pearson Square method?",
+      "options": ["A) To formulate diets with more than three ingredients", "B) To balance a single nutrient using two ingredients", "C) To calculate the cost of a diet", "D) To determine the amino acid profile of a diet"],
+      "answer": "B",
+      "explanation": "The Pearson Square is a simple tool for mixing two ingredients to achieve a target level of one nutrient, such as crude protein."
+    },
+    {
+      "q": "Using the Pearson Square, if you mix maize (8.5% CP) and soybean meal (44% CP) to get 16% CP, what percentage of soybean meal is needed (before adding premix)?",
+      "options": ["A) 21.1%", "B) 28.0%", "C) 7.5%", "D) 16.0%"],
+      "answer": "A",
+      "explanation": "The parts of soybean meal are 16 - 8.5 = 7.5, and total parts are 7.5 + 28 = 35.5, so 7.5/35.5 = 21.1%."
+    },
+    {
+      "q": "In the algebraic method, if you want 100 kg of feed with 16% CP from maize (8.5% CP) and soybean meal (44% CP), how many kg of maize are needed?",
+      "options": ["A) 21.1 kg", "B) 78.9 kg", "C) 16.0 kg", "D) 44.0 kg"],
+      "answer": "B",
+      "explanation": "Solving the equations gives 78.9 kg maize and 21.1 kg soybean meal."
+    },
+    {
+      "q": "What does linear programming (LP) do in feed formulation?",
+      "options": ["A) It calculates the Pearson Square", "B) It finds the cheapest mix of ingredients that meets nutrient requirements", "C) It analyses the amino acid profile of ingredients", "D) It predicts pig growth rate"],
+      "answer": "B",
+      "explanation": "LP minimises cost while satisfying all specified nutrient and ingredient constraints."
+    },
+    {
+      "q": "Which of the following is NOT a typical input for LP formulation?",
+      "options": ["A) Ingredient nutrient composition", "B) Ingredient prices", "C) Pig's genetic potential", "D) Nutrient requirements of the pig"],
+      "answer": "C",
+      "explanation": "LP uses ingredient data and nutrient requirements, but not the pig's genetic potential directly."
+    },
+    {
+      "q": "In Excel, which function is commonly used with Solver to calculate total cost in a feed formulation?",
+      "options": ["A) SUM", "B) SUMPRODUCT", "C) VLOOKUP", "D) AVERAGE"],
+      "answer": "B",
+      "explanation": "SUMPRODUCT multiplies ingredient quantities by their costs and sums the results."
+    },
+    {
+      "q": "What is a key best practice when using formulation software?",
+      "options": ["A) Use only NRC nutrient values for all ingredients", "B) Update ingredient prices regularly", "C) Set no maximum limits on ingredients", "D) Ignore the final nutrient profile"],
+      "answer": "B",
+      "explanation": "Prices change frequently, so updating them ensures the least-cost formula remains accurate."
+    },
+    {
+      "q": "Which software feature allows you to set a maximum inclusion level for an ingredient?",
+      "options": ["A) Nutrient constraints", "B) Ingredient restrictions", "C) Sensitivity analysis", "D) Shadow prices"],
+      "answer": "B",
+      "explanation": "Ingredient restrictions set minimum or maximum amounts for each ingredient."
+    },
+    {
+      "q": "Why is it important to set a maximum for fish meal in pig diets?",
+      "options": ["A) It is too cheap", "B) It can cause fishy taint in meat and is expensive", "C) It lacks lysine", "D) It is high in fibre"],
+      "answer": "B",
+      "explanation": "Excessive fish meal can taint pork and increase cost, so limits are set."
+    },
+    {
+      "q": "What does a shadow price of zero for a constraint indicate?",
+      "options": ["A) The constraint is binding", "B) The constraint is not affecting the cost", "C) The constraint is too tight", "D) The constraint is irrelevant"],
+      "answer": "B",
+      "explanation": "A zero shadow price means changing that constraint slightly would not change the total cost."
+    },
+    {
+      "q": "If the shadow price for lysine is $0.02 per 0.01% increase, what is the cost of increasing lysine by 0.05%?",
+      "options": ["A) $0.02", "B) $0.10", "C) $0.05", "D) $0.20"],
+      "answer": "B",
+      "explanation": "0.05% is five times 0.01%, so 5 * $0.02 = $0.10 per kg."
+    },
+    {
+      "q": "Which of the following is a practical use of sensitivity analysis?",
+      "options": ["A) To determine the exact nutrient requirements of pigs", "B) To decide which ingredient to buy when prices change", "C) To calculate the Pearson Square", "D) To measure feed intake"],
+      "answer": "B",
+      "explanation": "Sensitivity analysis shows how cost changes with ingredient prices, helping purchasing decisions."
+    },
+    {
+      "q": "What is a common alternative energy source to maize in African pig diets?",
+      "options": ["A) Soybean meal", "B) Cassava chips", "C) Fish meal", "D) Limestone"],
+      "answer": "B",
+      "explanation": "Cassava chips are a locally available energy source, though lower in protein than maize."
+    },
+    {
+      "q": "When substituting groundnut cake for soybean meal, what anti-nutritional factor should you watch for?",
+      "options": ["A) Gossypol", "B) Aflatoxin", "C) Trypsin inhibitors", "D) Cyanide"],
+      "answer": "B",
+      "explanation": "Groundnut cake can be contaminated with aflatoxin, especially if stored poorly."
+    },
+    {
+      "q": "Why is it important to have a backup formula when ingredient availability changes?",
+      "options": ["A) To use more expensive ingredients", "B) To maintain pig performance when primary ingredients are unavailable", "C) To increase feed cost", "D) To avoid using software"],
+      "answer": "B",
+      "explanation": "A backup formula allows you to switch ingredients without compromising nutrition."
+    },
+    {
+      "q": "What does the algebraic method use to solve for ingredient proportions?",
+      "options": ["A) A square diagram", "B) Simultaneous equations", "C) A computer algorithm", "D) Trial and error"],
+      "answer": "B",
+      "explanation": "The algebraic method sets up equations for total weight and nutrient content and solves them."
+    },
+    {
+      "q": "In LP, what is the objective function?",
+      "options": ["A) To maximise nutrient content", "B) To minimise cost", "C) To maximise ingredient variety", "D) To minimise fibre"],
+      "answer": "B",
+      "explanation": "Least-cost formulation aims to minimise the total cost of the diet."
+    },
+    {
+      "q": "Which of the following is a nutrient constraint you might set for a grower diet?",
+      "options": ["A) Maize maximum 70%", "B) Lysine minimum 0.85%", "C) Fish meal maximum 5%", "D) Salt minimum 0.3%"],
+      "answer": "B",
+      "explanation": "Lysine minimum is a nutrient constraint; the others are ingredient restrictions."
+    },
+    {
+      "q": "What is the first step in using formulation software effectively?",
+      "options": ["A) Buy the most expensive software", "B) Build an accurate ingredient database", "C) Set all constraints to zero", "D) Ignore local ingredient variability"],
+      "answer": "B",
+      "explanation": "Accurate nutrient and price data are essential for reliable formulations."
+    },
+    {
+      "q": "Why might you set a maximum inclusion level for wheat bran?",
+      "options": ["A) It is high in energy", "B) It is high in fibre and can reduce digestibility", "C) It is too expensive", "D) It lacks phosphorus"],
+      "answer": "B",
+      "explanation": "Wheat bran is bulky and high in fibre, so limits prevent reduced feed intake and nutrient dilution."
+    },
+    {
+      "q": "What does a negative shadow price for an ingredient maximum mean?",
+      "options": ["A) Increasing the maximum would increase cost", "B) Increasing the maximum would decrease cost", "C) The constraint is not binding", "D) The ingredient is not used"],
+      "answer": "B",
+      "explanation": "A negative shadow price means relaxing the maximum (allowing more) would lower the total cost."
+    },
+    {
+      "q": "In Africa, why is it important to use local ingredient nutrient values instead of book values?",
+      "options": ["A) Book values are always wrong", "B) Local ingredients vary in nutrient content due to variety and processing", "C) Local ingredients are cheaper", "D) Book values are for different species"],
+      "answer": "B",
+      "explanation": "Local ingredients like cassava peel or palm kernel cake can differ significantly from standard values."
+    },
+    {
+      "q": "What is a simple way to compare the cost-effectiveness of two protein sources?",
+      "options": ["A) Compare their total cost per kg", "B) Compare their cost per kg of crude protein", "C) Compare their colour", "D) Compare their fibre content"],
+      "answer": "B",
+      "explanation": "Cost per unit of protein (or lysine) gives a better comparison than cost per kg of ingredient."
+    },
+    {
+      "q": "Which of the following is a risk of not setting maximum constraints in LP?",
+      "options": ["A) The software may select an unpalatable or unsafe diet", "B) The cost will always be higher", "C) The nutrient requirements will not be met", "D) The software will crash"],
+      "answer": "A",
+      "explanation": "Without maximums, LP might use excessive amounts of an ingredient that causes problems, like fish meal or cassava."
+    },
+    {
+      "q": "What is the purpose of a sensitivity report in Excel Solver?",
+      "options": ["A) To show the optimal ingredient mix", "B) To show how changes in constraints or prices affect the solution", "C) To calculate the Pearson Square", "D) To list all available ingredients"],
+      "answer": "B",
+      "explanation": "The sensitivity report provides shadow prices and allowable ranges for objective coefficients and constraints."
+    },
+    {
+      "q": "If maize price increases by $0.05/kg and the shadow price for maize maximum is 0.8, what is the approximate increase in diet cost per kg?",
+      "options": ["A) $0.04", "B) $0.05", "C) $0.08", "D) $0.40"],
+      "answer": "A",
+      "explanation": "0.8 * $0.05 = $0.04 per kg increase in cost."
+    },
+    {
+      "q": "Which of the following is a good practice when formulating with variable ingredient prices?",
+      "options": ["A) Use the same formula regardless of price changes", "B) Re-formulate when prices change significantly", "C) Only use the cheapest ingredient", "D) Ignore nutrient requirements"],
+      "answer": "B",
+      "explanation": "Re-formulating ensures you maintain least-cost as prices fluctuate."
+    },
+    {
+      "q": "What is a common problem with using cassava peel meal in pig diets?",
+      "options": ["A) It is high in protein", "B) It contains cyanide and is low in energy", "C) It is high in lysine", "D) It is too expensive"],
+      "answer": "B",
+      "explanation": "Cassava peel meal can contain cyanogenic glycosides and has low energy and protein, so it must be limited."
+    },
+    {
+      "q": "In the context of feed formulation, what does 'least-cost' mean?",
+      "options": ["A) The diet with the lowest quality ingredients", "B) The cheapest diet that meets all nutrient requirements", "C) The diet with the most ingredients", "D) The diet with the highest protein"],
+      "answer": "B",
+      "explanation": "Least-cost formulation minimises cost while satisfying all specified nutritional constraints."
+    },
+    {
+      "q": "Why is it useful to record shadow prices for common diets?",
+      "options": ["A) To impress your customers", "B) To quickly estimate the impact of price changes without re-running software", "C) To increase feed cost", "D) To avoid using software"],
+      "answer": "B",
+      "explanation": "Shadow prices allow rapid assessment of how ingredient price changes affect total diet cost."
+    }
+  ],
+  "videos": [
+    "Pearson square feed formulation example",
+    "least cost feed formulation Excel Solver",
+    "pig feed formulation software tutorial"
+  ]
+}

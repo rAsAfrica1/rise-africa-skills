@@ -1,0 +1,218 @@
+﻿{
+  "course": "Robotics",
+  "module_number": 10,
+  "module_title": "Robot Operating System (ROS)",
+  "lessons": [
+    {
+      "title": "ROS Architecture: Nodes, Topics, Services",
+      "body": "ROS is a set of software libraries and tools that help you build robot applications. Think of it as the 'operating system' for your robot, handling communication between different parts. In ROS, a node is a single process that does one job, like reading a sensor or controlling a motor. Nodes talk to each other using topics and services. Topics are like radio stations: a node publishes messages to a topic, and any node subscribed to that topic receives them. For example, a camera node publishes images to /camera/image, and a vision node subscribes to that topic to detect objects. Services are like phone calls: a node sends a request and waits for a response. For instance, a service /get_robot_pose might return the robot's current position.\n\nIn Africa, where hardware can be expensive, ROS lets you reuse code and integrate low-cost sensors. A typical setup: an Arduino or Raspberry Pi running ROS nodes for motor control and sensor reading. You can run ROS on a laptop with Ubuntu 20.04 and ROS Noetic. Start by installing ROS: sudo apt install ros-noetic-desktop-full. Then run roscore to start the master node. In a new terminal, run rosrun turtlesim turtlesim_node to see a demo. Use rostopic list to see active topics, and rostopic echo /turtle1/pose to see messages. This hands-on approach helps you grasp the publish-subscribe model.\n\nFor a mobile robot, you might have nodes for: motor driver (subscribes to /cmd_vel, publishes to /odom), lidar (publishes to /scan), and navigation (subscribes to /scan and /odom, publishes to /cmd_vel). Services are used for occasional tasks like saving a map or calibrating sensors. Remember, ROS 1 uses a central master, while ROS 2 uses DDS for peer-to-peer communication. For beginners, ROS 1 Noetic is well-documented and works on Ubuntu 20.04. Practice by creating a simple publisher and subscriber in Python, as you'll do in the next lesson. This architecture makes your robot modular and easier to debug."
+    },
+    {
+      "title": "Writing ROS Publishers and Subscribers",
+      "body": "To make your robot do something, you'll write nodes that publish and subscribe to topics. We'll use Python because it's beginner-friendly. First, create a package: catkin_create_pkg my_robot rospy std_msgs. Then, inside the package, create a scripts folder and a Python file, e.g., talker.py. Make it executable: chmod +x talker.py. In talker.py, import rospy and std_msgs.msg. Initialize the node: rospy.init_node('talker', anonymous=True). Create a publisher: pub = rospy.Publisher('chatter', String, queue_size=10). Then loop at 10 Hz: rate = rospy.Rate(10); while not rospy.is_shutdown(): msg = String(); msg.data = 'Hello from Africa %s' % rospy.get_time(); pub.publish(msg); rate.sleep().\n\nNow a subscriber: listener.py. Import rospy and String. Define a callback function that prints the message: def callback(data): rospy.loginfo(rospy.get_caller_id() + 'I heard %s', data.data). In main, rospy.init_node('listener', anonymous=True); rospy.Subscriber('chatter', String, callback); rospy.spin(). Run roscore, then rosrun my_robot talker.py and rosrun my_robot listener.py. You'll see messages flowing. This is the foundation for sensor data and control commands.\n\nFor a real robot, you might publish motor commands as geometry_msgs/Twist to /cmd_vel. A Twist message has linear and angular vectors. For example, to move forward at 0.2 m/s: twist.linear.x = 0.2; twist.angular.z = 0.0. Your motor driver node subscribes to /cmd_vel and converts to wheel speeds. Similarly, an ultrasonic sensor node might publish a Float32 distance to /ultrasonic. Always set queue_size to avoid dropping messages, and use rospy.loginfo for debugging. In Africa, where internet may be limited, test locally with a laptop and a microcontroller like Arduino running rosserial. This allows you to publish sensor data from cheap sensors. Remember to handle exceptions and shutdown cleanly with rospy.on_shutdown(). Practice by making a node that publishes random numbers and another that filters them."
+    },
+    {
+      "title": "ROS Packages and Launch Files",
+      "body": "A ROS package is the basic unit for organizing your code. It contains nodes, libraries, datasets, and configuration files. To create a package, use catkin_create_pkg <package_name> <dependencies>. For example, catkin_create_pkg my_robot rospy std_msgs sensor_msgs. This creates a folder with package.xml and CMakeLists.txt. You must build your workspace with catkin_make in the src directory of your catkin workspace. After building, source devel/setup.bash to overlay your packages. Packages let you share code with others; you can find many open-source packages for Africa-relevant tasks like GPS waypoint navigation or camera calibration.\n\nLaunch files are XML files that start multiple nodes at once, set parameters, and remap topics. Instead of running many rosrun commands, you create a .launch file in a launch folder. For example, robot.launch might start a motor driver, a lidar node, and a navigation node. You can include arguments and conditions. A simple launch file: <launch><node name=\"talker\" pkg=\"my_robot\" type=\"talker.py\" output=\"screen\"/><node name=\"listener\" pkg=\"my_robot\" type=\"listener.py\" output=\"screen\"/></launch>. Run it with roslaunch my_robot robot.launch. This is crucial for complex robots with many nodes.\n\nIn Africa, where power can be unstable, launch files help you restart your robot system quickly. You can also set parameters like robot speed limits or sensor offsets directly in the launch file using <param>. For example, <param name=\"max_speed\" value=\"0.5\"/>. Nodes can read this with rospy.get_param('max_speed'). Use <remap> to change topic names, e.g., remap from=\"cmd_vel\" to=\"robot1/cmd_vel\". This is useful when testing multiple robots. Always keep your launch files organized and documented. Practice by creating a launch file that starts a publisher and subscriber, and use roslaunch to run it. Then add a parameter and see how it affects the nodes."
+    },
+    {
+      "title": "TF2 and Coordinate Transforms",
+      "body": "Robots have many coordinate frames: the base of the robot, the lidar, the camera, the wheels, and the world. TF2 is a ROS library that keeps track of these frames and their relationships over time. It lets you transform a point from one frame to another, like finding where an object is relative to the robot's base. For example, if your lidar detects an obstacle 2 meters ahead in the lidar frame, TF2 can tell you its position in the base frame. This is essential for navigation and manipulation.\n\nTo use TF2, you need to broadcast transforms. A common way is with a URDF (Unified Robot Description Format) file that describes your robot's geometry. You can also broadcast static transforms for fixed sensors: static_transform_publisher x y z yaw pitch roll frame_id child_frame_id. For dynamic transforms, like the robot moving, you publish a tf2_msgs/TFMessage on /tf. In Python, use tf2_ros.TransformBroadcaster. For listening, use tf2_ros.Buffer and TransformListener. Then call buffer.lookup_transform(target_frame, source_frame, rospy.Time(0)).\n\nIn Africa, where robots often operate in unstructured environments, accurate transforms are vital. For a differential drive robot, you need transforms from base_link to laser and from odom to base_link. If your robot slips, odom might drift, but TF2 helps you fuse sensor data. Use rosrun tf2_tools view_frames to visualize the transform tree. A common error is missing transforms, which causes lookup failures. Always set the timestamp correctly. For a low-cost robot, you can use a static transform for the lidar if it's fixed. Practice by writing a node that broadcasts a moving frame and another that listens and prints the position of a point. This will prepare you for simulation and real robot navigation."
+    },
+    {
+      "title": "Simulation with Gazebo and RViz",
+      "body": "Gazebo is a 3D simulator that lets you test your robot without hardware. RViz is a visualization tool for sensor data and robot state. Together, they save time and money, especially in Africa where hardware can be scarce. To simulate a robot, you need a URDF model and a Gazebo world file. Start by installing gazebo_ros_pkgs: sudo apt install ros-noetic-gazebo-ros-pkgs. Then, create a launch file that starts Gazebo with an empty world and spawns your robot. For example, roslaunch my_robot gazebo.launch. You can also use existing models like TurtleBot3: sudo apt install ros-noetic-turtlebot3-gazebo, then roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch.\n\nIn Gazebo, you can add sensors like lidar, camera, and IMU to your robot model. The simulator publishes sensor data to ROS topics, just like a real robot. For instance, a lidar publishes to /scan. You can then run your navigation stack in simulation. RViz is used to visualize the robot model, laser scans, maps, and paths. Launch it with rosrun rviz rviz. Add displays for LaserScan, RobotModel, and TF. Set the fixed frame to 'odom' or 'map'. This helps you debug your algorithms.\n\nFor African robotics projects, simulation allows you to test in scenarios like rough terrain or narrow roads without risking hardware. You can create custom worlds with obstacles, slopes, and even rural landscapes. Use gazebo's building editor to design simple structures. Practice by spawning a robot in Gazebo, driving it with teleop (rosrun teleop_twist_keyboard teleop_twist_keyboard.py), and visualizing in RViz. Then, add a camera and view the image in RViz. This workflow is standard in robotics development. Remember to save your world and launch files for reuse. Simulation is not perfect but it's a powerful tool for learning and prototyping."
+    },
+    {
+      "title": "Lab: Building a ROS-Based Mobile Robot",
+      "body": "In this lab, you'll build a simulated mobile robot in ROS from scratch. You'll create a URDF model, simulate it in Gazebo, and control it with a custom node. This integrates everything you've learned. First, create a new package: catkin_create_pkg my_mobile_robot rospy std_msgs sensor_msgs geometry_msgs gazebo_ros. Then, create a URDF file in a urdf folder. A simple differential drive robot has a base, two wheels, and a caster. Use <link> and <joint> tags. For the wheels, use continuous joints. Add a lidar sensor: <gazebo reference=\"laser\"><sensor type=\"ray\" name=\"laser\"><update_rate>10</update_rate><ray><scan><horizontal><samples>360</samples><min_angle>-3.14</min_angle><max_angle>3.14</max_angle></horizontal></scan></ray></sensor></gazebo>. Also add a differential drive plugin for movement.\n\nNext, create a launch file to start Gazebo, spawn the robot, and run a control node. The control node will subscribe to /scan and publish to /cmd_vel. Write a Python node that makes the robot move forward until an obstacle is within 0.5 meters, then turn. Use the lidar data: ranges array. Find the minimum distance in the front sector. If min_dist < 0.5, set angular.z = 0.5, else linear.x = 0.2. Publish at 10 Hz. Run the simulation and see the robot avoid obstacles. This is a basic obstacle avoidance behavior.\n\nFor an African context, you can modify the world to include a dirt road or a market scene. You can also test with different speeds and sensor noise. Document your results: how does the robot perform? What are the limitations? This lab prepares you for real hardware. If you have a physical robot, you can transfer the same code by changing the hardware interface. Remember to use rosbag to record data for later analysis. Practice by adding a camera and a simple line-following algorithm. This hands-on project will give you confidence to build your own ROS-based robot for agriculture, delivery, or environmental monitoring."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is a ROS node?",
+      "options": ["A) A single process that performs computation", "B) A message type", "C) A communication channel", "D) A configuration file"],
+      "answer": "A",
+      "explanation": "A node is a process that performs computation, and nodes communicate via topics and services."
+    },
+    {
+      "q": "Which command starts the ROS master?",
+      "options": ["A) rosrun", "B) roscore", "C) roslaunch", "D) rostopic"],
+      "answer": "B",
+      "explanation": "roscore starts the ROS master, parameter server, and logging nodes."
+    },
+    {
+      "q": "What is the difference between a topic and a service?",
+      "options": ["A) Topics are synchronous, services are asynchronous", "B) Topics use publish/subscribe, services use request/response", "C) Topics are only for sensor data, services for control", "D) Topics are for ROS 2, services for ROS 1"],
+      "answer": "B",
+      "explanation": "Topics are many-to-many publish/subscribe, while services are one-to-one request/response."
+    },
+    {
+      "q": "Which command lists all active topics?",
+      "options": ["A) rosnode list", "B) rostopic list", "C) rosservice list", "D) rosmsg list"],
+      "answer": "B",
+      "explanation": "rostopic list displays all topics currently being published or subscribed."
+    },
+    {
+      "q": "In Python, which library is used for ROS 1 nodes?",
+      "options": ["A) rospy", "B) rclpy", "C) roscpp", "D) rosnode"],
+      "answer": "A",
+      "explanation": "rospy is the Python client library for ROS 1."
+    },
+    {
+      "q": "What does rospy.init_node() do?",
+      "options": ["A) Initializes a publisher", "B) Registers the node with the master", "C) Starts the ROS master", "D) Creates a subscriber"],
+      "answer": "B",
+      "explanation": "init_node registers the node with the ROS master and initializes the node."
+    },
+    {
+      "q": "Which message type is commonly used for velocity commands?",
+      "options": ["A) std_msgs/String", "B) geometry_msgs/Twist", "C) sensor_msgs/LaserScan", "D) nav_msgs/Odometry"],
+      "answer": "B",
+      "explanation": "geometry_msgs/Twist contains linear and angular vectors for velocity."
+    },
+    {
+      "q": "What is the purpose of a callback function in a subscriber?",
+      "options": ["A) To initialize the node", "B) To process incoming messages", "C) To publish messages", "D) To shut down the node"],
+      "answer": "B",
+      "explanation": "The callback is called each time a message is received on the subscribed topic."
+    },
+    {
+      "q": "Which command creates a new ROS package?",
+      "options": ["A) catkin_create_pkg", "B) roscreate-pkg", "C) rosnewpkg", "D) mkpkg"],
+      "answer": "A",
+      "explanation": "catkin_create_pkg is the standard command to create a package in ROS Noetic."
+    },
+    {
+      "q": "What file lists a package's dependencies?",
+      "options": ["A) CMakeLists.txt", "B) package.xml", "C) manifest.xml", "D) dependencies.txt"],
+      "answer": "B",
+      "explanation": "package.xml contains metadata and dependencies for a ROS package."
+    },
+    {
+      "q": "What is the purpose of a launch file?",
+      "options": ["A) To compile code", "B) To start multiple nodes and set parameters", "C) To record data", "D) To visualize sensor data"],
+      "answer": "B",
+      "explanation": "Launch files allow starting multiple nodes, setting parameters, and remapping topics."
+    },
+    {
+      "q": "Which tag is used to set a parameter in a launch file?",
+      "options": ["A) <param>", "B) <arg>", "C) <node>", "D) <remap>"],
+      "answer": "A",
+      "explanation": "<param> sets a parameter on the parameter server."
+    },
+    {
+      "q": "What does the <remap> tag do in a launch file?",
+      "options": ["A) Changes the node name", "B) Changes the topic name", "C) Changes the package name", "D) Changes the parameter value"],
+      "answer": "B",
+      "explanation": "<remap> renames a topic, service, or parameter from one name to another."
+    },
+    {
+      "q": "What is TF2 used for?",
+      "options": ["A) Transforming coordinate frames", "B) Publishing messages", "C) Starting nodes", "D) Visualizing data"],
+      "answer": "A",
+      "explanation": "TF2 tracks coordinate frames and allows transforming points between them."
+    },
+    {
+      "q": "Which command visualizes the transform tree?",
+      "options": ["A) rosrun tf2_tools view_frames", "B) rosrun rviz rviz", "C) rosrun tf view_frames", "D) rostopic echo /tf"],
+      "answer": "A",
+      "explanation": "view_frames generates a diagram of the transform tree."
+    },
+    {
+      "q": "What is a static transform?",
+      "options": ["A) A transform that changes over time", "B) A transform that never changes", "C) A transform between two moving frames", "D) A transform that is not published"],
+      "answer": "B",
+      "explanation": "Static transforms are fixed relationships, like a sensor mounted rigidly to the robot."
+    },
+    {
+      "q": "Which message type is used to broadcast transforms?",
+      "options": ["A) tf2_msgs/TFMessage", "B) geometry_msgs/TransformStamped", "C) std_msgs/String", "D) sensor_msgs/Imu"],
+      "answer": "A",
+      "explanation": "TFMessage contains an array of TransformStamped messages for /tf."
+    },
+    {
+      "q": "What is Gazebo?",
+      "options": ["A) A 3D simulator", "B) A visualization tool", "C) A ROS package", "D) A programming language"],
+      "answer": "A",
+      "explanation": "Gazebo is a physics-based 3D simulator for robots."
+    },
+    {
+      "q": "What is RViz used for?",
+      "options": ["A) Simulating physics", "B) Visualizing sensor data and robot state", "C) Compiling code", "D) Creating URDF models"],
+      "answer": "B",
+      "explanation": "RViz is a 3D visualization tool for ROS data like laser scans, maps, and robot models."
+    },
+    {
+      "q": "Which package provides Gazebo integration with ROS?",
+      "options": ["A) gazebo_ros_pkgs", "B) ros_gazebo", "C) gazebo_ros", "D) sim_ros"],
+      "answer": "A",
+      "explanation": "gazebo_ros_pkgs is the metapackage for Gazebo and ROS integration."
+    },
+    {
+      "q": "What is a URDF file?",
+      "options": ["A) A launch file", "B) A robot model description", "C) A configuration file", "D) A message type"],
+      "answer": "B",
+      "explanation": "URDF (Unified Robot Description Format) describes a robot's links and joints."
+    },
+    {
+      "q": "Which sensor is commonly simulated in Gazebo for obstacle detection?",
+      "options": ["A) GPS", "B) Lidar", "C) IMU", "D) Camera"],
+      "answer": "B",
+      "explanation": "Lidar (laser scanner) is widely used for obstacle detection and mapping."
+    },
+    {
+      "q": "What does the differential drive plugin do in Gazebo?",
+      "options": ["A) Simulates wheel movement based on velocity commands", "B) Publishes lidar data", "C) Visualizes the robot", "D) Records data"],
+      "answer": "A",
+      "explanation": "The differential drive plugin controls the robot's wheels based on /cmd_vel."
+    },
+    {
+      "q": "In the lab, what behavior was implemented?",
+      "options": ["A) Line following", "B) Obstacle avoidance", "C) Wall following", "D) Path planning"],
+      "answer": "B",
+      "explanation": "The lab code made the robot move forward and turn when an obstacle was detected."
+    },
+    {
+      "q": "Which topic does the robot publish to for movement?",
+      "options": ["A) /cmd_vel", "B) /scan", "C) /odom", "D) /tf"],
+      "answer": "A",
+      "explanation": "/cmd_vel is the standard topic for velocity commands to the robot base."
+    },
+    {
+      "q": "What is rospy.spin() used for?",
+      "options": ["A) To keep the node running and process callbacks", "B) To publish messages", "C) To initialize the node", "D) To shut down the node"],
+      "answer": "A",
+      "explanation": "rospy.spin() blocks until the node is shut down, allowing callbacks to be processed."
+    },
+    {
+      "q": "Which command records data from topics?",
+      "options": ["A) rosbag record", "B) rostopic echo", "C) rosrecord", "D) roslog"],
+      "answer": "A",
+      "explanation": "rosbag record saves messages from specified topics to a bag file."
+    },
+    {
+      "q": "What is the purpose of rospy.get_param()?",
+      "options": ["A) To retrieve a parameter from the parameter server", "B) To set a parameter", "C) To delete a parameter", "D) To list parameters"],
+      "answer": "A",
+      "explanation": "get_param reads a parameter value from the ROS parameter server."
+    },
+    {
+      "q": "Which tool is used for teleoperation in ROS?",
+      "options": ["A) teleop_twist_keyboard", "B) rqt_robot_steering", "C) Both A and B", "D) ros_teleop"],
+      "answer": "C",
+      "explanation": "Both teleop_twist_keyboard and rqt_robot_steering allow manual control of a robot."
+    },
+    {
+      "q": "What is the advantage of using ROS for robotics in Africa?",
+      "options": ["A) It requires expensive hardware", "B) It promotes code reuse and community support", "C) It only works with specific robots", "D) It is not well documented"],
+      "answer": "B",
+      "explanation": "ROS is open-source, well-documented, and allows reusing code, which is cost-effective."
+    }
+  ],
+  "videos": [
+    "ROS Noetic tutorial for beginners",
+    "Gazebo simulation mobile robot ROS",
+    "TF2 coordinate transforms ROS tutorial"
+  ]
+}

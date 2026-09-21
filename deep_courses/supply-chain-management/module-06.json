@@ -1,0 +1,218 @@
+﻿{
+  "course": "Supply Chain Management",
+  "module_number": 6,
+  "module_title": "Production Planning and Scheduling",
+  "lessons": [
+    {
+      "title": "Aggregate Planning and Master Production Scheduling",
+      "body": "Aggregate planning is how you decide, over the next 3 to 12 months, how much you will produce and how many people you will need. For a small African bakery, it might mean planning to make 5,000 loaves per week in December but only 3,000 in June. You start by forecasting demand using simple tools like a 3-month moving average. If your sales were 2,000, 2,500, and 3,000 loaves in the last three months, your forecast for next month is (2,000+2,500+3,000)/3 = 2,500 loaves. Then you compare that to your capacity. If one oven can bake 500 loaves per day and you work 6 days a week, you can make 3,000 loaves weekly. If demand is 3,500, you need overtime, a second oven, or to outsource.\n\nMaster Production Scheduling (MPS) breaks the aggregate plan into specific products and weeks. Instead of 'bread', you plan 'white loaf 700g', 'brown loaf 700g', and 'rolls'. For example, in week 1 you schedule 1,200 white loaves, 800 brown loaves, and 1,000 rolls. The MPS must respect capacity and inventory. If you have 200 white loaves left from last week and want 1,000 in stock at the end of week 1, you need to produce 800 + (1,000 - 200) = 1,600? Wait, thatâs wrong. Let's recalc: Desired ending inventory = 1,000. Beginning inventory = 200. Demand = 1,200. Production needed = Demand + Desired ending inventory - Beginning inventory = 1,200 + 1,000 - 200 = 2,000 loaves. So you schedule 2,000 white loaves.\n\nIn Africa, aggregate planning must account for rainy seasons, harvests, and holidays. A tomato sauce factory in Nigeria knows that demand spikes during Ramadan and Christmas. They start building inventory two months early. Use a simple spreadsheet with columns for month, forecast, production, inventory, and workforce. Calculate inventory each month as previous inventory + production - forecast. Aim to keep inventory between 10% and 20% of monthly sales. If inventory goes negative, increase production or reduce sales. This is called a chase strategy: match production to demand by hiring and laying off. A level strategy keeps production steady and lets inventory rise and fall. For small businesses, a hybrid works: keep a core workforce and use overtime during peaks. Always update your plan monthly as actual sales come in."
+    },
+    {
+      "title": "Material Requirements Planning (MRP)",
+      "body": "MRP is a calculator that tells you exactly what materials to order, how much, and when, based on your production schedule. Imagine you make wooden chairs. Each chair needs 4 legs, 1 seat, 8 screws, and 2 meters of varnish. You have an order for 100 chairs in week 5. MRP works backwards from that due date. It uses three inputs: the Master Production Schedule (what you will make), the Bill of Materials (what goes into each product), and inventory records (what you already have).\n\nLetâs run MRP for the chair legs. You need 100 chairs in week 5. Each chair needs 4 legs, so you need 400 legs in week 5. You check inventory: you have 50 legs. So net requirement = 400 - 50 = 350 legs. You also have a safety stock of 20 legs, so you need 370 legs. Your supplier takes 2 weeks to deliver. So you must place the order in week 3 (week 5 minus 2 weeks lead time). If you order in batches of 500 (because of supplier discounts), you order 500 legs in week 3, leaving 130 legs in inventory after week 5 (500 - 370 = 130).\n\nFor the seat, you need 100 seats in week 5. You have 10 in stock. Net requirement = 90. Lead time is 1 week, so order 90 seats in week 4. For screws, you need 800 screws in week 5. You have 200 in stock. Net requirement = 600. Lead time is 1 day, so order 600 screws in week 5. For varnish, you need 200 meters. You have 50 meters. Net requirement = 150 meters. Lead time is 3 days, so order 150 meters in week 5.\n\nIn Africa, MRP helps you avoid both stockouts and excess cash tied up in inventory. Use a simple spreadsheet: list all components, their lead times, current stock, and safety stock. For each week, calculate gross requirements (from MPS), then net requirements = gross - on hand + safety stock. Then offset by lead time to get order release dates. Always add a buffer for unreliable suppliers. If your supplier in China takes 6 weeks but sometimes 8, use 8 weeks in your MRP. Review your MRP weekly. If a supplier fails, you can quickly see which orders are at risk. Many African manufacturers use free tools like Excel or Google Sheets for MRP. Start simple: one product, five components. Once you master that, expand."
+    },
+    {
+      "title": "Capacity Planning and Management",
+      "body": "Capacity planning is about matching your ability to produce with the demand you expect. If you run a maize mill in Kenya, your capacity might be 10 tonnes per day. If demand is 12 tonnes, you have a capacity gap. You can close it by adding a shift, buying a bigger mill, or outsourcing. If demand is 8 tonnes, you have excess capacity and are wasting money on idle machines and labour.\n\nFirst, measure your capacity. For a machine, capacity = (hours available) Ã (units per hour) Ã (efficiency). If your mill runs 8 hours a day at 1.5 tonnes per hour, but efficiency is 80% due to breakdowns, actual capacity = 8 Ã 1.5 Ã 0.8 = 9.6 tonnes per day. For labour, capacity = number of workers Ã hours per day Ã productivity. If 5 workers each process 0.2 tonnes per hour, capacity = 5 Ã 8 Ã 0.2 = 8 tonnes per day. Your bottleneck is the lower of the two: 8 tonnes. So you can only produce 8 tonnes daily, not 9.6.\n\nNext, forecast demand. Use historical sales and adjust for trends. If you sold 150 tonnes last month and expect 10% growth, forecast 165 tonnes. Over 20 working days, thatâs 8.25 tonnes per day. Your capacity is 8 tonnes, so you have a small gap. You can close it by reducing downtime (improve efficiency to 85% gives 8.5 tonnes) or adding 30 minutes of overtime (8.5 hours Ã 5 Ã 0.2 = 8.5 tonnes). \n\nCapacity management strategies include: lead strategy (build capacity ahead of demand), lag strategy (wait until demand is consistently high), and match strategy (add capacity in small increments). For African businesses, a match strategy is often best because cash is tight. Use a capacity planning table: months in rows, demand and capacity in columns. Calculate utilisation = demand / capacity. If utilisation is above 90%, you risk delays. If below 70%, you are losing money. Aim for 80-85%. If you have seasonal demand, like a tomato processor during harvest, you can build inventory during low season and draw it down during peak. That way you keep capacity level. Always involve your team: machine operators know real capacity better than any formula."
+    },
+    {
+      "title": "Lean Production and Just-in-Time (JIT)",
+      "body": "Lean production is about removing waste. Waste is anything that does not add value for the customer. The eight wastes are: defects, overproduction, waiting, non-utilised talent, transportation, inventory, motion, and extra processing. In an African garment factory, overproduction means making 1,000 shirts when you only have orders for 600. That ties up cash in fabric and finished goods. Waiting means workers standing idle because the sewing machine broke down. Inventory waste is having 3 months of thread in stock when you only need 1 week.\n\nJust-in-Time (JIT) means you produce only what the customer wants, when they want it, and in the amount they want. Instead of pushing products through the factory, you pull them based on actual demand. A kanban card is a simple signal. In a car parts factory, when a worker uses the last of 10 bolts from a bin, they send a kanban card to the store to bring 10 more. The store then orders from the supplier. This keeps inventory low. For JIT to work, you need reliable suppliers, consistent quality, and flexible workers. In Africa, JIT can be challenging because suppliers may be far or unreliable. So you adapt: use a 'JIT with buffer' approach. Keep a small safety stock of critical items, but aim for 3-5 days of inventory instead of 30 days.\n\nA practical JIT tool is the 5S system: Sort, Set in order, Shine, Standardise, Sustain. Sort means remove unnecessary items from the work area. Set in order means put tools where they are needed. Shine means clean. Standardise means create rules. Sustain means keep it up. A bakery in Ghana used 5S to reduce flour waste by 15% in one month. Another tool is value stream mapping. Draw every step from raw material to customer, and mark which steps add value. You will find that 80% of time is waiting or moving. Eliminate those steps. Start small: pick one product line, map it, and remove one waste per week. Train your team to spot waste and suggest improvements. Lean is not about cutting jobs; it is about making work easier and more profitable."
+    },
+    {
+      "title": "Theory of Constraints and Drum-Buffer-Rope",
+      "body": "The Theory of Constraints (TOC) says that every system has one bottleneck that limits its output. If you improve anything else, you wonât increase total production. The bottleneck is called the drum because it sets the beat for the whole factory. In a furniture workshop, the bottleneck might be the drying oven. If the oven can only dry 20 chairs per day, the whole workshop can only produce 20 chairs per day, no matter how fast the carpenters work.\n\nDrum-Buffer-Rope (DBR) is a scheduling method for TOC. The drum is the bottleneck schedule. You plan production around the bottleneckâs capacity. The buffer is a time buffer of inventory before the bottleneck to ensure it never starves. The rope is the release of materials to the start of the line, tied to the bottleneckâs pace. For example, if the oven dries 20 chairs per day and takes 2 days to dry a batch, you need to have 40 chairs ready to enter the oven at all times. Thatâs your buffer. The rope means you only release new wood to the cutting station when the oven has finished a batch. So you donât flood the workshop with work-in-progress.\n\nHow to implement DBR: First, identify your bottleneck. Look for the step with the longest queue or the most overtime. Second, exploit the bottleneck: make sure it never stops. Give it its own maintenance, lunch relief, and quality checks. Third, subordinate everything else to the bottleneck. Non-bottleneck machines should work at the bottleneckâs pace, not faster. Fourth, elevate the bottleneck: if you still need more capacity, invest in the bottleneck (e.g., a second oven). Fifth, repeat. In an African context, a maize millâs bottleneck might be the sifting machine. You can add a buffer of 2 hours of unsifted maize before it. The rope is to only bring maize from the storage when the sifter is ready. This reduces waiting and inventory. Use a simple whiteboard to track the bottleneckâs hourly output. If it drops, find out why immediately. Train your team to respect the bottleneck: never let it idle. The goal is to increase throughput, not to keep everyone busy. Measure throughput, inventory, and operating expense. TOC is powerful because it focuses your limited resources on the one thing that matters most."
+    },
+    {
+      "title": "Case Study: Lean Manufacturing at Toyota",
+      "body": "Toyota is the birthplace of lean manufacturing. After World War II, Toyota faced a small market and limited resources. They could not afford mass production like Ford. So they created the Toyota Production System (TPS), which focuses on eliminating waste and respecting people. The two pillars of TPS are Just-in-Time and Jidoka (automation with a human touch). Jidoka means that when a problem occurs, the machine stops, and a worker fixes it immediately. This prevents defective products from moving forward.\n\nOne famous Toyota tool is the Andon cord. Any worker on the assembly line can pull a cord to stop the line if they see a problem. In many factories, stopping the line is a sin. At Toyota, it is expected. The line stops, the team leader comes, and they solve the root cause. This builds quality into the process. Another tool is the kanban system. Toyota uses cards to signal when to replenish parts. Each card specifies the part number, quantity, and location. When a bin is empty, the card goes back to the previous process to request more. This creates a pull system.\n\nToyota also uses standardised work. Every task has a defined sequence, takt time (the rate of customer demand), and standard inventory. Takt time = available work time per shift / customer demand per shift. If demand is 400 cars per day and you work 480 minutes, takt time = 480/400 = 1.2 minutes per car. Workers are trained to follow the standard, but they are also encouraged to improve it. This is called kaizen, continuous improvement. Small teams meet regularly to suggest changes.\n\nWhat can African businesses learn from Toyota? First, you donât need expensive technology. Toyota started with simple tools like andon cords and kanban cards. Second, respect for people is central. Workers are not machines; they are problem solvers. Third, go to the gemba (the actual place where work happens). Managers should spend time on the floor, not in offices. Fourth, solve problems at the root cause using the 5 Whys. Ask 'why' five times to get to the real issue. A Nigerian bottling company applied Toyotaâs 5S and reduced changeover time from 45 minutes to 15 minutes. A Kenyan textile firm used kanban to cut work-in-progress by 40%. Start small: pick one production line, train your team on 5S and standard work, and celebrate small wins. Lean is a journey, not a destination."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is the main purpose of aggregate planning?",
+      "options": ["A) To schedule daily production tasks", "B) To plan production and workforce over 3-12 months", "C) To order raw materials", "D) To design new products"],
+      "answer": "B",
+      "explanation": "Aggregate planning matches production capacity with demand over a medium-term horizon, typically 3 to 12 months."
+    },
+    {
+      "q": "If sales for the last three months were 2,000, 2,500, and 3,000 units, what is the 3-month moving average forecast for next month?",
+      "options": ["A) 2,000", "B) 2,500", "C) 3,000", "D) 2,750"],
+      "answer": "B",
+      "explanation": "The moving average is (2000+2500+3000)/3 = 2500."
+    },
+    {
+      "q": "In Master Production Scheduling, what does MPS break down?",
+      "options": ["A) Aggregate plan into specific products and weeks", "B) Customer orders into invoices", "C) Raw materials into components", "D) Machine capacity into hours"],
+      "answer": "A",
+      "explanation": "MPS takes the aggregate plan and specifies which end products to produce in which periods."
+    },
+    {
+      "q": "What is a chase strategy in aggregate planning?",
+      "options": ["A) Keeping production level and letting inventory fluctuate", "B) Matching production to demand by hiring and laying off", "C) Outsourcing all production", "D) Producing only to order"],
+      "answer": "B",
+      "explanation": "A chase strategy adjusts workforce and production rates to match demand changes."
+    },
+    {
+      "q": "What are the three main inputs to MRP?",
+      "options": ["A) Master Production Schedule, Bill of Materials, Inventory Records", "B) Sales forecast, Employee list, Machine capacity", "C) Supplier list, Transport costs, Taxes", "D) Customer orders, Invoices, Payments"],
+      "answer": "A",
+      "explanation": "MRP uses the MPS, BOM, and inventory records to calculate material needs."
+    },
+    {
+      "q": "If you need 100 chairs in week 5, each chair needs 4 legs, you have 50 legs in stock, and safety stock is 20, what is the net requirement for legs?",
+      "options": ["A) 350", "B) 370", "C) 400", "D) 420"],
+      "answer": "B",
+      "explanation": "Gross requirement = 100*4 = 400. Net = 400 - 50 + 20 = 370."
+    },
+    {
+      "q": "If lead time for legs is 2 weeks, when should you place the order for week 5?",
+      "options": ["A) Week 3", "B) Week 4", "C) Week 5", "D) Week 2"],
+      "answer": "A",
+      "explanation": "Order release = need date - lead time = week 5 - 2 = week 3."
+    },
+    {
+      "q": "What does MRP offsetting mean?",
+      "options": ["A) Adding safety stock", "B) Subtracting inventory", "C) Scheduling orders backwards from due date by lead time", "D) Calculating batch sizes"],
+      "answer": "C",
+      "explanation": "Offsetting means placing orders earlier by the lead time so they arrive when needed."
+    },
+    {
+      "q": "What is the formula for machine capacity?",
+      "options": ["A) Hours available Ã units per hour Ã efficiency", "B) Number of workers Ã hours", "C) Demand / supply", "D) Inventory / lead time"],
+      "answer": "A",
+      "explanation": "Capacity is the product of available time, production rate, and efficiency."
+    },
+    {
+      "q": "If a mill runs 8 hours at 1.5 tonnes/hour with 80% efficiency, what is actual capacity?",
+      "options": ["A) 9.6 tonnes", "B) 12 tonnes", "C) 8 tonnes", "D) 10 tonnes"],
+      "answer": "A",
+      "explanation": "8 Ã 1.5 Ã 0.8 = 9.6 tonnes per day."
+    },
+    {
+      "q": "What is a bottleneck in capacity planning?",
+      "options": ["A) The fastest machine", "B) The step with the lowest capacity that limits output", "C) The most expensive machine", "D) The final assembly step"],
+      "answer": "B",
+      "explanation": "The bottleneck is the constraint that determines the maximum output of the whole system."
+    },
+    {
+      "q": "What utilisation range is generally considered healthy?",
+      "options": ["A) 50-60%", "B) 70-80%", "C) 80-85%", "D) 95-100%"],
+      "answer": "C",
+      "explanation": "80-85% utilisation balances efficiency with flexibility to handle variability."
+    },
+    {
+      "q": "Which of the following is NOT one of the eight wastes of lean?",
+      "options": ["A) Defects", "B) Overproduction", "C) Overtime", "D) Waiting"],
+      "answer": "C",
+      "explanation": "Overtime is not one of the eight wastes; the eight are defects, overproduction, waiting, non-utilised talent, transportation, inventory, motion, and extra processing."
+    },
+    {
+      "q": "What does Just-in-Time (JIT) aim to do?",
+      "options": ["A) Produce as much as possible", "B) Produce only what is needed, when needed, in the amount needed", "C) Keep large inventory to avoid stockouts", "D) Maximize machine utilization"],
+      "answer": "B",
+      "explanation": "JIT pulls production based on actual demand to minimize waste."
+    },
+    {
+      "q": "What is a kanban card used for?",
+      "options": ["A) To signal replenishment of materials", "B) To track employee hours", "C) To record defects", "D) To schedule maintenance"],
+      "answer": "A",
+      "explanation": "Kanban cards are signals to produce or withdraw materials in a pull system."
+    },
+    {
+      "q": "What does the '5S' stand for?",
+      "options": ["A) Sort, Set in order, Shine, Standardise, Sustain", "B) Safety, Speed, Simplicity, Standard, Sustain", "C) Sort, Store, Shine, Standard, Sustain", "D) Sort, Set, Shine, Simplify, Sustain"],
+      "answer": "A",
+      "explanation": "5S is a workplace organization method: Sort, Set in order, Shine, Standardise, Sustain."
+    },
+    {
+      "q": "What is the main principle of the Theory of Constraints?",
+      "options": ["A) Every system has a bottleneck that limits output", "B) All machines should run at full capacity", "C) Inventory is always waste", "D) Workers should be multi-skilled"],
+      "answer": "A",
+      "explanation": "TOC states that a system's output is limited by its constraint (bottleneck)."
+    },
+    {
+      "q": "In Drum-Buffer-Rope, what is the 'drum'?",
+      "options": ["A) The bottleneck schedule", "B) The inventory buffer", "C) The release of materials", "D) The final assembly"],
+      "answer": "A",
+      "explanation": "The drum is the bottleneck's production schedule that sets the pace for the system."
+    },
+    {
+      "q": "What is the purpose of the buffer in DBR?",
+      "options": ["A) To ensure the bottleneck never starves", "B) To increase inventory everywhere", "C) To slow down production", "D) To reduce quality checks"],
+      "answer": "A",
+      "explanation": "The buffer protects the bottleneck from disruptions by providing a time or material buffer."
+    },
+    {
+      "q": "What does the 'rope' in DBR represent?",
+      "options": ["A) The release of materials tied to the bottleneck's pace", "B) The physical rope on the machine", "C) The communication between workers", "D) The transportation of goods"],
+      "answer": "A",
+      "explanation": "The rope signals the start of production to release materials only as the bottleneck consumes them."
+    },
+    {
+      "q": "Which company is credited with developing the Toyota Production System?",
+      "options": ["A) Toyota", "B) Ford", "C) General Motors", "D) Volkswagen"],
+      "answer": "A",
+      "explanation": "Toyota developed TPS, which became known as lean manufacturing."
+    },
+    {
+      "q": "What is Jidoka?",
+      "options": ["A) Automation with a human touch", "B) Just-in-time delivery", "C) Continuous improvement", "D) Standardised work"],
+      "answer": "A",
+      "explanation": "Jidoka means machines stop automatically when a problem is detected, and workers fix it."
+    },
+    {
+      "q": "What is the Andon cord used for at Toyota?",
+      "options": ["A) To stop the assembly line when a problem is detected", "B) To call for more materials", "C) To signal break time", "D) To measure takt time"],
+      "answer": "A",
+      "explanation": "The Andon cord allows any worker to stop the line to address a problem immediately."
+    },
+    {
+      "q": "What is takt time?",
+      "options": ["A) Available work time divided by customer demand", "B) The time to produce one unit", "C) The time between two shifts", "D) The lead time from supplier"],
+      "answer": "A",
+      "explanation": "Takt time is the rate at which a product must be completed to meet customer demand."
+    },
+    {
+      "q": "If demand is 400 cars per day and work time is 480 minutes, what is takt time?",
+      "options": ["A) 1.2 minutes", "B) 1.0 minutes", "C) 2.0 minutes", "D) 0.8 minutes"],
+      "answer": "A",
+      "explanation": "480 / 400 = 1.2 minutes per car."
+    },
+    {
+      "q": "What is kaizen?",
+      "options": ["A) Continuous improvement", "B) A type of kanban", "C) A quality control tool", "D) A production schedule"],
+      "answer": "A",
+      "explanation": "Kaizen means continuous improvement through small, incremental changes."
+    },
+    {
+      "q": "What does 'gemba' mean?",
+      "options": ["A) The actual place where work happens", "B) The manager's office", "C) The warehouse", "D) The design room"],
+      "answer": "A",
+      "explanation": "Gemba is the real place where value is created, and managers should go there to observe."
+    },
+    {
+      "q": "What is the 5 Whys technique used for?",
+      "options": ["A) Root cause analysis", "B) Setting production targets", "C) Calculating inventory", "D) Scheduling maintenance"],
+      "answer": "A",
+      "explanation": "Asking 'why' five times helps uncover the root cause of a problem."
+    },
+    {
+      "q": "Which of the following is a benefit of lean production?",
+      "options": ["A) Increased inventory", "B) Reduced waste and lower costs", "C) More defects", "D) Longer lead times"],
+      "answer": "B",
+      "explanation": "Lean reduces waste, which lowers costs and improves quality and lead times."
+    },
+    {
+      "q": "In MRP, what is the Bill of Materials (BOM)?",
+      "options": ["A) A list of all components needed to make one unit of a product", "B) A list of suppliers", "C) A schedule of production", "D) A record of inventory"],
+      "answer": "A",
+      "explanation": "The BOM specifies the raw materials, parts, and quantities required to produce one unit."
+    }
+  ],
+  "videos": [
+    "aggregate planning and master production scheduling explained",
+    "material requirements planning MRP tutorial for beginners",
+    "lean manufacturing and just-in-time production examples"
+  ]
+}

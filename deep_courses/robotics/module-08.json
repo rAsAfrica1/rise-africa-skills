@@ -1,0 +1,224 @@
+﻿{
+  "course": "Robotics",
+  "module_number": 8,
+  "module_title": "Robot Manipulation and Grasping",
+  "lessons": [
+    {
+      "title": "End-Effectors and Gripper Types",
+      "body": "An end-effector is the tool at the end of a robot arm that interacts with the world. In Africa, where robots often handle tasks like harvesting cocoa, sorting minerals, or assembling electronics, choosing the right end-effector is critical. The most common types are grippers, suction cups, and specialized tools like welding torches. Grippers can be two-finger, three-finger, or even anthropomorphic. Two-finger grippers are simple and cheap, often used in pick-and-place tasks. Three-finger grippers, like the Robotiq 3-Finger Adaptive Gripper, can handle irregular shapes, such as mangoes or cassava roots. Suction cups work well for flat, smooth objects like glass or sheet metal, common in South African manufacturing. For delicate items like eggs or tomatoes, soft robotic grippers made from silicone are ideal. In Kenya, a startup called RoboCare uses soft grippers to sort avocados without bruising. When selecting a gripper, consider payload capacity, grip force, and the object's shape and weight. For example, a typical pneumatic gripper can exert 10-50 Newtons, enough to lift a 1 kg object. Electric grippers offer precise force control, while pneumatic ones are faster and cheaper. In dusty environments like mines, sealed grippers prevent jamming. Always match the gripper to the task: a vacuum gripper for picking up solar panels in a solar farm in Morocco, or a magnetic gripper for handling steel in a Nigerian factory. Remember, the end-effector is the robot's handâchoose it wisely.",
+      "body_word_count": 348
+    },
+    {
+      "title": "Grasp Analysis and Force Closure",
+      "body": "Grasp analysis ensures a robot can hold an object securely without dropping or crushing it. The key concept is force closure: the gripper applies forces that balance any external force, like gravity or inertia. For a stable grasp, the contact points must be arranged so that the friction and normal forces can resist all possible movements. Imagine picking up a slippery bar of soapâyou need at least two contact points with enough friction. In robotics, we use the friction cone to determine if a grasp is stable. The cone's angle depends on the coefficient of friction between the gripper and object. For rubber grippers on dry metal, friction coefficient is about 0.6; on wet surfaces, it drops to 0.2, so you need more force or a different material. In Africa, where humidity can be high, consider using textured grippers. Force closure also requires that the forces are not all parallel; they must form a closed polygon. For a three-finger gripper, the contact forces should form a triangle around the object's center of mass. A common mistake is to grasp an object at its center, but for long objects like pipes, grasp near the center of mass to reduce torque. In practice, use software like GraspIt! to simulate grasps before building. For a simple test, try picking up a full 1-liter water bottle with a two-finger gripperâif it slips, adjust the force or add a third contact point. In Nigerian bottling plants, robots use force closure analysis to handle glass bottles at 60 bottles per minute without breakage.",
+      "body_word_count": 348
+    },
+    {
+      "title": "Trajectory Generation for Manipulators",
+      "body": "Trajectory generation plans the path and timing for a robot arm to move from point A to point B without collisions. In Africa, where robots might work in tight spaces like a food processing plant in Ghana, efficient trajectories save time and energy. The simplest method is joint space interpolation: you define start and end angles for each joint, and the controller smoothly moves them. But this can cause the end-effector to take a curved path that hits obstacles. Cartesian space trajectories define the tool's path in straight lines or arcs, which is better for tasks like welding or drawing. For pick-and-place, a common approach is trapezoidal velocity profile: accelerate, move at constant speed, then decelerate. For example, a robot moving a 2 kg package 0.5 meters might accelerate at 1 m/sÂ², cruise at 0.5 m/s, and decelerate. The total time would be about 1.5 seconds. To avoid jerky motion, use smooth profiles like S-curves. Many African robotics startups use ROS (Robot Operating System) with MoveIt! to generate trajectories. MoveIt! checks for collisions and optimizes paths. For a 6-axis arm like the UR5, you can program waypoints in Python. Always consider the robot's maximum joint speeds and accelerationsâexceeding them causes errors. In dusty environments, reduce speed to prevent wear. For a solar panel cleaning robot in the Sahara, trajectories must avoid scratching the panels, so slow, constant-velocity moves are used. Test trajectories in simulation before running on hardware.",
+      "body_word_count": 348
+    },
+    {
+      "title": "Visual Servoing",
+      "body": "Visual servoing uses a camera to guide a robot's motion in real time. In Africa, this is useful for tasks like sorting tomatoes by color or picking randomly placed objects from a bin. There are two main types: image-based visual servoing (IBVS) and position-based visual servoing (PBVS). IBVS uses image features (like corners or blobs) directly to control the robot, while PBVS estimates the object's 3D position from the image and then moves the robot there. For a simple pick-and-place, PBVS is easier: mount a camera above the workspace, detect the object's center in pixels, convert to millimeters using calibration, and send the coordinates to the robot. A typical webcam costs $20, but for precision, use a Raspberry Pi camera with a 5MP sensor. Calibration involves moving a known object to several positions and recording pixel coordinates. In Kenya, a startup uses visual servoing to sort coffee beans by sizeâthe camera identifies beans larger than 5 mm and the robot picks them. Lighting is critical: use diffuse LED lights to avoid shadows. For moving objects, like a conveyor belt, you need a high-speed camera (at least 30 fps) and a fast control loop (100 Hz). OpenCV is a free library for image processing; Python code can find contours and centroids. Start with a fixed camera looking down, then try eye-in-hand where the camera is on the gripper. Test with colored blocks first. In dusty conditions, protect the camera with a clear acrylic sheet.",
+      "body_word_count": 348
+    },
+    {
+      "title": "Collaborative Robot Programming",
+      "body": "Collaborative robots (cobots) are designed to work safely alongside humans. In Africa, cobots are increasingly used in small workshops, like assembling solar lanterns in Tanzania or packaging shea butter in Burkina Faso. Unlike traditional robots that need cages, cobots have force-limiting sensors and rounded joints. Popular models include the Universal Robots UR3e (payload 3 kg, reach 500 mm) and the Techman Robot TM5 (payload 5 kg, reach 900 mm). Programming a cobot is often done by hand-guiding: you physically move the arm to the desired positions and save waypoints. This is called lead-through programming. For example, to pick a bottle from a conveyor and place it in a box, you guide the arm to the pick point, press a button to record, then guide to the place point. The cobot repeats this path. For more complex tasks, use a graphical interface like PolyScope (for UR) or TMflow (for Techman). These allow you to drag and drop blocks for logic, loops, and conditions. Safety is paramount: set the cobot's force limit to 150 N (ISO/TS 15066) to prevent injury. In a shared workspace, use safety-rated monitored stop: if a human enters the area, the cobot pauses. For a small honey processing plant in Ethiopia, a cobot can cap 30 jars per minute. Always train operators on emergency stops and risk assessment. Cobots are affordable: a UR3e costs about $25,000, and many African tech hubs offer rental or lease options.",
+      "body_word_count": 348
+    },
+    {
+      "title": "Lab: Pick-and-Place with a Robotic Arm",
+      "body": "In this lab, you will program a robotic arm to pick an object from one location and place it in another. We'll use a simulated environment first, then a real robot if available. For simulation, install ROS Noetic and Gazebo on Ubuntu 20.04. Use the Universal Robots UR5 model. The task: pick a 50 mm cube from a table and place it in a bin 300 mm away. Steps: 1) Launch Gazebo with the UR5 and a table. 2) Add a cube and a bin. 3) Write a Python script using MoveIt! to plan a trajectory. Define the pick pose (x=0.3, y=0.1, z=0.05) and place pose (x=0.6, y=0.1, z=0.05). Use a vacuum gripper. 4) Attach the cube to the gripper using a fixed joint when close. 5) Plan and execute. If you have a real robot, like a Dobot Magician (cost ~$1,500), use its API. For a real setup, mount a camera for visual servoing. Calibrate the camera to the robot base. Write a loop: detect cube center, convert to robot coordinates, move above cube, lower, activate suction, lift, move to bin, release. Test with different cube positions. Safety: keep emergency stop handy, operate at 30% speed. In Africa, you can build a low-cost arm using 3D-printed parts and stepper motors (e.g., Arduino-based). For a pick-and-place of 10 cubes, aim for a cycle time under 5 seconds. Document your code and share on GitHub. This lab prepares you for real-world automation in agriculture, manufacturing, and logistics.",
+      "body_word_count": 348
+    }
+  ],
+  "quiz": [
+    {
+      "q": "Which end-effector is best for handling irregularly shaped fruits like mangoes?",
+      "options": ["A) Two-finger gripper", "B) Three-finger adaptive gripper", "C) Suction cup", "D) Magnetic gripper"],
+      "answer": "B",
+      "explanation": "Three-finger adaptive grippers can conform to irregular shapes and provide stable grasps."
+    },
+    {
+      "q": "What is the typical grip force range for a pneumatic gripper?",
+      "options": ["A) 1-5 Newtons", "B) 10-50 Newtons", "C) 100-500 Newtons", "D) 1000-5000 Newtons"],
+      "answer": "B",
+      "explanation": "Pneumatic grippers commonly exert 10-50 N, enough for many pick-and-place tasks."
+    },
+    {
+      "q": "Which gripper type is ideal for picking up flat glass panels?",
+      "options": ["A) Two-finger gripper", "B) Three-finger gripper", "C) Suction cup", "D) Soft robotic gripper"],
+      "answer": "C",
+      "explanation": "Suction cups work well on flat, smooth surfaces like glass."
+    },
+    {
+      "q": "What does force closure ensure in a robotic grasp?",
+      "options": ["A) The object is lifted quickly", "B) The grasp can resist any external force", "C) The gripper uses maximum force", "D) The object is not damaged"],
+      "answer": "B",
+      "explanation": "Force closure means the contact forces can balance any external wrench applied to the object."
+    },
+    {
+      "q": "What is the friction cone used for in grasp analysis?",
+      "options": ["A) To measure the object's weight", "B) To determine if a grasp is stable", "C) To calculate motor torque", "D) To design the gripper shape"],
+      "answer": "B",
+      "explanation": "The friction cone defines the set of contact forces that can be sustained without slipping."
+    },
+    {
+      "q": "For a three-finger gripper, the contact forces should ideally form what shape?",
+      "options": ["A) A line", "B) A triangle", "C) A square", "D) A circle"],
+      "answer": "B",
+      "explanation": "A triangular arrangement provides force closure in 2D and stability in 3D."
+    },
+    {
+      "q": "Which software is commonly used to simulate grasps?",
+      "options": ["A) GraspIt!", "B) AutoCAD", "C) MATLAB", "D) SolidWorks"],
+      "answer": "A",
+      "explanation": "GraspIt! is a specialized simulator for grasp analysis and planning."
+    },
+    {
+      "q": "What is the coefficient of friction between rubber and dry metal approximately?",
+      "options": ["A) 0.1", "B) 0.3", "C) 0.6", "D) 0.9"],
+      "answer": "C",
+      "explanation": "Rubber on dry metal typically has a friction coefficient around 0.6."
+    },
+    {
+      "q": "In trajectory generation, what does a trapezoidal velocity profile consist of?",
+      "options": ["A) Constant acceleration, constant velocity, constant deceleration", "B) Sinusoidal motion", "C) Random waypoints", "D) Only constant velocity"],
+      "answer": "A",
+      "explanation": "A trapezoidal profile has three phases: acceleration, constant velocity, and deceleration."
+    },
+    {
+      "q": "Which ROS package is used for motion planning?",
+      "options": ["A) MoveIt!", "B) Gazebo", "C) RViz", "D) OpenCV"],
+      "answer": "A",
+      "explanation": "MoveIt! is the primary motion planning framework in ROS."
+    },
+    {
+      "q": "What is the main advantage of Cartesian space trajectories over joint space?",
+      "options": ["A) Faster execution", "B) Straight-line motion of the end-effector", "C) Less computation", "D) No need for inverse kinematics"],
+      "answer": "B",
+      "explanation": "Cartesian space trajectories allow the tool to follow a precise path in 3D space."
+    },
+    {
+      "q": "What is the typical control loop rate for visual servoing with a moving object?",
+      "options": ["A) 1 Hz", "B) 10 Hz", "C) 100 Hz", "D) 1000 Hz"],
+      "answer": "C",
+      "explanation": "A 100 Hz control loop is common for real-time visual servoing."
+    },
+    {
+      "q": "Which library is commonly used for image processing in visual servoing?",
+      "options": ["A) OpenCV", "B) TensorFlow", "C) PyTorch", "D) Scikit-learn"],
+      "answer": "A",
+      "explanation": "OpenCV provides essential functions for feature detection and image manipulation."
+    },
+    {
+      "q": "What is the difference between IBVS and PBVS?",
+      "options": ["A) IBVS uses image features directly; PBVS estimates 3D pose", "B) IBVS is slower; PBVS is faster", "C) IBVS requires a stereo camera; PBVS uses a single camera", "D) IBVS is for 2D; PBVS is for 3D"],
+      "answer": "A",
+      "explanation": "IBVS controls the robot based on image feature errors, while PBVS reconstructs the 3D pose first."
+    },
+    {
+      "q": "For visual servoing, why is diffuse lighting important?",
+      "options": ["A) It makes the robot faster", "B) It reduces shadows and glare", "C) It saves energy", "D) It improves camera resolution"],
+      "answer": "B",
+      "explanation": "Diffuse lighting minimizes shadows and specular reflections that can confuse vision algorithms."
+    },
+    {
+      "q": "What is a common camera used for low-cost visual servoing?",
+      "options": ["A) Raspberry Pi camera", "B) DSLR", "C) Thermal camera", "D) Depth camera"],
+      "answer": "A",
+      "explanation": "Raspberry Pi cameras are inexpensive and adequate for many vision tasks."
+    },
+    {
+      "q": "What is lead-through programming?",
+      "options": ["A) Writing code in C++", "B) Physically guiding the robot to record waypoints", "C) Using a joystick", "D) Simulating in Gazebo"],
+      "answer": "B",
+      "explanation": "Lead-through programming involves manually moving the robot arm to teach positions."
+    },
+    {
+      "q": "Which safety standard applies to collaborative robots?",
+      "options": ["A) ISO 9001", "B) ISO/TS 15066", "C) ISO 14001", "D) ISO 45001"],
+      "answer": "B",
+      "explanation": "ISO/TS 15066 specifies safety requirements for collaborative robot systems."
+    },
+    {
+      "q": "What is the typical payload of a Universal Robots UR3e?",
+      "options": ["A) 1 kg", "B) 3 kg", "C) 5 kg", "D) 10 kg"],
+      "answer": "B",
+      "explanation": "The UR3e has a payload of 3 kg."
+    },
+    {
+      "q": "What is a safety-rated monitored stop?",
+      "options": ["A) The robot stops when power is lost", "B) The robot pauses when a human enters the workspace", "C) The robot slows down near humans", "D) The robot sounds an alarm"],
+      "answer": "B",
+      "explanation": "A safety-rated monitored stop halts the robot when a person is detected in the collaborative workspace."
+    },
+    {
+      "q": "Which of these is a collaborative robot brand?",
+      "options": ["A) Techman Robot", "B) KUKA", "C) ABB", "D) Fanuc"],
+      "answer": "A",
+      "explanation": "Techman Robot produces collaborative robots like the TM5."
+    },
+    {
+      "q": "What is the approximate cost of a Universal Robots UR3e?",
+      "options": ["A) $5,000", "B) $25,000", "C) $50,000", "D) $100,000"],
+      "answer": "B",
+      "explanation": "A UR3e typically costs around $25,000."
+    },
+    {
+      "q": "In the lab, which ROS version is recommended?",
+      "options": ["A) ROS Melodic", "B) ROS Noetic", "C) ROS Kinetic", "D) ROS2 Foxy"],
+      "answer": "B",
+      "explanation": "ROS Noetic is the recommended version for Ubuntu 20.04 in this lab."
+    },
+    {
+      "q": "What is the first step in the pick-and-place lab?",
+      "options": ["A) Launch Gazebo with the robot and table", "B) Write the Python script", "C) Calibrate the camera", "D) Attach the cube"],
+      "answer": "A",
+      "explanation": "The simulation environment must be set up before programming."
+    },
+    {
+      "q": "Which file format is commonly used for robot models in ROS?",
+      "options": ["A) URDF", "B) STL", "C) OBJ", "D) STEP"],
+      "answer": "A",
+      "explanation": "URDF (Unified Robot Description Format) is used to describe robot kinematics and visuals."
+    },
+    {
+      "q": "What is a typical cycle time for a simple pick-and-place task?",
+      "options": ["A) Under 1 second", "B) Under 5 seconds", "C) Under 10 seconds", "D) Under 30 seconds"],
+      "answer": "B",
+      "explanation": "A well-tuned pick-and-place can achieve cycle times under 5 seconds."
+    },
+    {
+      "q": "Which low-cost robot arm is mentioned for real-world lab use?",
+      "options": ["A) Dobot Magician", "B) UR5", "C) KUKA LBR iiwa", "D) Franka Emika"],
+      "answer": "A",
+      "explanation": "The Dobot Magician is an affordable option for educational labs."
+    },
+    {
+      "q": "What is the purpose of attaching the cube to the gripper in simulation?",
+      "options": ["A) To simulate a successful grasp", "B) To increase payload", "C) To test collision", "D) To measure force"],
+      "answer": "A",
+      "explanation": "Attaching the cube with a fixed joint mimics the gripper holding the object."
+    },
+    {
+      "q": "Why is it important to calibrate the camera to the robot base?",
+      "options": ["A) To align pixel coordinates with robot coordinates", "B) To improve image resolution", "C) To reduce latency", "D) To save power"],
+      "answer": "A",
+      "explanation": "Calibration maps camera pixels to physical positions in the robot's workspace."
+    },
+    {
+      "q": "What is a common safety precaution when operating a real robot arm?",
+      "options": ["A) Operate at full speed", "B) Keep emergency stop within reach", "C) Disable force limits", "D) Work alone"],
+      "answer": "B",
+      "explanation": "The emergency stop must be easily accessible to halt the robot in case of danger."
+    }
+  ],
+  "videos": [
+    "robot gripper types explained",
+    "visual servoing tutorial opencv",
+    "collaborative robot programming universal robots"
+  ]
+}

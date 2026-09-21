@@ -1,0 +1,218 @@
+﻿{
+  "course": "Robotics",
+  "module_number": 6,
+  "module_title": "Robot Control Architectures",
+  "lessons": [
+    {
+      "title": "Open-Loop vs Closed-Loop Control",
+      "body": "Open-loop control means your robot does exactly what you tell it, with no checking. For example, you program a robot to drive forward for 3 seconds at 50% motor power. If the battery is full, it might go 2 meters. If the battery is low, it might go only 1.5 meters. If one motor is weaker, it veers left. Open-loop is simple and cheapâgreat for fixed tasks like a conveyor belt in a Nairobi packaging plant that moves a box exactly 30 cm every time. But for anything that needs accuracy, open-loop fails.\n\nClosed-loop control uses sensors to measure what actually happens and corrects in real time. A wheel encoder counts rotations. A distance sensor measures how far you really moved. The robot compares the desired position to the actual position, calculates the error, and adjusts motor power. For example, a line-following robot in a Lagos warehouse uses infrared sensors to stay on a painted line. If it drifts right, the left motor speeds up and the right slows down. That feedback loop runs 50 times per second.\n\nIn practice, start with open-loop for simple jobs: a robot arm that picks a tomato from a fixed bin. Then add closed-loop when you need repeatability. Use a PID controller (next lesson) for smooth correction. Real numbers: a typical DC gear motor with encoder gives 20 pulses per revolution. At 100 RPM, that's 2000 pulses per secondâenough for precise speed control. Without encoders, your robot will drift 10-20 cm over 5 meters.\n\nFor African makers, closed-loop is affordable: an Arduino Uno (about $5) plus two wheel encoders ($2 each) and an L298N motor driver ($3) gives you a closed-loop mobile robot for under $20. Power it with a 12V rechargeable battery. Test on a flat concrete floor. Start by making the robot go straight for 2 meters. Measure the error. Then tune your controller. Closed-loop is how you turn a toy into a tool."
+    },
+    {
+      "title": "PID Control Tuning Methods",
+      "body": "PID stands for Proportional, Integral, Derivative. It's the most common closed-loop controller. You measure an error (e.g., difference between desired speed and actual speed). P responds to current error: if error is large, push hard. I responds to accumulated past error: if error persists, push harder. D responds to rate of change: if error is shrinking fast, ease off to avoid overshoot. The magic is in the three tuning constants: Kp, Ki, Kd.\n\nManual tuning works for most African robotics projects. Start with Ki=0, Kd=0. Set Kp to a small value, like 0.5 for a motor speed controller. Run the robot. If it responds too slowly, increase Kp. If it oscillates (shakes back and forth), decrease Kp. Once you get a quick response with slight overshoot, add Kd to dampen. Increase Kd until oscillation stops. Finally, add a tiny Ki (like 0.01) to eliminate steady-state errorâthe small offset that remains when the robot is close but not exact. For a line follower, typical values: Kp=20, Ki=0.5, Kd=5. For a temperature-controlled soldering iron, Kp=2, Ki=0.1, Kd=0.5.\n\nZiegler-Nichols is a systematic method. Set Ki=0, Kd=0. Increase Kp until the system oscillates steadily. Note that Kp as Ku (ultimate gain) and the oscillation period as Tu. Then set: Kp=0.6*Ku, Ki=2*Kp/Tu, Kd=Kp*Tu/8. This works well for slow systems like a water tank heater. For fast robots, manual tuning is faster.\n\nTools: Use a serial plotter (Arduino IDE) or Python with matplotlib to see error over time. Log data to an SD card. In Africa, where power can be unstable, test with a battery, not a wall adapter. Tune on the actual surfaceâcarpet, tile, or dirt. A PID tuned on smooth concrete will fail on gravel. Always test with the robot carrying its real payload. Start with P-only, then add D, then I. Never tune all three at once. Write down your valuesâyou will forget."
+    },
+    {
+      "title": "State Machines and Behavior Trees",
+      "body": "A state machine is a way to organize robot behavior into distinct modes. The robot is always in exactly one state. Events trigger transitions. For example, a solar panel cleaning robot in Accra has states: IDLE, MOVING_TO_PANEL, CLEANING, RETURNING, CHARGING. If battery < 20%, transition to CHARGING. If cleaning done, transition to RETURNING. This prevents chaosâthe robot never tries to clean and charge at once.\n\nImplement a state machine with a switch-case in Arduino or Python. Use an enum for states. In the loop, read sensors, then switch on current state. Each state has entry actions, exit actions, and transition conditions. Keep states small. For a maze-solving robot, states: FOLLOW_LINE, TURN_LEFT, TURN_RIGHT, DEAD_END. Transitions based on IR sensor readings. A state machine is easy to debug: print the state name every second.\n\nBehavior trees are more flexible for complex tasks. A behavior tree has nodes: Sequence (do all children in order), Selector (try children until one succeeds), and leaf nodes (actions or conditions). For a robot that sorts recycling, the root is a Selector: try PICK_BOTTLE, if fail try PICK_CAN, if fail try PICK_PAPER. Each pick is a Sequence: APPROACH, GRIP, LIFT, MOVE_TO_BIN. Behavior trees are modularâyou can reuse subtrees. They are popular in ROS (Robot Operating System).\n\nFor African makers, start with state machines. They are simpler and use less memory. A typical Arduino Uno has 2KB RAMâenough for 10-20 states. Behavior trees need more overhead but scale better. Use a library like BehaviorTree.CPP if you have a Raspberry Pi. Practical tip: draw your state machine on paper before coding. Use circles for states, arrows for transitions. Test each state individually with a push button. For a farm robot that plants seeds, states: DRIVE, DETECT_HOLE, DROP_SEED, COVER. That's four statesâeasy to implement in a weekend."
+    },
+    {
+      "title": "Subsumption Architecture",
+      "body": "Subsumption architecture, invented by Rodney Brooks in the 1980s, builds robot control from the bottom up. Instead of one brain planning everything, you have layers of simple behaviors. Each layer runs independently and can suppress (subsume) lower layers. The lowest layer is a reflex: avoid obstacles. The next layer: wander. The next: seek light. The highest: follow a path. When an obstacle appears, the avoid layer overrides everything else. When no obstacle, the seek layer runs.\n\nEach layer is a finite state machine with sensors and actuators. Layers are added incrementally. Start with a robot that just avoids walls using two bump sensors. That's layer 0. Test it. Then add layer 1: drive forward until bump. Layer 1 subsumes layer 0's forward command when a bump occurs. Then layer 2: follow a line. Layer 2 subsumes layer 1 when line sensors see the line. You never rewrite lower layersâyou just add new ones. This is perfect for African makers because you can build a useful robot in one afternoon with just an Arduino and two motors.\n\nExample: A garbage-collecting robot in a Kigali market. Layer 0: avoid people (ultrasonic sensor, stop if < 30 cm). Layer 1: wander randomly. Layer 2: detect trash (color sensor) and move toward it. Layer 3: pick up trash (servo arm). Each layer is a few lines of code. The robot doesn't need a map or plan. It just reacts. Subsumption is robustâif one sensor fails, lower layers still work.\n\nImplementation: Use a priority arbiter. Each layer outputs motor commands (left speed, right speed). The highest-priority layer that is active wins. In code, check layers from highest to lowest. If layer 3 is active, use its output. Else check layer 2, etc. Use a flag for each layer. For a sumo robot, layers: 0) stay in ring (edge sensors), 1) charge forward, 2) push if opponent detected. This architecture is fast, cheap, and reliable. It's how many commercial robots work today."
+    },
+    {
+      "title": "Hybrid and Deliberative Control",
+      "body": "Deliberative control means the robot plans before acting. It builds a map, computes a path, then executes. Think of a robot navigating a warehouse in Johannesburg. It uses SLAM (Simultaneous Localization and Mapping) to build a map with a LiDAR. Then A* or Dijkstra's algorithm finds the shortest path. Then a controller follows that path. Deliberative control is smart but slowâplanning can take seconds. It also needs a good map. If the map is wrong, the robot fails.\n\nHybrid control combines deliberative planning with reactive execution. A high-level planner sets waypoints. A low-level reactive controller (like PID or subsumption) handles immediate obstacles. For example, a delivery robot in Nairobi: the planner says go to room 5. The reactive layer avoids people and chairs. If a new obstacle blocks the path, the reactive layer stops, and the planner replans. This is how most autonomous cars work. The planner runs at 1 Hz, the reactive layer at 50 Hz.\n\nFor African makers, hybrid is practical. Use a Raspberry Pi for planning (Python with ROS) and an Arduino for reactive control (C++). Communicate over serial. The Pi sends target speed and heading. The Arduino runs PID to achieve it. For a farm robot that maps soil moisture, the planner decides which grid cells to visit. The reactive layer keeps the robot on a straight line between cells. If a chicken crosses, the reactive layer stops, then resumes.\n\nReal numbers: A LiDAR (RPLIDAR A1) costs about $100. A Raspberry Pi 4 is $35. An Arduino Uno is $5. You can build a hybrid robot for under $200. Start with a simple deliberative planner: a grid map and BFS. Then add a reactive layer: ultrasonic sensors and a PID controller. Test in a 3x3 meter area. Log data. If planning is too slow, reduce map resolution. If reactive layer oscillates, tune PID. Hybrid control gives you the best of both: intelligence and speed. It's how you go from a toy to a real robot."
+    },
+    {
+      "title": "Lab: Implementing PID for a Mobile Robot",
+      "body": "In this lab, you will build a mobile robot that drives straight using PID control on wheel encoders. You need: Arduino Uno, L298N motor driver, two DC gear motors with encoders (e.g., 12V, 200 RPM, 20 pulses per revolution), two wheels, a caster wheel, a 12V battery, and a chassis. Total cost: about $25. Tools: screwdriver, USB cable, computer with Arduino IDE.\n\nStep 1: Wire the encoders to Arduino interrupt pins (pin 2 and 3). Wire the motor driver to PWM pins (5, 6, 9, 10). Step 2: Write code to read encoder counts. Use interrupts to count pulses. Calculate speed as pulses per 100 ms. Step 3: Implement PID for each motor. Desired speed = 100 pulses per 100 ms (about 0.5 m/s). Error = desired - actual. Kp=0.5, Ki=0.01, Kd=0.1 as starting values. Output = Kp*error + Ki*integral + Kd*derivative. Clamp output to 0-255 for PWM. Step 4: Test on a flat floor. Mark a 2-meter line. Run the robot. It should go straight. If it veers, adjust Kp. If it oscillates, increase Kd. If it lags, increase Ki slightly. Step 5: Log data to serial. Use Arduino Serial Plotter to see speed vs time. Tune until both motors maintain the same speed within 5% error.\n\nTroubleshooting: If one motor doesn't move, check wiring. If encoder counts are erratic, add a 0.1 ÂµF capacitor across motor terminals. If PID output saturates, reduce Kp. If robot drifts left, increase left motor Kp or decrease right motor Kp. For African makers, test with a fully charged battery. As battery drains, PID will compensateâthat's the point. Run for 5 minutes. The robot should still go straight. If not, your integral term is too small. Write down final PID values. Use them for future robots. This lab teaches you the core of closed-loop control. Master it, and you can control any motor, heater, or servo."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is the main disadvantage of open-loop control?",
+      "options": ["A) It requires expensive sensors", "B) It cannot correct for errors or disturbances", "C) It is too complex for beginners", "D) It only works with stepper motors"],
+      "answer": "B",
+      "explanation": "Open-loop control does not use feedback, so it cannot adjust for changes like battery voltage or motor differences."
+    },
+    {
+      "q": "Which sensor is commonly used for closed-loop speed control of a robot wheel?",
+      "options": ["A) Ultrasonic sensor", "B) Infrared sensor", "C) Wheel encoder", "D) Temperature sensor"],
+      "answer": "C",
+      "explanation": "Wheel encoders count rotations and provide feedback for speed or position control."
+    },
+    {
+      "q": "In PID control, what does the 'P' stand for?",
+      "options": ["A) Proportional", "B) Predictive", "C) Parallel", "D) Pulse"],
+      "answer": "A",
+      "explanation": "P is proportional, which responds to the current error."
+    },
+    {
+      "q": "What is the role of the integral term in PID?",
+      "options": ["A) It responds to the rate of change of error", "B) It eliminates steady-state error", "C) It amplifies high-frequency noise", "D) It sets the motor speed directly"],
+      "answer": "B",
+      "explanation": "The integral term accumulates past error to remove persistent offset."
+    },
+    {
+      "q": "In manual PID tuning, what should you do first?",
+      "options": ["A) Set Ki and Kd to zero, then tune Kp", "B) Set Kp and Ki to zero, then tune Kd", "C) Set all three to maximum", "D) Tune all three simultaneously"],
+      "answer": "A",
+      "explanation": "Start with only proportional gain to see the basic response, then add derivative and integral."
+    },
+    {
+      "q": "What is a typical symptom of too high Kp?",
+      "options": ["A) Slow response", "B) Oscillation", "C) Steady-state error", "D) No movement"],
+      "answer": "B",
+      "explanation": "High proportional gain causes overshoot and oscillation."
+    },
+    {
+      "q": "In a state machine, what triggers a transition from one state to another?",
+      "options": ["A) A timer only", "B) An event or condition", "C) A random number", "D) The user pressing a button only"],
+      "answer": "B",
+      "explanation": "Transitions occur when a specific event or sensor condition is met."
+    },
+    {
+      "q": "Which is an advantage of behavior trees over state machines?",
+      "options": ["A) They use less memory", "B) They are easier to debug", "C) They are more modular and reusable", "D) They require no sensors"],
+      "answer": "C",
+      "explanation": "Behavior trees allow subtrees to be reused and recombined easily."
+    },
+    {
+      "q": "In subsumption architecture, what does a higher layer do?",
+      "options": ["A) It always runs and ignores lower layers", "B) It can suppress or override lower layers", "C) It only works when lower layers fail", "D) It replaces all lower layers"],
+      "answer": "B",
+      "explanation": "Higher layers subsume (override) lower layers when their behavior is active."
+    },
+    {
+      "q": "Which is a characteristic of deliberative control?",
+      "options": ["A) It reacts immediately without planning", "B) It builds a map and plans a path", "C) It uses only reflex behaviors", "D) It never uses sensors"],
+      "answer": "B",
+      "explanation": "Deliberative control involves planning based on a model or map."
+    },
+    {
+      "q": "What is a hybrid control architecture?",
+      "options": ["A) Only reactive control", "B) Only deliberative control", "C) A combination of deliberative planning and reactive execution", "D) A control system that uses no feedback"],
+      "answer": "C",
+      "explanation": "Hybrid control combines high-level planning with low-level reactive responses."
+    },
+    {
+      "q": "In the PID lab, what is the desired speed for the robot?",
+      "options": ["A) 10 pulses per 100 ms", "B) 100 pulses per 100 ms", "C) 1000 pulses per 100 ms", "D) 1 pulse per second"],
+      "answer": "B",
+      "explanation": "The lab uses 100 pulses per 100 ms as the target speed."
+    },
+    {
+      "q": "Which Arduino pins are typically used for external interrupts?",
+      "options": ["A) Pins 0 and 1", "B) Pins 2 and 3", "C) Pins 5 and 6", "D) Pins 9 and 10"],
+      "answer": "B",
+      "explanation": "On the Arduino Uno, pins 2 and 3 support external interrupts."
+    },
+    {
+      "q": "What should you do if the robot drifts left in the PID lab?",
+      "options": ["A) Increase left motor Kp", "B) Decrease left motor Kp", "C) Increase right motor Kp", "D) Both A and C"],
+      "answer": "D",
+      "explanation": "To correct left drift, either increase left motor gain or decrease right motor gain."
+    },
+    {
+      "q": "What is the purpose of the derivative term in PID?",
+      "options": ["A) To eliminate steady-state error", "B) To dampen oscillation and predict future error", "C) To increase the proportional gain", "D) To reset the integral term"],
+      "answer": "B",
+      "explanation": "Derivative responds to the rate of change of error, reducing overshoot."
+    },
+    {
+      "q": "Which tuning method involves increasing Kp until steady oscillation?",
+      "options": ["A) Manual tuning", "B) Ziegler-Nichols", "C) Trial and error", "D) Genetic algorithm"],
+      "answer": "B",
+      "explanation": "Ziegler-Nichols finds the ultimate gain Ku and period Tu from sustained oscillation."
+    },
+    {
+      "q": "In a state machine for a solar panel cleaning robot, which state would it enter when battery is low?",
+      "options": ["A) CLEANING", "B) MOVING_TO_PANEL", "C) CHARGING", "D) IDLE"],
+      "answer": "C",
+      "explanation": "Low battery triggers a transition to the CHARGING state."
+    },
+    {
+      "q": "Which node type in a behavior tree tries children until one succeeds?",
+      "options": ["A) Sequence", "B) Selector", "C) Parallel", "D) Decorator"],
+      "answer": "B",
+      "explanation": "A Selector (or fallback) node runs children in order until one returns success."
+    },
+    {
+      "q": "In subsumption architecture, what is the lowest layer typically responsible for?",
+      "options": ["A) Path planning", "B) Obstacle avoidance", "C) Mapping", "D) Task allocation"],
+      "answer": "B",
+      "explanation": "The lowest layer is often a reflex behavior like obstacle avoidance."
+    },
+    {
+      "q": "Which sensor is commonly used in deliberative control for mapping?",
+      "options": ["A) Bump sensor", "B) LiDAR", "C) Thermistor", "D) Microphone"],
+      "answer": "B",
+      "explanation": "LiDAR provides distance measurements for building maps."
+    },
+    {
+      "q": "What is the typical update rate for the reactive layer in a hybrid robot?",
+      "options": ["A) 1 Hz", "B) 10 Hz", "C) 50 Hz", "D) 1000 Hz"],
+      "answer": "C",
+      "explanation": "Reactive layers often run at 50 Hz or faster for quick response."
+    },
+    {
+      "q": "In the PID lab, what should you do if encoder counts are erratic?",
+      "options": ["A) Add a capacitor across motor terminals", "B) Increase Kp", "C) Remove the encoders", "D) Use a different battery"],
+      "answer": "A",
+      "explanation": "A capacitor reduces electrical noise from motors that can cause false encoder pulses."
+    },
+    {
+      "q": "What is the main advantage of closed-loop control over open-loop?",
+      "options": ["A) Lower cost", "B) Simpler code", "C) Ability to correct for errors", "D) No need for sensors"],
+      "answer": "C",
+      "explanation": "Closed-loop uses feedback to correct for disturbances and inaccuracies."
+    },
+    {
+      "q": "Which term in PID is responsible for eliminating steady-state error?",
+      "options": ["A) Proportional", "B) Integral", "C) Derivative", "D) Feedforward"],
+      "answer": "B",
+      "explanation": "The integral term accumulates error over time, driving steady-state error to zero."
+    },
+    {
+      "q": "What is a common starting value for Kp in a motor speed PID?",
+      "options": ["A) 0.01", "B) 0.5", "C) 50", "D) 500"],
+      "answer": "B",
+      "explanation": "A small value like 0.5 is often a safe starting point for motor speed control."
+    },
+    {
+      "q": "In a behavior tree, what does a Sequence node do?",
+      "options": ["A) Runs children until one succeeds", "B) Runs all children in order, fails if any fails", "C) Runs children in random order", "D) Runs only the first child"],
+      "answer": "B",
+      "explanation": "A Sequence node succeeds only if all children succeed, in order."
+    },
+    {
+      "q": "Which architecture is most robust to sensor failure?",
+      "options": ["A) Deliberative", "B) Hybrid", "C) Subsumption", "D) PID-only"],
+      "answer": "C",
+      "explanation": "Subsumption layers operate independently, so lower layers can still function if a higher sensor fails."
+    },
+    {
+      "q": "In the PID lab, what is the total approximate cost of the robot?",
+      "options": ["A) $5", "B) $25", "C) $100", "D) $200"],
+      "answer": "B",
+      "explanation": "The lab specifies about $25 for the components."
+    },
+    {
+      "q": "What should you use to visualize PID error over time?",
+      "options": ["A) Serial Plotter", "B) Multimeter", "C) Oscilloscope", "D) Logic analyzer"],
+      "answer": "A",
+      "explanation": "Arduino Serial Plotter can graph error and speed values in real time."
+    },
+    {
+      "q": "Which control architecture is inspired by biological reflexes?",
+      "options": ["A) Deliberative", "B) Hybrid", "C) Subsumption", "D) Model Predictive Control"],
+      "answer": "C",
+      "explanation": "Subsumption architecture was inspired by insect-like reactive behaviors."
+    }
+  ],
+  "videos": [
+    "PID control for mobile robot Arduino tutorial",
+    "subsumption architecture robot example",
+    "behavior tree robotics tutorial"
+  ]
+}

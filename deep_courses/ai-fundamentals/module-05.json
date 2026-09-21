@@ -1,0 +1,218 @@
+﻿{
+  "course": "AI Fundamentals",
+  "module_number": 5,
+  "module_title": "Supervised Learning: Regression",
+  "lessons": [
+    {
+      "title": "Simple Linear Regression",
+      "body": "Simple linear regression predicts a number using one input. For example, a maize farmer in Kaduna might want to predict yield (in bags per hectare) from rainfall (in mm). You collect data: rainfall and yield for 20 seasons. The model finds a line: yield = 2.5 + 0.03 * rainfall. That means for every extra mm of rain, yield increases by 0.03 bags. The 2.5 is the interceptâthe yield when rainfall is zero (not realistic, but it anchors the line).\n\nTo build this, you can use Python with scikit-learn. Load your data into a pandas DataFrame. Split into X (rainfall) and y (yield). Then: from sklearn.linear_model import LinearRegression; model = LinearRegression(); model.fit(X, y). The model learns coefficients. You can predict for a new rainfall value: model.predict([[500]]) gives the expected yield.\n\nIn Africa, simple linear regression helps small businesses. A poultry farmer in Ghana can predict egg production from feed quantity. A transport company in Kenya can predict fuel cost from distance travelled. The key is having clean data: no missing values, and the relationship should look roughly linear when you plot a scatter plot.\n\nAlways check the residualsâthe differences between actual and predicted values. If they show a pattern (like a curve), a straight line may not be best. You can calculate R-squared to see how much variation in yield is explained by rainfall. An R-squared of 0.75 means 75% of yield changes are explained by rainfall. The rest is due to other factors like soil quality or pests.\n\nStart with simple linear regression because it is easy to interpret and fast to train. Even with one input, you can make actionable decisions: if rain is below 400 mm, expect low yield and plan irrigation. This is the foundation for more complex models."
+    },
+    {
+      "title": "Multiple Linear Regression",
+      "body": "Multiple linear regression uses two or more inputs to predict a number. For a maize farmer, yield might depend on rainfall, fertilizer used (kg/ha), and temperature (Â°C). The model: yield = b0 + b1*rainfall + b2*fertilizer + b3*temperature. Each coefficient tells you how much yield changes when that input increases by one unit, holding others constant.\n\nIn practice, you gather data on all inputs and the output. Using Python: X = df[['rainfall', 'fertilizer', 'temperature']]; y = df['yield']; model = LinearRegression().fit(X, y). Then model.coef_ gives [b1, b2, b3] and model.intercept_ gives b0. For a new farm with rainfall=600, fertilizer=100, temperature=28, you predict yield.\n\nThis is powerful for African businesses. A bakery in Lagos can predict daily bread sales from day of week, temperature, and promotions. A mobile money agent in Uganda can predict transaction volume from number of customers, location foot traffic, and hour of day. The key is to avoid multicollinearityâwhen inputs are highly correlated. For example, rainfall and humidity might be correlated, making coefficients unstable. Check correlation matrix and remove one if correlation > 0.8.\n\nAlways scale your features if you use regularization later, but for plain multiple regression, scaling is not required for prediction. However, it helps compare coefficient sizes. For example, if fertilizer coefficient is 0.5 and rainfall coefficient is 0.02, fertilizer has a larger effect per unit, but units differ. Standardizing inputs (mean=0, std=1) makes coefficients comparable.\n\nEvaluate with R-squared and adjusted R-squared. Adjusted R-squared penalizes adding useless inputs. If adding temperature only increases R-squared from 0.80 to 0.81, it may not be worth the complexity. Use statsmodels for detailed summary: import statsmodels.api as sm; model = sm.OLS(y, X).fit(); print(model.summary()). This shows p-values for each coefficient, telling you which inputs are statistically significant."
+    },
+    {
+      "title": "Polynomial Regression",
+      "body": "Polynomial regression is used when the relationship between input and output is curved, not straight. For example, crop yield may increase with rainfall up to a point, then decrease due to flooding. A straight line would miss that. Polynomial regression adds squared and cubed terms: yield = b0 + b1*rainfall + b2*rainfall^2 + b3*rainfall^3.\n\nIn Python, you can create polynomial features using sklearn.preprocessing.PolynomialFeatures. For degree=2: from sklearn.preprocessing import PolynomialFeatures; poly = PolynomialFeatures(degree=2); X_poly = poly.fit_transform(X). Then fit LinearRegression on X_poly. The model learns coefficients for rainfall, rainfall^2, etc. You can predict for new rainfall values.\n\nUse polynomial regression when you see a curve in your scatter plot. In Africa, this applies to fertilizer response: too little fertilizer gives low yield, optimal amount gives high yield, too much can burn plants. Also, temperature and milk production: cows produce more milk at moderate temperatures, less when too hot or too cold.\n\nBut be careful: high-degree polynomials (degree > 3) can overfitâthey fit noise in your data and perform poorly on new data. Always split data into training and test sets. If training R-squared is 0.99 but test R-squared is 0.60, you overfit. Reduce degree or use regularization.\n\nYou can also use polynomial regression for time series with seasonal patterns. For example, monthly sales of a product may have a yearly cycle. Adding month squared and cubed can capture that. But often, more data or different models (like Fourier terms) work better. Start with degree 2, check test performance, then try degree 3. Plot the fitted curve against actual data to visually check.\n\nRemember to center and scale your data before creating polynomial terms to avoid numerical instability. In scikit-learn, use Pipeline: from sklearn.pipeline import make_pipeline; model = make_pipeline(PolynomialFeatures(degree=2), LinearRegression()). This handles scaling if you add StandardScaler."
+    },
+    {
+      "title": "Regularization: Ridge and Lasso",
+      "body": "Regularization prevents overfitting by adding a penalty to the model for large coefficients. Ridge (L2) adds penalty = alpha * sum(coefficient^2). Lasso (L1) adds penalty = alpha * sum(|coefficient|). Alpha controls strength: higher alpha means more penalty, simpler model. In scikit-learn: from sklearn.linear_model import Ridge, Lasso; model = Ridge(alpha=1.0); model.fit(X, y).\n\nWhen to use Ridge vs Lasso? Ridge shrinks coefficients but keeps all inputs. Lasso can shrink some coefficients to exactly zero, effectively selecting important features. If you have many inputs and suspect only a few matter, use Lasso. For example, predicting crop yield from 20 soil nutrientsâLasso might pick only nitrogen, phosphorus, and potassium. Ridge is better when all inputs contribute a little.\n\nIn Africa, regularization helps with small datasets. A startup in Nairobi with only 50 customer records and 10 features can use Ridge to avoid overfitting. The model will generalize better to new customers. You can tune alpha using cross-validation: from sklearn.linear_model import RidgeCV; model = RidgeCV(alphas=[0.1, 1.0, 10.0]); model.fit(X, y); print(model.alpha_).\n\nAlways scale your features before regularization because the penalty depends on coefficient size. Use StandardScaler: from sklearn.preprocessing import StandardScaler; scaler = StandardScaler(); X_scaled = scaler.fit_transform(X). Then fit Ridge or Lasso on X_scaled. Without scaling, a feature with large units (e.g., rainfall in mm) will have a small coefficient, so penalty affects it less, which is unfair.\n\nLasso can also help with interpretability: if it sets a coefficient to zero, you can drop that input. This is useful for building simple models for mobile apps or low-resource settings. For example, a farming advice app can ask only 3 questions instead of 10. Ridge is preferred when you believe all inputs are relevant but correlated. Both are available in scikit-learn and are fast to train."
+    },
+    {
+      "title": "Model Evaluation Metrics for Regression",
+      "body": "To know if your regression model is good, you need metrics. The most common are Mean Absolute Error (MAE), Mean Squared Error (MSE), Root Mean Squared Error (RMSE), and R-squared (RÂ²). MAE is average absolute difference between actual and predicted. MSE squares differences, penalizing large errors more. RMSE is square root of MSE, in same units as target. RÂ² is proportion of variance explained, from 0 to 1 (higher better).\n\nIn Python, use sklearn.metrics: from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score. After predictions: mae = mean_absolute_error(y_test, y_pred); mse = mean_squared_error(y_test, y_pred); rmse = mse**0.5; r2 = r2_score(y_test, y_pred). Always evaluate on a test set, not training data.\n\nFor African contexts, choose metrics that matter. If predicting maize yield in bags, MAE tells you average error in bags. If MAE=2 bags, your predictions are off by 2 bags on average. RMSE is more sensitive to large errorsâif one prediction is off by 10 bags, RMSE will be higher. RÂ² tells you how much better than just predicting the mean. RÂ²=0.8 means 80% of variation explained.\n\nBut RÂ² can be misleading if you add many inputs. Use adjusted RÂ²: adj_r2 = 1 - (1-r2)*(n-1)/(n-p-1), where n is samples, p is predictors. Also, always compare to a baseline: predict the mean. If your model doesn't beat that, it's useless. For example, if average yield is 20 bags, and your model's MAE is 5 bags, but predicting 20 always gives MAE of 6 bags, your model is only slightly better.\n\nPlot residuals: residuals = y_test - y_pred. They should be randomly scattered around zero. If they show a pattern (e.g., increasing with predicted values), your model is missing something. Use matplotlib: import matplotlib.pyplot as plt; plt.scatter(y_pred, residuals); plt.axhline(0, color='red'). This visual check is as important as numbers. In low-resource settings, MAE is often easiest to explain to stakeholders."
+    },
+    {
+      "title": "Cross-Validation Techniques",
+      "body": "Cross-validation (CV) gives a more reliable estimate of model performance than a single train-test split. The most common is k-fold CV: split data into k folds (e.g., 5). Train on k-1 folds, test on the remaining fold. Repeat k times, each fold as test once. Average the scores. In scikit-learn: from sklearn.model_selection import cross_val_score; scores = cross_val_score(model, X, y, cv=5, scoring='neg_mean_absolute_error'); print(scores.mean()).\n\nWhy use CV? With small datasets, a single split might be lucky or unlucky. For example, a Ghanaian cocoa farmer with 30 years of data: if you use 20 for training and 10 for testing, the test set might be unusually good or bad. 5-fold CV uses all data for both training and testing, giving a stable estimate. It also helps tune hyperparameters like alpha in Ridge.\n\nFor time series data, use TimeSeriesSplit. It respects temporal order: train on past, test on future. For example, predicting monthly sales: train on months 1-24, test on 25-30; then train on 1-30, test on 31-36. This mimics real forecasting. In scikit-learn: from sklearn.model_selection import TimeSeriesSplit; tscv = TimeSeriesSplit(n_splits=5).\n\nLeave-One-Out CV (LOOCV) uses one sample as test, rest as train, repeated for all samples. It's computationally expensive but useful for very small datasets (e.g., 10 samples). For most African business datasets (50-500 rows), 5-fold or 10-fold CV is sufficient. Stratified k-fold is for classification, not regression.\n\nAlways scale inside CV to avoid data leakage. Use Pipeline: from sklearn.pipeline import make_pipeline; from sklearn.preprocessing import StandardScaler; model = make_pipeline(StandardScaler(), Ridge()). Then cross_val_score(model, X, y, cv=5). This ensures scaling is fit only on training folds. Report mean and standard deviation of scores. A high standard deviation means performance varies across foldsâyour model may be unstable. In that case, collect more data or simplify the model."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What does simple linear regression predict?",
+      "options": ["A) A category", "B) A number using one input", "C) A number using multiple inputs", "D) A probability"],
+      "answer": "B",
+      "explanation": "Simple linear regression uses a single independent variable to predict a continuous outcome."
+    },
+    {
+      "q": "In the equation y = 2.5 + 0.03 * rainfall, what does 0.03 represent?",
+      "options": ["A) The intercept", "B) The predicted yield when rainfall is 0", "C) The change in yield for each 1 mm increase in rainfall", "D) The average rainfall"],
+      "answer": "C",
+      "explanation": "The coefficient 0.03 indicates the slope: yield increases by 0.03 units per mm of rainfall."
+    },
+    {
+      "q": "Which Python library is commonly used for simple linear regression?",
+      "options": ["A) matplotlib", "B) pandas", "C) scikit-learn", "D) seaborn"],
+      "answer": "C",
+      "explanation": "scikit-learn provides LinearRegression for fitting simple and multiple linear regression models."
+    },
+    {
+      "q": "What does an R-squared value of 0.75 mean?",
+      "options": ["A) 75% of the variation in the output is explained by the input", "B) The model is 75% accurate", "C) 75% of predictions are correct", "D) The correlation is 0.75"],
+      "answer": "A",
+      "explanation": "R-squared measures the proportion of variance in the dependent variable explained by the independent variable(s)."
+    },
+    {
+      "q": "What should you check to decide if a straight line is appropriate for simple linear regression?",
+      "options": ["A) The histogram of the output", "B) The scatter plot of input vs output", "C) The mean of the input", "D) The standard deviation of the output"],
+      "answer": "B",
+      "explanation": "A scatter plot helps visually assess if the relationship is roughly linear."
+    },
+    {
+      "q": "What is the main difference between simple and multiple linear regression?",
+      "options": ["A) Simple uses one input, multiple uses two or more inputs", "B) Simple predicts categories, multiple predicts numbers", "C) Simple is for small data, multiple for big data", "D) Simple uses Python, multiple uses R"],
+      "answer": "A",
+      "explanation": "Multiple linear regression extends simple linear regression by using multiple independent variables."
+    },
+    {
+      "q": "In multiple linear regression, what does a coefficient of 0.5 for fertilizer mean?",
+      "options": ["A) Fertilizer increases yield by 0.5 units per kg, holding other inputs constant", "B) Fertilizer is 0.5 times as important as rainfall", "C) The average fertilizer use is 0.5 kg", "D) The model is 50% accurate"],
+      "answer": "A",
+      "explanation": "The coefficient represents the change in the predicted output for a one-unit increase in that input, with other inputs fixed."
+    },
+    {
+      "q": "What is multicollinearity?",
+      "options": ["A) When the output has multiple values", "B) When two or more inputs are highly correlated", "C) When the model has too many coefficients", "D) When the data has missing values"],
+      "answer": "B",
+      "explanation": "Multicollinearity occurs when independent variables are correlated, making coefficient estimates unstable."
+    },
+    {
+      "q": "Which Python library provides a detailed summary with p-values for multiple linear regression?",
+      "options": ["A) scikit-learn", "B) statsmodels", "C) numpy", "D) matplotlib"],
+      "answer": "B",
+      "explanation": "statsmodels' OLS summary includes p-values and other statistical details not available in scikit-learn's LinearRegression."
+    },
+    {
+      "q": "What does adjusted R-squared do compared to R-squared?",
+      "options": ["A) It always increases when you add inputs", "B) It penalizes adding inputs that don't improve the model", "C) It is always lower than R-squared", "D) It is used for classification"],
+      "answer": "B",
+      "explanation": "Adjusted R-squared adjusts for the number of predictors, only increasing if the new predictor improves the model more than expected by chance."
+    },
+    {
+      "q": "When is polynomial regression useful?",
+      "options": ["A) When the relationship is a straight line", "B) When the relationship is curved", "C) When you have categorical inputs", "D) When you have no data"],
+      "answer": "B",
+      "explanation": "Polynomial regression captures non-linear relationships by adding squared and higher-order terms."
+    },
+    {
+      "q": "What does PolynomialFeatures(degree=2) do?",
+      "options": ["A) Creates only squared terms", "B) Creates all polynomial combinations of features up to degree 2", "C) Removes features", "D) Scales features"],
+      "answer": "B",
+      "explanation": "PolynomialFeatures generates new features including squares and interactions up to the specified degree."
+    },
+    {
+      "q": "What is a risk of using a high-degree polynomial?",
+      "options": ["A) Underfitting", "B) Overfitting", "C) Slow training", "D) All of the above"],
+      "answer": "B",
+      "explanation": "High-degree polynomials can fit noise in the training data, leading to poor generalization on new data."
+    },
+    {
+      "q": "In scikit-learn, how do you create a pipeline for polynomial regression?",
+      "options": ["A) make_pipeline(PolynomialFeatures(degree=2), LinearRegression())", "B) make_pipeline(LinearRegression(), PolynomialFeatures(degree=2))", "C) PolynomialFeatures(degree=2).fit(X)", "D) LinearRegression().fit(X_poly)"],
+      "answer": "A",
+      "explanation": "The pipeline applies PolynomialFeatures first, then fits LinearRegression on the transformed features."
+    },
+    {
+      "q": "What does a polynomial regression coefficient for rainfall^2 represent?",
+      "options": ["A) The linear effect of rainfall", "B) The curvature in the relationship", "C) The intercept", "D) The error term"],
+      "answer": "B",
+      "explanation": "The squared term captures the non-linear, curved effect of rainfall on the output."
+    },
+    {
+      "q": "What is the purpose of regularization in regression?",
+      "options": ["A) To increase model complexity", "B) To prevent overfitting by penalizing large coefficients", "C) To speed up training", "D) To handle missing data"],
+      "answer": "B",
+      "explanation": "Regularization adds a penalty to the loss function to discourage large coefficients, reducing overfitting."
+    },
+    {
+      "q": "Which regularization technique can set some coefficients exactly to zero?",
+      "options": ["A) Ridge", "B) Lasso", "C) Elastic Net", "D) None"],
+      "answer": "B",
+      "explanation": "Lasso (L1) can shrink coefficients to zero, performing feature selection."
+    },
+    {
+      "q": "What does the alpha parameter control in Ridge and Lasso?",
+      "options": ["A) The learning rate", "B) The strength of regularization", "C) The number of iterations", "D) The number of features"],
+      "answer": "B",
+      "explanation": "Higher alpha increases the penalty, leading to smaller coefficients and a simpler model."
+    },
+    {
+      "q": "Why should you scale features before using Ridge or Lasso?",
+      "options": ["A) To make coefficients comparable and penalty fair", "B) To increase R-squared", "C) To reduce training time", "D) To handle missing values"],
+      "answer": "A",
+      "explanation": "Scaling ensures all features are on the same scale so the penalty applies equally to all coefficients."
+    },
+    {
+      "q": "Which scikit-learn class automatically tunes alpha using cross-validation?",
+      "options": ["A) Ridge", "B) Lasso", "C) RidgeCV", "D) LinearRegression"],
+      "answer": "C",
+      "explanation": "RidgeCV performs cross-validation to select the best alpha from a provided list."
+    },
+    {
+      "q": "What does Mean Absolute Error (MAE) measure?",
+      "options": ["A) Average squared difference between actual and predicted", "B) Average absolute difference between actual and predicted", "C) Proportion of variance explained", "D) Correlation coefficient"],
+      "answer": "B",
+      "explanation": "MAE is the mean of the absolute errors, giving the average magnitude of errors in the same units as the target."
+    },
+    {
+      "q": "Which metric is most sensitive to large errors?",
+      "options": ["A) MAE", "B) MSE", "C) R-squared", "D) Adjusted R-squared"],
+      "answer": "B",
+      "explanation": "MSE squares the errors, so large errors have a disproportionately large effect."
+    },
+    {
+      "q": "If your model's RMSE is 2 bags, what does that mean?",
+      "options": ["A) On average, predictions are off by 2 bags", "B) The model explains 2% of variance", "C) The model is 2 times better than random", "D) The maximum error is 2 bags"],
+      "answer": "A",
+      "explanation": "RMSE is in the same units as the target, so an RMSE of 2 bags means typical prediction error is about 2 bags."
+    },
+    {
+      "q": "What does an R-squared of 0 mean?",
+      "options": ["A) The model predicts perfectly", "B) The model explains none of the variance in the output", "C) The model is 0% accurate", "D) The model has no coefficients"],
+      "answer": "B",
+      "explanation": "R-squared of 0 means the model does not explain any variation in the target beyond the mean."
+    },
+    {
+      "q": "Why is it important to evaluate on a test set?",
+      "options": ["A) To get a realistic estimate of performance on unseen data", "B) To increase R-squared", "C) To reduce training time", "D) To avoid overfitting the training data"],
+      "answer": "A",
+      "explanation": "Evaluating on a separate test set estimates how well the model generalizes to new, unseen data."
+    },
+    {
+      "q": "What is the purpose of cross-validation?",
+      "options": ["A) To train the model faster", "B) To get a more reliable estimate of model performance", "C) To increase the number of features", "D) To reduce the dataset size"],
+      "answer": "B",
+      "explanation": "Cross-validation uses multiple train-test splits to provide a stable estimate of performance."
+    },
+    {
+      "q": "In 5-fold cross-validation, how many times is the model trained?",
+      "options": ["A) 1", "B) 5", "C) 10", "D) 20"],
+      "answer": "B",
+      "explanation": "In k-fold cross-validation, the model is trained k times, each time using a different fold as validation."
+    },
+    {
+      "q": "Which cross-validation technique is best for time series data?",
+      "options": ["A) K-fold", "B) Stratified K-fold", "C) TimeSeriesSplit", "D) Leave-One-Out"],
+      "answer": "C",
+      "explanation": "TimeSeriesSplit respects the temporal order of data, training on past and testing on future."
+    },
+    {
+      "q": "What is data leakage in cross-validation?",
+      "options": ["A) When test data is used in training", "B) When the model is too simple", "C) When features are scaled before splitting", "D) When the dataset is too small"],
+      "answer": "A",
+      "explanation": "Data leakage occurs when information from the test set is used during training, leading to overly optimistic performance estimates."
+    },
+    {
+      "q": "How can you avoid data leakage when scaling features in cross-validation?",
+      "options": ["A) Scale the entire dataset before splitting", "B) Use a pipeline that scales inside each fold", "C) Don't scale features", "D) Scale only the test set"],
+      "answer": "B",
+      "explanation": "Using a pipeline ensures scaling is fit only on the training fold and applied to the validation fold, preventing leakage."
+    }
+  ],
+  "videos": [
+    "simple linear regression python scikit-learn tutorial",
+    "multiple linear regression africa business example",
+    "ridge lasso regularization explained python"
+  ]
+}

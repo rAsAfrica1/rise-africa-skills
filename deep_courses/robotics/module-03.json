@@ -1,0 +1,218 @@
+﻿{
+  "course": "Robotics",
+  "module_number": 3,
+  "module_title": "Sensors and Perception",
+  "lessons": [
+    {
+      "title": "Proprioceptive Sensors: Encoders, IMUs",
+      "body": "Proprioceptive sensors measure the robot's own stateâjoint angles, wheel rotation, orientation, acceleration. The two workhorses are encoders and IMUs.\n\n**Encoders** count wheel or motor shaft rotations. A common incremental encoder like the Omron E6B2-CWZ6C gives 360 pulses per revolution (PPR). If your wheel is 65 mm diameter, circumference = Ï Ã 65 â 204 mm. Each pulse = 204/360 â 0.57 mm of travel. In Arduino, use an interrupt pin to count pulses: `attachInterrupt(digitalPinToInterrupt(2), countPulse, RISING);`. For direction, read a second channel (quadrature). In Africa, encoders are cheap on AliExpress or from local electronics shops in Nairobi or Lagos. Mount them on motor shafts with a slotted disc and optical sensor if you can't afford sealed units.\n\n**IMUs** (Inertial Measurement Units) combine accelerometer, gyroscope, and sometimes magnetometer. The MPU-6050 (about $3) is popular. It gives acceleration in g and angular velocity in Â°/s. But raw data drifts: a gyro might drift 1â2Â° per minute. So you must calibrate and filter. For a robot moving on uneven ground, the accelerometer helps correct pitch and roll, but vibration from motors adds noise. Use a low-pass filter: `angle = 0.98*(angle + gyro*dt) + 0.02*accel_angle`. This is a complementary filter, simple and effective on an Arduino.\n\n**Practical tips for Africa:** Power stability matters. Use a separate 5V regulator for sensors to avoid brownouts. Keep wires short to reduce noise. If you can't get an IMU, a smartphone with a sensor-logging app can serve as a temporary IMU via Bluetooth. For encoders, old printer or scanner mechanisms often contain optical encoders you can salvage.\n\n**Calibration:** Before each run, keep the robot still and average 500 accelerometer readings to find offset. Subtract that offset in code. For gyro, average 500 readings and subtract. This takes 2 seconds and cuts drift dramatically.\n\n**Testing:** Write a sketch that prints encoder counts and IMU angles every 100 ms. Push the robot by hand and verify counts increase in the right direction. Rotate it 90Â° and check the gyro integrates to ~90Â°. Adjust as needed."
+    },
+    {
+      "title": "Exteroceptive Sensors: Ultrasonic, Infrared, LiDAR",
+      "body": "Exteroceptive sensors measure the world outside the robot. The three you'll use most are ultrasonic, infrared (IR), and LiDAR.\n\n**Ultrasonic** sensors like the HC-SR04 ($2) emit a 40 kHz chirp and time the echo. Distance = (echo time Ã speed of sound) / 2. Speed of sound â 343 m/s at 20Â°C. In code: `distance_cm = duration * 0.0343 / 2;`. Range is 2 cm to 400 cm, but accuracy drops beyond 200 cm. Soft surfaces (cloth, foam) absorb sound, giving false long readings. In dusty or humid environments, the sensor can fail. Mount it at least 10 cm above ground to avoid ground reflections. For outdoor robots in Africa, protect it from direct sun and rain.\n\n**Infrared** sensors like the Sharp GP2Y0A21YK0F ($10) output an analog voltage inversely proportional to distance (10â80 cm). They are faster than ultrasonic but affected by sunlight and black surfaces (which absorb IR). Use them for edge detection or short-range obstacle avoidance. Calibrate with a lookup table: measure voltage at 10, 20, 30, 40, 60, 80 cm and fit a curve.\n\n**LiDAR** (e.g., RPLIDAR A1, $100) spins a laser and gives 360Â° distance scans up to 12 m. It's precise but costs more and needs a clear line of sight. In dusty conditions, keep the lens clean. For outdoor use, a 2D LiDAR can't see holes or overhangsâpair it with ultrasonic.\n\n**Practical Africa-focused tips:** Buy sensors from local distributors like Robu.in (India) or Mouser (ships to Africa) or from Kenyan shops like Nerokas. For low budget, build your own IR proximity sensor with an IR LED and photodiode. For ultrasonic, waterproof the transducer with a thin plastic film. Always test in the actual environment: a market stall with metal roofs causes multipath echoes.\n\n**Fusion idea:** Use ultrasonic for long range and IR for short range. If ultrasonic reads >200 cm but IR reads 30 cm, trust IR. This simple rule prevents collisions."
+    },
+    {
+      "title": "Vision Sensors: Cameras and Depth Sensors",
+      "body": "Cameras give robots rich information: colors, shapes, motion. Depth sensors add distance per pixel. For African robotics, start with a cheap USB webcam (Logitech C270, $20) or a Raspberry Pi Camera Module ($15).\n\n**Camera basics:** Resolution matters. 640Ã480 is enough for line following or color tracking. Frame rate: 30 fps is standard. On a Raspberry Pi, use `picamera` or OpenCV. For color tracking, convert to HSV color space (hue, saturation, value). A red object has hue around 0â10 or 170â180. Write a mask: `mask = cv2.inRange(hsv, (0,100,100), (10,255,255))`. Then find contours and compute centroid. This runs at 10â15 fps on a Pi 3.\n\n**Depth sensors:** The Microsoft Kinect v1 (used, $30) gives RGB + depth at 640Ã480. The Intel RealSense D435 ($150) is newer but pricier. For a low-cost option, use two webcams for stereo visionâbut calibration is hard. A simpler trick: use a single camera and known object size. If a soccer ball is 22 cm diameter and appears 50 pixels wide, distance = (22 cm Ã focal_length_px) / 50. Focal length in pixels = (image_width_px Ã real_focal_mm) / sensor_width_mm. For a Pi Camera v2, focal length = 3.04 mm, sensor width = 3.67 mm, so at 640 px width, focal_px â 530. Then distance = 22 Ã 530 / 50 â 233 cm.\n\n**Africa-specific challenges:** Lighting varies from harsh sun to dim huts. Use auto-exposure or add a bright LED ring. Dust on lenses is commonâcarry a microfiber cloth. For outdoor robots, a camera with global shutter (like OV5647) avoids motion blur. Power: a Pi 4 needs 5V 3A; use a good UBEC.\n\n**Practical project:** Build a line follower using a Pi Camera. Threshold for black line on white floor. Compute error from center and steer. This is more robust than IR sensors on reflective floors. For depth, mount the camera at 45Â° down to see obstacles ahead."
+    },
+    {
+      "title": "Sensor Calibration and Noise Filtering",
+      "body": "Raw sensor data is noisy and biased. Calibration removes systematic errors; filtering removes random noise.\n\n**Calibration steps:**\n1. **Offset:** For analog sensors, read 100 times with no stimulus (e.g., no object in front of IR). Average and subtract. For IMU, keep still and average.\n2. **Scale:** For distance sensors, measure known distances (10, 20, 30 cm) and record output. Fit a linear or polynomial equation. For example, Sharp IR: voltage = 1.2 / (distance + 0.2) â 0.1. Use Excel or Python to fit.\n3. **Cross-axis:** For magnetometer, rotate 360Â° and find min/max on each axis. Hard iron offset = (max+min)/2. Soft iron scale = (max-min)/2.\n\n**Noise filtering:**\n- **Moving average:** Keep last N readings in an array, output average. N=5 for fast response, N=20 for smooth. In Arduino: `avg = avg * 0.8 + new_reading * 0.2;` (exponential moving average).\n- **Median filter:** Take 5 readings, sort, pick middle. Great for spikes (e.g., ultrasonic glitches).\n- **Low-pass RC filter:** Hardware: resistor + capacitor. For 10 Hz cutoff, R=1kÎ©, C=16ÂµF. This smooths analog signals before ADC.\n- **Kalman filter:** Covered in L5, but a simple 1D Kalman for distance: predict = last_estimate + velocity*dt; update = predict + K*(measurement - predict). K depends on noise.\n\n**Africa-focused practicalities:** Power supply noise is common. Add a 100ÂµF capacitor across sensor VCC and GND. Keep sensor wires away from motor wires. Use shielded cable for long runs. For outdoor robots, temperature changes affect sensorsârecalibrate every hour if precision matters. In dusty environments, clean sensor lenses before calibration.\n\n**Testing:** Write a sketch that prints raw and filtered values. Wave your hand in front of an ultrasonic sensor. The raw value jumps; the filtered value should be smooth. If it lags too much, reduce N. For IMU, plot angle over timeâdrift should be less than 1Â° per minute after calibration."
+    },
+    {
+      "title": "Sensor Fusion with Kalman Filters",
+      "body": "No single sensor is perfect. Sensor fusion combines data to get a better estimate. The Kalman filter is the most common method.\n\n**Why fuse?** An IMU gives fast orientation but drifts. A magnetometer gives absolute heading but is noisy and affected by motors. An encoder gives distance but slips. Fusing them gives smooth, accurate state estimation.\n\n**1D Kalman filter (for distance):**\n- State: position and velocity.\n- Predict: `pos = pos + vel*dt; vel = vel;`\n- Update: `K = P / (P + R); pos = pos + K*(measurement - pos); P = (1-K)*P;`\nHere P is estimate uncertainty, R is measurement noise. Tune R by measuring variance of sensor readings when stationary. For ultrasonic, R might be 4 cmÂ². For encoder, R = 0.1 cmÂ².\n\n**2D Kalman for orientation (IMU + magnetometer):**\nUse a complementary filter firstâit's simpler. `angle = 0.98*(angle + gyro*dt) + 0.02*mag_angle`. This works well on Arduino. For full Kalman, use a library like `KalmanFilter` or `Madgwick`. The Madgwick filter runs on a Pi or ESP32 and fuses accel, gyro, mag at 100 Hz.\n\n**Practical implementation on Arduino:**\n```cpp\nfloat Q_angle = 0.001; // process noise\nfloat Q_bias = 0.003;\nfloat R_measure = 0.03;\nfloat angle = 0, bias = 0, P[2][2] = {{0,0},{0,0}};\n// ... in loop:\nfloat rate = gyro - bias;\nangle += dt * rate;\nP[0][0] += dt * (dt*P[1][1] - P[0][1] - P[1][0] + Q_angle);\n// ... update with accel angle\n```\nThis is a 1D Kalman for pitch/roll. For yaw, add magnetometer.\n\n**Africa-focused tips:** Use an ESP32 instead of Arduino for more processing power. Keep the filter loop time consistentâuse `micros()` for dt. If motors cause magnetic interference, mount the magnetometer on a mast 20 cm above the robot. For outdoor robots, add GPS to the fusion for global position. Test by driving a square path: the fused estimate should close the loop within 10 cm.\n\n**Common mistakes:** Wrong R values cause sluggish or jittery response. Start with R = variance of sensor. If the estimate lags, increase Q. Always validate with a known trajectory."
+    },
+    {
+      "title": "Lab: Building a Distance-Measuring Sensor Array",
+      "body": "In this lab, you'll build a sensor array that measures distance in three directions: front, left, right. You'll use three HC-SR04 ultrasonic sensors, an Arduino Uno, and a breadboard. Total cost: about $15.\n\n**Materials:**\n- 3Ã HC-SR04 ultrasonic sensors\n- 1Ã Arduino Uno (or ESP32)\n- 1Ã breadboard, jumper wires\n- 1Ã 5V power supply (e.g., 9V battery + regulator or USB power bank)\n- Optional: 3Ã IR sensors for short-range backup\n\n**Wiring:**\nEach HC-SR04 has VCC, GND, Trig, Echo. Connect VCC to 5V, GND to GND. Trig and Echo to digital pins: front (Trig=2, Echo=3), left (Trig=4, Echo=5), right (Trig=6, Echo=7). Use a separate 5V regulator for the sensors if your Arduino browns out.\n\n**Code:**\n```cpp\nconst int trigPins[3] = {2,4,6};\nconst int echoPins[3] = {3,5,7};\nfloat distances[3];\nvoid setup() { Serial.begin(9600); for(int i=0;i<3;i++){ pinMode(trigPins[i], OUTPUT); pinMode(echoPins[i], INPUT); } }\nvoid loop() {\n  for(int i=0;i<3;i++){\n    digitalWrite(trigPins[i], LOW); delayMicroseconds(2);\n    digitalWrite(trigPins[i], HIGH); delayMicroseconds(10);\n    digitalWrite(trigPins[i], LOW);\n    long duration = pulseIn(echoPins[i], HIGH);\n    distances[i] = duration * 0.0343 / 2;\n    delay(50); // avoid cross-talk\n  }\n  Serial.print(\"F:\"); Serial.print(distances[0]);\n  Serial.print(\" L:\"); Serial.print(distances[1]);\n  Serial.print(\" R:\"); Serial.println(distances[2]);\n  delay(100);\n}\n```\n**Calibration:**\nPlace a wall at 30 cm. Adjust the code if readings are off. For better accuracy, take 5 readings per sensor, sort, and use the median. This reduces noise from echoes.\n\n**Mounting:**\nMount the sensors on a cardboard or 3D-printed bracket. Front sensor points straight ahead; left and right point 45Â° outward. Keep sensors at least 10 cm apart to avoid cross-talk. Use rubber grommets to reduce vibration.\n\n**Testing in Africa:**\nTest in a corridor, a market aisle, or outdoors. Note how dust and wind affect readings. For outdoor use, add a thin plastic film over the transducers (but not too thickâit attenuates sound). If you see erratic readings, add a 100ÂµF capacitor across VCC and GND of each sensor.\n\n**Extension:**\nAdd a servo to sweep the front sensor 180Â° for a scanning sonar. Or fuse the three distances with a simple rule: if any distance < 20 cm, stop the robot. This is the foundation of obstacle avoidance."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What does an encoder measure?",
+      "options": ["A) Distance to an obstacle", "B) Rotation of a wheel or motor shaft", "C) Acceleration and orientation", "D) Light intensity"],
+      "answer": "B",
+      "explanation": "Encoders count pulses per revolution to measure rotation."
+    },
+    {
+      "q": "Which sensor is proprioceptive?",
+      "options": ["A) Ultrasonic", "B) Infrared", "C) IMU", "D) LiDAR"],
+      "answer": "C",
+      "explanation": "IMU measures the robot's own motion and orientation."
+    },
+    {
+      "q": "A wheel with 65 mm diameter and 360 PPR encoder moves how far per pulse?",
+      "options": ["A) 0.57 mm", "B) 1.14 mm", "C) 2.28 mm", "D) 5.7 mm"],
+      "answer": "A",
+      "explanation": "Circumference = ÏÃ65 â 204 mm; 204/360 â 0.57 mm."
+    },
+    {
+      "q": "What is a common IMU chip used in low-cost robotics?",
+      "options": ["A) MPU-6050", "B) HC-SR04", "C) RPLIDAR A1", "D) Sharp GP2Y0A21"],
+      "answer": "A",
+      "explanation": "MPU-6050 is a popular 6-axis accelerometer and gyroscope."
+    },
+    {
+      "q": "How do you reduce gyro drift in software?",
+      "options": ["A) Increase sample rate", "B) Use a complementary filter with accelerometer", "C) Add a capacitor", "D) Use a higher voltage"],
+      "answer": "B",
+      "explanation": "Complementary filter corrects gyro drift using accelerometer angles."
+    },
+    {
+      "q": "Which sensor uses sound waves to measure distance?",
+      "options": ["A) Infrared", "B) Ultrasonic", "C) LiDAR", "D) Camera"],
+      "answer": "B",
+      "explanation": "Ultrasonic sensors emit and receive sound pulses."
+    },
+    {
+      "q": "What is the speed of sound at 20Â°C?",
+      "options": ["A) 343 m/s", "B) 300 m/s", "C) 400 m/s", "D) 500 m/s"],
+      "answer": "A",
+      "explanation": "Speed of sound in air at 20Â°C is approximately 343 m/s."
+    },
+    {
+      "q": "Which sensor is affected by black surfaces?",
+      "options": ["A) Ultrasonic", "B) Infrared", "C) LiDAR", "D) Encoder"],
+      "answer": "B",
+      "explanation": "Black surfaces absorb infrared light, reducing reflection."
+    },
+    {
+      "q": "What is the typical range of an HC-SR04 ultrasonic sensor?",
+      "options": ["A) 2 cm to 400 cm", "B) 10 cm to 80 cm", "C) 0.1 m to 12 m", "D) 1 m to 100 m"],
+      "answer": "A",
+      "explanation": "HC-SR04 works from about 2 cm to 400 cm."
+    },
+    {
+      "q": "Which sensor provides a 360Â° scan?",
+      "options": ["A) Ultrasonic", "B) Infrared", "C) LiDAR", "D) IMU"],
+      "answer": "C",
+      "explanation": "LiDAR spins a laser to scan 360 degrees."
+    },
+    {
+      "q": "What color space is best for color tracking?",
+      "options": ["A) RGB", "B) HSV", "C) CMYK", "D) Grayscale"],
+      "answer": "B",
+      "explanation": "HSV separates hue from brightness, making color tracking robust."
+    },
+    {
+      "q": "How do you compute distance using a single camera and known object size?",
+      "options": ["A) distance = (real_size Ã focal_px) / pixel_size", "B) distance = (pixel_size Ã focal_px) / real_size", "C) distance = real_size Ã pixel_size", "D) distance = focal_px / pixel_size"],
+      "answer": "A",
+      "explanation": "Distance = (real_size Ã focal_length_px) / apparent_pixel_width."
+    },
+    {
+      "q": "Which depth sensor is low-cost and used?",
+      "options": ["A) Kinect v1", "B) Intel RealSense D435", "C) RPLIDAR A1", "D) MPU-6050"],
+      "answer": "A",
+      "explanation": "Kinect v1 is a used, affordable depth sensor."
+    },
+    {
+      "q": "What is a common issue with cameras outdoors in Africa?",
+      "options": ["A) Too much resolution", "B) Harsh sunlight causing overexposure", "C) Too many colors", "D) Low frame rate"],
+      "answer": "B",
+      "explanation": "Harsh sunlight can overexpose images; use auto-exposure or filters."
+    },
+    {
+      "q": "What is the first step in sensor calibration?",
+      "options": ["A) Scale adjustment", "B) Offset removal", "C) Cross-axis calibration", "D) Filtering"],
+      "answer": "B",
+      "explanation": "Offset removal corrects systematic bias first."
+    },
+    {
+      "q": "Which filter is best for removing spikes?",
+      "options": ["A) Moving average", "B) Median filter", "C) Low-pass RC", "D) Kalman filter"],
+      "answer": "B",
+      "explanation": "Median filter ignores outliers by taking the middle value."
+    },
+    {
+      "q": "What does a 100ÂµF capacitor across sensor VCC and GND do?",
+      "options": ["A) Increases voltage", "B) Reduces power supply noise", "C) Increases current", "D) Filters light"],
+      "answer": "B",
+      "explanation": "Capacitor smooths voltage fluctuations, reducing noise."
+    },
+    {
+      "q": "How often should you recalibrate sensors in changing temperatures?",
+      "options": ["A) Never", "B) Every hour", "C) Every day", "D) Every week"],
+      "answer": "B",
+      "explanation": "Temperature changes affect sensor readings, so hourly recalibration is safe."
+    },
+    {
+      "q": "What is the purpose of sensor fusion?",
+      "options": ["A) To use one sensor only", "B) To combine data for better accuracy", "C) To reduce cost", "D) To increase power consumption"],
+      "answer": "B",
+      "explanation": "Fusion combines strengths of multiple sensors to improve estimates."
+    },
+    {
+      "q": "In a 1D Kalman filter, what does R represent?",
+      "options": ["A) Process noise", "B) Measurement noise", "C) State estimate", "D) Kalman gain"],
+      "answer": "B",
+      "explanation": "R is the measurement noise covariance."
+    },
+    {
+      "q": "Which filter is simpler for IMU orientation than Kalman?",
+      "options": ["A) Complementary filter", "B) Median filter", "C) Moving average", "D) Band-pass filter"],
+      "answer": "A",
+      "explanation": "Complementary filter is easy to implement and works well."
+    },
+    {
+      "q": "What is a common mistake in Kalman filter tuning?",
+      "options": ["A) Using correct R", "B) Wrong R causing sluggish or jittery response", "C) Using too much memory", "D) Not using a library"],
+      "answer": "B",
+      "explanation": "Incorrect R leads to poor filter performance."
+    },
+    {
+      "q": "Which microcontroller is recommended for running Madgwick filter?",
+      "options": ["A) Arduino Uno", "B) ESP32", "C) 8051", "D) PIC16F84"],
+      "answer": "B",
+      "explanation": "ESP32 has enough processing power for sensor fusion."
+    },
+    {
+      "q": "How can you reduce magnetic interference on a magnetometer?",
+      "options": ["A) Mount it near motors", "B) Mount it on a mast 20 cm above", "C) Use longer wires", "D) Increase voltage"],
+      "answer": "B",
+      "explanation": "Distance from motors reduces magnetic interference."
+    },
+    {
+      "q": "In the lab, how many ultrasonic sensors are used?",
+      "options": ["A) 1", "B) 2", "C) 3", "D) 4"],
+      "answer": "C",
+      "explanation": "Three sensors: front, left, right."
+    },
+    {
+      "q": "Why add a delay between ultrasonic sensor readings?",
+      "options": ["A) To save power", "B) To avoid cross-talk", "C) To increase range", "D) To calibrate"],
+      "answer": "B",
+      "explanation": "Delay prevents one sensor's pulse from being heard by another."
+    },
+    {
+      "q": "What is the recommended mounting angle for side sensors?",
+      "options": ["A) 0Â°", "B) 45Â°", "C) 90Â°", "D) 180Â°"],
+      "answer": "B",
+      "explanation": "45Â° outward gives good coverage without cross-talk."
+    },
+    {
+      "q": "What simple rule can stop a robot using three distances?",
+      "options": ["A) If any distance < 20 cm, stop", "B) If all distances > 100 cm, stop", "C) If front < 50 cm, turn left", "D) If left < 10 cm, go faster"],
+      "answer": "A",
+      "explanation": "A threshold of 20 cm is a basic collision avoidance rule."
+    },
+    {
+      "q": "What is a common power issue with Arduino and multiple sensors?",
+      "options": ["A) Too much voltage", "B) Brownout due to insufficient current", "C) Too much memory", "D) Overheating"],
+      "answer": "B",
+      "explanation": "Sensors draw current; Arduino's regulator may not supply enough."
+    },
+    {
+      "q": "Which sensor would you use for a line follower on reflective floors?",
+      "options": ["A) Ultrasonic", "B) Infrared", "C) Camera", "D) LiDAR"],
+      "answer": "C",
+      "explanation": "Camera is more robust than IR on reflective surfaces."
+    }
+  ],
+  "videos": [
+    "Arduino encoder tutorial",
+    "HC-SR04 ultrasonic sensor calibration",
+    "Kalman filter sensor fusion Arduino"
+  ]
+}

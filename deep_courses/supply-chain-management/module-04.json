@@ -1,0 +1,218 @@
+﻿{
+  "course": "Supply Chain Management",
+  "module_number": 4,
+  "module_title": "Inventory Management",
+  "lessons": [
+    {
+      "title": "Types of Inventory and Their Costs",
+      "body": "Inventory is the stock of goods a business holds. In African supply chains, you typically see four types: raw materials (e.g., cocoa beans for a chocolate maker in Ghana), work-in-progress (partially assembled items), finished goods (ready for sale), and maintenance, repair, and operations (MRO) items like spare parts for a generator in a Kenyan factory. Each type serves a purpose: raw materials buffer against supplier delays, WIP keeps production flowing, finished goods meet customer demand, and MRO keeps machines running.\n\nBut inventory costs money. There are four main costs: purchase cost (what you pay suppliers), ordering cost (placing orders, shipping, customs clearance), holding cost (storage, insurance, spoilage, capital tied up), and shortage cost (lost sales, expedited shipping, unhappy customers). In many African markets, holding costs are high due to unreliable electricity (spoilage of perishables) and expensive warehousing. For example, a Lagos retailer storing imported electronics pays 20-30% of item value annually in holding costsâinterest, theft, obsolescence.\n\nLetâs use numbers. A small agro-dealer in Tanzania sells 1,000 bags of fertilizer per year. Each bag costs TZS 50,000. Ordering cost is TZS 200,000 per order. Holding cost is 25% of bag value per year. If they order 100 bags at a time, they place 10 orders yearly: ordering cost = TZS 2,000,000. Average inventory = 50 bags, holding cost = 50 Ã 50,000 Ã 0.25 = TZS 625,000. Total relevant cost = TZS 2,625,000. If they order 200 bags, ordering cost drops to TZS 1,000,000 but holding cost rises to TZS 1,250,000âtotal TZS 2,250,000. So larger orders can reduce total cost, but only up to a point.\n\nTo manage costs, track inventory turnover (cost of goods sold Ã· average inventory). A turnover of 6 means you sell stock every 2 months. Low turnover signals overstocking; high turnover may mean stockouts. Use simple tools like Excel or a notebook to record daily stock levels, and review monthly. In Africa, where cash is tight, keeping too much inventory can cripple your business. Aim for the sweet spot: enough to meet demand without tying up cash you need for rent or salaries."
+    },
+    {
+      "title": "Economic Order Quantity (EOQ) Model",
+      "body": "The Economic Order Quantity (EOQ) is a formula that tells you how much to order to minimize total inventory costs. It balances ordering costs (which fall when you order more) and holding costs (which rise when you order more). The formula is: EOQ = sqrt((2 Ã D Ã S) Ã· H), where D = annual demand, S = cost per order, and H = annual holding cost per unit.\n\nLetâs apply it. A Nairobi hardware store sells 12,000 bags of cement per year. Each order costs KES 5,000 to place (transport, customs, admin). Holding cost is KES 100 per bag per year (storage, interest). EOQ = sqrt((2 Ã 12,000 Ã 5,000) Ã· 100) = sqrt(1,200,000) = 1,095 bags. So they should order about 1,095 bags each time. Number of orders per year = 12,000 Ã· 1,095 â 11 orders. Total ordering cost = 11 Ã 5,000 = KES 55,000. Average inventory = 1,095 Ã· 2 = 548 bags. Holding cost = 548 Ã 100 = KES 54,800. Total cost â KES 109,800.\n\nIf they ordered 500 bags, orders = 24, ordering cost = KES 120,000, holding cost = 250 Ã 100 = KES 25,000, total = KES 145,000. If they ordered 2,000 bags, orders = 6, ordering cost = KES 30,000, holding cost = 1,000 Ã 100 = KES 100,000, total = KES 130,000. So EOQ minimizes total cost.\n\nBut EOQ assumes constant demand and immediate replenishmentâoften unrealistic in Africa. Supplier lead times vary, demand fluctuates, and bulk discounts may apply. Still, EOQ gives a baseline. Adjust for reality: if your supplier offers 10% discount for orders over 2,000 bags, compare total cost with discount. For 2,000 bags, purchase cost = 12,000 Ã (price Ã 0.9), saving 10% on purchase. If price is KES 500, annual purchase cost = 12,000 Ã 500 = KES 6,000,000; with discount = KES 5,400,000, saving KES 600,000âfar outweighing extra holding cost. So take the discount.\n\nUse EOQ in Excel: set up cells for D, S, H, and formula =SQRT(2*D*S/H). Review quarterly as demand changes. In African markets, where cash flow is king, EOQ helps you avoid overordering and free up capital for other needs."
+    },
+    {
+      "title": "Safety Stock and Reorder Point",
+      "body": "Safety stock is extra inventory you keep to protect against unexpected demand or supplier delays. Reorder point (ROP) is the inventory level at which you place a new order. Together, they prevent stockouts. In Africa, where lead times can be long and variable (e.g., imports from China take 30-60 days), safety stock is critical.\n\nFormula: ROP = (Average daily demand Ã Lead time in days) + Safety stock. Safety stock = (Maximum daily demand Ã Maximum lead time) â (Average daily demand Ã Average lead time). For example, a Kigali pharmacy sells 50 boxes of malaria test kits per day on average, but demand can spike to 80. Average lead time from supplier is 10 days, but can be 15 days. Safety stock = (80 Ã 15) â (50 Ã 10) = 1,200 â 500 = 700 boxes. ROP = (50 Ã 10) + 700 = 1,200 boxes. So when inventory hits 1,200 boxes, order more.\n\nIf lead time is reliable (e.g., local supplier delivers in 2 days), safety stock can be lower. But if you import, add buffer for customs delays. A Mombasa retailer importing electronics from Dubai faces 45-day average lead time, but during peak season it can stretch to 60 days. If average daily sales are 20 units, max 30 units, safety stock = (30 Ã 60) â (20 Ã 45) = 1,800 â 900 = 900 units. ROP = (20 Ã 45) + 900 = 1,800 units.\n\nTo set safety stock, use historical data: look at past sales and lead times. If you lack data, start with a simple rule: keep 20-30% of lead-time demand as safety stock. For the pharmacy, lead-time demand = 50 Ã 10 = 500 boxes; 30% = 150 boxes. But the calculated 700 is safer. Balance cost: holding 700 boxes at KES 200 each = KES 140,000 tied up. If stockout cost (lost sales, reputation) is high, invest in safety stock. If holding cost is high (perishables), reduce safety stock and find faster suppliers.\n\nTools: use Excel to track daily demand and lead times. Set reorder alerts in your inventory system (even a notebook with a red line). Review monthly. In African markets, where supply chains are unpredictable, safety stock is your insurance policy."
+    },
+    {
+      "title": "ABC Analysis and Inventory Classification",
+      "body": "ABC analysis classifies inventory into three categories based on value and importance: A items (high value, low volume), B items (moderate value, moderate volume), and C items (low value, high volume). The goal is to focus management effort where it matters most. Typically, A items account for 10-20% of items but 70-80% of total value; B items 20-30% of items and 15-20% of value; C items 50-70% of items and 5-10% of value.\n\nExample: A Nairobi electronics shop stocks 1,000 SKUs. Annual sales value is KES 10 million. A items: 100 SKUs (10%) generate KES 7 million (70%)âthese are laptops, smartphones. B items: 200 SKUs (20%) generate KES 2 million (20%)âaccessories like chargers. C items: 700 SKUs (70%) generate KES 1 million (10%)âcables, cases. For A items, count inventory weekly, negotiate better supplier terms, and keep tight control. For B items, review monthly. For C items, order in bulk, review quarterly, and donât over-manage.\n\nHow to do ABC analysis: list all items, calculate annual usage value (annual demand Ã unit cost), sort descending, and compute cumulative percentage. In Excel: sort by value, add cumulative sum, and cumulative percentage. Assign A to top 70-80%, B to next 15-20%, C to rest. For a small shop in Kampala, A items might be rice and cooking oil; C items might be matches and salt.\n\nBenefits: reduces stockouts of critical items, lowers holding costs for C items (order less frequently), and frees up cash. For A items, consider vendor-managed inventory or just-in-time. For C items, use two-bin system: when one bin empties, reorder. In Africa, where resources are limited, ABC helps you prioritize. Donât treat all items equallyâa missing laptop costs more than a missing phone case.\n\nReview ABC annually or when demand shifts. For a growing business, what was C may become A. Use simple software like Excel or free inventory apps. Train staff to recognize A items and handle them with care."
+    },
+    {
+      "title": "Vendor Managed Inventory (VMI)",
+      "body": "Vendor Managed Inventory (VMI) is a arrangement where the supplier monitors your inventory and replenishes it automatically. You share sales data and stock levels with the supplier, who then decides when and how much to deliver. This shifts the burden of inventory management from you to the vendor, reducing stockouts and holding costs. In Africa, VMI is used by large retailers like Shoprite and manufacturers like SABMiller.\n\nHow it works: You and the supplier agree on minimum and maximum stock levels. The supplier accesses your inventory data (via EDI, email, or a shared spreadsheet) and sends goods when levels drop. For example, a Coca-Cola distributor in Nigeria might manage inventory for a supermarket chain. The distributor checks the supermarketâs sales data weekly, and delivers Coca-Cola products to keep shelves stocked. The supermarket doesnât place orders; the distributor owns the inventory until itâs sold.\n\nBenefits: For you, less time ordering, lower safety stock, and fewer stockouts. For the supplier, better demand visibility, smoother production, and stronger relationship. Costs: You may lose some control, and supplier must be reliable. In Africa, VMI works best with stable, long-term partners. A small retailer might not have the data systems, but can start with a simple VMI: supplier visits weekly, checks stock, and replenishes.\n\nExample: A pharmacy in Accra partners with a pharmaceutical distributor. The distributor visits every Monday, checks stock of top 50 medicines, and delivers whatâs needed. The pharmacy shares sales data via a notebook. This reduces the pharmacyâs ordering time by 10 hours per week and cuts stockouts by 40%. The distributor benefits from guaranteed shelf space.\n\nTo implement VMI: choose a reliable supplier, agree on roles and data sharing, set min/max levels, and pilot with a few items. Use simple tools: a shared Google Sheet or WhatsApp updates. Monitor performance: stockout rate, inventory turns, and supplier fill rate. In African markets, VMI can overcome infrastructure challenges by leveraging the supplierâs logistics. But trust is keyâstart small and scale."
+    },
+    {
+      "title": "Case Study: Inventory Optimization at Dell",
+      "body": "Dell revolutionized the PC industry with its direct-to-customer model and just-in-time inventory. In the 1990s, Dell held only 4 days of inventory, compared to competitors like Compaq with 30-40 days. This gave Dell a massive cost advantage: lower holding costs, faster response to demand, and less obsolescence. How did they do it? They built to order, not to stock. Customers ordered online or by phone, and Dell assembled PCs only after receiving orders. Components were pulled from suppliers just in time.\n\nDellâs inventory optimization involved several key practices: (1) Demand forecasting: Dell used real-time sales data to predict component needs. (2) Supplier integration: Suppliers like Intel and Microsoft held inventory near Dellâs factories and replenished as needed. (3) Postponement: Dell kept generic components and assembled final products after orders. (4) Direct sales: No middlemen meant Dell knew exactly what customers wanted.\n\nNumbers: In 1997, Dellâs inventory turnover was 32 times per year (about 11 days of inventory). Competitors averaged 10 times. If Dellâs cost of goods sold was $10 billion, average inventory = $10B / 32 = $312.5 million. Competitor with turnover 10 = $1 billion. At 20% holding cost, Dell saved $137.5 million annually. Thatâs huge.\n\nFor African businesses, Dellâs lessons apply: (1) Use demand data to avoid overstocking. A Lagos electronics retailer can track daily sales and order only whatâs needed. (2) Work closely with suppliers. A Nairobi boutique can partner with local tailors to replenish fast-selling designs. (3) Postpone customization. A furniture maker can keep unfinished frames and assemble when orders come. (4) Sell directly. A farmer can sell via WhatsApp to consumers, reducing middlemen and inventory.\n\nBut Dellâs model requires reliable suppliers and IT systems. In Africa, where internet and logistics can be unreliable, adapt: use simple tools like Excel and phone calls. Start with a few key items. Measure inventory turnover monthly. Aim to reduce days of inventory gradually. Dellâs success shows that inventory optimization can transform a businessâeven with constraints, you can apply the principles."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "Which type of inventory includes partially assembled items?",
+      "options": ["A) Raw materials", "B) Work-in-progress", "C) Finished goods", "D) MRO items"],
+      "answer": "B",
+      "explanation": "Work-in-progress inventory consists of items that are in the production process but not yet complete."
+    },
+    {
+      "q": "What is the formula for Economic Order Quantity (EOQ)?",
+      "options": ["A) sqrt((2DS)/H)", "B) sqrt((2DH)/S)", "C) sqrt((2SH)/D)", "D) D/S Ã H"],
+      "answer": "A",
+      "explanation": "EOQ = sqrt((2 Ã annual demand Ã ordering cost) / holding cost per unit per year)."
+    },
+    {
+      "q": "Which cost is NOT part of inventory holding cost?",
+      "options": ["A) Storage", "B) Insurance", "C) Ordering", "D) Obsolescence"],
+      "answer": "C",
+      "explanation": "Ordering cost is separate from holding cost; holding cost includes storage, insurance, and obsolescence."
+    },
+    {
+      "q": "In ABC analysis, which category typically represents 70-80% of total inventory value?",
+      "options": ["A) A items", "B) B items", "C) C items", "D) D items"],
+      "answer": "A",
+      "explanation": "A items are high-value items that account for the majority of inventory value but a small percentage of items."
+    },
+    {
+      "q": "What does VMI stand for?",
+      "options": ["A) Vendor Managed Inventory", "B) Variable Material Input", "C) Verified Inventory Management", "D) Volume Managed Inventory"],
+      "answer": "A",
+      "explanation": "VMI is Vendor Managed Inventory, where the supplier manages stock levels for the buyer."
+    },
+    {
+      "q": "Dellâs inventory turnover in 1997 was approximately how many times per year?",
+      "options": ["A) 10", "B) 20", "C) 32", "D) 50"],
+      "answer": "C",
+      "explanation": "Dell achieved 32 inventory turns per year, far higher than competitors."
+    },
+    {
+      "q": "Which of the following is a shortage cost?",
+      "options": ["A) Storage fees", "B) Lost sales", "C) Insurance", "D) Ordering cost"],
+      "answer": "B",
+      "explanation": "Shortage costs include lost sales, expedited shipping, and customer dissatisfaction."
+    },
+    {
+      "q": "What is the reorder point formula?",
+      "options": ["A) (Average daily demand Ã Lead time) + Safety stock", "B) (Maximum daily demand Ã Lead time) - Safety stock", "C) Average daily demand Ã Safety stock", "D) Lead time / Safety stock"],
+      "answer": "A",
+      "explanation": "Reorder point = (Average daily demand Ã Lead time) + Safety stock."
+    },
+    {
+      "q": "Safety stock protects against:",
+      "options": ["A) High holding costs", "B) Unexpected demand or delays", "C) Ordering errors", "D) Obsolescence"],
+      "answer": "B",
+      "explanation": "Safety stock is extra inventory to cover demand spikes or supplier delays."
+    },
+    {
+      "q": "In the EOQ example, if D=12,000, S=5,000, H=100, what is EOQ?",
+      "options": ["A) 1,095", "B) 1,200", "C) 800", "D) 1,500"],
+      "answer": "A",
+      "explanation": "EOQ = sqrt((2 Ã 12,000 Ã 5,000) / 100) = sqrt(1,200,000) â 1,095."
+    },
+    {
+      "q": "Which inventory classification requires the most management attention?",
+      "options": ["A) A items", "B) B items", "C) C items", "D) All equally"],
+      "answer": "A",
+      "explanation": "A items are high-value and critical, so they require tight control and frequent review."
+    },
+    {
+      "q": "What is a benefit of VMI for the buyer?",
+      "options": ["A) Higher inventory levels", "B) Less time ordering", "C) More control", "D) Higher holding costs"],
+      "answer": "B",
+      "explanation": "VMI reduces the buyerâs ordering effort and can lower stockouts."
+    },
+    {
+      "q": "Dellâs direct sales model allowed them to:",
+      "options": ["A) Hold more inventory", "B) Build to order", "C) Use more middlemen", "D) Increase lead times"],
+      "answer": "B",
+      "explanation": "Dell built products only after receiving customer orders, reducing inventory."
+    },
+    {
+      "q": "Which of the following is an MRO item?",
+      "options": ["A) Finished goods", "B) Raw materials", "C) Spare parts", "D) Work-in-progress"],
+      "answer": "C",
+      "explanation": "MRO stands for Maintenance, Repair, and Operations, which includes spare parts."
+    },
+    {
+      "q": "If a company has a high inventory turnover ratio, it means:",
+      "options": ["A) It holds too much stock", "B) It sells stock quickly", "C) It has high holding costs", "D) It has many stockouts"],
+      "answer": "B",
+      "explanation": "High turnover indicates efficient inventory management and fast sales."
+    },
+    {
+      "q": "What is the main goal of ABC analysis?",
+      "options": ["A) To classify inventory by value and focus effort", "B) To calculate EOQ", "C) To set safety stock", "D) To implement VMI"],
+      "answer": "A",
+      "explanation": "ABC analysis prioritizes inventory management based on value and importance."
+    },
+    {
+      "q": "In the safety stock example, if average daily demand is 50, max is 80, average lead time 10, max 15, what is safety stock?",
+      "options": ["A) 500", "B) 700", "C) 1200", "D) 300"],
+      "answer": "B",
+      "explanation": "Safety stock = (80 Ã 15) - (50 Ã 10) = 1,200 - 500 = 700."
+    },
+    {
+      "q": "Which cost is reduced by ordering larger quantities?",
+      "options": ["A) Holding cost", "B) Ordering cost", "C) Purchase cost", "D) Shortage cost"],
+      "answer": "B",
+      "explanation": "Larger orders reduce the number of orders placed, lowering total ordering cost."
+    },
+    {
+      "q": "What is a challenge of implementing VMI in Africa?",
+      "options": ["A) Too much data", "B) Unreliable suppliers", "C) Low holding costs", "D) Excess inventory"],
+      "answer": "B",
+      "explanation": "VMI requires reliable suppliers, which can be a challenge in some African markets."
+    },
+    {
+      "q": "Dellâs inventory optimization involved:",
+      "options": ["A) Keeping large safety stock", "B) Just-in-time components", "C) Using many distributors", "D) Building to stock"],
+      "answer": "B",
+      "explanation": "Dell used just-in-time delivery of components to minimize inventory."
+    },
+    {
+      "q": "Which of the following is a holding cost?",
+      "options": ["A) Shipping", "B) Customs clearance", "C) Spoilage", "D) Order placement"],
+      "answer": "C",
+      "explanation": "Spoilage is a holding cost, along with storage, insurance, and obsolescence."
+    },
+    {
+      "q": "If annual demand is 1,000 units, ordering cost is $100, holding cost is $5 per unit, what is EOQ?",
+      "options": ["A) 200", "B) 100", "C) 500", "D) 250"],
+      "answer": "A",
+      "explanation": "EOQ = sqrt((2 Ã 1,000 Ã 100) / 5) = sqrt(40,000) = 200."
+    },
+    {
+      "q": "Which inventory type is most likely to be classified as A in ABC analysis?",
+      "options": ["A) Cheap consumables", "B) Expensive electronics", "C) Office supplies", "D) Cleaning materials"],
+      "answer": "B",
+      "explanation": "Expensive electronics have high value and low volume, fitting A classification."
+    },
+    {
+      "q": "What is the reorder point if average daily demand is 20, lead time is 5 days, and safety stock is 100?",
+      "options": ["A) 100", "B) 200", "C) 300", "D) 400"],
+      "answer": "B",
+      "explanation": "ROP = (20 Ã 5) + 100 = 100 + 100 = 200."
+    },
+    {
+      "q": "Which of the following is NOT a benefit of VMI?",
+      "options": ["A) Reduced stockouts", "B) Lower inventory levels", "C) Increased ordering time", "D) Stronger supplier relationships"],
+      "answer": "C",
+      "explanation": "VMI reduces ordering time, not increases it."
+    },
+    {
+      "q": "Dellâs inventory turnover advantage led to:",
+      "options": ["A) Higher holding costs", "B) Lower cost of goods sold", "C) More obsolete inventory", "D) Slower response to demand"],
+      "answer": "B",
+      "explanation": "Lower inventory reduced holding costs and obsolescence, lowering overall costs."
+    },
+    {
+      "q": "What is the first step in ABC analysis?",
+      "options": ["A) Sort items by value", "B) Set safety stock", "C) Calculate EOQ", "D) Implement VMI"],
+      "answer": "A",
+      "explanation": "ABC analysis starts by calculating annual usage value and sorting items descending."
+    },
+    {
+      "q": "Which of the following is a shortage cost?",
+      "options": ["A) Warehouse rent", "B) Expedited shipping", "C) Insurance", "D) Interest on capital"],
+      "answer": "B",
+      "explanation": "Expedited shipping is a shortage cost incurred to avoid stockouts."
+    },
+    {
+      "q": "In the EOQ model, if holding cost increases, EOQ will:",
+      "options": ["A) Increase", "B) Decrease", "C) Stay same", "D) Become zero"],
+      "answer": "B",
+      "explanation": "Higher holding cost reduces the optimal order quantity to avoid excessive holding costs."
+    },
+    {
+      "q": "Which company is known for its direct-to-customer model and low inventory?",
+      "options": ["A) Dell", "B) Compaq", "C) IBM", "D) HP"],
+      "answer": "A",
+      "explanation": "Dell pioneered the direct model, achieving very low inventory levels."
+    }
+  ],
+  "videos": [
+    "Economic Order Quantity explained with example",
+    "ABC analysis inventory management tutorial",
+    "Vendor managed inventory case study Africa"
+  ]
+}
