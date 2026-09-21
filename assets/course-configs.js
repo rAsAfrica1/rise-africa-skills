@@ -184,3 +184,27 @@ window.COURSE_CONFIGS["pork-processing-full"] = {
   "unit": { "name": "Mixed product basket per pig", "variableCost": 120, "price": 210 },
   "volume": { "monthly": 8 }
 };
+window.COURSE_CONFIGS["small-machines-pharmaceuticals-import"] = {
+  "title": "Small Machines & Pharmaceuticals Import",
+  "note": "Combined machine and pharmaceutical import operation. Adjust to your local prices.",
+  "startup": [
+    { "item": "Machine Sample Order (1 unit)", "qty": 1, "unit": 800 },
+    { "item": "Certification (SONCAP/PVoC)", "qty": 1, "unit": 500 },
+    { "item": "Freight (LCL, 5 CBM)", "qty": 1, "unit": 600 },
+    { "item": "Import Duty and VAT", "qty": 1, "unit": 350 },
+    { "item": "Customs Clearing Agent", "qty": 1, "unit": 150 },
+    { "item": "Business Registration and Import Licence", "qty": 1, "unit": 200 },
+    { "item": "Working Capital", "qty": 1, "unit": 400 }
+  ],
+  "monthlyFixed": [
+    { "item": "Recurring Freight and Shipping", "amount": 400 },
+    { "item": "Certification (per shipment)", "amount": 200 },
+    { "item": "Customs Clearance", "amount": 150 },
+    { "item": "Marketing and Sales", "amount": 100 },
+    { "item": "Transport and Logistics", "amount": 80 },
+    { "item": "Office and Communication", "amount": 50 },
+    { "item": "Miscellaneous", "amount": 70 }
+  ],
+  "unit": { "name": "Machine or pharmaceutical shipment", "variableCost": 800, "price": 1120 },
+  "volume": { "monthly": 5 }
+};
