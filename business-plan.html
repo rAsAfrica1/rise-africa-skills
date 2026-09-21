@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Business Plan & Cashflow — rise AFRICA skills</title>
+<link rel="stylesheet" href="assets/business-tools.css">
+<style>
+body{font-family:system-ui,sans-serif;max-width:960px;margin:0 auto;padding:1rem 1.2rem 3rem;line-height:1.6;background:#fafaf7;color:#222}
+h1{font-size:1.7rem;margin:.3rem 0}.sub{color:#666;margin-bottom:1.5rem}
+.pick{background:#fff;padding:1.2rem;border:1px solid #e5e5e5;border-radius:10px;margin-bottom:1.5rem}
+.pick label{display:block;font-weight:600;margin-bottom:.5rem}
+.pick select{width:100%;padding:.6rem;border:1px solid #ccc;border-radius:6px;font-size:1rem;font-family:inherit}
+.steps{background:#f0f8f0;border-left:4px solid #2a7;padding:1rem 1.2rem;border-radius:8px;margin-bottom:1.5rem}
+.steps h2{margin:0 0 .8rem;font-size:1.1rem;color:#1a5}
+.steps ol{margin:0;padding-left:1.2rem}.steps li{margin:.4rem 0;font-size:.95rem}
+.steps li strong{color:#1a5}
+.empty{padding:2rem;text-align:center;color:#888;font-style:italic;background:#fff;border-radius:10px;border:1px dashed #ccc}
+</style></head><body>
+
+<h1>💼 Business Plan & Cashflow Calculator</h1>
+<p class="sub">Pick your business, adjust the numbers, print your plan. Everything saves on your device — nothing is sent anywhere.</p>
+
+<div class="steps">
+<h2>📋 The 5-step process</h2>
+<ol>
+<li><strong>Startup Costs</strong> — every one-time expense. This is your seed capital.</li>
+<li><strong>Operating</strong> — monthly fixed costs: rent, transport, electricity, labour.</li>
+<li><strong>Pricing & Break-even</strong> — what you sell, for how much, at what cost.</li>
+<li><strong>12-Month Cash Flow</strong> — month by month, will you stay positive?</li>
+<li><strong>Loan</strong> — if you borrow, can your profit cover the payment?</li>
+</ol>
+</div>
+
+<div class="pick">
+<label for="courseSelect">Choose your business:</label>
+<select id="courseSelect"><option value="">— Select a course —</option></select>
+</div>
+
+<div id="toolArea"><div class="empty">Select a course above to load its business plan calculator.</div></div>
+
+<script src="assets/course-configs.js"></script>
+<script src="assets/business-tools.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var sel=document.getElementById('courseSelect');
+  var area=document.getElementById('toolArea');
+  var configs=window.COURSE_CONFIGS||{};
+  Object.keys(configs).sort().forEach(function(slug){
+    var opt=document.createElement('option');
+    opt.value=slug;
+    opt.textContent=configs[slug].title||slug;
+    sel.appendChild(opt);
+  });
+  sel.addEventListener('change',function(){
+    var slug=sel.value;
+    if(!slug){area.innerHTML='<div class="empty">Select a course above to load its business plan calculator.</div>';return;}
+    area.innerHTML='<div class="biz-tools" data-course="'+slug+'"></div>';
+    window.location.reload();
+  });
+});
+</script>
+</body></html>
