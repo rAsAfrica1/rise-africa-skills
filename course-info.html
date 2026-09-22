@@ -466,7 +466,39 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         }
       }
       if (!course) {
-        container.innerHTML = '<div class="error">Course not found. <a href="?">View all courses</a> or go back to the <a href="/" style="color:#C9A227;">homepage</a>.</div>';
+        // Supabase fallback for courses not in D (newer courses)
+        fetch(SUPA + '/rest/v1/course_content?course_slug=eq.' + encodeURIComponent(courseKey) + '&select=file_path,html&order=file_path.asc&apikey=' + encodeURIComponent(KEY))
+          .then(function(r){ return r.json(); })
+          .then(function(rows) {
+            if (!rows || !rows.length) {
+              container.innerHTML = '<div class="error">Course not found. <a href="?">View all courses</a> or go back to the <a href="/" style="color:#C9A227;">homepage</a>.</div>';
+              return;
+            }
+            var title = courseKey.replace(/-/g, ' ').replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+            var h = '<h1>&#128218; ' + title + '</h1>';
+            h += '<div class="sub">Full syllabus &middot; ' + rows.length + ' modules</div>';
+            var mods = rows.filter(function(r){ return /-module-\d+$/.test(r.file_path); });
+            mods.sort(function(a,b){
+              var na = parseInt((a.file_path.match(/-module-(\d+)$/)||[0,0])[1], 10);
+              var nb = parseInt((b.file_path.match(/-module-(\d+)$/)||[0,0])[1], 10);
+              return na - nb;
+            });
+            mods.forEach(function(m) {
+              var tm = m.html.match(/<h1[^>]*>([^<]+)<\/h1>/);
+              var mTitle = tm ? tm[1].replace(/<[^>]+>/g,'') : m.file_path;
+              h += '<div class="module"><h2>' + mTitle + '</h2><ul>';
+              var lessons = m.html.match(/<h3[^>]*>([^<]+)<\/h3>/g) || [];
+              lessons.forEach(function(l){
+                var clean = l.replace(/<[^>]+>/g, '');
+                h += '<li>' + clean + '</li>';
+              });
+              h += '</ul></div>';
+            });
+            container.innerHTML = h;
+          })
+          .catch(function(){
+            container.innerHTML = '<div class="error">Course not found. <a href="?">View all courses</a> or go back to the <a href="/" style="color:#C9A227;">homepage</a>.</div>';
+          });
         return;
       }
 
@@ -551,6 +583,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </script>
 </body>
 </html>
+
 
 
 
