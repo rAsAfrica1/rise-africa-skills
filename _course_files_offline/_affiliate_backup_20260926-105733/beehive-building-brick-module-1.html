@@ -1,0 +1,207 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Module 1 — Why Fixed Masonry Hives Exist — beehive-building-brick</title>
+<style>
+:root{--ink:#1e293b;--ink-soft:#334155;--muted:#64748b;--brand:#2c3e50;--brand-soft:#eaeef2;--accent:#8a4a12;--gold:#c9a227;--line:#e2e0d8;--card:#fff;--warn-soft:#fdf5e0;--radius:12px}
+*{box-sizing:border-box}body{margin:0;font-family:Georgia,serif;background:#faf8f3;color:var(--ink);line-height:1.7;font-size:17px}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px}
+header.top{background:var(--ink);color:#f6f1e8;padding:14px 0}header.top .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;align-items:center}
+.brand{font-weight:700;font-size:15px}.brand span{color:#e8c65a}
+header.top nav a{color:#f6f1e8;text-decoration:none;font-size:13.5px;opacity:.85;margin-left:14px}
+.hero{background:#fff;border-bottom:1px solid var(--line);padding:38px 0 32px}
+.crumbs{font-size:13px;color:var(--muted);margin-bottom:12px}.crumbs a{color:var(--brand);text-decoration:none}
+.kicker{display:inline-block;background:var(--brand-soft);color:var(--brand);font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin:0 0 14px}
+.hero h1{font-size:32px;line-height:1.25;margin:0 0 14px}
+.hero .lead{color:var(--ink-soft);font-size:18px;margin:0 0 20px}
+.meta{display:flex;gap:14px;flex-wrap:wrap;font-size:13.5px;color:var(--muted)}
+.meta-chip{background:#f3efe8;border-radius:999px;padding:6px 14px}
+section.body{padding:32px 0}
+.lesson{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px 30px;margin:0 0 22px}
+.lesson-head{margin:0 0 4px;font-size:13px;color:var(--brand);font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.lesson h2{margin:6px 0 20px;font-size:24px;line-height:1.3}
+.objectives{background:var(--brand-soft);border-radius:10px;padding:16px 20px;margin:0 0 22px;font-size:15.5px}
+.objectives strong{display:block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.objectives ul{margin:0;padding-left:20px}
+.body p{margin:16px 0}.body h3{font-size:19px;margin:28px 0 8px;font-weight:700}
+.body ul,.body ol{margin:14px 0 14px 24px}.body li{margin:8px 0}
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px}
+th{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);background:#f3efe8;font-weight:700;font-size:14px}
+td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+.warn{background:rgba(231,76,60,.06);border-left:3px solid #c2513f;padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0}
+.warn strong{color:#c2513f}
+.good{background:rgba(39,174,96,.06);border-left:3px solid #2f7a3d;padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0}
+.good strong{color:#2f7a3d}
+.callout{background:rgba(201,162,39,.08);border-left:3px solid var(--gold);padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0}
+.callout strong{color:#8a6a12}
+.quiz{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin:24px 0}
+.q{margin:18px 0}.q .qt{font-weight:600;margin:0 0 10px}
+.opts{list-style:none;padding:0;margin:0}.opts li{margin:0 0 8px}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:9px;padding:11px 14px;font:inherit;font-size:15.5px;cursor:pointer;color:var(--ink)}
+.opt:hover{border-color:var(--brand)}
+.opt.right{background:#e7f5e9;border-color:#2f7a3d}
+.opt.wrong{background:#fdeceb;border-color:#c2513f}
+.why{display:none;margin-top:10px;font-size:15px;background:#f3efe8;border-radius:8px;padding:12px 14px;color:var(--ink-soft)}
+.why.show{display:block}
+.capstone{background:var(--warn-soft);border:1px solid #eadfb8;border-radius:12px;padding:22px 24px;margin:24px 0}
+.capstone h3{margin:0 0 12px;font-size:17px;color:var(--accent)}
+.disclaim{background:#f3efe8;border-radius:10px;padding:16px 18px;font-size:14px;color:var(--ink-soft);margin-top:24px}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:32px;flex-wrap:wrap;padding-top:22px;border-top:1px solid var(--line)}
+.btn{display:inline-block;background:var(--brand);color:#fff;text-decoration:none;padding:12px 22px;border-radius:10px;font-weight:600}
+footer{background:var(--ink);color:#f6f1e8;text-align:center;padding:24px;font-size:13px;margin-top:40px}
+footer a{color:#e8c65a;text-decoration:none;margin:0 8px}
+@media(max-width:560px){.hero h1{font-size:25px}.lesson{padding:22px}}
+</style>
+</head><body>
+
+<header class="top"><div class="wrap"><div class="brand">rise <span>AFRICA</span> skills</div>
+<nav><a href="beehive-building-brick-course.html">All modules</a> <a href="index.html">Home</a></nav></div></header>
+<section class="hero"><div class="wrap">
+<div class="crumbs"><a href="beehive-building-brick-course.html">Course</a> / Module 1 of 12</div>
+<p class="kicker">Module 1</p>
+<h1>Why Fixed Masonry Hives Exist</h1>
+<p class="lead">Fixed brick and block hives exist for four reasons: theft, fire, termites and permanence. If none of those is your problem, the wooden hive is better. This module tells you which one you are.</p>
+<div class="meta"><span class="meta-chip">Module 1 of 12</span><span class="meta-chip">Written method</span><span class="meta-chip">Knowledge check + capstone</span></div>
+<div class="objectives"><strong>By the end of this module you will be able to</strong><ul>
+<li>Name the four problems masonry solves and three it creates</li>
+<li>Decide whether a fixed hive is the right choice for your site</li>
+<li>Understand why theft is the leading reason fixed hives appear across Africa</li>
+<li>Recognise when masonry is the wrong answer</li>
+<li>Sketch a fixed hive apiary layout for a real site</li>
+</ul></div>
+</div></section>
+<section class="body"><div class="wrap">
+<div class="lesson"><p class="lesson-head">Lesson 1.1</p><h2>Why masonry exists</h2>
+<div class="body">
+<p>Every beekeeper who has lost a hive to theft has wondered whether a wooden hive was the right choice. In many African districts, hive theft is not a risk — it is a certainty with a timescale. A Langstroth hive is 20–40 kg of finished timber with two or three kilos of honey inside. It is portable. It can be carried away at night. And it is worth real money on any market.</p>
+<p>Masonry hives solve this by being immovable. A brick hive weighs 300–800 kg. Nobody carries that away. The same property that makes it theft-proof makes it fire-resistant (a wooden hive in dry grass burns to nothing in an hour), and termite-proof (termites eat timber, not fired brick), and permanent — a masonry hive can stand for decades with maintenance.</p>
+<p>But masonry creates its own problems:</p>
+<ol>
+<li><strong>Fixed.</strong> You cannot move it. You cannot follow a nectar flow. You cannot relocate because of drought, spray drift, or a neighbour's complaint.</li>
+<li><strong>Repairs are hard.</strong> Repairing a cracked wooden box is 30 minutes. Repairing a cracked masonry hive often means rebuilding it.</li>
+<li><strong>Inspections are slower.</strong> Wooden frames lift out; masonry hives usually use top bars or cavity combs. Every inspection is more work.</li>
+<li><strong>Capital and labour.</strong> A brick hive costs more material and more labour than a wooden one, especially at first construction.</li>
+</ol>
+<div class="callout"><strong>The rule:</strong> build fixed masonry hives only if theft, fire, or termites are a real threat on your site. Otherwise, wooden hives are cheaper, more flexible, and easier to work.</div>
+</div></div>
+
+<div class="lesson"><p class="lesson-head">Lesson 1.2</p><h2>The four problems masonry solves</h2>
+<div class="body">
+<h3>1. Theft</h3>
+<p>Across East, Central and West Africa, hive theft is the single most common reason beekeepers switch to fixed hives. Wooden hives are stolen for three purposes: to resell as hives, to use as firewood, and to harvest the honey inside. A fixed masonry hive cannot be moved by a thief, and its honey can only be taken by opening the hive in place — which is slow, noisy, and risky for a thief with defensive African bees inside.</p>
+
+<h3>2. Fire</h3>
+<p>Every dry-season bush fire that crosses a wooden apiary destroys the hives. Bees may survive, but the wood does not. A masonry hive survives fire, and in some cases the bees survive with it.</p>
+
+<h3>3. Termites</h3>
+<p>Untreated timber in contact with the ground is termite food. Even treated timber eventually succumbs if the treatment is breached. Masonry is not on the termite menu. A well-built brick hive outlasts three or four wooden hives placed on the same site.</p>
+
+<h3>4. Permanence</h3>
+<p>A brick hive is a fixture. It improves the site, supports the yard, and lasts as long as the wall it stands on. For a beekeeper investing in a long-term apiary, the fixed hive is the correct choice — if the site itself is correct.</p>
+</div></div>
+
+<div class="lesson"><p class="lesson-head">Lesson 1.3</p><h2>When masonry is the wrong answer</h2>
+<div class="body">
+<ul>
+<li><strong>Migratory beekeeping.</strong> If you move hives for nectar flows, honeydew, or pollination contracts, fixed hives are useless.</li>
+<li><strong>Wet sites.</strong> A brick hive in poorly drained ground holds water in the base and the bees abscond. If your site floods, use wooden hives on stands.</li>
+<li><strong>Sandy or unstable soil.</strong> A brick hive is heavy. On soft ground, it settles and cracks. Either build a proper foundation or use a wooden hive on a stand.</li>
+<li><strong>Small trial apiary.</strong> If you are testing whether beekeeping works for you, do not invest in permanent construction. Use wooden hives first.</li>
+<li><strong>Rented land.</strong> Building a permanent structure on land you might lose is a mistake. Fixed hives go with the land.</li>
+<li><strong>Cold highlands.</strong> Masonry conducts heat away from the colony. In cold areas, wooden hives are better insulators and support the colony through cold nights.</li>
+</ul>
+<div class="good"><strong>The decision rule:</strong> fixed masonry hives are the right answer when (a) theft, fire or termites are real threats, (b) you own the land, (c) the site is well-drained, and (d) you intend to keep bees there for at least ten years. Miss any of those four and the wooden hive is correct.</div>
+</div></div>
+
+<div class="lesson"><p class="lesson-head">Lesson 1.4</p><h2>Sketching a fixed hive apiary</h2>
+<div class="body">
+<p>Fixed hives are arranged differently from wooden ones because you cannot move them once they are built. Get the layout right before the first brick is laid.</p>
+<h3>The five layout rules</h3>
+<ol>
+<li><strong>Level ground, high and dry.</strong> A masonry hive on a slope will crack. On a flood plain it will drown.</li>
+<li><strong>Entrances face away from paths and dwellings.</strong> Bee flight paths cross 5–10 m at head height. Point entrances toward a hedge or wall, not a footpath.</li>
+<li><strong>Space hives 2–4 m apart.</strong> Closer and drifting bees cause robbing. Wider and you walk further at inspection.</li>
+<li><strong>Shade in the afternoon.</strong> A masonry hive in full afternoon sun reaches 45°C+ internally. Plant trees or build a shade roof.</li>
+<li><strong>Access for the beekeeper.</strong> Leave a clear 1 m working space behind every hive. You will be standing there, suited up, at every inspection.</li>
+</ol>
+<p>A 10-hive fixed apiary on level ground needs roughly 12 × 8 m. Draw it on paper before building.</p>
+</div></div>
+<div class="quiz">
+<h3>Knowledge check — Module 1</h3>
+<div class="q"><p class="qt">1. What is the single most common reason beekeepers switch from wooden to fixed hives in Africa?</p>
+<ul class="opts"><li><button class="opt" onclick="ans(this,0)">Bees prefer brick</button></li><li><button class="opt" onclick="ans(this,1)">Theft of wooden hives</button></li><li><button class="opt" onclick="ans(this,2)">Brick is cheaper</button></li><li><button class="opt" onclick="ans(this,3)">Honey tastes better</button></li></ul>
+<div class="why"><strong>Correct: theft.</strong> A 300–800 kg masonry hive cannot be carried away.</div></div>
+<div class="q"><p class="qt">2. Which is NOT a good reason to build a fixed hive?</p>
+<ul class="opts"><li><button class="opt" onclick="ans(this,0)">Fire risk</button></li><li><button class="opt" onclick="ans(this,1)">Termite pressure</button></li><li><button class="opt" onclick="ans(this,2)">You plan to move hives to nectar flows</button></li><li><button class="opt" onclick="ans(this,3)">Theft risk</button></li></ul>
+<div class="why"><strong>Correct: migratory beekeeping.</strong> Fixed hives cannot be moved. Use wooden hives if you plan to move them.</div></div>
+<div class="q"><p class="qt">3. Why is a wet site bad for masonry hives?</p>
+<ul class="opts"><li><button class="opt" onclick="ans(this,0)">Bees dislike the colour of wet brick</button></li><li><button class="opt" onclick="ans(this,1)">Water collects in the hive base and the bees abscond; the structure also cracks</button></li><li><button class="opt" onclick="ans(this,2)">Honey ferments faster</button></li><li><button class="opt" onclick="ans(this,3)">The mortar fails first</button></li></ul>
+<div class="why"><strong>Correct: water collects and bees abscond.</strong> Build on high, well-drained ground or use wooden hives on stands.</div></div>
+<div class="q"><p class="qt">4. Roughly what does a 10-hive fixed apiary need in space?</p>
+<ul class="opts"><li><button class="opt" onclick="ans(this,0)">2 × 2 m</button></li><li><button class="opt" onclick="ans(this,1)">12 × 8 m</button></li><li><button class="opt" onclick="ans(this,2)">50 × 50 m</button></li><li><button class="opt" onclick="ans(this,3)">1 hectare</button></li></ul>
+<div class="why"><strong>Correct: ~12 × 8 m.</strong> At 2–4 m between hives and 1 m working space behind each.</div></div>
+<div class="q"><p class="qt">5. What is the decision rule for fixed masonry hives?</p>
+<ul class="opts"><li><button class="opt" onclick="ans(this,0)">Always build masonry — it is more permanent</button></li><li><button class="opt" onclick="ans(this,1)">Only build masonry if theft, fire or termites are real threats, you own the land, the site is well-drained, and you intend to stay ten years</button></li><li><button class="opt" onclick="ans(this,2)">Never build masonry — wooden hives are always better</button></li><li><button class="opt" onclick="ans(this,3)">Build masonry only in cold highlands</button></li></ul>
+<div class="why"><strong>Correct: all four conditions.</strong> Miss any and the wooden hive is correct.</div></div>
+</div>
+<div class="capstone">
+<h3>Practical assignment — Module 1</h3>
+<p>Sketch a fixed hive apiary layout for a real site you control. Include:</p>
+<ol>
+<li>A plan drawing to approximate scale, with north marked, showing the site's boundaries and any existing structures or trees.</li>
+<li>The position of at least 4 hives, spaced 2–4 m apart, with working space behind each.</li>
+<li>Flight paths, drawn as arrows, pointing away from paths and dwellings.</li>
+<li>Shade plan — existing trees or proposed shade roof — for afternoon shading of each hive.</li>
+<li>One paragraph (150 words) stating whether fixed hives are the right choice on this site, referring to the four-condition rule.</li>
+</ol>
+<p>Marks are weighted toward the decision paragraph. Any plan can look good on paper; the test is whether you would actually build masonry here or use wooden hives instead.</p>
+</div>
+<div class="pager"><a class="btn" href="beehive-building-brick-course.html">← Course home</a> <a class="btn" href="beehive-building-brick-module-2.html">Module 2 — Site, Orientation and Sun Exposure →</a></div>
+<div class="disclaim">All figures are indicative and must be verified with three local quotations and the relevant authority before money is spent. This module teaches general principles and does not replace a qualified professional.</div>
+</div></section>
+<footer><a href="index.html">Home</a> · <a href="beehive-building-brick-course.html">Course home</a><br>© rise AFRICA skills · all@riseafricaskills.com</footer>
+<script>function ans(b,i){var o=b.parentElement.parentElement.querySelectorAll(".opt");var w=b.parentElement.parentElement.parentElement.querySelector(".why");for(var j=0;j<o.length;j++){o[j].classList.remove("right","wrong");}if(i===0){b.classList.add("right");}else{b.classList.add("wrong");}w.classList.add("show");}</script>
+<script src="/paywall.js"></script>
+<!-- REVENUE MODULE START -->
+<section style="max-width:960px;margin:40px auto;padding:20px;font-family:system-ui,sans-serif;line-height:1.6;color:#222">
+
+<hr style="border:none;border-top:3px solid #f9a825;margin:40px 0">
+
+<h2 style="color:#b8860b;font-size:1.4rem">Tools, Certificate &amp; Support</h2>
+
+<h3 style="color:#2a7">1. Recommended Tools for This Course</h3>
+<p style="font-size:.9rem">These tools will improve your results. Buy from local suppliers where possible. Links marked "affiliate" earn us a small commission at no extra cost to you.</p>
+<ul style="font-size:.9rem">
+<li style='margin:.4rem 0'>Digital scale — <a href='https://www.amazon.com/s?k=Digital+scale&tag=YOUR-REAL-AMAZON-ID' target='_blank' rel='noopener sponsored' style='color:#2a7'>Check price</a> <span style='font-size:.75rem;color:#888'>(affiliate link)</span></li>
+<li style='margin:.4rem 0'>Record book — <a href='https://www.amazon.com/s?k=Record+book&tag=YOUR-REAL-AMAZON-ID' target='_blank' rel='noopener sponsored' style='color:#2a7'>Check price</a> <span style='font-size:.75rem;color:#888'>(affiliate link)</span></li>
+<li style='margin:.4rem 0'>Measuring tools — <a href='https://www.amazon.com/s?k=Measuring+tools&tag=YOUR-REAL-AMAZON-ID' target='_blank' rel='noopener sponsored' style='color:#2a7'>Check price</a> <span style='font-size:.75rem;color:#888'>(affiliate link)</span></li>
+<li style='margin:.4rem 0'>Safety equipment — <a href='https://www.amazon.com/s?k=Safety+equipment&tag=YOUR-REAL-AMAZON-ID' target='_blank' rel='noopener sponsored' style='color:#2a7'>Check price</a> <span style='font-size:.75rem;color:#888'>(affiliate link)</span></li>
+</ul>
+
+<h3 style="color:#2a7">2. Get Your Certificate of Completion</h3>
+<div style="background:#e8f5e9;border-left:4px solid #2a7;padding:16px;border-radius:6px;margin:16px 0">
+<p style="margin:0 0 8px"><strong>Finish all 12 modules and pass the final quiz to earn a rise AFRICA skills Certificate.</strong></p>
+<p style="margin:0;font-size:.9rem">Show it to buyers, lenders, and employers. Printed and digital versions available.</p>
+<p style="margin:10px 0 0;font-size:.85rem">Request via WhatsApp: <a href="https://wa.me/263773001353" target="_blank" rel="noopener" style="color:#2a7">+263 77 688 1941</a></p>
+</div>
+
+<h3 style="color:#2a7">3. Find a Local Supplier</h3>
+<p style="font-size:.9rem">We are building a directory of vetted local suppliers for African farmers. If you supply tools, feed, or equipment, contact us to be listed here.</p>
+<p style="font-size:.85rem">Contact: <a href="https://wa.me/263773001353" target="_blank" rel="noopener" style="color:#2a7">WhatsApp +263 77 688 1941</a></p>
+
+<h3 style="color:#2a7">4. Book a Consultation</h3>
+<div style="background:#e3f2fd;border-left:4px solid #1976d2;padding:16px;border-radius:6px;margin:16px 0">
+<p style="margin:0 0 8px"><strong>Need one-on-one help?</strong></p>
+<p style="margin:0;font-size:.9rem">Book a 30-minute consultation with a specialist. Custom profit plan, disease prevention checklist, and market strategy.</p>
+<p style="margin:10px 0 0;font-size:.85rem">Book via WhatsApp: <a href="https://wa.me/263773001353" target="_blank" rel="noopener" style="color:#1976d2">+263 77 688 1941</a></p>
+</div>
+
+<h3 style="color:#2a7">5. Support This Course</h3>
+<p style="font-size:.9rem">rise AFRICA skills is free for everyone. If this course helped you, consider supporting us so we can keep creating free content.</p>
+<p style="font-size:.85rem"><a href="https://riseafricaskills.com/support.html" style="color:#2a7">Support Us →</a></p>
+
+<p style="font-size:.78rem;color:#777;margin-top:24px;border-top:1px solid #e0e0e0;padding-top:12px">
+Affiliate links: We earn a small commission if you buy through these links. This does not affect the price you pay. All recommendations are based on practical usefulness, not commission rates.
+</p>
+
+</section>
+<!-- REVENUE MODULE END -->
+</body></html>
