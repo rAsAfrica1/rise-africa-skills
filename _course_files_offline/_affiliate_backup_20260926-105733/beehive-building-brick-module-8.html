@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 8 — Ventilation, Thermal Mass and Cooling | Beehive Building — Brick</title>
+<style>
+:root{--green:#2e7d32;--dark:#1b3a1f;--sand:#f6f3ea;--line:#d8d2c2;--amber:#e8a33d;--red:#b3261e;--blue:#1f5f8b}
+*{box-sizing:border-box}
+body{margin:0;font-family:Georgia,'Times New Roman',serif;line-height:1.65;color:#232323;background:var(--sand)}
+header{background:var(--dark);color:#fff;padding:30px 20px}
+header .wrap{max-width:960px;margin:0 auto}
+header .kicker{font-family:system-ui,sans-serif;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:#a5d6a7;margin:0 0 6px}
+header h1{margin:0;font-size:1.9rem;line-height:1.2}
+header p{margin:8px 0 0;color:#cfe3d0;font-size:.95rem}
+nav.crumbs{background:#fff;border-bottom:1px solid var(--line);padding:10px 20px;font-family:system-ui,sans-serif;font-size:.85rem}
+nav.crumbs .wrap{max-width:960px;margin:0 auto}
+nav.crumbs a{color:var(--green);text-decoration:none}
+main{max-width:960px;margin:0 auto;padding:28px 20px 60px}
+h2{color:var(--dark);border-bottom:2px solid var(--line);padding-bottom:6px;margin-top:38px;font-size:1.35rem}
+h3{color:var(--green);margin-top:26px;font-size:1.1rem}
+p,li{font-size:1rem}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-family:system-ui,sans-serif;font-size:.9rem;background:#fff}
+th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+th{background:var(--dark);color:#fff;font-weight:600}
+tbody tr:nth-child(even){background:#fbfaf5}
+.box{background:#fff;border:1px solid var(--line);border-left:5px solid var(--green);padding:14px 18px;margin:20px 0;border-radius:3px}
+.box.warn{border-left-color:var(--red)}
+.box.tip{border-left-color:var(--amber)}
+.box.calc{border-left-color:var(--blue);font-family:system-ui,sans-serif;font-size:.92rem}
+.box h4{margin:0 0 8px;font-family:system-ui,sans-serif;font-size:.95rem;text-transform:uppercase;letter-spacing:.06em;color:var(--dark)}
+.calc code{background:#eef3f7;padding:1px 5px;border-radius:3px;font-size:.88rem}
+figure{margin:26px 0;background:#fff;border:1px solid var(--line);padding:16px;border-radius:3px}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-family:system-ui,sans-serif;font-size:.83rem;color:#555;margin-top:10px;text-align:center}
+ol.steps{counter-reset:s;list-style:none;padding-left:0}
+ol.steps>li{counter-increment:s;position:relative;padding-left:44px;margin-bottom:14px}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:0;width:30px;height:30px;background:var(--green);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;font-weight:700;font-size:.9rem}
+.assign{background:#fff8e7;border:1px dashed var(--amber);padding:18px 22px;border-radius:4px;margin-top:30px}
+.assign h2{margin-top:0;border:none;color:#8a5a00}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:44px;padding-top:22px;border-top:1px solid var(--line);flex-wrap:wrap}
+.btn{display:inline-block;background:var(--green);color:#fff;text-decoration:none;padding:10px 16px;border-radius:4px;font-family:system-ui,sans-serif;font-size:.88rem}
+.btn.alt{background:#fff;color:var(--green);border:1px solid var(--green)}
+.btn:hover{opacity:.9}
+footer{background:var(--dark);color:#a5d6a7;text-align:center;padding:22px;font-family:system-ui,sans-serif;font-size:.82rem}
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+<p class="kicker">Rise Africa Skills · Beehive Building — Brick</p>
+<h1>Module 8 — Ventilation, Thermal Mass and Cooling</h1>
+<p>Using brick's greatest strength — and stopping it becoming its greatest liability.</p>
+</div></header>
+
+<nav class="crumbs"><div class="wrap">
+<a href="index.html">Home</a> › <a href="beehive-building-brick.html">Beehive Building — Brick</a> › Module 8
+</div></nav>
+
+<main>
+
+<h2>Learning outcomes</h2>
+<ul>
+<li>Explain diurnal lag and night purge in a brick hive.</li>
+<li>Design a low-inlet / high-outlet vent pair and size it with the stack-effect calculation.</li>
+<li>Control solar gain with roof overhang, cavity and reflective surfaces.</li>
+<li>Apply evaporative cooling safely — and know when it is dangerous.</li>
+<li>Set ventilation differently for hot-dry, hot-humid and cold conditions.</li>
+<li>Manage condensation, mould and the brick's tendency to hold moisture.</li>
+</ul>
+
+<h2>1. What thermal mass actually does</h2>
+<p>A brick wall stores heat. Thermal mass does <em>not</em> make a hive cool; it makes it <strong>slow</strong>. That is useful in a desert climate with a 15 K swing between day and night, and it is a liability in a humid coastal climate where the wall never gets a chance to discharge.</p>
+
+<div class="box calc"><h4>Diurnal lag — how far behind the wall runs</h4>
+<p>For a wall of thickness <em>L</em>, thermal diffusivity <em>α</em> (brick ≈ 0.5 × 10⁻⁶ m²/s), the time lag for the inner surface to peak after the outer surface peaks is approximately:</p>
+<p><code>t_lag ≈ 0.14 × L² / α</code> &nbsp; (seconds)</p>
+<p>For a 230 mm brick wall:<br>
+t_lag = 0.14 × (0.23)² / (0.5 × 10⁻⁶)<br>
+= 0.14 × 0.0529 / 0.0000005<br>
+= <strong>14 812 s ≈ 4.1 hours</strong></p>
+<p>So a wall that peaks at 14:00 outside peaks at about 18:00 on the inside — after the sun is off it. In a dry climate, that lag is exactly what you want: the wall absorbs the afternoon heat and releases it at night when you can purge it.</p>
+</div>
+
+<h3>The night purge</h3>
+<p>The brick hive's cooling strategy is not "stay cool all day". It is:</p>
+<ol class="steps">
+<li>Daytime: the wall absorbs heat slowly; the interior stays below ambient until late afternoon.</li>
+<li>Evening: open the high vent and the bottom inlet wide. Cool night air flushes the stored heat out.</li>
+<li>Dawn: close down to a minimum setting. The wall is now cool and will stay cool well into the next afternoon.</li>
+</ol>
+
+<div class="box warn"><h4>Night purge only works if night air is cooler than the wall</h4>
+<p>In a humid tropical night where the air stays at 27 °C and 90 % RH, purging does nothing except push wet air into the hive. Check your night temperature before you rely on this strategy. If night air is not at least 4–5 K cooler than the wall, do not purge — insulate instead.</p></div>
+
+<h2>2. Vent design for a brick hive</h2>
+<p>Brick hives usually have thick walls and a heavy roof, so ventilation openings must be designed in, not added later. Provide:</p>
+<ul>
+<li><strong>Low inlet</strong> — at or just above the floor, on the shaded side, screened. Minimum two, 40 × 20 mm each, adjustable with a sliding plate.</li>
+<li><strong>High outlet</strong> — at the top of the cavity, below the crown board, on the opposite (sunny) side. Two, 40 × 20 mm, screened and pluggable.</li>
+<li><strong>Gap above the crown board</strong> — 25–40 mm continuous air space between the crown board and the roof slab, open to the high outlets.</li>
+<li><strong>Entrance</strong> — kept separate from the ventilation inlet where possible, so bee traffic and airflow do not fight each other.</li>
+</ul>
+
+<div class="box calc"><h4>Sizing the vent pair</h4>
+<p>Stack pressure, h = 0.9 m cavity height, ΔT = 10 K:<br>
+<code>ΔP = 0.043 × 0.9 × 10 = 0.387 Pa</code></p>
+<p>Velocity: <code>v = √(2 × 0.387 / 1.15) = 0.82 m/s</code></p>
+<p>Two inlets of 0.04 × 0.02 m = 0.0016 m² total inlet area (treat outlet as at least as large):<br>
+<code>Q = 0.0016 × 0.82 × 3600 = 4.7 m³/h</code></p>
+<p>That is far below the 20–40 m³/h a strong colony needs. <strong>The lesson:</strong> small holes are decorative. To reach 25 m³/h at 0.82 m/s you need:</p>
+<p><code>A = Q / (v × 3600) = 25 / (0.82 × 3600) = 0.0085 m² = 85 cm²</code></p>
+<p>That is roughly a <strong>300 × 30 mm slot</strong>, or four 50 × 40 mm holes. Design the openings at that scale from the start — retrofitting large openings into a finished brick hive is unpleasant work.</p>
+</div>
+
+<figure>
+<svg viewBox="0 0 600 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Brick hive cross-section showing thermal mass, vents and airflow">
+<rect x="0" y="0" width="600" height="380" fill="#fff"/>
+<!-- roof slab -->
+<rect x="150" y="30" width="300" height="26" fill="#d8d2c2" stroke="#1b3a1f"/>
+<text x="300" y="48" font-family="system-ui" font-size="10" text-anchor="middle">ROOF SLAB (insulated / reflective)</text>
+<!-- cavity gap -->
+<rect x="150" y="56" width="300" height="22" fill="#eef3f7" stroke="#1b3a1f"/>
+<text x="300" y="71" font-family="system-ui" font-size="9" text-anchor="middle" fill="#1f5f8b">VENTILATED CAVITY 25–40 mm</text>
+<!-- walls -->
+<rect x="150" y="78" width="34" height="220" fill="#fdf1dc" stroke="#1b3a1f"/>
+<rect x="416" y="78" width="34" height="220" fill="#fdf1dc" stroke="#1b3a1f"/>
+<text x="167" y="195" font-family="system-ui" font-size="9" text-anchor="middle" transform="rotate(-90 167 195)" fill="#8a5a00">BRICK MASS 230 mm</text>
+<text x="433" y="195" font-family="system-ui" font-size="9" text-anchor="middle" transform="rotate(90 433 195)" fill="#8a5a00">BRICK MASS 230 mm</text>
+<!-- interior -->
+<rect x="184" y="78" width="232" height="220" fill="#e8f0e8" stroke="#1b3a1f"/>
+<text x="300" y="180" font-family="system-ui" font-size="11" text-anchor="middle">BROOD CAVITY</text>
+<text x="300" y="198" font-family="system-ui" font-size="10" text-anchor="middle" fill="#555">34–35 °C target</text>
+<!-- crown board -->
+<rect x="184" y="78" width="232" height="10" fill="#fff" stroke="#1b3a1f"/>
+<text x="300" y="86" font-family="system-ui" font-size="8" text-anchor="middle">CROWN BOARD</text>
+<!-- high outlets -->
+<rect x="150" y="60" width="34" height="14" fill="#fbe9e7" stroke="#b3261e"/>
+<rect x="416" y="60" width="34" height="14" fill="#fbe9e7" stroke="#b3261e"/>
+<!-- low inlets -->
+<rect x="150" y="272" width="34" height="16" fill="#e6f0f7" stroke="#1f5f8b"/>
+<rect x="416" y="272" width="34" height="16" fill="#e6f0f7" stroke="#1f5f8b"/>
+<!-- floor -->
+<rect x="150" y="298" width="300" height="20" fill="#d8d2c2" stroke="#1b3a1f"/>
+<text x="300" y="312" font-family="system-ui" font-size="9" text-anchor="middle">FLOOR (sloped to drain)</text>
+<!-- arrows -->
+<path d="M120 280 L146 280" stroke="#1f5f8b" stroke-width="2.5" marker-end="url(#bb)"/>
+<path d="M186 280 L400 280" stroke="#1f5f8b" stroke-width="2" marker-end="url(#bb)"/>
+<path d="M396 278 L396 110" stroke="#1f5f8b" stroke-width="2" marker-end="url(#bb)"/>
+<path d="M396 100 L396 68" stroke="#b3261e" stroke-width="2.5" marker-end="url(#rr)"/>
+<path d="M180 68 L180 40" stroke="#b3261e" stroke-width="2.5" marker-end="url(#rr)"/>
+<text x="66" y="276" font-family="system-ui" font-size="10" fill="#1f5f8b">cool night air in</text>
+<text x="470" y="60" font-family="system-ui" font-size="10" fill="#b3261e">hot air out</text>
+<!-- sun -->
+<circle cx="530" cy="120" r="26" fill="#e8a33d"/>
+<path d="M504 130 L462 150" stroke="#e8a33d" stroke-width="2" marker-end="url(#yy)"/>
+<text x="480" y="180" font-family="system-ui" font-size="10" fill="#8a5a00">solar gain stored</text>
+<text x="480" y="194" font-family="system-ui" font-size="10" fill="#8a5a00">in brick mass</text>
+<!-- night label -->
+<text x="30" y="40" font-family="system-ui" font-size="11" fill="#1b3a1f">NIGHT PURGE MODE</text>
+<defs>
+<marker id="bb" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#1f5f8b"/></marker>
+<marker id="rr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#b3261e"/></marker>
+<marker id="yy" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#e8a33d"/></marker>
+</defs>
+</svg>
+<figcaption>Figure 1 — Brick hive in night-purge mode. Cool air enters low, crosses the cavity, and exits high, carrying stored heat out of the brick mass.</figcaption>
+</figure>
+
+<h2>3. Roof, overhang and solar gain</h2>
+<p>The roof is where brick hives fail. A heavy masonry roof slab in direct sun becomes a radiator pointed straight down at the brood nest.</p>
+<table>
+<thead><tr><th>Measure</th><th>Specification</th><th>Effect</th></tr></thead>
+<tbody>
+<tr><td>Overhang</td><td>100–150 mm all round (wider than a wooden hive)</td><td>Shades the top of the wall; sheds rain clear of the vents</td></tr>
+<tr><td>Reflective top</td><td>White lime wash or light-coloured tile</td><td>Reduces surface temperature 10–20 °C</td></tr>
+<tr><td>Roof cavity</td><td>25–40 mm ventilated gap between slab and crown board</td><td>Breaks the conduction path; connects to high vents</td></tr>
+<tr><td>Insulation</td><td>25 mm rigid board above crown board (dry climate) or below slab (humid)</td><td>Cuts downward radiation into the brood cavity</td></tr>
+<tr><td>Double roof / second skin</td><td>Separate light cover on 50 mm spacers above the slab</td><td>Best performance; slab stays near ambient</td></tr>
+</tbody>
+</table>
+
+<h2>4. Evaporative cooling — useful and dangerous</h2>
+<p>Evaporating water absorbs about <strong>2 450 kJ per litre</strong>. A shaded, wetted sand floor or a damp burlap panel on the shaded vent can drop incoming air temperature by several kelvin.</p>
+
+<div class="box calc"><h4>How much cooling is available?</h4>
+<p>Wet 2 m² of shade cloth, evaporating 3 L/day:<br>
+Energy absorbed = 3 × 2450 = 7 350 kJ/day = 7 350 / 86 400 ≈ <strong>0.085 kW</strong> continuous</p>
+<p>Compare with the heat a strong colony generates: roughly 40–80 W. So evaporative cooling can offset a meaningful fraction of colony heat — but only in <strong>dry</strong> air. At 80 % relative humidity the evaporation rate collapses and you are simply making the hive damp.</p>
+</div>
+
+<table>
+<thead><tr><th>Climate</th><th>Evaporative cooling</th><th>Reason</th></tr></thead>
+<tbody>
+<tr><td>Hot dry (RH &lt; 40 %)</td><td>Yes — very effective</td><td>High evaporation potential</td></tr>
+<tr><td>Hot humid (RH &gt; 70 %)</td><td>No — harmful</td><td>Air cannot take up more vapour; adds condensation and mould risk</td></tr>
+<tr><td>Cool / cold</td><td>Never</td><td>Chills the cluster and wets the hive</td></tr>
+</tbody>
+</table>
+
+<h2>5. Climate-specific ventilation settings</h2>
+<table>
+<thead><tr><th>Climate</th><th>Low inlet</th><th>High outlet</th><th>Entrance</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Hot dry, big day/night swing</td><td>Open day, wide open night</td><td>Open day, wide open night</td><td>Moderate</td><td>Aggressive night purge; use damp sand floor</td></tr>
+<tr><td>Hot humid, small swing</td><td>Half open</td><td>Half open</td><td>Moderate</td><td>Do not wet; shade and dehumidify by airflow only</td></tr>
+<tr><td>Warm wet season</td><td>Quarter open</td><td>Quarter open</td><td>Reduced</td><td>Keep rain out; weekly mould inspection</td></tr>
+<tr><td>Cool / cold</td><td>Closed</td><td>Small opening only</td><td>8–10 mm</td><td>Ventilate for moisture, insulate for warmth</td></tr>
+</tbody>
+</table>
+
+<h2>6. Condensation and mould in a brick hive</h2>
+<p>Brick is porous and hygroscopic. It absorbs moisture and releases it slowly. If you add water faster than it can dry, the wall stays damp, mould grows, and the colony suffers.</p>
+<ul>
+<li>Slope the floor to a drain and fit a drain plug — never let water pool.</li>
+<li>Seal the interior of the brood cavity with a breathable lime render, not a plastic sheet. Plastic traps moisture behind it and rots the brick.</li>
+<li>Inspect the high vents monthly for cobwebs and propolis blockages.</li>
+<li>After any wet season, run a full dry-out period with all vents open before the next flow.</li>
+</ul>
+
+<h2>7. Brick vs wood — where each wins</h2>
+<table>
+<thead><tr><th>Property</th><th>Brick hive</th><th>Wooden hive</th></tr></thead>
+<tbody>
+<tr><td>Daytime heat damping</td><td>Excellent</td><td>Poor</td></tr>
+<tr><td>Night purge potential</td><td>Excellent (dry climates)</td><td>Limited by low mass</td></tr>
+<tr><td>Cold-season warmth</td><td>Good, if dry</td><td>Good, if insulated</td></tr>
+<tr><td>Humidity control</td><td>Poor — holds moisture</td><td>Better — dries faster</td></tr>
+<tr><td>Adaptability</td><td>Fixed openings only</td><td>Can add boxes, screens, reducers freely</td></tr>
+<tr><td>Cost of change</td><td>High</td><td>Low</td></tr>
+</tbody>
+</table>
+<p>Brick wins in hot, dry, high-swing climates and loses everywhere else. If you farm in a humid lowland, consider brick walls with a <em>wooden</em> super and roof — the best of both.</p>
+
+<div class="assign">
+<h2>Assignment 8</h2>
+<ol>
+<li>Calculate the diurnal lag for your wall thickness using <code>t_lag ≈ 0.14 × L² / α</code> with α = 0.5 × 10⁻⁶ m²/s.</li>
+<li>Record your local day and night temperatures for one week. Is the night air at least 4–5 K cooler than the wall? State whether night purge is viable for you.</li>
+<li>Size your low inlet and high outlet. Show ΔP, v, and required area in cm² for 25 m³/h.</li>
+<li>Specify your roof: overhang, surface colour, cavity depth, insulation type and thickness.</li>
+<li>Decide whether evaporative cooling is appropriate for your climate and justify it with a humidity figure.</li>
+<li>Write your four seasonal vent settings as a table you can hang in the apiary.</li>
+</ol>
+</div>
+
+<div class="pager">
+<a class="btn alt" href="beehive-building-brick-module-7.html">← Module 7 — Roofs, Slabs and Weatherproofing</a>
+<a class="btn" href="beehive-building-brick-module-9.html">Module 9 — Hive Stands, Bases and Apiary Layout →</a>
+</div>
+
+</main>
+<footer>Rise Africa Skills · Beehive Building — Brick · Module 8 of 12</footer>
+<script src="/paywall.js"></script>
+<!-- REVENUE MODULE START -->
+<section style="max-width:960px;margin:40px auto;padding:20px;font-family:system-ui,sans-serif;line-height:1.6;color:#222">
+
+<hr style="border:none;border-top:3px solid #f9a825;margin:40px 0">
+
+<h2 style="color:#b8860b;font-size:1.4rem">Tools, Certificate &amp; Support</h2>
+
+<h3 style="color:#2a7">1. Recommended Tools for This Course</h3>
+<p style="font-size:.9rem">These tools will improve your results. Buy from local suppliers where possible. Links marked "affiliate" earn us a small commission at no extra cost to you.</p>
+<ul style="font-size:.9rem">
+<li style='margin:.4rem 0'>Digital scale — <a href='https://www.amazon.com/s?k=Digital+scale&tag=YOUR-REAL-AMAZON-ID' target='_blank' rel='noopener sponsored' style='color:#2a7'>Check price</a> <span style='font-size:.75rem;color:#888'>(affiliate link)</span></li>
+<li style='margin:.4rem 0'>Record book — <a href='https://www.amazon.com/s?k=Record+book&tag=YOUR-REAL-AMAZON-ID' target='_blank' rel='noopener sponsored' style='color:#2a7'>Check price</a> <span style='font-size:.75rem;color:#888'>(affiliate link)</span></li>
+<li style='margin:.4rem 0'>Measuring tools — <a href='https://www.amazon.com/s?k=Measuring+tools&tag=YOUR-REAL-AMAZON-ID' target='_blank' rel='noopener sponsored' style='color:#2a7'>Check price</a> <span style='font-size:.75rem;color:#888'>(affiliate link)</span></li>
+<li style='margin:.4rem 0'>Safety equipment — <a href='https://www.amazon.com/s?k=Safety+equipment&tag=YOUR-REAL-AMAZON-ID' target='_blank' rel='noopener sponsored' style='color:#2a7'>Check price</a> <span style='font-size:.75rem;color:#888'>(affiliate link)</span></li>
+</ul>
+
+<h3 style="color:#2a7">2. Get Your Certificate of Completion</h3>
+<div style="background:#e8f5e9;border-left:4px solid #2a7;padding:16px;border-radius:6px;margin:16px 0">
+<p style="margin:0 0 8px"><strong>Finish all 12 modules and pass the final quiz to earn a rise AFRICA skills Certificate.</strong></p>
+<p style="margin:0;font-size:.9rem">Show it to buyers, lenders, and employers. Printed and digital versions available.</p>
+<p style="margin:10px 0 0;font-size:.85rem">Request via WhatsApp: <a href="https://wa.me/263773001353" target="_blank" rel="noopener" style="color:#2a7">+263 77 688 1941</a></p>
+</div>
+
+<h3 style="color:#2a7">3. Find a Local Supplier</h3>
+<p style="font-size:.9rem">We are building a directory of vetted local suppliers for African farmers. If you supply tools, feed, or equipment, contact us to be listed here.</p>
+<p style="font-size:.85rem">Contact: <a href="https://wa.me/263773001353" target="_blank" rel="noopener" style="color:#2a7">WhatsApp +263 77 688 1941</a></p>
+
+<h3 style="color:#2a7">4. Book a Consultation</h3>
+<div style="background:#e3f2fd;border-left:4px solid #1976d2;padding:16px;border-radius:6px;margin:16px 0">
+<p style="margin:0 0 8px"><strong>Need one-on-one help?</strong></p>
+<p style="margin:0;font-size:.9rem">Book a 30-minute consultation with a specialist. Custom profit plan, disease prevention checklist, and market strategy.</p>
+<p style="margin:10px 0 0;font-size:.85rem">Book via WhatsApp: <a href="https://wa.me/263773001353" target="_blank" rel="noopener" style="color:#1976d2">+263 77 688 1941</a></p>
+</div>
+
+<h3 style="color:#2a7">5. Support This Course</h3>
+<p style="font-size:.9rem">rise AFRICA skills is free for everyone. If this course helped you, consider supporting us so we can keep creating free content.</p>
+<p style="font-size:.85rem"><a href="https://riseafricaskills.com/support.html" style="color:#2a7">Support Us →</a></p>
+
+<p style="font-size:.78rem;color:#777;margin-top:24px;border-top:1px solid #e0e0e0;padding-top:12px">
+Affiliate links: We earn a small commission if you buy through these links. This does not affect the price you pay. All recommendations are based on practical usefulness, not commission rates.
+</p>
+
+</section>
+<!-- REVENUE MODULE END -->
+</body>
+</html>
+
