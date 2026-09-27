@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Module 2 - Breeds and Selection - Cat Breeding</title>
+<meta name="description" content="Cat breeding module 2 - Breeds and Selection">
+<style>
+:root{--gold:#c9a227;--darker:#0f0f1a;--card:#1e1e32;--muted:#9a9ab0;--green:#27ae60;--red:#e74c3c;--border:rgba(201,162,39,.2)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--darker);color:#e8e8e8;line-height:1.7}
+a{color:var(--gold)}
+header{position:sticky;top:0;background:rgba(15,15,26,0.95);border-bottom:1px solid var(--border);padding:.7rem 1rem;display:flex;align-items:center;gap:.6rem;z-index:100}
+.logo-icon{width:34px;height:34px;border-radius:8px;background:var(--gold);color:var(--darker);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem}
+header .brand{font-weight:700;font-size:.95rem}
+header a.back{margin-left:auto;text-decoration:none;font-size:.85rem;border:1px solid var(--gold);padding:.35rem .8rem;border-radius:20px}
+main{max-width:820px;margin:0 auto;padding:2rem 1.2rem 4rem}
+.crumb{font-size:.85rem;color:var(--muted);margin-bottom:1rem}
+.crumb a{text-decoration:none}
+h1{color:var(--gold);font-size:1.9rem;line-height:1.2;margin:1rem 0 .5rem}
+h2{color:var(--gold);font-size:1.3rem;margin:2.5rem 0 .8rem;padding-bottom:.4rem;border-bottom:1px solid var(--border)}
+p{margin:.8rem 0}
+.lead{color:var(--muted);font-style:italic}
+.meta{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem;margin:1.5rem 0;font-size:.9rem;color:var(--muted)}
+.callout{background:rgba(201,162,39,.08);border-left:3px solid var(--gold);padding:1rem 1.2rem;border-radius:0 8px 8px 0;margin:1.3rem 0}
+.callout strong{color:var(--gold)}
+.warn{background:rgba(231,76,60,.1);border-left:3px solid var(--red);padding:1rem 1.2rem;border-radius:0 8px 8px 0;margin:1.3rem 0}
+.warn strong{color:var(--red)}
+.good{background:rgba(39,174,96,.08);border-left:3px solid var(--green);padding:1rem 1.2rem;border-radius:0 8px 8px 0;margin:1.3rem 0}
+.good strong{color:var(--green)}
+table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.92rem}
+th{background:rgba(201,162,39,.15);color:var(--gold);text-align:left;padding:.6rem .8rem;border:1px solid var(--border)}
+td{padding:.6rem .8rem;border:1px solid var(--border)}
+ul,ol{padding-left:1.4rem}
+li{margin:.5rem 0}
+.nav{display:flex;justify-content:space-between;margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);gap:.6rem;flex-wrap:wrap}
+.nav a{text-decoration:none;font-weight:700;padding:.7rem 1.2rem;border:1px solid var(--gold);border-radius:50px;font-size:.9rem}
+footer{border-top:1px solid rgba(255,255,255,.08);padding:1.5rem 1rem;text-align:center;color:var(--muted);font-size:.8rem;margin-top:3rem}
+.cards{display:grid;gap:1rem;margin:1.5rem 0}
+.card{display:block;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.2rem;text-decoration:none;color:#e8e8e8}
+.card:hover{border-color:var(--gold)}
+.card .num{display:inline-block;background:rgba(201,162,39,.2);color:var(--gold);font-weight:700;font-size:.75rem;padding:.15rem .55rem;border-radius:6px;margin-bottom:.5rem}
+.card .ttl{display:block;color:var(--gold);font-weight:700;font-size:1.05rem}
+</style>
+<style id="yt-search-cards">
+.ytsec{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;margin:18px 0}
+.ytsec h3{margin:0 0 4px;font-size:16px;color:var(--ink)}
+.ytsec .sub{font-size:13px;color:var(--muted);margin:0 0 12px}
+.ytgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.ytcard{display:flex;gap:10px;text-decoration:none;background:#f8f6f1;border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--ink);transition:all .15s}
+.ytcard:hover{border-color:var(--brand);background:#fff;transform:translateY(-1px)}
+.ytcard .ico{width:26px;height:26px;flex:0 0 26px;background:#c4302b;border-radius:6px;display:flex;align-items:center;justify-content:center}
+.ytcard .ico::after{content:"";display:block;width:0;height:0;border-left:8px solid #fff;border-top:5px solid transparent;border-bottom:5px solid transparent;margin-left:2px}
+.ytcard .body{flex:1;min-width:0}
+.ytcard .ttl{display:block;font-size:13.5px;font-weight:600;line-height:1.35;color:var(--ink)}
+.ytcard .hint{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
+</style></head>
+<body>
+
+<div class="biz-callout" style="background:#fdf5e0;border-left:4px solid #c9a227;border-radius:0 10px 10px 0;padding:16px 20px;margin:18px 0">
+<strong style="display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#7c4a12;margin-bottom:6px">What this means for your business</strong>
+<p style="margin:0;font-size:15px">Before you touch anything in this module, know which business you are running. See the full Business Seed for capital tiers, buyers and the value-addition ladder.</p>
+<p style="margin:8px 0 0;font-size:13.5px"><a href="cat-breeding-business.html" style="color:#3d5a2e;font-weight:600">Read the full Business Seed →</a></p>
+</div>
+<section class="ytsec">
+<h3>📹 Watch these on YouTube</h3>
+<p class="sub">Live search results for each topic in this module. Opens in a new tab.</p>
+<div class="ytgrid">
+<a class="ytcard" href="https://www.youtube.com/results?search_query=cat%20breeding%20module%202%20cat%20breeding%20Africa%20tutorial" target="_blank" rel="noopener">
+  <span class="ico"></span>
+  <span class="body">
+    <span class="ttl">cat breeding module 2</span>
+    <span class="hint">Open on YouTube →</span>
+  </span>
+</a>
+</div>
+</section><script src="auth-guard.js"></script>
+<header><div class="logo-icon">rAs</div><div class="brand">rise AFRICA skills</div><a class="back" href="cat-breeding-course.html">&larr; Course</a></header>
+<main>
+<div class="crumb"><a href="index.html">Home</a> · <a href="cat-breeding-course.html">Cat Breeding</a> · Module 2</div>
+<h1>2. Breeds and Selection</h1>
+<p class="lead">The breed and the individual cats you start with decide the next 8-10 years of your cattery.</p>
+<div class="meta"><strong>Module 2 of 12</strong> · Cat Breeding for Profit</div>
+<h2>The five breed categories</h2>
+<table>
+<tr><th>Category</th><th>Examples</th><th>Best for</th></tr>
+<tr><td>Longhair</td><td>Persian, Maine Coon, Ragdoll, Norwegian Forest</td><td>Show, family pets</td></tr>
+<tr><td>Semilonghair</td><td>Birman, Turkish Angora, Somali</td><td>Family, show</td></tr>
+<tr><td>Shorthair</td><td>British Shorthair, American Shorthair, Exotic</td><td>Family, easy grooming</td></tr>
+<tr><td>Oriental / Siamese-type</td><td>Siamese, Burmese, Oriental</td><td>Family, vocal, intelligent</td></tr>
+<tr><td>Rare / specialist</td><td>Bengal, Savannah, Sphynx, Scottish Fold</td><td>Premium, enthusiasts</td></tr>
+<tr><td>Indigenous / mixed</td><td>African domestic shorthair (Kalahari, Egyptian Mau ancestry)</td><td>Hardy, low-input, local markets</td></tr>
+</table>
+<h2>Best breeds for African markets</h2>
+<table>
+<tr><th>Breed</th><th>Category</th><th>Price range</th><th>Notes</th></tr>
+<tr><td>Persian</td><td>Longhair</td><td>$300-1,500</td><td>Popular, needs daily grooming</td></tr>
+<tr><td>Maine Coon</td><td>Longhair</td><td>$500-2,500</td><td>Large, friendly, good family cat</td></tr>
+<tr><td>Ragdoll</td><td>Longhair</td><td>$500-2,500</td><td>Docile, ideal family pet</td></tr>
+<tr><td>British Shorthair</td><td>Shorthair</td><td>$400-1,500</td><td>Easy grooming, sturdy</td></tr>
+<tr><td>Siamese</td><td>Oriental</td><td>$300-1,500</td><td>Vocal, intelligent, popular</td></tr>
+<tr><td>Bengal</td><td>Rare</td><td>$800-3,000</td><td>Wild look, active</td></tr>
+<tr><td>Sphynx</td><td>Rare</td><td>$1,000-3,000</td><td>Hairless, needs warmth and skin care</td></tr>
+<tr><td>Scottish Fold</td><td>Specialist</td><td>$500-2,000</td><td>Distinctive ears, health concerns (joint)</td></tr>
+<tr><td>African domestic shorthair</td><td>Indigenous</td><td>$30-200</td><td>Hardy, low-input, local market</td></tr>
+</table>
+<h2>Choosing by your market</h2>
+<table>
+<tr><th>Your market</th><th>Best breed type</th><th>Why</th></tr>
+<tr><td>Urban families</td><td>British Shorthair, Ragdoll, Siamese</td><td>Good temperament, easy care</td></tr>
+<tr><td>Apartment dwellers</td><td>British Shorthair, Persian, Exotic</td><td>Quiet, indoor-friendly</td></tr>
+<tr><td>Show circuit</td><td>Persian, Maine Coon, Siamese</td><td>Competitive classes</td></tr>
+<tr><td>Enthusiasts / collectors</td><td>Bengal, Savannah, Sphynx</td><td>Novelty, premium prices</td></tr>
+<tr><td>Rural / farms</td><td>African domestic, British Shorthair</td><td>Hardy, purposeful</td></tr>
+<tr><td>Export</td><td>Recognised pedigreed breeds</td><td>International demand</td></tr>
+</table>
+<h2>Choosing a breeding queen</h2>
+<ul>
+<li><strong>Age:</strong> 12-18 months at first breeding (never before her second heat).</li>
+<li><strong>Health:</strong> tested for breed-specific diseases (HCM in Maine Coons, PKD in Persians, etc.).</li>
+<li><strong>Conformation:</strong> correct for the breed standard - a good queen produces good kittens.</li>
+<li><strong>Temperament:</strong> calm, friendly, not aggressive. Aggression is heritable.</li>
+<li><strong>Pedigree:</strong> registered, known lineage, no hereditary defects in the line.</li>
+<li><strong>Reproductive history:</strong> has she kindled successfully? Any complications?</li>
+<li><strong>Body condition:</strong> fit, not fat, well-muscled, healthy coat.</li>
+<li><strong>Vaccination status:</strong> up to date (FVRCP, rabies).</li>
+<li><strong>FeLV/FIV negative:</strong> critical for a breeding cattery.</li>
+</ul>
+<h2>Choosing a stud male</h2>
+<ul>
+<li><strong>Proven producer:</strong> has he sired healthy litters before?</li>
+<li><strong>Health clearances:</strong> HCM screening, DNA tests, FeLV/FIV negative.</li>
+<li><strong>Temperament:</strong> confident, calm, willing, not aggressive.</li>
+<li><strong>Conformation:</strong> excellent - he influences 50% of every litter.</li>
+<li><strong>Pedigree:</strong> unrelated to your queen for genetic diversity.</li>
+<li><strong>Age:</strong> 12 months to 8 years is peak fertility.</li>
+</ul>
+<p>If you don't own a stud male, you can use artificial insemination from chilled or frozen semen, or pay a stud fee to a proven male. Stud fees typically run $200-1,500.</p>
+<h2>Buying stock - where</h2>
+<table>
+<tr><th>Source</th><th>Quality</th><th>Cost</th><th>Best for</th></tr>
+<tr><td>Registered cattery</td><td>Excellent, health tested</td><td>High</td><td>Show and breeding lines</td></tr>
+<tr><td>Reputable breeder</td><td>Good, health tested</td><td>Medium-high</td><td>Family pet market</td></tr>
+<tr><td>Private sale</td><td>Variable, often no papers</td><td>Low</td><td>Pets, no pedigree focus</td></tr>
+<tr><td>Import</td><td>Excellent, elite genetics</td><td>Very high</td><td>Top show lines</td></tr>
+<tr><td>Rescue / rehome</td><td>Variable</td><td>Low</td><td>Pets only, not breeding</td></tr>
+</table>
+<div class="warn"><strong>Never breed from a cat without health clearances.</strong> HCM, PKD, and other genetic diseases pass to offspring. Testing costs $50-300 per test but saves thousands in vet bills and reputation damage.</div>
+<h2>Breeds to avoid for beginners</h2>
+<ul>
+<li><strong>Wild hybrids first generations</strong> (F1-F3 Savannah, early Bengal) - legal issues, difficult to handle</li>
+<li><strong>Scottish Fold</strong> - the fold gene causes arthritis in many cats</li>
+<li><strong>Munchkin</strong> - dwarf gene causes joint and mobility problems</li>
+<li><strong>Brachycephalic Persians</strong> - breathing and eye issues, high c-section rates</li>
+<li><strong>Rare or banned breeds</strong> in your area</li>
+</ul>
+<div class="callout"><strong>The breed rule:</strong> Pick one breed and stick with it for 5 years. Become known for that breed. Reputation sells kittens - not variety.</div>
+<div class="good"><strong>Practical exercise 2:</strong> Contact 3 breeders of your chosen breed. Ask about health testing, pedigree, and kitten prices. Attend a cat club event if there is one nearby.</div>
+<h2>Quiz</h2>
+<ol>
+<li>What is the correct age to breed a queen for the first time?</li>
+<li>What is the stud fee range for a proven male?</li>
+<li>Why should you never breed from a cat without health clearances?</li>
+</ol>
+<div class="nav"><a href="cat-breeding-module-1.html">← Module 1</a> <a href="cat-breeding-module-3.html">Module 3 →</a></div>
+</main>
+<footer><a href="index.html">Home</a> · <a href="cat-breeding-course.html">Course home</a> · <a href="support-us.html">Support</a><br>© rise AFRICA skills · all@riseafricaskills.com</footer>
+<script src="/paywall.js"></script>
+<!-- REVENUE MODULE START -->
+<section style="max-width:960px;margin:40px auto;padding:20px;font-family:system-ui,sans-serif;line-height:1.6;color:#222">
+
+<hr style="border:none;border-top:3px solid #f9a825;margin:40px 0">
+
+<h2 style="color:#b8860b;font-size:1.4rem">Tools, Certificate &amp; Support</h2>
+
+<h3 style="color:#2a7">1. Recommended Tools for This Course</h3>
+<p style="font-size:.9rem">These tools will improve your results. Buy from local suppliers where possible. Links marked "affiliate" earn us a small commission at no extra cost to you.</p>
+<ul style="font-size:.9rem">
+<li style='margin:.4rem 0'>Digital scale — <a href='https://www.amazon.com/s?k=Digital+scale&tag=YOUR-REAL-AMAZON-ID' target='_blank' rel='noopener sponsored' style='color:#2a7'>Check price</a> <span style='font-size:.75rem;color:#888'>(affiliate link)</span></li>
+<li style='margin:.4rem 0'>Record book — <a href='https://www.amazon.com/s?k=Record+book&tag=YOUR-REAL-AMAZON-ID' target='_blank' rel='noopener sponsored' style='color:#2a7'>Check price</a> <span style='font-size:.75rem;color:#888'>(affiliate link)</span></li>
+<li style='margin:.4rem 0'>Measuring tools — <a href='https://www.amazon.com/s?k=Measuring+tools&tag=YOUR-REAL-AMAZON-ID' target='_blank' rel='noopener sponsored' style='color:#2a7'>Check price</a> <span style='font-size:.75rem;color:#888'>(affiliate link)</span></li>
+<li style='margin:.4rem 0'>Safety equipment — <a href='https://www.amazon.com/s?k=Safety+equipment&tag=YOUR-REAL-AMAZON-ID' target='_blank' rel='noopener sponsored' style='color:#2a7'>Check price</a> <span style='font-size:.75rem;color:#888'>(affiliate link)</span></li>
+</ul>
+
+<h3 style="color:#2a7">2. Get Your Certificate of Completion</h3>
+<div style="background:#e8f5e9;border-left:4px solid #2a7;padding:16px;border-radius:6px;margin:16px 0">
+<p style="margin:0 0 8px"><strong>Finish all 12 modules and pass the final quiz to earn a rise AFRICA skills Certificate.</strong></p>
+<p style="margin:0;font-size:.9rem">Show it to buyers, lenders, and employers. Printed and digital versions available.</p>
+<p style="margin:10px 0 0;font-size:.85rem">Request via WhatsApp: <a href="https://wa.me/263773001353" target="_blank" rel="noopener" style="color:#2a7">+263 77 688 1941</a></p>
+</div>
+
+<h3 style="color:#2a7">3. Find a Local Supplier</h3>
+<p style="font-size:.9rem">We are building a directory of vetted local suppliers for African farmers. If you supply tools, feed, or equipment, contact us to be listed here.</p>
+<p style="font-size:.85rem">Contact: <a href="https://wa.me/263773001353" target="_blank" rel="noopener" style="color:#2a7">WhatsApp +263 77 688 1941</a></p>
+
+<h3 style="color:#2a7">4. Book a Consultation</h3>
+<div style="background:#e3f2fd;border-left:4px solid #1976d2;padding:16px;border-radius:6px;margin:16px 0">
+<p style="margin:0 0 8px"><strong>Need one-on-one help?</strong></p>
+<p style="margin:0;font-size:.9rem">Book a 30-minute consultation with a specialist. Custom profit plan, disease prevention checklist, and market strategy.</p>
+<p style="margin:10px 0 0;font-size:.85rem">Book via WhatsApp: <a href="https://wa.me/263773001353" target="_blank" rel="noopener" style="color:#1976d2">+263 77 688 1941</a></p>
+</div>
+
+<h3 style="color:#2a7">5. Support This Course</h3>
+<p style="font-size:.9rem">rise AFRICA skills is free for everyone. If this course helped you, consider supporting us so we can keep creating free content.</p>
+<p style="font-size:.85rem"><a href="https://riseafricaskills.com/support.html" style="color:#2a7">Support Us →</a></p>
+
+<p style="font-size:.78rem;color:#777;margin-top:24px;border-top:1px solid #e0e0e0;padding-top:12px">
+Affiliate links: We earn a small commission if you buy through these links. This does not affect the price you pay. All recommendations are based on practical usefulness, not commission rates.
+</p>
+
+</section>
+<!-- REVENUE MODULE END -->
+</body>
+</html>

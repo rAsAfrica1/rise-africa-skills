@@ -1,0 +1,319 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 8 — Lighting, Harvesting and Crop Scheduling | Mushroom House — Brick</title>
+<style>
+:root{--green:#2e7d32;--dark:#1b3a1f;--sand:#f6f3ea;--line:#d8d2c2;--amber:#e8a33d;--red:#b3261e;--blue:#1f5f8b}
+*{box-sizing:border-box}
+body{margin:0;font-family:Georgia,'Times New Roman',serif;line-height:1.65;color:#232323;background:var(--sand)}
+header{background:var(--dark);color:#fff;padding:30px 20px}
+header .wrap{max-width:960px;margin:0 auto}
+header .kicker{font-family:system-ui,sans-serif;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:#a5d6a7;margin:0 0 6px}
+header h1{margin:0;font-size:1.9rem;line-height:1.2}
+header p{margin:8px 0 0;color:#cfe3d0;font-size:.95rem}
+nav.crumbs{background:#fff;border-bottom:1px solid var(--line);padding:10px 20px;font-family:system-ui,sans-serif;font-size:.85rem}
+nav.crumbs .wrap{max-width:960px;margin:0 auto}
+nav.crumbs a{color:var(--green);text-decoration:none}
+main{max-width:960px;margin:0 auto;padding:28px 20px 60px}
+h2{color:var(--dark);border-bottom:2px solid var(--line);padding-bottom:6px;margin-top:38px;font-size:1.35rem}
+h3{color:var(--green);margin-top:26px;font-size:1.1rem}
+p,li{font-size:1rem}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-family:system-ui,sans-serif;font-size:.9rem;background:#fff}
+th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+th{background:var(--dark);color:#fff;font-weight:600}
+tbody tr:nth-child(even){background:#fbfaf5}
+.box{background:#fff;border:1px solid var(--line);border-left:5px solid var(--green);padding:14px 18px;margin:20px 0;border-radius:3px}
+.box.warn{border-left-color:var(--red)}
+.box.tip{border-left-color:var(--amber)}
+.box.calc{border-left-color:var(--blue);font-family:system-ui,sans-serif;font-size:.92rem}
+.box h4{margin:0 0 8px;font-family:system-ui,sans-serif;font-size:.95rem;text-transform:uppercase;letter-spacing:.06em;color:var(--dark)}
+.calc code{background:#eef3f7;padding:1px 5px;border-radius:3px;font-size:.88rem}
+figure{margin:26px 0;background:#fff;border:1px solid var(--line);padding:16px;border-radius:3px}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-family:system-ui,sans-serif;font-size:.83rem;color:#555;margin-top:10px;text-align:center}
+ol.steps{counter-reset:s;list-style:none;padding-left:0}
+ol.steps>li{counter-increment:s;position:relative;padding-left:44px;margin-bottom:14px}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:0;width:30px;height:30px;background:var(--green);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;font-weight:700;font-size:.9rem}
+.assign{background:#fff8e7;border:1px dashed var(--amber);padding:18px 22px;border-radius:4px;margin-top:30px}
+.assign h2{margin-top:0;border:none;color:#8a5a00}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:44px;padding-top:22px;border-top:1px solid var(--line);flex-wrap:wrap}
+.btn{display:inline-block;background:var(--green);color:#fff;text-decoration:none;padding:10px 16px;border-radius:4px;font-family:system-ui,sans-serif;font-size:.88rem}
+.btn.alt{background:#fff;color:var(--green);border:1px solid var(--green)}
+.btn:hover{opacity:.9}
+footer{background:var(--dark);color:#a5d6a7;text-align:center;padding:22px;font-family:system-ui,sans-serif;font-size:.82rem}
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+<p class="kicker">Rise Africa Skills · Mushroom House — Brick</p>
+<h1>Module 8 — Lighting, Harvesting and Crop Scheduling</h1>
+<p>Light for pinning, hands for picking, and a calendar that keeps mushrooms on the shelf every week.</p>
+</div></header>
+
+<nav class="crumbs"><div class="wrap">
+<a href="index.html">Home</a> › <a href="mushroom-house-brick.html">Mushroom House — Brick</a> › Module 8
+</div></nav>
+
+<main>
+
+<h2>Learning outcomes</h2>
+<ul>
+<li>Set light intensity and photoperiod correctly for your species and stage.</li>
+<li>Harvest at the right moment, by the right method, for maximum yield and shelf life.</li>
+<li>Manage the between-flush period to set up the next flush.</li>
+<li>Build a staggered crop schedule that delivers a steady weekly harvest.</li>
+<li>Handle, cool and pack mushrooms so they reach the customer in good condition.</li>
+<li>Keep records that show yield per bag and cost per kg.</li>
+</ul>
+
+<h2>1. Light — how much, for how long</h2>
+<p>Mushrooms do not photosynthesise, but many species use light as a signal. Light tells the mycelium it has reached the surface and it is time to fruit. Too little light gives long stems and small caps. Too much light dries the surface and can inhibit pinning.</p>
+
+<table>
+<thead><tr><th>Species / stage</th><th>Light intensity</th><th>Photoperiod</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Oyster — spawn run</td><td>0–50 lux</td><td>Dark or dim</td><td>Colonisation is faster in the dark</td></tr>
+<tr><td>Oyster — pinning and fruiting</td><td>200–500 lux</td><td>12 h on / 12 h off</td><td>Light is essential for pinning; more light = darker caps and shorter stems</td></tr>
+<tr><td>Shiitake — fruiting</td><td>500–1 000 lux</td><td>12 h / 12 h</td><td>Needs more light for good cap colour and thick flesh</td></tr>
+<tr><td>Button / Agaricus</td><td>50–200 lux</td><td>12 h / 12 h</td><td>Tolerates and prefers lower light; direct light causes browning</td></tr>
+<tr><td>Enoki</td><td>Very low, 20–50 lux</td><td>8–10 h</td><td>High light gives short, dark, undesirable stems</td></tr>
+<tr><td>Milky / reishi</td><td>300–800 lux</td><td>12 h / 12 h</td><td>Reishi needs light for spore formation and colour</td></tr>
+</tbody>
+</table>
+
+<div class="box calc"><h4>How many light fittings do you need?</h4>
+<p>Target 300 lux at the bag surface for oysters.<br>
+A 20 W LED batten typically produces about 2 000 lumens spread over 4 m² of floor at 2 m height.<br>
+1 lux = 1 lumen / m².<br>
+300 lux needed = 300 lumens / m².<br>
+For a 40 m² growing room with bags on 3 tiers:<br>
+Floor area = 40 m². Effective bag area ≈ 3 × 40 = 120 m² of surfaces receiving light (but light is measured at the surface, not summed).</p>
+<p>Practical approach: fit LED battens along the aisles at 2.2 m height, spaced 2 m apart. Two rows of 10 fittings per 20 m of aisle. Measure with a lux meter app at the bag surface and adjust spacing until you read 250–350 lux. Do not guess.</p>
+</div>
+
+<div class="box tip"><h4>Measure, then adjust</h4>
+<p>A phone lux meter is not laboratory-grade, but it is consistent enough to compare positions in your own room. Walk the aisles with the phone at bag height and find the dark spots. Move or add fittings until every bag is within 100 lux of your target.</p></div>
+
+<h3>Lighting hardware</h3>
+<ul>
+<li>Use <strong>IP65 or better</strong> sealed LED fittings. Standard fittings fail within months in 90 % RH.</li>
+<li>Choose a <strong>neutral to cool white</strong> (4 000–6 500 K) — closer to daylight, good for pinning.</li>
+<li>Do not use coloured or full-spectrum "grow" lights. Mushrooms do not need them and they waste power.</li>
+<li>Fit lights on a timer, not on a manual switch. Consistency matters more than total hours.</li>
+<li>Position lights so they do not shine directly into open bags or into workers' eyes.</li>
+</ul>
+
+<h2>2. Harvesting</h2>
+<p>Harvest timing decides shelf life. A mushroom picked too late has opened spores, loses water fast, and bruises in transit. Picked too early it is small and light for its substrate cost.</p>
+
+<table>
+<thead><tr><th>Species</th><th>Harvest signal</th><th>Method</th><th>Typical yield per 5 kg bag</th></tr></thead>
+<tbody>
+<tr><td>Oyster</td><td>Cap fully formed but edge still slightly curled; before spores release</td><td>Twist and pull the whole cluster; trim base with a clean knife</td><td>1.2–1.8 kg over 3 flushes</td></tr>
+<tr><td>Shiitake</td><td>Cap 70–90 % open; edge still inrolled</td><td>Cut at the base with a knife; do not pull</td><td>0.8–1.2 kg over 3–4 flushes</td></tr>
+<tr><td>Button / Agaricus</td><td>Cap closed or just opening depending on market</td><td>Twist and pull; trim the base</td><td>Varies — grown on compost beds</td></tr>
+<tr><td>Milky</td><td>Cap 3–6 cm, flat, before heavy spore drop</td><td>Cut at the base</td><td>0.5–0.9 kg over 2–3 flushes</td></tr>
+<tr><td>Reishi</td><td>Cap edge white and still growing; stop before sporulation</td><td>Cut the whole stipe</td><td>0.2–0.4 kg per block (dried)</td></tr>
+</tbody>
+</table>
+
+<h3>Harvest technique</h3>
+<ol class="steps">
+<li><strong>Harvest before the room is misted.</strong> Dry caps store longer and bruise less.</li>
+<li><strong>Twist and pull clusters whole</strong> — do not cut individual mushrooms from a cluster. Pull the whole cluster cleanly from the substrate.</li>
+<li><strong>Trim the base</strong> with a clean sharp knife or scissors. Remove any substrate attached.</li>
+<li><strong>Place in a clean crate</strong> — do not overfill; the mushrooms will bruise themselves under their own weight.</li>
+<li><strong>Move to the cool room immediately.</strong> Every hour at room temperature costs shelf life.</li>
+<li><strong>Do not wash.</strong> Mushrooms are like sponges. Brush off substrate with a soft brush instead.</li>
+</ol>
+
+<div class="box warn"><h4>Spore drop is a health hazard</h4>
+<p>Oyster mushrooms release millions of spores at maturity. In a poorly ventilated room this is a respiratory hazard for workers — and it coats every surface in the room. Wear an N95 mask when harvesting mature oysters, harvest before full spore release, and ventilate the room before and after harvest.</p></div>
+
+<h2>3. Between-flush management</h2>
+<p>After a flush, the substrate is depleted and the surface is exposed. What you do in the next 5–10 days decides how good the next flush is.</p>
+
+<table>
+<thead><tr><th>Step</th><th>Timing</th><th>Action</th></tr></thead>
+<tbody>
+<tr><td>Clean the surface</td><td>Immediately after harvest</td><td>Remove all aborted pins and substrate fragments — they rot and invite contamination</td></tr>
+<tr><td>Reduce humidity</td><td>Days 1–3 after harvest</td><td>RH 80–85 %, less misting — lets the surface dry and discourages mould</td></tr>
+<tr><td>Lower temperature slightly</td><td>Days 1–3</td><td>2–3 °C below fruiting temperature; helps the mycelium recover</td></tr>
+<tr><td>CO₂ drop</td><td>Days 1–3</td><td>Increase air exchange to drop CO₂ below 800 ppm — this is a pinning trigger</td></tr>
+<tr><td>Rest, then re-trigger</td><td>Days 3–5</td><td>Return to fruiting conditions: cooler, high humidity, high air exchange, light</td></tr>
+<tr><td>Second flush pins</td><td>Days 5–10</td><td>Wait for pinning, then return to standard fruiting conditions</td></tr>
+</tbody>
+</table>
+
+<div class="box calc"><h4>Yield distribution across flushes</h4>
+<p>Typical oyster on a 5 kg bag, total 1.5 kg over 3 flushes:<br>
+<strong>Flush 1:</strong> 0.75 kg (50 %)<br>
+<strong>Flush 2:</strong> 0.50 kg (33 %)<br>
+<strong>Flush 3:</strong> 0.25 kg (17 %)<br>
+Then the bag is spent and should be removed, not left to attract pests and mould.</p>
+<p>Plan your schedule around flush 1 being the biggest. If your buyer needs consistent volume, stagger bags so a new batch enters flush 1 each week.</p>
+</div>
+
+<h2>4. Crop scheduling</h2>
+<p>Mushroom supply is lumpy by nature. Customers want the same amount every week. The answer is staggering — starting a new batch every week, so harvests overlap and average out.</p>
+
+<figure>
+<svg viewBox="0 0 620 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Staggered crop schedule showing weekly batches and overlapping flushes">
+<rect x="0" y="0" width="620" height="260" fill="#fff"/>
+<!-- week axis -->
+<line x1="60" y1="40" x2="600" y2="40" stroke="#1b3a1f" stroke-width="2"/>
+<text x="60" y="30" font-family="system-ui" font-size="9" fill="#555">Wk 1</text>
+<text x="130" y="30" font-family="system-ui" font-size="9" fill="#555">Wk 2</text>
+<text x="200" y="30" font-family="system-ui" font-size="9" fill="#555">Wk 3</text>
+<text x="270" y="30" font-family="system-ui" font-size="9" fill="#555">Wk 4</text>
+<text x="340" y="30" font-family="system-ui" font-size="9" fill="#555">Wk 5</text>
+<text x="410" y="30" font-family="system-ui" font-size="9" fill="#555">Wk 6</text>
+<text x="480" y="30" font-family="system-ui" font-size="9" fill="#555">Wk 7</text>
+<text x="550" y="30" font-family="system-ui" font-size="9" fill="#555">Wk 8</text>
+<!-- tick marks -->
+<g stroke="#1b3a1f"><line x1="60" y1="38" x2="60" y2="44"/><line x1="130" y1="38" x2="130" y2="44"/><line x1="200" y1="38" x2="200" y2="44"/><line x1="270" y1="38" x2="270" y2="44"/><line x1="340" y1="38" x2="340" y2="44"/><line x1="410" y1="38" x2="410" y2="44"/><line x1="480" y1="38" x2="480" y2="44"/><line x1="550" y1="38" x2="550" y2="44"/></g>
+<!-- batch 1 -->
+<rect x="60" y="55" width="105" height="18" fill="#e8f0e8" stroke="#1b3a1f"/>
+<text x="112" y="68" font-family="system-ui" font-size="8" text-anchor="middle">B1 colonise</text>
+<rect x="165" y="55" width="140" height="18" fill="#fdf1dc" stroke="#8a5a00"/>
+<text x="235" y="68" font-family="system-ui" font-size="8" text-anchor="middle">B1 flushes 1–3</text>
+<!-- batch 2 -->
+<rect x="130" y="80" width="105" height="18" fill="#e8f0e8" stroke="#1b3a1f"/>
+<text x="182" y="93" font-family="system-ui" font-size="8" text-anchor="middle">B2 colonise</text>
+<rect x="235" y="80" width="140" height="18" fill="#fdf1dc" stroke="#8a5a00"/>
+<text x="305" y="93" font-family="system-ui" font-size="8" text-anchor="middle">B2 flushes 1–3</text>
+<!-- batch 3 -->
+<rect x="200" y="105" width="105" height="18" fill="#e8f0e8" stroke="#1b3a1f"/>
+<text x="252" y="118" font-family="system-ui" font-size="8" text-anchor="middle">B3 colonise</text>
+<rect x="305" y="105" width="140" height="18" fill="#fdf1dc" stroke="#8a5a00"/>
+<text x="375" y="118" font-family="system-ui" font-size="8" text-anchor="middle">B3 flushes 1–3</text>
+<!-- batch 4 -->
+<rect x="270" y="130" width="105" height="18" fill="#e8f0e8" stroke="#1b3a1f"/>
+<text x="322" y="143" font-family="system-ui" font-size="8" text-anchor="middle">B4 colonise</text>
+<rect x="375" y="130" width="140" height="18" fill="#fdf1dc" stroke="#8a5a00"/>
+<text x="445" y="143" font-family="system-ui" font-size="8" text-anchor="middle">B4 flushes 1–3</text>
+<!-- output line -->
+<text x="60" y="185" font-family="system-ui" font-size="10" fill="#1b3a1f">Weekly harvest if each batch flushes over 2 weeks:</text>
+<g fill="#b3261e">
+<rect x="165" y="195" width="70" height="10"/><rect x="235" y="195" width="70" height="10"/>
+<rect x="305" y="195" width="70" height="10"/><rect x="375" y="195" width="70" height="10"/>
+<rect x="445" y="195" width="70" height="10"/>
+</g>
+<text x="165" y="222" font-family="system-ui" font-size="8" fill="#b3261e">continuous weekly supply — no gaps, no glut</text>
+<text x="60" y="248" font-family="system-ui" font-size="9" fill="#555">Each batch: 2 weeks colonisation + 2–3 weeks fruiting. Start a new batch every week.</text>
+</svg>
+<figcaption>Figure 1 — Staggered schedule. Four overlapping batches deliver mushrooms every week instead of a glut every three weeks.</figcaption>
+</figure>
+
+<h3>Scheduling arithmetic</h3>
+<div class="box calc"><h4>How many bags to start each week?</h4>
+<p>Target: 30 kg of mushrooms per week.<br>
+Yield per 5 kg bag over all flushes: 1.5 kg.<br>
+Number of bags per week = 30 / 1.5 = <strong>20 bags per week</strong>.</p>
+<p>Each bag occupies space for: 2 weeks colonisation + 3 weeks fruiting = <strong>5 weeks total</strong>.<br>
+Bags in the house at any time = 20 × 5 = <strong>100 bags</strong>.</p>
+<p>Using 0.12 m² per bag: 100 × 0.12 = <strong>12 m² of growing surface needed</strong>.<br>
+On 3-tier shelving, floor area = 12 / 3 = <strong>4 m² of shelving footprint</strong>.<br>
+With aisles and working space, that is roughly a <strong>10–12 m² growing room</strong>.</p>
+</div>
+
+<h3>Record sheet per batch</h3>
+<table>
+<thead><tr><th>Field</th><th>Example</th></tr></thead>
+<tbody>
+<tr><td>Batch code</td><td>250512-OY-B03</td></tr>
+<tr><td>Species</td><td>Oyster — Pleurotus ostreatus</td></tr>
+<tr><td>Substrate</td><td>Wheat straw + 5 % wheat bran</td></tr>
+<tr><td>Bag weight</td><td>5 kg wet</td></tr>
+<tr><td>Number of bags</td><td>20</td></tr>
+<tr><td>Inoculation date</td><td>12 May 2025</td></tr>
+<tr><td>Colonisation complete</td><td>26 May 2025 (14 days)</td></tr>
+<tr><td>First pins</td><td>30 May 2025</td></tr>
+<tr><td>Flush 1 harvest</td><td>2 June 2025 — 15.0 kg</td></tr>
+<tr><td>Flush 2 harvest</td><td>10 June 2025 — 9.8 kg</td></tr>
+<tr><td>Flush 3 harvest</td><td>17 June 2025 — 5.2 kg</td></tr>
+<tr><td>Total yield</td><td>30.0 kg (1.5 kg per bag)</td></tr>
+<tr><td>Biological efficiency</td><td>30 / 100 = 30 % of wet substrate weight</td></tr>
+<tr><td>Problems</td><td>Green mould on 2 bags at day 20; removed</td></tr>
+</tbody>
+</table>
+
+<div class="box calc"><h4>Biological efficiency — the number that matters</h4>
+<p>BE = (fresh mushroom weight / wet substrate weight) × 100 %<br>
+30 kg mushrooms from 100 kg wet substrate = <strong>30 % BE</strong>.</p>
+<p>Good commercial oyster growers reach 30–50 % BE. Below 20 % means something is wrong: contaminated substrate, poor spawn rate, wrong temperature, insufficient air exchange.</p>
+</div>
+
+<h2>5. Post-harvest handling</h2>
+<table>
+<thead><tr><th>Step</th><th>Timing</th><th>Method</th></tr></thead>
+<tbody>
+<tr><td>Cooling</td><td>Within 1 hour of harvest</td><td>2–4 °C cool room; spread in shallow crates so cold air reaches all mushrooms</td></tr>
+<tr><td>Grading</td><td>After cooling, before packing</td><td>Remove damaged, oversized or undersized; group by size for retail</td></tr>
+<tr><td>Packing</td><td>Cooled, in the cool room</td><td>Perforated punnets or paper bags — mushrooms need to breathe; sealed plastic sweats and rots them</td></tr>
+<tr><td>Storage</td><td>Until delivery</td><td>2–4 °C, 85–90 % RH, dark. Shelf life 5–10 days depending on species</td></tr>
+<tr><td>Delivery</td><td>Within 24 h of packing</td><td>Insulated boxes with ice packs; keep out of sun</td></tr>
+</tbody>
+</table>
+
+<div class="box warn"><h4>Never seal mushrooms in plastic</h4>
+<p>Mushrooms continue to respire after harvest. Sealed in a plastic bag they use up the oxygen, build up CO₂, sweat, and go slimy within a day. Perforated film, paper bags or open crates in the cool room — always breathable packaging.</p></div>
+
+<h2>6. Yield and cost per kg</h2>
+<div class="box calc"><h4>Cost per kg — worked example</h4>
+<p>Per 20-bag weekly batch (5 kg each = 100 kg wet substrate):<br>
+Substrate (straw + bran): <strong>18</strong><br>
+Spawn (10 % rate): <strong>22</strong><br>
+Bag and labour for prep: <strong>15</strong><br>
+Electricity (heat, light, air exchange): <strong>20</strong><br>
+Labour for harvest, pack, deliver: <strong>25</strong><br>
+Packaging and delivery: <strong>15</strong><br>
+<strong>Total cost = 115</strong></p>
+<p>Yield: 30 kg.<br>
+<strong>Cost per kg = 115 / 30 = 3.83</strong></p>
+<p>If you sell at 8 per kg, margin = (8 − 3.83) / 8 = 52 %.<br>
+If you sell at 6 per kg, margin = 36 %.</p>
+<p>Track this every batch. Rising cost per kg is the earliest warning of a yield problem.</p>
+</div>
+
+<h2>7. Common harvest and scheduling mistakes</h2>
+<table>
+<thead><tr><th>Mistake</th><th>Consequence</th><th>Fix</th></tr></thead>
+<tbody>
+<tr><td>Harvesting too late</td><td>Spore drop, weight loss, short shelf life, worker health risk</td><td>Check twice daily during flush; harvest at first sign of edge unrolling</td></tr>
+<tr><td>Starting all bags the same week</td><td>Glut one week, nothing the next; customer loses confidence</td><td>Stagger — start 1/5 of your bags each week</td></tr>
+<tr><td>Washing mushrooms</td><td>Short shelf life, slimy texture</td><td>Brush clean; never wash</td></tr>
+<tr><td>Sealing in plastic</td><td>Rapid spoilage</td><td>Perforated film, paper bags or open crates</td></tr>
+<tr><td>Leaving spent bags in the room</td><td>Mould, pests, contamination of the next crop</td><td>Remove spent bags the day the third flush ends</td></tr>
+<tr><td>No harvest records</td><td>Cannot tell which substrate, spawn rate or schedule is best</td><td>Keep a batch record sheet for every batch</td></tr>
+</tbody>
+</table>
+
+<div class="assign">
+<h2>Assignment 8</h2>
+<ol>
+<li>State the species you will grow. State the light intensity and photoperiod for spawn run and for fruiting.</li>
+<li>Calculate your lighting requirement for your growing room. State the number, type and spacing of fittings.</li>
+<li>State your harvest signal for your species and the exact method you will use.</li>
+<li>Write your between-flush routine for days 1–3 and days 3–10, with temperature, humidity and CO₂ targets.</li>
+<li>Calculate your weekly bag start number from your target weekly harvest and expected yield per bag. Show the arithmetic.</li>
+<li>Calculate the total bags in the house at any time and the growing surface needed. Compare with your Module 7 shelf capacity.</li>
+<li>Design a batch record sheet with at least 10 fields, and fill in one example batch.</li>
+<li>Calculate cost per kg for your operation. State your selling price and margin.</li>
+</ol>
+</div>
+
+<div class="pager">
+<a class="btn alt" href="mushroom-house-brick-module-7.html">← Module 7 — Shelving, Beds and Grow Bag Support</a>
+<a class="btn" href="mushroom-house-brick-module-9.html">Module 9 — Contamination Control and Sterile Technique →</a>
+</div>
+
+</main>
+<footer>Rise Africa Skills · Mushroom House — Brick · Module 8 of 12</footer>
+<script src="/paywall.js"></script>
+</body>
+</html>
+

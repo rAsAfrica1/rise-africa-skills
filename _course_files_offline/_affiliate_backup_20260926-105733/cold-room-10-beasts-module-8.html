@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Module 8 — Costing the Build and the Kill — cold-room-10-beasts</title>
+<style>
+:root{--ink:#1e293b;--ink-soft:#334155;--muted:#64748b;--brand:#2c3e50;--brand-soft:#eaeef2;--accent:#8a4a12;--gold:#c9a227;--line:#e2e0d8;--card:#fff;--warn-soft:#fdf5e0;--radius:12px}
+*{box-sizing:border-box}body{margin:0;font-family:Georgia,serif;background:#faf8f3;color:var(--ink);line-height:1.7;font-size:17px}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px}
+header.top{background:var(--ink);color:#f6f1e8;padding:14px 0}header.top .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;align-items:center}
+.brand{font-weight:700;font-size:15px}.brand span{color:#e8c65a}
+header.top nav a{color:#f6f1e8;text-decoration:none;font-size:13.5px;opacity:.85;margin-left:14px}
+.hero{background:#fff;border-bottom:1px solid var(--line);padding:38px 0 32px}
+.crumbs{font-size:13px;color:var(--muted);margin-bottom:12px}.crumbs a{color:var(--brand);text-decoration:none}
+.kicker{display:inline-block;background:var(--brand-soft);color:var(--brand);font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin:0 0 14px}
+.hero h1{font-size:32px;line-height:1.25;margin:0 0 14px}
+.hero .lead{color:var(--ink-soft);font-size:18px;margin:0 0 20px}
+.meta{display:flex;gap:14px;flex-wrap:wrap;font-size:13.5px;color:var(--muted)}
+.meta-chip{background:#f3efe8;border-radius:999px;padding:6px 14px}
+section.body{padding:32px 0}
+.lesson{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px 30px;margin:0 0 22px}
+.lesson-head{margin:0 0 4px;font-size:13px;color:var(--brand);font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.lesson h2{margin:6px 0 20px;font-size:24px;line-height:1.3}
+.objectives{background:var(--brand-soft);border-radius:10px;padding:16px 20px;margin:0 0 22px;font-size:15.5px}
+.objectives strong{display:block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.objectives ul{margin:0;padding-left:20px}
+.body p{margin:16px 0}.body h3{font-size:19px;margin:28px 0 8px;font-weight:700}
+.body ul,.body ol{margin:14px 0 14px 24px}.body li{margin:8px 0}
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px}
+th{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);background:#f3efe8;font-weight:700;font-size:14px}
+td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+.warn{background:rgba(231,76,60,.06);border-left:3px solid #c2513f;padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0}
+.warn strong{color:#c2513f}
+.good{background:rgba(39,174,96,.06);border-left:3px solid #2f7a3d;padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0}
+.good strong{color:#2f7a3d}
+.callout{background:rgba(201,162,39,.08);border-left:3px solid var(--gold);padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0}
+.callout strong{color:#8a6a12}
+.diagram{background:#f3efe8;border-radius:8px;padding:20px;font-family:'Courier New',monospace;font-size:14px;line-height:1.7;white-space:pre;overflow-x:auto;margin:18px 0;color:var(--ink-soft)}
+.quiz{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin:24px 0}
+.q{margin:18px 0}.q .qt{font-weight:600;margin:0 0 10px}
+.opts{list-style:none;padding:0;margin:0}.opts li{margin:0 0 8px}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:9px;padding:11px 14px;font:inherit;font-size:15.5px;cursor:pointer;color:var(--ink)}
+.opt:hover{border-color:var(--brand)}
+.opt.right{background:#e7f5e9;border-color:#2f7a3d}
+.opt.wrong{background:#fdeceb;border-color:#c2513f}
+.why{display:none;margin-top:10px;font-size:15px;background:#f3efe8;border-radius:8px;padding:12px 14px;color:var(--ink-soft)}
+.why.show{display:block}
+.capstone{background:var(--warn-soft);border:1px solid #eadfb8;border-radius:12px;padding:22px 24px;margin:24px 0}
+.capstone h3{margin:0 0 12px;font-size:17px;color:var(--accent)}
+.disclaim{background:#f3efe8;border-radius:10px;padding:16px 18px;font-size:14px;color:var(--ink-soft);margin-top:24px}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:32px;flex-wrap:wrap;padding-top:22px;border-top:1px solid var(--line)}
+.btn{display:inline-block;background:var(--brand);color:#fff;text-decoration:none;padding:12px 22px;border-radius:10px;font-weight:600}
+footer{background:var(--ink);color:#f6f1e8;text-align:center;padding:24px;font-size:13px;margin-top:40px}
+footer a{color:#e8c65a;text-decoration:none;margin:0 8px}
+@media(max-width:560px){.hero h1{font-size:25px}.lesson{padding:22px}}
+</style>
+</head><body>
+
+<header class="top"><div class="wrap"><div class="brand">rise <span>AFRICA</span> skills</div>
+<nav><a href="cold-room-10-beasts-course.html">All modules</a> <a href="index.html">Home</a></nav></div></header>
+<section class="hero"><div class="wrap">
+<div class="crumbs"><a href="cold-room-10-beasts-course.html">Course</a> / Module 8 of 12</div>
+<p class="kicker">Module 8</p>
+<h1>Costing the Build and the Kill</h1>
+<p class="lead">Two numbers decide whether your cold room business survives. The first is what it costs to build and run the room. The second is what it costs to put a kilogram of saleable meat on the shelf. Get both wrong and no price is high enough.</p>
+<div class="meta"><span class="meta-chip">Module 8 of 12</span><span class="meta-chip">Written method</span><span class="meta-chip">Knowledge check + capstone</span></div>
+<div class="objectives"><strong>By the end of this module you will be able to</strong><ul>
+<li>Build a complete capital cost sheet for a 10-beast cold room</li>
+<li>Calculate the running cost per month and per kg of meat chilled</li>
+<li>Work out the true cost of a kill day</li>
+<li>Set a meat price from cost, not from guessing</li>
+<li>Identify the three line items that most often blow the budget</li>
+<li>Produce a written cost model for your own cold room</li>
+</ul></div>
+</div></section>
+<section class="body"><div class="wrap">
+<div class="lesson"><p class="lesson-head">Lesson 8.1</p><h2>The capital cost sheet</h2>
+<div class="body">
+<p>Every item that exists once, and must be paid for before the first kill. Underestimate this and you run out of money before the room opens.</p>
+<table>
+<tr><th>Line</th><th>Indicative USD</th><th>Notes</th></tr>
+<tr><td>Site preparation and pad</td><td>500–1,500</td><td>Levelling, hardcore, slab</td></tr>
+<tr><td>Insulated panels (walls, ceiling, floor)</td><td>3,000–7,000</td><td>100 mm PUR, 40 m² walls + 20 m² ceiling</td></tr>
+<tr><td>Insulated door assembly</td><td>600–1,500</td><td>Panel door with gasket and safety release</td></tr>
+<tr><td>Vapour barrier and sealants</td><td>150–400</td><td>Polyethylene, tape, membranes</td></tr>
+<tr><td>Refrigeration unit (split system)</td><td>2,500–5,500</td><td>6–7 kW rated, installed</td></tr>
+<tr><td>Refrigerant pipework and controls</td><td>500–1,200</td><td>Includes controller and alarm</td></tr>
+<tr><td>Rails and hooks</td><td>400–900</td><td>Stainless or galvanised</td></tr>
+<tr><td>Floor drain and grease trap</td><td>300–700</td><td>Includes soakaway</td></tr>
+<tr><td>Internal lighting and controls</td><td>200–500</td><td>IP65 fixtures, door switch</td></tr>
+<tr><td>Backup power (generator or battery)</td><td>2,500–8,000</td><td>See Module 6</td></tr>
+<tr><td>Electrical installation and changeover</td><td>600–1,500</td><td>Licensed electrician</td></tr>
+<tr><td>Water supply and wash-down point</td><td>300–800</td><td>Pipe, tap, backflow preventer</td></tr>
+<tr><td>Kill floor slab (if separate)</td><td>400–1,200</td><td>Optional but strongly recommended</td></tr>
+<tr><td>Commissioning and refrigerant charge</td><td>200–600</td><td>Never skip</td></tr>
+<tr><td>Health licence and initial inspection</td><td>100–400</td><td>Varies by district</td></tr>
+<tr><td>Contingency (15%)</td><td>1,700–4,500</td><td>Non-optional</td></tr>
+<tr><td style="font-weight:700">Total capital</td><td style="font-weight:700">$13,500 – $34,500</td><td>—</td></tr>
+</table>
+<div class="warn"><strong>Add 15–25% contingency.</strong> First-time builders always underestimate. If you build with no contingency, you will stop half-finished with no money to continue.</div>
+</div></div>
+
+<div class="lesson"><p class="lesson-head">Lesson 8.2</p><h2>The running cost per month</h2>
+<div class="body">
+<p>The monthly running cost is what you must cover every month, whether or not you kill.</p>
+<table>
+<tr><th>Line</th><th>Indicative USD/month</th><th>Notes</th></tr>
+<tr><td>Electricity (grid)</td><td>80–250</td><td>Depends on tariff, hours of sun, panel quality</td></tr>
+<tr><td>Generator fuel (if used)</td><td>150–400</td><td>Only if outages are frequent</td></tr>
+<tr><td>Refrigerant top-up (amortised)</td><td>15–40</td><td>$200–500 every 12–18 months</td></tr>
+<tr><td>Door gasket replacement (amortised)</td><td>10–25</td><td>$150–300 every 12–18 months</td></tr>
+<tr><td>Cleaning chemicals</td><td>20–60</td><td>Detergent and sanitiser</td></tr>
+<tr><td>Pest control</td><td>10–40</td><td>Bait stations, occasional spray</td></tr>
+<tr><td>Water</td><td>15–50</td><td>If billed</td></tr>
+<tr><td>Maintenance and small repairs</td><td>40–120</td><td>Ongoing</td></tr>
+<tr><td>Insurance (optional)</td><td>50–200</td><td>If available</td></tr>
+<tr><td>Health licence renewal</td><td>10–40</td><td>Annual fee, amortised monthly</td></tr>
+<tr><td style="font-weight:700">Total monthly running cost</td><td style="font-weight:700">$400 – $1,300</td><td>—</td></tr>
+</table>
+<p>The single largest variable is grid reliability. A room that runs mostly off the grid pays $80–250. A room that runs mostly off a diesel generator pays $150–400 just in fuel.</p>
+</div></div>
+
+<div class="lesson"><p class="lesson-head">Lesson 8.3</p><h2>The cost per kill day</h2>
+<div class="body">
+<p>A kill day is a discrete production event. Every kill day has its own cost that must be recovered from the meat sold from that kill.</p>
+<h3>Direct costs per kill day (10 beasts)</h3>
+<table>
+<tr><th>Line</th><th>Indicative USD</th></tr>
+<tr><td>Live animals (10 × 400 kg × $2.00/kg)</td><td>8,000</td></tr>
+<tr><td>Transport of live animals</td><td>200–500</td></tr>
+<tr><td>Slaughter labour (4 people × 8 hours)</td><td>200–400</td></tr>
+<tr><td>Water and consumables</td><td>30–60</td></tr>
+<tr><td>Refrigeration pull-down (kill day share of running cost)</td><td>40–100</td></tr>
+<tr><td>Cleaning and sanitising</td><td>15–30</td></tr>
+<tr><td>Delivery to buyer</td><td>40–100</td></tr>
+<tr><td style="font-weight:700">Direct cost per kill day</td><td style="font-weight:700">$8,525 – $9,190</td></tr>
+</table>
+
+<h3>Saleable weight per kill day</h3>
+<ul>
+<li>10 beasts × 250 kg carcass = 2,500 kg carcass weight</li>
+<li>Boneless yield 57%: 1,425 kg saleable boneless meat</li>
+<li>Plus offal, bones, fat: another 300–400 kg of secondary product</li>
+<li>Total saleable weight: ~1,750 kg</li>
+</ul>
+
+<h3>Cost per saleable kg</h3>
+<p>$8,800 ÷ 1,750 = <strong>$5.03/kg</strong>. That is the cost of the meat as it leaves the cold room, before any profit.</p>
+<div class="callout"><strong>The reality check:</strong> if you paid $2.00/kg live and your cost per saleable kg is $5.03, then every kilogram you sell below $5.03 is a loss. This is the number that most small butchers never calculate — and it is the number that decides whether the business makes money.</div>
+</div></div>
+
+<div class="lesson"><p class="lesson-head">Lesson 8.4</p><h2>Pricing from cost, not from hope</h2>
+<div class="body">
+<h3>The three costs</h3>
+<ul>
+<li><strong>Direct cost per kg (kill day)</strong> — $5.03/kg in the example</li>
+<li><strong>Overhead cost per kg</strong> — monthly running cost ÷ monthly kg sold. At $800/month and 7,000 kg/month = $0.11/kg.</li>
+<li><strong>Total cost per kg</strong> — $5.14/kg in the example</li>
+</ul>
+<h3>The three price levels</h3>
+<ul>
+<li><strong>Break-even price</strong> — $5.14/kg. Below this, you lose money.</li>
+<li><strong>Target price</strong> — 15–25% above break-even for the standard product. $5.90–6.40/kg.</li>
+<li><strong>Premium price</strong> — 40–60% above break-even for branded, packaged product sold to hotels and supermarkets. $7.20–8.20/kg.</li>
+</ul>
+<h3>Why most butchers lose money without knowing</h3>
+<p>They look at the price they paid for the animal. They think "I paid $2.00/kg, I sell at $6.00/kg, I make $4.00/kg." But they never did the division. In reality:</p>
+<ul>
+<li>Dressing loss: 45% of live weight is not saleable meat</li>
+<li>Chilling shrink: another 4%</li>
+<li>Boning loss: another 30–40%</li>
+<li>Offal and bones sell at lower price or not at all</li>
+</ul>
+<p>The true cost is 2.5–3.5× the live purchase price. Every butcher who has not done this arithmetic is pricing against the wrong number.</p>
+<div class="good"><strong>The pricing rule:</strong> always price from cost per saleable kg, not from live purchase price per kg. These two numbers differ by a factor of three, and confusing them is the most common cause of failed butcheries.</div>
+</div></div>
+
+<div class="lesson"><p class="lesson-head">Lesson 8.5</p><h2>The three budget killers</h2>
+<div class="body">
+<h3>1. Underestimating the envelope</h3>
+<p>Panels, door, vapour barrier, floor insulation. This line is 40–50% of the capital cost, and it is the one most often under-quoted. A cheap envelope means a high running cost forever.</p>
+<h3>2. Ignoring the backup power cost</h3>
+<p>Backup power is 20–30% of the capital cost in unreliable-grid areas, and 30–60% of the monthly running cost in generator-only sites. Business plans that leave this out show a profit that does not exist.</p>
+<h3>3. Assuming full yield</h3>
+<p>Small butchers assume they will sell every kilogram. Real-world: 5–15% is lost to trim, waste, discount, spoilage, theft. Price to cover 90% of theoretical yield, not 100%.</p>
+</div></div>
+<div class="quiz">
+<h3>Knowledge check — Module 8</h3>
+<div class="q"><p class="qt">1. What is the correct contingency percentage for a cold room capital budget?</p>
+<ul class="opts"><li><button class="opt" onclick="ans(this,0)">0%</button></li><li><button class="opt" onclick="ans(this,1)">5%</button></li><li><button class="opt" onclick="ans(this,2)">15–25%</button></li><li><button class="opt" onclick="ans(this,3)">50%</button></li></ul>
+<div class="why"><strong>Correct: 15–25%.</strong> First-time builders always underestimate. Budget with a real contingency or run out of money halfway.</div></div>
+<div class="q"><p class="qt">2. What is the largest variable in monthly running cost?</p>
+<ul class="opts"><li><button class="opt" onclick="ans(this,0)">Cleaning chemicals</button></li><li><button class="opt" onclick="ans(this,1)">Electricity or generator fuel — the grid's reliability decides the cost</button></li><li><button class="opt" onclick="ans(this,2)">Pest control</button></li><li><button class="opt" onclick="ans(this,3)">Door gaskets</button></li></ul>
+<div class="why"><strong>Correct: power cost.</strong> A grid-reliant room pays $80–250/month. A generator-reliant room pays $150–400 just in fuel.</div></div>
+<div class="q"><p class="qt">3. Why does cost per saleable kg come out at 2.5–3.5× the live purchase price?</p>
+<ul class="opts"><li><button class="opt" onclick="ans(this,0)">Because butcheries are expensive</button></li><li><button class="opt" onclick="ans(this,1)">Because of dressing loss, chilling shrink, boning loss, and offal/bone not selling as prime cuts</button></li><li><button class="opt" onclick="ans(this,2)">Because of taxes</button></li><li><button class="opt" onclick="ans(this,3)">Because of refrigeration cost only</button></li></ul>
+<div class="why"><strong>Correct: multiple losses.</strong> Dressing (55% yield), chilling (96%), boning (57%) — combined, only 30–40% of live weight becomes saleable prime meat.</div></div>
+<div class="q"><p class="qt">4. What is the correct pricing approach?</p>
+<ul class="opts"><li><button class="opt" onclick="ans(this,0)">Match the neighbouring butchery's price</button></li><li><button class="opt" onclick="ans(this,1)">Price from cost per saleable kg, plus overhead, plus a target margin</button></li><li><button class="opt" onclick="ans(this,2)">Whatever the market will bear</button></li><li><button class="opt" onclick="ans(this,3)">Double the purchase price</button></li></ul>
+<div class="why"><strong>Correct: cost-based pricing.</strong> Matching neighbours means matching their mistakes. Guessing means losing money without knowing.</div></div>
+<div class="q"><p class="qt">5. What yield percentage should you price to cover?</p>
+<ul class="opts"><li><button class="opt" onclick="ans(this,0)">100%</button></li><li><button class="opt" onclick="ans(this,1)">95%</button></li><li><button class="opt" onclick="ans(this,2)">~85–90% — real-world losses of 5–15% should be built in</button></li><li><button class="opt" onclick="ans(this,3)">50%</button></li></ul>
+<div class="why"><strong>Correct: 85–90%.</strong> Trim, waste, discount, spoilage, theft — every butchery loses 5–15%. Price to cover the real yield, not the theoretical one.</div></div>
+</div>
+<div class="capstone">
+<h3>Practical assignment — Module 8</h3>
+<p>Build a full cost model for your cold room.</p>
+<ol>
+<li>Your complete capital cost sheet, with each line filled by a real supplier quotation (or an indicative figure clearly marked). Include 15% contingency.</li>
+<li>Your monthly running cost, with each line estimated from real local prices.</li>
+<li>Your direct cost per kill day, using your local live animal price and your slaughter cost.</li>
+<li>Your cost per saleable kg, with the arithmetic shown (dressing %, shrink %, boning %).</li>
+<li>Your break-even price, target price, and premium price.</li>
+<li>A comparison against two local butchers' current prices.</li>
+<li>One paragraph (150 words) stating whether your break-even price is above or below the local market price, and what that means for the business.</li>
+</ol>
+<p>Marks are weighted toward points 4 and 7. The cost per saleable kg is the single most important number; the paragraph is where you decide whether the business works.</p>
+</div>
+<div class="pager"><a class="btn" href="cold-room-10-beasts-module-7.html">← Module 7 — Hygiene and HACCP</a> <a class="btn" href="cold-room-10-beasts-module-9.html">Module 9 — Commissioning and Loading →</a></div>
+<div class="disclaim">All figures are indicative and must be verified with three local quotations and the relevant authority before money is spent. This module teaches general principles and does not replace a qualified professional.</div>
+</div></section>
+<footer><a href="index.html">Home</a> · <a href="cold-room-10-beasts-course.html">Course home</a><br>© rise AFRICA skills · all@riseafricaskills.com</footer>
+<script>function ans(b,i){var o=b.parentElement.parentElement.querySelectorAll(".opt");var w=b.parentElement.parentElement.parentElement.querySelector(".why");for(var j=0;j<o.length;j++){o[j].classList.remove("right","wrong");}if(i===0){b.classList.add("right");}else{b.classList.add("wrong");}w.classList.add("show");}</script>
+<script src="/paywall.js"></script>
+<!-- REVENUE MODULE START -->
+<section style="max-width:960px;margin:40px auto;padding:20px;font-family:system-ui,sans-serif;line-height:1.6;color:#222">
+
+<hr style="border:none;border-top:3px solid #f9a825;margin:40px 0">
+
+<h2 style="color:#b8860b;font-size:1.4rem">Tools, Certificate &amp; Support</h2>
+
+<h3 style="color:#2a7">1. Recommended Tools for This Course</h3>
+<p style="font-size:.9rem">These tools will improve your results. Buy from local suppliers where possible. Links marked "affiliate" earn us a small commission at no extra cost to you.</p>
+<ul style="font-size:.9rem">
+<li style='margin:.4rem 0'>Digital scale — <a href='https://www.amazon.com/s?k=Digital+scale&tag=YOUR-REAL-AMAZON-ID' target='_blank' rel='noopener sponsored' style='color:#2a7'>Check price</a> <span style='font-size:.75rem;color:#888'>(affiliate link)</span></li>
+<li style='margin:.4rem 0'>Record book — <a href='https://www.amazon.com/s?k=Record+book&tag=YOUR-REAL-AMAZON-ID' target='_blank' rel='noopener sponsored' style='color:#2a7'>Check price</a> <span style='font-size:.75rem;color:#888'>(affiliate link)</span></li>
+<li style='margin:.4rem 0'>Measuring tools — <a href='https://www.amazon.com/s?k=Measuring+tools&tag=YOUR-REAL-AMAZON-ID' target='_blank' rel='noopener sponsored' style='color:#2a7'>Check price</a> <span style='font-size:.75rem;color:#888'>(affiliate link)</span></li>
+<li style='margin:.4rem 0'>Safety equipment — <a href='https://www.amazon.com/s?k=Safety+equipment&tag=YOUR-REAL-AMAZON-ID' target='_blank' rel='noopener sponsored' style='color:#2a7'>Check price</a> <span style='font-size:.75rem;color:#888'>(affiliate link)</span></li>
+</ul>
+
+<h3 style="color:#2a7">2. Get Your Certificate of Completion</h3>
+<div style="background:#e8f5e9;border-left:4px solid #2a7;padding:16px;border-radius:6px;margin:16px 0">
+<p style="margin:0 0 8px"><strong>Finish all 12 modules and pass the final quiz to earn a rise AFRICA skills Certificate.</strong></p>
+<p style="margin:0;font-size:.9rem">Show it to buyers, lenders, and employers. Printed and digital versions available.</p>
+<p style="margin:10px 0 0;font-size:.85rem">Request via WhatsApp: <a href="https://wa.me/263773001353" target="_blank" rel="noopener" style="color:#2a7">+263 77 688 1941</a></p>
+</div>
+
+<h3 style="color:#2a7">3. Find a Local Supplier</h3>
+<p style="font-size:.9rem">We are building a directory of vetted local suppliers for African farmers. If you supply tools, feed, or equipment, contact us to be listed here.</p>
+<p style="font-size:.85rem">Contact: <a href="https://wa.me/263773001353" target="_blank" rel="noopener" style="color:#2a7">WhatsApp +263 77 688 1941</a></p>
+
+<h3 style="color:#2a7">4. Book a Consultation</h3>
+<div style="background:#e3f2fd;border-left:4px solid #1976d2;padding:16px;border-radius:6px;margin:16px 0">
+<p style="margin:0 0 8px"><strong>Need one-on-one help?</strong></p>
+<p style="margin:0;font-size:.9rem">Book a 30-minute consultation with a specialist. Custom profit plan, disease prevention checklist, and market strategy.</p>
+<p style="margin:10px 0 0;font-size:.85rem">Book via WhatsApp: <a href="https://wa.me/263773001353" target="_blank" rel="noopener" style="color:#1976d2">+263 77 688 1941</a></p>
+</div>
+
+<h3 style="color:#2a7">5. Support This Course</h3>
+<p style="font-size:.9rem">rise AFRICA skills is free for everyone. If this course helped you, consider supporting us so we can keep creating free content.</p>
+<p style="font-size:.85rem"><a href="https://riseafricaskills.com/support.html" style="color:#2a7">Support Us →</a></p>
+
+<p style="font-size:.78rem;color:#777;margin-top:24px;border-top:1px solid #e0e0e0;padding-top:12px">
+Affiliate links: We earn a small commission if you buy through these links. This does not affect the price you pay. All recommendations are based on practical usefulness, not commission rates.
+</p>
+
+</section>
+<!-- REVENUE MODULE END -->
+</body></html>

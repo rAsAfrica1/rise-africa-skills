@@ -1,0 +1,515 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Module 2 — Site, Power and the Load-Shedding Question — Cold Room for 10 Beasts</title>
+<meta name="description" content="Where to put the cold room, how to read grid reliability in your district, and the honest economics of diesel vs solar vs hybrid backup.">
+<style>
+:root{--ink:#1e293b;--ink-soft:#334155;--muted:#64748b;--brand:#2c3e50;--brand-soft:#eaeef2;--accent:#8a4a12;--gold:#c9a227;--line:#e2e0d8;--card:#fff;--warn-soft:#fdf5e0;--radius:12px}
+*{box-sizing:border-box}body{margin:0;font-family:Georgia,'Times New Roman',serif;background:#faf8f3;color:var(--ink);line-height:1.7;font-size:17px}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px}
+header.top{background:var(--ink);color:#f6f1e8;padding:14px 0}
+header.top .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;align-items:center}
+.brand{font-weight:700;font-size:15px}.brand span{color:#e8c65a}
+header.top nav a{color:#f6f1e8;text-decoration:none;font-size:13.5px;opacity:.85;margin-left:14px}
+header.top nav a:hover{opacity:1;text-decoration:underline}
+.hero{background:#fff;border-bottom:1px solid var(--line);padding:38px 0 32px}
+.crumbs{font-size:13px;color:var(--muted);margin-bottom:12px;letter-spacing:.02em}
+.crumbs a{color:var(--brand);text-decoration:none}
+.kicker{display:inline-block;background:var(--brand-soft);color:var(--brand);font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin:0 0 14px}
+.hero h1{font-size:32px;line-height:1.25;margin:0 0 14px;letter-spacing:-.01em}
+.hero .lead{color:var(--ink-soft);font-size:18px;margin:0 0 20px}
+.meta{display:flex;gap:14px;flex-wrap:wrap;font-size:13.5px;color:var(--muted);margin-bottom:8px}
+.meta-chip{background:#f3efe8;border-radius:999px;padding:6px 14px}
+section.body{padding:32px 0}
+.lesson{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px 30px;margin:0 0 22px}
+.lesson-head{margin:0 0 4px;font-size:13px;color:var(--brand);font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.lesson h2{margin:6px 0 20px;font-size:24px;line-height:1.3}
+.objectives{background:var(--brand-soft);border-radius:10px;padding:16px 20px;margin:0 0 22px;font-size:15.5px}
+.objectives strong{display:block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.objectives ul{margin:0;padding-left:20px}
+.body p{margin:16px 0}
+.body h3{font-size:19px;margin:28px 0 8px;color:var(--ink);font-weight:700}
+.body h4{font-size:17px;margin:22px 0 6px;color:var(--ink-soft);font-weight:700}
+.body ul,.body ol{margin:14px 0 14px 24px}
+.body li{margin:8px 0}
+.body strong{color:var(--ink);font-weight:700}
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px}
+th{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);background:#f3efe8;font-weight:700;font-size:14px}
+td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+.warn{background:rgba(231,76,60,.06);border-left:3px solid #c2513f;padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0;font-size:16px}
+.warn strong{color:#c2513f}
+.good{background:rgba(39,174,96,.06);border-left:3px solid #2f7a3d;padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0;font-size:16px}
+.good strong{color:#2f7a3d}
+.callout{background:rgba(201,162,39,.08);border-left:3px solid var(--gold);padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0;font-size:16px}
+.callout strong{color:#8a6a12}
+.diagram{background:#f3efe8;border-radius:8px;padding:20px;font-family:'Courier New',monospace;font-size:14px;line-height:1.7;white-space:pre;overflow-x:auto;margin:18px 0;color:var(--ink-soft)}
+.quiz{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin:24px 0}
+.quiz h3{margin:0 0 16px;font-size:18px;color:var(--ink)}
+.q{margin:18px 0}.q .qt{font-weight:600;margin:0 0 10px;font-size:16px}
+.opts{list-style:none;padding:0;margin:0}.opts li{margin:0 0 8px}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:9px;padding:11px 14px;font:inherit;font-size:15.5px;cursor:pointer;color:var(--ink);transition:all .15s}
+.opt:hover{border-color:var(--brand);background:#faf8f3}
+.opt.right{background:#e7f5e9;border-color:#2f7a3d}
+.opt.wrong{background:#fdeceb;border-color:#c2513f}
+.why{display:none;margin-top:10px;font-size:15px;background:#f3efe8;border-radius:8px;padding:12px 14px;color:var(--ink-soft)}
+.why.show{display:block}
+.capstone{background:var(--warn-soft);border:1px solid #eadfb8;border-radius:12px;padding:22px 24px;margin:24px 0}
+.capstone h3{margin:0 0 12px;font-size:17px;color:var(--accent)}
+.disclaim{background:#f3efe8;border-radius:10px;padding:16px 18px;font-size:14px;color:var(--ink-soft);margin-top:24px;line-height:1.6}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:32px;flex-wrap:wrap;padding-top:22px;border-top:1px solid var(--line)}
+.btn{display:inline-block;background:var(--brand);color:#fff;text-decoration:none;padding:12px 22px;border-radius:10px;font-weight:600;font-size:15px}
+.btn:hover{opacity:.9}
+footer{background:var(--ink);color:#f6f1e8;text-align:center;padding:24px;font-size:13px;margin-top:40px}
+footer a{color:#e8c65a;text-decoration:none;margin:0 8px}
+@media(max-width:560px){.hero h1{font-size:25px}.lesson{padding:22px}}
+</style>
+</head><body>
+
+<header class="top"><div class="wrap"><div class="brand">rise <span>AFRICA</span> skills</div>
+<nav><a href="cold-room-10-beasts-course.html">All modules</a> <a href="index.html">Home</a></nav></div></header>
+
+<section class="hero"><div class="wrap">
+<div class="crumbs"><a href="cold-room-10-beasts-course.html">Cold Room for 10 Beasts</a> / Module 2 of 12</div>
+<p class="kicker">Module 2</p>
+<h1>Site, Power and the Load-Shedding Question</h1>
+<p class="lead">Where the room goes, how the power behaves in your district, and what happens to 2,500 kg of meat on the seventy-second hour of a blackout.</p>
+<div class="meta"><span class="meta-chip"><b>Read time:</b> 28 minutes</span><span class="meta-chip"><b>Then:</b> Module 3 — The Envelope</span></div>
+<div class="objectives"><strong>By the end of this module you will be able to</strong><ul>
+<li>Site the cold room on the chain from live animal to sold meat, not in isolation</li>
+<li>Read the actual reliability of your district grid over a full month, not from memory</li>
+<li>Distinguish three classes of power backup and price each of them against the value of the meat</li>
+<li>Design the electrical installation so that a future upgrade does not require a rebuild</li>
+<li>Plan drainage and water as one system, not two afterthoughts</li>
+<li>Produce a marked site plan and a power strategy for your own cold room</li>
+</ul></div>
+</div></section>
+
+<section class="body"><div class="wrap">
+
+<div class="lesson">
+<p class="lesson-head">Lesson 2.1</p>
+<h2>Site selection — the room is one link, not the whole chain</h2>
+
+<div class="body">
+<p>Every cold room failure I have walked past has one of two origins. Either the room itself was wrong — wrong insulation, wrong refrigeration, wrong drainage — or the room was right and everything around it was wrong. The second is far more common, and it is entirely a site decision.</p>
+
+<p>A cold room does not function in isolation. It sits inside a working chain: live animal arrives, is held, is slaughtered, is dressed, is transferred to the room, is cooled, is broken down, is packed, is dispatched. Every one of those links has a physical location, and if the locations do not form a sensible path, the room underperforms no matter how good it is.</p>
+
+<h3>The four movements that decide the site</h3>
+
+<p>Draw the intended path of four things across your site:</p>
+
+<ol>
+<li><strong>The live animal, on foot.</strong> From the road or holding pen to the kill floor. This should be short, on firm ground, and ideally downhill or level — an animal that has just been walked three kilometres arrives stressed with reduced meat quality.</li>
+<li><strong>The hot carcass, on a rail or trolley.</strong> From the kill floor into the cold room. This is the single most important movement, and it must be under cover. A hot carcass carried twenty metres across an open yard in thirty-degree heat picks up surface bacteria and heat load that the refrigeration unit then has to remove. Both the quality and the power bill suffer.</li>
+<li><strong>The chilled carcass or cuts, on a trolley or a shoulder.</strong> From the cold room to the cutting table, and from the cutting table to the dispatch point. This movement should be direct and, ideally, inside the same building envelope.</li>
+<li><strong>Water and waste.</strong> In from the source, out through the drain. Wash-down water from a kill floor is heavy with organic matter. It must not pool under the cold room, must not run through the holding pen, and must not cross the path of clean meat.</li>
+</ol>
+
+<div class="callout"><strong>The rule:</strong> if any of the four movements crosses another, or leaves cover, or runs uphill, the site is wrong. Redraw the plan until all four are clean.</div>
+
+<h3>The ideal site layout</h3>
+
+<p>A small 10-beast operation works best on a single line, from live animal at one end to dispatch at the other, with the cold room in the middle and every movement under a continuous roof.</p>
+
+<div class="diagram">  ROAD     ← delivery vehicles arrive and leave
+    │
+    ▼
+┌─────────┐
+│ HOLDING │  live animals wait here (shaded, water)
+│   PEN   │
+└────┬────┘
+     │  (on foot, 10–15 m)
+     ▼
+┌─────────┐
+│  KILL   │  slab, drain, water point, hoist
+│  FLOOR  │
+└────┬────┘
+     │  (rail or trolley, UNDER COVER, 3–8 m)
+     ▼
+┌─────────┐
+│  COLD   │  ← the room this course is about
+│  ROOM   │
+└────┬────┘
+     │  (trolley or shoulder, 0–5 m)
+     ▼
+┌─────────┐
+│ CUTTING │  table, clean water, packaging
+│  ROOM   │
+└────┬────┘
+     │  (to dispatch)
+     ▼
+┌─────────┐
+│DISPATCH │  loading bay, cold transport
+└─────────┘</div>
+
+<p>Not every element exists on day one. But the layout should be drawn on day one even if you build the cold room first. The people who build the cold room and only then realise they have nowhere to slaughter cleanly end up carrying carcasses through the mud — and then wonder why their meat fails inspection.</p>
+
+<h3>The five site conditions for the cold room itself</h3>
+
+<table>
+<tr><th>Condition</th><th>Why</th><th>What to do if your site fails</th></tr>
+<tr><td>Well-drained, level ground</td><td>A cold room is a heavy concrete slab on wet soil. Water under the slab wicks through, moulds insulation, and rots the vapour barrier from outside in.</td><td>Raise the platform 300–500 mm above surrounding ground, or find higher ground. Do not build in a hollow.</td></tr>
+<tr><td>Within 30 m of the kill floor</td><td>The hot carcass must be transferred quickly. Beyond 30 m, even under cover, the pull-down load rises sharply.</td><td>Move the kill floor, or accept a higher refrigeration capacity and running cost.</td></tr>
+<tr><td>Water point within 10 m</td><td>Wash-down at every entry and exit. Carrying water with a bucket across the yard contaminates the floor you just cleaned.</td><td>Extend a pipe before the build. Piping is cheap now and expensive later.</td></tr>
+<tr><td>Drain to a safe discharge point</td><td>Wash-down water is organic. It must go to a soakaway, septic system or approved discharge. Never to open ground near a well, borehole or water course.</td><td>Plan a grease trap and soakaway. Module 5 covers the design.</td></tr>
+<tr><td>Vehicle access on the downhill side</td><td>A loaded delivery truck on a wet uphill approach becomes stuck. The ruts it leaves become the channel that delivers water under your slab.</td><td>Approach on the downhill side, or reinforce the approach with gravel or a concrete apron.</td></tr>
+</table>
+</div>
+</div>
+
+<div class="lesson">
+<p class="lesson-head">Lesson 2.2</p>
+<h2>Reading the actual grid — not from memory</h2>
+
+<div class="body">
+<p>Every cold room project starts with the owner's confident statement of power reliability. In every case I have checked, the memory is wrong — sometimes wildly optimistic, sometimes overly pessimistic. Do not plan on either.</p>
+
+<p>The only reliable way to know what power you actually have is to measure it. It takes one month and costs nothing.</p>
+
+<h3>The measurement, done properly</h3>
+
+<ol>
+<li><strong>Install a simple log.</strong> A notebook, a wall chart, or a spreadsheet on a phone. You need four columns: date, time of outage start, time of outage end, total minutes off.</li>
+<li><strong>Log every outage, including short ones.</strong> Brief flickers of ten seconds matter — they trip controllers and compressors, and they add up. A month of flickers is worth more planning data than one long blackout.</li>
+<li><strong>Log the start time of each outage.</strong> Patterns matter: many districts black out on a schedule, and knowing the schedule lets you plan around it. Others fail randomly, which requires a different strategy.</li>
+<li><strong>Log the longest single outage.</strong> This is the number that decides your backup system, not the total hours off in the month.</li>
+<li><strong>Ask two neighbours</strong> — the butcher, the welder, the shop with a fridge — what their longest outage was in the last twelve months. Their answer tells you the worst case you must design for.</li>
+</ol>
+
+<p>After one month you can draw three conclusions:</p>
+
+<table>
+<tr><th>If your log shows</th><th>Your grid is</th><th>Your backup strategy</th></tr>
+<tr><td>Total outages under 6 hours per month, longest single under 2 hours</td><td>Reliable</td><td>Small battery bank or a small generator. Enough to ride through short events.</td></tr>
+<tr><td>Total 6–24 hours per month, longest single 2–6 hours</td><td>Moderate</td><td>Proper battery bank sized for 12 hours, or a generator sized for full load and run on demand.</td></tr>
+<tr><td>Total over 24 hours per month, longest single over 6 hours</td><td>Unreliable</td><td>Solar + battery sized for 24 hours, plus a generator as second line. Or relocate the project.</td></tr>
+</table>
+
+<div class="warn"><strong>Do not skip the measurement.</strong> A cold room designed for a reliable grid, built on an unreliable one, is a room full of rotten meat waiting for the first long blackout. The month you spend logging is worth more than the extra ,000 you might spend on a bigger battery.</div>
+</div>
+</div>
+
+<div class="lesson">
+<p class="lesson-head">Lesson 2.3</p>
+<h2>The three classes of backup, and what each one really costs</h2>
+
+<div class="body">
+<p>There is no single right answer for backup power. There are three classes of solution, and the correct one depends on the grid reliability you measured in Lesson 2.2 and the value of the meat you are protecting.</p>
+
+<h3>Class 1 — Small battery bank, no generator</h3>
+<p>A battery bank sized for 4–8 hours of refrigeration load, charged from the grid when it is available and discharged during outages. No generator. Simplest to operate, no fuel, no maintenance of a diesel engine.</p>
+<p><strong>Best for:</strong> grids with outages under 6 hours per month and rarely longer than 2 hours. Districts in urban or peri-urban areas with reasonably reliable supply.</p>
+<p><strong>Indicative cost:</strong> ,500–3,500 for a 5 kWh lithium battery bank plus inverter.</p>
+<p><strong>Limitation:</strong> a single 12-hour outage on a hot day will drain the bank and the room will warm up.</p>
+
+<h3>Class 2 — Generator, sized for full load</h3>
+<p>A diesel generator sized to run the refrigeration unit, lights and pumps. Starts manually or automatically when the grid fails, runs on fuel until the grid returns.</p>
+<p><strong>Best for:</strong> grids with outages of 2–8 hours per event, of moderate frequency. The generator runs for a few hours per week rather than permanently.</p>
+<p><strong>Indicative cost:</strong> ,000–6,000 for a 10–20 kVA generator plus automatic transfer switch, plus –400 per month in fuel at typical use.</p>
+<p><strong>Limitation:</strong> fuel is a running cost forever. Diesel price spikes hurt. The generator itself needs servicing, oil changes and eventual replacement. In areas with frequent short outages, diesel consumption is high.</p>
+
+<h3>Class 3 — Solar + battery + generator (hybrid)</h3>
+<p>Solar panels charge a battery bank daily. During the day the panels run the refrigeration. During outages the battery carries the load. During a long night-time outage, or if the battery is depleted, a small generator kicks in.</p>
+<p><strong>Best for:</strong> unreliable grids with long outages, or sites with no reliable grid at all. Also best for sites with high sun hours and expensive diesel.</p>
+<p><strong>Indicative cost:</strong> ,000–15,000 for a 5 kW solar array, 10–20 kWh battery, inverter and small backup generator.</p>
+<p><strong>Limitation:</strong> high capital cost. Solar panels must be cleaned and can be stolen. The system is more complex and requires a competent installer.</p>
+
+<h3>Which is right for a 10-beast room?</h3>
+
+<p>For a well-run 10-beast room in a temperate climate, the daily refrigeration load is roughly 30–60 kWh. That is the number that must be covered for 24 hours of autonomy.</p>
+
+<table>
+<tr><th>Grid measured over one month</th><th>Class</th><th>Indicative capital</th><th>Indicative monthly cost</th></tr>
+<tr><td>Reliable (under 6 hr/month)</td><td>1 — small battery</td><td>,500–3,500</td><td> (grid only)</td></tr>
+<tr><td>Moderate (6–24 hr/month)</td><td>2 — generator</td><td>,000–6,000</td><td>–400 (fuel)</td></tr>
+<tr><td>Unreliable (over 24 hr/month)</td><td>3 — hybrid</td><td>,000–15,000</td><td>–150 (minimal fuel)</td></tr>
+</table>
+
+<div class="callout"><strong>The honest rule:</strong> the backup system is worth what the meat is worth. Two thousand five hundred kilograms at .00/kg is ,500 per full room. A backup system that costs less than ,500 and protects the room over its life is not expensive — it is the cheapest insurance in the business.</div>
+</div>
+</div>
+
+<div class="lesson">
+<p class="lesson-head">Lesson 2.4</p>
+<h2>What actually happens during a blackout — the physics of a warming room</h2>
+
+<div class="body">
+<p>Understanding what happens inside the room during a power failure is the difference between a business plan that assumes everything is fine and one that plans for the worst hour.</p>
+
+<p>A well-built cold room is not just a box with a refrigeration unit attached. It is a thermal battery. The insulation, the mass of the carcasses, the mass of the wall panels and floor — all of them store cold. When the power fails, the room does not warm up instantly. It warms up gradually, and the rate depends on four things:</p>
+
+<ol>
+<li><strong>How full the room is.</strong> A full room warms more slowly than an empty one, because the carcasses themselves hold cold. Counterintuitively, an empty room is more vulnerable.</li>
+<li><strong>How good the insulation is.</strong> The envelope is covered in Module 3. Panel thickness, panel condition and vapour barrier integrity decide the rate of heat gain.</li>
+<li><strong>The outside temperature.</strong> A blackout in a 35°C afternoon gains heat three times faster than the same blackout at 20°C night-time.</li>
+<li><strong>How many times the door is opened.</strong> During a blackout, every door opening is a fresh injection of warm, humid air. The discipline of "keep the door closed" during an outage is not a suggestion — it is the difference between an hour more or an hour less of safe temperature.</li>
+</ol>
+
+<h3>Indicative temperatures during a blackout on a full 10-beast room</h3>
+
+<p>Assume the room is at 2°C, the outside air is at 30°C, the room is fully loaded (2,500 kg of carcasses), the panels are 100 mm polyurethane, and the door is opened twice during the outage.</p>
+
+<table>
+<tr><th>Hours after power loss</th><th>Room temperature (indicative)</th><th>Product state</th></tr>
+<tr><td>1</td><td>2.5 – 3.0 °C</td><td>Safe. No action.</td></tr>
+<tr><td>4</td><td>4 – 5 °C</td><td>Safe. Still within legal chilled storage range.</td></tr>
+<tr><td>8</td><td>6 – 8 °C</td><td>Approaching the upper limit of safe chilled storage. The meat is still usable but the clock is running.</td></tr>
+<tr><td>12</td><td>9 – 12 °C</td><td>Above safe storage. Meat quality is declining. Urgent action needed.</td></tr>
+<tr><td>24</td><td>14 – 18 °C</td><td>Meat is spoiling. Some product loss is likely.</td></tr>
+<tr><td>48</td><td>20 – 25 °C</td><td>Significant loss. Most product is unsaleable as fresh chilled meat.</td></tr>
+<tr><td>72</td><td>Ambient</td><td>Total product loss. The full room is condemned.</td></tr>
+</table>
+
+<p>The numbers above are indicative. Real rates vary with the four factors listed. The important thing is the shape of the curve: the first 8 hours are almost free, the next 16 hours are critical, and beyond 24 hours the room is a loss either way.</p>
+
+<div class="good"><strong>The practical implication:</strong> your backup system does not need to keep the room cold forever. It needs to give you time to act. Eight hours of backup on a hot day is enough to ride out most events. Twelve hours is enough to move stock or find a market. Twenty-four hours of autonomy covers almost any blackout you will meet in Africa.</div>
+
+<h3>What to do during a blackout</h3>
+
+<ol>
+<li><strong>Do not open the door.</strong> Every opening costs you an hour of safe time. Post a note on the door. Tell the staff.</li>
+<li><strong>Log the start time.</strong> Note it in the outage log.</li>
+<li><strong>Switch on the backup.</strong> Manual or automatic — know which, and make sure everyone on site knows which.</li>
+<li><strong>If the outage will clearly exceed your backup capacity, act early.</strong> Move meat to a nearby cold room. Sell at a discount. Turn into processed product. Do not wait until the meat is warm to decide.</li>
+<li><strong>When power returns, do not open the door immediately.</strong> Let the unit pull the room back down to 2–4°C before you resume normal work. Opening the door during pull-down slows it and wastes the recovery.</li>
+</ol>
+</div>
+</div>
+
+<div class="lesson">
+<p class="lesson-head">Lesson 2.5</p>
+<h2>The electrical installation — done once, done properly</h2>
+
+<div class="body">
+<p>The electrical side of a cold room is where non-electricians most often get into trouble, and where a small mistake becomes an expensive one. Two principles govern the whole installation:</p>
+
+<ol>
+<li><strong>The refrigeration circuit must be on its own dedicated circuit.</strong> Not shared with lights, not shared with the butcher's bandsaw, not shared with the house. A dedicated circuit means the compressor is not competing for supply, and a fault elsewhere does not take the cold room down.</li>
+<li><strong>The installation must be sized for the future, not just today.</strong> If you might add a second room, a freezer or a bandsaw in three years, run cables that can carry that load now. Rewiring a cold room means demolishing walls.</li>
+</ol>
+
+<h3>The minimum electrical installation</h3>
+
+<table>
+<tr><th>Item</th><th>Rating</th><th>Why</th></tr>
+<tr><td>Main distribution board</td><td>Single-phase or 3-phase, sized for full load + 30%</td><td>Brings grid, generator and solar together on one panel with changeover</td></tr>
+<tr><td>Dedicated refrigeration circuit</td><td>Sized for the compressor's rated current × 1.25</td><td>Prevents nuisance tripping and voltage drop on startup</td></tr>
+<tr><td>Surge protection device (SPD)</td><td>Type 2, at the board</td><td>Protects the compressor controller from grid surges. Cheap insurance.</td></tr>
+<tr><td>Changeover switch (manual or automatic)</td><td>Rated for full load</td><td>Switches from grid to generator without back-feeding the grid. Mandatory for safety.</td></tr>
+<tr><td>Isolator at the cold room</td><td>Lockable</td><td>Must be able to fully isolate the room for service without going to the main board</td></tr>
+<tr><td>Warning lamp or alarm</td><td>Simple indicator</td><td>Shows when the compressor is running and when the room is out of range. Cheap and invaluable.</td></tr>
+</table>
+
+<h3>Wiring the changeover correctly</h3>
+
+<p>This is where serious injury and death happen if done wrong. The generator must never be able to feed power back into the grid. Two ways to ensure this:</p>
+
+<ul>
+<li><strong>Manual changeover switch.</strong> Physically moves the load from "grid" position to "generator" position. When set to generator, the grid connection is open. This is the safe, simple, reliable option for a small operation.</li>
+<li><strong>Automatic transfer switch (ATS).</strong> Senses grid failure and starts the generator, switching load automatically. More expensive and more complex, but no one has to be on site when the power fails.</li>
+</ul>
+
+<p>Whichever you choose, the changeover must be <strong>mechanically interlocked</strong> — meaning it is physically impossible for both inputs to be connected at once. A changeover switch that only looks like it isolates but can be put in a position where both are live is a lethal hazard to the utility's line workers and to anyone working on the circuit.</p>
+
+<div class="warn"><strong>Do not do the electrical installation yourself unless you are qualified.</strong> This is the one part of the cold room build where the cost of getting it wrong is a life, not a crack. Use a licensed electrician. Require a certificate. Keep the certificate with your other documents — it is needed for insurance, for health inspection, and for any future sale.</div>
+
+<h3>Voltage stability — the quiet killer</h3>
+
+<p>Compressors are sensitive to low voltage. On a weak grid, or during peak load in a district with a long feeder, voltage can drop to 180 V or below on a nominal 230 V system. Running a compressor at 180 V causes overheating, premature failure and eventually burnout.</p>
+
+<p>If your measured voltage frequently falls below 200 V, install a voltage stabiliser or an automatic voltage regulator (AVR) sized for the compressor. Cost: –800 depending on rating. It is cheaper than one compressor.</p>
+</div>
+</div>
+
+<div class="lesson">
+<p class="lesson-head">Lesson 2.6</p>
+<h2>Water, drainage and the waste path</h2>
+
+<div class="body">
+<p>Water and drainage are the two systems most often added as afterthoughts and most often the source of a cold room's eventual failure. Every wash-down of the room produces organic waste water that must leave the room and go somewhere safe. Every entry and exit of a carcass is a chance to bring in mud and bacteria.</p>
+
+<h3>Water supply</h3>
+
+<p>A 10-beast room uses roughly 400–800 litres of water per kill day for wash-down, plus the water used at the kill floor. That is a substantial daily demand. Before building, confirm your source can supply it year-round:</p>
+
+<ul>
+<li><strong>Borehole or municipal supply.</strong> Preferred. Confirm the yield and the pressure. A dry season test is worth more than a rainy season test.</li>
+<li><strong>Rainwater harvesting.</strong> Useful as a supplement, especially in areas with seasonal rain. A 5,000 L tank is a reasonable minimum. Must be filtered and, for final rinse, treated.</li>
+<li><strong>River or dam.</strong> Acceptable for wash-down, not for final rinse on food contact surfaces without treatment. Requires pumping, which ties back to your power strategy.</li>
+</ul>
+
+<p>Install a simple sand and cartridge filter on the wash-down line if the source is surface water. Install a UV or chlorine dosing system on any line used for food contact surfaces. Both are cheap compared to a health inspection failure.</p>
+
+<h3>Drainage</h3>
+
+<p>The drainage design has three jobs:</p>
+
+<ol>
+<li><strong>Remove wash-down water quickly.</strong> Standing water in a cold room becomes ice, which is a slip hazard and slows work.</li>
+<li><strong>Prevent cross-contamination.</strong> The drain must not allow waste water from the kill floor or the animal handling area to enter the cold room.</li>
+<li><strong>Discharge to a safe point.</strong> Never to a bare field, never to a watercourse, never near a well or borehole. To a grease trap then a soakaway, or to a septic system, or to an approved municipal discharge.</li>
+</ol>
+
+<h3>The drainage path, in order</h3>
+
+<div class="diagram">COLD ROOM floor drain
+  (with a strainer basket for solids)
+        │
+        ▼
+GREASE TRAP  ← removes fats and oils
+  (a simple two-chamber concrete box
+   is enough at this scale)
+        │
+        ▼
+SOAKAWAY  ← a pit filled with rubble,
+  or SEPTIC SYSTEM, or approved discharge
+        │
+        ▼
+NOT to a well, borehole, watercourse, or open ground</div>
+
+<h3>Floor slope and drain position</h3>
+
+<p>The cold room floor must slope to the drain. A slope of 1:100 (1 cm per metre) is enough. The drain should be at the lowest point — usually the centre for a small room, or at one end for a long room. Never leave the drain at a high point or where it can be blocked by the door swing.</p>
+
+<p>Insulated panel floors are flat and smooth. This is good for cleaning but bad for water run-off. If you are building on a slab rather than on panels, screed the slab to slope correctly before the insulation goes down. Getting this right once saves you wet floors forever.</p>
+
+<h3>The wash-down routine</h3>
+
+<p>During and after every kill day:</p>
+
+<ol>
+<li>Sweep out solids — bone fragments, fat, blood. Into a bin, not into the drain.</li>
+<li>Rinse the walls and floor with cold water.</li>
+<li>Wash with a food-safe detergent, working top-down.</li>
+<li>Rinse with clean water.</li>
+<li>Sanitise with a food-safe sanitiser (chlorine, peracetic acid or quaternary ammonium) at the correct contact time.</li>
+<li>Squeegee water toward the drain.</li>
+<li>Leave the room to dry and cool back to temperature before the next carcass enters.</li>
+</ol>
+
+<p>Between kills, a light daily clean is enough. Between batches, a full deep clean. Module 7 covers this in detail.</p>
+</div>
+</div>
+
+<div class="quiz">
+<h3>Knowledge check — Module 2</h3>
+
+<div class="q"><p class="qt">1. Why is a cold room built in isolation — without a clean kill floor and a covered rail to the room — a common failure?</p>
+<ul class="opts">
+<li><button class="opt" onclick="ans(this,0)">Because the walls do not match</button></li>
+<li><button class="opt" onclick="ans(this,1)">Because a hot carcass carried across open ground in heat picks up bacteria and heat load that the room then has to remove</button></li>
+<li><button class="opt" onclick="ans(this,2)">Because you cannot get a health licence</button></li>
+<li><button class="opt" onclick="ans(this,3)">Because the refrigeration unit is undersized</button></li>
+</ul>
+<div class="why"><strong>Correct: hot carcass through open ground.</strong> Every metre of exposed transport adds heat load and surface contamination. The chain matters as much as the room.</div></div>
+
+<div class="q"><p class="qt">2. What is the only reliable way to know how reliable your district's power supply actually is?</p>
+<ul class="opts">
+<li><button class="opt" onclick="ans(this,0)">Ask your neighbours</button></li>
+<li><button class="opt" onclick="ans(this,1)">Log every outage for one month, including short flickers, and note the longest single outage</button></li>
+<li><button class="opt" onclick="ans(this,2)">Ask the utility</button></li>
+<li><button class="opt" onclick="ans(this,3)">Assume the worst</button></li>
+</ul>
+<div class="why"><strong>Correct: log for one month.</strong> Memory is unreliable. A written log of every outage duration and the longest single event is the only defensible basis for a backup plan.</div></div>
+
+<div class="q"><p class="qt">3. During a blackout, which of these actions extends the safe time the most?</p>
+<ul class="opts">
+<li><button class="opt" onclick="ans(this,0)">Opening the door to check temperature frequently</button></li>
+<li><button class="opt" onclick="ans(this,1)">Keeping the door closed and opening it as little as possible</button></li>
+<li><button class="opt" onclick="ans(this,2)">Adding ice to the floor</button></li>
+<li><button class="opt" onclick="ans(this,3)">Running a fan inside the room</button></li>
+</ul>
+<div class="why"><strong>Correct: keep the door closed.</strong> Every opening injects warm humid air and costs an hour of safe time. Running a fan without a heat exchanger just moves warm air around.</div></div>
+
+<div class="q"><p class="qt">4. What is the most dangerous mistake in the electrical installation of a cold room?</p>
+<ul class="opts">
+<li><button class="opt" onclick="ans(this,0)">Using a larger cable than necessary</button></li>
+<li><button class="opt" onclick="ans(this,1)">A changeover switch that does not physically prevent the generator from back-feeding the grid</button></li>
+<li><button class="opt" onclick="ans(this,2)">Installing surge protection</button></li>
+<li><button class="opt" onclick="ans(this,3)">Putting the compressor on a dedicated circuit</button></li>
+</ul>
+<div class="why"><strong>Correct: a non-interlocked changeover.</strong> Back-feeding kills utility line workers and anyone working on the circuit. The changeover must be mechanically interlocked so both inputs can never be live at once.</div></div>
+
+<div class="q"><p class="qt">5. Where must wash-down water from a cold room finally discharge?</p>
+<ul class="opts">
+<li><button class="opt" onclick="ans(this,0)">Into the nearest watercourse</button></li>
+<li><button class="opt" onclick="ans(this,1)">Onto an open field for irrigation</button></li>
+<li><button class="opt" onclick="ans(this,2)">Through a grease trap to a soakaway, septic system, or approved discharge</button></li>
+<li><button class="opt" onclick="ans(this,3)">Into a soak pit next to the well</button></li>
+</ul>
+<div class="why"><strong>Correct: grease trap → soakaway / septic / approved discharge.</strong> Never to a watercourse, a well, a borehole or open ground near one.</div></div>
+</div>
+
+<div class="capstone">
+<h3>Practical assignment — Module 2</h3>
+<p>Produce a site plan and a power strategy for your own cold room project. This is a paper exercise plus a two-week measurement. It does not require building anything.</p>
+
+<p><strong>Submit:</strong></p>
+<ol>
+<li>A hand-drawn site plan showing the four movements from Lesson 2.1: live animal, hot carcass, chilled product, and water/waste. Label each movement with arrows. State in one sentence whether any movement crosses another or leaves cover.</li>
+<li>A photograph of the actual site, taken from the road, showing the slope and the intended building position.</li>
+<li>A two-week power log: date, time off, time on, duration, total minutes per day. Note the longest single outage observed and any short flickers.</li>
+<li>A one-page power strategy: which class of backup (1, 2, or 3) you will use and why, with indicative costs from at least two suppliers.</li>
+<li>A simple drainage sketch: cold room floor drain → grease trap → discharge point. State the discharge point and why it is safe.</li>
+<li>One paragraph (150 words) naming the single biggest site risk you have identified and how you will reduce it.</li>
+</ol>
+<p>Marks are weighted toward points 3 and 6. The log is evidence. The risk paragraph is judgement. Everything else can be copied from a book; those two cannot.</p>
+</div>
+
+<div class="pager">
+<a class="btn" href="cold-room-10-beasts-module-1.html">← Module 1 — The 10-Beast Cold Room Business</a>
+<a class="btn" href="cold-room-10-beasts-module-3.html">Module 3 — The Envelope →</a>
+</div>
+
+<div class="disclaim">This module teaches general principles of cold room siting and power planning for a 10-carcass beef operation in tropical Africa. Electrical installation must be carried out by a licensed electrician. Every figure is indicative and must be verified with three local quotations and the relevant authority before money is spent.</div>
+
+</div></section>
+
+<footer><a href="index.html">Home</a> · <a href="cold-room-10-beasts-course.html">Course home</a><br>© rise AFRICA skills · all@riseafricaskills.com</footer>
+
+<script>function ans(b,i){var o=b.parentElement.parentElement.querySelectorAll(".opt");var w=b.parentElement.parentElement.parentElement.querySelector(".why");for(var j=0;j<o.length;j++){o[j].classList.remove("right","wrong");}if(i===0){b.classList.add("right");}else{b.classList.add("wrong");}w.classList.add("show");}</script>
+<script src="/paywall.js"></script>
+<!-- REVENUE MODULE START -->
+<section style="max-width:960px;margin:40px auto;padding:20px;font-family:system-ui,sans-serif;line-height:1.6;color:#222">
+
+<hr style="border:none;border-top:3px solid #f9a825;margin:40px 0">
+
+<h2 style="color:#b8860b;font-size:1.4rem">Tools, Certificate &amp; Support</h2>
+
+<h3 style="color:#2a7">1. Recommended Tools for This Course</h3>
+<p style="font-size:.9rem">These tools will improve your results. Buy from local suppliers where possible. Links marked "affiliate" earn us a small commission at no extra cost to you.</p>
+<ul style="font-size:.9rem">
+<li style='margin:.4rem 0'>Digital scale — <a href='https://www.amazon.com/s?k=Digital+scale&tag=YOUR-REAL-AMAZON-ID' target='_blank' rel='noopener sponsored' style='color:#2a7'>Check price</a> <span style='font-size:.75rem;color:#888'>(affiliate link)</span></li>
+<li style='margin:.4rem 0'>Record book — <a href='https://www.amazon.com/s?k=Record+book&tag=YOUR-REAL-AMAZON-ID' target='_blank' rel='noopener sponsored' style='color:#2a7'>Check price</a> <span style='font-size:.75rem;color:#888'>(affiliate link)</span></li>
+<li style='margin:.4rem 0'>Measuring tools — <a href='https://www.amazon.com/s?k=Measuring+tools&tag=YOUR-REAL-AMAZON-ID' target='_blank' rel='noopener sponsored' style='color:#2a7'>Check price</a> <span style='font-size:.75rem;color:#888'>(affiliate link)</span></li>
+<li style='margin:.4rem 0'>Safety equipment — <a href='https://www.amazon.com/s?k=Safety+equipment&tag=YOUR-REAL-AMAZON-ID' target='_blank' rel='noopener sponsored' style='color:#2a7'>Check price</a> <span style='font-size:.75rem;color:#888'>(affiliate link)</span></li>
+</ul>
+
+<h3 style="color:#2a7">2. Get Your Certificate of Completion</h3>
+<div style="background:#e8f5e9;border-left:4px solid #2a7;padding:16px;border-radius:6px;margin:16px 0">
+<p style="margin:0 0 8px"><strong>Finish all 12 modules and pass the final quiz to earn a rise AFRICA skills Certificate.</strong></p>
+<p style="margin:0;font-size:.9rem">Show it to buyers, lenders, and employers. Printed and digital versions available.</p>
+<p style="margin:10px 0 0;font-size:.85rem">Request via WhatsApp: <a href="https://wa.me/263773001353" target="_blank" rel="noopener" style="color:#2a7">+263 77 688 1941</a></p>
+</div>
+
+<h3 style="color:#2a7">3. Find a Local Supplier</h3>
+<p style="font-size:.9rem">We are building a directory of vetted local suppliers for African farmers. If you supply tools, feed, or equipment, contact us to be listed here.</p>
+<p style="font-size:.85rem">Contact: <a href="https://wa.me/263773001353" target="_blank" rel="noopener" style="color:#2a7">WhatsApp +263 77 688 1941</a></p>
+
+<h3 style="color:#2a7">4. Book a Consultation</h3>
+<div style="background:#e3f2fd;border-left:4px solid #1976d2;padding:16px;border-radius:6px;margin:16px 0">
+<p style="margin:0 0 8px"><strong>Need one-on-one help?</strong></p>
+<p style="margin:0;font-size:.9rem">Book a 30-minute consultation with a specialist. Custom profit plan, disease prevention checklist, and market strategy.</p>
+<p style="margin:10px 0 0;font-size:.85rem">Book via WhatsApp: <a href="https://wa.me/263773001353" target="_blank" rel="noopener" style="color:#1976d2">+263 77 688 1941</a></p>
+</div>
+
+<h3 style="color:#2a7">5. Support This Course</h3>
+<p style="font-size:.9rem">rise AFRICA skills is free for everyone. If this course helped you, consider supporting us so we can keep creating free content.</p>
+<p style="font-size:.85rem"><a href="https://riseafricaskills.com/support.html" style="color:#2a7">Support Us →</a></p>
+
+<p style="font-size:.78rem;color:#777;margin-top:24px;border-top:1px solid #e0e0e0;padding-top:12px">
+Affiliate links: We earn a small commission if you buy through these links. This does not affect the price you pay. All recommendations are based on practical usefulness, not commission rates.
+</p>
+
+</section>
+<!-- REVENUE MODULE END -->
+</body></html>
