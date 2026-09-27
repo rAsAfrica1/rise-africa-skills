@@ -1,0 +1,368 @@
+﻿{
+  "course": "Wind Turbine Basics",
+  "module_number": 8,
+  "module_title": "Control Systems and Automation",
+  "lessons": [
+    {
+      "title": "Pitch and Yaw Control Loops",
+      "body": "Pitch and yaw control are the two main ways a wind turbine adapts to changing wind. Pitch control turns the blades along their length to change the angle of attack. Yaw control turns the entire nacelle to face the wind. Without these, a turbine would overspeed in strong gusts or produce little power in shifting winds. In Africa, where wind can be gusty and change direction quickly, these loops are critical for both safety and output.\n\nA typical pitch system uses electric motors or hydraulic actuators at the blade root. The controller reads wind speed and power output every 50â100 milliseconds. If wind exceeds rated speed (e.g., 12 m/s for a 2 MW turbine), the controller commands pitch to feather (turn blades parallel to wind) to spill excess energy. In low winds, it pitches to fine (blades facing wind) to capture more. The loop must respond in under 1 second to prevent overspeed. In dusty conditions, common in northern Kenya or Senegal, hydraulic seals wear faster, so maintenance every 6 months is recommended.\n\nYaw control uses a yaw motor and gearbox to rotate the nacelle. A wind vane or ultrasonic anemometer on the nacelle tells the controller the wind direction. The controller commands yaw when the wind deviates more than 10â15 degrees from the rotor axis. Yaw rates are slowâabout 0.5 degrees per secondâto avoid gyroscopic loads. In African coastal sites like LÃ¼deritz, Namibia, salt corrosion can seize yaw bearings, so greasing every 3 months is essential. Some turbines use active yaw with multiple motors for redundancy.\n\nBoth loops rely on feedback sensors: encoders on pitch motors, proximity switches on yaw gears. A common failure is a stuck pitch bearing due to dust or iceâthough ice is rare in most of Africa. Regular calibration of pitch and yaw encoders prevents drift. For a learner, the key takeaway: pitch manages power and speed, yaw maximizes wind capture. Together they keep the turbine within safe limits and optimize energy production."
+    },
+    {
+      "title": "Torque and Speed Control",
+      "body": "Torque and speed control determines how much power the generator extracts from the wind. In a wind turbine, the rotor speed and generator torque must be balanced to follow the optimal power curve. Below rated wind speed, the controller adjusts torque to keep the tip-speed ratio at its optimumâusually around 7 for a 3-blade turbine. That means for a 40 m blade, the tip moves at 7 times the wind speed. If wind is 8 m/s, tip speed is 56 m/s. The controller measures rotor speed via an encoder and commands the generator converter to apply the right torque.\n\nAbove rated wind speed, pitch control takes over to limit speed, while torque control holds generator power at rated (e.g., 2 MW). The controller uses a PI (proportional-integral) loop to adjust torque. A typical setting: proportional gain 0.5, integral time 0.1 seconds. These values are tuned during commissioning. In Africa, grid frequency can vary (e.g., 49.5â50.5 Hz in weak grids), so the controller must handle frequency dips without tripping. Some turbines have a frequency ride-through feature that reduces torque briefly to help the grid.\n\nThe generator is often a doubly-fed induction generator (DFIG) or permanent magnet synchronous generator (PMSG). The converter controls torque by adjusting currents. For a DFIG, the rotor circuit handles about 30% of power, so the converter is smaller and cheaper. For PMSG, full-power converter is needed. In dusty environments, converter cooling fans clog, causing overheating. Clean or replace filters every 3 months in Sahelian conditions.\n\nSpeed control also involves overspeed protection. If rotor speed exceeds 1.2 times rated, the controller triggers an emergency stop: pitch to feather and apply mechanical brake. The brake is a disc brake on the high-speed shaft. Regular testing of overspeed sensors is mandatory. For a learner, remember: torque control maximizes energy below rated wind; pitch control limits power above rated. Together they keep the turbine on its power curve."
+    },
+    {
+      "title": "Programmable Logic Controllers (PLCs)",
+      "body": "A PLC is the brain of a wind turbine. It is a rugged computer that reads sensors, makes decisions, and commands actuators. In a turbine, the PLC handles pitch, yaw, torque, and safety logic. Common brands are Siemens S7-1200, Allen-Bradley MicroLogix, and Beckhoff. In Africa, Siemens is popular due to local support in South Africa and Kenya. A basic PLC has digital inputs (on/off), analog inputs (4â20 mA or 0â10 V), and relay outputs. For example, a wind speed sensor sends 4â20 mA to the PLC, which scales it to 0â50 m/s.\n\nThe PLC runs a program written in ladder logic or structured text. A simple rung: if wind speed > 25 m/s, then set pitch to feather and open brake. The scan time is typically 10â50 ms. For safety, a separate safety PLC or relay is used. In dusty conditions, PLC cabinets must be sealed to IP54 or better. Heat is a bigger killer than dustâcabinet fans and filters need monthly cleaning in hot African sites like Sudan or Mali.\n\nPLCs communicate with the SCADA system via Modbus TCP or OPC UA. The SCADA displays data and logs faults. For a learner, start with a small PLC like Siemens S7-1200 and TIA Portal software (free trial). Practice wiring a 4â20 mA signal from a potentiometer to simulate wind speed. Then write logic to turn on an LED when speed exceeds 10 m/s. This mimics pitch control. In the field, always check 24 VDC power supply firstâmost PLC faults are power-related. Keep spare input/output modules on site. In remote African wind farms, waiting for a part from Europe can take weeks, so stock critical spares."
+    },
+    {
+      "title": "Human-Machine Interface (HMI) Systems",
+      "body": "An HMI is the screen and controls that let operators monitor and command the turbine. It can be a local touchscreen on the turbine cabinet or a remote SCADA screen. The HMI shows real-time data: wind speed, rotor RPM, power output, pitch angle, yaw position, and active faults. It also allows manual commands like start, stop, and reset. In Africa, HMIs must be readable in bright sunlightâuse high-brightness screens (1000 nits) and matte finishes. Dust and fingerprints are common, so capacitive touchscreens with glove mode are better than resistive.\n\nA typical HMI screen has a mimic diagram of the turbine with color-coded status: green for running, yellow for warning, red for fault. Operators can tap a component to see details. For example, tapping the pitch system shows motor current, temperature, and position. The HMI logs alarms with timestamps. In a 50 MW wind farm in South Africa, the SCADA HMI might show 20 turbines on one screen. The operator can zoom into one turbine. Alarm priority is critical: a vibration alarm might be a warning, but an overspeed alarm is a trip.\n\nHMIs use software like WinCC (Siemens), FactoryTalk View (Allen-Bradley), or open-source ScadaBR. For a learner, you can build a simple HMI with a Raspberry Pi and Node-RED. Connect a temperature sensor and display it on a web page. Add a button to turn on a fan. This teaches the basics. In the field, always set up user access levels: operator, technician, engineer. Only engineers should change control parameters. In remote African sites, HMIs often have a GSM modem for SMS alerts when no one is on site. Test the modem monthly. Also, keep the HMI firmware updatedâold versions have security holes."
+    },
+    {
+      "title": "Safety Instrumented Systems",
+      "body": "A Safety Instrumented System (SIS) is a separate, independent system that brings the turbine to a safe state when something goes wrong. It is not the same as the normal control system. The SIS uses its own sensors, logic solver, and actuators. For a wind turbine, the SIS monitors overspeed, vibration, and pitch system failure. If any limit is exceeded, the SIS triggers an emergency stop: pitch to feather, apply mechanical brake, and disconnect from grid. The SIS must be certified to SIL 2 or SIL 3 (Safety Integrity Level) under IEC 61508. In Africa, many older turbines lack proper SIS, but new installations in Kenya and Ethiopia require it.\n\nKey components: overspeed sensor (often a proximity probe on the high-speed shaft), vibration sensors (accelerometers on gearbox and bearings), and a safety relay or safety PLC. The logic is simple: if overspeed > 1.2 times rated, or vibration > 10 mm/s RMS, then trip. The SIS must be tested monthly. A common test: simulate an overspeed signal and verify the brake engages within 0.5 seconds. In dusty conditions, vibration sensors can give false alarms, so set thresholds carefully. Use trending to distinguish real faults from noise.\n\nThe SIS also includes an emergency stop button at the base and nacelle. Pressing it must immediately cut power to pitch motors and apply the brake. The button must be red with a yellow background, and tested weekly. For a learner, understand that the SIS is your last line of defense. Never bypass it. In remote African wind farms, spare safety relays and sensors are essential. Train all staff on SIS function. After any trip, investigate root cause before resetting. Document every test in a logbook. This is not optionalâit saves lives and equipment."
+    },
+    {
+      "title": "Cybersecurity for Wind Farms",
+      "body": "Wind farms are increasingly connected to the internet for remote monitoring. That makes them a target for hackers. A cyberattack could cause physical damage: overspeed, brake failure, or grid instability. In Africa, where many wind farms use cellular modems for SCADA, the risk is high. Basic cybersecurity starts with network segmentation. The control network (PLCs, HMIs) must be separate from the office network. Use a firewall with strict rules. For example, only allow SCADA traffic on port 502 (Modbus) from specific IP addresses. Never expose PLCs directly to the internet.\n\nUse strong passwords. Default passwords like 'admin' or '1234' are common in older turbines. Change them. Enable two-factor authentication on remote access. Use VPNs (e.g., OpenVPN or WireGuard) for remote engineers. Keep firmware updatedâvendors release patches for known vulnerabilities. In 2020, a wind farm in the US was hacked via an unpatched VPN. In Africa, many sites lack IT staff, so train a technician on basic cyber hygiene. Log all access. Monitor for unusual traffic, like a PLC being programmed at 2 AM.\n\nPhysical security matters too. Lock control cabinets. Use keyed access. In remote sites, thieves may steal laptops or USB drives. Encrypt data at rest. For a learner, practice on a home network: set up a firewall (pfSense), create a VPN, and test that you cannot reach a PLC from outside. Use tools like Nmap to scan your own network and see what is exposed. Never use default credentials. In wind farms, a cyber incident can cause downtime costing thousands of dollars per hour. A simple step like changing default passwords and segmenting networks can prevent most attacks."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is the primary purpose of pitch control in a wind turbine?",
+      "options": [
+        "A) To turn the nacelle into the wind",
+        "B) To change the angle of the blades to control power and speed",
+        "C) To measure wind direction",
+        "D) To apply the mechanical brake"
+      ],
+      "answer": "B",
+      "explanation": "Pitch control adjusts blade angle to manage rotor speed and power output."
+    },
+    {
+      "q": "How often should hydraulic seals in pitch systems be maintained in dusty African conditions?",
+      "options": [
+        "A) Every 6 months",
+        "B) Every 2 years",
+        "C) Every week",
+        "D) Every 5 years"
+      ],
+      "answer": "A",
+      "explanation": "Dust accelerates wear, so 6-month maintenance is recommended."
+    },
+    {
+      "q": "What is the typical yaw rate for a wind turbine?",
+      "options": [
+        "A) 5 degrees per second",
+        "B) 0.5 degrees per second",
+        "C) 10 degrees per second",
+        "D) 50 degrees per second"
+      ],
+      "answer": "B",
+      "explanation": "Slow yaw rates avoid gyroscopic loads on the rotor."
+    },
+    {
+      "q": "Which sensor is commonly used to measure rotor speed for torque control?",
+      "options": [
+        "A) Anemometer",
+        "B) Encoder",
+        "C) Thermocouple",
+        "D) Pressure transducer"
+      ],
+      "answer": "B",
+      "explanation": "An encoder on the rotor shaft provides precise speed feedback."
+    },
+    {
+      "q": "What is the optimum tip-speed ratio for a typical 3-blade wind turbine?",
+      "options": [
+        "A) 1",
+        "B) 7",
+        "C) 20",
+        "D) 50"
+      ],
+      "answer": "B",
+      "explanation": "A tip-speed ratio of about 7 maximizes power coefficient for 3-blade turbines."
+    },
+    {
+      "q": "Above rated wind speed, which control takes over to limit power?",
+      "options": [
+        "A) Torque control",
+        "B) Pitch control",
+        "C) Yaw control",
+        "D) Brake control"
+      ],
+      "answer": "B",
+      "explanation": "Pitch control feathers blades to spill excess wind energy above rated speed."
+    },
+    {
+      "q": "What type of generator uses a partial-power converter?",
+      "options": [
+        "A) Permanent magnet synchronous generator (PMSG)",
+        "B) Doubly-fed induction generator (DFIG)",
+        "C) Squirrel cage induction generator",
+        "D) DC generator"
+      ],
+      "answer": "B",
+      "explanation": "DFIG uses a partial-power converter on the rotor circuit, typically 30% of rated power."
+    },
+    {
+      "q": "In a PLC, what does a 4â20 mA signal typically represent?",
+      "options": [
+        "A) A digital on/off state",
+        "B) An analog value such as wind speed",
+        "C) A communication protocol",
+        "D) A power supply voltage"
+      ],
+      "answer": "B",
+      "explanation": "4â20 mA is a standard analog signal for sensors like wind speed or temperature."
+    },
+    {
+      "q": "What is the typical scan time for a wind turbine PLC?",
+      "options": [
+        "A) 10â50 milliseconds",
+        "B) 1â2 seconds",
+        "C) 5â10 minutes",
+        "D) 1 hour"
+      ],
+      "answer": "A",
+      "explanation": "Fast scan times ensure quick response to changing conditions."
+    },
+    {
+      "q": "Which communication protocol is commonly used between PLCs and SCADA in wind farms?",
+      "options": [
+        "A) HTTP",
+        "B) Modbus TCP",
+        "C) FTP",
+        "D) SMTP"
+      ],
+      "answer": "B",
+      "explanation": "Modbus TCP is widely used for industrial control communications."
+    },
+    {
+      "q": "What is the first thing to check when a PLC is not working?",
+      "options": [
+        "A) The programming code",
+        "B) The 24 VDC power supply",
+        "C) The network cable",
+        "D) The sensor calibration"
+      ],
+      "answer": "B",
+      "explanation": "Most PLC faults are power-related, so check power first."
+    },
+    {
+      "q": "What does HMI stand for?",
+      "options": [
+        "A) Human-Machine Interface",
+        "B) High-Level Management Interface",
+        "C) Hydraulic Mechanical Interface",
+        "D) Hardware Monitoring Instrument"
+      ],
+      "answer": "A",
+      "explanation": "HMI is the interface between the operator and the machine."
+    },
+    {
+      "q": "Why are high-brightness screens important for HMIs in Africa?",
+      "options": [
+        "A) To reduce power consumption",
+        "B) To be readable in bright sunlight",
+        "C) To save cost",
+        "D) To improve touch sensitivity"
+      ],
+      "answer": "B",
+      "explanation": "Sunlight readability is critical for outdoor HMI use."
+    },
+    {
+      "q": "What color typically indicates a fault on an HMI mimic diagram?",
+      "options": [
+        "A) Green",
+        "B) Yellow",
+        "C) Red",
+        "D) Blue"
+      ],
+      "answer": "C",
+      "explanation": "Red is the standard color for faults or critical alarms."
+    },
+    {
+      "q": "Which software is commonly used for Siemens HMI development?",
+      "options": [
+        "A) WinCC",
+        "B) FactoryTalk View",
+        "C) Node-RED",
+        "D) ScadaBR"
+      ],
+      "answer": "A",
+      "explanation": "WinCC is Siemens' HMI/SCADA software."
+    },
+    {
+      "q": "What is a recommended practice for HMI user access?",
+      "options": [
+        "A) Give all users engineer access",
+        "B) Use a single shared password",
+        "C) Set up user levels: operator, technician, engineer",
+        "D) Disable passwords for convenience"
+      ],
+      "answer": "C",
+      "explanation": "Role-based access prevents unauthorized changes to critical parameters."
+    },
+    {
+      "q": "What does SIS stand for?",
+      "options": [
+        "A) Safety Instrumented System",
+        "B) Supervisory Information System",
+        "C) Standard Industrial Sensor",
+        "D) System Integrity Software"
+      ],
+      "answer": "A",
+      "explanation": "SIS is an independent system that brings the turbine to a safe state."
+    },
+    {
+      "q": "What is the typical action of an SIS when overspeed is detected?",
+      "options": [
+        "A) Increase power output",
+        "B) Pitch to feather and apply brake",
+        "C) Yaw the nacelle",
+        "D) Reduce torque"
+      ],
+      "answer": "B",
+      "explanation": "SIS triggers emergency stop by feathering blades and braking."
+    },
+    {
+      "q": "What safety integrity level (SIL) is often required for wind turbine SIS?",
+      "options": [
+        "A) SIL 1",
+        "B) SIL 2 or SIL 3",
+        "C) SIL 4",
+        "D) No SIL required"
+      ],
+      "answer": "B",
+      "explanation": "Wind turbine SIS typically requires SIL 2 or SIL 3 certification."
+    },
+    {
+      "q": "How often should the SIS be tested?",
+      "options": [
+        "A) Monthly",
+        "B) Yearly",
+        "C) Every 5 years",
+        "D) Never"
+      ],
+      "answer": "A",
+      "explanation": "Monthly testing ensures the SIS will function when needed."
+    },
+    {
+      "q": "What is a common cause of false vibration alarms in dusty conditions?",
+      "options": [
+        "A) Sensor overheating",
+        "B) Dust accumulation on sensors",
+        "C) Electrical noise",
+        "D) Software bugs"
+      ],
+      "answer": "B",
+      "explanation": "Dust can cause sensors to give erroneous readings, requiring careful threshold setting."
+    },
+    {
+      "q": "Why is network segmentation important for wind farm cybersecurity?",
+      "options": [
+        "A) To improve internet speed",
+        "B) To separate control network from office network",
+        "C) To reduce cable costs",
+        "D) To allow remote access"
+      ],
+      "answer": "B",
+      "explanation": "Segmentation prevents attackers from moving from office IT to critical control systems."
+    },
+    {
+      "q": "What is a common default password risk in wind turbines?",
+      "options": [
+        "A) Passwords are too long",
+        "B) Default passwords like 'admin' are not changed",
+        "C) Passwords are changed weekly",
+        "D) Passwords are encrypted"
+      ],
+      "answer": "B",
+      "explanation": "Default passwords are easily guessed and must be changed immediately."
+    },
+    {
+      "q": "What technology is recommended for secure remote access to wind farm SCADA?",
+      "options": [
+        "A) Telnet",
+        "B) VPN",
+        "C) FTP",
+        "D) HTTP"
+      ],
+      "answer": "B",
+      "explanation": "VPN provides encrypted, authenticated remote access."
+    },
+    {
+      "q": "What should be done with unused ports on a wind farm firewall?",
+      "options": [
+        "A) Leave them open for convenience",
+        "B) Close them",
+        "C) Monitor them",
+        "D) Assign them to guests"
+      ],
+      "answer": "B",
+      "explanation": "Closing unused ports reduces attack surface."
+    },
+    {
+      "q": "Which of the following is a physical security measure for wind farm control cabinets?",
+      "options": [
+        "A) Using wireless keyboards",
+        "B) Locking cabinets with keyed access",
+        "C) Sharing passwords",
+        "D) Disabling firewalls"
+      ],
+      "answer": "B",
+      "explanation": "Physical locks prevent unauthorized access to control equipment."
+    },
+    {
+      "q": "What is the purpose of a yaw control loop?",
+      "options": [
+        "A) To adjust blade angle",
+        "B) To turn the nacelle to face the wind",
+        "C) To control generator torque",
+        "D) To apply the brake"
+      ],
+      "answer": "B",
+      "explanation": "Yaw control aligns the rotor with the wind direction for maximum energy capture."
+    },
+    {
+      "q": "What is a typical wind speed deviation that triggers yaw correction?",
+      "options": [
+        "A) 1 degree",
+        "B) 10â15 degrees",
+        "C) 45 degrees",
+        "D) 90 degrees"
+      ],
+      "answer": "B",
+      "explanation": "Yaw correction is typically initiated when wind direction deviates by 10â15 degrees."
+    },
+    {
+      "q": "Which component measures wind direction for yaw control?",
+      "options": [
+        "A) Anemometer",
+        "B) Wind vane or ultrasonic anemometer",
+        "C) Encoder",
+        "D) Thermometer"
+      ],
+      "answer": "B",
+      "explanation": "Wind vane or ultrasonic sensors provide wind direction data."
+    },
+    {
+      "q": "What is a common maintenance task for yaw systems in coastal African sites?",
+      "options": [
+        "A) Replacing blades",
+        "B) Greasing yaw bearings every 3 months",
+        "C) Painting the nacelle",
+        "D) Upgrading software"
+      ],
+      "answer": "B",
+      "explanation": "Salt corrosion requires frequent greasing of yaw bearings."
+    }
+  ],
+  "videos": [
+    "wind turbine pitch control explained",
+    "PLC programming for wind turbine control",
+    "wind farm cybersecurity best practices"
+  ]
+}

@@ -1,0 +1,224 @@
+﻿{
+  "course": "Solar Panel Assembly",
+  "module_number": 2,
+  "module_title": "Solar Cell Sorting and Testing",
+  "lessons": [
+    {
+      "title": "Visual Inspection of Solar Cells for Defects",
+      "body": "Before you test any solar cell with tools, you must first look at it carefully. Visual inspection catches problems that a multimeter might miss, like microcracks, chipped edges, or discoloration. Work on a clean, flat surface under bright lightâideally outdoors in daylight or under a bright LED lamp. Pick up each cell by the edges only, wearing clean cotton gloves to avoid leaving oil from your fingers. Oils can cause hot spots later.\n\nStart by checking the corners and edges. A good cell has smooth, unbroken edges. Look for chips, cracks, or missing pieces. Even a tiny chip on the corner can weaken the cell and cause it to break during soldering. Next, examine the surface for scratches or dull spots. Shiny, uniform blue or black surface is good. White or grey spots mean the anti-reflective coating is damaged. Also look for solder padsâthe silver strips. They should be flat, shiny, and fully attached. If a pad is peeling or missing, the cell is no good.\n\nNow hold the cell up to a light source and look through it. You are checking for microcracksâtiny hairline cracks that are hard to see straight on. They appear as thin, darker lines. Microcracks often happen during shipping or handling. A cell with many microcracks will lose power and may break later. If you see more than two or three microcracks, set the cell aside as reject. Also check for bubbles or delamination in the encapsulant if the cell is already laminatedâbut for raw cells, focus on the silicon.\n\nSort your cells into three piles: good, questionable, and reject. Good cells have no visible defects. Questionable cells have minor issues like one small chip or a single microcrackâthese can be used for small test panels or practice. Reject cells have major cracks, missing pads, or heavy discoloration. In a typical batch of 100 cells from a supplier, expect 5 to 10 rejects. In Africa, where cells often travel long distances, reject rates can be higher. Always inspect every single cell before testing. This saves time and prevents building a panel that fails early.",
+      "word_count": 345
+    },
+    {
+      "title": "Using a Multimeter to Test Cell Voltage and Current",
+      "body": "A multimeter is your most important tool for testing solar cells. You need a digital multimeter that can measure DC volts and DC amps. A basic model like the UNI-T UT120C or a Fluke 107 works well. Set your multimeter to DC volts, 20V range. Connect the red probe to the positive solder pad and the black probe to the negative pad. Now take the cell outside into direct sunlight. Hold the cell flat, facing the sun. You should read between 0.5V and 0.6V for a standard silicon cell. If you read 0V, the cell is dead or you have a bad connection. If you read less than 0.45V, the cell is weak.\n\nNext, test current. Switch your multimeter to DC amps, 10A range. Move the red probe to the 10A jack. Connect the probes to the cell's padsâred to positive, black to negative. In full sun, a 5-inch monocrystalline cell should produce about 4.5 to 5.5 amps. A polycrystalline cell of the same size gives 4.0 to 5.0 amps. If you read less than 3 amps, the cell is underperforming. Remember: current depends on sunlight intensity. A cloudy day will give lower readings. Always test at midday with clear sky. In many African countries, peak sun hours are between 11am and 2pm.\n\nYou can also test the cell's open-circuit voltage (Voc) and short-circuit current (Isc). Voc is voltage with no loadâjust touch the probes to the pads. Isc is current with the probes directly shorting the cellâset to amps and touch probes together through the cell. These are the same as above. For a quick check, measure Voc first. If Voc is good, then measure Isc. If Isc is low but Voc is fine, the cell has high internal resistanceâoften from a bad solder pad or microcracks. Write down every reading. Use a notebook or a simple spreadsheet on your phone. Label each cell with a number using a permanent marker on the edge. This data will help you sort cells into groups later.",
+      "word_count": 350
+    },
+    {
+      "title": "Measuring Cell Efficiency with a Solar Simulator",
+      "body": "Efficiency tells you how much of the sun's energy a cell turns into electricity. To measure it accurately, you need a solar simulatorâa machine that mimics sunlight. In a small workshop, you can build a simple simulator using a 1000W halogen lamp placed 30cm above the cell. But for consistent results, a proper solar simulator like the Sunlite 16S or a used class AAA simulator is better. If you cannot afford one, you can use natural sunlight on a clear day at noon, but you must measure the sunlight intensity with a pyranometer or a calibrated solar cell.\n\nHere is the method. First, measure the cell's area in square centimeters. For a standard 5-inch pseudo-square cell, area is about 125 cmÂ². Next, set up your simulator so the light intensity is exactly 1000 W/mÂ² (1 sun). Use a reference cell to confirm. Place your test cell on a temperature-controlled plate at 25Â°C. Temperature matters: for every 1Â°C above 25Â°C, efficiency drops by about 0.4%. So keep it cool. Connect the cell to a variable resistor (rheostat) and a multimeter. Slowly adjust the resistor from zero to maximum while recording voltage and current at each step. This gives you the I-V curve.\n\nFrom the I-V curve, find the maximum power point (Pmax). That is the highest product of voltage times current. For example, if Vmp = 0.52V and Imp = 4.8A, then Pmax = 2.496W. Now calculate efficiency: Efficiency = (Pmax / (Area Ã 1000 W/mÂ²)) Ã 100%. For our example: (2.496 / (0.0125 mÂ² Ã 1000)) Ã 100% = 19.97%. So about 20% efficient. Good commercial cells range from 15% to 22%. If your cell measures below 12%, it is likely defective or old.\n\nIn Africa, many learners start with a simple setup: a halogen lamp, a multimeter, and a homemade I-V tracer using an Arduino and a MOSFET. That costs under $50. You can also send a few cells to a local university or solar company that has a simulator. Record efficiency for each cell. Cells within 0.5% efficiency of each other should be grouped together for panel assembly. Mixing a 15% cell with a 20% cell will drag down the whole panel's performance.",
+      "word_count": 355
+    },
+    {
+      "title": "Sorting Cells by Performance Characteristics",
+      "body": "After you have tested voltage, current, and efficiency, you must sort cells into groups. The goal is to build panels where all cells perform similarly. If you mix a strong cell with a weak cell, the weak cell will limit the current for the whole stringâlike a chain with one short link. So sorting is critical. You will sort by current (Isc or Imp) first, because current matching matters most in series connections. Then sort by voltage (Voc) and efficiency.\n\nStart by writing each cell's measurements on a label or directly on the cell edge with a permanent marker. Use a simple code: for example, 'A1-4.8-0.55' means group A, cell 1, 4.8A, 0.55V. Now arrange all cells on a large table. Group them by current in steps of 0.1A. For instance, all cells between 4.7A and 4.8A go in one group. Cells between 4.8A and 4.9A go in another. Aim for groups of 36 or 60 cells, depending on your panel size. A typical 100W panel uses 36 cells (4x9 grid). A 200W panel uses 60 or 72 cells.\n\nWithin each current group, sort by voltage. Voltage differences of more than 0.02V can cause mismatch losses. So keep voltage spread tight. If you have cells with 0.50V and 0.55V, do not put them in the same series string. You can either use them in separate panels or use a buck converter to balance. For most small workshops, just keep voltage within 0.03V. Also check efficiency: cells in the same group should be within 1% efficiency. If a cell is 2% lower, set it aside for a smaller project.\n\nAfter sorting, you will have several groups. Label each group clearly: 'Group A: 4.8A, 0.55V, 18%' etc. Store each group in its own box or tray. When you start soldering, use only cells from one group per panel. This ensures maximum power output. In Africa, where cells may come from different suppliers or batches, sorting is even more important. You might receive cells with 10% variation. By sorting, you can still build good panels. Remember: a well-sorted panel can be 5-10% more efficient than a randomly assembled one.",
+      "word_count": 355
+    },
+    {
+      "title": "Documenting Cell Test Results",
+      "body": "Good documentation saves you time and money. Without records, you will forget which cell was which, and you may end up using a bad cell in a panel. Start a simple logbookâa notebook or a spreadsheet on your phone or computer. For each cell, record: a unique ID number, date of test, visual inspection result (good/questionable/reject), Voc, Isc, Pmax, efficiency, and any notes. Also record the tester's name and the weather conditions if you tested outdoors. For example: 'Cell #023, 2025-03-15, good, Voc=0.56V, Isc=5.1A, Pmax=2.65W, Eff=21.2%, sunny 28Â°C.'\n\nUse a consistent format. If you have many cells, create a table. In a notebook, draw columns. On a phone, use Google Sheets or a free app like 'Solar Cell Tester'. Include a column for 'group' after sorting. This helps you trace which cells went into which panel. For each panel you build, keep a build sheet: list the cell IDs, their group, and the panel's total expected power. For example: 'Panel P-001, 36 cells, Group A (4.8A, 0.55V), expected 100W.' Then after building, test the panel and record actual output. This feedback loop helps you improve.\n\nWhy is this important? In Africa, many solar panels fail early because of mismatched cells. If you document, you can identify patterns. Maybe a certain supplier sends cells with lower efficiency. Or maybe your soldering technique damages cells. With records, you can prove warranty claims or adjust your process. Also, if you sell panels, give the buyer a simple test report. That builds trust. Keep records for at least two years. Store them in a dry place. If you use paper, put it in a plastic sleeve. If digital, back up to a USB drive or cloud. A simple Excel sheet is enough. Do not skip this stepâit is the difference between a hobby and a professional workshop.",
+      "word_count": 345
+    },
+    {
+      "title": "Handling and Storing Solar Cells Properly",
+      "body": "Solar cells are fragile. They are thin (about 200 micrometers) and can crack easily. Proper handling and storage prevent damage and keep your cells performing well. Always wear clean cotton gloves when handling cells. Oils from your skin can create hot spots and reduce efficiency. Pick up a cell by its edges with both hands, supporting the middle. Never squeeze the center or drop it. Work on a soft surfaceâa foam pad or a clean clothâso if you drop a cell, it has a chance. Keep your work area free of metal tools that could scratch the surface.\n\nStore cells in a cool, dry place. Humidity is the enemy: it causes corrosion on the solder pads. In many African regions, humidity can be high during rainy season. Use airtight plastic containers with silica gel packets. You can buy silica gel online or reuse packets from shoe boxes. Place cells face-to-face with a thin foam sheet between them, or stack them in a custom rack. Do not stack more than 20 cells highâthe weight can cause microcracks. Keep them away from direct sunlight when storing, because heat and UV can degrade the encapsulant if already laminated, but raw cells are less affected. Still, store in a dark cabinet.\n\nTemperature matters too. Avoid extreme heat (above 40Â°C) or cold (below 0Â°C). A typical room temperature of 20-30Â°C is ideal. If you live in a very hot area, store cells in an air-conditioned room or a basement. Never leave cells in a car on a hot dayâtemperatures can reach 60Â°C and cause warping. Also, keep cells away from dust and sand. In dusty environments, cover containers tightly. Before soldering, clean the solder pads with isopropyl alcohol and a lint-free cloth. This removes oxidation and ensures good solder joints.\n\nWhen transporting cells, use a rigid box with foam padding. Mark it 'FRAGILE'. If you ship cells, double-box them. Many suppliers ship cells in Styrofoam boxes with slotsâreuse those. For long-term storage, check your cells every few months for signs of corrosion or cracks. A well-stored cell can last for years. Remember: a cracked cell is a lost cell. Proper handling is not optionalâit is a core skill in solar panel assembly.",
+      "word_count": 355
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is the first step before testing any solar cell with tools?",
+      "options": ["A) Visual inspection", "B) Measuring voltage", "C) Measuring current", "D) Soldering tabs"],
+      "answer": "A",
+      "explanation": "Visual inspection catches defects that might not show up in electrical tests."
+    },
+    {
+      "q": "Which glove type is recommended when handling solar cells?",
+      "options": ["A) Leather gloves", "B) Cotton gloves", "C) Rubber gloves", "D) No gloves needed"],
+      "answer": "B",
+      "explanation": "Cotton gloves prevent oils from skin transferring to the cell, which can cause hot spots."
+    },
+    {
+      "q": "What does a white or grey spot on a solar cell indicate?",
+      "options": ["A) Good efficiency", "B) Damaged anti-reflective coating", "C) High voltage", "D) Proper solder pad"],
+      "answer": "B",
+      "explanation": "White or grey spots mean the anti-reflective coating is damaged, reducing light absorption."
+    },
+    {
+      "q": "How many microcracks are typically acceptable before rejecting a cell?",
+      "options": ["A) None", "B) One or two", "C) More than two or three", "D) Any number is fine"],
+      "answer": "C",
+      "explanation": "More than two or three microcracks indicates the cell is likely to lose power or break."
+    },
+    {
+      "q": "What is the expected open-circuit voltage (Voc) for a standard silicon cell in full sun?",
+      "options": ["A) 0.1-0.2V", "B) 0.5-0.6V", "C) 1.0-1.2V", "D) 2.0-2.5V"],
+      "answer": "B",
+      "explanation": "A standard silicon cell produces about 0.5 to 0.6 volts under full sunlight."
+    },
+    {
+      "q": "When testing current with a multimeter, which setting should you use?",
+      "options": ["A) DC volts", "B) AC volts", "C) DC amps", "D) Resistance"],
+      "answer": "C",
+      "explanation": "Current is measured in amps, and solar cells produce DC current."
+    },
+    {
+      "q": "What is the typical short-circuit current (Isc) for a 5-inch monocrystalline cell in full sun?",
+      "options": ["A) 0.5-1.0A", "B) 2.0-3.0A", "C) 4.5-5.5A", "D) 8.0-10.0A"],
+      "answer": "C",
+      "explanation": "A 5-inch monocrystalline cell typically produces 4.5 to 5.5 amps under full sun."
+    },
+    {
+      "q": "Why should you test cells at midday with clear sky?",
+      "options": ["A) To avoid shadows", "B) Because sunlight intensity is highest and consistent", "C) To keep the multimeter cool", "D) Because cells work better when hot"],
+      "answer": "B",
+      "explanation": "Midday clear sky provides maximum and consistent sunlight, giving accurate current readings."
+    },
+    {
+      "q": "If a cell has good Voc but low Isc, what is a likely problem?",
+      "options": ["A) Dead cell", "B) High internal resistance", "C) Too much sunlight", "D) Wrong multimeter setting"],
+      "answer": "B",
+      "explanation": "Low current with normal voltage often indicates high internal resistance from cracks or bad solder pads."
+    },
+    {
+      "q": "What is the purpose of a solar simulator?",
+      "options": ["A) To cool the cell", "B) To mimic sunlight for testing", "C) To clean the cell", "D) To measure temperature"],
+      "answer": "B",
+      "explanation": "A solar simulator provides controlled light similar to sunlight for accurate efficiency measurements."
+    },
+    {
+      "q": "What is the standard light intensity for efficiency testing?",
+      "options": ["A) 500 W/mÂ²", "B) 800 W/mÂ²", "C) 1000 W/mÂ²", "D) 1500 W/mÂ²"],
+      "answer": "C",
+      "explanation": "Standard test conditions use 1000 W/mÂ² (1 sun) irradiance."
+    },
+    {
+      "q": "How does temperature affect solar cell efficiency?",
+      "options": ["A) Efficiency increases with temperature", "B) Efficiency decreases with temperature", "C) No effect", "D) Only affects voltage"],
+      "answer": "B",
+      "explanation": "For every 1Â°C above 25Â°C, efficiency drops by about 0.4%."
+    },
+    {
+      "q": "What is the maximum power point (Pmax) on an I-V curve?",
+      "options": ["A) Highest voltage", "B) Highest current", "C) Highest product of voltage and current", "D) Lowest resistance"],
+      "answer": "C",
+      "explanation": "Pmax is the point where voltage times current is at its maximum."
+    },
+    {
+      "q": "A cell has an area of 125 cmÂ² and Pmax of 2.5W. What is its efficiency?",
+      "options": ["A) 10%", "B) 15%", "C) 20%", "D) 25%"],
+      "answer": "C",
+      "explanation": "Efficiency = (2.5 / (0.0125 Ã 1000)) Ã 100% = 20%."
+    },
+    {
+      "q": "Which parameter is most important to match when sorting cells for series connection?",
+      "options": ["A) Voltage", "B) Current", "C) Efficiency", "D) Weight"],
+      "answer": "B",
+      "explanation": "In series, current matching is critical because the lowest current cell limits the whole string."
+    },
+    {
+      "q": "How many cells are typically used in a 100W solar panel?",
+      "options": ["A) 12", "B) 24", "C) 36", "D) 60"],
+      "answer": "C",
+      "explanation": "A typical 100W panel uses 36 cells in a 4x9 grid."
+    },
+    {
+      "q": "What is the maximum voltage difference allowed within a sorted group?",
+      "options": ["A) 0.01V", "B) 0.02V", "C) 0.03V", "D) 0.1V"],
+      "answer": "C",
+      "explanation": "Keeping voltage within 0.03V minimizes mismatch losses in series strings."
+    },
+    {
+      "q": "What should you do with a cell that has 2% lower efficiency than the group?",
+      "options": ["A) Use it anyway", "B) Set it aside for smaller projects", "C) Throw it away", "D) Mix it with higher efficiency cells"],
+      "answer": "B",
+      "explanation": "A cell with 2% lower efficiency can be used in a separate smaller project to avoid dragging down a panel."
+    },
+    {
+      "q": "Why is sorting cells important in Africa?",
+      "options": ["A) Cells are cheaper there", "B) Cells often come from different batches with high variation", "C) Sunlight is stronger", "D) No reason"],
+      "answer": "B",
+      "explanation": "In Africa, cells may come from various suppliers, leading to up to 10% variation, making sorting crucial."
+    },
+    {
+      "q": "What information should be recorded for each cell in a logbook?",
+      "options": ["A) Only voltage", "B) Only current", "C) Unique ID, date, visual result, Voc, Isc, Pmax, efficiency", "D) Just the price"],
+      "answer": "C",
+      "explanation": "Complete records help trace performance and identify patterns for improvement."
+    },
+    {
+      "q": "Why should you keep a build sheet for each panel?",
+      "options": ["A) To know the cell IDs and expected power", "B) To calculate shipping cost", "C) To paint the panel", "D) No reason"],
+      "answer": "A",
+      "explanation": "A build sheet links cells to the panel, helping with troubleshooting and warranty claims."
+    },
+    {
+      "q": "How long should you keep cell test records?",
+      "options": ["A) 1 month", "B) 6 months", "C) At least 2 years", "D) Forever"],
+      "answer": "C",
+      "explanation": "Keeping records for at least two years allows you to track long-term performance and warranty issues."
+    },
+    {
+      "q": "What is the best way to handle a solar cell?",
+      "options": ["A) By the center with bare hands", "B) By the edges with cotton gloves", "C) With metal tongs", "D) By the solder pads"],
+      "answer": "B",
+      "explanation": "Handling by edges with cotton gloves prevents oils and mechanical stress."
+    },
+    {
+      "q": "Why is humidity a problem for solar cell storage?",
+      "options": ["A) It makes cells heavier", "B) It causes corrosion on solder pads", "C) It increases voltage", "D) It attracts insects"],
+      "answer": "B",
+      "explanation": "Humidity leads to oxidation and corrosion of the metallic solder pads."
+    },
+    {
+      "q": "What is the maximum recommended stack height for storing solar cells?",
+      "options": ["A) 5 cells", "B) 10 cells", "C) 20 cells", "D) 50 cells"],
+      "answer": "C",
+      "explanation": "Stacking more than 20 cells can cause microcracks due to weight."
+    },
+    {
+      "q": "What should you use to clean solder pads before soldering?",
+      "options": ["A) Water", "B) Isopropyl alcohol", "C) Oil", "D) Sandpaper"],
+      "answer": "B",
+      "explanation": "Isopropyl alcohol removes oxidation and dirt without leaving residue."
+    },
+    {
+      "q": "How should you transport solar cells?",
+      "options": ["A) In a plastic bag", "B) In a rigid box with foam padding", "C) Loose in a backpack", "D) Stacked without protection"],
+      "answer": "B",
+      "explanation": "A rigid box with foam padding protects cells from shock and vibration."
+    },
+    {
+      "q": "What is a sign of a well-stored cell?",
+      "options": ["A) Discoloration", "B) Corrosion on pads", "C) No cracks or corrosion", "D) Warping"],
+      "answer": "C",
+      "explanation": "A well-stored cell remains free from cracks, corrosion, and other damage."
+    },
+    {
+      "q": "Why should you avoid storing cells in a car on a hot day?",
+      "options": ["A) Theft risk", "B) Temperatures can reach 60Â°C and cause warping", "C) Vibration", "D) No reason"],
+      "answer": "B",
+      "explanation": "High temperatures inside a car can warp or damage solar cells."
+    },
+    {
+      "q": "What is the recommended temperature range for storing solar cells?",
+      "options": ["A) -10 to 0Â°C", "B) 0 to 10Â°C", "C) 20 to 30Â°C", "D) 40 to 50Â°C"],
+      "answer": "C",
+      "explanation": "Room temperature of 20-30Â°C is ideal for storing solar cells."
+    }
+  ],
+  "videos": [
+    "solar cell visual inspection defects",
+    "multimeter test solar cell voltage current",
+    "solar cell sorting efficiency measurement"
+  ]
+}

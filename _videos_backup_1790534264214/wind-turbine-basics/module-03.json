@@ -1,0 +1,222 @@
+{
+  "course": "Wind Turbine Basics",
+  "module_number": 3,
+  "module_title": "Aerodynamics of Wind Turbines",
+  "lessons": [
+    {
+      "title": "Lift and Drag Forces on Airfoils",
+      "body": "When wind hits a wind turbine blade, it doesn't just push it. The blade is shaped like an airplane wingâan airfoil. The wind splits, going faster over the curved top and slower underneath. This creates a pressure difference: low pressure on top, high pressure below. The result is lift, a force perpendicular to the wind direction. Lift is what actually turns the rotor. Drag is the force parallel to the wind, pulling the blade back. Your goal is to maximize lift and minimize drag.\n\nIn Africa, most small wind turbines use simple airfoils like the NACA 4412 or 2412. These are easy to carve from wood or mold from fiberglass. For a 1-meter blade, a lift coefficient (Cl) of 1.0 is typical at a 5Â° angle of attack. Drag coefficient (Cd) might be 0.01. The lift-to-drag ratio (Cl/Cd) tells you efficiency: 100 is good, 50 is poor. You can measure this with free software like XFOIL or QBlade on a laptop.\n\nPractical tip: Keep blades smooth. Dust, insect marks, or rough repairs increase drag. In dusty Sahel conditions, wipe blades monthly. If you're building from wood, sand with 400-grit and seal with polyurethane. For a 3-blade, 2-meter diameter turbine, a 10% increase in drag can cut power output by 5-8%.\n\nYou can test airfoil performance without a wind tunnel. Use a simple setup: a household fan, a kitchen scale, and a model blade. Mount the blade on a pivot, blow air, and measure the force with the scale. Compare different shapes. Even a flat plate generates lift, but a proper airfoil gives 3-5 times more. Remember: lift increases with speed squared. Double the wind speed, quadruple the liftâbut also quadruple the drag. That's why high winds need braking."
+    },
+    {
+      "title": "Angle of Attack and Stall",
+      "body": "Angle of attack (AoA) is the angle between the blade's chord line and the oncoming wind. It's the single most important number for blade performance. At low AoA (0-5Â°), lift rises steadily. At around 15-20Â°, lift peaks. Beyond that, the airflow separates from the blade's top surfaceâthis is stall. Lift drops sharply, drag skyrockets. The turbine loses power and may vibrate.\n\nFor small African wind turbines, design for an AoA of 5-10Â° at normal wind speeds. A typical 2-meter diameter, 3-blade turbine spinning at 300 rpm in 8 m/s wind has a relative wind angle of about 7Â° at the tip. But near the hub, the angle is higherâup to 20Â°âbecause the blade moves slower there. That's why blades are twisted: the root has a larger pitch angle to keep AoA optimal along the whole length.\n\nStall is not always bad. Some turbines use \"stall regulation\": blades are fixed, and in high winds the AoA increases until stall limits power. This is simple and cheapâgood for off-grid African installations. But it can cause noise and fatigue. Active stall uses pitch control to force stall earlier.\n\nHow to avoid unwanted stall: keep blades clean, avoid sudden yaw changes, and don't overspeed. If you hear a loud whooshing or feel vibration, the blade may be stalling. Reduce load or apply brake. For a DIY turbine, test stall by tying a string to the blade tip and watching airflow with a small tuft. At stall, the tuft flutters wildly. Adjust blade pitch by rotating the blade in its hubâ2Â° changes can make a big difference. In dusty conditions, stall happens earlier because dirt disrupts smooth flow. Clean blades monthly."
+    },
+    {
+      "title": "Blade Element Momentum Theory Basics",
+      "body": "Blade Element Momentum (BEM) theory is the workhorse for designing wind turbine blades. It combines two ideas: momentum theory (wind slows as it passes through the rotor) and blade element theory (each slice of blade generates lift and drag). You don't need a PhD to use it. Free tools like QBlade or HARP_Opt do the math for you.\n\nThe core idea: divide each blade into 10-20 elements from root to tip. For each element, calculate the local wind speed, angle of attack, and lift/drag coefficients. Then sum the forces to get total torque and power. The result tells you the optimal twist and chord (width) for each element. For a 1 kW turbine in 8 m/s wind, a typical blade might be 2.5 m long, with chord tapering from 0.25 m at root to 0.05 m at tip, and twist from 20Â° to 2Â°.\n\nIn Africa, you can build blades using BEM output. Print the shape on paper, cut plywood templates, and carve. Or use PVC pipe: cut a 200 mm diameter pipe lengthwise, heat it, and twist to match the BEM profile. This is cheap and works well for small turbines. For a 3-blade, 3-meter diameter turbine, BEM predicts about 1.5 kW at 10 m/s if efficiency is 40%.\n\nBEM has limits. It assumes no tip losses, but real blades lose energy at the tip. Add a tip loss factor (Prandtl) to correct. Also, BEM ignores turbulence and yaw misalignment. For African sites with gusty winds, use a safety factor of 1.5 on loads. If you don't have software, use the simpler \"Schmitz\" method: it gives good twist for small turbines. Start with a 5Â° angle of attack at the tip and 15Â° at the root. Test, measure power, and adjust."
+    },
+    {
+      "title": "Tip Speed Ratio and Efficiency",
+      "body": "Tip speed ratio (TSR) is the speed of the blade tip divided by the wind speed. It's written as Î» (lambda). If the tip moves at 30 m/s and wind is 10 m/s, TSR = 3. TSR determines how fast the rotor spins and how much energy you capture. Most 3-blade turbines run best at TSR 6-8. Two-blade turbines run faster, TSR 8-10. Many-blade farm windmills run slow, TSR 1-2.\n\nWhy does TSR matter? At low TSR, the blades see a high angle of attack and may stall. At high TSR, drag increases and efficiency drops. The maximum theoretical efficiency is 59.3% (Betz limit). Real turbines achieve 40-45% at optimal TSR. For a small African turbine, aim for 35-40%. If your TSR is too low, the rotor turns slowly and produces less power. Too high, and it may overspeed and break.\n\nYou can measure TSR easily. Use a bicycle speedometer on the shaft: set wheel circumference to 1 meter, and it reads tip speed directly if you multiply by rotor radius. Or use a smartphone tachometer app. Count revolutions per minute (RPM). TSR = (RPM Ã Ï Ã diameter) / (60 Ã wind speed). For a 2 m diameter rotor at 300 RPM in 8 m/s wind: TSR = (300 Ã 3.14 Ã 2) / (60 Ã 8) = 3.9. That's lowâyou'd want 6-7. Increase blade pitch or reduce load.\n\nIn Africa, many small turbines use car alternators. These need high RPM to charge. So you might run TSR 8-10 to get 1000+ RPM. But high TSR means more noise and wear. Balance by using a belt drive to step up RPM. For direct-drive PMG (permanent magnet generator), TSR 5-6 is fine. Always test: adjust load (battery voltage) and watch RPM. If RPM drops when you connect load, TSR is too lowâadd more blades or reduce generator resistance."
+    },
+    {
+      "title": "Pitch Control and Aerodynamic Braking",
+      "body": "Pitch control means rotating the blade around its long axis to change the angle of attack. This lets you optimize power at low winds and limit power at high winds. Small African turbines often use fixed pitch to keep costs down, but pitch control is worth it for turbines above 1 kW. You can pitch manually with a lever or automatically with a governor.\n\nAerodynamic braking uses pitch to stall the blades. Turn them to 90Â° (feather) and they stop producing liftâthe rotor slows. This is safer than mechanical brakes because it doesn't wear out. For a 3-blade turbine, pitch all blades equally. A simple system: a spring-loaded lever that twists blades when wind exceeds 15 m/s. Or use a centrifugal governor from a diesel engineâweights fly out and rotate the blades.\n\nIn Africa, dust and heat affect pitch mechanisms. Use sealed bearings and stainless steel cables. Lubricate monthly with graphite spray, not oil (oil attracts dust). Test pitch monthly: with the turbine stopped, move blades from 0Â° to 90Â° and check for smooth motion. If a blade sticks, the turbine may yaw violently in a storm.\n\nAerodynamic braking also works by yawing the rotor sideways (furling). But pitch braking is more controlled. For a 5 kW turbine, pitch braking can stop the rotor in 10 seconds from 20 m/s wind. Mechanical brakes would need a large disc and caliper. Combine both: pitch to feather, then apply a small mechanical brake to hold. For DIY, you can use a manual pitch lever with a locking pin. Never leave a turbine unattended in high winds without a braking method. In cyclone-prone areas like Mozambique, pitch to 90Â° and tie the rotor with a rope."
+    },
+    {
+      "title": "Yaw Control and Wind Direction Tracking",
+      "body": "Yaw is the rotation of the turbine around its vertical axis to face the wind. If the turbine is not facing the wind, you lose powerâup to 30% for 30Â° misalignment. Small turbines use a tail vane (like a weather vane) to passively yaw. Larger turbines use active yaw motors with wind sensors.\n\nFor a tail vane, size matters. The tail area should be about 10-15% of the rotor swept area. For a 2 m diameter rotor (area 3.14 mÂ²), tail area 0.3-0.5 mÂ². Mount the tail on a boom 1-1.5 m behind the rotor. The pivot point should be slightly ahead of the rotor's center of pressure so the turbine naturally turns into the wind. Test by pushing the tail sidewaysâit should swing back smoothly.\n\nIn Africa, wind direction can shift quickly, especially in coastal or mountainous areas. A tail vane with a damper (a small shock absorber or friction disc) prevents constant hunting. Without damping, the turbine yaws back and forth, causing wear. Use a simple rubber bumper or a spring-loaded hinge.\n\nActive yaw uses a wind vane sensor and a small motor (like a car window motor). This is more complex but needed for turbines above 10 kW. You can build a DIY yaw system with an Arduino, a potentiometer as wind vane, and a geared motor. Set a deadband of 10Â° so the motor doesn't jitter. Power the motor from the turbine's battery bank.\n\nMaintenance: grease the yaw bearing every 3 months. In dusty conditions, use a sealed bearing or a bronze bushing. Check cablesâthey twist as the turbine yaws. Use a slip ring or leave enough slack. For a small turbine, a simple cable loop works. In a storm, yaw can be locked with a pin to prevent damage. Always ensure the turbine can yaw freely in normal operation. If it sticks, the turbine may face sideways and overspeed."
+    }
+  ,
+    {
+      "title": "Practical Reference",
+      "body": "<section>\n  <h2>Practical Reference: Aerodynamics for African Wind Turbine Operators and Technicians</h2>\n\n  <p>This practical reference consolidates the core aerodynamic principles covered in this module into field-ready guidance. Whether you are commissioning a 5 kW turbine on a Kenyan tea estate, maintaining a 250 kW unit at a South African coastal site, or evaluating a hybrid mini-grid in Cabo Verde, the aerodynamics of the rotor determine how much energy you harvest, how much you spend on maintenance, and how long your turbine survives. The physics does not change because the turbine is in Africa â but the operating environment does. High dust loads in the Sahel, salt-laden air on the Atlantic and Indian Ocean coasts, extreme temperature swings in the Kalahari, and variable wind regimes across the continent all interact with aerodynamic behaviour in ways that directly affect your business case.</p>\n\n  <p>Use this lesson as a desk reference. The tables, diagram, checklist, and safety box are designed to be printed and kept in the O&M shed or the project office.</p>\n\n  <figure>\n    <svg viewBox=\"0 0 640 380\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"Diagram showing lift and drag forces on a wind turbine blade airfoil section, with angle of attack and resultant force vectors\">\n      <rect width=\"640\" height=\"380\" fill=\"#f7f9fb\"/>\n      <text x=\"320\" y=\"28\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"16\" font-weight=\"bold\" fill=\"#1a2b3c\">Lift and Drag Forces on a Wind Turbine Airfoil Section</text>\n\n      <!-- Airfoil shape -->\n      <path d=\"M 180 200 Q 260 150 380 185 Q 460 205 500 200 Q 460 225 380 220 Q 260 235 180 200 Z\" fill=\"#4a90c2\" stroke=\"#1a2b3c\" stroke-width=\"2\"/>\n\n      <!-- Chord line -->\n      <line x1=\"170\" y1=\"200\" x2=\"510\" y2=\"200\" stroke=\"#888\" stroke-width=\"1.5\" stroke-dasharray=\"6,4\"/>\n      <text x=\"515\" y=\"204\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#555\">Chord line</text>\n\n      <!-- Relative wind direction arrow -->\n      <line x1=\"100\" y1=\"290\" x2=\"200\" y2=\"240\" stroke=\"#e67e22\" stroke-width=\"2.5\" marker-end=\"url(#arrowOrange)\"/>\n      <text x=\"60\" y=\"305\" font-family=\"Arial, sans-serif\" font-size=\"12\" fill=\"#e67e22\">Relative wind</text>\n\n      <!-- Angle of attack arc -->\n      <path d=\"M 210 200 A 40 40 0 0 0 230 230\" fill=\"none\" stroke=\"#e67e22\" stroke-width=\"1.5\"/>\n      <text x=\"240\" y=\"238\" font-family=\"Arial, sans-serif\" font-size=\"12\" fill=\"#e67e22\">Î± (angle of attack)</text>\n\n      <!-- Lift vector -->\n      <line x1=\"340\" y1=\"190\" x2=\"340\" y2=\"80\" stroke=\"#27ae60\" stroke-width=\"3\" marker-end=\"url(#arrowGreen)\"/>\n      <text x=\"348\" y=\"95\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"bold\" fill=\"#27ae60\">Lift</text>\n\n      <!-- Drag vector -->\n      <line x1=\"340\" y1=\"190\" x2=\"460\" y2=\"190\" stroke=\"#c0392b\" stroke-width=\"3\" marker-end=\"url(#arrowRed)\"/>\n      <text x=\"465\" y=\"194\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"bold\" fill=\"#c0392b\">Drag</text>\n\n      <!-- Resultant vector -->\n      <line x1=\"340\" y1=\"190\" x2=\"430\" y2=\"100\" stroke=\"#8e44ad\" stroke-width=\"2\" stroke-dasharray=\"5,3\" marker-end=\"url(#arrowPurple)\"/>\n      <text x=\"435\" y=\"100\" font-family=\"Arial, sans-serif\" font-size=\"12\" fill=\"#8e44ad\">Resultant</text>\n\n      <!-- Rotation direction -->\n      <path d=\"M 550 180 A 30 30 0 1 1 550 220\" fill=\"none\" stroke=\"#1a2b3c\" stroke-width=\"2\" marker-end=\"url(#arrowBlack)\"/>\n      <text x=\"560\" y=\"205\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#1a2b3c\">Rotation</text>\n\n      <!-- Hub / root -->\n      <circle cx=\"170\" cy=\"200\" r=\"8\" fill=\"#1a2b3c\"/>\n      <text x=\"120\" y=\"185\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#1a2b3c\">Blade root</text>\n\n      <!-- Arrowhead markers -->\n      <defs>\n        <marker id=\"arrowGreen\" markerWidth=\"10\" markerHeight=\"10\" refX=\"5\" refY=\"5\" orient=\"auto\">\n          <path d=\"M0,0 L10,5 L0,10 Z\" fill=\"#27ae60\"/>\n        </marker>\n        <marker id=\"arrowRed\" markerWidth=\"10\" markerHeight=\"10\" refX=\"5\" refY=\"5\" orient=\"auto\">\n          <path d=\"M0,0 L10,5 L0,10 Z\" fill=\"#c0392b\"/>\n        </marker>\n        <marker id=\"arrowOrange\" markerWidth=\"10\" markerHeight=\"10\" refX=\"5\" refY=\"5\" orient=\"auto\">\n          <path d=\"M0,0 L10,5 L0,10 Z\" fill=\"#e67e22\"/>\n        </marker>\n        <marker id=\"arrowPurple\" markerWidth=\"10\" markerHeight=\"10\" refX=\"5\" refY=\"5\" orient=\"auto\">\n          <path d=\"M0,0 L10,5 L0,10 Z\" fill=\"#8e44ad\"/>\n        </marker>\n        <marker id=\"arrowBlack\" markerWidth=\"10\" markerHeight=\"10\" refX=\"5\" refY=\"5\" orient=\"auto\">\n          <path d=\"M0,0 L10,5 L0,10 Z\" fill=\"#1a2b3c\"/>\n        </marker>\n      </defs>\n    </svg>\n    <figcaption>Lift and drag forces resolved on an airfoil section. Adapted from Manwell, McGowan &amp; Rogers, <em>Wind Energy Explained: Theory, Design and Application</em>, 2nd ed., Wiley, 2009, Figure 3.5.</figcaption>\n  </figure>\n\n  <h3>Why This Matters for Your Business</h3>\n\n  <p>Every kilowatt-hour your turbine produces â or fails to produce â traces back to aerodynamics. A blade that stalls earlier than expected because of leading-edge erosion from Saharan dust loses revenue every day. A yaw system that misaligns by 15Â° during Harmattan winds can cut output by 5â8%. Understanding the aerodynamic fundamentals lets you diagnose underperformance, justify maintenance spend, and negotiate better O&M contracts.</p>\n\n  <h3>Data Table 1: Typical Aerodynamic Parameters for Small to Medium Wind Turbines Deployed in Africa</h3>\n\n  <table border=\"1\" cellpadding=\"6\" cellspacing=\"0\" style=\"border-collapse:collapse; width:100%; font-family:Arial, sans-serif; font-size:13px;\">\n    <thead style=\"background:#1a2b3c; color:#fff;\">\n      <tr>\n        <th>Parameter</th>\n        <th>Typical Range</th>\n        <th>African Context Notes</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>Optimal tip speed ratio (Î»)</td>\n        <td>6â8 (3-blade); 4â6 (2-blade)</td>\n        <td>Lower Î» reduces noise and erosion but increases torque loads</td>\n      </tr>\n      <tr>\n        <td>Optimal angle of attack (Î±)</td>\n        <td>4Â°â8Â°</td>\n        <td>Stall typically occurs at 12Â°â16Â° depending on airfoil</td>\n      </tr>\n      <tr>\n        <td>Maximum power coefficient (Cp)</td>\n        <td>0.40â0.48 (theoretical Betz limit = 0.593)</td>\n        <td>Real-world Cp drops 5â15% with dust, erosion, or misalignment</td>\n      </tr>\n      <tr>\n        <td>Cut-in wind speed</td>\n        <td>2.5â4.0 m/s</td>\n        <td>Critical for low-wind inland sites (e.g., Malawi, Zambia)</td>\n      </tr>\n      <tr>\n        <td>Rated wind speed</td>\n        <td>9â14 m/s</td>\n        <td>Coastal sites (e.g., Cape Town, Mombasa) reach rated more often</td>\n      </tr>\n      <tr>\n        <td>Cut-out wind speed</td>\n        <td>20â25 m/s</td>\n        <td>Pitch or furling protects structure during storms</td>\n      </tr>\n      <tr>\n        <td>Blade tip speed</td>\n        <td>60â80 m/s</td>\n        <td>Limits noise and leading-edge erosion; lower in dusty regions</td>\n      </tr>\n    </tbody>\n  </table>\n  <p style=\"font-size:12px; color:#555;\">Sources: Manwell et al. (2009); IRENA, <em>Wind Power in Africa: Deployment and Economics</em>, 2022; manufacturers' technical datasheets (Vestas, Bergey, Kestrel).</p>\n\n  <h3>Data Table 2: Common Aerodynamic Faults, Symptoms, and Business Impact</h3>\n\n  <table border=\"1\" cellpadding=\"6\" cellspacing=\"0\" style=\"border-collapse:collapse; width:100%; font-family:Arial, sans-serif; font-size:13px;\">\n    <thead style=\"background:#1a2b3c; color:#fff;\">\n      <tr>\n        <th>Fault</th>\n        <th>Aerodynamic Symptom</th>\n        <th>Business Impact</th>\n        <th>Corrective Action</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>Leading-edge erosion (dust/sand)</td>\n        <td>Premature stall; Cp drop 5â15%</td>\n        <td>Lost revenue; warranty disputes</td>\n        <td>Blade tape or leading-edge protection; annual inspection</td>\n      </tr>\n      <tr>\n        <td>Yaw misalignment</td>\n        <td>Cosine loss; 5â8% output reduction at 15Â°</td>\n        <td>Chronic underperformance</td>\n        <td>Calibrate wind vane; check yaw motor and controller</td>\n      </tr>\n      <tr>\n        <td>Pitch system drift</td>\n        <td>Asymmetric loads; vibration; reduced Cp</td>\n        <td>Bearing fatigue; downtime</td>\n        <td>Recalibrate pitch actuators; inspect linkage</td>\n      </tr>\n      <tr>\n        <td>Ice or dirt accumulation</td>\n        <td>Airfoil shape change; stall at lower Î±</td>\n        <td>Seasonal output loss</td>\n        <td>Cleaning schedule; anti-icing if high-altitude (e.g., Lesotho)</td>\n      </tr>\n      <tr>\n        <td>Blade imbalance</td>\n        <td>1P vibration; tower fatigue</td>\n        <td>Structural risk; high O&M cost</td>\n        <td>Dynamic balancing; inspect root bolts</td>\n      </tr>\n    </tbody>\n  </table>\n  <p style=\"font-size:12px; color:#555;\">Sources: IEC 61400-1 (2019); DNV GL Service Specification DNVGL-SE-0439; field data from African wind farms compiled by the Global Wind Energy Council (GWEC), 2023.</p>\n\n  <div style=\"border:3px solid #c0392b; background:#fdecea; padding:14px; margin:20px 0; border-radius:4px;\">\n    <strong style=\"color:#c0392b; font-size:15px;\">â  SAFETY WARNING â Aerodynamic Braking and Pitch Control</strong>\n    <p style=\"margin:8px 0 0 0; font-size:13px; color:#1a2b3c;\">Never rely on a single aerodynamic braking method during high winds or maintenance. Pitch-to-feather and tip brakes can fail due to actuator faults, icing, or dust ingress in the pitch bearing. Always ensure a redundant mechanical brake is engaged and locked out/tagged out before any personnel approach the rotor. In African coastal and dusty environments, inspect pitch mechanisms monthly â contamination is the leading cause of pitch failure. Failure to follow lockout/tagout procedures has caused fatalities on wind turbines worldwide.</p>\n  </div>\n\n  <h3>Quick Reference Checklist</h3>\n  <ol style=\"font-size:14px; line-height:1.7;\">\n    <li><strong>Verify yaw alignment monthly.</strong> A 10Â° misalignment costs roughly 3% of annual energy production â on a 250 kW turbine, that is thousands of dollars per year.</li>\n    <li><strong>Inspect blade leading edges quarterly.</strong> Dust, sand, and insects erode the leading edge and trigger early stall. Photograph and log any erosion.</li>\n    <li><strong>Check pitch angle calibration every 6 months.</strong> Even a 1Â° error shifts the power curve and reduces Cp.</li>\n    <li><strong>Monitor tip speed ratio (Î»).</strong> If Î» drifts below optimal (6â8 for 3-blade), investigate rotor speed control or generator loading.</li>\n    <li><strong>Record wind speed and direction data continuously.</strong> Use a calibrated anemometer and vane; compare against SCADA or controller logs.</li>\n    <li><strong>Test aerodynamic braking systems under controlled conditions.</strong> Do not wait for a storm to discover a fault.</li>\n    <li><strong>Clean blades after dust storms or harvest season.</strong> Agricultural dust and chaff accumulate and change airfoil geometry.</li>\n    <li><strong>Document everything.</strong> A written O&M log supports warranty claims and helps you negotiate service contracts.</li>\n  </ol>\n\n  <h3>Further Reading</h3>\n  <ul style=\"font-size:14px; line-height:1.7;\">\n    <li><a href=\"https://www.irena.org/publications\" target=\"_blank\" rel=\"noopener\">IRENA â Wind Power Publications</a> (free reports on African wind deployment and economics)</li>\n    <li><a href=\"https://www.gwec.net/reports\" target=\"_blank\" rel=\"noopener\">GWEC â Global Wind Report</a> (annual market data, including Africa)</li>\n    <li><a href=\"https://www.nrel.gov/wind/\" target=\"_blank\" rel=\"noopener\">NREL â Wind Research</a> (free technical papers on aerodynamics and turbine design)</li>\n    <li><a href=\"https://www.iec.ch/standards\" target=\"_blank\" rel=\"noopener\">IEC 61400 Series</a> (international standards for wind turbine design and safety)</li>\n    <li><a href=\"https://www.energy.gov/eere/wind/articles/wind-turbine-aerodynamics\" target=\"_blank\" rel=\"noopener\">U.S. Department of Energy â Wind Turbine Aerodynamics</a> (accessible overview)</li>\n  </ul>\n\n  <p style=\"font-size:13px; color:#555; margin-top:24px;\">This practical reference is part of the <strong>rise AFRICA Skills</strong> course <em>Wind Turbine Basics</em>, Module: <em>Aerodynamics of Wind Turbines</em>. For training enquiries, contact your regional rise AFRICA hub.</p>\n</section>"
+    }],
+  "quiz": [
+    {
+      "q": "What is the primary force that turns a wind turbine rotor?",
+      "options": ["A) Drag", "B) Lift", "C) Gravity", "D) Centrifugal force"],
+      "answer": "B",
+      "explanation": "Lift, created by pressure difference over the airfoil, is perpendicular to the wind and drives rotation."
+    },
+    {
+      "q": "Which airfoil is commonly used for small DIY wind turbine blades?",
+      "options": ["A) NACA 0012", "B) NACA 4412", "C) Clark Y", "D) Both B and C"],
+      "answer": "D",
+      "explanation": "NACA 4412 and Clark Y are popular for small turbines due to good lift and easy construction."
+    },
+    {
+      "q": "What happens to lift when wind speed doubles?",
+      "options": ["A) Doubles", "B) Triples", "C) Quadruples", "D) Stays the same"],
+      "answer": "C",
+      "explanation": "Lift is proportional to the square of wind speed, so doubling speed quadruples lift."
+    },
+    {
+      "q": "What is the angle of attack?",
+      "options": ["A) Angle between blade chord and wind", "B) Angle between blade and tower", "C) Angle of blade twist", "D) Angle of yaw"],
+      "answer": "A",
+      "explanation": "Angle of attack is the angle between the blade's chord line and the oncoming relative wind."
+    },
+    {
+      "q": "At what angle of attack does stall typically begin?",
+      "options": ["A) 5Â°", "B) 10Â°", "C) 15-20Â°", "D) 30Â°"],
+      "answer": "C",
+      "explanation": "Stall occurs when the angle of attack exceeds about 15-20Â°, causing airflow separation."
+    },
+    {
+      "q": "Why are wind turbine blades twisted along their length?",
+      "options": ["A) To look better", "B) To maintain optimal angle of attack", "C) To reduce weight", "D) To increase drag"],
+      "answer": "B",
+      "explanation": "Twist compensates for varying relative wind speeds along the blade, keeping angle of attack near optimal."
+    },
+    {
+      "q": "What is a sign that a blade is stalling?",
+      "options": ["A) Smooth rotation", "B) Loud whooshing and vibration", "C) Increased power", "D) Lower noise"],
+      "answer": "B",
+      "explanation": "Stall causes flow separation, leading to noise and vibration as lift drops."
+    },
+    {
+      "q": "What does BEM theory stand for?",
+      "options": ["A) Blade Energy Momentum", "B) Blade Element Momentum", "C) Basic Energy Method", "D) Blade Efficiency Model"],
+      "answer": "B",
+      "explanation": "BEM combines blade element theory and momentum theory to predict turbine performance."
+    },
+    {
+      "q": "How many elements are typically used in BEM analysis per blade?",
+      "options": ["A) 1-2", "B) 5", "C) 10-20", "D) 50-100"],
+      "answer": "C",
+      "explanation": "Dividing the blade into 10-20 elements gives a good balance of accuracy and computation time."
+    },
+    {
+      "q": "What is a cheap material for DIY blades in Africa?",
+      "options": ["A) Carbon fiber", "B) PVC pipe", "C) Titanium", "D) Aluminum sheet"],
+      "answer": "B",
+      "explanation": "PVC pipe can be cut, heated, and twisted to form effective airfoil shapes at low cost."
+    },
+    {
+      "q": "What is tip speed ratio (TSR)?",
+      "options": ["A) Tip speed divided by wind speed", "B) Wind speed divided by tip speed", "C) Rotor diameter divided by wind speed", "D) RPM divided by wind speed"],
+      "answer": "A",
+      "explanation": "TSR is the ratio of the blade tip's linear speed to the free-stream wind speed."
+    },
+    {
+      "q": "What TSR range is optimal for a typical 3-blade turbine?",
+      "options": ["A) 1-2", "B) 3-5", "C) 6-8", "D) 10-12"],
+      "answer": "C",
+      "explanation": "Most 3-blade turbines achieve peak efficiency at TSR 6-8."
+    },
+    {
+      "q": "What is the Betz limit?",
+      "options": ["A) 40.3%", "B) 59.3%", "C) 75%", "D) 100%"],
+      "answer": "B",
+      "explanation": "The Betz limit is the theoretical maximum efficiency of a wind turbine, about 59.3%."
+    },
+    {
+      "q": "How can you measure TSR without expensive equipment?",
+      "options": ["A) Use a bicycle speedometer", "B) Guess", "C) Use a thermometer", "D) Count blade passes by eye"],
+      "answer": "A",
+      "explanation": "A bicycle speedometer on the shaft can measure RPM, which you convert to TSR."
+    },
+    {
+      "q": "What does pitch control do?",
+      "options": ["A) Changes blade angle to the wind", "B) Changes rotor diameter", "C) Changes tower height", "D) Changes generator type"],
+      "answer": "A",
+      "explanation": "Pitch control rotates blades around their long axis to adjust angle of attack."
+    },
+    {
+      "q": "What is aerodynamic braking?",
+      "options": ["A) Using mechanical disc brakes", "B) Turning blades to stall or feather", "C) Using a parachute", "D) Shorting the generator"],
+      "answer": "B",
+      "explanation": "Aerodynamic braking uses pitch to stall or feather blades, reducing lift and slowing the rotor."
+    },
+    {
+      "q": "Why is aerodynamic braking preferred over mechanical braking?",
+      "options": ["A) It is cheaper", "B) It causes less wear", "C) It is faster", "D) It requires no maintenance"],
+      "answer": "B",
+      "explanation": "Aerodynamic braking avoids friction and wear on mechanical components."
+    },
+    {
+      "q": "In dusty conditions, what should you use to lubricate pitch mechanisms?",
+      "options": ["A) Oil", "B) Grease", "C) Graphite spray", "D) Water"],
+      "answer": "C",
+      "explanation": "Graphite spray lubricates without attracting dust, unlike oil or grease."
+    },
+    {
+      "q": "What is yaw in a wind turbine?",
+      "options": ["A) Rotation around vertical axis", "B) Rotation around horizontal axis", "C) Blade twist", "D) Generator rotation"],
+      "answer": "A",
+      "explanation": "Yaw is the rotation of the turbine to face the wind, around its vertical axis."
+    },
+    {
+      "q": "What is used for passive yaw control on small turbines?",
+      "options": ["A) Tail vane", "B) Electric motor", "C) Hydraulic pump", "D) Manual crank"],
+      "answer": "A",
+      "explanation": "A tail vane acts like a weather vane to keep the rotor facing the wind."
+    },
+    {
+      "q": "What tail area is recommended for a 2 m diameter rotor?",
+      "options": ["A) 0.1 mÂ²", "B) 0.3-0.5 mÂ²", "C) 1 mÂ²", "D) 2 mÂ²"],
+      "answer": "B",
+      "explanation": "Tail area should be about 10-15% of rotor swept area, which is 0.3-0.5 mÂ² for a 2 m rotor."
+    },
+    {
+      "q": "What is a deadband in active yaw control?",
+      "options": ["A) A range where motor doesn't move", "B) A type of bearing", "C) A wind speed limit", "D) A brake setting"],
+      "answer": "A",
+      "explanation": "Deadband prevents the yaw motor from constantly adjusting for small wind shifts."
+    },
+    {
+      "q": "What should you do to yaw bearing in dusty conditions?",
+      "options": ["A) Grease monthly", "B) Leave it dry", "C) Use oil", "D) Replace weekly"],
+      "answer": "A",
+      "explanation": "Monthly greasing with a sealed bearing or bronze bushing reduces wear in dust."
+    },
+    {
+      "q": "What happens if a turbine cannot yaw freely?",
+      "options": ["A) It produces more power", "B) It may face sideways and overspeed", "C) It stops", "D) It becomes quieter"],
+      "answer": "B",
+      "explanation": "A stuck yaw can cause the rotor to face sideways, reducing load and leading to overspeed."
+    },
+    {
+      "q": "What is the purpose of a damper on a tail vane?",
+      "options": ["A) To increase speed", "B) To prevent hunting", "C) To add weight", "D) To reduce noise"],
+      "answer": "B",
+      "explanation": "A damper (friction disc or shock absorber) stops the tail from oscillating back and forth."
+    },
+    {
+      "q": "Which of these is a real number for lift-to-drag ratio of a good airfoil?",
+      "options": ["A) 5", "B) 20", "C) 100", "D) 500"],
+      "answer": "C",
+      "explanation": "A lift-to-drag ratio of 100 is achievable with well-designed airfoils at optimal angle of attack."
+    },
+    {
+      "q": "What happens to drag when wind speed doubles?",
+      "options": ["A) Doubles", "B) Triples", "C) Quadruples", "D) Stays same"],
+      "answer": "C",
+      "explanation": "Drag is proportional to the square of wind speed, so it quadruples when speed doubles."
+    },
+    {
+      "q": "What is the typical efficiency of a small African wind turbine at optimal TSR?",
+      "options": ["A) 10-20%", "B) 35-40%", "C) 60-70%", "D) 90%"],
+      "answer": "B",
+      "explanation": "Small turbines typically achieve 35-40% efficiency, below the Betz limit of 59.3%."
+    },
+    {
+      "q": "Why might you use a belt drive on a small turbine?",
+      "options": ["A) To increase RPM for generator", "B) To reduce noise", "C) To change direction", "D) To add weight"],
+      "answer": "A",
+      "explanation": "A belt drive can step up RPM to match generator requirements, allowing lower TSR operation."
+    },
+    {
+      "q": "What should you do before a cyclone in Mozambique?",
+      "options": ["A) Pitch blades to 90Â° and tie rotor", "B) Remove blades", "C) Increase load", "D) Turn off yaw"],
+      "answer": "A",
+      "explanation": "Pitching to feather and tying the rotor prevents damage from extreme winds."
+    }
+  ],
+  "videos": [
+    "how to carve wind turbine blades from wood",
+    "DIY wind turbine pitch control mechanism",
+    "measuring tip speed ratio small wind turbine"
+  ]
+}

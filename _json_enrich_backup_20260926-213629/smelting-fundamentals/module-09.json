@@ -1,0 +1,224 @@
+﻿{
+  "course": "Smelting Fundamentals",
+  "module_number": 9,
+  "module_title": "Process Control and Instrumentation",
+  "lessons": [
+    {
+      "title": "Sensors for Temperature and Pressure",
+      "body": "In smelting, you must know how hot your furnace is and how much pressure your air or gas lines are under. Temperature sensors come in two main types for our workshops: thermocouples and infrared pyrometers. Thermocouples are cheap and rugged. A Type K thermocouple can measure up to 1,200Â°C and costs about $15. You insert it into a protective ceramic sheath and place it in the furnace wall or molten metal. For higher temperatures, use Type S or R (platinum-rhodium) but they cost over $100. Infrared pyrometers measure surface temperature without touching, good for checking molten metal streams or hot billets. A basic handheld pyrometer costs $80 and works from 1 meter away.\n\nPressure sensors: Most smelting operations use pressure gauges for compressed air, gas, and water lines. A simple Bourdon tube gauge costs $10 and reads 0-10 bar. For automation, you need a pressure transmitter that sends a 4-20 mA signal to your control panel. A 0-10 bar transmitter costs $50-$100. Install a gauge and transmitter together so you can see locally and send to the control room.\n\nCalibration is critical. Thermocouples drift over time. Every 3 months, check your thermocouple with a known reference like boiling water (100Â°C) or a calibrated thermometer. For pressure gauges, use a hand pump calibrator ($200) or send to a local instrument shop. In Africa, many smelters skip calibration and lose money from bad readings. A 10Â°C error in furnace temperature can waste 5% of your fuel.\n\nPractical tips: Shield thermocouple wires from electrical noise by using twisted pair and grounding the shield. For pressure lines, install a pigtail siphon tube to protect the sensor from steam. Keep spare thermocouples and gauges on site because suppliers may be far away. Train one person as your instrument champion. Record daily readings in a logbook and watch for sudden changes. If a thermocouple reading jumps by 50Â°C in one minute, you likely have a loose connection or a failing sensor. Replace it immediately.",
+      "word_count": 350
+    },
+    {
+      "title": "Flow Measurement and Control",
+      "body": "Flow measurement tells you how much air, gas, or water is going into your furnace. In smelting, you control combustion air, cooling water, and sometimes fuel gas. The cheapest flow meter is an orifice plate with a differential pressure transmitter. You install a thin metal plate with a hole in the pipe. The pressure drop across the plate relates to flow. A complete orifice kit with transmitter costs $400-$800. For smaller lines, use a rotameter (variable area meter). A 0-100 L/min rotameter costs $50 and gives a direct reading.\n\nFor air blast in a cupola or reverb furnace, you need to measure large flows. A pitot tube with a manometer works but is not accurate for dirty gases. Better to use a thermal mass flow meter for air. A 0-1000 m3/h thermal meter costs $600. It has no moving parts and handles dust well. For water cooling lines, use a turbine flow meter. A 1-inch turbine meter costs $150 and reads 5-50 L/min.\n\nControl valves regulate flow. A simple manual gate valve costs $20 but you must adjust by hand. For automatic control, use a pneumatic or electric control valve. A 1-inch electric control valve with 4-20 mA signal costs $300. The valve receives a signal from your controller and opens or closes to maintain set flow. Always install a bypass around control valves so you can service them without shutting down the furnace.\n\nCalibration: Rotameters are factory calibrated for air or water. If you use them for other gases, correct the reading. Orifice plates need clean sharp edges; replace if worn. Check flow meter zero every month. In Africa, water flow is often critical for cooling. If your cooling water flow drops below 20 L/min on a small furnace, you risk overheating. Install a low-flow alarm switch ($80) that trips if flow falls below setpoint. Keep a spare rotameter and control valve on site. Train operators to log flow every hour and investigate any change greater than 10%.",
+      "word_count": 340
+    },
+    {
+      "title": "Automated Control Systems",
+      "body": "Automated control systems use sensors, controllers, and final control elements to keep your furnace running steady. The most common is a PID controller. PID stands for Proportional-Integral-Derivative. It compares your measured value (like temperature) to a setpoint and adjusts an output (like fuel valve position). A basic panel-mounted PID controller costs $100-$200. You can buy one from AutomationDirect or local suppliers in South Africa, Kenya, or Nigeria.\n\nFor simple on-off control, like a cooling fan, use a thermostat. But for smelting, you need PID because temperatures must stay within Â±10Â°C. Tune your PID manually: start with only proportional band (P) at 5%, integral (I) at 0, derivative (D) at 0. Increase P until the temperature oscillates slightly, then back off. Add I slowly to eliminate offset. Add D only if you have fast disturbances. Most smelting furnaces need P=2-10%, I=1-5 minutes, D=0-1 minute.\n\nFor more complex control, use a PLC (Programmable Logic Controller). A basic PLC like Siemens S7-1200 costs $500 and can handle 10-20 loops. You program it with ladder logic. For example, if temperature > 1200Â°C, close fuel valve. PLCs are robust and work in dusty, hot environments. In Africa, many small smelters use a PLC from Delta or Mitsubishi, which are cheaper ($300).\n\nPractical steps: Start with manual control. Record readings every 15 minutes. Then add a PID controller for your most critical loop, usually furnace temperature. Keep a written log of tuning parameters. Train one technician to program and troubleshoot the PLC. Use surge protection on all signal lines because power in rural Africa is unstable. If your controller fails, have a manual bypass valve ready. Test your automated system weekly by simulating a sensor failure. A good automated system reduces fuel use by 10-20% and improves product quality.",
+      "word_count": 350
+    },
+    {
+      "title": "Data Acquisition and Monitoring",
+      "body": "Data acquisition means recording your process measurements over time. Without data, you cannot improve. The simplest method is a paper chart recorder. A 6-channel recorder costs $300 and uses paper rolls. But paper runs out and pens clog. Better to use a digital data logger. A basic 8-channel USB data logger costs $150. You connect thermocouples and 4-20 mA signals. The logger saves to an SD card or sends to a computer. Free software like LabVIEW Community or Python with a serial library can plot the data.\n\nFor real-time monitoring, use a SCADA (Supervisory Control and Data Acquisition) system. A simple SCADA like Ignition (free trial) or OpenPLC runs on a $200 mini PC. You need a touchscreen monitor ($150) and Ethernet cables. SCADA shows trends, alarms, and allows remote control. In Africa, where internet may be unreliable, use a local SCADA on a local network. Do not rely on cloud-only systems.\n\nWhat to monitor: furnace temperature (at least 2 points), cooling water flow and temperature, fuel gas pressure, and exhaust gas temperature. Record every 5 seconds for critical loops. Store data for at least 30 days. Use a spreadsheet (Excel or Google Sheets) to calculate daily averages and spot trends. If your furnace temperature slowly rises by 20Â°C over a week, you have a sensor drift or a refractory problem.\n\nPractical tips: Label all wires clearly. Use shielded cables for analog signals. Ground the shield at one end only. Keep data loggers away from high-voltage cables. In dusty environments, put electronics in a sealed IP65 box ($50). Train an operator to check the data every shift. Look for gaps in data â they mean a power failure or sensor fault. Back up your data weekly to a USB drive. With good data, you can prove to buyers that your product meets quality standards.",
+      "word_count": 350
+    },
+    {
+      "title": "Alarm and Safety Interlock Systems",
+      "body": "Alarms warn you before something goes wrong. Interlocks shut down equipment automatically to prevent accidents. In smelting, the biggest dangers are overheating, water leaks into molten metal, and gas explosions. You need both alarms and interlocks.\n\nStart with simple alarm switches. A high-temperature alarm uses a thermocouple and a trip amplifier. Set it to 50Â°C above your normal setpoint. A buzzer and flashing light cost $30. For low water flow, use a paddle flow switch ($50) that closes a contact when flow drops. For high pressure, use a pressure switch ($40). Connect these to a PLC or a simple relay panel. When an alarm triggers, the operator must acknowledge it. Log all alarms with time and date.\n\nInterlocks are stronger. They physically stop the process. For example, if cooling water flow is low, the interlock closes the fuel valve and turns off the furnace. You wire the flow switch directly to the fuel valve solenoid. Use a safety relay (like Pilz PNOZ, $200) for critical interlocks. Never rely on software alone for safety. In Africa, power surges can crash a PLC. Use hard-wired interlocks for emergency stop, low water flow, and high temperature.\n\nTest your alarms and interlocks monthly. Simulate a low flow by closing a valve. The alarm should sound and the furnace should shut down within 2 seconds. Keep a written test log. Train all operators on what to do when an alarm sounds. Post emergency phone numbers. For gas-fired furnaces, install a gas detection alarm ($150) that trips the gas valve if it senses methane or CO. In many African smelters, accidents happen because alarms are disabled or ignored. Never bypass an interlock without written approval from the supervisor. A proper alarm system costs less than $500 and can save lives.",
+      "word_count": 340
+    },
+    {
+      "title": "Process Optimization Techniques",
+      "body": "Process optimization means getting more product with less fuel, less time, and fewer defects. In smelting, you can optimize by adjusting air-to-fuel ratio, charge composition, and furnace temperature. Start by measuring your baseline. Record fuel consumption per ton of metal, furnace efficiency, and product quality for one week. Then change one variable at a time.\n\nAir-to-fuel ratio: Too little air wastes fuel (incomplete combustion). Too much air carries away heat. For natural gas, the stoichiometric ratio is about 10:1 air to gas. But for smelting, you often need 10-20% excess air. Use an oxygen sensor in the flue gas ($200) to measure excess oxygen. Target 2-4% oxygen. Adjust the combustion air damper until you reach that. You can save 10-15% fuel.\n\nCharge composition: If your ore or scrap has too much moisture, you waste heat evaporating water. Dry your charge in the sun or with waste heat. If your flux is too fine, it blows out. Briquette it. If your coke has high ash, you need more flux. Test each batch. Keep a log of charge weight, moisture, and analysis. For a small cupola, a 5% reduction in coke consumption saves $50 per ton of iron.\n\nFurnace temperature: Higher temperature speeds up melting but increases refractory wear and energy use. Find the minimum temperature that gives good slag fluidity and metal quality. For iron, 1,400-1,500Â°C is typical. Use a pyrometer to check. If you run at 1,550Â°C unnecessarily, you waste 20% energy.\n\nOther techniques: Preheat combustion air using a recuperator (heat exchanger). A simple shell-and-tube recuperator costs $1,000 and saves 15% fuel. Use variable frequency drives (VFDs) on blowers and pumps. A 5 kW VFD costs $300 and saves 30% on electricity. Schedule smelting during off-peak hours if your utility offers lower rates. Train operators to follow best practices. Small changes add up. A 20% reduction in fuel cost can double your profit margin.",
+      "word_count": 350
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What type of thermocouple is commonly used for temperatures up to 1,200Â°C?",
+      "options": ["A) Type K", "B) Type S", "C) Type R", "D) Type B"],
+      "answer": "A",
+      "explanation": "Type K thermocouples are inexpensive and measure up to 1,200Â°C."
+    },
+    {
+      "q": "What is the typical output signal of a pressure transmitter for automation?",
+      "options": ["A) 0-10 V", "B) 4-20 mA", "C) 0-5 V", "D) 1-5 V"],
+      "answer": "B",
+      "explanation": "4-20 mA is the industry standard for transmitting analog signals over long distances."
+    },
+    {
+      "q": "How often should you calibrate a thermocouple in a smelting furnace?",
+      "options": ["A) Every day", "B) Every week", "C) Every 3 months", "D) Every 5 years"],
+      "answer": "C",
+      "explanation": "Thermocouples drift over time and should be checked every 3 months with a known reference."
+    },
+    {
+      "q": "What is the purpose of a siphon tube on a pressure gauge?",
+      "options": ["A) To increase pressure", "B) To protect the sensor from steam", "C) To measure flow", "D) To reduce cost"],
+      "answer": "B",
+      "explanation": "A pigtail siphon tube condenses steam before it reaches the sensor, preventing damage."
+    },
+    {
+      "q": "What should you do if a thermocouple reading jumps by 50Â°C in one minute?",
+      "options": ["A) Ignore it", "B) Increase fuel", "C) Check for loose connection or replace sensor", "D) Add water"],
+      "answer": "C",
+      "explanation": "A sudden jump indicates a loose connection or failing sensor, which must be fixed immediately."
+    },
+    {
+      "q": "Which flow meter is best for dirty gases like exhaust?",
+      "options": ["A) Orifice plate", "B) Rotameter", "C) Thermal mass flow meter", "D) Turbine meter"],
+      "answer": "C",
+      "explanation": "Thermal mass flow meters have no moving parts and handle dust well."
+    },
+    {
+      "q": "What is the typical cost of a basic rotameter for 0-100 L/min?",
+      "options": ["A) $5", "B) $50", "C) $500", "D) $5,000"],
+      "answer": "B",
+      "explanation": "A small rotameter costs around $50 and gives a direct flow reading."
+    },
+    {
+      "q": "Why should you install a bypass around a control valve?",
+      "options": ["A) To increase flow", "B) To service the valve without shutting down", "C) To reduce cost", "D) To measure pressure"],
+      "answer": "B",
+      "explanation": "A bypass allows manual flow control while the control valve is being repaired."
+    },
+    {
+      "q": "What does PID stand for in control systems?",
+      "options": ["A) Proportional-Integral-Derivative", "B) Pressure-Indicating Device", "C) Process Instrumentation Data", "D) Pneumatic-Industrial Drive"],
+      "answer": "A",
+      "explanation": "PID is the standard control algorithm using proportional, integral, and derivative terms."
+    },
+    {
+      "q": "What is the first step when tuning a PID controller?",
+      "options": ["A) Set derivative to maximum", "B) Set integral to maximum", "C) Start with only proportional band", "D) Turn off the controller"],
+      "answer": "C",
+      "explanation": "Start with only proportional control, adjust until slight oscillation, then add integral and derivative."
+    },
+    {
+      "q": "What is a common PLC brand used in small African smelters?",
+      "options": ["A) Siemens S7-1200", "B) Allen-Bradley", "C) Delta", "D) All of the above"],
+      "answer": "D",
+      "explanation": "Siemens, Allen-Bradley, and Delta are all used, with Delta being cheaper."
+    },
+    {
+      "q": "What is the typical cost of a basic PLC for 10-20 loops?",
+      "options": ["A) $50", "B) $500", "C) $5,000", "D) $50,000"],
+      "answer": "B",
+      "explanation": "A basic PLC like Siemens S7-1200 costs around $500."
+    },
+    {
+      "q": "What should you do if your automated controller fails?",
+      "options": ["A) Stop production", "B) Use manual bypass valve", "C) Call the supplier", "D) Ignore it"],
+      "answer": "B",
+      "explanation": "A manual bypass valve allows continued operation until the controller is repaired."
+    },
+    {
+      "q": "What is the simplest method for data acquisition?",
+      "options": ["A) Paper chart recorder", "B) SCADA", "C) PLC", "D) Cloud system"],
+      "answer": "A",
+      "explanation": "A paper chart recorder is the simplest and cheapest way to record data over time."
+    },
+    {
+      "q": "How often should you record critical process data?",
+      "options": ["A) Every hour", "B) Every 5 seconds", "C) Every day", "D) Every week"],
+      "answer": "B",
+      "explanation": "Critical loops should be recorded every 5 seconds to capture fast changes."
+    },
+    {
+      "q": "Why should you avoid cloud-only SCADA systems in Africa?",
+      "options": ["A) Too expensive", "B) Internet may be unreliable", "C) Not secure", "D) Too slow"],
+      "answer": "B",
+      "explanation": "Unreliable internet can cause loss of monitoring and control, so local SCADA is preferred."
+    },
+    {
+      "q": "What does a slow rise in furnace temperature over a week indicate?",
+      "options": ["A) Normal operation", "B) Sensor drift or refractory problem", "C) Fuel increase", "D) Good control"],
+      "answer": "B",
+      "explanation": "A gradual rise often means the thermocouple is drifting or the refractory is thinning."
+    },
+    {
+      "q": "What is the purpose of an alarm switch?",
+      "options": ["A) To control flow", "B) To warn before something goes wrong", "C) To measure temperature", "D) To reduce pressure"],
+      "answer": "B",
+      "explanation": "Alarms provide early warning so operators can take corrective action."
+    },
+    {
+      "q": "What is the difference between an alarm and an interlock?",
+      "options": ["A) Alarms are louder", "B) Interlocks automatically shut down equipment", "C) Alarms are cheaper", "D) Interlocks are only for gas"],
+      "answer": "B",
+      "explanation": "Interlocks take automatic action to prevent accidents, while alarms only warn."
+    },
+    {
+      "q": "How often should you test alarms and interlocks?",
+      "options": ["A) Daily", "B) Weekly", "C) Monthly", "D) Yearly"],
+      "answer": "C",
+      "explanation": "Monthly testing ensures they work when needed."
+    },
+    {
+      "q": "What should you never do with a safety interlock?",
+      "options": ["A) Test it", "B) Bypass it without approval", "C) Log it", "D) Train on it"],
+      "answer": "B",
+      "explanation": "Bypassing an interlock without written approval can lead to accidents."
+    },
+    {
+      "q": "What is the target excess oxygen in flue gas for efficient combustion?",
+      "options": ["A) 0%", "B) 2-4%", "C) 10-15%", "D) 20%"],
+      "answer": "B",
+      "explanation": "2-4% excess oxygen ensures complete combustion without excessive heat loss."
+    },
+    {
+      "q": "How can you reduce fuel consumption by 10-15%?",
+      "options": ["A) Increase air", "B) Optimize air-to-fuel ratio", "C) Add more ore", "D) Run at higher temperature"],
+      "answer": "B",
+      "explanation": "Proper air-to-fuel ratio minimizes wasted fuel."
+    },
+    {
+      "q": "What is a recuperator used for?",
+      "options": ["A) Cooling water", "B) Preheating combustion air", "C) Measuring flow", "D) Controlling pressure"],
+      "answer": "B",
+      "explanation": "A recuperator recovers waste heat to preheat combustion air, saving fuel."
+    },
+    {
+      "q": "What is the benefit of using a VFD on a blower?",
+      "options": ["A) Increases noise", "B) Saves electricity", "C) Reduces flow", "D) Increases cost"],
+      "answer": "B",
+      "explanation": "VFDs adjust motor speed to match demand, saving up to 30% electricity."
+    },
+    {
+      "q": "Why should you dry your charge before smelting?",
+      "options": ["A) To save water", "B) To avoid wasting heat on evaporation", "C) To increase weight", "D) To reduce dust"],
+      "answer": "B",
+      "explanation": "Moisture in charge absorbs heat that should melt metal, wasting fuel."
+    },
+    {
+      "q": "What is the typical smelting temperature for iron?",
+      "options": ["A) 800-900Â°C", "B) 1,000-1,100Â°C", "C) 1,400-1,500Â°C", "D) 1,800-2,000Â°C"],
+      "answer": "C",
+      "explanation": "Iron melts around 1,400-1,500Â°C, and smelting requires this range."
+    },
+    {
+      "q": "What should you do if your coke has high ash?",
+      "options": ["A) Use less coke", "B) Add more flux", "C) Increase air", "D) Reduce temperature"],
+      "answer": "B",
+      "explanation": "High ash requires more flux to maintain slag fluidity."
+    },
+    {
+      "q": "What is the first step in process optimization?",
+      "options": ["A) Change everything", "B) Measure baseline", "C) Buy new equipment", "D) Hire consultant"],
+      "answer": "B",
+      "explanation": "You must know your current performance before making changes."
+    },
+    {
+      "q": "What is a simple way to reduce electricity costs in smelting?",
+      "options": ["A) Run during peak hours", "B) Schedule smelting during off-peak hours", "C) Use more power", "D) Ignore rates"],
+      "answer": "B",
+      "explanation": "Off-peak rates are lower, reducing electricity costs."
+    }
+  ],
+  "videos": [
+    "thermocouple calibration procedure",
+    "PID controller tuning for furnace",
+    "smelting process optimization techniques"
+  ]
+}

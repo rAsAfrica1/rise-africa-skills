@@ -1,0 +1,224 @@
+﻿{
+  "course": "Robotics",
+  "module_number": 9,
+  "module_title": "Computer Vision for Robotics",
+  "lessons": [
+    {
+      "title": "Image Processing Fundamentals",
+      "body": "Start by installing OpenCV on your laptop: `pip install opencv-python`. Then grab a photo of a busy street in Lagos or Nairobi using your phone. Load it with `cv2.imread()`. The first thing you'll notice: images are just NumPy arrays of pixel values. A colour image has three channels (Blue, Green, Red in OpenCV). Convert to grayscale with `cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)` to reduce data by two-thirds. Grayscale is enough for most robot vision tasks like line following or detecting a red tomato.\n\nNext, blur the image to remove noise. Use `cv2.GaussianBlur(gray, (5,5), 0)` â the (5,5) is the kernel size. A bigger kernel means more blur but slower processing. On a Raspberry Pi 4, a 5x5 blur on a 640x480 image takes about 2 milliseconds. That matters if your robot must react in under 100 ms.\n\nEdges are where brightness changes sharply. Run `cv2.Canny(gray, 50, 150)` â the two numbers are low and high thresholds. Try 50/150 for outdoor scenes in bright African sunlight; for dark indoor workshops, drop to 30/100. Canny edges are thin and binary (white on black). You can then find contours with `cv2.findContours()`. Filter contours by area â ignore anything smaller than 500 pixels (noise) and larger than 50,000 (background). This is how you detect a soccer ball on a dusty field.\n\nFinally, learn colour thresholding. Convert to HSV with `cv2.cvtColor(img, cv2.COLOR_BGR2HSV)`. Red is tricky because it wraps around 0 and 180. Use two ranges: `(0,100,100)` to `(10,255,255)` and `(170,100,100)` to `(180,255,255)`. For a maize plant, target green: `(35,50,50)` to `(85,255,255)`. Apply `cv2.inRange()` to get a mask. Combine with morphological operations like `cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)` to remove small dots. Practice on 10 images from your surroundings. Save your script as `img_basics.py` and run it on a Raspberry Pi camera later.",
+      "body_word_count": 347
+    },
+    {
+      "title": "Feature Detection: SIFT, SURF, ORB",
+      "body": "Feature detection finds unique points (corners, blobs) that stay recognisable even when the robot moves or lighting changes. SIFT (Scale-Invariant Feature Transform) is the gold standard but slow: on a 640x480 image, it takes ~200 ms on a Raspberry Pi 4. SURF is faster but patented â avoid it for commercial products. ORB (Oriented FAST and Rotated BRIEF) is free, fast (~20 ms), and works well on African outdoor scenes with high contrast. Use ORB for real-time robotics.\n\nTo detect and match features: `orb = cv2.ORB_create(nfeatures=500)`. Then `kp, des = orb.detectAndCompute(gray, None)`. `kp` is a list of keypoints; `des` is a 500x32 binary descriptor array. To match two images (e.g., a robot's current view vs. a stored map), use `bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)` and `matches = bf.match(des1, des2)`. Sort matches by distance: `matches = sorted(matches, key=lambda x: x.distance)`. Keep the best 30% â if you have 100 matches, keep 30. If fewer than 10 good matches, the images are probably not the same place.\n\nReal numbers: For a 640x480 image of a building in Accra, ORB finds ~400 keypoints. Matching against a database of 20 images takes ~50 ms on a laptop CPU. On a Raspberry Pi 4, it's ~300 ms â still okay for a robot that moves slowly (0.5 m/s). For faster performance, downscale to 320x240: ORB drops to ~80 ms.\n\nPractical use: visual place recognition for a delivery robot. Store ORB descriptors of 50 landmarks (a specific tree, a painted wall, a market stall). When the robot sees a new image, match against all 50 and pick the best. If match count > 20, you are at that landmark. This works even if lighting changes from morning to afternoon. Test it in your neighbourhood: take 20 photos of distinct spots, then walk a different path and see if your script identifies them. Adjust `nfeatures` to 1000 for more detail if your CPU allows.",
+      "body_word_count": 348
+    },
+    {
+      "title": "Object Recognition with Deep Learning",
+      "body": "Deep learning for object recognition means using a pre-trained neural network. You don't need a GPU farm. Start with MobileNet-SSD (Single Shot MultiBox Detector) â it runs at 10-15 FPS on a Raspberry Pi 4 with a Coral USB accelerator, or 2-3 FPS on CPU alone. Download the model files: `MobileNetSSD_deploy.caffemodel` and `MobileNetSSD_deploy.prototxt`. Load with `cv2.dnn.readNetFromCaffe()`. The model recognises 20 classes: person, car, bicycle, motorbike, bus, train, truck, bird, cat, dog, and more. That covers many African street scenes.\n\nTo run inference: `blob = cv2.dnn.blobFromImage(frame, 0.007843, (300, 300), 127.5)`. Then `net.setInput(blob)` and `detections = net.forward()`. Each detection has a confidence score. Keep only those above 0.5 (50%). For each, extract the bounding box: `box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])`. Draw a rectangle and label. On a 640x480 webcam feed, you'll see ~5-10 detections per frame in a busy market.\n\nFor custom objects â say, a specific type of cocoa pod or a locally made robot â you need to train. Use transfer learning with TensorFlow or PyTorch. Collect 200+ images per class. Label them with LabelImg (free tool). Train a MobileNetV2 model for 20 epochs on a Google Colab free GPU (about 10 minutes). Export to TensorFlow Lite for Raspberry Pi. Expect 85-95% accuracy if your images are varied (different angles, lighting, backgrounds).\n\nDeploy on a robot: use ROS (Robot Operating System) with the `cv_bridge` package. Subscribe to `/camera/image_raw`, run inference, publish `/detections` as a custom message. For a pick-and-place robot, trigger the arm when a target object is detected with confidence > 0.7. Test in your workshop: place 5 different objects on a table, run the detector, and log false positives. Adjust the confidence threshold until you get zero false positives on 100 frames.",
+      "body_word_count": 347
+    },
+    {
+      "title": "Stereo Vision and Depth Estimation",
+      "body": "Stereo vision uses two cameras side by side to estimate distance â like human eyes. You need two identical USB cameras (e.g., Logitech C270) mounted 10 cm apart. Calibrate them first: print a chessboard (9x6 inner corners), take 20 photos from different angles, and run `cv2.stereoCalibrate()`. This gives you the camera matrix and distortion coefficients. Without calibration, depth errors can be 30% or more.\n\nNext, rectify the images so that corresponding points lie on the same horizontal line. Use `cv2.stereoRectify()` and `cv2.initUndistortRectifyMap()`. Then compute disparity with `cv2.StereoSGBM_create(minDisparity=0, numDisparities=64, blockSize=11)`. Disparity is the pixel shift between left and right images. Depth = (focal_length * baseline) / disparity. For a 10 cm baseline and 600-pixel focal length, a disparity of 30 pixels gives depth = (600 * 0.1) / 30 = 2 meters. That's accurate to about Â±10 cm at 2 m.\n\nPractical limits: Stereo fails on textureless surfaces (plain white walls, dusty roads) because there are no features to match. It also fails in direct sunlight if one camera is overexposed. For African outdoor robots, use a polarising filter on both lenses. At night, add IR illuminators. For a 640x480 stereo pair, SGBM runs at ~15 FPS on a laptop, ~3 FPS on Raspberry Pi 4. Downscale to 320x240 for 10 FPS on Pi.\n\nUse depth for obstacle avoidance. On a robot, take the depth map, divide into a 3x3 grid (left, centre, right). If the centre region has depth < 1.0 m, stop or turn. If left is clear (< 2 m), turn left. This simple rule works for a maize field robot avoiding trees. Test with a cardboard box at 0.5 m, 1 m, 2 m, and 3 m. Log the measured depth. Adjust `numDisparities` to 128 for far objects (up to 10 m) but expect more noise.",
+      "body_word_count": 348
+    },
+    {
+      "title": "Visual Odometry and SLAM",
+      "body": "Visual odometry (VO) estimates how a robot moves by tracking features between consecutive camera frames. SLAM (Simultaneous Localisation and Mapping) builds a map while tracking position. For a ground robot in an African warehouse, use ORB features plus a motion model. Steps: (1) Detect ORB features in frame 1. (2) Detect in frame 2. (3) Match them with BFMatcher. (4) Estimate the essential matrix with `cv2.findEssentialMat()`. (5) Recover rotation and translation with `cv2.recoverPose()`. This gives you the camera's movement (e.g., moved 0.2 m forward, rotated 5Â° left).\n\nAccumulate these movements to get a trajectory. But errors drift: after 10 meters, you might be off by 0.5 m. That's why SLAM adds loop closure â when you recognise a previously seen place, you correct the drift. Use ORB-SLAM2 or ORB-SLAM3 (open-source, runs on ROS). On a Raspberry Pi 4 with a 640x480 camera, ORB-SLAM2 runs at ~5 FPS â enough for a robot moving at 0.3 m/s. On a laptop, it runs at 30 FPS.\n\nFor outdoor African environments, monocular SLAM struggles with scale (you don't know if a tree is 5 m or 50 m away). Use stereo SLAM (ORB-SLAM2 with stereo) or add an IMU (Inertial Measurement Unit). A cheap MPU-6050 IMU (â¹200 or $3) gives accelerometer and gyroscope data. Fuse with a Kalman filter: `x = x + v*dt + 0.5*a*dt^2`. This reduces drift by 50% over 100 m.\n\nPractical test: Build a small wheeled robot with a Raspberry Pi, camera, and IMU. Drive it in a 10 m x 10 m square. Log the estimated path vs. actual (measure with tape). After one loop, the error should be < 1 m. If not, tune the ORB feature count (try 1000) and the RANSAC threshold in `findEssentialMat` (try 1.0). Save the map as a point cloud using `pcl` or `open3d`. This map can then be used for path planning.",
+      "body_word_count": 348
+    },
+    {
+      "title": "Lab: Object Detection with OpenCV and ROS",
+      "body": "In this lab, you will build a ROS node that detects a red ball using OpenCV and publishes its position. You need: a Raspberry Pi 4 (4GB), a Pi Camera v2, ROS Noetic (Ubuntu 20.04), and a red ball (10 cm diameter). Install `cv_bridge` and `usb_cam` or `raspicam_node`. Start the camera: `rosrun raspicam_node raspicam_node`. Verify with `rosrun image_view image_view image:=/raspicam_node/image`.\n\nCreate a package: `catkin_create_pkg ball_detector rospy cv_bridge sensor_msgs`. Write a Python script `ball_detector.py`. Subscribe to `/raspicam_node/image/compressed`. Convert to OpenCV with `cv_bridge.imgmsg_to_cv2()`. Convert to HSV. Threshold red: lower1 = (0, 100, 100), upper1 = (10, 255, 255); lower2 = (170, 100, 100), upper2 = (180, 255, 255). Combine masks. Find contours. For each contour, compute the centroid `M = cv2.moments(c)` and `cx = int(M['m10']/M['m00'])`, `cy = int(M['m01']/M['m00'])`. Filter by area > 500 pixels. Publish the centroid as a `geometry_msgs/Point` on `/ball_position`.\n\nRun the node: `rosrun ball_detector ball_detector.py`. In another terminal, `rostopic echo /ball_position`. Move the ball left and right. The x-coordinate should change. For a 640x480 image, x ranges 0-640. If x < 200, the ball is left; if x > 440, right; else centre. Use this to control a robot: if left, turn left; if right, turn right; if centre, go forward. Write a second node `controller.py` that subscribes to `/ball_position` and publishes `/cmd_vel` (Twist messages).\n\nTest in a 2 m x 2 m area. Place the ball at 1 m, 2 m, 3 m. The detector should work up to 3 m if the ball is well lit. In low light, add an LED ring (5V, 1W) around the camera. Log detection rate: aim for > 15 FPS on the Pi. If slower, downscale the image to 320x240 and adjust thresholds. Document your results: distance vs. detection success. This lab gives you a complete perception-action loop for a robot.",
+      "body_word_count": 348
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is the primary advantage of converting a colour image to grayscale before processing?",
+      "options": ["A) It increases resolution", "B) It reduces data size by two-thirds", "C) It adds colour information", "D) It improves edge detection accuracy"],
+      "answer": "B",
+      "explanation": "Grayscale uses one channel instead of three, reducing data and speeding up processing."
+    },
+    {
+      "q": "Which OpenCV function is used to apply Gaussian blur?",
+      "options": ["A) cv2.filter2D()", "B) cv2.GaussianBlur()", "C) cv2.medianBlur()", "D) cv2.bilateralFilter()"],
+      "answer": "B",
+      "explanation": "cv2.GaussianBlur() applies a Gaussian kernel to blur the image."
+    },
+    {
+      "q": "In Canny edge detection, what do the two threshold values represent?",
+      "options": ["A) Low and high hysteresis thresholds", "B) Minimum and maximum edge lengths", "C) Kernel size and sigma", "D) Colour channel ranges"],
+      "answer": "A",
+      "explanation": "Canny uses low and high thresholds for hysteresis to detect strong and weak edges."
+    },
+    {
+      "q": "Why is HSV colour space preferred over BGR for colour thresholding?",
+      "options": ["A) HSV is faster to compute", "B) HSV separates colour (hue) from brightness", "C) HSV has more channels", "D) HSV works only in sunlight"],
+      "answer": "B",
+      "explanation": "HSV isolates hue, making thresholding more robust to lighting changes."
+    },
+    {
+      "q": "What morphological operation removes small noise dots from a binary mask?",
+      "options": ["A) cv2.dilate()", "B) cv2.erode()", "C) cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)", "D) cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)"],
+      "answer": "C",
+      "explanation": "Morphological opening (erosion then dilation) removes small objects."
+    },
+    {
+      "q": "Which feature detector is free, fast, and suitable for real-time robotics?",
+      "options": ["A) SIFT", "B) SURF", "C) ORB", "D) BRISK"],
+      "answer": "C",
+      "explanation": "ORB is free, fast, and works well for real-time applications."
+    },
+    {
+      "q": "What does the ORB descriptor size (e.g., 32 bytes) represent?",
+      "options": ["A) Number of keypoints", "B) Length of binary descriptor vector", "C) Image resolution", "D) Matching threshold"],
+      "answer": "B",
+      "explanation": "ORB uses a 32-byte binary descriptor for each keypoint."
+    },
+    {
+      "q": "Which matcher is used for ORB binary descriptors?",
+      "options": ["A) BFMatcher with NORM_L2", "B) BFMatcher with NORM_HAMMING", "C) FLANN with KDTree", "D) BruteForce with NORM_L1"],
+      "answer": "B",
+      "explanation": "ORB descriptors are binary, so Hamming distance is appropriate."
+    },
+    {
+      "q": "If you have 100 matches, how many good matches should you typically keep?",
+      "options": ["A) All 100", "B) Top 30", "C) Bottom 10", "D) Exactly 50"],
+      "answer": "B",
+      "explanation": "Keeping the best 30% (30 matches) reduces false positives."
+    },
+    {
+      "q": "What is a practical use of ORB feature matching for a delivery robot?",
+      "options": ["A) Measuring temperature", "B) Visual place recognition", "C) Battery management", "D) Motor control"],
+      "answer": "B",
+      "explanation": "Matching features against a database identifies known landmarks."
+    },
+    {
+      "q": "Which deep learning model is recommended for object detection on a Raspberry Pi?",
+      "options": ["A) ResNet-50", "B) MobileNet-SSD", "C) VGG-16", "D) YOLOv5x"],
+      "answer": "B",
+      "explanation": "MobileNet-SSD is lightweight and runs at usable FPS on Pi."
+    },
+    {
+      "q": "What is the purpose of cv2.dnn.blobFromImage()?",
+      "options": ["A) To display an image", "B) To preprocess an image for a neural network", "C) To save a model", "D) To convert colour spaces"],
+      "answer": "B",
+      "explanation": "It scales, resizes, and normalises the image into a blob for inference."
+    },
+    {
+      "q": "What confidence threshold is commonly used to filter detections?",
+      "options": ["A) 0.1", "B) 0.3", "C) 0.5", "D) 0.9"],
+      "answer": "C",
+      "explanation": "0.5 (50%) is a common balance between false positives and missed detections."
+    },
+    {
+      "q": "How many images per class are recommended for transfer learning?",
+      "options": ["A) 10", "B) 50", "C) 200+", "D) 10,000"],
+      "answer": "C",
+      "explanation": "200+ varied images per class give good accuracy with transfer learning."
+    },
+    {
+      "q": "Which tool is used to label images for object detection training?",
+      "options": ["A) LabelImg", "B) OpenCV", "C) TensorFlow", "D) ROS"],
+      "answer": "A",
+      "explanation": "LabelImg is a free graphical tool for bounding box annotation."
+    },
+    {
+      "q": "What is the baseline in stereo vision?",
+      "options": ["A) Distance between the two cameras", "B) Focal length of each camera", "C) Image resolution", "D) Disparity value"],
+      "answer": "A",
+      "explanation": "Baseline is the physical distance between the left and right camera centres."
+    },
+    {
+      "q": "What does stereo calibration compute?",
+      "options": ["A) Camera matrix and distortion coefficients", "B) Depth directly", "C) Disparity map", "D) Feature descriptors"],
+      "answer": "A",
+      "explanation": "Calibration finds intrinsic and extrinsic parameters to rectify images."
+    },
+    {
+      "q": "If focal length is 600 pixels, baseline is 0.1 m, and disparity is 30 pixels, what is depth?",
+      "options": ["A) 0.5 m", "B) 1 m", "C) 2 m", "D) 5 m"],
+      "answer": "C",
+      "explanation": "Depth = (600 * 0.1) / 30 = 2 meters."
+    },
+    {
+      "q": "Why does stereo vision fail on plain white walls?",
+      "options": ["A) Too much light", "B) Lack of texture for matching", "C) Wrong baseline", "D) Camera resolution too high"],
+      "answer": "B",
+      "explanation": "Without texture, stereo matching cannot find corresponding points."
+    },
+    {
+      "q": "What is a simple rule for obstacle avoidance using a depth map?",
+      "options": ["A) If centre depth < 1 m, stop or turn", "B) If centre depth > 5 m, stop", "C) Always turn left", "D) Ignore centre region"],
+      "answer": "A",
+      "explanation": "A close centre obstacle triggers a stop or turn to avoid collision."
+    },
+    {
+      "q": "What does visual odometry estimate?",
+      "options": ["A) Object colour", "B) Robot motion from camera images", "C) Battery level", "D) Motor torque"],
+      "answer": "B",
+      "explanation": "Visual odometry tracks features to estimate camera movement."
+    },
+    {
+      "q": "Which OpenCV function estimates the essential matrix from matched points?",
+      "options": ["A) cv2.findHomography()", "B) cv2.findEssentialMat()", "C) cv2.solvePnP()", "D) cv2.stereoRectify()"],
+      "answer": "B",
+      "explanation": "cv2.findEssentialMat() computes the essential matrix for relative pose."
+    },
+    {
+      "q": "What is loop closure in SLAM?",
+      "options": ["A) Closing the camera lens", "B) Recognising a previously seen place to correct drift", "C) Ending the program", "D) Calibrating the IMU"],
+      "answer": "B",
+      "explanation": "Loop closure corrects accumulated drift by matching current view to a past map."
+    },
+    {
+      "q": "Why is monocular SLAM challenging outdoors?",
+      "options": ["A) Too many features", "B) Scale ambiguity", "C) Colour distortion", "D) Low frame rate"],
+      "answer": "B",
+      "explanation": "Without stereo or IMU, monocular SLAM cannot determine absolute scale."
+    },
+    {
+      "q": "What does an IMU provide in visual-inertial SLAM?",
+      "options": ["A) Colour images", "B) Accelerometer and gyroscope data", "C) Depth maps", "D) GPS coordinates"],
+      "answer": "B",
+      "explanation": "IMU measures linear acceleration and angular velocity to aid motion estimation."
+    },
+    {
+      "q": "In the lab, what ROS message type is used to publish the ball's centroid?",
+      "options": ["A) std_msgs/String", "B) geometry_msgs/Point", "C) sensor_msgs/Image", "D) nav_msgs/Odometry"],
+      "answer": "B",
+      "explanation": "geometry_msgs/Point holds x, y, z coordinates of the centroid."
+    },
+    {
+      "q": "What is the purpose of cv_bridge in ROS?",
+      "options": ["A) To convert between ROS image messages and OpenCV images", "B) To control motors", "C) To calibrate cameras", "D) To publish depth maps"],
+      "answer": "A",
+      "explanation": "cv_bridge converts sensor_msgs/Image to and from OpenCV numpy arrays."
+    },
+    {
+      "q": "For a 640x480 image, if the ball's x-coordinate is 150, where is it?",
+      "options": ["A) Left", "B) Centre", "C) Right", "D) Off-screen"],
+      "answer": "A",
+      "explanation": "x < 200 is left, x > 440 is right, else centre."
+    },
+    {
+      "q": "What is the recommended target detection rate for the lab on a Raspberry Pi?",
+      "options": ["A) 1 FPS", "B) 5 FPS", "C) 15 FPS", "D) 60 FPS"],
+      "answer": "C",
+      "explanation": "15 FPS ensures responsive control for a slow-moving robot."
+    },
+    {
+      "q": "What should you do if detection is slow on the Pi?",
+      "options": ["A) Increase resolution", "B) Downscale image to 320x240", "C) Add more features", "D) Use a heavier model"],
+      "answer": "B",
+      "explanation": "Downscaling reduces pixel count and speeds up processing."
+    }
+  ],
+  "videos": [
+    "OpenCV Python image processing tutorial for beginners",
+    "ORB feature detection and matching OpenCV Python",
+    "ROS object detection with OpenCV and Raspberry Pi"
+  ]
+}

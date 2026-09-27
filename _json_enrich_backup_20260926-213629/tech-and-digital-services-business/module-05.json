@@ -1,0 +1,224 @@
+﻿{
+  "course": "Tech and Digital Services Business",
+  "module_number": 5,
+  "module_title": "Technology Stack and Infrastructure",
+  "lessons": [
+    {
+      "title": "Cloud Computing Platforms (AWS, Azure, GCP)",
+      "body": "Cloud platforms let you rent servers, storage, and services instead of buying hardware. For an African tech business, this means you can start small and scale without huge upfront costs. AWS, Azure, and GCP are the big three. AWS has the largest presence in Africa with data centers in Cape Town (South Africa) and upcoming in Kenya. Azure has data centers in South Africa (Johannesburg and Cape Town). GCP does not have an African data center yet, so latency may be higher. But all three offer free tiers: AWS Free Tier gives you 750 hours of t2.micro or t3.micro per month for 12 months; Azure gives $200 credit for 30 days plus 12 months of popular services; GCP gives $300 credit for 90 days. Use these to learn and prototype. For production, consider latency. If your users are in Nigeria, a server in Europe or South Africa may add 100-200ms delay. A local data center like AWS Cape Town reduces that to under 50ms for Southern African users. Pricing is pay-as-you-go. A small virtual server (2 vCPU, 4GB RAM) costs about $20-40 per month on AWS or Azure. You can also use managed services like databases (e.g., Amazon RDS, Azure SQL) which cost more but save you from managing servers. For African startups, start with a free tier, then move to a paid instance when you have paying customers. Use cost calculators on each platform to estimate. Also consider data sovereignty: some countries require data to stay within borders. AWS and Azure in South Africa comply with local laws. Finally, set up billing alerts to avoid surprises. A common mistake is leaving a large instance running. Use auto-scaling and shut down dev servers at night.",
+      "body_word_count": 300
+    },
+    {
+      "title": "Choosing Development Frameworks and Tools",
+      "body": "A development framework is a set of pre-built code that speeds up building your app. For web apps, popular choices are React, Angular, and Vue.js for the frontend; and Node.js, Django, Ruby on Rails, or Laravel for the backend. In Africa, many startups use React and Node.js because of the large talent pool and abundant learning resources. For mobile apps, Flutter (by Google) and React Native (by Facebook) let you write one codebase for both Android and iOS. Android dominates in Africa (over 80% market share), so building for Android first is smart. Flutter is popular because it compiles to native code and has good performance on low-end devices. When choosing, consider: community size, availability of local developers, and hosting costs. For example, a Django app can be hosted on a $5/month DigitalOcean droplet, while a Node.js app might need more memory. Use tools like Git for version control (GitHub, GitLab, or Bitbucket). For project management, Trello or Jira. For communication, Slack or WhatsApp. For design, Figma. Start with a simple stack: HTML, CSS, JavaScript, and a backend like Node.js with Express. Use a database like PostgreSQL (free, powerful). For deployment, use Heroku (easy but can be expensive) or Render (free tier). In Africa, unreliable electricity and internet mean you should choose tools that work offline or have low bandwidth. VS Code is a lightweight code editor that works well. Use npm or yarn for package management. Don't over-engineer: pick a stack you can learn in 3 months. Many successful African startups use PHP and MySQL because of cheap hosting and abundant tutorials. The key is to ship fast and iterate.",
+      "body_word_count": 300
+    },
+    {
+      "title": "API Strategy and Integration",
+      "body": "An API (Application Programming Interface) lets different software talk to each other. For a tech business, APIs are how you connect to payment gateways, SMS services, and other tools. In Africa, popular payment APIs include Paystack (Nigeria, Ghana, South Africa), Flutterwave (many African countries), and M-Pesa (Kenya, Tanzania, etc.). These allow you to accept mobile money, cards, and bank transfers. For SMS, use Africa's Talking or Twilio. To integrate, you typically need an API key and secret. Always store these in environment variables, not in your code. Use HTTPS for all API calls. Start by reading the API documentation. For example, Paystack's API lets you initialize a payment with a POST request to https://api.paystack.co/transaction/initialize with amount, email, and callback URL. They return a authorization_url where you redirect the user. After payment, Paystack sends a webhook to your server. You must verify the webhook signature to prevent fraud. For mobile money like M-Pesa, you use the Daraja API. You need to register on the Safaricom developer portal, get a consumer key and secret, and use OAuth to get an access token. Then you can initiate STK push (prompt on user's phone). Test with sandbox credentials first. When building your own API, follow RESTful principles: use nouns for resources (e.g., /users), HTTP methods (GET, POST, PUT, DELETE), and return JSON. Use rate limiting to prevent abuse. Document your API with Swagger or Postman. For African businesses, consider offline capabilities: store data locally and sync when online. Also, handle poor network conditions with retries and timeouts. A good API strategy reduces development time and lets you focus on your core product.",
+      "body_word_count": 300
+    },
+    {
+      "title": "Data Storage and Management",
+      "body": "Data is the lifeblood of your tech business. You need to store user data, transactions, and logs. There are two main types: structured (e.g., names, amounts) and unstructured (e.g., images, videos). For structured data, use a relational database like PostgreSQL or MySQL. They are free, reliable, and well-supported. For unstructured data, use object storage like Amazon S3, Google Cloud Storage, or Azure Blob Storage. In Africa, consider latency: store data close to your users. AWS S3 has a region in Cape Town; Azure Blob has regions in South Africa. For small businesses, you can start with a single database on a $10/month server. But as you grow, you'll need backups, replication, and scaling. Use managed databases like Amazon RDS or Azure SQL Database to automate backups and patching. For analytics, consider a data warehouse like Google BigQuery or Amazon Redshift. But for most African startups, a simple PostgreSQL with regular backups to S3 is enough. Backup daily and test restore. Use encryption at rest and in transit. For sensitive data like passwords, hash them with bcrypt or Argon2. Never store plain text passwords. For personal data, comply with laws like South Africa's POPIA and Nigeria's NDPR. This means getting consent, allowing deletion, and securing data. Use a content delivery network (CDN) like Cloudflare to cache static assets and reduce load on your servers. For images, use a service like Cloudinary to resize and optimize. Monitor your database performance with tools like pgAdmin or MySQL Workbench. Set up alerts for disk space and slow queries. Finally, plan for data growth: a user table with 10,000 rows is fine, but at 1 million rows you may need indexing. Learn basic SQL to query and manage your data.",
+      "body_word_count": 300
+    },
+    {
+      "title": "DevOps and Continuous Integration/Deployment",
+      "body": "DevOps is a set of practices that combines software development and IT operations to shorten the development cycle and deliver features faster. For a small African tech business, DevOps means automating how you build, test, and deploy your app. Continuous Integration (CI) is the practice of merging code changes frequently and running automated tests. Continuous Deployment (CD) automatically deploys tested code to production. Popular CI/CD tools include GitHub Actions, GitLab CI, Jenkins, and CircleCI. GitHub Actions is free for public repositories and gives 2,000 minutes per month for private repos. Start by creating a simple pipeline: when you push code to GitHub, run tests, build a Docker image, and deploy to a server. Docker packages your app and its dependencies into a container, so it runs the same everywhere. You can run Docker on a $5/month DigitalOcean droplet. For orchestration, use Docker Compose for small apps, or Kubernetes for larger ones (but Kubernetes has a steep learning curve). For deployment, you can use a simple script that pulls the latest code and restarts the service. Or use a platform like Heroku, Render, or Vercel that handles deployment for you. In Africa, unreliable internet can make CI/CD slow. Use caching to speed up builds. Also, set up a staging environment that mirrors production. Test there before deploying to production. Monitor your app with tools like Sentry for errors, and UptimeRobot for uptime. Logs are crucial: use a service like Papertrail or just store logs on your server and rotate them. Automate backups and database migrations. For example, use Flyway or Liquibase. A good DevOps culture reduces manual errors and lets you deploy multiple times a day. Start small: automate one thing at a time.",
+      "body_word_count": 300
+    },
+    {
+      "title": "Security and Compliance Fundamentals",
+      "body": "Security is not optional. A breach can destroy your reputation and lead to legal penalties. For an African tech business, you must protect user data and comply with local laws. Start with the basics: use HTTPS everywhere (free with Let's Encrypt). Keep your software updated. Use strong passwords and two-factor authentication (2FA) for all admin accounts. Never hardcode secrets in your code; use environment variables or a secrets manager like AWS Secrets Manager or HashiCorp Vault. For user authentication, use a library like OAuth or JWT. Hash passwords with bcrypt. Validate all input to prevent SQL injection and cross-site scripting (XSS). Use a web application firewall (WAF) like Cloudflare's free tier. For compliance, know your local laws. In South Africa, the Protection of Personal Information Act (POPIA) requires you to safeguard personal information, appoint an information officer, and report breaches. In Nigeria, the Nigeria Data Protection Regulation (NDPR) mandates similar. In Kenya, the Data Protection Act 2019. If you handle payments, you must comply with PCI DSS. Use a payment gateway like Paystack or Flutterwave that handles PCI compliance for you. For data storage, encrypt data at rest (e.g., using AWS S3 server-side encryption) and in transit (TLS). Regularly back up data and test restores. Conduct a security audit: check for open ports, outdated software, and weak passwords. Use tools like OWASP ZAP for vulnerability scanning. Train your team on phishing and social engineering. Have an incident response plan: who to call, how to notify users, and how to recover. For African startups, a common mistake is ignoring security until it's too late. Spend 10% of your development time on security. It's cheaper than a breach.",
+      "body_word_count": 300
+    }
+  ],
+  "quiz": [
+    {
+      "q": "Which cloud provider has data centers in South Africa?",
+      "options": ["A) AWS and Azure", "B) GCP and AWS", "C) Only AWS", "D) Only Azure"],
+      "answer": "A",
+      "explanation": "AWS has a region in Cape Town and Azure has regions in Johannesburg and Cape Town."
+    },
+    {
+      "q": "What is the main advantage of using a cloud platform for an African startup?",
+      "options": ["A) No need for internet", "B) Pay-as-you-go and scalability", "C) Free hardware", "D) Unlimited storage"],
+      "answer": "B",
+      "explanation": "Cloud platforms allow you to rent resources and scale without large upfront investment."
+    },
+    {
+      "q": "Which free tier gives you $300 credit for 90 days?",
+      "options": ["A) AWS", "B) Azure", "C) GCP", "D) All of them"],
+      "answer": "C",
+      "explanation": "Google Cloud Platform offers $300 credit for 90 days for new users."
+    },
+    {
+      "q": "Why is latency important when choosing a cloud region?",
+      "options": ["A) It affects the cost", "B) It affects user experience", "C) It affects data sovereignty", "D) It affects security"],
+      "answer": "B",
+      "explanation": "Higher latency means slower response times for users, which can hurt user experience."
+    },
+    {
+      "q": "What is a common mistake when using cloud free tiers?",
+      "options": ["A) Using too many services", "B) Forgetting to shut down instances", "C) Not using HTTPS", "D) Not backing up"],
+      "answer": "B",
+      "explanation": "Leaving instances running can lead to unexpected charges after the free tier expires."
+    },
+    {
+      "q": "Which frontend framework is popular for building mobile apps for both Android and iOS?",
+      "options": ["A) React", "B) Angular", "C) Flutter", "D) Vue.js"],
+      "answer": "C",
+      "explanation": "Flutter allows you to write one codebase that compiles to native code for both platforms."
+    },
+    {
+      "q": "Why is Android development often prioritized in Africa?",
+      "options": ["A) Android is cheaper", "B) Android has over 80% market share", "C) iOS is not available", "D) Android is easier to develop"],
+      "answer": "B",
+      "explanation": "Android dominates the African smartphone market, so reaching Android users first makes business sense."
+    },
+    {
+      "q": "Which tool is used for version control?",
+      "options": ["A) Git", "B) Docker", "C) Jenkins", "D) Figma"],
+      "answer": "A",
+      "explanation": "Git is the standard version control system, often used with GitHub or GitLab."
+    },
+    {
+      "q": "What is a good backend framework for a beginner in Africa?",
+      "options": ["A) Node.js with Express", "B) Ruby on Rails", "C) Django", "D) All of the above"],
+      "answer": "D",
+      "explanation": "All are viable, but Node.js with Express is lightweight and has a large community."
+    },
+    {
+      "q": "Why might PHP and MySQL be a good choice for African startups?",
+      "options": ["A) They are the fastest", "B) Cheap hosting and abundant tutorials", "C) They are the most secure", "D) They are required by law"],
+      "answer": "B",
+      "explanation": "PHP and MySQL are widely supported by low-cost hosting providers and have many learning resources."
+    },
+    {
+      "q": "Which payment API is popular in Nigeria and Ghana?",
+      "options": ["A) Paystack", "B) Stripe", "C) PayPal", "D) Square"],
+      "answer": "A",
+      "explanation": "Paystack is widely used in Nigeria and Ghana for accepting payments."
+    },
+    {
+      "q": "What should you do with API keys?",
+      "options": ["A) Hardcode them in your code", "B) Store them in environment variables", "C) Share them publicly", "D) Email them to your team"],
+      "answer": "B",
+      "explanation": "Environment variables keep secrets out of your codebase and version control."
+    },
+    {
+      "q": "What is a webhook?",
+      "options": ["A) A type of API request", "B) A notification sent from a server to your server", "C) A database query", "D) A frontend framework"],
+      "answer": "B",
+      "explanation": "Webhooks allow services like Paystack to notify your app when an event occurs, such as a successful payment."
+    },
+    {
+      "q": "Which API is used for M-Pesa integration?",
+      "options": ["A) Daraja", "B) Paystack", "C) Flutterwave", "D) Twilio"],
+      "answer": "A",
+      "explanation": "Safaricom's Daraja API is the official API for M-Pesa integration."
+    },
+    {
+      "q": "What is a best practice when building your own API?",
+      "options": ["A) Use verbs for endpoints", "B) Return XML", "C) Use rate limiting", "D) Avoid documentation"],
+      "answer": "C",
+      "explanation": "Rate limiting prevents abuse and ensures fair usage of your API."
+    },
+    {
+      "q": "Which database is a good choice for structured data?",
+      "options": ["A) MongoDB", "B) PostgreSQL", "C) Redis", "D) Cassandra"],
+      "answer": "B",
+      "explanation": "PostgreSQL is a powerful, free relational database suitable for structured data."
+    },
+    {
+      "q": "What is object storage used for?",
+      "options": ["A) Storing images and videos", "B) Running queries", "C) Managing user sessions", "D) Caching"],
+      "answer": "A",
+      "explanation": "Object storage like Amazon S3 is designed for unstructured data such as media files."
+    },
+    {
+      "q": "Why should you encrypt data at rest?",
+      "options": ["A) To improve performance", "B) To comply with laws and protect data", "C) To reduce storage costs", "D) To make backups faster"],
+      "answer": "B",
+      "explanation": "Encryption at rest protects data if the storage medium is compromised, and many regulations require it."
+    },
+    {
+      "q": "What is POPIA?",
+      "options": ["A) A cloud provider", "B) A South African data protection law", "C) A payment gateway", "D) A programming language"],
+      "answer": "B",
+      "explanation": "POPIA is South Africa's Protection of Personal Information Act, which governs data privacy."
+    },
+    {
+      "q": "How often should you back up your database?",
+      "options": ["A) Never", "B) Once a year", "C) Daily", "D) Only when you remember"],
+      "answer": "C",
+      "explanation": "Daily backups minimize data loss in case of failure or attack."
+    },
+    {
+      "q": "What is Continuous Integration?",
+      "options": ["A) Merging code changes frequently and running tests", "B) Deploying to production manually", "C) Writing code without testing", "D) Using a single developer"],
+      "answer": "A",
+      "explanation": "CI involves automatically testing code changes as they are merged into the main branch."
+    },
+    {
+      "q": "Which tool is free for public repositories and offers CI/CD?",
+      "options": ["A) GitHub Actions", "B) Jenkins", "C) CircleCI", "D) Travis CI"],
+      "answer": "A",
+      "explanation": "GitHub Actions is free for public repos and provides CI/CD capabilities."
+    },
+    {
+      "q": "What does Docker do?",
+      "options": ["A) Manages databases", "B) Packages apps into containers", "C) Monitors servers", "D) Writes code"],
+      "answer": "B",
+      "explanation": "Docker containers package an app with its dependencies for consistent deployment."
+    },
+    {
+      "q": "What is a staging environment?",
+      "options": ["A) A copy of production for testing", "B) A backup server", "C) A development laptop", "D) A database"],
+      "answer": "A",
+      "explanation": "A staging environment mirrors production so you can test changes safely before release."
+    },
+    {
+      "q": "Why is monitoring important in DevOps?",
+      "options": ["A) To catch errors and downtime", "B) To increase costs", "C) To slow down development", "D) To replace testing"],
+      "answer": "A",
+      "explanation": "Monitoring helps you detect and respond to issues quickly, ensuring uptime."
+    },
+    {
+      "q": "What is HTTPS?",
+      "options": ["A) A secure version of HTTP", "B) A programming language", "C) A database", "D) A cloud provider"],
+      "answer": "A",
+      "explanation": "HTTPS encrypts data between the user and your server, protecting against eavesdropping."
+    },
+    {
+      "q": "Why should you hash passwords?",
+      "options": ["A) To make them shorter", "B) To store them securely", "C) To share them with users", "D) To speed up login"],
+      "answer": "B",
+      "explanation": "Hashing converts passwords into irreversible strings, so even if stolen, they are not usable."
+    },
+    {
+      "q": "What is two-factor authentication (2FA)?",
+      "options": ["A) Using two passwords", "B) An extra layer of security beyond a password", "C) A type of encryption", "D) A backup system"],
+      "answer": "B",
+      "explanation": "2FA requires a second form of verification, such as a code from your phone, making accounts harder to compromise."
+    },
+    {
+      "q": "Which law governs data protection in Nigeria?",
+      "options": ["A) POPIA", "B) NDPR", "C) GDPR", "D) PCI DSS"],
+      "answer": "B",
+      "explanation": "The Nigeria Data Protection Regulation (NDPR) sets rules for handling personal data in Nigeria."
+    },
+    {
+      "q": "What should you do if you suspect a data breach?",
+      "options": ["A) Ignore it", "B) Notify affected users and authorities", "C) Delete all data", "D) Blame your team"],
+      "answer": "B",
+      "explanation": "Many regulations require prompt notification of breaches to protect affected individuals."
+    }
+  ],
+  "videos": [
+    "AWS vs Azure vs GCP comparison for beginners",
+    "How to choose a tech stack for African startups",
+    "Paystack API integration tutorial for beginners"
+  ]
+}

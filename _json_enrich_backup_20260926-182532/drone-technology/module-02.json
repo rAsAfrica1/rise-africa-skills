@@ -1,0 +1,218 @@
+﻿{
+  "course": "Drone Technology",
+  "module_number": 2,
+  "module_title": "Drone Hardware and Components",
+  "lessons": [
+    {
+      "title": "Frames and Materials: Choosing the Right Frame",
+      "body": "The frame is the skeleton of your drone. It holds everything together and must be strong, light, and stiff. In Africa, you want a frame that survives rough landings on dirt, grass, or gravel. Most beginner drones use plastic or carbon fibre. Carbon fibre is best: it is light, strong, and does not bend. But it costs more and can block radio signals if you cover antennas. Fibreglass is cheaper but heavier and breaks easier. Plastic frames from old toys are too weak for anything but the smallest drones.\n\nFor a typical 250mm racing drone or a 450mm camera drone, you need a frame kit. Common sizes: 250mm for racing, 450mm for aerial photography, 650mm for heavy lift. In Africa, where spare parts can be hard to find, buy a frame with replaceable arms. If you crash, you only replace one arm, not the whole frame. Look for frames that use standard screws (M3) and have mounting holes for your flight controller and motors.\n\nWhen building, use threadlocker (blue Loctite) on metal screws that go into metal. Do not use it on plastic. Tighten screws firmly but not so tight that you strip the threads. A good frame has no flex when you twist it. If it flexes, your drone will vibrate and your camera footage will be shaky.\n\nIn hot, dusty environments, carbon fibre can conduct electricity if it gets wet with muddy water. Keep your electronics insulated. Also, carbon fibre can block GPS signals if the GPS module is mounted too close to the frame. Mount GPS on a small mast above the frame. For African conditions, consider a frame with landing gear or skids to keep the camera and battery off the ground. A simple fix: zip-tie two plastic bottles to the bottom as makeshift landing gear. Test your frame by hand: twist it, bend it gently. It should feel solid. If it creaks, tighten or replace parts. Remember, a good frame saves you money because you crash less and repair cheaper."
+    },
+    {
+      "title": "Motors and Propellers: Types and Selection",
+      "body": "Motors and propellers work together to lift your drone. The motor spins the propeller, which pushes air down and lifts the drone up. For most African drone builders, brushless motors are the standard. Brushed motors are cheap but wear out fast and are only for tiny toy drones. Brushless motors last longer and are more powerful.\n\nMotor size is given by a four-digit number like 2212 or 2306. The first two digits are the stator diameter in mm, the last two are the stator height in mm. A 2212 motor is 22mm wide and 12mm tall. Bigger motors give more torque and can spin bigger propellers. For a 450mm camera drone, use 2212 or 2216 motors with 900-1000 KV. KV means RPM per volt. A 1000KV motor on a 3S battery (11.1V) spins at about 11,100 RPM. For a 250mm racing drone, use 2306 motors with 2400-2700KV on a 4S battery.\n\nPropellers come in pairs: clockwise (CW) and counter-clockwise (CCW). You need two of each for a quadcopter. Prop size is like 1045: 10-inch diameter, 4.5-inch pitch. Higher pitch gives more speed but uses more battery. For African heat, use nylon or glass-fibre reinforced props. Cheap plastic props break easily. Always balance your propellers. An unbalanced prop causes vibration that ruins camera footage and can loosen screws. Use a prop balancer tool. If you don't have one, you can balance by adding a small piece of tape to the light side.\n\nWhen choosing motors, check the maximum current (amps) and match it to your ESC. A 2212 motor might draw 20A max. Your ESC must handle at least 20A. Also, check motor mounting holes: most are 16x19mm or 19x19mm. Make sure your frame arms have the same pattern. In Africa, buy spare motors and props. A crash often breaks one motor or prop. Keep at least two spare motors and ten spare props. Solder motor wires carefully: three wires, any order. If the motor spins the wrong way, swap any two wires. Test without propellers first."
+    },
+    {
+      "title": "Electronic Speed Controllers (ESCs)",
+      "body": "An Electronic Speed Controller (ESC) is a small circuit board that tells the motor how fast to spin. Each brushless motor needs its own ESC. For a quadcopter, you need four ESCs. They take power from the battery and a signal from the flight controller. The ESC converts that signal into three-phase power for the motor.\n\nESC ratings: The most important number is the continuous current rating in amps (A). If your motor draws 20A max, use an ESC rated for at least 25A or 30A. Never use an ESC rated lower than your motor's max current. Also check the voltage rating: ESCs come in 2S-4S, 3S-6S, etc. Match your battery. For African conditions, heat is a killer. ESCs get hot. Choose ESCs with good heat sinks or buy a 4-in-1 ESC (one board for all four motors) which saves weight and wiring. But if one ESC burns out, you replace the whole board. Separate ESCs are cheaper to repair.\n\nFirmware: Most ESCs run BLHeli or BLHeli_S. You can program them with a USB linker or through your flight controller. You can set motor direction, timing, and brake. For beginners, keep default settings. But always calibrate your ESCs: turn on transmitter, put throttle to max, power the drone, wait for beeps, then throttle to min. This teaches the ESC the throttle range.\n\nWiring: ESCs have three thick wires to the motor (any order) and two thick wires to the battery (positive and negative). Never reverse battery polarity â it will destroy the ESC instantly. Use a smoke stopper (a small device with a light bulb) when first powering up to catch shorts. In Africa, where power can be unstable, use a good LiPo battery and avoid cheap ESCs from unknown brands. A common mistake: soldering ESCs directly to the power distribution board without checking for shorts. Always use a multimeter to check for continuity between positive and negative before plugging in battery. Keep spare ESCs. They are cheap insurance."
+    },
+    {
+      "title": "Flight Controllers and Sensors",
+      "body": "The flight controller (FC) is the brain of your drone. It reads signals from your radio receiver, data from sensors, and then tells the ESCs how fast to spin each motor. Without an FC, your drone cannot balance itself. Most FCs today run Betaflight or ArduPilot firmware. Betaflight is for racing and freestyle; ArduPilot is for autonomous missions and mapping.\n\nKey sensors on an FC: gyroscope and accelerometer (together called IMU) measure rotation and acceleration. Barometer measures altitude. Magnetometer (compass) gives direction. GPS module (often separate) gives position. For African conditions, dust and heat can affect sensors. Keep the FC covered but ventilated. Mount it on soft rubber grommets to reduce vibration. Vibration makes the gyro confused and can cause the drone to flip.\n\nConnections: The FC has many pads. You need to solder: battery power (VBAT), ESC signal wires, receiver input (usually a UART port), and maybe GPS, buzzer, LED. Use a wiring diagram for your specific FC. Common FCs: Matek F405, Holybro Kakute, SpeedyBee F7. They cost $30-$60. In Africa, buy from a local supplier if possible to avoid long shipping. If you must order from abroad, buy two â one spare.\n\nConfiguration: Use Betaflight Configurator on a laptop. Connect via USB. Set your receiver protocol (SBUS, CRSF, etc.). Set your ESC protocol (DSHOT600 is common). Calibrate the accelerometer on a level surface. Set failsafe: if signal lost, motors stop. Test motor order and direction in the Motors tab without propellers. For GPS, enable GPS rescue mode so the drone returns home if it flies away. A common beginner mistake: mounting the FC backwards. The arrow on the FC must point forward. If not, set board alignment in software. Always do a pre-arm check: props off, battery on, arm, check motor spin. In dusty areas, clean your FC with a soft brush and isopropyl alcohol every few flights."
+    },
+    {
+      "title": "Batteries and Power Systems",
+      "body": "Lithium Polymer (LiPo) batteries are the standard for drones. They give high current and are rechargeable. A LiPo cell has a nominal voltage of 3.7V. A 3S battery has 3 cells in series: 11.1V. A 4S is 14.8V. More cells mean more power but also more weight. For a 450mm camera drone, use 3S or 4S, 3000-5000mAh. For a 250mm racer, use 4S, 1300-1500mAh.\n\nCapacity (mAh) tells you how long you can fly. A 5000mAh battery on a 450mm drone gives about 15-20 minutes. But higher capacity means more weight, which reduces flight time. Find a balance. Discharge rate (C rating) tells you how fast you can pull current. A 20C battery on 5000mAh can deliver 100A continuous (20 x 5). Most drones need 20-30C. Never use a battery with a C rating lower than your system needs â it will puff and catch fire.\n\nSafety in African heat: LiPo batteries hate heat. Do not leave them in a hot car or in direct sun. Store them at 3.8V per cell (storage charge). Charge at 1C (e.g., 5A for 5000mAh). Use a balance charger like the ISDT Q6 or SkyRC B6. Never charge unattended. Use a LiPo safe bag. If a battery puffs, swells, or gets hot after a flight, dispose of it properly. Do not puncture.\n\nPower distribution: You need a way to get battery power to ESCs and FC. Many drones use a power distribution board (PDB) or a 4-in-1 ESC with built-in PDB. Solder a battery connector (XT60 or XT30) to the PDB. Use a capacitor (e.g., 1000ÂµF, 25V) across the battery input to smooth voltage spikes. This prevents video noise and protects electronics. Always check polarity with a multimeter before connecting battery. In areas with unreliable grid power, charge your batteries when you have electricity. A car battery with an inverter can charge LiPos in the field. Keep a fireproof bag and a bucket of sand nearby when charging. Never leave charging batteries alone."
+    },
+    {
+      "title": "Radio Transmitters and Receivers",
+      "body": "The radio transmitter (TX) is your remote control. The receiver (RX) is on the drone and sends your commands to the flight controller. They communicate over radio waves. For drones, 2.4GHz is standard. In Africa, you may face interference from other radios, Wi-Fi, or cell towers. Use a frequency-hopping system like FrSky, FlySky, or RadioMaster. These are reliable and affordable.\n\nTransmitter: A good beginner TX is the RadioMaster TX12 or FlySky FS-i6. They cost $60-$120. You need at least 6 channels: throttle, yaw, pitch, roll, arm switch, and flight mode switch. More channels for GPS, camera, etc. Set up your TX with a model memory for each drone. Use expo (exponential) to soften controls around center. Set dual rates: low rates for smooth filming, high rates for racing. Always set a failsafe: if signal lost, the receiver tells the FC to cut motors or return home. Test failsafe on the ground with props off.\n\nReceiver: Match your receiver to your transmitter brand. Common protocols: SBUS, iBUS, CRSF. The RX connects to a UART port on the FC. Solder signal, 5V, and ground. Mount antennas away from carbon fibre and battery. Use diversity antennas (two antennas) for better range. In Africa, line-of-sight is important. Trees, buildings, and hills block 2.4GHz. Keep your drone in sight. For long-range, use 433MHz or 915MHz systems like TBS Crossfire, but they cost more.\n\nBinding: Put TX in bind mode, power RX with bind button pressed. Wait for solid LED. Then set up in Betaflight: select receiver protocol, check channel mapping. Move sticks: throttle up, yaw left, etc. In the Receiver tab, ensure channel bars move correctly. If not, adjust channel order or invert. A common mistake: not setting failsafe in the TX. Also, keep your TX battery charged. Use a lipo or NiMH pack. In dusty environments, keep TX in a case. Always do a range check: walk 30 meters away with props off, check signal strength. If weak, check antenna connections. Never fly with a damaged antenna."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "Which frame material is best for a beginner drone in Africa because it is strong and light?",
+      "options": ["A) Plastic", "B) Carbon fibre", "C) Aluminium", "D) Wood"],
+      "answer": "B",
+      "explanation": "Carbon fibre is strong, light, and stiff, making it ideal for rough African conditions."
+    },
+    {
+      "q": "What does the KV rating on a brushless motor indicate?",
+      "options": ["A) Maximum current in amps", "B) RPM per volt", "C) Motor weight in grams", "D) Propeller size"],
+      "answer": "B",
+      "explanation": "KV is the motor's speed constant: RPM per volt of input."
+    },
+    {
+      "q": "For a 450mm camera drone, which motor KV is commonly recommended?",
+      "options": ["A) 900-1000KV", "B) 2400-2700KV", "C) 3500-4000KV", "D) 500-600KV"],
+      "answer": "A",
+      "explanation": "Lower KV motors like 900-1000KV provide more torque for larger props on camera drones."
+    },
+    {
+      "q": "What is the purpose of an Electronic Speed Controller (ESC)?",
+      "options": ["A) To control the flight controller", "B) To convert battery power to three-phase for the motor", "C) To receive radio signals", "D) To measure altitude"],
+      "answer": "B",
+      "explanation": "ESCs take DC battery power and a signal, then output three-phase AC to spin the brushless motor."
+    },
+    {
+      "q": "When soldering ESCs, which tool should you use to check for shorts before connecting the battery?",
+      "options": ["A) Oscilloscope", "B) Multimeter", "C) Watt meter", "D) Soldering iron"],
+      "answer": "B",
+      "explanation": "A multimeter set to continuity mode can detect shorts between positive and negative."
+    },
+    {
+      "q": "What is the main function of the flight controller?",
+      "options": ["A) To provide thrust", "B) To process sensor data and control motors", "C) To store battery power", "D) To transmit video"],
+      "answer": "B",
+      "explanation": "The flight controller reads sensors and receiver input, then commands the ESCs to stabilize the drone."
+    },
+    {
+      "q": "Which firmware is commonly used for autonomous missions like mapping?",
+      "options": ["A) Betaflight", "B) ArduPilot", "C) Cleanflight", "D) Baseflight"],
+      "answer": "B",
+      "explanation": "ArduPilot supports advanced autonomous features like waypoint navigation and mapping."
+    },
+    {
+      "q": "Why should you mount the flight controller on rubber grommets?",
+      "options": ["A) To reduce vibration", "B) To improve radio range", "C) To increase battery life", "D) To make it waterproof"],
+      "answer": "A",
+      "explanation": "Rubber grommets dampen vibrations that can confuse the gyroscope and cause instability."
+    },
+    {
+      "q": "What does a 3S LiPo battery mean?",
+      "options": ["A) 3 cells in series, 11.1V nominal", "B) 3 cells in parallel, 3.7V", "C) 3 amp hours", "D) 3C discharge rate"],
+      "answer": "A",
+      "explanation": "A 3S battery has 3 cells in series, each 3.7V nominal, giving 11.1V total."
+    },
+    {
+      "q": "What is the recommended storage voltage for a LiPo cell?",
+      "options": ["A) 3.0V", "B) 3.8V", "C) 4.2V", "D) 5.0V"],
+      "answer": "B",
+      "explanation": "Storing LiPos at 3.8V per cell reduces stress and prolongs battery life."
+    },
+    {
+      "q": "Why should you use a capacitor across the battery input on a power distribution board?",
+      "options": ["A) To increase voltage", "B) To smooth voltage spikes", "C) To reduce weight", "D) To store energy for longer flights"],
+      "answer": "B",
+      "explanation": "Capacitors absorb voltage spikes from motors, protecting electronics and reducing video noise."
+    },
+    {
+      "q": "What is the typical frequency band for drone radio transmitters?",
+      "options": ["A) 433MHz", "B) 900MHz", "C) 2.4GHz", "D) 5.8GHz"],
+      "answer": "C",
+      "explanation": "2.4GHz is the most common band for hobby drone transmitters and receivers."
+    },
+    {
+      "q": "What does a failsafe do on a drone?",
+      "options": ["A) Prevents arming", "B) Stops motors or returns home if signal is lost", "C) Increases range", "D) Balances props"],
+      "answer": "B",
+      "explanation": "Failsafe is a safety feature that activates when the radio link is lost, preventing flyaways."
+    },
+    {
+      "q": "Which of these is a common receiver protocol?",
+      "options": ["A) SBUS", "B) DSHOT", "C) PWM", "D) LiPo"],
+      "answer": "A",
+      "explanation": "SBUS is a serial protocol used by many receivers to communicate with flight controllers."
+    },
+    {
+      "q": "What is the first step when binding a receiver to a transmitter?",
+      "options": ["A) Power the drone with props on", "B) Put transmitter in bind mode, then power receiver with bind button pressed", "C) Connect to Betaflight", "D) Calibrate ESCs"],
+      "answer": "B",
+      "explanation": "Binding requires both TX and RX to be in bind mode simultaneously to link them."
+    },
+    {
+      "q": "Why is it important to balance propellers?",
+      "options": ["A) To increase top speed", "B) To reduce vibration", "C) To change direction", "D) To make them lighter"],
+      "answer": "B",
+      "explanation": "Unbalanced props cause vibrations that affect gyro performance and camera footage."
+    },
+    {
+      "q": "What does a 1045 propeller size mean?",
+      "options": ["A) 10-inch diameter, 4.5-inch pitch", "B) 10mm diameter, 45mm pitch", "C) 1.0-inch diameter, 4.5-inch pitch", "D) 10-inch pitch, 4.5-inch diameter"],
+      "answer": "A",
+      "explanation": "Prop size is diameter x pitch in inches: 10 inches diameter, 4.5 inches pitch."
+    },
+    {
+      "q": "Which tool is used to check for motor direction without props?",
+      "options": ["A) Betaflight Configurator", "B) Multimeter", "C) Oscilloscope", "D) Tachometer"],
+      "answer": "A",
+      "explanation": "Betaflight's Motors tab allows you to spin each motor individually to verify direction."
+    },
+    {
+      "q": "What is a 4-in-1 ESC?",
+      "options": ["A) Four separate ESCs", "B) One board with four ESCs", "C) An ESC with four motors", "D) A type of flight controller"],
+      "answer": "B",
+      "explanation": "A 4-in-1 ESC combines four ESCs on a single board, saving weight and wiring."
+    },
+    {
+      "q": "What should you do if a LiPo battery puffs?",
+      "options": ["A) Continue using it", "B) Dispose of it properly", "C) Charge it faster", "D) Puncture it to release gas"],
+      "answer": "B",
+      "explanation": "A puffed LiPo is damaged and can catch fire; it must be disposed of safely."
+    },
+    {
+      "q": "What is the purpose of a power distribution board (PDB)?",
+      "options": ["A) To distribute battery power to ESCs and FC", "B) To control motor speed", "C) To receive radio signals", "D) To store flight data"],
+      "answer": "A",
+      "explanation": "A PDB takes battery input and provides regulated power and connections to ESCs and other components."
+    },
+    {
+      "q": "Which sensor measures altitude on a flight controller?",
+      "options": ["A) Gyroscope", "B) Accelerometer", "C) Barometer", "D) Magnetometer"],
+      "answer": "C",
+      "explanation": "A barometer measures atmospheric pressure to estimate altitude."
+    },
+    {
+      "q": "What is the recommended action if your drone's receiver antenna is damaged?",
+      "options": ["A) Fly anyway", "B) Replace it before flying", "C) Cut it shorter", "D) Wrap it in tape"],
+      "answer": "B",
+      "explanation": "A damaged antenna reduces range and can cause loss of control; replace it."
+    },
+    {
+      "q": "What does the C rating on a LiPo battery indicate?",
+      "options": ["A) Capacity in mAh", "B) Maximum continuous discharge current", "C) Cell count", "D) Charge rate"],
+      "answer": "B",
+      "explanation": "C rating multiplied by capacity gives the maximum safe continuous current draw."
+    },
+    {
+      "q": "Why should you avoid mounting a GPS module directly on carbon fibre?",
+      "options": ["A) Carbon fibre blocks GPS signals", "B) Carbon fibre is too heavy", "C) Carbon fibre gets too hot", "D) Carbon fibre is conductive"],
+      "answer": "A",
+      "explanation": "Carbon fibre can shield GPS signals, so mount GPS on a mast above the frame."
+    },
+    {
+      "q": "What is the first thing to do after soldering a new power connector?",
+      "options": ["A) Plug in battery", "B) Check polarity with a multimeter", "C) Arm the drone", "D) Calibrate ESCs"],
+      "answer": "B",
+      "explanation": "Always verify correct polarity and no shorts before applying power."
+    },
+    {
+      "q": "Which flight controller firmware is best for racing drones?",
+      "options": ["A) ArduPilot", "B) Betaflight", "C) PX4", "D) iNav"],
+      "answer": "B",
+      "explanation": "Betaflight is optimized for low latency and racing performance."
+    },
+    {
+      "q": "What is the purpose of a smoke stopper?",
+      "options": ["A) To prevent fire by limiting current on first power-up", "B) To cool ESCs", "C) To increase range", "D) To balance props"],
+      "answer": "A",
+      "explanation": "A smoke stopper uses a light bulb or resistor to limit current, protecting electronics from shorts."
+    },
+    {
+      "q": "How many channels do you need at minimum for a basic drone?",
+      "options": ["A) 2", "B) 4", "C) 6", "D) 8"],
+      "answer": "C",
+      "explanation": "You need at least 6 channels: throttle, yaw, pitch, roll, arm, and flight mode."
+    },
+    {
+      "q": "What should you do before first flight with a new build?",
+      "options": ["A) Fly immediately", "B) Perform a pre-arm check with props off", "C) Charge battery to 4.2V per cell", "D) Set all rates to maximum"],
+      "answer": "B",
+      "explanation": "A pre-arm check ensures motors spin correctly and sensors work before risking a crash."
+    }
+  ],
+  "videos": [
+    "how to build a drone frame for beginners",
+    "brushless motor and ESC selection guide",
+    "drone flight controller setup Betaflight"
+  ]
+}

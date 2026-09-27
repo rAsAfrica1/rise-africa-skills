@@ -1,0 +1,218 @@
+﻿{
+  "course": "Robotics",
+  "module_number": 7,
+  "module_title": "Mobile Robot Navigation",
+  "lessons": [
+    {
+      "title": "Odometry and Dead Reckoning",
+      "body": "Odometry is how a robot estimates its position by counting wheel rotations. On a typical African maker robot like a 2WD chassis with TT motors and a caster wheel, you attach an incremental encoder to each motor shaft. The encoder gives pulses per revolution (PPR). For example, a common cheap encoder gives 20 PPR. With a gear ratio of 1:48, one full wheel turn gives 960 pulses. If your wheel diameter is 65 mm, circumference = Ï Ã 65 â 204 mm. So each pulse = 204 / 960 â 0.2125 mm. That's your resolution. In code, you count pulses, multiply by 0.2125, and you have distance traveled. To get heading, you need to know the distance each wheel traveled. If left wheel goes 100 mm and right wheel goes 120 mm, and your wheelbase (distance between wheels) is 150 mm, then the robot turned by (120-100)/150 = 0.133 radians â 7.6 degrees to the left. You integrate these small turns over time to get your x, y, and theta. This is dead reckoning: estimating your current pose from a known start and measured motions. The problem is drift. Small errors in wheel diameter, uneven floors, or wheel slip accumulate. On a dirt road in a farm, slip can be 20% or more. So after 10 meters, your robot might think it's at 12 meters. To reduce drift, calibrate your wheel diameter by driving a straight 5 meters and measuring actual distance, then adjust. Use a gyroscope (like MPU6050) to correct heading drift. Combine wheel odometry with gyro using a simple complementary filter: trust gyro for short-term changes, odometry for long-term. In practice, odometry alone is good for short trips (under 5 meters) on smooth surfaces. For longer runs, you need landmarks or GPS. But odometry is cheap, fast, and always available. Start with it, then add sensors. In your lab, you'll test odometry on a tiled floor and on grass to see the difference. Record the error at 1, 3, and 5 meters. That data will guide your sensor fusion later."
+    },
+    {
+      "title": "Wheeled Locomotion and Kinematics",
+      "body": "Wheeled locomotion is the most common way to move a robot on flat ground. The two main types are differential drive and Ackermann steering. Differential drive uses two independently driven wheels, usually with a caster or omni wheel for balance. It's simple, cheap, and can turn in place. Ackermann steering is like a car: two front wheels steer, rear wheels drive. It's better for high speed and rough terrain but can't turn in place. For African conditions, differential drive is popular because it handles uneven ground and is easy to build with locally available parts. Kinematics is the math that relates wheel speeds to robot motion. For differential drive, let v_L and v_R be the linear speeds of left and right wheels. The robot's linear speed v = (v_L + v_R)/2. The angular speed Ï = (v_R - v_L)/L, where L is the wheelbase. Conversely, given desired v and Ï, you set v_L = v - (Ï L)/2 and v_R = v + (Ï L)/2. For example, if you want to go straight at 0.2 m/s, set both wheels to 0.2 m/s. To turn left at 0.5 rad/s with L=0.15 m, v_L = 0.2 - (0.5*0.15)/2 = 0.1625 m/s, v_R = 0.2 + 0.0375 = 0.2375 m/s. These speeds translate to motor PWM values. You'll need to calibrate: find the minimum PWM that moves the robot, and the maximum before wheels slip. A typical TT motor with 1:48 gear runs well at 6V with PWM 100-255 (8-bit). For precise control, use PID on each wheel's encoder. Also consider wheel slip: on loose sand, wheels spin without moving. To reduce slip, use rubber tires with tread, add weight over drive wheels, and accelerate slowly. For omni-directional robots, you use mecanum or omni wheels, but they are expensive and hard to find in local markets. Stick with differential drive for your first robot. In the lab, you'll program a function that takes v and Ï and sets motor speeds, then test it by driving a square path: forward 1 m, turn 90Â°, repeat. Measure how close you return to start. That's your kinematic accuracy."
+    },
+    {
+      "title": "Path Planning: A*, Dijkstra, RRT",
+      "body": "Path planning finds a route from start to goal without hitting obstacles. The three common algorithms are Dijkstra, A*, and RRT. Dijkstra's algorithm explores all directions equally, like pouring water on a flat surface. It guarantees the shortest path but is slow because it checks many cells. A* is Dijkstra with a heuristic: it uses a guess of distance to goal to focus the search. For a grid map, the heuristic is often Manhattan distance (|x1-x2| + |y1-y2|) or Euclidean distance. A* is faster and still optimal if the heuristic never overestimates. RRT (Rapidly-exploring Random Tree) is different: it randomly samples points in the space and builds a tree, connecting each new point to the nearest existing point. It's good for high-dimensional spaces and robots with complex motions, but the path is not optimal and can be jerky. For a mobile robot in a maze, A* on a grid is the go-to. You represent the environment as a 2D grid (e.g., 1 cell = 10 cm). Mark obstacles as blocked. Run A* to get a list of cells. Then smooth the path by removing unnecessary waypoints. In Africa, you might map a warehouse in Lagos or a farm in Kenya. Use a grid of 0.5 m cells. A* will find a path in milliseconds on a laptop, but on a microcontroller like Arduino, it might be too heavy. Use a Raspberry Pi or ESP32 with enough RAM. For dynamic obstacles, you need replanning. If a person walks into the path, stop, update the grid, and replan. RRT is better for continuous spaces, like a drone flying through trees, but for ground robots, grid-based A* is simpler. In the lab, you'll implement A* in Python on a 10x10 grid with obstacles. Then you'll convert the path to motor commands. Test with a small robot on a floor with cardboard boxes as obstacles. Measure time to goal and path length. Compare with Dijkstra to see the speed difference. A* is usually 2-5 times faster."
+    },
+    {
+      "title": "Obstacle Avoidance and Local Planning",
+      "body": "Obstacle avoidance keeps your robot from crashing when the map is wrong or something new appears. Local planning uses sensors to react in real time. The most common sensor is ultrasonic (HC-SR04). It gives distance to an object by timing sound pulses. Range is 2 cm to 4 m, but accuracy drops on soft surfaces like cloth. Infrared (IR) sensors are cheaper but only detect close objects (2-30 cm) and are affected by sunlight. For outdoor use, add a lidar (e.g., RPLIDAR A1) which gives 360Â° scans up to 12 m. The simplest avoidance algorithm is the Braitenberg vehicle: each sensor drives a motor. For example, if left sensor sees an obstacle, turn right. If both see obstacles, back up and turn. A more robust method is the Vector Field Histogram (VFH): build a polar histogram of obstacles, find gaps, and steer toward the largest gap. Another is the Dynamic Window Approach (DWA): sample possible velocities (v, Ï) in a short time window, simulate the robot's motion, and pick the one that avoids obstacles and gets closer to the goal. DWA works well on differential drive robots. In Africa, you might have unpredictable obstacles: goats, potholes, people. So you need a safety margin. Set a stop distance of 30 cm for ultrasonic. If distance < 30 cm, stop and turn. For narrow corridors, use side sensors. In code, read sensors every 50 ms. Use a state machine: if front clear, go forward; if front blocked, turn left or right based on which side is clearer. Add a buzzer to warn people. In the lab, you'll program a robot to navigate a corridor with randomly placed boxes. Use three ultrasonic sensors (left, center, right). The robot should reach the end without touching. Then add a moving obstacle (a person) and see how it reacts. Tune the stop distance and turn speed. Remember: local planning is reactive, so it can get stuck in a dead end. Combine with a global planner to escape."
+    },
+    {
+      "title": "SLAM: Simultaneous Localization and Mapping",
+      "body": "SLAM is when a robot builds a map and figures out where it is at the same time. It's a chicken-and-egg problem: to map, you need to know your position; to know your position, you need a map. SLAM solves it by using landmarks. The robot moves, observes features (walls, corners, pillars), and updates both its position and the map. The two main types are EKF-SLAM (Extended Kalman Filter) and GraphSLAM. EKF-SLAM keeps a state vector of robot pose and landmark positions, and updates it with sensor data. It works for small maps (up to a few hundred landmarks) but is computationally heavy. GraphSLAM builds a graph of robot poses and landmarks, then optimizes the whole graph. It's more accurate and scales better. For a beginner, use a lidar and a ROS package like GMapping or Cartographer. On a Raspberry Pi 4 with RPLIDAR A1, you can run GMapping at 5 Hz. The output is a 2D occupancy grid: each cell is free, occupied, or unknown. You can then use that map for navigation with AMCL (Adaptive Monte Carlo Localization). In Africa, SLAM is useful for mapping buildings, mines, or farms. But lidar is expensive (over $100). A cheaper alternative is a camera and ORB-SLAM, but it needs good lighting and texture. For outdoor sun, use a depth camera like Intel RealSense. In the lab, you'll use a pre-built robot with a lidar and ROS. Drive it around a room slowly (0.2 m/s). Watch the map build in RViz. Then save the map and use it to navigate to a goal. Note the loop closure: when you return to start, the map should correct itself. If you don't have lidar, simulate SLAM in Python with a simple 2D world. The key takeaway: SLAM is powerful but needs good sensors and computation. Start with a known map and localization (AMCL) before attempting full SLAM."
+    },
+    {
+      "title": "Lab: Autonomous Navigation in a Maze",
+      "body": "In this lab, you'll build a robot that can navigate a maze autonomously. You'll use a differential drive robot with encoders, three ultrasonic sensors, and an Arduino or Raspberry Pi. The maze is made of cardboard walls, 30 cm high, on a 2m x 2m floor. The goal is to go from start to finish without hitting walls. First, calibrate your odometry: drive straight 1 m and adjust the wheel diameter in code until the error is under 2 cm. Then calibrate your turn: command a 90Â° turn and measure actual angle; adjust the wheelbase parameter. Next, implement a simple wall-following algorithm: keep a set distance (20 cm) from the right wall. Use a PID controller on the right sensor to adjust steering. If front sensor sees a wall within 30 cm, turn left. This works for many mazes. For more complex mazes, use a flood-fill algorithm: treat the maze as a grid, mark visited cells, and always move to the unvisited neighbor with the lowest distance to goal. You'll need to map the maze as you go. Use a 2D array (e.g., 10x10) and update it with sensor readings. For each cell, store walls (N, S, E, W). When you enter a cell, check sensors and update walls. Then compute the shortest path to goal using A* on the known map. Move one cell at a time. This is a simplified SLAM. In practice, you'll run into issues: sensor noise, wheel slip, and timing. Use a 50 ms loop. Add a buzzer that beeps when turning. Test with a simple maze first (3x3), then increase size. Record your success rate over 10 runs. Aim for 80% success. If you fail, check your sensor thresholds and motor deadband. For power, use a 7.4V LiPo battery with a voltage regulator. Keep wires tidy to avoid snags. This lab ties together odometry, kinematics, path planning, and obstacle avoidance. It's the core of mobile robotics. After this, you can add a camera for line following or a lidar for full SLAM."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What does odometry measure?",
+      "options": ["A) Distance to obstacles", "B) Wheel rotations to estimate position", "C) Light intensity", "D) Battery voltage"],
+      "answer": "B",
+      "explanation": "Odometry uses wheel encoders to count rotations and estimate distance traveled and heading change."
+    },
+    {
+      "q": "If a wheel has a circumference of 200 mm and an encoder gives 1000 pulses per revolution, what is the distance per pulse?",
+      "options": ["A) 0.2 mm", "B) 2 mm", "C) 20 mm", "D) 200 mm"],
+      "answer": "A",
+      "explanation": "Distance per pulse = circumference / pulses per revolution = 200 mm / 1000 = 0.2 mm."
+    },
+    {
+      "q": "What is a common cause of odometry drift?",
+      "options": ["A) Too many sensors", "B) Wheel slip", "C) High battery voltage", "D) Fast processor"],
+      "answer": "B",
+      "explanation": "Wheel slip causes the robot to move less than the wheels indicate, leading to position error."
+    },
+    {
+      "q": "Which sensor can correct heading drift in odometry?",
+      "options": ["A) Ultrasonic", "B) Gyroscope", "C) Infrared", "D) Bump sensor"],
+      "answer": "B",
+      "explanation": "A gyroscope measures angular velocity, which can be integrated to correct heading drift."
+    },
+    {
+      "q": "In differential drive, if left wheel speed is 0.1 m/s and right wheel speed is 0.3 m/s, what is the robot's linear speed?",
+      "options": ["A) 0.1 m/s", "B) 0.2 m/s", "C) 0.3 m/s", "D) 0.4 m/s"],
+      "answer": "B",
+      "explanation": "Linear speed v = (v_L + v_R)/2 = (0.1 + 0.3)/2 = 0.2 m/s."
+    },
+    {
+      "q": "What is the main advantage of differential drive?",
+      "options": ["A) Can turn in place", "B) High speed on highways", "C) Requires no motors", "D) Works only on rails"],
+      "answer": "A",
+      "explanation": "Differential drive allows zero-radius turns by driving wheels in opposite directions."
+    },
+    {
+      "q": "In the kinematic equation Ï = (v_R - v_L)/L, what does L represent?",
+      "options": ["A) Wheel diameter", "B) Distance between wheels (wheelbase)", "C) Length of robot", "D) Motor gear ratio"],
+      "answer": "B",
+      "explanation": "L is the wheelbase, the distance between the left and right wheels."
+    },
+    {
+      "q": "Which algorithm guarantees the shortest path but explores many cells?",
+      "options": ["A) A*", "B) Dijkstra", "C) RRT", "D) PID"],
+      "answer": "B",
+      "explanation": "Dijkstra explores all directions equally, ensuring optimality but at higher computational cost."
+    },
+    {
+      "q": "What is the heuristic used in A* for a grid map?",
+      "options": ["A) Random guess", "B) Manhattan distance", "C) Battery level", "D) Wheel slip"],
+      "answer": "B",
+      "explanation": "Manhattan distance is a common heuristic for grid-based A* that never overestimates true distance."
+    },
+    {
+      "q": "Which algorithm is best for high-dimensional spaces with complex motions?",
+      "options": ["A) Dijkstra", "B) A*", "C) RRT", "D) Flood fill"],
+      "answer": "C",
+      "explanation": "RRT randomly samples the space and is effective in high-dimensional or continuous spaces."
+    },
+    {
+      "q": "What is a disadvantage of RRT?",
+      "options": ["A) Always optimal", "B) Path can be jerky and non-optimal", "C) Requires no sensors", "D) Only works in 2D"],
+      "answer": "B",
+      "explanation": "RRT does not guarantee optimal paths and often produces jerky trajectories."
+    },
+    {
+      "q": "In a grid-based path planner, what does a cell marked as 'occupied' mean?",
+      "options": ["A) Free space", "B) Obstacle", "C) Robot's position", "D) Goal"],
+      "answer": "B",
+      "explanation": "Occupied cells represent obstacles that the robot cannot enter."
+    },
+    {
+      "q": "Which sensor is most affected by sunlight?",
+      "options": ["A) Ultrasonic", "B) Infrared", "C) Lidar", "D) Encoder"],
+      "answer": "B",
+      "explanation": "Infrared sensors use light and can be saturated by sunlight, reducing range and accuracy."
+    },
+    {
+      "q": "What is the typical range of an HC-SR04 ultrasonic sensor?",
+      "options": ["A) 2 cm to 4 m", "B) 10 m to 20 m", "C) 0.1 m to 0.5 m", "D) 1 m to 2 m"],
+      "answer": "A",
+      "explanation": "The HC-SR04 works from about 2 cm to 4 meters, with best accuracy in the middle range."
+    },
+    {
+      "q": "Which local planning algorithm samples possible velocities and picks the best one?",
+      "options": ["A) A*", "B) Dijkstra", "C) Dynamic Window Approach (DWA)", "D) RRT"],
+      "answer": "C",
+      "explanation": "DWA samples velocities in a short window, simulates motion, and selects the best based on obstacles and goal."
+    },
+    {
+      "q": "What is a safe stop distance for an ultrasonic sensor on a small robot?",
+      "options": ["A) 5 cm", "B) 30 cm", "C) 1 m", "D) 3 m"],
+      "answer": "B",
+      "explanation": "30 cm gives enough time to stop and turn, accounting for sensor noise and robot inertia."
+    },
+    {
+      "q": "What does SLAM stand for?",
+      "options": ["A) Simultaneous Localization and Mapping", "B) Simple Light and Motion", "C) Sensor Leveling and Mapping", "D) System for Local Autonomous Movement"],
+      "answer": "A",
+      "explanation": "SLAM is the process of building a map while simultaneously keeping track of the robot's location."
+    },
+    {
+      "q": "Which SLAM method builds a graph of poses and landmarks?",
+      "options": ["A) EKF-SLAM", "B) GraphSLAM", "C) FastSLAM", "D) GridSLAM"],
+      "answer": "B",
+      "explanation": "GraphSLAM represents the problem as a graph and optimizes all poses and landmarks together."
+    },
+    {
+      "q": "What is a common sensor for 2D SLAM?",
+      "options": ["A) Ultrasonic", "B) Lidar", "C) Infrared", "D) GPS"],
+      "answer": "B",
+      "explanation": "Lidar provides accurate 360-degree distance measurements, ideal for 2D mapping."
+    },
+    {
+      "q": "What is loop closure in SLAM?",
+      "options": ["A) Closing the robot's wheels", "B) Recognizing a previously visited place to correct the map", "C) Turning off the robot", "D) Ending the program"],
+      "answer": "B",
+      "explanation": "Loop closure detects when the robot returns to a known location, reducing accumulated error."
+    },
+    {
+      "q": "Which ROS package is commonly used for 2D SLAM with a lidar?",
+      "options": ["A) GMapping", "B) MoveIt", "C) Navigation2", "D) RViz"],
+      "answer": "A",
+      "explanation": "GMapping is a popular ROS package for building 2D occupancy grids from laser scans."
+    },
+    {
+      "q": "In the maze lab, what is the first calibration step?",
+      "options": ["A) Tune the PID", "B) Calibrate odometry", "C) Build the maze", "D) Charge the battery"],
+      "answer": "B",
+      "explanation": "Calibrating odometry ensures accurate distance and turn measurements before higher-level navigation."
+    },
+    {
+      "q": "What does a flood-fill algorithm do in a maze?",
+      "options": ["A) Fills the maze with water", "B) Computes shortest path to goal from any cell", "C) Detects obstacles", "D) Controls motor speed"],
+      "answer": "B",
+      "explanation": "Flood-fill assigns distance values to cells, allowing the robot to move toward the goal by descending values."
+    },
+    {
+      "q": "What is a common issue when using ultrasonic sensors in a maze?",
+      "options": ["A) Too much light", "B) Crosstalk between sensors", "C) Overheating", "D) High voltage"],
+      "answer": "B",
+      "explanation": "Ultrasonic sensors can interfere with each other if triggered simultaneously; stagger their readings."
+    },
+    {
+      "q": "In differential drive, to turn left, which wheel should spin faster?",
+      "options": ["A) Left wheel", "B) Right wheel", "C) Both same", "D) Neither"],
+      "answer": "B",
+      "explanation": "Turning left requires the right wheel to move faster than the left, creating a positive angular velocity."
+    },
+    {
+      "q": "What is the purpose of a PID controller in wall following?",
+      "options": ["A) To keep a constant distance from the wall", "B) To increase speed", "C) To map the maze", "D) To charge the battery"],
+      "answer": "A",
+      "explanation": "PID adjusts steering to maintain a set distance from the wall despite disturbances."
+    },
+    {
+      "q": "Which of these is NOT a typical output of SLAM?",
+      "options": ["A) Occupancy grid map", "B) Robot trajectory", "C) Landmark positions", "D) Motor PWM values"],
+      "answer": "D",
+      "explanation": "SLAM outputs a map and pose estimates; motor PWM values come from the motor controller, not SLAM."
+    },
+    {
+      "q": "What is the main challenge of SLAM on a microcontroller like Arduino?",
+      "options": ["A) Too much memory and processing power needed", "B) Too few sensors", "C) No wireless", "D) No GPIO"],
+      "answer": "A",
+      "explanation": "SLAM requires significant computation and memory, which microcontrollers like Arduino lack."
+    },
+    {
+      "q": "In the maze lab, what is a reasonable success rate target after 10 runs?",
+      "options": ["A) 10%", "B) 50%", "C) 80%", "D) 100%"],
+      "answer": "C",
+      "explanation": "80% success is a realistic goal for a beginner robot, allowing for some sensor noise and slip."
+    },
+    {
+      "q": "What does the Dynamic Window Approach consider when selecting velocities?",
+      "options": ["A) Only goal direction", "B) Obstacles and robot dynamics", "C) Battery level", "D) Map resolution"],
+      "answer": "B",
+      "explanation": "DWA evaluates velocities based on obstacle avoidance and the robot's kinematic limits."
+    }
+  ],
+  "videos": [
+    "differential drive robot kinematics tutorial",
+    "A* path planning python grid",
+    "SLAM for beginners with ROS and lidar"
+  ]
+}

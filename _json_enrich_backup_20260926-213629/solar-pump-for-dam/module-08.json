@@ -1,0 +1,218 @@
+﻿{
+  "course": "Solar Pump for Dam",
+  "module_number": 8,
+  "module_title": "Energy Storage and Hybrid Systems",
+  "lessons": [
+    {
+      "title": "Battery Bank Sizing for Night or Cloudy Operation",
+      "body": "To size a battery bank for your solar pump, you need to know two things: how much energy your pump uses per day, and how many days of backup you want. Start by finding your pump's power rating in watts (W). It's on the motor nameplate or in the manual. Multiply that by the hours you run the pump daily to get watt-hours (Wh). For example, a 500W pump running 6 hours uses 3,000Wh per day. If you want two days of backup for cloudy weather, you need 6,000Wh of storage.\n\nBatteries are rated in amp-hours (Ah) at a specific voltage, usually 12V, 24V, or 48V. To convert watt-hours to amp-hours, divide by the system voltage. Using a 24V system: 6,000Wh Ã· 24V = 250Ah. But you shouldn't discharge lead-acid batteries below 50% depth of discharge (DoD) or they die quickly. So double that: 500Ah. For lithium-ion, you can go to 80% DoD, so 250Ah Ã· 0.8 = 312.5Ah, round up to 320Ah.\n\nAlso account for temperature. In hot African conditions, batteries lose capacity. Above 30Â°C, reduce capacity by 10-15%. In cold highlands, capacity drops too. And don't forget inverter and wiring lossesâadd 10-20%. So a 500W pump, 6 hours daily, 2 days backup, 24V lead-acid: 3,000Wh/day Ã 2 days = 6,000Wh. Divide by 24V = 250Ah. Divide by 0.5 DoD = 500Ah. Add 15% for losses and temperature: 575Ah. You'd need six 100Ah batteries in parallel, or a 600Ah bank.\n\nUse a clamp meter to measure actual pump current if possibleânameplate ratings can be optimistic. Track your daily water needs: if you pump 10,000 liters a day, that's your target. Tools like a Kill A Watt meter or a simple energy monitor help. Always round up to the next available battery size. Write down your calculations and keep them for maintenance checks."
+    },
+    {
+      "title": "Battery Types: Lead-Acid, Lithium-Ion, Flow Batteries",
+      "body": "Lead-acid batteries are the most common in African solar pump systems because they're cheap and available. There are two main types: flooded (you add water) and sealed (AGM or gel). Flooded cost less but need monthly watering with distilled water and good ventilation because they release hydrogen gas. AGM and gel are maintenance-free but cost 20-30% more and can't take as much abuse. Lead-acid lasts 3-5 years if treated well, and you should only discharge to 50%. They perform poorly in high heatâabove 35Â°C, life drops by half.\n\nLithium-ion, especially LiFePO4 (lithium iron phosphate), is becoming popular. They cost 2-3 times more upfront but last 8-12 years, can discharge to 80-90%, and are lighter. They have a battery management system (BMS) that protects against overcharge and deep discharge. They don't need watering and work better in heat. For a 500W pump, a 24V 100Ah LiFePO4 battery gives 2,400Wh usable (80% DoD), while a lead-acid equivalent gives only 1,200Wh. So you need fewer lithium batteries. But lithium needs a compatible charge controllerâmany MPPT controllers have a lithium setting.\n\nFlow batteries (like vanadium redox) store energy in liquid tanks. They can discharge 100% without damage and last 15-20 years, but they're bulky, expensive, and rare in Africa. Not practical for most small pump systems. For a typical dam pump, lead-acid is the budget choice; lithium is the long-term value. If you have unreliable grid or generator, lithium handles partial state of charge better. Check local availability: in many countries, lead-acid is everywhere, but lithium may need import. Always buy from a reputable dealerâcheap lithium without a BMS is dangerous."
+    },
+    {
+      "title": "Charge Controllers for Battery-Based Systems",
+      "body": "A charge controller sits between your solar panels and battery bank. Its job is to prevent overcharging and over-discharging, which destroy batteries. There are two types: PWM (pulse width modulation) and MPPT (maximum power point tracking). PWM is cheaper but less efficientâit pulls panel voltage down to battery voltage, wasting power. MPPT converts excess voltage into extra current, giving 10-30% more energy, especially in cloudy conditions. For a solar pump with battery, always choose MPPT if you can afford it.\n\nSize the controller by two numbers: maximum input voltage and maximum output current. Your solar array's open-circuit voltage (Voc) must be less than the controller's max PV voltage. For example, a 24V system with three 300W panels in series might have Voc of 120V; you need a controller rated for at least 150V. Output current: divide total panel wattage by battery voltage. If you have 900W of panels and a 24V battery, 900W Ã· 24V = 37.5A. Choose a 40A or 50A controller. Never undersizeâcontrollers run hot and fail.\n\nMany MPPT controllers have programmable settings for battery type (flooded, AGM, lithium) and allow you to set absorption, float, and equalization voltages. For flooded lead-acid, equalize monthly at 14.8V for 2-3 hours (for 12V). For lithium, disable equalization. Some controllers have a load output that can directly power DC pumps or control a relay. Use that for low-voltage disconnect to protect the battery. Brands like Victron, Epever, and Renogy are common in Africa. Always install a fuse or circuit breaker between controller and batteryâreverse polarity can fry the controller. Read the manual; settings differ. A good controller pays for itself in battery life."
+    },
+    {
+      "title": "Hybrid Systems with Grid or Generator Backup",
+      "body": "A hybrid system combines solar with another power sourceâgrid or generatorâto keep your pump running when sun is low or batteries are empty. This is useful for large dams where you need constant water. The key is a transfer switch or inverter-charger that automatically switches between sources. When solar is strong, it powers the pump and charges batteries. When solar drops, the grid or generator takes over, and if batteries are low, it charges them too.\n\nFor grid backup, you need a grid-tie inverter with battery backup, or a hybrid inverter. In many African areas, grid is unreliable, so a generator is more common. Size the generator to handle the pump's starting surgeâinduction motors draw 3-5 times running watts for a few seconds. A 500W pump might need a 2,000W generator. Connect the generator to an inverter-charger like Victron MultiPlus or a simple changeover switch. Set the inverter to prioritize solar, then battery, then generator. Use a timer or voltage sensor to start the generator only when battery voltage drops below a set point (e.g., 22V for 24V system).\n\nHybrid systems save fuel and generator wear. But they add complexity and cost. For a small dam pump, a pure solar-battery system is often simpler. For large irrigation, hybrid makes sense. Always install a generator shed with ventilation and a fuel shutoff. Use a battery monitor (like Victron BMV) to track state of charge. Program the system to run the pump during sunny hours and charge batteries, then switch to generator only at night or cloudy spells. Keep a log of generator hours and fuel use to see savings."
+    },
+    {
+      "title": "Energy Management and Load Prioritization",
+      "body": "Energy management means using your stored solar power wisely so you never run out when you need water most. Start by listing all loads: pump, lights, phone charging, maybe a fridge. Assign priority: critical (pump for drinking water), important (irrigation), and optional (lights). Your battery bank has limited energy, so you must decide what runs when. For a dam pump, the pump is usually the biggest load. Run it during peak sun hours (10am-3pm) directly from solar, and use batteries only when needed.\n\nUse a timer or smart relay to schedule pump run times. For example, if you have 6,000Wh battery and a 500W pump, you can run it for 12 hours on battery alone (6,000Wh Ã· 500W = 12h), but that would fully discharge lead-acid. Better to run 6 hours at night and 6 hours during day, keeping battery above 50%. If cloudy, reduce pump hours or switch to a smaller pump. Install a low-voltage disconnect (LVD) that cuts off the pump when battery reaches 50% DoD (e.g., 24.0V for lead-acid). This prevents damage.\n\nLoad prioritization also means using efficient pumps and motors. A brushless DC pump uses less power than an AC induction pump. Consider a variable frequency drive (VFD) to slow pump when demand is low. Use a battery monitor to see state of charge (SoC) and adjust. Train users to check the monitor daily. Keep a simple chart: if SoC > 80%, run all loads; 50-80%, run pump and critical only; below 50%, stop pump and recharge. This simple rule saves batteries and ensures water when needed."
+    },
+    {
+      "title": "Battery Maintenance and Safety",
+      "body": "Batteries are the most expensive part of your solar pump system, so maintain them well. For flooded lead-acid, check water level monthlyâtop up with distilled water to cover plates, but not overfill. Use a hydrometer to check specific gravity of each cell; all cells should be within 0.050 of each other. If one cell is low, equalize the battery. Clean terminals with baking soda and water, then apply petroleum jelly to prevent corrosion. Tighten connectionsâloose cables cause heat and voltage drop. Keep batteries in a ventilated box, out of direct sun, ideally at 25Â°C. Heat kills them faster than cold.\n\nFor sealed (AGM/gel) and lithium, maintenance is minimal but still check connections and voltage. Lithium BMS may need occasional balancingâsome have Bluetooth apps. Never mix old and new batteries in the same bank; they will fight each other. Replace all batteries at once if one fails. Safety first: lead-acid batteries produce explosive hydrogen gas. No smoking, no sparks near batteries. Wear goggles and gloves when handling. If acid spills on skin, flush with water for 15 minutes. Keep a baking soda box nearby to neutralize acid spills.\n\nUse a torque wrench to tighten terminals to manufacturer specsâtoo tight cracks posts, too loose causes arcing. Inspect cables for cracks or exposed wire. Install a class T fuse on the battery positive cable, sized to 1.25 times the maximum expected current. Label all cables. Keep a maintenance log: date, water added, voltage, specific gravity, notes. Train a local technician. For lithium, never charge below 0Â°Câit damages cells. If you see swelling, leaking, or strange smell, disconnect and replace. Proper maintenance can double battery life, saving you money and downtime."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is the first step in sizing a battery bank for a solar pump?",
+      "options": ["A) Determine pump daily energy use in watt-hours", "B) Buy the cheapest batteries available", "C) Calculate the number of solar panels", "D) Choose the inverter size"],
+      "answer": "A",
+      "explanation": "You must know the daily energy consumption to size the battery bank."
+    },
+    {
+      "q": "For a 24V system, a 500W pump running 6 hours daily uses how many watt-hours per day?",
+      "options": ["A) 500Wh", "B) 3,000Wh", "C) 12,000Wh", "D) 500Ah"],
+      "answer": "B",
+      "explanation": "500W Ã 6h = 3,000Wh per day."
+    },
+    {
+      "q": "What depth of discharge (DoD) is recommended for lead-acid batteries to prolong life?",
+      "options": ["A) 80%", "B) 50%", "C) 100%", "D) 20%"],
+      "answer": "B",
+      "explanation": "Discharging lead-acid below 50% significantly shortens battery life."
+    },
+    {
+      "q": "If you need 6,000Wh of storage at 24V with 50% DoD, what is the required battery capacity in amp-hours?",
+      "options": ["A) 250Ah", "B) 500Ah", "C) 125Ah", "D) 1,000Ah"],
+      "answer": "B",
+      "explanation": "6,000Wh Ã· 24V = 250Ah; then divide by 0.5 DoD = 500Ah."
+    },
+    {
+      "q": "Why should you add 10-20% to battery bank size for losses?",
+      "options": ["A) To account for inverter and wiring losses", "B) To make the system look bigger", "C) Because batteries are cheap", "D) To allow for future expansion"],
+      "answer": "A",
+      "explanation": "Inverter, wiring, and temperature reduce usable capacity, so add a margin."
+    },
+    {
+      "q": "Which battery type requires monthly watering with distilled water?",
+      "options": ["A) Lithium-ion", "B) Flooded lead-acid", "C) AGM", "D) Gel"],
+      "answer": "B",
+      "explanation": "Flooded lead-acid batteries need regular water top-ups."
+    },
+    {
+      "q": "What is a key advantage of LiFePO4 batteries over lead-acid?",
+      "options": ["A) Lower upfront cost", "B) Can be discharged to 80-90% DoD", "C) Heavier weight", "D) Requires more maintenance"],
+      "answer": "B",
+      "explanation": "Lithium batteries can be discharged deeper without damage."
+    },
+    {
+      "q": "Which battery type is bulky and expensive, and rare in Africa?",
+      "options": ["A) Flooded lead-acid", "B) AGM", "C) Flow batteries", "D) Lithium-ion"],
+      "answer": "C",
+      "explanation": "Flow batteries are large, costly, and not commonly used in small African systems."
+    },
+    {
+      "q": "What does a battery management system (BMS) do in lithium batteries?",
+      "options": ["A) Increases voltage", "B) Protects against overcharge and deep discharge", "C) Adds water", "D) Converts AC to DC"],
+      "answer": "B",
+      "explanation": "BMS monitors and protects lithium cells from unsafe conditions."
+    },
+    {
+      "q": "Why is lead-acid battery life shorter in hot climates?",
+      "options": ["A) Heat speeds up chemical reactions and corrosion", "B) Heat freezes the electrolyte", "C) Heat reduces water loss", "D) Heat increases capacity permanently"],
+      "answer": "A",
+      "explanation": "High temperatures accelerate aging and water loss in lead-acid batteries."
+    },
+    {
+      "q": "What is the main function of a charge controller?",
+      "options": ["A) Convert DC to AC", "B) Prevent battery overcharge and over-discharge", "C) Increase pump speed", "D) Store energy"],
+      "answer": "B",
+      "explanation": "Charge controllers regulate charging and protect the battery."
+    },
+    {
+      "q": "Which charge controller type gives 10-30% more energy from solar panels?",
+      "options": ["A) PWM", "B) MPPT", "C) Linear", "D) Shunt"],
+      "answer": "B",
+      "explanation": "MPPT tracks the maximum power point and converts excess voltage to current."
+    },
+    {
+      "q": "If you have 900W of solar panels and a 24V battery, what minimum charge controller output current do you need?",
+      "options": ["A) 20A", "B) 30A", "C) 40A", "D) 60A"],
+      "answer": "C",
+      "explanation": "900W Ã· 24V = 37.5A, so choose a 40A or larger controller."
+    },
+    {
+      "q": "What should you do before connecting a charge controller to batteries?",
+      "options": ["A) Connect solar panels first", "B) Install a fuse or circuit breaker", "C) Set equalization to 15V", "D) Disconnect all loads"],
+      "answer": "B",
+      "explanation": "A fuse protects against reverse polarity and short circuits."
+    },
+    {
+      "q": "For flooded lead-acid, what is the typical equalization voltage for a 12V battery?",
+      "options": ["A) 13.2V", "B) 14.8V", "C) 16.0V", "D) 12.0V"],
+      "answer": "B",
+      "explanation": "Equalization for 12V flooded lead-acid is around 14.8V for 2-3 hours."
+    },
+    {
+      "q": "What is a hybrid solar pump system?",
+      "options": ["A) Uses only solar panels", "B) Combines solar with grid or generator backup", "C) Uses wind and solar", "D) Has no batteries"],
+      "answer": "B",
+      "explanation": "Hybrid systems integrate solar with another power source like grid or generator."
+    },
+    {
+      "q": "Why might a generator need to be sized 3-5 times larger than the pump's running watts?",
+      "options": ["A) To handle starting surge of induction motors", "B) To charge batteries faster", "C) To run at night", "D) To power lights"],
+      "answer": "A",
+      "explanation": "Induction motors draw a high inrush current at startup."
+    },
+    {
+      "q": "What is the purpose of a transfer switch in a hybrid system?",
+      "options": ["A) To switch between power sources automatically", "B) To increase voltage", "C) To store energy", "D) To measure current"],
+      "answer": "A",
+      "explanation": "Transfer switches change the load from one source to another."
+    },
+    {
+      "q": "What setting on an inverter-charger prioritizes solar over generator?",
+      "options": ["A) Grid priority", "B) Solar priority", "C) Generator priority", "D) Battery priority"],
+      "answer": "B",
+      "explanation": "Solar priority uses solar first, then battery, then generator."
+    },
+    {
+      "q": "What is a good practice to minimize generator runtime in a hybrid system?",
+      "options": ["A) Run generator continuously", "B) Use a voltage sensor to start generator only when battery is low", "C) Disconnect solar panels", "D) Use a manual switch"],
+      "answer": "B",
+      "explanation": "Automatic start based on battery voltage saves fuel and wear."
+    },
+    {
+      "q": "What is energy management in a solar pump system?",
+      "options": ["A) Using power wisely and prioritizing loads", "B) Increasing pump size", "C) Ignoring battery state", "D) Running all loads at night"],
+      "answer": "A",
+      "explanation": "Energy management ensures critical loads get power when needed."
+    },
+    {
+      "q": "When should you run a solar pump directly from solar panels?",
+      "options": ["A) At night", "B) During peak sun hours", "C) During cloudy weather", "D) When battery is full"],
+      "answer": "B",
+      "explanation": "Peak sun hours (10am-3pm) provide maximum solar energy."
+    },
+    {
+      "q": "What does a low-voltage disconnect (LVD) do?",
+      "options": ["A) Cuts off load when battery reaches a set depth of discharge", "B) Increases voltage", "C) Charges battery", "D) Measures solar output"],
+      "answer": "A",
+      "explanation": "LVD prevents over-discharge by disconnecting loads at a safe voltage."
+    },
+    {
+      "q": "What is a simple rule for load prioritization based on battery state of charge (SoC)?",
+      "options": ["A) If SoC > 80%, run all loads; 50-80%, critical only; below 50%, stop pump", "B) Run all loads always", "C) Stop all loads when SoC < 90%", "D) Ignore SoC"],
+      "answer": "A",
+      "explanation": "This rule protects the battery and ensures critical water supply."
+    },
+    {
+      "q": "Why is a brushless DC pump often better than an AC induction pump for solar?",
+      "options": ["A) Uses less power", "B) Cheaper", "C) Noisier", "D) Requires more maintenance"],
+      "answer": "A",
+      "explanation": "Brushless DC pumps are more efficient and can run directly from DC."
+    },
+    {
+      "q": "How often should you check water level in flooded lead-acid batteries?",
+      "options": ["A) Daily", "B) Monthly", "C) Yearly", "D) Never"],
+      "answer": "B",
+      "explanation": "Monthly checks prevent plates from drying out."
+    },
+    {
+      "q": "What tool is used to check specific gravity of lead-acid battery cells?",
+      "options": ["A) Multimeter", "B) Hydrometer", "C) Clamp meter", "D) Thermometer"],
+      "answer": "B",
+      "explanation": "A hydrometer measures electrolyte specific gravity to assess state of charge."
+    },
+    {
+      "q": "Why should you never mix old and new batteries in the same bank?",
+      "options": ["A) They will fight each other and reduce life", "B) They will explode", "C) They will charge faster", "D) They will increase voltage"],
+      "answer": "A",
+      "explanation": "Different ages have different capacities and internal resistance, causing imbalance."
+    },
+    {
+      "q": "What safety precaution is essential when working with lead-acid batteries?",
+      "options": ["A) Smoke nearby", "B) Wear goggles and gloves", "C) Use metal tools on terminals", "D) Work in enclosed space without ventilation"],
+      "answer": "B",
+      "explanation": "Goggles and gloves protect against acid splashes."
+    },
+    {
+      "q": "What should you do if acid spills on your skin?",
+      "options": ["A) Apply oil", "B) Flush with water for 15 minutes", "C) Ignore it", "D) Use baking soda directly"],
+      "answer": "B",
+      "explanation": "Immediate and prolonged flushing with water is critical."
+    }
+  ],
+  "videos": [
+    "solar pump battery bank sizing calculation",
+    "lead acid vs lithium battery solar pump Africa",
+    "hybrid solar generator pump system wiring"
+  ]
+}

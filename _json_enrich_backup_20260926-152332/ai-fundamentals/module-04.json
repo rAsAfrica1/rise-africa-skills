@@ -1,0 +1,218 @@
+﻿{
+  "course": "AI Fundamentals",
+  "module_number": 4,
+  "module_title": "Data Preprocessing and Feature Engineering",
+  "lessons": [
+    {
+      "title": "Data Cleaning: Handling Missing Values",
+      "body": "Missing data is common in African datasets. For example, a mobile money dataset from Kenya might have missing transaction amounts because of network issues. If you ignore missing values, your AI model will make wrong predictions. First, identify missing values using Python's pandas: `df.isnull().sum()`. Then decide how to handle them. If less than 5% of a column is missing, you can drop those rows: `df.dropna(subset=['amount'], inplace=True)`. But dropping too many rows loses valuable data. For numerical columns, fill missing values with the mean or median. In a Nigerian agricultural dataset with missing crop yields, use the median because it's robust to outliers: `df['yield'].fillna(df['yield'].median(), inplace=True)`. For categorical columns, fill with the most frequent value (mode): `df['region'].fillna(df['region'].mode()[0], inplace=True)`. Better yet, use predictive imputation: train a simple model to predict missing values based on other columns. For time-series data like daily sales in a Ghanaian market, use forward-fill: `df['sales'].fillna(method='ffill', inplace=True)`. Always document your imputation method and check if it introduces bias. Tools: pandas, scikit-learn's SimpleImputer. Remember, cleaning data is 80% of the work. Start with a plan: explore, quantify, then choose a method. In Africa, where data collection can be inconsistent, robust imputation is key to reliable AI."
+    },
+    {
+      "title": "Data Normalization and Standardization",
+      "body": "When features have different scales, AI models like K-Nearest Neighbors or neural networks perform poorly. For instance, in a dataset of African businesses, 'annual revenue' might range from 10,000 to 10,000,000 USD, while 'number of employees' ranges from 1 to 500. Without scaling, revenue dominates distance calculations. Normalization (min-max scaling) rescales features to a 0-1 range: `X_norm = (X - X_min) / (X_max - X_min)`. Use scikit-learn's MinMaxScaler: `from sklearn.preprocessing import MinMaxScaler; scaler = MinMaxScaler(); X_scaled = scaler.fit_transform(X)`. This is good when you need bounded values, like for image pixels. Standardization (Z-score) transforms data to have mean 0 and standard deviation 1: `X_std = (X - mean) / std`. Use StandardScaler: `from sklearn.preprocessing import StandardScaler; scaler = StandardScaler(); X_scaled = scaler.fit_transform(X)`. This is better for algorithms that assume Gaussian distribution, like linear regression or PCA. For African datasets with outliers (e.g., a few very large transactions), standardization is more robust. Always fit the scaler on training data only, then transform test data to avoid data leakage. In practice, use pipelines: `from sklearn.pipeline import Pipeline; pipe = Pipeline([('scaler', StandardScaler()), ('model', LogisticRegression())])`. This ensures consistent scaling. Remember, scaling doesn't change the shape of the distribution, just the range. Test both methods and see which improves your model's accuracy."
+    },
+    {
+      "title": "Categorical Encoding Techniques",
+      "body": "Most AI models require numerical input, so categorical data like 'country' or 'product category' must be encoded. For nominal categories (no order), use one-hot encoding. In a dataset of African countries, 'country' has values like 'Kenya', 'Nigeria', 'Ghana'. One-hot creates binary columns: `pd.get_dummies(df, columns=['country'])`. This works well for low-cardinality features (less than 10 categories). But if you have 50 categories, it creates 50 columns, causing the curse of dimensionality. For high-cardinality, use label encoding: assign each category a unique integer: `from sklearn.preprocessing import LabelEncoder; le = LabelEncoder(); df['country_encoded'] = le.fit_transform(df['country'])`. But label encoding implies order, which may mislead models. For ordinal categories (with order), like 'education level' (Primary, Secondary, Tertiary), use ordinal encoding: map to 1,2,3. For advanced cases, use target encoding: replace category with the mean target value. In a Nigerian loan dataset, encode 'city' by the average loan default rate. But beware of overfitting; use cross-validation. Another technique is binary encoding, which uses fewer columns. Tools: category_encoders library. Always handle unseen categories in test data: use `handle_unknown='ignore'` in OneHotEncoder. In Africa, where categorical features like 'mobile network' are common, choose encoding based on model type and cardinality. Tree-based models can handle label encoding, but linear models need one-hot."
+    },
+    {
+      "title": "Feature Scaling and Transformation",
+      "body": "Beyond basic scaling, feature transformation can make your data more normal and improve model performance. For skewed data, like income in many African countries where a few people earn much more, apply a log transformation: `df['income_log'] = np.log1p(df['income'])`. This reduces skewness and makes patterns more linear. For counts data, like number of daily transactions, use square root or Box-Cox transformation. Box-Cox finds the best power transformation: `from scipy.stats import boxcox; df['transformed'], _ = boxcox(df['count'] + 1)`. For features with outliers, use robust scaling: `from sklearn.preprocessing import RobustScaler; scaler = RobustScaler(); X_scaled = scaler.fit_transform(X)`. This uses median and interquartile range, so outliers don't dominate. Another technique is discretization (binning): convert continuous features into categories. For age, create bins: 'young', 'middle', 'old'. Use `pd.cut(df['age'], bins=[0, 25, 50, 100], labels=['young', 'middle', 'old'])`. This can help linear models capture non-linear relationships. For text data, use TF-IDF or word embeddings. In African context, transforming features like 'distance to nearest market' can reveal patterns. Always visualize before and after: use histograms and Q-Q plots. Remember, transformation should be based on training data and applied to test data. Use pipelines to automate. Experiment with different transformations and evaluate with cross-validation. The goal is to make your data more suitable for the model, not to perfect the distribution."
+    },
+    {
+      "title": "Feature Selection Methods",
+      "body": "Not all features are useful; some add noise and slow down training. Feature selection picks the most relevant ones. Start with filter methods: calculate correlation between each feature and target. In a dataset predicting crop yield in Tanzania, features like 'rainfall' and 'fertilizer' might have high correlation, while 'farmer's name' has none. Use `df.corr()['yield'].sort_values(ascending=False)`. For categorical, use chi-square test: `from sklearn.feature_selection import chi2; chi2_scores, p_values = chi2(X, y)`. Select features with p-value < 0.05. Wrapper methods like Recursive Feature Elimination (RFE) train a model and remove weakest features iteratively: `from sklearn.feature_selection import RFE; selector = RFE(estimator=LogisticRegression(), n_features_to_select=5); selector.fit(X, y)`. Embedded methods like Lasso (L1 regularization) shrink coefficients to zero: `from sklearn.linear_model import Lasso; lasso = Lasso(alpha=0.1); lasso.fit(X, y); selected = X.columns[lasso.coef_ != 0]`. For tree-based models, use feature_importances_: `from sklearn.ensemble import RandomForestClassifier; rf = RandomForestClassifier(); rf.fit(X, y); importances = rf.feature_importances_`. In Africa, where data collection is expensive, feature selection reduces cost and improves interpretability. Always use cross-validation to avoid overfitting. Start with domain knowledge: include features that make sense. Then use automated methods. A smaller set of good features often beats a large set of mediocre ones."
+    },
+    {
+      "title": "Dimensionality Reduction with PCA",
+      "body": "When you have many features (e.g., 100 columns from survey data), dimensionality reduction simplifies the data while preserving important information. Principal Component Analysis (PCA) is the most common technique. It creates new features (principal components) that are linear combinations of original features, capturing maximum variance. For example, in a dataset of African households with 50 variables, PCA might reduce to 10 components that explain 95% of variance. Steps: standardize data first (PCA is sensitive to scale). Then: `from sklearn.decomposition import PCA; pca = PCA(n_components=0.95); X_pca = pca.fit_transform(X_scaled)`. This keeps components that explain 95% variance. You can also specify number: `pca = PCA(n_components=10)`. Check explained variance ratio: `pca.explained_variance_ratio_`. Use scree plot to decide number of components. PCA helps with visualization: reduce to 2D or 3D and plot. It also speeds up training and reduces overfitting. But PCA components are less interpretable; you lose original feature meanings. For interpretability, use feature selection instead. In Africa, PCA is useful for high-dimensional data like satellite imagery or genomic data. Apply PCA after handling missing values and encoding categoricals. Always fit PCA on training data only. For non-linear data, use Kernel PCA or t-SNE. Remember, PCA assumes linear relationships; if data is highly non-linear, consider autoencoders. Start with PCA as a baseline, then try other methods."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is the first step when handling missing values in a dataset?",
+      "options": ["A) Drop all rows with missing values", "B) Identify and quantify missing values", "C) Fill missing values with zeros", "D) Ignore missing values"],
+      "answer": "B",
+      "explanation": "You must first identify where and how many missing values exist before deciding on a strategy."
+    },
+    {
+      "q": "Which method is best for filling missing numerical values when outliers are present?",
+      "options": ["A) Mean", "B) Median", "C) Mode", "D) Zero"],
+      "answer": "B",
+      "explanation": "Median is robust to outliers, unlike the mean which can be skewed by extreme values."
+    },
+    {
+      "q": "What does the pandas method `df.isnull().sum()` do?",
+      "options": ["A) Drops missing values", "B) Counts missing values per column", "C) Fills missing values", "D) Replaces missing values with mean"],
+      "answer": "B",
+      "explanation": "It returns the number of missing values in each column."
+    },
+    {
+      "q": "For time-series data, which imputation method is often used?",
+      "options": ["A) Mean imputation", "B) Forward-fill", "C) Zero imputation", "D) Random imputation"],
+      "answer": "B",
+      "explanation": "Forward-fill carries the last observed value forward, which is suitable for time-series."
+    },
+    {
+      "q": "What is the main difference between normalization and standardization?",
+      "options": ["A) Normalization scales to 0-1, standardization to mean 0 and std 1", "B) Normalization uses mean, standardization uses median", "C) Normalization is for categorical, standardization for numerical", "D) They are the same"],
+      "answer": "A",
+      "explanation": "Normalization (min-max) bounds values to [0,1]; standardization (Z-score) centers to mean 0 and scales to unit variance."
+    },
+    {
+      "q": "Which scaler is more robust to outliers?",
+      "options": ["A) MinMaxScaler", "B) StandardScaler", "C) RobustScaler", "D) Normalizer"],
+      "answer": "C",
+      "explanation": "RobustScaler uses median and interquartile range, making it less sensitive to outliers."
+    },
+    {
+      "q": "Why should you fit a scaler only on training data?",
+      "options": ["A) To save time", "B) To avoid data leakage", "C) To improve accuracy", "D) To reduce memory"],
+      "answer": "B",
+      "explanation": "Fitting on training data only prevents information from the test set from influencing the scaling, avoiding data leakage."
+    },
+    {
+      "q": "What is the purpose of a pipeline in scikit-learn?",
+      "options": ["A) To visualize data", "B) To chain preprocessing and modeling steps", "C) To handle missing values", "D) To encode categorical variables"],
+      "answer": "B",
+      "explanation": "A pipeline sequentially applies a list of transforms and a final estimator, ensuring consistent preprocessing."
+    },
+    {
+      "q": "Which encoding technique is best for nominal categorical variables with low cardinality?",
+      "options": ["A) Label encoding", "B) One-hot encoding", "C) Ordinal encoding", "D) Target encoding"],
+      "answer": "B",
+      "explanation": "One-hot encoding creates binary columns for each category without implying order, ideal for low-cardinality nominal data."
+    },
+    {
+      "q": "What is a disadvantage of one-hot encoding for high-cardinality features?",
+      "options": ["A) It loses information", "B) It creates too many columns", "C) It implies order", "D) It requires numerical data"],
+      "answer": "B",
+      "explanation": "High cardinality leads to a large number of binary columns, causing dimensionality issues."
+    },
+    {
+      "q": "Which encoding method is suitable for ordinal categories?",
+      "options": ["A) One-hot encoding", "B) Label encoding", "C) Ordinal encoding", "D) Binary encoding"],
+      "answer": "C",
+      "explanation": "Ordinal encoding assigns integers based on the order of categories, preserving the ranking."
+    },
+    {
+      "q": "What is target encoding?",
+      "options": ["A) Encoding based on the target variable", "B) Encoding based on frequency", "C) Encoding based on order", "D) Encoding based on binary representation"],
+      "answer": "A",
+      "explanation": "Target encoding replaces a category with the mean of the target variable for that category."
+    },
+    {
+      "q": "Which library provides advanced categorical encoding techniques?",
+      "options": ["A) pandas", "B) scikit-learn", "C) category_encoders", "D) numpy"],
+      "answer": "C",
+      "explanation": "The category_encoders library offers many encoding methods like target encoding, binary encoding, etc."
+    },
+    {
+      "q": "When should you use label encoding?",
+      "options": ["A) For nominal data with many categories", "B) For ordinal data or tree-based models", "C) For linear models", "D) For text data"],
+      "answer": "B",
+      "explanation": "Label encoding is suitable for ordinal data and can be used with tree-based models that can handle integer splits."
+    },
+    {
+      "q": "What does a log transformation do to skewed data?",
+      "options": ["A) Increases skewness", "B) Reduces skewness", "C) Makes data uniform", "D) Removes outliers"],
+      "answer": "B",
+      "explanation": "Log transformation compresses the range of large values, reducing right skewness."
+    },
+    {
+      "q": "Which transformation is best for count data?",
+      "options": ["A) Log transformation", "B) Square root transformation", "C) Box-Cox transformation", "D) All of the above"],
+      "answer": "D",
+      "explanation": "Log, square root, and Box-Cox are all suitable for count data depending on the distribution."
+    },
+    {
+      "q": "What is the purpose of discretization?",
+      "options": ["A) To convert continuous features to categorical", "B) To convert categorical to continuous", "C) To normalize data", "D) To reduce dimensionality"],
+      "answer": "A",
+      "explanation": "Discretization (binning) transforms continuous variables into discrete intervals."
+    },
+    {
+      "q": "Which of the following is a robust scaling method?",
+      "options": ["A) MinMaxScaler", "B) StandardScaler", "C) RobustScaler", "D) Normalizer"],
+      "answer": "C",
+      "explanation": "RobustScaler uses statistics that are robust to outliers, such as median and IQR."
+    },
+    {
+      "q": "What is the main goal of feature selection?",
+      "options": ["A) To increase the number of features", "B) To select the most relevant features", "C) To transform features", "D) To encode features"],
+      "answer": "B",
+      "explanation": "Feature selection aims to identify and keep the most useful features for the model."
+    },
+    {
+      "q": "Which filter method uses correlation?",
+      "options": ["A) Chi-square test", "B) Pearson correlation", "C) Mutual information", "D) All of the above"],
+      "answer": "D",
+      "explanation": "All these are filter methods; Pearson correlation is for numerical features, chi-square for categorical."
+    },
+    {
+      "q": "What does RFE stand for?",
+      "options": ["A) Recursive Feature Elimination", "B) Random Feature Extraction", "C) Robust Feature Encoding", "D) Rapid Feature Evaluation"],
+      "answer": "A",
+      "explanation": "RFE is a wrapper method that recursively removes less important features."
+    },
+    {
+      "q": "Which regularization method can perform feature selection?",
+      "options": ["A) L1 (Lasso)", "B) L2 (Ridge)", "C) Elastic Net", "D) Both A and C"],
+      "answer": "D",
+      "explanation": "L1 regularization (Lasso) and Elastic Net (which combines L1 and L2) can shrink coefficients to zero, effectively selecting features."
+    },
+    {
+      "q": "How can you get feature importances from a Random Forest?",
+      "options": ["A) Using .coef_", "B) Using .feature_importances_", "C) Using .p_values", "D) Using .scores"],
+      "answer": "B",
+      "explanation": "Random Forest models have a feature_importances_ attribute that indicates the importance of each feature."
+    },
+    {
+      "q": "What is the curse of dimensionality?",
+      "options": ["A) Too many features make models perform worse", "B) Too few features make models perform worse", "C) Data is too large", "D) Data is too small"],
+      "answer": "A",
+      "explanation": "As the number of features increases, the data becomes sparse, making it harder for models to learn patterns."
+    },
+    {
+      "q": "What does PCA stand for?",
+      "options": ["A) Principal Component Analysis", "B) Primary Component Analysis", "C) Partial Component Analysis", "D) Predictive Component Analysis"],
+      "answer": "A",
+      "explanation": "PCA is a dimensionality reduction technique that finds principal components."
+    },
+    {
+      "q": "What should you do before applying PCA?",
+      "options": ["A) Standardize the data", "B) Normalize the data", "C) Remove outliers", "D) All of the above"],
+      "answer": "A",
+      "explanation": "PCA is sensitive to scale, so standardizing the data is recommended."
+    },
+    {
+      "q": "How do you decide the number of components in PCA?",
+      "options": ["A) By explained variance ratio", "B) By scree plot", "C) By cross-validation", "D) All of the above"],
+      "answer": "D",
+      "explanation": "All these methods help determine the optimal number of components."
+    },
+    {
+      "q": "What is a disadvantage of PCA?",
+      "options": ["A) It reduces interpretability", "B) It increases overfitting", "C) It requires categorical data", "D) It cannot handle large datasets"],
+      "answer": "A",
+      "explanation": "Principal components are linear combinations of original features, making them harder to interpret."
+    },
+    {
+      "q": "When is PCA most useful?",
+      "options": ["A) When features are highly correlated", "B) When features are independent", "C) When data is categorical", "D) When data is small"],
+      "answer": "A",
+      "explanation": "PCA is effective when features are correlated, as it combines them into components capturing shared variance."
+    },
+    {
+      "q": "What is the difference between PCA and feature selection?",
+      "options": ["A) PCA creates new features, feature selection keeps original", "B) PCA keeps original features, feature selection creates new", "C) Both create new features", "D) Both keep original features"],
+      "answer": "A",
+      "explanation": "PCA transforms data into new components, while feature selection retains a subset of original features."
+    }
+  ],
+  "videos": [
+    "handling missing values in python pandas",
+    "feature scaling and normalization explained",
+    "PCA dimensionality reduction tutorial"
+  ]
+}

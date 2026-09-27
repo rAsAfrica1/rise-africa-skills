@@ -1,0 +1,218 @@
+﻿{
+  "course": "AI Fundamentals",
+  "module_number": 6,
+  "module_title": "Supervised Learning: Classification",
+  "lessons": [
+    {
+      "title": "Logistic Regression",
+      "body": "Logistic regression is a classification algorithm used to predict the probability of an event belonging to a particular class. For example, a mobile money agent in Kenya might want to predict whether a customer will default on a loan. Logistic regression outputs a probability between 0 and 1, and we set a threshold (e.g., 0.5) to classify as 'default' or 'no default'. It works by fitting a logistic (sigmoid) function to the data, which maps any real number to a probability. In practice, you can use Python's scikit-learn library: from sklearn.linear_model import LogisticRegression; model = LogisticRegression(); model.fit(X_train, y_train). The model learns coefficients for each feature. For instance, if you use features like 'income', 'loan amount', and 'age', the coefficients tell you how each feature affects the log-odds of default. A positive coefficient means higher feature value increases default probability. Logistic regression is popular because it's simple, fast, and interpretable. However, it assumes a linear relationship between features and log-odds. In Africa, it's used in credit scoring, disease diagnosis, and customer churn prediction. For example, a Nigerian fintech startup might use logistic regression to classify loan applicants as high or low risk based on their transaction history. To evaluate, use accuracy, precision, recall, and F1. Always split data into training and test sets (e.g., 80/20) to avoid overfitting. Also, scale features if needed (e.g., StandardScaler). Logistic regression is a great starting point for any classification problem."
+    },
+    {
+      "title": "K-Nearest Neighbors",
+      "body": "K-Nearest Neighbors (KNN) is a simple, non-parametric classification algorithm. It classifies a new data point by looking at the 'k' closest labeled examples in the training set and assigning the majority class. For example, if k=3 and the three nearest neighbors are two 'fraud' and one 'not fraud', the new point is classified as 'fraud'. KNN is called a lazy learner because it doesn't build a model during training; it just stores the data. To predict, it calculates distances (usually Euclidean) between the new point and all training points. In Python, use sklearn.neighbors.KNeighborsClassifier: model = KNeighborsClassifier(n_neighbors=3); model.fit(X_train, y_train). Choosing k is crucial: small k (e.g., 1) leads to overfitting; large k smooths decision boundaries but may miss local patterns. A common rule is to try k from 1 to 20 and pick the one with best cross-validation accuracy. KNN requires feature scaling (e.g., MinMaxScaler) because distance is sensitive to scale. For instance, if one feature is 'age' (0-100) and another is 'income' (0-1,000,000), income will dominate. In Africa, KNN can be used for crop disease classification from leaf images (after extracting features) or for classifying mobile phone usage patterns. However, KNN is computationally expensive for large datasets because it must compute distances to all points at prediction time. It also struggles with high-dimensional data (curse of dimensionality). Despite these drawbacks, KNN is intuitive and often surprisingly effective for small-to-medium datasets."
+    },
+    {
+      "title": "Decision Trees",
+      "body": "A decision tree is a flowchart-like model that splits data based on feature values to make predictions. Each internal node tests a feature, each branch represents an outcome, and each leaf node gives a class label. For example, a tree might first ask 'Is income > 50,000?' then 'Is loan amount > 20,000?' to decide loan approval. Decision trees are easy to interpret and visualize, making them popular in fields like agriculture and healthcare. In Python, use sklearn.tree.DecisionTreeClassifier: model = DecisionTreeClassifier(max_depth=3); model.fit(X_train, y_train). The algorithm chooses splits that maximize information gain (or minimize Gini impurity). However, trees can easily overfit if grown too deep. To prevent this, set hyperparameters like max_depth, min_samples_split, or min_samples_leaf. You can also use pruning. For example, a tree with max_depth=3 might be more generalizable than one with depth=10. In Africa, decision trees are used to predict crop yields based on rainfall, soil type, and fertilizer use, or to diagnose diseases from symptoms. One advantage is that they handle both numerical and categorical data without much preprocessing. But single trees are unstable: small changes in data can produce very different trees. That's why ensemble methods like Random Forests (many trees) are often better. Still, learning a single tree is a great way to understand feature importance and decision logic. Always evaluate with a test set and consider cross-validation."
+    },
+    {
+      "title": "Support Vector Machines",
+      "body": "Support Vector Machines (SVM) are powerful classifiers that find the best boundary (hyperplane) separating classes. The goal is to maximize the margin between the closest points of each class, called support vectors. For linearly separable data, SVM finds a straight line (in 2D) or hyperplane (in higher dimensions). For non-linear data, SVM uses the 'kernel trick' to map data into a higher-dimensional space where it becomes linearly separable. Common kernels: linear, polynomial, radial basis function (RBF). In Python, use sklearn.svm.SVC: model = SVC(kernel='rbf', C=1.0, gamma='scale'); model.fit(X_train, y_train). The parameter C controls the trade-off between smooth decision boundary and classifying training points correctly. A small C makes the boundary smooth (more misclassifications allowed), while a large C aims to classify all training points correctly (risk of overfitting). Gamma defines how far the influence of a single training example reaches. SVM works well for small-to-medium datasets with clear margins, such as image classification or text categorization. In Africa, SVMs have been used for classifying malaria-infected cells from microscopy images, or for credit scoring. However, SVMs are computationally intensive for large datasets and require careful tuning of C and gamma. Also, they need feature scaling. Despite these challenges, SVMs often achieve high accuracy and are robust to overfitting if tuned properly. Start with a linear kernel for text data, and RBF for non-linear patterns."
+    },
+    {
+      "title": "Naive Bayes Classifier",
+      "body": "Naive Bayes is a probabilistic classifier based on Bayes' theorem, assuming that features are independent given the class. Despite this 'naive' assumption, it often performs well, especially for text classification. For example, you can classify emails as spam or not spam based on word frequencies. The algorithm calculates the probability of each class given the input features and picks the class with highest probability. In Python, use sklearn.naive_bayes.GaussianNB for continuous data, MultinomialNB for word counts, or BernoulliNB for binary features. For spam detection, MultinomialNB is common: from sklearn.naive_bayes import MultinomialNB; model = MultinomialNB(); model.fit(X_train_counts, y_train). The model learns prior probabilities of each class and likelihoods of each feature given the class. It's fast, requires little training data, and works well with high-dimensional data. In Africa, Naive Bayes can be used for sentiment analysis of tweets about mobile money services, or for classifying news articles by topic. It's also used in medical diagnosis, e.g., predicting disease from symptoms. However, if features are highly correlated, the independence assumption hurts performance. Also, it can be biased toward classes with more frequent features. To improve, you can use TF-IDF instead of raw counts for text. Always evaluate with precision, recall, and F1, especially if classes are imbalanced. Naive Bayes is a great baseline model due to its simplicity and speed."
+    },
+    {
+      "title": "Evaluation Metrics: Accuracy, Precision, Recall, F1",
+      "body": "When building classification models, you need to measure how well they perform. Accuracy is the ratio of correct predictions to total predictions. But accuracy can be misleading if classes are imbalanced. For example, if 95% of loans are repaid, a model that always predicts 'repaid' gets 95% accuracy but is useless for identifying defaulters. Precision answers: Of all predicted positive cases, how many were actually positive? Recall answers: Of all actual positive cases, how many did we catch? F1 score is the harmonic mean of precision and recall, giving a balanced measure. In Python, use sklearn.metrics: from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score. For a confusion matrix, use confusion_matrix. Suppose you have a test set of 100 loans, 10 defaults. Your model predicts 8 defaults, but only 6 are true defaults. Then: accuracy = (90 correct + 6 correct) / 100 = 96%? Wait, let's compute: True Positives=6, False Positives=2, False Negatives=4, True Negatives=88. Accuracy = (6+88)/100 = 94%. Precision = 6/(6+2)=0.75. Recall = 6/(6+4)=0.6. F1 = 2*(0.75*0.6)/(0.75+0.6)=0.667. In Africa, for a mobile money fraud detection system, high recall is crucial to catch fraud, but high precision reduces false alarms. F1 balances both. Always use a test set and consider cross-validation. Also, for imbalanced data, use precision-recall curves or ROC-AUC. Choose metrics based on business goals: in disease screening, recall is more important; in spam filtering, precision might matter more."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What does logistic regression output?",
+      "options": ["A) A class label directly", "B) A probability between 0 and 1", "C) A continuous value without bounds", "D) A decision tree"],
+      "answer": "B",
+      "explanation": "Logistic regression uses the sigmoid function to output a probability."
+    },
+    {
+      "q": "Which Python library is commonly used for logistic regression?",
+      "options": ["A) sklearn.linear_model", "B) sklearn.tree", "C) sklearn.svm", "D) sklearn.neighbors"],
+      "answer": "A",
+      "explanation": "LogisticRegression is in sklearn.linear_model."
+    },
+    {
+      "q": "What is a key assumption of logistic regression?",
+      "options": ["A) Features are independent", "B) Linear relationship between features and log-odds", "C) Data is linearly separable", "D) No assumptions"],
+      "answer": "B",
+      "explanation": "Logistic regression assumes linearity in the log-odds."
+    },
+    {
+      "q": "In KNN, what does 'k' represent?",
+      "options": ["A) Number of features", "B) Number of nearest neighbors", "C) Number of classes", "D) Kernel type"],
+      "answer": "B",
+      "explanation": "k is the number of neighbors considered for classification."
+    },
+    {
+      "q": "Why is feature scaling important for KNN?",
+      "options": ["A) It speeds up training", "B) It prevents overfitting", "C) Distance metrics are sensitive to scale", "D) It handles missing values"],
+      "answer": "C",
+      "explanation": "KNN uses distance, so features with larger scales dominate."
+    },
+    {
+      "q": "What is a disadvantage of KNN?",
+      "options": ["A) It cannot handle multi-class", "B) It is computationally expensive at prediction time", "C) It requires a lot of training", "D) It only works with numerical data"],
+      "answer": "B",
+      "explanation": "KNN must compute distances to all training points for each prediction."
+    },
+    {
+      "q": "In a decision tree, what is a leaf node?",
+      "options": ["A) A node that tests a feature", "B) A node that gives a class label", "C) A node with no children", "D) Both B and C"],
+      "answer": "D",
+      "explanation": "Leaf nodes are terminal and provide the final classification."
+    },
+    {
+      "q": "Which metric does a decision tree use to choose splits?",
+      "options": ["A) Accuracy", "B) Gini impurity", "C) Precision", "D) Recall"],
+      "answer": "B",
+      "explanation": "Decision trees often use Gini impurity or information gain."
+    },
+    {
+      "q": "How can you prevent a decision tree from overfitting?",
+      "options": ["A) Increase max_depth", "B) Decrease max_depth", "C) Use more features", "D) Remove pruning"],
+      "answer": "B",
+      "explanation": "Limiting depth reduces overfitting."
+    },
+    {
+      "q": "What is the kernel trick in SVM?",
+      "options": ["A) A way to speed up training", "B) A method to map data to higher dimensions", "C) A technique to handle missing values", "D) A type of regularization"],
+      "answer": "B",
+      "explanation": "The kernel trick allows non-linear classification by mapping to higher-dimensional space."
+    },
+    {
+      "q": "In SVM, what does the parameter C control?",
+      "options": ["A) Number of support vectors", "B) Trade-off between margin and classification error", "C) Kernel type", "D) Learning rate"],
+      "answer": "B",
+      "explanation": "C balances maximizing margin and minimizing training errors."
+    },
+    {
+      "q": "Which kernel is commonly used for non-linear data in SVM?",
+      "options": ["A) Linear", "B) Polynomial", "C) RBF", "D) All of the above"],
+      "answer": "D",
+      "explanation": "Linear, polynomial, and RBF are all valid kernels; RBF is common for non-linear."
+    },
+    {
+      "q": "What is the 'naive' assumption in Naive Bayes?",
+      "options": ["A) Features are independent", "B) Classes are balanced", "C) Data is normally distributed", "D) No missing values"],
+      "answer": "A",
+      "explanation": "Naive Bayes assumes conditional independence of features."
+    },
+    {
+      "q": "Which Naive Bayes variant is used for word counts?",
+      "options": ["A) GaussianNB", "B) MultinomialNB", "C) BernoulliNB", "D) CategoricalNB"],
+      "answer": "B",
+      "explanation": "MultinomialNB is for discrete counts like word frequencies."
+    },
+    {
+      "q": "In what application is Naive Bayes often used?",
+      "options": ["A) Image segmentation", "B) Spam filtering", "C) Speech recognition", "D) Reinforcement learning"],
+      "answer": "B",
+      "explanation": "Naive Bayes is classic for text classification like spam detection."
+    },
+    {
+      "q": "What does accuracy measure?",
+      "options": ["A) Ratio of correct predictions to total predictions", "B) Ratio of true positives to predicted positives", "C) Ratio of true positives to actual positives", "D) Harmonic mean of precision and recall"],
+      "answer": "A",
+      "explanation": "Accuracy is overall correctness."
+    },
+    {
+      "q": "When is accuracy a misleading metric?",
+      "options": ["A) When classes are balanced", "B) When classes are imbalanced", "C) When data is large", "D) When using SVM"],
+      "answer": "B",
+      "explanation": "With imbalanced classes, a trivial classifier can have high accuracy."
+    },
+    {
+      "q": "What does precision measure?",
+      "options": ["A) Of all predicted positives, how many are actually positive", "B) Of all actual positives, how many are predicted positive", "C) Overall correctness", "D) Balance between precision and recall"],
+      "answer": "A",
+      "explanation": "Precision is TP/(TP+FP)."
+    },
+    {
+      "q": "What does recall measure?",
+      "options": ["A) Of all predicted positives, how many are actually positive", "B) Of all actual positives, how many are predicted positive", "C) Overall correctness", "D) Balance between precision and recall"],
+      "answer": "B",
+      "explanation": "Recall is TP/(TP+FN)."
+    },
+    {
+      "q": "What is the F1 score?",
+      "options": ["A) Arithmetic mean of precision and recall", "B) Harmonic mean of precision and recall", "C) Geometric mean of precision and recall", "D) Difference between precision and recall"],
+      "answer": "B",
+      "explanation": "F1 = 2*(precision*recall)/(precision+recall)."
+    },
+    {
+      "q": "In a confusion matrix, what is a false positive?",
+      "options": ["A) Predicted negative, actually negative", "B) Predicted positive, actually negative", "C) Predicted negative, actually positive", "D) Predicted positive, actually positive"],
+      "answer": "B",
+      "explanation": "False positive is when the model incorrectly predicts positive."
+    },
+    {
+      "q": "Which metric is most important for disease screening?",
+      "options": ["A) Accuracy", "B) Precision", "C) Recall", "D) F1"],
+      "answer": "C",
+      "explanation": "In screening, you want to catch all positive cases, so recall is critical."
+    },
+    {
+      "q": "What does a logistic regression coefficient represent?",
+      "options": ["A) Probability of class", "B) Change in log-odds per unit change in feature", "C) Feature importance", "D) Both B and C"],
+      "answer": "B",
+      "explanation": "Coefficients indicate the effect on log-odds."
+    },
+    {
+      "q": "For KNN, what happens if k is too small?",
+      "options": ["A) Overfitting", "B) Underfitting", "C) No effect", "D) Better generalization"],
+      "answer": "A",
+      "explanation": "Small k captures noise, leading to overfitting."
+    },
+    {
+      "q": "What is the purpose of max_depth in a decision tree?",
+      "options": ["A) To limit the number of features", "B) To control tree complexity", "C) To set the number of leaves", "D) To choose the splitting criterion"],
+      "answer": "B",
+      "explanation": "max_depth limits how deep the tree can grow, reducing overfitting."
+    },
+    {
+      "q": "In SVM, what are support vectors?",
+      "options": ["A) All training points", "B) Points closest to the decision boundary", "C) Misclassified points", "D) Points with zero weight"],
+      "answer": "B",
+      "explanation": "Support vectors are the critical points that define the margin."
+    },
+    {
+      "q": "Which of these is NOT a type of Naive Bayes classifier in scikit-learn?",
+      "options": ["A) GaussianNB", "B) MultinomialNB", "C) BernoulliNB", "D) PoissonNB"],
+      "answer": "D",
+      "explanation": "PoissonNB is not a standard variant in scikit-learn."
+    },
+    {
+      "q": "What is the harmonic mean of precision and recall called?",
+      "options": ["A) Accuracy", "B) F1 score", "C) AUC", "D) MSE"],
+      "answer": "B",
+      "explanation": "F1 score is the harmonic mean."
+    },
+    {
+      "q": "If a model has high precision but low recall, what does it mean?",
+      "options": ["A) It predicts few positives but most are correct", "B) It predicts many positives but many are wrong", "C) It predicts all positives correctly", "D) It misses many positives"],
+      "answer": "A",
+      "explanation": "High precision means few false positives; low recall means many false negatives."
+    },
+    {
+      "q": "Which metric would you use for an imbalanced dataset?",
+      "options": ["A) Accuracy", "B) Precision-Recall curve", "C) ROC curve", "D) Both B and C"],
+      "answer": "D",
+      "explanation": "Precision-Recall and ROC curves are better for imbalanced data."
+    }
+  ],
+  "videos": [
+    "logistic regression tutorial python",
+    "k nearest neighbors explained",
+    "decision tree classification example"
+  ]
+}

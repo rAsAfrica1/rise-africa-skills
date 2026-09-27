@@ -1,0 +1,218 @@
+﻿{
+  "course": "AI Fundamentals",
+  "module_number": 8,
+  "module_title": "Neural Networks and Deep Learning",
+  "lessons": [
+    {
+      "title": "Perceptron and Multilayer Perceptrons",
+      "body": "A perceptron is the simplest neural network: it takes several inputs, multiplies each by a weight, adds a bias, and passes the sum through a step function to produce a 0 or 1. For example, a mobile-money fraud detector might use three inputs: transaction amount (in KES), time of day, and location risk score. Weights: 0.001, -0.5, 2.0; bias: -1.0. If the weighted sum exceeds 0, flag fraud. A single perceptron can only separate data with a straight line. That fails for problems like XOR, where you need a curve. Multilayer perceptrons (MLPs) solve this by stacking layers: an input layer, one or more hidden layers, and an output layer. Each neuron in a hidden layer connects to every neuron in the next layer. For a crop-disease classifier using leaf images, you might flatten a 64x64 pixel image into 4096 inputs, then have hidden layers of 128 and 64 neurons, and an output layer with 3 neurons for three diseases. The number of weights explodes: 4096*128 + 128*64 + 64*3 = 532,736 weights. That's why deep learning needs lots of data and compute. In Africa, you can start with small MLPs on tabular data: predicting maize yield from rainfall, fertilizer, and soil pH. Use Python with scikit-learn's MLPRegressor. Train on 1,000 rows from your local agricultural extension office. Normalize inputs to 0-1 range. With 2 hidden layers of 10 neurons each, you can get RÂ² above 0.8. The key is to start simple, measure error, and add layers only if needed. Remember: more layers mean more parameters, which require more data to avoid overfitting."
+    },
+    {
+      "title": "Activation Functions",
+      "body": "Without activation functions, a neural network is just a linear model, no matter how many layers you stack. Activation functions add non-linearity, letting the network learn complex patterns. The most common today is ReLU (Rectified Linear Unit): f(x) = max(0, x). It's cheap to compute and helps gradients flow. For a loan-default predictor with 20 input features, using ReLU in hidden layers lets the model capture thresholds like 'income above 50,000 KES and loan below 200,000 KES'. Sigmoid squashes outputs to 0-1, useful for binary classification (e.g., will this customer repay?). But sigmoid saturates: for very large or small inputs, gradient becomes near zero, slowing learning. Tanh is similar but outputs -1 to 1, often better for hidden layers. Softmax is used in the output layer for multi-class problems: it converts raw scores into probabilities that sum to 1. For a crop-disease classifier with 3 classes, softmax gives you the probability of each disease. In practice, start with ReLU for hidden layers. If you see dead neurons (always zero), try Leaky ReLU (small slope for negative inputs). For output: sigmoid for binary, softmax for multi-class, and linear for regression (e.g., predicting maize price). In Keras, you specify activation='relu' or activation='sigmoid'. On a dataset of 5,000 customer records from a Nairobi fintech, using ReLU instead of sigmoid in hidden layers cut training time from 10 minutes to 2 minutes on a standard laptop. Always monitor your loss curve; if it plateaus early, your activation might be saturating. Experiment with different activations on a validation set."
+    },
+    {
+      "title": "Backpropagation Algorithm",
+      "body": "Backpropagation is how neural networks learn. It's just the chain rule from calculus applied efficiently. After a forward pass computes the output, you calculate the loss (e.g., mean squared error). Then you work backwards: for each weight, you compute how much it contributed to the error. That's the gradient. You then adjust each weight by a small step opposite to the gradient. For a network predicting house prices in Accra, with inputs like square meters, number of bedrooms, and distance to market, backprop tells you: 'increase weight for square meters by 0.02, decrease weight for distance by 0.01' to reduce error. The algorithm repeats for every layer, from output back to input. The math: if loss L depends on output y, and y = f(z), and z = w*x + b, then dL/dw = dL/dy * dy/dz * dz/dw. This chain multiplies local gradients. In practice, you don't compute by hand. Libraries like TensorFlow and PyTorch do it automatically via autograd. But understanding it helps debug. For example, if your gradients become zero (vanishing gradient), learning stops. That happens with deep networks and sigmoid activations. Solutions: use ReLU, batch normalization, or residual connections. On a small dataset of 2,000 loan applications, a 3-layer MLP trained with backprop for 100 epochs might reach 85% accuracy. Without backprop, you'd have to guess weights randomly. Backprop is efficient: one forward pass and one backward pass per batch. For a batch of 32, it takes milliseconds on a CPU. Start with a small network, print gradients to check they're not zero, and use a learning rate like 0.01. If loss oscillates, reduce learning rate. If loss decreases too slowly, increase it. Backprop is the engine; you just steer."
+    },
+    {
+      "title": "Gradient Descent Variants",
+      "body": "Gradient descent is the optimization algorithm that updates weights to minimize loss. Batch gradient descent computes the gradient over the entire dataset before one update. For 10,000 records, that's slow and memory-heavy. Stochastic gradient descent (SGD) updates after each single example. It's fast but noisyâloss jumps around. Mini-batch gradient descent is the practical middle ground: update after a batch of 32, 64, or 128 examples. On a dataset of 50,000 mobile money transactions, a batch size of 64 means 782 updates per epoch. That's efficient on a laptop. But vanilla SGD can zigzag. Momentum adds a fraction of the previous update to the current one, smoothing the path. Think of a ball rolling downhill: it gains speed and doesn't get stuck in small dips. Nesterov momentum looks ahead by computing gradient at the approximate future position. RMSProp adapts learning rate per weight: large gradients get smaller steps, small gradients get larger steps. Adam combines momentum and RMSProp, and is the default choice for most deep learning. In Keras, use optimizer='adam' with learning rate 0.001. For a crop yield prediction model, Adam often converges in 20 epochs where SGD needs 100. But Adam can generalize slightly worse on some problems. If you have a small dataset (under 1,000 rows), try SGD with momentum 0.9 and learning rate 0.01. Always monitor training and validation loss. If training loss decreases but validation loss increases, you're overfittingâstop early. Use a learning rate schedule: reduce by half every 10 epochs if no improvement. On a budget laptop in Lagos, training a 5-layer MLP on 20,000 records with Adam takes about 5 minutes for 50 epochs. That's feasible for a small business predicting customer churn."
+    },
+    {
+      "title": "Regularization in Neural Networks",
+      "body": "Regularization prevents overfittingâwhen your model memorizes training data but fails on new data. With 1,000 customer records and a network of 100,000 weights, overfitting is guaranteed. The simplest fix: get more data. If you can't, use L2 regularization (weight decay). It adds a penalty to the loss: Î» * sum of squared weights. This keeps weights small, making the model simpler. In Keras, add kernel_regularizer=regularizers.l2(0.01) to layers. Start with Î»=0.001 to 0.01. Dropout is another powerful method: during training, randomly set a fraction of neurons to zero. For example, dropout=0.2 means 20% of neurons are ignored each batch. This forces the network to not rely on any single neuron. At test time, no dropout; instead, weights are scaled. Dropout is like training many sub-networks and averaging them. For a maize disease classifier, dropout in hidden layers often improves validation accuracy by 5-10%. Early stopping: monitor validation loss and stop training when it starts increasing. Patience=5 means wait 5 epochs before stopping. This is free and effective. Data augmentation: for image data, rotate, flip, or zoom images to create more training examples. For tabular data, you can add small noise to inputs. Batch normalization also regularizes slightly by normalizing layer inputs. In practice, combine dropout (0.2-0.5) with early stopping. On a dataset of 2,000 loan applications, a model without regularization might get 95% training accuracy but 70% validation. With dropout 0.3 and L2 0.001, training accuracy drops to 88% but validation rises to 82%. That's a better model for real use. Always split your data: 70% train, 15% validation, 15% test. Never tune on test. Use validation to choose regularization strength."
+    },
+    {
+      "title": "Introduction to TensorFlow and Keras",
+      "body": "TensorFlow is Google's open-source library for deep learning. Keras is its high-level APIâlike a friendly dashboard for building neural networks. You can install both with pip install tensorflow. On a basic laptop, it works on CPU; for larger models, use Google Colab (free GPU) or Kaggle Kernels. Start with a sequential model: from tensorflow.keras import layers, models. model = models.Sequential([ layers.Dense(64, activation='relu', input_shape=(10,)), layers.Dense(32, activation='relu'), layers.Dense(1, activation='sigmoid') ]). This defines a network for binary classification with 10 input features. Compile: model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy']). Then fit: model.fit(X_train, y_train, epochs=50, batch_size=32, validation_split=0.2). That's it. For a real project, load your CSV with pandas: data = pd.read_csv('customer_churn.csv'). Preprocess: fill missing values, normalize numerical columns to 0-1 using MinMaxScaler. Convert categorical columns to one-hot. Split into X and y. Build a model with 2 hidden layers of 64 and 32 neurons. Train for 100 epochs with early stopping: from tensorflow.keras.callbacks import EarlyStopping; es = EarlyStopping(patience=10). Evaluate on test set: model.evaluate(X_test, y_test). Save the model: model.save('churn_model.h5'). Later load it for predictions. For deployment on a small business server, you can convert to TensorFlow Lite for mobile. A typical churn model on 5,000 records trains in under 2 minutes on a CPU. Use callbacks like ModelCheckpoint to save the best model. Always visualize training history: plot loss and accuracy over epochs. If validation loss increases, you're overfittingâadd dropout or more data. TensorFlow also has a datasets API for efficient loading. Start with a small project: predict whether a customer will repay a loan based on age, income, and past defaults. You'll have a working model in an afternoon."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is the main limitation of a single perceptron?",
+      "options": ["A) It cannot handle more than two inputs", "B) It can only solve linearly separable problems", "C) It requires a GPU to train", "D) It cannot use a bias term"],
+      "answer": "B",
+      "explanation": "A single perceptron can only separate data with a straight line, so it fails on non-linear problems like XOR."
+    },
+    {
+      "q": "In a multilayer perceptron, what does a hidden layer do?",
+      "options": ["A) It directly produces the final output", "B) It increases the number of inputs", "C) It learns intermediate representations to solve non-linear problems", "D) It stores the training data"],
+      "answer": "C",
+      "explanation": "Hidden layers transform inputs into more complex features, enabling the network to model non-linear relationships."
+    },
+    {
+      "q": "For a binary classification problem, which activation function is typically used in the output layer?",
+      "options": ["A) ReLU", "B) Sigmoid", "C) Softmax", "D) Linear"],
+      "answer": "B",
+      "explanation": "Sigmoid squashes outputs to 0-1, representing probabilities for two classes."
+    },
+    {
+      "q": "Why is ReLU often preferred over sigmoid in hidden layers?",
+      "options": ["A) It outputs negative values", "B) It avoids the vanishing gradient problem for positive inputs", "C) It is more expensive to compute", "D) It always produces probabilities"],
+      "answer": "B",
+      "explanation": "ReLU has a constant gradient of 1 for positive inputs, which helps gradients flow during backpropagation."
+    },
+    {
+      "q": "What does the softmax activation function do?",
+      "options": ["A) Converts raw scores into probabilities that sum to 1", "B) Clips negative values to zero", "C) Outputs values between -1 and 1", "D) Computes the mean squared error"],
+      "answer": "A",
+      "explanation": "Softmax is used for multi-class classification, producing a probability distribution over classes."
+    },
+    {
+      "q": "Backpropagation primarily uses which mathematical rule?",
+      "options": ["A) Product rule", "B) Chain rule", "C) Quotient rule", "D) L'HÃ´pital's rule"],
+      "answer": "B",
+      "explanation": "Backpropagation applies the chain rule to compute gradients of the loss with respect to each weight."
+    },
+    {
+      "q": "What is a vanishing gradient?",
+      "options": ["A) When gradients become very large", "B) When gradients become very small, slowing learning", "C) When the learning rate is too high", "D) When the loss function is convex"],
+      "answer": "B",
+      "explanation": "In deep networks with saturating activations like sigmoid, gradients can shrink to near zero, preventing weight updates."
+    },
+    {
+      "q": "Which of the following is a common solution to vanishing gradients?",
+      "options": ["A) Using sigmoid activations", "B) Using ReLU activations", "C) Increasing the number of layers without limit", "D) Removing the bias term"],
+      "answer": "B",
+      "explanation": "ReLU does not saturate for positive inputs, so it helps maintain gradient flow."
+    },
+    {
+      "q": "What is the main advantage of mini-batch gradient descent over batch gradient descent?",
+      "options": ["A) It uses less memory and converges faster per epoch", "B) It always finds the global minimum", "C) It requires no learning rate", "D) It works only for small datasets"],
+      "answer": "A",
+      "explanation": "Mini-batch updates weights more frequently, leading to faster convergence and lower memory usage than full-batch."
+    },
+    {
+      "q": "What does momentum add to gradient descent?",
+      "options": ["A) A fraction of the previous update to smooth the path", "B) Random noise to escape local minima", "C) A penalty for large weights", "D) A second-order derivative"],
+      "answer": "A",
+      "explanation": "Momentum accumulates past gradients to accelerate learning and dampen oscillations."
+    },
+    {
+      "q": "Which optimizer combines momentum and adaptive learning rates?",
+      "options": ["A) SGD", "B) RMSProp", "C) Adam", "D) Adagrad"],
+      "answer": "C",
+      "explanation": "Adam uses both momentum-like terms and per-parameter learning rates, making it a popular default."
+    },
+    {
+      "q": "What is the purpose of regularization in neural networks?",
+      "options": ["A) To speed up training", "B) To prevent overfitting", "C) To increase the number of parameters", "D) To eliminate the need for a validation set"],
+      "answer": "B",
+      "explanation": "Regularization techniques like L2 and dropout reduce overfitting by constraining the model's complexity."
+    },
+    {
+      "q": "How does dropout work during training?",
+      "options": ["A) It randomly sets a fraction of neuron outputs to zero", "B) It removes entire layers", "C) It increases the learning rate", "D) It adds noise to the labels"],
+      "answer": "A",
+      "explanation": "Dropout randomly deactivates neurons in each batch, forcing the network to learn redundant representations."
+    },
+    {
+      "q": "What is early stopping?",
+      "options": ["A) Stopping training when training loss reaches zero", "B) Stopping training when validation loss starts increasing", "C) Stopping after a fixed number of epochs", "D) Stopping when accuracy reaches 100%"],
+      "answer": "B",
+      "explanation": "Early stopping monitors validation loss and halts training to prevent overfitting."
+    },
+    {
+      "q": "Which of the following is a data augmentation technique for images?",
+      "options": ["A) Rotating the image", "B) Adding L2 regularization", "C) Using dropout", "D) Reducing the learning rate"],
+      "answer": "A",
+      "explanation": "Data augmentation creates new training examples by applying transformations like rotation, flipping, or zooming."
+    },
+    {
+      "q": "In Keras, which function is used to train a model?",
+      "options": ["A) model.compile()", "B) model.fit()", "C) model.evaluate()", "D) model.predict()"],
+      "answer": "B",
+      "explanation": "model.fit() trains the model on the training data for a specified number of epochs."
+    },
+    {
+      "q": "What does the input_shape parameter in the first Dense layer specify?",
+      "options": ["A) The number of output classes", "B) The number of features in the input data", "C) The batch size", "D) The number of hidden layers"],
+      "answer": "B",
+      "explanation": "For a tabular dataset, input_shape=(n,) indicates n input features."
+    },
+    {
+      "q": "Which loss function is appropriate for multi-class classification?",
+      "options": ["A) mean_squared_error", "B) binary_crossentropy", "C) categorical_crossentropy", "D) mean_absolute_error"],
+      "answer": "C",
+      "explanation": "Categorical crossentropy measures the difference between predicted probability distributions and true labels for multiple classes."
+    },
+    {
+      "q": "What is the role of the validation_split parameter in model.fit()?",
+      "options": ["A) It splits the training data into training and validation sets", "B) It splits the test data", "C) It sets the learning rate", "D) It defines the batch size"],
+      "answer": "A",
+      "explanation": "validation_split reserves a fraction of the training data for validation during training."
+    },
+    {
+      "q": "Why is it important to normalize input features before training?",
+      "options": ["A) To make the model interpretable", "B) To speed up convergence and prevent large gradients", "C) To reduce the number of features", "D) To avoid overfitting"],
+      "answer": "B",
+      "explanation": "Normalizing features to a similar scale helps gradient descent converge faster and more stably."
+    },
+    {
+      "q": "What does the EarlyStopping callback do in Keras?",
+      "options": ["A) Stops training when a monitored metric stops improving", "B) Stops training after a fixed number of epochs", "C) Stops training when accuracy reaches 100%", "D) Stops training when loss is zero"],
+      "answer": "A",
+      "explanation": "EarlyStopping monitors a metric like val_loss and stops training after a patience period of no improvement."
+    },
+    {
+      "q": "Which of the following is a valid way to save a Keras model?",
+      "options": ["A) model.save('model.h5')", "B) model.export('model.pkl')", "C) model.dump('model.json')", "D) model.write('model.txt')"],
+      "answer": "A",
+      "explanation": "model.save() saves the architecture, weights, and training configuration to an HDF5 file."
+    },
+    {
+      "q": "What is the purpose of the activation function in a neural network?",
+      "options": ["A) To introduce non-linearity", "B) To compute the loss", "C) To update weights", "D) To load data"],
+      "answer": "A",
+      "explanation": "Without non-linear activation functions, a neural network would be equivalent to a linear model."
+    },
+    {
+      "q": "In a neural network, what is a bias term?",
+      "options": ["A) An additional weight that shifts the activation function", "B) A regularization parameter", "C) The learning rate", "D) The number of layers"],
+      "answer": "A",
+      "explanation": "The bias allows the activation to shift left or right, helping the network fit data better."
+    },
+    {
+      "q": "Which of the following is a common problem when training deep neural networks?",
+      "options": ["A) Overfitting", "B) Underfitting", "C) Vanishing gradients", "D) All of the above"],
+      "answer": "D",
+      "explanation": "Deep networks can suffer from overfitting, underfitting, and vanishing/exploding gradients."
+    },
+    {
+      "q": "What is the recommended first step when building a neural network for a new dataset?",
+      "options": ["A) Use a very deep network", "B) Start with a simple model and small number of layers", "C) Use all available data for testing", "D) Ignore validation"],
+      "answer": "B",
+      "explanation": "Starting simple helps you establish a baseline and avoid unnecessary complexity."
+    },
+    {
+      "q": "What does the term 'epoch' mean in training?",
+      "options": ["A) One forward and backward pass over the entire dataset", "B) One update of weights", "C) One batch of data", "D) One layer of the network"],
+      "answer": "A",
+      "explanation": "An epoch is a full cycle through the training dataset."
+    },
+    {
+      "q": "Which of the following is a hyperparameter?",
+      "options": ["A) Weights", "B) Biases", "C) Learning rate", "D) Activations"],
+      "answer": "C",
+      "explanation": "Learning rate is set before training and controls the step size during gradient descent."
+    },
+    {
+      "q": "What is the main difference between TensorFlow and Keras?",
+      "options": ["A) Keras is a high-level API that runs on top of TensorFlow", "B) TensorFlow is only for research", "C) Keras cannot build neural networks", "D) TensorFlow does not support GPUs"],
+      "answer": "A",
+      "explanation": "Keras provides a simpler, more user-friendly interface for building models with TensorFlow as the backend."
+    },
+    {
+      "q": "Why is it important to use a separate test set?",
+      "options": ["A) To tune hyperparameters", "B) To evaluate the final model's performance on unseen data", "C) To increase training speed", "D) To reduce overfitting during training"],
+      "answer": "B",
+      "explanation": "The test set provides an unbiased estimate of how well the model generalizes to new data."
+    }
+  ],
+  "videos": [
+    "perceptron and multilayer perceptron tutorial for beginners",
+    "activation functions in neural networks explained",
+    "backpropagation and gradient descent variants tutorial"
+  ]
+}

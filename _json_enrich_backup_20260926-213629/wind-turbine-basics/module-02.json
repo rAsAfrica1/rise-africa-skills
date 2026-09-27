@@ -1,0 +1,224 @@
+﻿{
+  "course": "Wind Turbine Basics",
+  "module_number": 2,
+  "module_title": "Wind Resource Assessment",
+  "lessons": [
+    {
+      "title": "Measuring Wind Speed and Direction",
+      "body": "Wind speed and direction are the two most important things to measure for any wind project. You need to know how fast the wind blows and from which direction, on average, over at least one full year. In Africa, many sites have strong seasonal winds, like the trade winds in Kenya or the Harmattan in West Africa. For a small wind turbine, you want an average wind speed of at least 4-5 meters per second (m/s) at hub height. A good site might have 6-8 m/s. You measure wind speed with an anemometer and direction with a wind vane. These are usually mounted on a tower or a simple pole at the same height as the turbine hub. For a small turbine, that could be 10-20 meters high. You also need a data logger to record the readings every 10 minutes or so. Inexpensive options include the Davis Instruments Vantage Pro2 or a homemade Arduino-based system using a cup anemometer. If you cannot afford a tower, you can start with a handheld anemometer and take readings at different times of day, but this is less accurate. For a proper assessment, you need at least 12 months of data to capture seasonal changes. In many African countries, the windiest months are during the dry season, while the rainy season may have calm periods. Record both speed and direction at the same time so you can later make a wind rose. Also note the maximum gust speeds, as turbines must survive extreme winds. Simple tools like a windsock can give a rough idea of direction and speed, but they are not precise. Always calibrate your instruments and check for obstacles like trees or buildings that can distort the wind. If you are near the coast, salt spray can damage sensors, so choose marine-grade equipment.",
+      "word_count": 310
+    },
+    {
+      "title": "Wind Rose Diagrams and Site Analysis",
+      "body": "A wind rose is a circular diagram that shows how often the wind blows from each direction and how strong it is. It is one of the most useful tools for wind site assessment. To make a wind rose, you need at least a few months of wind direction and speed data. You can use free software like WRPLOT View from Lakes Environmental, or even a spreadsheet. The wind rose has spokes for each of the 16 compass directions (N, NNE, NE, etc.). The length of each spoke shows the percentage of time the wind comes from that direction. Colors on the spoke show wind speed ranges. For example, a long spoke to the east means the wind often comes from the east. In many parts of Africa, the prevailing wind is from the east or northeast (trade winds), but coastal areas may have sea breezes that change direction between day and night. When you analyze a site, you want the wind rose to show a dominant direction that is consistent. If the wind comes from all directions equally, the site is poor for a wind turbine because the turbine cannot always face the wind. You also want to avoid placing a turbine in a valley or behind a hill that blocks the prevailing wind. Use the wind rose to orient your turbine: most small turbines are upwind, meaning they face into the wind. If the wind rose shows a strong prevailing direction, you can point the turbine that way. Also, check for turbulence: if the wind rose shows many different directions, the site may be turbulent, which reduces energy production and stresses the turbine. In Africa, you can get wind rose data from global databases like the Global Wind Atlas (globalwindatlas.info), which provides free maps and wind roses for any location. Use that as a starting point, but always verify with on-site measurements.",
+      "word_count": 312
+    },
+    {
+      "title": "Anemometers and Wind Vanes",
+      "body": "Anemometers measure wind speed, and wind vanes measure wind direction. There are several types, but for small wind projects in Africa, cup anemometers and propeller anemometers are most common. Cup anemometers have three or four cups that spin with the wind; the faster they spin, the higher the wind speed. They are rugged and relatively cheap. A good entry-level cup anemometer is the NRG Systems #40, but it costs a few hundred dollars. A cheaper option is the Inspeed Vortex or a homemade one using a small DC motor and cups. Propeller anemometers have a propeller that points into the wind and a tail vane to keep it facing the wind. They can measure both speed and direction in one unit, like the Davis 6410. Ultrasonic anemometers have no moving parts and are very accurate but expensive. Wind vanes are simple: a flat fin that points downwind, with a counterweight. They are often combined with anemometers on the same mount. When installing, place the anemometer at the top of a tower or pole, at least 10 meters above the ground and away from obstacles. The standard height for wind measurement is 10 meters, but for a small turbine you might measure at hub height. You also need to record data. A simple data logger like the HOBO or a Raspberry Pi can store readings. In Africa, power supply can be an issue, so choose a logger with low power consumption or solar power. Calibration is important: check your anemometer against a known reference every year. Also, ensure the anemometer is level and the vane is balanced. If you are using a handheld anemometer, take readings at the same spot and height each time. Remember that wind speed increases with height, so measuring at 2 meters will give much lower readings than at 10 meters. Always note the height of your measurements.",
+      "word_count": 305
+    },
+    {
+      "title": "Estimating Annual Energy Production",
+      "body": "Estimating annual energy production (AEP) tells you how much electricity your wind turbine will generate in a year. This is crucial for deciding if a project is worth it. The basic formula is: AEP = 0.5 Ã air density Ã swept area Ã wind speed cubed Ã efficiency Ã hours in a year. But wind speed varies, so you need a wind speed distribution. The most common is the Weibull distribution, which uses two parameters: k (shape) and c (scale). You can calculate these from your wind data using free software like WindRose or a spreadsheet. For a small turbine, a simpler method is to use the average wind speed and a capacity factor. Capacity factor is the actual energy produced divided by the energy if the turbine ran at full power all the time. For small wind turbines, capacity factors are typically 0.15 to 0.30 (15-30%). So if you have a 1 kW turbine and the average wind speed is 5 m/s, you might get 1 kW Ã 0.25 Ã 8760 hours = 2190 kWh per year. But that is rough. Better: use the power curve of your turbine. The power curve shows the output at each wind speed. You multiply the hours the wind blows at each speed by the power output at that speed, then sum up. You can get wind speed data in bins (e.g., hours per year at 0-1 m/s, 1-2 m/s, etc.) from your measurements or from the Global Wind Atlas. In Africa, air density is lower at high altitudes (e.g., Addis Ababa at 2350 m has about 20% lower air density than sea level), so you must adjust. Air density = pressure / (287.05 Ã temperature in Kelvin). Use average temperature and pressure for your site. Also, account for losses: downtime, soiling, and electrical losses can reduce output by 10-20%. So multiply your gross AEP by 0.8 to get net AEP. Many online calculators, like the one from the Danish Wind Industry Association, can help. Always be conservative: it is better to underestimate than to overpromise.",
+      "word_count": 312
+    },
+    {
+      "title": "Wind Shear and Turbulence Intensity",
+      "body": "Wind shear is how wind speed changes with height. It is important because you measure wind at one height (say 10 m) but your turbine hub might be at 20 m. Wind shear is described by the shear exponent (alpha). A common value is 0.14 for open land, but it can be 0.2 to 0.4 in areas with trees or buildings. You calculate alpha using the formula: alpha = log(V2/V1) / log(H2/H1), where V1 and V2 are wind speeds at heights H1 and H2. For example, if wind at 10 m is 5 m/s and at 20 m is 5.8 m/s, alpha = log(5.8/5) / log(20/10) = 0.21. To get accurate AEP, you need to extrapolate your measured wind speed to hub height using this alpha. In Africa, wind shear can be high in savanna areas with scattered trees, but low over smooth desert or water. If you cannot measure at two heights, use a default alpha of 0.14 for open terrain, but be aware this adds uncertainty. Turbulence intensity (TI) is the standard deviation of wind speed divided by the mean wind speed, usually expressed as a percentage. For example, if mean wind speed is 6 m/s and standard deviation is 1.2 m/s, TI = 20%. Low TI (below 10%) is good; high TI (above 20%) is bad because it causes fatigue loads and reduces turbine life. Turbulence is caused by obstacles, rough terrain, and thermal effects. In cities or near trees, TI can be very high. For small wind turbines, you want a site with TI less than 15% at hub height. You can measure TI with a fast-response anemometer (like a sonic or a 3-cup with high sampling rate) and a data logger that records at least 1 Hz. If you cannot measure TI, avoid sites with many obstacles. Also, note that turbulence increases with wind speed up to a point, then decreases. For wind resource assessment, always report both wind shear and turbulence, as they affect both energy production and turbine survival.",
+      "word_count": 314
+    },
+    {
+      "title": "Using Wind Atlases and Software Tools",
+      "body": "Before you spend money on measuring equipment, use free wind atlases to get a first idea of the wind resource in your area. The Global Wind Atlas (globalwindatlas.info) is the best starting point. It covers the whole world, including Africa, with a resolution of about 1 km. You can zoom into your site, see the average wind speed at 10 m, 50 m, 100 m, and 200 m, and download wind roses and data. It also shows capacity factors for different turbine types. Another useful tool is the DTU Wind Energy Global Wind Atlas, which is the same. For Africa, the African Wind Atlas (africanwindatlas.org) might have more local data, but it is not always updated. Also, the SWERA (Solar and Wind Energy Resource Assessment) project has maps for many African countries. These atlases are based on computer models, not actual measurements, so they can be off by 10-20%. Use them to identify promising areas, then verify with on-site measurements. For software, you can use free tools like WAsP (Wind Atlas Analysis and Application Program) for small projects, but it is complex. A simpler tool is RETScreen (from Natural Resources Canada), which has a wind energy module. You input your site coordinates, and it pulls data from NASA and other sources to estimate energy production. It also does financial analysis. Another free tool is HOMER (Hybrid Optimization of Multiple Energy Resources) for off-grid systems. For small wind turbines, you can use the free online calculator from the Danish Wind Industry Association (windpower.org) or the American Wind Energy Association (AWEA) small wind calculator. If you have measured data, you can use Excel or Google Sheets to make your own analysis. There are also mobile apps like Windfinder and Windy for real-time wind forecasts, but these are not for resource assessment. Always remember that atlases and software are just estimates. The only way to know for sure is to measure at your site for at least a year. But these tools can save you time and money by helping you avoid obviously bad sites.",
+      "word_count": 315
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is the minimum average wind speed generally recommended for a small wind turbine?",
+      "options": ["A) 1-2 m/s", "B) 4-5 m/s", "C) 10-12 m/s", "D) 20-25 m/s"],
+      "answer": "B",
+      "explanation": "Small wind turbines typically need at least 4-5 m/s average wind speed to produce useful energy."
+    },
+    {
+      "q": "Which instrument measures wind direction?",
+      "options": ["A) Anemometer", "B) Wind vane", "C) Barometer", "D) Thermometer"],
+      "answer": "B",
+      "explanation": "A wind vane points into the wind and indicates direction."
+    },
+    {
+      "q": "How long should you ideally measure wind at a site for a proper assessment?",
+      "options": ["A) 1 week", "B) 1 month", "C) 12 months", "D) 5 years"],
+      "answer": "C",
+      "explanation": "At least 12 months of data captures seasonal variations."
+    },
+    {
+      "q": "What does a wind rose diagram show?",
+      "options": ["A) Wind speed only", "B) Wind direction frequency and speed", "C) Temperature changes", "D) Air pressure"],
+      "answer": "B",
+      "explanation": "A wind rose shows how often wind comes from each direction and at what speeds."
+    },
+    {
+      "q": "Which free online tool provides global wind resource maps?",
+      "options": ["A) Google Maps", "B) Global Wind Atlas", "C) Wikipedia", "D) Weather.com"],
+      "answer": "B",
+      "explanation": "The Global Wind Atlas offers free wind speed and direction data worldwide."
+    },
+    {
+      "q": "What is the standard height for wind measurement according to many guidelines?",
+      "options": ["A) 2 meters", "B) 10 meters", "C) 50 meters", "D) 100 meters"],
+      "answer": "B",
+      "explanation": "10 meters is the standard reference height for wind measurements."
+    },
+    {
+      "q": "Which type of anemometer has no moving parts?",
+      "options": ["A) Cup anemometer", "B) Propeller anemometer", "C) Ultrasonic anemometer", "D) Vane anemometer"],
+      "answer": "C",
+      "explanation": "Ultrasonic anemometers use sound waves and have no moving parts."
+    },
+    {
+      "q": "What is the typical capacity factor for a small wind turbine?",
+      "options": ["A) 5-10%", "B) 15-30%", "C) 50-70%", "D) 90-100%"],
+      "answer": "B",
+      "explanation": "Small wind turbines typically have capacity factors between 15% and 30%."
+    },
+    {
+      "q": "How does air density change with altitude?",
+      "options": ["A) Increases", "B) Decreases", "C) Stays the same", "D) Doubles"],
+      "answer": "B",
+      "explanation": "Air density decreases as altitude increases, reducing energy production."
+    },
+    {
+      "q": "What is the formula for wind shear exponent alpha?",
+      "options": ["A) alpha = log(V2/V1) / log(H2/H1)", "B) alpha = V2 - V1", "C) alpha = H2/H1", "D) alpha = V1/V2"],
+      "answer": "A",
+      "explanation": "Alpha is calculated using the log ratio of wind speeds and heights."
+    },
+    {
+      "q": "What does high turbulence intensity do to a wind turbine?",
+      "options": ["A) Increases energy production", "B) Reduces fatigue loads", "C) Causes fatigue and reduces life", "D) Has no effect"],
+      "answer": "C",
+      "explanation": "High turbulence causes fluctuating loads that can damage the turbine."
+    },
+    {
+      "q": "Which of these is a free software tool for wind energy analysis?",
+      "options": ["A) RETScreen", "B) AutoCAD", "C) Photoshop", "D) Excel only"],
+      "answer": "A",
+      "explanation": "RETScreen is a free tool from Natural Resources Canada for renewable energy analysis."
+    },
+    {
+      "q": "What does a cup anemometer measure?",
+      "options": ["A) Wind direction", "B) Wind speed", "C) Humidity", "D) Temperature"],
+      "answer": "B",
+      "explanation": "Cup anemometers spin with the wind to measure speed."
+    },
+    {
+      "q": "Why is it important to record wind direction along with speed?",
+      "options": ["A) To know which way to orient the turbine", "B) To calculate air density", "C) To measure temperature", "D) To find the best soil"],
+      "answer": "A",
+      "explanation": "Wind direction determines the optimal orientation for the turbine."
+    },
+    {
+      "q": "What is the typical shear exponent for open land?",
+      "options": ["A) 0.01", "B) 0.14", "C) 0.50", "D) 1.00"],
+      "answer": "B",
+      "explanation": "0.14 is a common default for open, unobstructed terrain."
+    },
+    {
+      "q": "Which African region is known for strong trade winds?",
+      "options": ["A) Congo Basin", "B) Sahara Desert", "C) East African coast", "D) Kalahari Desert"],
+      "answer": "C",
+      "explanation": "The East African coast experiences strong trade winds, especially near Kenya and Tanzania."
+    },
+    {
+      "q": "What is the purpose of a data logger in wind measurement?",
+      "options": ["A) To store wind data over time", "B) To generate electricity", "C) To clean the anemometer", "D) To measure temperature only"],
+      "answer": "A",
+      "explanation": "Data loggers record and store wind speed and direction readings."
+    },
+    {
+      "q": "How can you estimate annual energy production (AEP) simply?",
+      "options": ["A) AEP = turbine rating Ã capacity factor Ã 8760 hours", "B) AEP = wind speed Ã 24", "C) AEP = tower height Ã 100", "D) AEP = air density only"],
+      "answer": "A",
+      "explanation": "This formula uses rated power, capacity factor, and hours in a year."
+    },
+    {
+      "q": "What is the Weibull distribution used for in wind resource assessment?",
+      "options": ["A) Describing wind speed frequency", "B) Measuring temperature", "C) Calculating tower height", "D) Predicting rainfall"],
+      "answer": "A",
+      "explanation": "The Weibull distribution models how often different wind speeds occur."
+    },
+    {
+      "q": "Which of these is a common obstacle that causes turbulence?",
+      "options": ["A) Flat desert", "B) Trees and buildings", "C) Calm water", "D) Open grassland"],
+      "answer": "B",
+      "explanation": "Trees and buildings disrupt airflow, creating turbulence."
+    },
+    {
+      "q": "What does the Global Wind Atlas provide?",
+      "options": ["A) Real-time wind forecasts", "B) Average wind speed and direction maps", "C) Turbine prices", "D) Solar radiation data"],
+      "answer": "B",
+      "explanation": "It offers free global maps of average wind resource."
+    },
+    {
+      "q": "Why is air density important in AEP calculations?",
+      "options": ["A) It affects the power available in the wind", "B) It determines wind direction", "C) It measures humidity", "D) It has no effect"],
+      "answer": "A",
+      "explanation": "Power in the wind is proportional to air density."
+    },
+    {
+      "q": "What is a good turbulence intensity level for a small wind turbine site?",
+      "options": ["A) Below 10%", "B) 20-30%", "C) Above 40%", "D) 50%"],
+      "answer": "A",
+      "explanation": "Low turbulence (below 10%) is ideal for turbine longevity."
+    },
+    {
+      "q": "Which instrument is commonly used as a wind vane?",
+      "options": ["A) Cup anemometer", "B) Tail fin with counterweight", "C) Barometer", "D) Hygrometer"],
+      "answer": "B",
+      "explanation": "A wind vane typically has a fin and counterweight to point into the wind."
+    },
+    {
+      "q": "What is the recommended sampling interval for wind data logging?",
+      "options": ["A) Every second", "B) Every 10 minutes", "C) Every hour", "D) Every day"],
+      "answer": "B",
+      "explanation": "10-minute averages are standard for wind resource assessment."
+    },
+    {
+      "q": "How can you adjust AEP for losses?",
+      "options": ["A) Multiply by 0.8", "B) Add 20%", "C) Divide by 2", "D) No adjustment needed"],
+      "answer": "A",
+      "explanation": "Typical losses (downtime, soiling) reduce output by about 20%, so multiply by 0.8."
+    },
+    {
+      "q": "Which of these is a handheld wind measurement tool?",
+      "options": ["A) Davis Vantage Pro2", "B) Kestrel 3000", "C) NRG #40", "D) HOBO logger"],
+      "answer": "B",
+      "explanation": "The Kestrel 3000 is a handheld anemometer for spot measurements."
+    },
+    {
+      "q": "What does a wind rose with a long spoke to the north indicate?",
+      "options": ["A) Wind rarely comes from north", "B) Wind often comes from north", "C) Wind speed is low", "D) No wind at all"],
+      "answer": "B",
+      "explanation": "The length of the spoke shows the frequency of wind from that direction."
+    },
+    {
+      "q": "Why is it important to calibrate anemometers?",
+      "options": ["A) To ensure accurate wind speed readings", "B) To make them spin faster", "C) To change direction", "D) To reduce cost"],
+      "answer": "A",
+      "explanation": "Calibration ensures the anemometer measures wind speed correctly."
+    },
+    {
+      "q": "Which free software can estimate wind energy production and financials?",
+      "options": ["A) RETScreen", "B) Microsoft Word", "C) Adobe Reader", "D) VLC Player"],
+      "answer": "A",
+      "explanation": "RETScreen includes a wind energy module for energy and financial analysis."
+    }
+  ],
+  "videos": [
+    "how to measure wind speed and direction for wind turbine site assessment",
+    "wind rose diagram tutorial for wind energy",
+    "Global Wind Atlas tutorial for Africa wind resource"
+  ]
+}

@@ -1,0 +1,218 @@
+﻿{
+  "course": "Robotics",
+  "module_number": 4,
+  "module_title": "Actuators and Drive Systems",
+  "lessons": [
+    {
+      "title": "DC Motors and Motor Drivers",
+      "body": "A DC motor is the workhorse of robotics. In Africa, you'll find them in cheap toys, car wipers, and even washing machines. A typical small DC motor runs on 3â12V and draws 0.5â2A. For example, the yellow TT gear motor (used in many Arduino kits) runs at 6V, 200mA no-load, and has a stall current of 1.2A. You can salvage motors from old printers, DVD players, or remote-controlled cars at places like Kenya's Ngara market or Nigeria's Alaba International. To control a DC motor with a microcontroller, you need a motor driver because the Arduino can only supply 20mA per pin. Common drivers: L293D (1A per channel), L298N (2A per channel), and TB6612FNG (1.2A continuous). The L298N is popular in Africa because it's cheap (around $2) and available in most electronics shops. Wiring: connect the motor to OUT1 and OUT2, battery to 12V and GND, and control pins to Arduino. For a single motor, you need two control pins (IN1, IN2) to set direction, and an enable pin (ENA) for speed via PWM. If you want to drive two motors, you need two sets of control pins. Always use a separate battery for motorsânever power them from the Arduino's 5V pin. A 6V AA battery pack (4 AA batteries) works for small motors. Add a 100ÂµF capacitor across the motor terminals to reduce noise. Test with a simple sketch: set IN1 HIGH, IN2 LOW, and analogWrite ENA to 200 (out of 255) for half speed. If the motor doesn't spin, check your battery voltage and wiring. In many African workshops, learners use recycled 18650 lithium cells from laptop batteries to power motorsâjust be careful with charging and use a protection circuit."
+    },
+    {
+      "title": "Stepper Motors and Servo Motors",
+      "body": "Stepper motors move in precise steps, making them ideal for 3D printers, CNC machines, and robot arms. A common stepper is the NEMA 17, which has 200 steps per revolution (1.8Â° per step). In Africa, you can salvage steppers from old printers and scannersâthey often have 1.8Â° or 7.5Â° step angles. To drive a stepper, you need a driver like the A4988 or DRV8825 (around $1â2 each). These take step and direction signals from an Arduino. For example, to rotate a NEMA 17 one full revolution, you send 200 pulses to the STEP pin. Microstepping (e.g., 1/16) gives smoother motion but reduces torque. Power them with 12V at 1â1.5A. Servo motors, on the other hand, are for angular positioning. The SG90 micro servo (plastic gears, 1.8 kgÂ·cm torque) costs about $2 and runs on 4.8â6V. The MG996R (metal gears, 11 kgÂ·cm) is stronger and costs $5â8. Servos have three wires: brown/black (GND), red (5V), and orange/yellow (signal). They expect a PWM pulse every 20ms, with pulse width from 1ms (0Â°) to 2ms (180Â°). In Arduino, use the Servo library: `myservo.write(90)` sets the shaft to 90Â°. For African makers, servos are great for robotic grippers and pan-tilt cameras. But beware: cheap servos can jitter if your power supply is weak. Use a separate 5V 2A regulator for multiple servos. Also, steppers are better for continuous rotation and holding torque. A typical project: a solar panel cleaner that uses a stepper to rotate a brush and a servo to adjust the angle. Salvage steppers from printers at local e-waste dumpsâthey often work fine."
+    },
+    {
+      "title": "Pneumatic and Hydraulic Actuators",
+      "body": "Pneumatic and hydraulic actuators use air or fluid pressure to create linear or rotary motion. In Africa, pneumatics are more common in small workshops because air is free and clean. A basic pneumatic system needs a compressor, air filter, regulator, solenoid valves, and a cylinder. For example, a double-acting cylinder (bore 32mm, stroke 100mm) at 6 bar (87 psi) can push about 480N (48 kg) of force. That's enough to lift a small robot arm or clamp a workpiece. You can buy pneumatic kits from online stores like AliExpress or local industrial suppliers in South Africa (e.g., RS Components) or Kenya (e.g., Birmingham). But for low-cost robotics, consider using a bicycle pump and a 2/2 solenoid valve (12V DC, $5) to control a single-acting cylinder. Hydraulics use incompressible fluid (oil) and can generate much higher forcesâup to 200 bar in car jacks. However, hydraulic systems are messy, expensive, and require safety precautions. For African robotics, hydraulics are rare except in large-scale mining or agricultural equipment. Instead, focus on pneumatics for pick-and-place robots. A simple project: a pneumatic gripper that opens and closes using a 5/2 solenoid valve controlled by an Arduino through a relay. Use 6mm PU tubing and push-to-connect fittings. Always install a water trap and lubricator to protect valves. In dusty environments, use filtered air. Safety: never exceed the cylinder's rated pressure, and always secure tubing with clamps. Pneumatics can be loudâuse a silencer on exhaust ports. For a low-budget start, salvage a car tyre inflator as a compressor (but it's not continuous duty). Better: use a fridge compressor (quiet, but needs oil). Many African makers repurpose refrigerator compressors for vacuum or low-pressure air."
+    },
+    {
+      "title": "Gearing, Belts, and Pulleys",
+      "body": "Gears, belts, and pulleys let you trade speed for torque or change direction. In robotics, you often need more torque than a motor provides. A gear ratio is the number of teeth on the driven gear divided by the driver gear. For example, if a 10-tooth gear drives a 50-tooth gear, the ratio is 5:1âoutput speed is 1/5 of input, but torque is 5 times higher (minus friction). In African workshops, you can salvage gears from old printers, photocopiers, and car alternators. Plastic gears are common but wear out; metal gears (brass or steel) last longer. For belts, timing belts (e.g., GT2) are best for precisionâthey don't slip. A 20-tooth pulley driving a 60-tooth pulley gives a 3:1 reduction. Use a belt tensioner to avoid skipping. V-belts are for high torque but slip; they're used in car engines but not ideal for robots. Pulleys and belts are great for transferring motion over distanceâlike a robot arm with a shoulder and elbow. For a differential drive robot, you might use a pulley to connect two wheels on the same axle. In Africa, bicycle chains and sprockets are a cheap source of robust gearing. A bicycle chain with a 14-tooth sprocket driving a 28-tooth sprocket gives 2:1 reduction. You can also use a worm gear for high reduction (20:1 to 100:1) and self-locking, but efficiency is low (30â50%). When designing, calculate the required torque: torque = force Ã radius. For a wheel of radius 3cm to climb a 10Â° slope with a 1kg robot, you need about 0.5 NÂ·m. Then choose a motor and gear ratio accordingly. Remember: more reduction means slower speed but more pushing power. Test with a multimeter and a tachometer (or use a phone app) to measure actual RPM."
+    },
+    {
+      "title": "Motor Control: PWM and PID",
+      "body": "PWM (Pulse Width Modulation) is how you control motor speed. The Arduino's analogWrite() outputs a PWM signal at about 490Hz (or 980Hz on pins 5 and 6). The duty cycle (0â255) sets the average voltage. For example, analogWrite(motorPin, 127) gives 50% duty cycle, so a 12V motor sees about 6V average. But PWM alone doesn't hold speed under loadâthe motor slows down when you add weight. That's where PID (Proportional-Integral-Derivative) control comes in. PID reads the actual speed (using an encoder) and adjusts PWM to match a target. A simple PID for a DC motor: error = targetRPM - actualRPM; output = Kp*error + Ki*integral + Kd*derivative. You tune Kp, Ki, Kd experimentally. Start with Kp=1, Ki=0, Kd=0, then increase Kp until oscillation, then add Kd to damp. In Africa, many learners use the Arduino PID library. For a line-following robot, PID keeps the robot centered on the line. For a balancing robot, PID keeps it upright. You need an encoderâa slotted optical sensor or a magnetic encoder (e.g., AS5600) on the motor shaft. A cheap way: use a recycled mouse encoder (quadrature) and count pulses. For example, a 20-slot encoder disc gives 20 pulses per revolution. With gear ratio 30:1, you get 600 pulses per output revolution. Then calculate RPM: RPM = (pulses per second Ã 60) / pulses per revolution. PID runs in a loop every 10â50ms. Use a hardware interrupt for encoder counting to avoid missing pulses. In resource-limited settings, you can skip PID and use a simple proportional controller for many tasks. But for precision like 3D printing, PID is essential. Test with a serial plotter to see the response. Always clamp the output to 0â255. A well-tuned PID makes a robot move smoothly and accurately."
+    },
+    {
+      "title": "Lab: Controlling a DC Motor with Arduino",
+      "body": "In this lab, you'll control a DC motor's speed and direction using an Arduino, an L298N motor driver, and a 6V battery pack. You need: Arduino Uno, L298N module, DC motor (6â12V, 1A max), 4 AA batteries (6V), jumper wires, and a small switch. First, wire the L298N: connect battery + to 12V terminal and battery â to GND. Connect motor to OUT1 and OUT2. Connect Arduino pin 9 to ENA (enable A), pin 8 to IN1, pin 7 to IN2. Also connect Arduino GND to L298N GND. Now write the code. In setup(), set pins 8, 7, and 9 as OUTPUT. In loop(), first test direction: digitalWrite(IN1, HIGH); digitalWrite(IN2, LOW); then analogWrite(ENA, 200); delay(2000); then stop: analogWrite(ENA, 0); delay(1000); then reverse: digitalWrite(IN1, LOW); digitalWrite(IN2, HIGH); analogWrite(ENA, 200); delay(2000); stop. Upload and observe. If the motor doesn't spin, check battery voltage (should be >5V) and wiring. If it spins but not smoothly, adjust the PWM valueâtry 100, 150, 255. For a speed sweep, use a for loop: for (int speed=0; speed<=255; speed+=5) { analogWrite(ENA, speed); delay(50); } then reverse. To control with a potentiometer, connect its middle pin to A0, and map the value (0â1023) to PWM (0â255). This gives you a manual speed knob. For African makers, this lab uses cheap, available parts. You can salvage the motor from a toy car and the L298N from an old printer. Always use a separate battery for motorsânever the Arduino's 5V. Add a 100nF capacitor across the motor terminals to reduce noise. If you hear a high-pitched whine, that's normal PWM. For a challenge, add a second motor and make a small robot car. Remember to common the grounds. This lab is the foundation for all motorized robots."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is the typical stall current of a small yellow TT gear motor?",
+      "options": ["A) 0.2A", "B) 1.2A", "C) 5A", "D) 10A"],
+      "answer": "B",
+      "explanation": "The TT gear motor stalls at about 1.2A at 6V."
+    },
+    {
+      "q": "Why do you need a motor driver to control a DC motor with an Arduino?",
+      "options": ["A) Arduino pins can only supply 20mA", "B) Arduino cannot output PWM", "C) Motors run on AC", "D) Motor drivers are optional"],
+      "answer": "A",
+      "explanation": "Arduino pins can only source 20mA, while motors need hundreds of milliamps."
+    },
+    {
+      "q": "Which motor driver can handle 2A per channel?",
+      "options": ["A) L293D", "B) L298N", "C) TB6612FNG", "D) ULN2003"],
+      "answer": "B",
+      "explanation": "The L298N is rated for 2A per channel."
+    },
+    {
+      "q": "What should you use to power a DC motor in a robot?",
+      "options": ["A) Arduino 5V pin", "B) Separate battery pack", "C) USB port", "D) 9V battery directly to Arduino"],
+      "answer": "B",
+      "explanation": "Motors should have a separate power supply to avoid damaging the Arduino."
+    },
+    {
+      "q": "How many steps per revolution does a typical NEMA 17 stepper motor have?",
+      "options": ["A) 100", "B) 200", "C) 400", "D) 512"],
+      "answer": "B",
+      "explanation": "NEMA 17 steppers usually have 200 steps per revolution (1.8Â° per step)."
+    },
+    {
+      "q": "Which driver is commonly used for stepper motors?",
+      "options": ["A) L298N", "B) A4988", "C) LM7805", "D) NE555"],
+      "answer": "B",
+      "explanation": "The A4988 is a popular stepper driver with microstepping."
+    },
+    {
+      "q": "What is the typical torque of an SG90 micro servo?",
+      "options": ["A) 1.8 kgÂ·cm", "B) 11 kgÂ·cm", "C) 20 kgÂ·cm", "D) 0.5 kgÂ·cm"],
+      "answer": "A",
+      "explanation": "The SG90 has about 1.8 kgÂ·cm of torque at 4.8V."
+    },
+    {
+      "q": "How many wires does a standard hobby servo have?",
+      "options": ["A) 2", "B) 3", "C) 4", "D) 5"],
+      "answer": "B",
+      "explanation": "Servos have power, ground, and signal wires."
+    },
+    {
+      "q": "What PWM pulse width corresponds to 90Â° on a typical servo?",
+      "options": ["A) 1ms", "B) 1.5ms", "C) 2ms", "D) 2.5ms"],
+      "answer": "B",
+      "explanation": "1.5ms pulse width centers the servo at 90Â°."
+    },
+    {
+      "q": "Why is it important to use a separate power supply for multiple servos?",
+      "options": ["A) To increase speed", "B) To prevent jitter and brownouts", "C) To reduce torque", "D) To save battery"],
+      "answer": "B",
+      "explanation": "Servos draw high current spikes; a separate supply prevents voltage drops."
+    },
+    {
+      "q": "What force can a 32mm bore pneumatic cylinder produce at 6 bar?",
+      "options": ["A) 48N", "B) 480N", "C) 4800N", "D) 48kN"],
+      "answer": "B",
+      "explanation": "Force = pressure Ã area; 6 bar â 600,000 Pa, area â 0.0008 mÂ², force â 480N."
+    },
+    {
+      "q": "Which component controls the flow of air in a pneumatic system?",
+      "options": ["A) Compressor", "B) Solenoid valve", "C) Cylinder", "D) Filter"],
+      "answer": "B",
+      "explanation": "Solenoid valves open or close to direct air flow."
+    },
+    {
+      "q": "Why are hydraulics rarely used in small African robotics projects?",
+      "options": ["A) They are too slow", "B) They are messy and expensive", "C) They need no maintenance", "D) They are banned"],
+      "answer": "B",
+      "explanation": "Hydraulic systems require oil, high pressure, and careful maintenance."
+    },
+    {
+      "q": "What is a common low-cost air compressor source for African makers?",
+      "options": ["A) Car tyre inflator", "B) Refrigerator compressor", "C) Bicycle pump", "D) All of the above"],
+      "answer": "D",
+      "explanation": "All can be repurposed, but each has limitations."
+    },
+    {
+      "q": "What safety device should be installed on pneumatic exhaust ports?",
+      "options": ["A) Silencer", "B) Filter", "C) Regulator", "D) Lubricator"],
+      "answer": "A",
+      "explanation": "Silencers reduce noise from escaping air."
+    },
+    {
+      "q": "If a 10-tooth gear drives a 50-tooth gear, what is the gear ratio?",
+      "options": ["A) 1:5", "B) 5:1", "C) 10:1", "D) 50:1"],
+      "answer": "B",
+      "explanation": "Ratio = driven/driver = 50/10 = 5:1."
+    },
+    {
+      "q": "Which type of belt is best for precision motion without slipping?",
+      "options": ["A) V-belt", "B) Timing belt", "C) Flat belt", "D) Round belt"],
+      "answer": "B",
+      "explanation": "Timing belts have teeth that mesh with pulleys, preventing slip."
+    },
+    {
+      "q": "What is the torque required to move a 1kg robot with 3cm wheels up a 10Â° slope?",
+      "options": ["A) 0.05 NÂ·m", "B) 0.5 NÂ·m", "C) 5 NÂ·m", "D) 50 NÂ·m"],
+      "answer": "B",
+      "explanation": "Torque = force Ã radius; force â 1kg Ã 9.8 Ã sin(10Â°) â 1.7N, radius 0.03m, torque â 0.05 NÂ·m, but with friction and acceleration, 0.5 NÂ·m is a safe estimate."
+    },
+    {
+      "q": "Which gear type provides self-locking and high reduction?",
+      "options": ["A) Spur gear", "B) Bevel gear", "C) Worm gear", "D) Rack and pinion"],
+      "answer": "C",
+      "explanation": "Worm gears can be self-locking and offer high reduction ratios."
+    },
+    {
+      "q": "What is a cheap source of robust gearing in Africa?",
+      "options": ["A) Bicycle chain and sprockets", "B) 3D printed gears only", "C) Lego gears", "D) Car engines"],
+      "answer": "A",
+      "explanation": "Bicycle chains and sprockets are widely available and durable."
+    },
+    {
+      "q": "What does PWM stand for?",
+      "options": ["A) Pulse Width Modulation", "B) Power Width Management", "C) Pulse Wave Modulation", "D) Proportional Width Modulation"],
+      "answer": "A",
+      "explanation": "PWM is Pulse Width Modulation, used to control average voltage."
+    },
+    {
+      "q": "What is the PWM frequency on most Arduino Uno pins?",
+      "options": ["A) 50Hz", "B) 490Hz", "C) 1kHz", "D) 10kHz"],
+      "answer": "B",
+      "explanation": "Most Arduino Uno PWM pins default to about 490Hz."
+    },
+    {
+      "q": "In PID, what does the 'I' term do?",
+      "options": ["A) Reacts to current error", "B) Eliminates steady-state error", "C) Predicts future error", "D) Amplifies noise"],
+      "answer": "B",
+      "explanation": "The integral term accumulates past error to eliminate steady-state offset."
+    },
+    {
+      "q": "What sensor is needed for closed-loop motor speed control?",
+      "options": ["A) Potentiometer", "B) Encoder", "C) Thermistor", "D) Light sensor"],
+      "answer": "B",
+      "explanation": "An encoder provides feedback on actual motor speed."
+    },
+    {
+      "q": "What is a good starting value for Kp in PID tuning?",
+      "options": ["A) 0.01", "B) 1", "C) 100", "D) 1000"],
+      "answer": "B",
+      "explanation": "Start with Kp=1, then adjust based on response."
+    },
+    {
+      "q": "How often should a PID loop run for a typical DC motor?",
+      "options": ["A) Every 1 second", "B) Every 10â50ms", "C) Every 5 minutes", "D) Only once"],
+      "answer": "B",
+      "explanation": "A 10â50ms loop is fast enough for most motor control."
+    },
+    {
+      "q": "In the lab, which Arduino pin is connected to ENA on the L298N?",
+      "options": ["A) Pin 9", "B) Pin 8", "C) Pin 7", "D) Pin 6"],
+      "answer": "A",
+      "explanation": "Pin 9 is used for PWM to control speed via ENA."
+    },
+    {
+      "q": "What should you do if the motor does not spin in the lab?",
+      "options": ["A) Increase PWM to 255", "B) Check battery voltage and wiring", "C) Replace Arduino", "D) Change motor"],
+      "answer": "B",
+      "explanation": "First verify power and connections before assuming component failure."
+    },
+    {
+      "q": "Why add a capacitor across motor terminals?",
+      "options": ["A) To increase speed", "B) To reduce electrical noise", "C) To store energy", "D) To reverse direction"],
+      "answer": "B",
+      "explanation": "Capacitors suppress voltage spikes and noise from motor brushes."
+    },
+    {
+      "q": "What is the purpose of the potentiometer in the lab extension?",
+      "options": ["A) To measure temperature", "B) To manually control motor speed", "C) To set direction", "D) To limit current"],
+      "answer": "B",
+      "explanation": "The potentiometer provides an analog input to set PWM speed."
+    }
+  ],
+  "videos": [
+    "Arduino DC motor control L298N tutorial",
+    "Stepper motor A4988 Arduino wiring",
+    "PID motor control Arduino encoder"
+  ]
+}

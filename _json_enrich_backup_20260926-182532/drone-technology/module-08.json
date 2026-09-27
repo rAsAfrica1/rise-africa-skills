@@ -1,0 +1,374 @@
+﻿{
+  "course": "Drone Technology",
+  "module_number": 8,
+  "module_title": "Drone Data Collection and Mapping",
+  "lessons": [
+    {
+      "title": "Introduction to Aerial Mapping and Photogrammetry",
+      "body": "Aerial mapping turns a drone into a flying camera that captures many overlapping photos. Photogrammetry is the science of stitching those photos into accurate 2D maps and 3D models. In Africa, this is used for land titling in Kenya, crop monitoring in Nigeria, and construction progress in South Africa. You don't need a fancy drone to start; a DJI Phantom 4 or Mavic 2 Pro works well. The key is overlap: shoot with 75% front overlap and 60% side overlap so software can match points. Fly at 80â120 meters above ground for a balance of detail and coverage. For a 10-hectare farm, a single battery flight at 100m with a 20MP camera can capture 200â300 photos in 15 minutes. Photogrammetry software like Pix4D or DroneDeploy identifies common features (like a tree or rock) in multiple photos and calculates their 3D positions. This creates a point cloud, then a mesh, then an orthomosaicâa flat, geometrically corrected map. Accuracy depends on ground control points (GCPs) and GPS quality. Without GCPs, your map might be off by 5â10 meters. With 5 GCPs surveyed by a handheld GPS, you can get 2â5 cm accuracy. Start small: map a 1-hectare plot, process with free software like WebODM, and check against Google Earth. You'll learn fast by doing. Remember: fly on calm, clear days, avoid midday shadows, and always check battery and SD card space before takeoff.",
+      "body_word_count": 400
+    },
+    {
+      "title": "Mission Planning for Mapping",
+      "body": "A good mapping mission starts on the ground, not in the air. Use free apps like Pix4Dcapture or DroneDeploy to plan your flight. First, define your area: walk the boundary with a GPS or draw it on Google Maps. Set your flight altitude. Lower altitude (50â70m) gives more detail but fewer hectares per battery; higher altitude (100â120m) covers more area but less detail. For a 20-hectare maize field, fly at 100m with 75% overlap. That's about 400 photos and two batteries on a Mavic 2 Pro. Always set a safe return-to-home altitude above the tallest obstacleâtrees, poles, or buildings. In Africa, watch for power lines and cell towers. Plan your mission with the sun behind you to avoid shadows in the lens. Fly in a grid pattern (lawnmower) with the camera pointing straight down (nadir). For 3D models, add oblique photos at 45 degrees. Check wind: if above 8 m/s (18 mph), postpone. Use a pre-flight checklist: props secure, battery charged, SD card empty, GPS lock (10+ satellites), home point recorded. Set your camera to manual exposure to avoid flickering between photos. Shoot in RAW if possible for better processing. After the flight, download photos to a laptop and back them up to an external drive or cloud. A common mistake is flying too fast; keep speed under 5 m/s for clear images. Practice on a small area firstâlike your backyardâbefore mapping a client's farm.",
+      "body_word_count": 400
+    },
+    {
+      "title": "Using GPS and Ground Control Points",
+      "body": "GPS on consumer drones is accurate to about 1â3 meters. That's fine for a rough map, but not for surveying or construction. To get centimeter accuracy, you need Ground Control Points (GCPs). A GCP is a marked point on the ground with known coordinates. You can use a black-and-white checkerboard target (print on A3 paper, mount on plywood) or a bright plastic lid. Place 5â10 GCPs evenly across your mapping area, including corners. Survey each GCP with a high-precision GPSâlike an Emlid Reach RS2 or a Trimbleâor hire a surveyor. In Africa, many surveyors charge $50â$100 per point. If you can't afford that, use a smartphone with a Bluetooth GPS like the Garmin GLO 2, which gives 1â2 meter accuracyâbetter than nothing. Record the latitude, longitude, and elevation of each GCP. After the drone flight, input these coordinates into Pix4D or DroneDeploy. The software will use them to georeference the map. Without GCPs, your orthomosaic might be shifted by 5â10 meters, making it useless for boundary disputes or volume calculations. For small farms, you can use a single GCP if you only need relative accuracy. Always double-check GCP coordinates with a second reading. In areas with poor GPS signal (under trees), use a total station. Remember: GCPs must be visible in the photosâdon't place them under tall crops. After processing, check the error report; a good result has RMSE under 3 cm.",
+      "body_word_count": 400
+    },
+    {
+      "title": "Creating Orthomosaics and 3D Models",
+      "body": "An orthomosaic is a flat, seamless map made from many drone photos. It's like a satellite image but with 2â5 cm per pixel resolution. To create one, you need photogrammetry software. Pix4D and DroneDeploy are popular but paid. Free options include WebODM (open source) and OpenDroneMap. The process: import photos, align them (software finds matching points), build a dense point cloud, create a mesh, then generate the orthomosaic. For a 10-hectare map, processing takes 30â60 minutes on a laptop with 16GB RAM. You'll get a GeoTIFF file you can open in QGIS or Google Earth. For 3D models, the same photos produce a textured mesh and point cloud. This is useful for measuring stockpiles, building facades, or erosion. In Africa, construction companies use 3D models to track progress weekly. To improve quality, ensure good overlap and avoid blurry photos. If you see holes in the orthomosaic, add more photos or increase overlap. You can also use a rolling shutter correction if your drone has a rolling shutter camera (most do). After processing, check the accuracy by comparing known distances (e.g., a 100m fence) with the map. If off by more than 10 cm, recheck GCPs. Export your orthomosaic as a JPEG for sharing or GeoTIFF for GIS. For 3D models, export as OBJ or PLY. Share results with clients via DroneDeploy's cloud or a free Google Drive link. Always keep raw photos and project files for future reprocessing.",
+      "body_word_count": 400
+    },
+    {
+      "title": "Data Processing Software: Pix4D, DroneDeploy",
+      "body": "Pix4D and DroneDeploy are the two most common drone mapping software in Africa. Pix4D is desktop-based (Pix4Dmapper) and offers a free trial, but a license costs about $350/month. DroneDeploy is cloud-based with a free plan for basic maps; paid plans start at $100/month. For beginners, DroneDeploy is easier: upload photos, it processes automatically, and you get a map in 24 hours. Pix4D gives more control over settings like point cloud density and coordinate systems. Both support GCPs. In Africa, where internet can be slow, Pix4D's offline processing is a big advantage. For a small farm, use DroneDeploy's free plan to test. For commercial surveying, invest in Pix4D or Agisoft Metashape ($179 one-time). Free alternatives: WebODM (runs on your laptop, no internet needed) and OpenDroneMap. They are powerful but require more technical skill. When choosing, consider: processing speed, accuracy, export formats (GeoTIFF, LAS, OBJ), and customer support. DroneDeploy has a mobile app for flight planning and live mapping. Pix4D has a companion app, Pix4Dcapture, for flight planning. For agriculture, DroneDeploy offers plant health maps (NDVI) if you have a multispectral camera. For construction, Pix4D's volume calculations are top-notch. Always process a small test area first to check settings. A common mistake is using too many photos; 200â400 per 10 hectares is enough. If processing fails, reduce the number of photos or lower the resolution. Keep your software updated.",
+      "body_word_count": 400
+    },
+    {
+      "title": "Applications in Agriculture, Construction, and Surveying",
+      "body": "Drone mapping is transforming three key sectors in Africa. In agriculture, farmers use orthomosaics to count plants, spot pests, and plan irrigation. With a multispectral camera like the MicaSense RedEdge, you can create NDVI maps that show crop stress before it's visible. A 50-hectare maize farm can be mapped in 30 minutes, saving hours of walking. In Kenya, tea estates use drones to monitor leaf rust. In construction, drones track progress weekly, measure stockpiles (gravel, sand), and detect safety issues. A 3D model of a building site lets project managers compare actual vs. planned work. In South Africa, drone mapping reduced survey time for a 100-hectare housing project from 2 weeks to 2 days. In surveying, drones create accurate boundary maps for land titling. In Rwanda, the government uses drones to map informal settlements, giving residents legal addresses. For cadastral surveys, you need 2â5 cm accuracy, so GCPs are essential. Cost savings are huge: a traditional survey of 100 hectares might cost $5,000; with a drone, it's $500â$1,000. To start, pick one application and master it. For agriculture, learn NDVI processing. For construction, learn volume calculations. For surveying, learn coordinate systems (UTM, WGS84). Always comply with local drone lawsâin Kenya, you need a permit from the Kenya Civil Aviation Authority. In Nigeria, NCAT regulates. Get certified if possible. Your clients will trust you more with a portfolio of maps. Start by mapping your own farm or a friend's plot for free.",
+      "body_word_count": 400
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is photogrammetry?",
+      "options": [
+        "A) The science of measuring light",
+        "B) The science of making maps from overlapping photos",
+        "C) A type of drone camera",
+        "D) A GPS correction method"
+      ],
+      "answer": "B",
+      "explanation": "Photogrammetry uses overlapping photos to create 2D maps and 3D models."
+    },
+    {
+      "q": "What is the recommended front overlap for mapping?",
+      "options": [
+        "A) 30%",
+        "B) 50%",
+        "C) 75%",
+        "D) 100%"
+      ],
+      "answer": "C",
+      "explanation": "75% front overlap ensures enough common points for software to stitch photos."
+    },
+    {
+      "q": "Which free software can process drone photos into maps?",
+      "options": [
+        "A) Pix4D",
+        "B) DroneDeploy",
+        "C) WebODM",
+        "D) Agisoft Metashape"
+      ],
+      "answer": "C",
+      "explanation": "WebODM is an open-source, free photogrammetry tool."
+    },
+    {
+      "q": "What is an orthomosaic?",
+      "options": [
+        "A) A 3D model of a building",
+        "B) A flat, geometrically corrected map",
+        "C) A type of drone battery",
+        "D) A GPS ground station"
+      ],
+      "answer": "B",
+      "explanation": "An orthomosaic is a seamless, flat map made from many drone photos."
+    },
+    {
+      "q": "What does GCP stand for?",
+      "options": [
+        "A) Ground Control Point",
+        "B) Global Coordinate Position",
+        "C) Geodetic Correction Parameter",
+        "D) Ground Camera Platform"
+      ],
+      "answer": "A",
+      "explanation": "GCP stands for Ground Control Point, used for accurate georeferencing."
+    },
+    {
+      "q": "Why are GCPs needed?",
+      "options": [
+        "A) To increase drone speed",
+        "B) To improve GPS accuracy to centimeters",
+        "C) To reduce battery consumption",
+        "D) To avoid wind"
+      ],
+      "answer": "B",
+      "explanation": "GCPs correct GPS errors, giving centimeter-level accuracy."
+    },
+    {
+      "q": "What is the typical accuracy of consumer drone GPS without GCPs?",
+      "options": [
+        "A) 1â3 cm",
+        "B) 1â3 meters",
+        "C) 10â20 meters",
+        "D) 0.5 meters"
+      ],
+      "answer": "B",
+      "explanation": "Consumer drone GPS is accurate to about 1â3 meters."
+    },
+    {
+      "q": "Which app is used for flight planning with Pix4D?",
+      "options": [
+        "A) Pix4Dcapture",
+        "B) DroneDeploy",
+        "C) WebODM",
+        "D) QGIS"
+      ],
+      "answer": "A",
+      "explanation": "Pix4Dcapture is the free flight planning app for Pix4D."
+    },
+    {
+      "q": "What is the maximum recommended wind speed for drone mapping?",
+      "options": [
+        "A) 5 m/s",
+        "B) 8 m/s",
+        "C) 12 m/s",
+        "D) 15 m/s"
+      ],
+      "answer": "B",
+      "explanation": "Above 8 m/s wind, image quality and flight stability suffer."
+    },
+    {
+      "q": "What is the best time of day for drone mapping?",
+      "options": [
+        "A) Midday with strong sun",
+        "B) Early morning or late afternoon",
+        "C) Night with lights",
+        "D) During rain"
+      ],
+      "answer": "B",
+      "explanation": "Early morning or late afternoon reduces shadows and glare."
+    },
+    {
+      "q": "What does a 3D model from drone photos include?",
+      "options": [
+        "A) Only a flat map",
+        "B) A point cloud and textured mesh",
+        "C) A GPS track",
+        "D) A weather report"
+      ],
+      "answer": "B",
+      "explanation": "3D models consist of a point cloud and a textured mesh."
+    },
+    {
+      "q": "Which software is cloud-based?",
+      "options": [
+        "A) Pix4Dmapper",
+        "B) DroneDeploy",
+        "C) WebODM",
+        "D) Agisoft Metashape"
+      ],
+      "answer": "B",
+      "explanation": "DroneDeploy is primarily a cloud-based processing platform."
+    },
+    {
+      "q": "What is the cost of Pix4Dmapper per month?",
+      "options": [
+        "A) Free",
+        "B) $50",
+        "C) $350",
+        "D) $1000"
+      ],
+      "answer": "C",
+      "explanation": "Pix4Dmapper license costs about $350 per month."
+    },
+    {
+      "q": "What is NDVI used for?",
+      "options": [
+        "A) Measuring wind speed",
+        "B) Assessing plant health",
+        "C) Calculating volume",
+        "D) Mapping roads"
+      ],
+      "answer": "B",
+      "explanation": "NDVI (Normalized Difference Vegetation Index) shows crop stress and health."
+    },
+    {
+      "q": "What is a common use of drone mapping in construction?",
+      "options": [
+        "A) Measuring stockpile volumes",
+        "B) Planting trees",
+        "C) Painting buildings",
+        "D) Welding pipes"
+      ],
+      "answer": "A",
+      "explanation": "Drones calculate stockpile volumes accurately from 3D models."
+    },
+    {
+      "q": "In which country is the Kenya Civil Aviation Authority responsible for drone permits?",
+      "options": [
+        "A) Nigeria",
+        "B) Kenya",
+        "C) South Africa",
+        "D) Ghana"
+      ],
+      "answer": "B",
+      "explanation": "KCAA regulates drone operations in Kenya."
+    },
+    {
+      "q": "What is the typical file format for an orthomosaic?",
+      "options": [
+        "A) MP4",
+        "B) GeoTIFF",
+        "C) DOCX",
+        "D) EXE"
+      ],
+      "answer": "B",
+      "explanation": "GeoTIFF is a georeferenced image format for maps."
+    },
+    {
+      "q": "How many GCPs are recommended for a small mapping area?",
+      "options": [
+        "A) 1â2",
+        "B) 5â10",
+        "C) 20â30",
+        "D) 50+"
+      ],
+      "answer": "B",
+      "explanation": "5â10 GCPs evenly distributed give good accuracy."
+    },
+    {
+      "q": "What is the purpose of a pre-flight checklist?",
+      "options": [
+        "A) To look professional",
+        "B) To ensure safety and data quality",
+        "C) To increase drone speed",
+        "D) To reduce battery use"
+      ],
+      "answer": "B",
+      "explanation": "A checklist prevents mistakes like low battery or missing SD card."
+    },
+    {
+      "q": "Which camera type is needed for NDVI maps?",
+      "options": [
+        "A) RGB",
+        "B) Multispectral",
+        "C) Thermal",
+        "D) Infrared"
+      ],
+      "answer": "B",
+      "explanation": "Multispectral cameras capture specific bands for NDVI."
+    },
+    {
+      "q": "What is the typical processing time for a 10-hectare map on a laptop?",
+      "options": [
+        "A) 5 minutes",
+        "B) 30â60 minutes",
+        "C) 3 hours",
+        "D) 10 hours"
+      ],
+      "answer": "B",
+      "explanation": "Processing 10 hectares takes about 30â60 minutes on a 16GB RAM laptop."
+    },
+    {
+      "q": "What does RMSE measure in drone mapping?",
+      "options": [
+        "A) Battery life",
+        "B) Positional error",
+        "C) Wind speed",
+        "D) Camera resolution"
+      ],
+      "answer": "B",
+      "explanation": "RMSE (Root Mean Square Error) indicates the accuracy of georeferencing."
+    },
+    {
+      "q": "Which free software runs offline?",
+      "options": [
+        "A) DroneDeploy",
+        "B) Pix4D",
+        "C) WebODM",
+        "D) Google Earth"
+      ],
+      "answer": "C",
+      "explanation": "WebODM can be installed locally and run without internet."
+    },
+    {
+      "q": "What is the main advantage of DroneDeploy for beginners?",
+      "options": [
+        "A) Free forever",
+        "B) Easy cloud processing",
+        "C) Works offline",
+        "D) No GCP needed"
+      ],
+      "answer": "B",
+      "explanation": "DroneDeploy's cloud platform is user-friendly and automated."
+    },
+    {
+      "q": "What is a common mistake when flying a mapping mission?",
+      "options": [
+        "A) Flying too slow",
+        "B) Flying too fast",
+        "C) Using too many GCPs",
+        "D) Flying at noon"
+      ],
+      "answer": "B",
+      "explanation": "Flying too fast causes motion blur and poor overlap."
+    },
+    {
+      "q": "What is the typical cost saving of drone surveying vs. traditional surveying for 100 hectares?",
+      "options": [
+        "A) 10%",
+        "B) 50%",
+        "C) 80â90%",
+        "D) No saving"
+      ],
+      "answer": "C",
+      "explanation": "Drone surveying can cost 80â90% less than traditional methods."
+    },
+    {
+      "q": "Which of these is a free flight planning app?",
+      "options": [
+        "A) Pix4Dcapture",
+        "B) Pix4Dmapper",
+        "C) Agisoft Metashape",
+        "D) QGIS"
+      ],
+      "answer": "A",
+      "explanation": "Pix4Dcapture is free for flight planning."
+    },
+    {
+      "q": "What is the purpose of oblique photos in mapping?",
+      "options": [
+        "A) To create 2D maps",
+        "B) To improve 3D models",
+        "C) To save battery",
+        "D) To avoid shadows"
+      ],
+      "answer": "B",
+      "explanation": "Oblique photos capture sides of objects, improving 3D reconstruction."
+    },
+    {
+      "q": "What is the recommended flight speed for clear images?",
+      "options": [
+        "A) Under 5 m/s",
+        "B) 10 m/s",
+        "C) 15 m/s",
+        "D) 20 m/s"
+      ],
+      "answer": "A",
+      "explanation": "Speeds under 5 m/s reduce motion blur and ensure overlap."
+    },
+    {
+      "q": "In which sector are drones used for land titling?",
+      "options": [
+        "A) Agriculture",
+        "B) Construction",
+        "C) Surveying",
+        "D) Mining"
+      ],
+      "answer": "C",
+      "explanation": "Surveying uses drones for accurate boundary mapping and land titling."
+    }
+  ],
+  "videos": [
+    "drone mapping for beginners Africa",
+    "how to use ground control points drone mapping",
+    "Pix4D tutorial for agriculture mapping"
+  ]
+}

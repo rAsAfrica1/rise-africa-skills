@@ -1,0 +1,222 @@
+{
+  "course": "AI Fundamentals",
+  "module_number": 8,
+  "module_title": "Neural Networks and Deep Learning",
+  "lessons": [
+    {
+      "title": "Perceptron and Multilayer Perceptrons",
+      "body": "A perceptron is the simplest neural network: it takes several inputs, multiplies each by a weight, adds a bias, and passes the sum through a step function to produce a 0 or 1. For example, a mobile-money fraud detector might use three inputs: transaction amount (in KES), time of day, and location risk score. Weights: 0.001, -0.5, 2.0; bias: -1.0. If the weighted sum exceeds 0, flag fraud. A single perceptron can only separate data with a straight line. That fails for problems like XOR, where you need a curve. Multilayer perceptrons (MLPs) solve this by stacking layers: an input layer, one or more hidden layers, and an output layer. Each neuron in a hidden layer connects to every neuron in the next layer. For a crop-disease classifier using leaf images, you might flatten a 64x64 pixel image into 4096 inputs, then have hidden layers of 128 and 64 neurons, and an output layer with 3 neurons for three diseases. The number of weights explodes: 4096*128 + 128*64 + 64*3 = 532,736 weights. That's why deep learning needs lots of data and compute. In Africa, you can start with small MLPs on tabular data: predicting maize yield from rainfall, fertilizer, and soil pH. Use Python with scikit-learn's MLPRegressor. Train on 1,000 rows from your local agricultural extension office. Normalize inputs to 0-1 range. With 2 hidden layers of 10 neurons each, you can get RÂ² above 0.8. The key is to start simple, measure error, and add layers only if needed. Remember: more layers mean more parameters, which require more data to avoid overfitting."
+    },
+    {
+      "title": "Activation Functions",
+      "body": "Without activation functions, a neural network is just a linear model, no matter how many layers you stack. Activation functions add non-linearity, letting the network learn complex patterns. The most common today is ReLU (Rectified Linear Unit): f(x) = max(0, x). It's cheap to compute and helps gradients flow. For a loan-default predictor with 20 input features, using ReLU in hidden layers lets the model capture thresholds like 'income above 50,000 KES and loan below 200,000 KES'. Sigmoid squashes outputs to 0-1, useful for binary classification (e.g., will this customer repay?). But sigmoid saturates: for very large or small inputs, gradient becomes near zero, slowing learning. Tanh is similar but outputs -1 to 1, often better for hidden layers. Softmax is used in the output layer for multi-class problems: it converts raw scores into probabilities that sum to 1. For a crop-disease classifier with 3 classes, softmax gives you the probability of each disease. In practice, start with ReLU for hidden layers. If you see dead neurons (always zero), try Leaky ReLU (small slope for negative inputs). For output: sigmoid for binary, softmax for multi-class, and linear for regression (e.g., predicting maize price). In Keras, you specify activation='relu' or activation='sigmoid'. On a dataset of 5,000 customer records from a Nairobi fintech, using ReLU instead of sigmoid in hidden layers cut training time from 10 minutes to 2 minutes on a standard laptop. Always monitor your loss curve; if it plateaus early, your activation might be saturating. Experiment with different activations on a validation set."
+    },
+    {
+      "title": "Backpropagation Algorithm",
+      "body": "Backpropagation is how neural networks learn. It's just the chain rule from calculus applied efficiently. After a forward pass computes the output, you calculate the loss (e.g., mean squared error). Then you work backwards: for each weight, you compute how much it contributed to the error. That's the gradient. You then adjust each weight by a small step opposite to the gradient. For a network predicting house prices in Accra, with inputs like square meters, number of bedrooms, and distance to market, backprop tells you: 'increase weight for square meters by 0.02, decrease weight for distance by 0.01' to reduce error. The algorithm repeats for every layer, from output back to input. The math: if loss L depends on output y, and y = f(z), and z = w*x + b, then dL/dw = dL/dy * dy/dz * dz/dw. This chain multiplies local gradients. In practice, you don't compute by hand. Libraries like TensorFlow and PyTorch do it automatically via autograd. But understanding it helps debug. For example, if your gradients become zero (vanishing gradient), learning stops. That happens with deep networks and sigmoid activations. Solutions: use ReLU, batch normalization, or residual connections. On a small dataset of 2,000 loan applications, a 3-layer MLP trained with backprop for 100 epochs might reach 85% accuracy. Without backprop, you'd have to guess weights randomly. Backprop is efficient: one forward pass and one backward pass per batch. For a batch of 32, it takes milliseconds on a CPU. Start with a small network, print gradients to check they're not zero, and use a learning rate like 0.01. If loss oscillates, reduce learning rate. If loss decreases too slowly, increase it. Backprop is the engine; you just steer."
+    },
+    {
+      "title": "Gradient Descent Variants",
+      "body": "Gradient descent is the optimization algorithm that updates weights to minimize loss. Batch gradient descent computes the gradient over the entire dataset before one update. For 10,000 records, that's slow and memory-heavy. Stochastic gradient descent (SGD) updates after each single example. It's fast but noisyâloss jumps around. Mini-batch gradient descent is the practical middle ground: update after a batch of 32, 64, or 128 examples. On a dataset of 50,000 mobile money transactions, a batch size of 64 means 782 updates per epoch. That's efficient on a laptop. But vanilla SGD can zigzag. Momentum adds a fraction of the previous update to the current one, smoothing the path. Think of a ball rolling downhill: it gains speed and doesn't get stuck in small dips. Nesterov momentum looks ahead by computing gradient at the approximate future position. RMSProp adapts learning rate per weight: large gradients get smaller steps, small gradients get larger steps. Adam combines momentum and RMSProp, and is the default choice for most deep learning. In Keras, use optimizer='adam' with learning rate 0.001. For a crop yield prediction model, Adam often converges in 20 epochs where SGD needs 100. But Adam can generalize slightly worse on some problems. If you have a small dataset (under 1,000 rows), try SGD with momentum 0.9 and learning rate 0.01. Always monitor training and validation loss. If training loss decreases but validation loss increases, you're overfittingâstop early. Use a learning rate schedule: reduce by half every 10 epochs if no improvement. On a budget laptop in Lagos, training a 5-layer MLP on 20,000 records with Adam takes about 5 minutes for 50 epochs. That's feasible for a small business predicting customer churn."
+    },
+    {
+      "title": "Regularization in Neural Networks",
+      "body": "Regularization prevents overfittingâwhen your model memorizes training data but fails on new data. With 1,000 customer records and a network of 100,000 weights, overfitting is guaranteed. The simplest fix: get more data. If you can't, use L2 regularization (weight decay). It adds a penalty to the loss: Î» * sum of squared weights. This keeps weights small, making the model simpler. In Keras, add kernel_regularizer=regularizers.l2(0.01) to layers. Start with Î»=0.001 to 0.01. Dropout is another powerful method: during training, randomly set a fraction of neurons to zero. For example, dropout=0.2 means 20% of neurons are ignored each batch. This forces the network to not rely on any single neuron. At test time, no dropout; instead, weights are scaled. Dropout is like training many sub-networks and averaging them. For a maize disease classifier, dropout in hidden layers often improves validation accuracy by 5-10%. Early stopping: monitor validation loss and stop training when it starts increasing. Patience=5 means wait 5 epochs before stopping. This is free and effective. Data augmentation: for image data, rotate, flip, or zoom images to create more training examples. For tabular data, you can add small noise to inputs. Batch normalization also regularizes slightly by normalizing layer inputs. In practice, combine dropout (0.2-0.5) with early stopping. On a dataset of 2,000 loan applications, a model without regularization might get 95% training accuracy but 70% validation. With dropout 0.3 and L2 0.001, training accuracy drops to 88% but validation rises to 82%. That's a better model for real use. Always split your data: 70% train, 15% validation, 15% test. Never tune on test. Use validation to choose regularization strength."
+    },
+    {
+      "title": "Introduction to TensorFlow and Keras",
+      "body": "TensorFlow is Google's open-source library for deep learning. Keras is its high-level APIâlike a friendly dashboard for building neural networks. You can install both with pip install tensorflow. On a basic laptop, it works on CPU; for larger models, use Google Colab (free GPU) or Kaggle Kernels. Start with a sequential model: from tensorflow.keras import layers, models. model = models.Sequential([ layers.Dense(64, activation='relu', input_shape=(10,)), layers.Dense(32, activation='relu'), layers.Dense(1, activation='sigmoid') ]). This defines a network for binary classification with 10 input features. Compile: model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy']). Then fit: model.fit(X_train, y_train, epochs=50, batch_size=32, validation_split=0.2). That's it. For a real project, load your CSV with pandas: data = pd.read_csv('customer_churn.csv'). Preprocess: fill missing values, normalize numerical columns to 0-1 using MinMaxScaler. Convert categorical columns to one-hot. Split into X and y. Build a model with 2 hidden layers of 64 and 32 neurons. Train for 100 epochs with early stopping: from tensorflow.keras.callbacks import EarlyStopping; es = EarlyStopping(patience=10). Evaluate on test set: model.evaluate(X_test, y_test). Save the model: model.save('churn_model.h5'). Later load it for predictions. For deployment on a small business server, you can convert to TensorFlow Lite for mobile. A typical churn model on 5,000 records trains in under 2 minutes on a CPU. Use callbacks like ModelCheckpoint to save the best model. Always visualize training history: plot loss and accuracy over epochs. If validation loss increases, you're overfittingâadd dropout or more data. TensorFlow also has a datasets API for efficient loading. Start with a small project: predict whether a customer will repay a loan based on age, income, and past defaults. You'll have a working model in an afternoon."
+    }
+  ,
+    {
+      "title": "Practical Reference",
+      "body": "<section>\n  <h2>Practical Reference: Neural Networks for African Agribusiness</h2>\n\n  <p>This practical reference consolidates the core ideas from the module <strong>Neural Networks and Deep Learning</strong> into a business-first field guide for African agribusinesses, cooperatives, agri-fintechs, and extension services. The goal is not to turn you into a machine-learning researcher. The goal is to help you decide when a neural network is worth the cost, how to prepare African farm and market data for it, and how to avoid the mistakes that waste money and erode trust with farmers and buyers.</p>\n\n  <p>Across Africa, neural networks are already being used for crop disease detection from smartphone photos, yield forecasting from weather and satellite data, livestock weight estimation, credit scoring for smallholder farmers, and demand forecasting for produce aggregation. But they only create value when they are paired with reliable data pipelines, clear business objectives, and local validation. This lesson gives you the reference tables, diagram, checklist, and safety warnings you need before you deploy.</p>\n\n  <figure>\n    <svg viewBox=\"0 0 760 420\" role=\"img\" aria-labelledby=\"nnTitle nnDesc\" xmlns=\"http://www.w3.org/2000/svg\">\n      <title id=\"nnTitle\">Feedforward neural network with input, hidden, and output layers</title>\n      <desc id=\"nnDesc\">A diagram showing an input layer with four nodes, two hidden layers with five and four nodes, and an output layer with two nodes, with arrows indicating forward propagation and a dashed arrow indicating backpropagation.</desc>\n      <rect x=\"0\" y=\"0\" width=\"760\" height=\"420\" fill=\"#f7f9f7\"/>\n      <text x=\"380\" y=\"34\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"20\" font-weight=\"bold\" fill=\"#1f3d2b\">Feedforward Neural Network: Forward Pass and Backpropagation</text>\n\n      <!-- Input layer -->\n      <text x=\"90\" y=\"70\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" fill=\"#2e5d3a\">Input Layer</text>\n      <circle cx=\"90\" cy=\"120\" r=\"18\" fill=\"#8fbf7f\" stroke=\"#2e5d3a\" stroke-width=\"2\"/>\n      <circle cx=\"90\" cy=\"170\" r=\"18\" fill=\"#8fbf7f\" stroke=\"#2e5d3a\" stroke-width=\"2\"/>\n      <circle cx=\"90\" cy=\"220\" r=\"18\" fill=\"#8fbf7f\" stroke=\"#2e5d3a\" stroke-width=\"2\"/>\n      <circle cx=\"90\" cy=\"270\" r=\"18\" fill=\"#8fbf7f\" stroke=\"#2e5d3a\" stroke-width=\"2\"/>\n      <text x=\"90\" y=\"125\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#fff\">x1</text>\n      <text x=\"90\" y=\"175\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#fff\">x2</text>\n      <text x=\"90\" y=\"225\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#fff\">x3</text>\n      <text x=\"90\" y=\"275\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#fff\">x4</text>\n\n      <!-- Hidden layer 1 -->\n      <text x=\"290\" y=\"70\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" fill=\"#2e5d3a\">Hidden Layer 1</text>\n      <circle cx=\"290\" cy=\"110\" r=\"18\" fill=\"#f0c36d\" stroke=\"#8a5a00\" stroke-width=\"2\"/>\n      <circle cx=\"290\" cy=\"155\" r=\"18\" fill=\"#f0c36d\" stroke=\"#8a5a00\" stroke-width=\"2\"/>\n      <circle cx=\"290\" cy=\"200\" r=\"18\" fill=\"#f0c36d\" stroke=\"#8a5a00\" stroke-width=\"2\"/>\n      <circle cx=\"290\" cy=\"245\" r=\"18\" fill=\"#f0c36d\" stroke=\"#8a5a00\" stroke-width=\"2\"/>\n      <circle cx=\"290\" cy=\"290\" r=\"18\" fill=\"#f0c36d\" stroke=\"#8a5a00\" stroke-width=\"2\"/>\n\n      <!-- Hidden layer 2 -->\n      <text x=\"490\" y=\"70\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" fill=\"#2e5d3a\">Hidden Layer 2</text>\n      <circle cx=\"490\" cy=\"125\" r=\"18\" fill=\"#f0c36d\" stroke=\"#8a5a00\" stroke-width=\"2\"/>\n      <circle cx=\"490\" cy=\"170\" r=\"18\" fill=\"#f0c36d\" stroke=\"#8a5a00\" stroke-width=\"2\"/>\n      <circle cx=\"490\" cy=\"215\" r=\"18\" fill=\"#f0c36d\" stroke=\"#8a5a00\" stroke-width=\"2\"/>\n      <circle cx=\"490\" cy=\"260\" r=\"18\" fill=\"#f0c36d\" stroke=\"#8a5a00\" stroke-width=\"2\"/>\n\n      <!-- Output layer -->\n      <text x=\"670\" y=\"70\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" fill=\"#2e5d3a\">Output Layer</text>\n      <circle cx=\"670\" cy=\"160\" r=\"18\" fill=\"#7fb3d5\" stroke=\"#1f4e79\" stroke-width=\"2\"/>\n      <circle cx=\"670\" cy=\"220\" r=\"18\" fill=\"#7fb3d5\" stroke=\"#1f4e79\" stroke-width=\"2\"/>\n      <text x=\"670\" y=\"165\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#fff\">y1</text>\n      <text x=\"670\" y=\"225\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#fff\">y2</text>\n\n      <!-- Connections input -> hidden1 -->\n      <g stroke=\"#9bbf8f\" stroke-width=\"1\" opacity=\"0.8\">\n        <line x1=\"108\" y1=\"120\" x2=\"272\" y2=\"110\"/>\n        <line x1=\"108\" y1=\"120\" x2=\"272\" y2=\"155\"/>\n        <line x1=\"108\" y1=\"120\" x2=\"272\" y2=\"200\"/>\n        <line x1=\"108\" y1=\"120\" x2=\"272\" y2=\"245\"/>\n        <line x1=\"108\" y1=\"120\" x2=\"272\" y2=\"290\"/>\n        <line x1=\"108\" y1=\"170\" x2=\"272\" y2=\"110\"/>\n        <line x1=\"108\" y1=\"170\" x2=\"272\" y2=\"155\"/>\n        <line x1=\"108\" y1=\"170\" x2=\"272\" y2=\"200\"/>\n        <line x1=\"108\" y1=\"170\" x2=\"272\" y2=\"245\"/>\n        <line x1=\"108\" y1=\"170\" x2=\"272\" y2=\"290\"/>\n        <line x1=\"108\" y1=\"220\" x2=\"272\" y2=\"110\"/>\n        <line x1=\"108\" y1=\"220\" x2=\"272\" y2=\"155\"/>\n        <line x1=\"108\" y1=\"220\" x2=\"272\" y2=\"200\"/>\n        <line x1=\"108\" y1=\"220\" x2=\"272\" y2=\"245\"/>\n        <line x1=\"108\" y1=\"220\" x2=\"272\" y2=\"290\"/>\n        <line x1=\"108\" y1=\"270\" x2=\"272\" y2=\"110\"/>\n        <line x1=\"108\" y1=\"270\" x2=\"272\" y2=\"155\"/>\n        <line x1=\"108\" y1=\"270\" x2=\"272\" y2=\"200\"/>\n        <line x1=\"108\" y1=\"270\" x2=\"272\" y2=\"245\"/>\n        <line x1=\"108\" y1=\"270\" x2=\"272\" y2=\"290\"/>\n      </g>\n\n      <!-- Connections hidden1 -> hidden2 -->\n      <g stroke=\"#d8b45a\" stroke-width=\"1\" opacity=\"0.8\">\n        <line x1=\"308\" y1=\"110\" x2=\"472\" y2=\"125\"/>\n        <line x1=\"308\" y1=\"110\" x2=\"472\" y2=\"170\"/>\n        <line x1=\"308\" y1=\"110\" x2=\"472\" y2=\"215\"/>\n        <line x1=\"308\" y1=\"110\" x2=\"472\" y2=\"260\"/>\n        <line x1=\"308\" y1=\"155\" x2=\"472\" y2=\"125\"/>\n        <line x1=\"308\" y1=\"155\" x2=\"472\" y2=\"170\"/>\n        <line x1=\"308\" y1=\"155\" x2=\"472\" y2=\"215\"/>\n        <line x1=\"308\" y1=\"155\" x2=\"472\" y2=\"260\"/>\n        <line x1=\"308\" y1=\"200\" x2=\"472\" y2=\"125\"/>\n        <line x1=\"308\" y1=\"200\" x2=\"472\" y2=\"170\"/>\n        <line x1=\"308\" y1=\"200\" x2=\"472\" y2=\"215\"/>\n        <line x1=\"308\" y1=\"200\" x2=\"472\" y2=\"260\"/>\n        <line x1=\"308\" y1=\"245\" x2=\"472\" y2=\"125\"/>\n        <line x1=\"308\" y1=\"245\" x2=\"472\" y2=\"170\"/>\n        <line x1=\"308\" y1=\"245\" x2=\"472\" y2=\"215\"/>\n        <line x1=\"308\" y1=\"245\" x2=\"472\" y2=\"260\"/>\n        <line x1=\"308\" y1=\"290\" x2=\"472\" y2=\"125\"/>\n        <line x1=\"308\" y1=\"290\" x2=\"472\" y2=\"170\"/>\n        <line x1=\"308\" y1=\"290\" x2=\"472\" y2=\"215\"/>\n        <line x1=\"308\" y1=\"290\" x2=\"472\" y2=\"260\"/>\n      </g>\n\n      <!-- Connections hidden2 -> output -->\n      <g stroke=\"#6fa8c9\" stroke-width=\"1\" opacity=\"0.8\">\n        <line x1=\"508\" y1=\"125\" x2=\"652\" y2=\"160\"/>\n        <line x1=\"508\" y1=\"125\" x2=\"652\" y2=\"220\"/>\n        <line x1=\"508\" y1=\"170\" x2=\"652\" y2=\"160\"/>\n        <line x1=\"508\" y1=\"170\" x2=\"652\" y2=\"220\"/>\n        <line x1=\"508\" y1=\"215\" x2=\"652\" y2=\"160\"/>\n        <line x1=\"508\" y1=\"215\" x2=\"652\" y2=\"220\"/>\n        <line x1=\"508\" y1=\"260\" x2=\"652\" y2=\"160\"/>\n        <line x1=\"508\" y1=\"260\" x2=\"652\" y2=\"220\"/>\n      </g>\n\n      <!-- Forward arrow -->\n      <defs>\n        <marker id=\"arrow\" markerWidth=\"10\" markerHeight=\"10\" refX=\"8\" refY=\"3\" orient=\"auto\">\n          <path d=\"M0,0 L8,3 L0,6 Z\" fill=\"#2e5d3a\"/>\n        </marker>\n        <marker id=\"arrowRed\" markerWidth=\"10\" markerHeight=\"10\" refX=\"8\" refY=\"3\" orient=\"auto\">\n          <path d=\"M0,0 L8,3 L0,6 Z\" fill=\"#b00020\"/>\n        </marker>\n      </defs>\n      <line x1=\"120\" y1=\"360\" x2=\"640\" y2=\"360\" stroke=\"#2e5d3a\" stroke-width=\"3\" marker-end=\"url(#arrow)\"/>\n      <text x=\"380\" y=\"395\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"14\" fill=\"#2e5d3a\">Forward propagation: inputs â weighted sums â activations â prediction</text>\n      <line x1=\"640\" y1=\"335\" x2=\"120\" y2=\"335\" stroke=\"#b00020\" stroke-width=\"3\" stroke-dasharray=\"8,5\" marker-end=\"url(#arrowRed)\"/>\n      <text x=\"380\" y=\"325\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"14\" fill=\"#b00020\">Backpropagation: loss gradient flows backward to update weights</text>\n    </svg>\n    <figcaption>Diagram adapted from the feedforward network architecture described in Goodfellow, Bengio, and Courville, <em>Deep Learning</em> (MIT Press, 2016), Figure 6.1, and the Keras documentation on sequential models. Source: <a href=\"https://www.deeplearningbook.org/contents/mlp.html\">deeplearningbook.org</a> and <a href=\"https://keras.io/guides/sequential_model/\">keras.io</a>.</figcaption>\n  </figure>\n\n  <h3>Table 1: Neural Network Components Mapped to African Agribusiness Use Cases</h3>\n  <table border=\"1\" cellpadding=\"8\" cellspacing=\"0\" style=\"border-collapse:collapse;width:100%;font-family:Arial,sans-serif;font-size:14px;\">\n    <thead style=\"background:#2e5d3a;color:#fff;\">\n      <tr>\n        <th>Component</th>\n        <th>What It Does</th>\n        <th>Agribusiness Example</th>\n        <th>Data Requirement</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>Perceptron</td>\n        <td>Single neuron with weighted sum and step activation</td>\n        <td>Simple yes/no loan approval based on farm size and repayment history</td>\n        <td>Few numeric features, linearly separable</td>\n      </tr>\n      <tr>\n        <td>Multilayer Perceptron (MLP)</td>\n        <td>Stacked layers that learn non-linear patterns</td>\n        <td>Maize yield prediction from rainfall, soil pH, fertilizer, and planting date</td>\n        <td>Hundreds to thousands of labeled farm records</td>\n      </tr>\n      <tr>\n        <td>Activation Functions</td>\n        <td>Introduce non-linearity (ReLU, sigmoid, softmax)</td>\n        <td>ReLU in hidden layers for disease image classification; softmax for crop type</td>\n        <td>No extra data; choice affects training speed</td>\n      </tr>\n      <tr>\n        <td>Backpropagation</td>\n        <td>Computes gradients to update weights</td>\n        <td>Improving a cocoa bean quality grader after each batch of labeled images</td>\n        <td>Labeled training set with ground truth</td>\n      </tr>\n      <tr>\n        <td>Gradient Descent Variants</td>\n        <td>Optimizes weights (SGD, Adam, RMSProp)</td>\n        <td>Adam for fast convergence on smallholder credit scoring datasets</td>\n        <td>Validation set to tune learning rate</td>\n      </tr>\n      <tr>\n        <td>Regularization</td>\n        <td>Prevents overfitting (dropout, L1/L2, early stopping)</td>\n        <td>Preventing a model from memorizing one region's rainfall pattern</td>\n        <td>Held-out test set from different regions</td>\n      </tr>\n      <tr>\n        <td>TensorFlow / Keras</td>\n        <td>Frameworks to build, train, and deploy models</td>\n        <td>Deploying a mobile disease detector via TensorFlow Lite on Android</td>\n        <td>Development environment and MLOps pipeline</td>\n      </tr>\n    </tbody>\n  </table>\n  <p style=\"font-size:13px;color:#555;\">Sources: Goodfellow et al., <em>Deep Learning</em> (2016); GÃ©ron, <em>Hands-On Machine Learning</em> (2022); TensorFlow documentation (<a href=\"https://www.tensorflow.org/\">tensorflow.org</a>); Keras documentation (<a href=\"https://keras.io/\">keras.io</a>).</p>\n\n  <h3>Table 2: Choosing the Right Approach for Common African Agribusiness Problems</h3>\n  <table border=\"1\" cellpadding=\"8\" cellspacing=\"0\" style=\"border-collapse:collapse;width:100%;font-family:Arial,sans-serif;font-size:14px;\">\n    <thead style=\"background:#8a5a00;color:#fff;\">\n      <tr>\n        <th>Business Problem</th>\n        <th>Recommended Model</th>\n        <th>Key Activation</th>\n        <th>Optimizer</th>\n        <th>Main Risk</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>Crop disease detection from phone photos</td>\n        <td>CNN (deep MLP variant)</td>\n        <td>ReLU + Softmax</td>\n        <td>Adam</td>\n        <td>Poor image quality in rural low-bandwidth settings</td>\n      </tr>\n      <tr>\n        <td>Smallholder credit scoring</td>\n        <td>MLP with 2â3 hidden layers</td>\n        <td>ReLU + Sigmoid</td>\n        <td>Adam or SGD with momentum</td>\n        <td>Bias against farmers without formal records</td>\n      </tr>\n      <tr>\n        <td>Yield forecasting from weather and satellite</td>\n        <td>MLP or LSTM</td>\n        <td>ReLU / Tanh</td>\n        <td>RMSProp</td>\n        <td>Missing or sparse weather station data</td>\n      </tr>\n      <tr>\n        <td>Produce demand forecasting for aggregation</td>\n        <td>MLP with lag features</td>\n        <td>ReLU</td>\n        <td>Adam</td>\n        <td>Seasonality shifts due to climate variability</td>\n      </tr>\n      <tr>\n        <td>Livestock weight estimation from images</td>\n        <td>CNN regression</td>\n        <td>ReLU + Linear</td>\n        <td>Adam</td>\n        <td>Breed and lighting variation across regions</td>\n      </tr>\n    </tbody>\n  </table>\n  <p style=\"font-size:13px;color:#555;\">Sources: FAO Digital Agriculture reports; CGIAR data science publications; TensorFlow Lite for mobile deployment (<a href=\"https://www.tensorflow.org/lite\">tensorflow.org/lite</a>); Keras applications (<a href=\"https://keras.io/api/applications/\">keras.io/api/applications</a>).</p>\n\n  <div style=\"border:3px solid #b00020;background:#fdecef;padding:16px;margin:24px 0;border-radius:6px;\">\n    <h3 style=\"color:#b00020;margin-top:0;\">â  Safety Warning: Do Not Deploy Neural Networks Without Local Validation</h3>\n    <p style=\"margin-bottom:8px;\">Neural networks trained on data from Europe, North America, or even a different African region can fail catastrophically when applied to your farmers, crops, or markets. A model that predicts maize yield in Iowa will not work in Kaduna or Nakuru without retraining. A credit model trained on urban bank data can systematically deny loans to rural women farmers, creating legal, reputational, and financial risk.</p>\n    <ul style=\"margin-top:0;\">\n      <li><strong>Always validate on local data</strong> from the exact regions, crops, and farmer segments you serve.</li>\n      <li><strong>Never use a model to deny credit, inputs, or insurance</strong> without a human review process and clear appeal mechanism.</li>\n      <li><strong>Document data provenance.</strong> If you cannot explain where training data came from, you cannot defend the model's decisions.</li>\n      <li><strong>Monitor for drift.</strong> Rainfall patterns, input prices, and pest outbreaks change. A model that was accurate last season may be wrong this season.</li>\n      <li><strong>Comply with local data protection laws</strong> such as Nigeria's NDPR, Kenya's Data Protection Act, and South Africa's POPIA when handling farmer data.</li>\n    </ul>\n  </div>\n\n  <h3>Quick Reference Checklist: Before You Build a Neural Network</h3>\n  <ol style=\"line-height:1.8;\">\n    <li><strong>Define the business decision first.</strong> What action will change based on the model output? If no action changes, do not build the model.</li>\n    <li><strong>Confirm you have enough labeled data.</strong> As a rule of thumb, start with at least 1,000 labeled examples per class or target range for an MLP; more for CNNs.</li>\n    <li><strong>Check data quality and representativeness.</strong> Does your dataset include smallholder farmers, women, youth, and different agro-ecological zones?</li>\n    <li><strong>Start simple.</strong> Try logistic regression or a single perceptron before jumping to a deep MLP. Many agribusiness problems are linear enough.</li>\n    <li><strong>Split data by geography or time, not randomly.</strong> Random splits leak information and overstate accuracy for African field conditions.</li>\n    <li><strong>Choose activation and optimizer deliberately.</strong> ReLU for hidden layers, sigmoid or softmax for outputs, Adam as a strong default optimizer.</li>\n    <li><strong>Apply regularization.</strong> Use dropout, L2, and early stopping to prevent overfitting, especially with small datasets.</li>\n    <li><strong>Plan for deployment and monitoring.</strong> TensorFlow Lite for offline Android apps, a retraining schedule, and a feedback loop from field agents.</li>\n  </ol>\n\n  <h3>Further Reading (Free Official Resources)</h3>\n  <ul style=\"line-height:1.8;\">\n    <li><a href=\"https://www.tensorflow.org/tutorials\">TensorFlow Official Tutorials</a> â hands-on guides for building and deploying neural networks, including TensorFlow Lite for mobile.</li>\n    <li><a href=\"https://keras.io/guides/\">Keras Developer Guides</a> â practical, code-first explanations of layers, activation functions, optimizers, and regularization.</li>\n    <li><a href=\"https://www.deeplearningbook.org/\">Deep Learning Book (Goodfellow, Bengio, Courville)</a> â free online textbook covering perceptrons, MLPs, backpropagation, and regularization.</li>\n    <li><a href=\"https://developers.google.com/machine-learning/crash-course\">Google Machine Learning Crash Course</a> â free modules on gradient descent, activation functions, and generalization.</li>\n    <li><a href=\"https://www.fao.org/digital-agriculture/en/\">FAO Digital Agriculture Resources</a> â context on applying AI and digital tools in African and global smallholder agriculture.</li>\n  </ul>\n\n  <p style=\"font-size:13px;color:#555;margin-top:24px;\">Prepared for the rise AFRICA Skills course <em>AI Fundamentals</em>, module <em>Neural Networks and Deep Learning</em>. This practical reference is intended for business and technical decision-makers in African agribusiness. Always pair model development with local validation, ethical review, and compliance with national data protection laws.</p>\n</section>"
+    }],
+  "quiz": [
+    {
+      "q": "What is the main limitation of a single perceptron?",
+      "options": ["A) It cannot handle more than two inputs", "B) It can only solve linearly separable problems", "C) It requires a GPU to train", "D) It cannot use a bias term"],
+      "answer": "B",
+      "explanation": "A single perceptron can only separate data with a straight line, so it fails on non-linear problems like XOR."
+    },
+    {
+      "q": "In a multilayer perceptron, what does a hidden layer do?",
+      "options": ["A) It directly produces the final output", "B) It increases the number of inputs", "C) It learns intermediate representations to solve non-linear problems", "D) It stores the training data"],
+      "answer": "C",
+      "explanation": "Hidden layers transform inputs into more complex features, enabling the network to model non-linear relationships."
+    },
+    {
+      "q": "For a binary classification problem, which activation function is typically used in the output layer?",
+      "options": ["A) ReLU", "B) Sigmoid", "C) Softmax", "D) Linear"],
+      "answer": "B",
+      "explanation": "Sigmoid squashes outputs to 0-1, representing probabilities for two classes."
+    },
+    {
+      "q": "Why is ReLU often preferred over sigmoid in hidden layers?",
+      "options": ["A) It outputs negative values", "B) It avoids the vanishing gradient problem for positive inputs", "C) It is more expensive to compute", "D) It always produces probabilities"],
+      "answer": "B",
+      "explanation": "ReLU has a constant gradient of 1 for positive inputs, which helps gradients flow during backpropagation."
+    },
+    {
+      "q": "What does the softmax activation function do?",
+      "options": ["A) Converts raw scores into probabilities that sum to 1", "B) Clips negative values to zero", "C) Outputs values between -1 and 1", "D) Computes the mean squared error"],
+      "answer": "A",
+      "explanation": "Softmax is used for multi-class classification, producing a probability distribution over classes."
+    },
+    {
+      "q": "Backpropagation primarily uses which mathematical rule?",
+      "options": ["A) Product rule", "B) Chain rule", "C) Quotient rule", "D) L'HÃ´pital's rule"],
+      "answer": "B",
+      "explanation": "Backpropagation applies the chain rule to compute gradients of the loss with respect to each weight."
+    },
+    {
+      "q": "What is a vanishing gradient?",
+      "options": ["A) When gradients become very large", "B) When gradients become very small, slowing learning", "C) When the learning rate is too high", "D) When the loss function is convex"],
+      "answer": "B",
+      "explanation": "In deep networks with saturating activations like sigmoid, gradients can shrink to near zero, preventing weight updates."
+    },
+    {
+      "q": "Which of the following is a common solution to vanishing gradients?",
+      "options": ["A) Using sigmoid activations", "B) Using ReLU activations", "C) Increasing the number of layers without limit", "D) Removing the bias term"],
+      "answer": "B",
+      "explanation": "ReLU does not saturate for positive inputs, so it helps maintain gradient flow."
+    },
+    {
+      "q": "What is the main advantage of mini-batch gradient descent over batch gradient descent?",
+      "options": ["A) It uses less memory and converges faster per epoch", "B) It always finds the global minimum", "C) It requires no learning rate", "D) It works only for small datasets"],
+      "answer": "A",
+      "explanation": "Mini-batch updates weights more frequently, leading to faster convergence and lower memory usage than full-batch."
+    },
+    {
+      "q": "What does momentum add to gradient descent?",
+      "options": ["A) A fraction of the previous update to smooth the path", "B) Random noise to escape local minima", "C) A penalty for large weights", "D) A second-order derivative"],
+      "answer": "A",
+      "explanation": "Momentum accumulates past gradients to accelerate learning and dampen oscillations."
+    },
+    {
+      "q": "Which optimizer combines momentum and adaptive learning rates?",
+      "options": ["A) SGD", "B) RMSProp", "C) Adam", "D) Adagrad"],
+      "answer": "C",
+      "explanation": "Adam uses both momentum-like terms and per-parameter learning rates, making it a popular default."
+    },
+    {
+      "q": "What is the purpose of regularization in neural networks?",
+      "options": ["A) To speed up training", "B) To prevent overfitting", "C) To increase the number of parameters", "D) To eliminate the need for a validation set"],
+      "answer": "B",
+      "explanation": "Regularization techniques like L2 and dropout reduce overfitting by constraining the model's complexity."
+    },
+    {
+      "q": "How does dropout work during training?",
+      "options": ["A) It randomly sets a fraction of neuron outputs to zero", "B) It removes entire layers", "C) It increases the learning rate", "D) It adds noise to the labels"],
+      "answer": "A",
+      "explanation": "Dropout randomly deactivates neurons in each batch, forcing the network to learn redundant representations."
+    },
+    {
+      "q": "What is early stopping?",
+      "options": ["A) Stopping training when training loss reaches zero", "B) Stopping training when validation loss starts increasing", "C) Stopping after a fixed number of epochs", "D) Stopping when accuracy reaches 100%"],
+      "answer": "B",
+      "explanation": "Early stopping monitors validation loss and halts training to prevent overfitting."
+    },
+    {
+      "q": "Which of the following is a data augmentation technique for images?",
+      "options": ["A) Rotating the image", "B) Adding L2 regularization", "C) Using dropout", "D) Reducing the learning rate"],
+      "answer": "A",
+      "explanation": "Data augmentation creates new training examples by applying transformations like rotation, flipping, or zooming."
+    },
+    {
+      "q": "In Keras, which function is used to train a model?",
+      "options": ["A) model.compile()", "B) model.fit()", "C) model.evaluate()", "D) model.predict()"],
+      "answer": "B",
+      "explanation": "model.fit() trains the model on the training data for a specified number of epochs."
+    },
+    {
+      "q": "What does the input_shape parameter in the first Dense layer specify?",
+      "options": ["A) The number of output classes", "B) The number of features in the input data", "C) The batch size", "D) The number of hidden layers"],
+      "answer": "B",
+      "explanation": "For a tabular dataset, input_shape=(n,) indicates n input features."
+    },
+    {
+      "q": "Which loss function is appropriate for multi-class classification?",
+      "options": ["A) mean_squared_error", "B) binary_crossentropy", "C) categorical_crossentropy", "D) mean_absolute_error"],
+      "answer": "C",
+      "explanation": "Categorical crossentropy measures the difference between predicted probability distributions and true labels for multiple classes."
+    },
+    {
+      "q": "What is the role of the validation_split parameter in model.fit()?",
+      "options": ["A) It splits the training data into training and validation sets", "B) It splits the test data", "C) It sets the learning rate", "D) It defines the batch size"],
+      "answer": "A",
+      "explanation": "validation_split reserves a fraction of the training data for validation during training."
+    },
+    {
+      "q": "Why is it important to normalize input features before training?",
+      "options": ["A) To make the model interpretable", "B) To speed up convergence and prevent large gradients", "C) To reduce the number of features", "D) To avoid overfitting"],
+      "answer": "B",
+      "explanation": "Normalizing features to a similar scale helps gradient descent converge faster and more stably."
+    },
+    {
+      "q": "What does the EarlyStopping callback do in Keras?",
+      "options": ["A) Stops training when a monitored metric stops improving", "B) Stops training after a fixed number of epochs", "C) Stops training when accuracy reaches 100%", "D) Stops training when loss is zero"],
+      "answer": "A",
+      "explanation": "EarlyStopping monitors a metric like val_loss and stops training after a patience period of no improvement."
+    },
+    {
+      "q": "Which of the following is a valid way to save a Keras model?",
+      "options": ["A) model.save('model.h5')", "B) model.export('model.pkl')", "C) model.dump('model.json')", "D) model.write('model.txt')"],
+      "answer": "A",
+      "explanation": "model.save() saves the architecture, weights, and training configuration to an HDF5 file."
+    },
+    {
+      "q": "What is the purpose of the activation function in a neural network?",
+      "options": ["A) To introduce non-linearity", "B) To compute the loss", "C) To update weights", "D) To load data"],
+      "answer": "A",
+      "explanation": "Without non-linear activation functions, a neural network would be equivalent to a linear model."
+    },
+    {
+      "q": "In a neural network, what is a bias term?",
+      "options": ["A) An additional weight that shifts the activation function", "B) A regularization parameter", "C) The learning rate", "D) The number of layers"],
+      "answer": "A",
+      "explanation": "The bias allows the activation to shift left or right, helping the network fit data better."
+    },
+    {
+      "q": "Which of the following is a common problem when training deep neural networks?",
+      "options": ["A) Overfitting", "B) Underfitting", "C) Vanishing gradients", "D) All of the above"],
+      "answer": "D",
+      "explanation": "Deep networks can suffer from overfitting, underfitting, and vanishing/exploding gradients."
+    },
+    {
+      "q": "What is the recommended first step when building a neural network for a new dataset?",
+      "options": ["A) Use a very deep network", "B) Start with a simple model and small number of layers", "C) Use all available data for testing", "D) Ignore validation"],
+      "answer": "B",
+      "explanation": "Starting simple helps you establish a baseline and avoid unnecessary complexity."
+    },
+    {
+      "q": "What does the term 'epoch' mean in training?",
+      "options": ["A) One forward and backward pass over the entire dataset", "B) One update of weights", "C) One batch of data", "D) One layer of the network"],
+      "answer": "A",
+      "explanation": "An epoch is a full cycle through the training dataset."
+    },
+    {
+      "q": "Which of the following is a hyperparameter?",
+      "options": ["A) Weights", "B) Biases", "C) Learning rate", "D) Activations"],
+      "answer": "C",
+      "explanation": "Learning rate is set before training and controls the step size during gradient descent."
+    },
+    {
+      "q": "What is the main difference between TensorFlow and Keras?",
+      "options": ["A) Keras is a high-level API that runs on top of TensorFlow", "B) TensorFlow is only for research", "C) Keras cannot build neural networks", "D) TensorFlow does not support GPUs"],
+      "answer": "A",
+      "explanation": "Keras provides a simpler, more user-friendly interface for building models with TensorFlow as the backend."
+    },
+    {
+      "q": "Why is it important to use a separate test set?",
+      "options": ["A) To tune hyperparameters", "B) To evaluate the final model's performance on unseen data", "C) To increase training speed", "D) To reduce overfitting during training"],
+      "answer": "B",
+      "explanation": "The test set provides an unbiased estimate of how well the model generalizes to new data."
+    }
+  ],
+  "videos": [
+    "perceptron and multilayer perceptron tutorial for beginners",
+    "activation functions in neural networks explained",
+    "backpropagation and gradient descent variants tutorial"
+  ]
+}

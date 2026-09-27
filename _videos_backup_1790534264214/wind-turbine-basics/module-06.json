@@ -1,0 +1,222 @@
+{
+  "course": "Wind Turbine Basics",
+  "module_number": 6,
+  "module_title": "Wind Farm Design and Layout",
+  "lessons": [
+    {
+      "title": "Micrositing and Wake Effects",
+      "body": "Micrositing is the process of choosing the exact position for each turbine in a wind farm to maximize energy production and minimize wake losses. Wake effect occurs when a turbine extracts energy from the wind, creating a slower, more turbulent airflow behind it. This reduces wind speed for downstream turbines, lowering their output. In Africa, where wind resources can be moderate, minimizing wake losses is critical. For example, in a 50 MW farm with 20 turbines, wake losses can reduce annual energy production by 10-20% if turbines are too close. Tools like WAsP, WindPRO, and open-source PyWake help model wakes. You need wind resource data: at least 12 months of wind speed and direction measurements from a met mast or LiDAR. Then, using a wake model (e.g., Jensen, Larsen), you simulate different layouts. A common rule: space turbines 7-10 rotor diameters apart in the prevailing wind direction, and 3-5 diameters in the crosswind direction. In complex terrain, like the Ethiopian highlands, you must also consider slope and turbulence. For small African projects, a simple Excel-based wake model can work, but for larger farms, invest in software. Always validate with on-site measurements. Start by mapping wind roses: if winds come mainly from one direction, align turbines in rows perpendicular to that direction. If winds are variable, use a more spread-out layout. Remember, micrositing is iterative: adjust positions, recalculate wakes, and check for other constraints like roads, houses, and protected areas. A well-microsited farm can gain 5-15% more energy, which directly improves project economics."
+    },
+    {
+      "title": "Turbine Spacing and Array Optimization",
+      "body": "Turbine spacing and array optimization determine how many turbines you can fit in a given area while maximizing energy and minimizing costs. The goal is to balance wake losses against infrastructure costs (roads, cables, land lease). In flat terrain, a spacing of 7-10 rotor diameters (D) in the prevailing wind direction and 3-5 D crosswind is typical. For a 2 MW turbine with 100 m rotor, that means 700-1000 m between turbines in the main wind direction. In Africa, land is often available, but you must consider soil conditions, access, and grid distance. Array optimization uses software like WindPRO, OpenWind, or even Python scripts to test thousands of layouts. Key inputs: wind rose, turbine power curve, wake model, and cost model. For a 100 MW farm in South Africa, spacing might be 8D x 4D, yielding about 25 turbines. But if you space too far, cable lengths and road costs increase. A good practice: start with a regular grid, then shift turbines slightly to avoid wakes and obstacles. Use a metric like 'net present value' or 'levelized cost of energy' to compare layouts. In complex terrain, like the Rift Valley, you may need to follow ridges, spacing turbines along the contour. Also, consider turbine types: larger rotors need more spacing. For community-scale projects (e.g., 5-10 turbines), a simple rule: keep turbines at least 5D apart in all directions if winds are variable. Always check for 'deep array' effects: in large farms, the first row produces most, and downstream rows suffer. You can mitigate by staggering rows or using different hub heights. Remember, optimization is not just about energy; it's about minimizing environmental impact and land use conflicts."
+    },
+    {
+      "title": "Electrical Collection System Design",
+      "body": "The electrical collection system gathers power from each turbine and delivers it to the substation. It typically uses medium-voltage (MV) cables, usually 33 kV in Africa, though 11 kV or 22 kV are used for smaller farms. Design starts with a single-line diagram: each turbine has a transformer (e.g., 690 V to 33 kV), then cables connect turbines in strings (daisy chains) to the substation. Key decisions: cable size, string length, and topology (radial, ring, or star). For a 50 MW farm with 20 turbines of 2.5 MW each, you might have 4 strings of 5 turbines. Cable size depends on current and voltage drop: use IEC 60287 or manufacturer tables. For 33 kV, a 3-core 95 mmÂ² copper cable can carry about 200 A, enough for 5-6 turbines. Voltage drop should be under 2-3%. In Africa, theft of copper cables is a problem, so consider aluminum or armored cables. Also, use SCADA for monitoring. Cost: cables can be 10-15% of total project cost. Optimize by minimizing total cable length: place substation centrally. Use software like ETAP or DIgSILENT for load flow and short circuit analysis. For small projects, a simple spreadsheet can calculate voltage drop. Always include reactive power compensation if needed. Grounding is critical: each turbine and cable joint must be grounded to protect against lightning, common in many African regions. Finally, plan for future expansion: leave spare capacity in cables and switchgear. A well-designed collection system reduces losses (target <2%) and ensures reliable power delivery to the grid."
+    },
+    {
+      "title": "Substation and Grid Connection",
+      "body": "The substation steps up voltage from the collection system (e.g., 33 kV) to the transmission voltage (e.g., 132 kV or 220 kV) for grid connection. It includes transformers, switchgear, protection relays, and metering. In Africa, grid codes vary by country: South Africa's NERSA, Kenya's EPRA, and Nigeria's NERC have specific requirements for power quality, fault ride-through, and reactive power. You need a grid connection study to determine if the local grid can accept your power. Often, the grid is weak, so you may need to pay for grid upgrades. For a 100 MW farm, a typical substation costs $5-10 million. Key equipment: main transformer (e.g., 100 MVA, 33/132 kV), circuit breakers, disconnectors, and current/voltage transformers. Design must include protection: overcurrent, earth fault, and distance protection. Use IEC 61850 for communication. For small farms (<10 MW), a simpler connection at 33 kV or 11 kV may be possible. You also need a power purchase agreement (PPA) with the utility. In many African countries, grid connection is a major bottleneck due to weak infrastructure. Consider a 'grid-ready' design: include filters and dynamic reactive power (STATCOM) if the grid is weak. Also, plan for black start capability if required. Site the substation on high ground, away from flood zones, and secure it with fencing and surveillance. For remote areas, you may need a diesel generator for backup. Always coordinate with the utility early: they will specify metering, protection settings, and communication protocols. A well-designed substation ensures reliable power export and minimizes downtime."
+    },
+    {
+      "title": "Environmental Impact Assessment",
+      "body": "An Environmental Impact Assessment (EIA) is a legal requirement for wind farm development in most African countries. It identifies potential impacts and mitigation measures. Key impacts: bird and bat collisions, noise, visual intrusion, habitat loss, and shadow flicker. In Africa, migratory birds (e.g., raptors) are a concern, especially in the Rift Valley. You must conduct baseline studies: at least one year of bird and bat surveys using point counts and acoustic monitoring. For a 50 MW farm, EIA costs $50,000-$200,000. Use tools like the Bird and Bat Conservation Strategy. Noise: turbines produce about 45 dB(A) at 300 m; ensure nearest homes are >500 m away. Shadow flicker: model using software like WindPRO; limit to 30 hours per year. Visual impact: use photomontages. In Kenya, the Lake Turkana Wind Power project conducted extensive EIA, including community consultations. You must also assess socio-economic impacts: job creation, land use, and cultural heritage. Public participation is mandatory: hold meetings with local communities, record concerns. The EIA report is submitted to the national environmental authority (e.g., NEMA in Kenya, DEA in South Africa). Approval can take 6-18 months. Mitigation: avoid sensitive areas, use bird deterrents, implement noise setbacks, and restore habitats. For small projects, a simplified environmental management plan may suffice. Always involve local experts and use local data. Remember, a strong EIA builds trust and reduces risk of delays or legal challenges."
+    },
+    {
+      "title": "Permitting and Land Lease Agreements",
+      "body": "Permitting and land lease are critical for project bankability. You need multiple permits: environmental (EIA), construction, grid connection, and land use. In Africa, land tenure is often customary, so you must negotiate with communities and local authorities. Start with land lease agreements: typically 20-30 years with renewal options. Payment can be a fixed annual rent (e.g., $500-2000 per turbine per year) or a percentage of revenue (2-5%). In South Africa, leases are registered against the title deed. In Kenya, you need a lease agreement approved by the National Land Commission. For a 100 MW farm, you might lease 2000-5000 hectares. Key clauses: access rights, restoration obligations, and dispute resolution. Also, obtain wayleaves for cables and roads. Permitting: in Nigeria, you need a generation licence from NERC; in Ghana, from the Energy Commission. The process involves feasibility studies, grid impact studies, and financial guarantees. Timeline: 12-24 months. Costs: permits can be 1-3% of project cost. Use local legal counsel. Community engagement is essential: hold barazas (public meetings) and sign benefit-sharing agreements (e.g., scholarships, local employment). In Ethiopia, land is owned by the state, so you lease from the government. Always document everything. A common pitfall: overlapping land claims. Conduct a land audit. For small projects, a simple lease with a cooperative can work. Remember, without secure land rights and permits, you cannot reach financial close. Start early and budget for legal fees."
+    }
+  ,
+    {
+      "title": "Practical Reference",
+      "body": "<section>\n  <h2>Practical Reference: Wind Farm Design and Layout in the African Context</h2>\n\n  <p>This practical reference consolidates the engineering, commercial, and regulatory knowledge you need to move from a wind resource map to a bankable wind farm layout. It is written for developers, EPC contractors, IPP teams, and public-sector planners working across Africa, where grid weakness, land tenure complexity, and logistics constraints often matter as much as the wind itself. Use it alongside the lessons on micrositing, array optimization, collection systems, substation design, environmental impact assessment, and permitting.</p>\n\n  <h3>1. From Wind Resource to Micrositing</h3>\n\n  <p>Micrositing is the process of placing individual turbines within a site to maximise energy yield while respecting wake losses, terrain, setbacks, and constructability. In Africa, the dominant constraint is often not the wind resource but access: haul roads for 60â90 m blades, crane pads on soft soils, and grid capacity at the point of interconnection. A layout that ignores these realities will fail at financial close.</p>\n\n  <p>Wake effects are the single largest controllable energy loss in a wind farm. For a typical onshore array, wake losses range from 5% to 15%, and can exceed 20% in tightly packed or single-direction wind regimes such as the Trade Wind corridors of the Horn of Africa and the coastal zones of Namibia and South Africa. Modern wake steering and yaw optimisation can recover 1â3% of annual energy production (AEP), but only if the layout provides adequate spacing.</p>\n\n  <figure>\n    <svg viewBox=\"0 0 640 360\" role=\"img\" aria-labelledby=\"wakeTitle wakeDesc\" xmlns=\"http://www.w3.org/2000/svg\">\n      <title id=\"wakeTitle\">Wake expansion and turbine spacing in a wind farm array</title>\n      <desc id=\"wakeDesc\">Diagram showing a row of wind turbines with expanding wake cones, illustrating downstream velocity deficit and recommended spacing of 7 to 10 rotor diameters.</desc>\n      <rect x=\"0\" y=\"0\" width=\"640\" height=\"360\" fill=\"#f7f9fb\"/>\n      <!-- ground line -->\n      <line x1=\"40\" y1=\"300\" x2=\"600\" y2=\"300\" stroke=\"#4a5568\" stroke-width=\"2\"/>\n      <!-- turbines -->\n      <g stroke=\"#2b6cb0\" stroke-width=\"4\" fill=\"none\">\n        <line x1=\"120\" y1=\"300\" x2=\"120\" y2=\"140\"/>\n        <line x1=\"100\" y1=\"140\" x2=\"140\" y2=\"140\"/>\n        <line x1=\"120\" y1=\"140\" x2=\"120\" y2=\"120\"/>\n        <line x1=\"300\" y1=\"300\" x2=\"300\" y2=\"140\"/>\n        <line x1=\"280\" y1=\"140\" x2=\"320\" y2=\"140\"/>\n        <line x1=\"300\" y1=\"140\" x2=\"300\" y2=\"120\"/>\n        <line x1=\"480\" y1=\"300\" x2=\"480\" y2=\"140\"/>\n        <line x1=\"460\" y1=\"140\" x2=\"500\" y2=\"140\"/>\n        <line x1=\"480\" y1=\"140\" x2=\"480\" y2=\"120\"/>\n      </g>\n      <!-- wake cones -->\n      <path d=\"M140 140 L260 100 L260 180 Z\" fill=\"#3182ce\" opacity=\"0.25\"/>\n      <path d=\"M320 140 L440 100 L440 180 Z\" fill=\"#3182ce\" opacity=\"0.25\"/>\n      <!-- labels -->\n      <text x=\"120\" y=\"320\" font-family=\"Arial, sans-serif\" font-size=\"14\" fill=\"#2d3748\" text-anchor=\"middle\">T1</text>\n      <text x=\"300\" y=\"320\" font-family=\"Arial, sans-serif\" font-size=\"14\" fill=\"#2d3748\" text-anchor=\"middle\">T2</text>\n      <text x=\"480\" y=\"320\" font-family=\"Arial, sans-serif\" font-size=\"14\" fill=\"#2d3748\" text-anchor=\"middle\">T3</text>\n      <!-- spacing arrow -->\n      <line x1=\"120\" y1=\"60\" x2=\"300\" y2=\"60\" stroke=\"#c05621\" stroke-width=\"2\" marker-start=\"url(#arrowStart)\" marker-end=\"url(#arrowEnd)\"/>\n      <defs>\n        <marker id=\"arrowStart\" markerWidth=\"8\" markerHeight=\"8\" refX=\"4\" refY=\"4\" orient=\"auto\">\n          <path d=\"M8,0 L0,4 L8,8 Z\" fill=\"#c05621\"/>\n        </marker>\n        <marker id=\"arrowEnd\" markerWidth=\"8\" markerHeight=\"8\" refX=\"4\" refY=\"4\" orient=\"auto\">\n          <path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#c05621\"/>\n        </marker>\n      </defs>\n      <text x=\"210\" y=\"52\" font-family=\"Arial, sans-serif\" font-size=\"13\" fill=\"#c05621\" text-anchor=\"middle\">7â10 rotor diameters</text>\n      <text x=\"200\" y=\"200\" font-family=\"Arial, sans-serif\" font-size=\"12\" fill=\"#2b6cb0\">wake expansion</text>\n    </svg>\n    <figcaption>Wake expansion behind a wind turbine and recommended downstream spacing. Source: adapted from Manwell, McGowan &amp; Rogers, <em>Wind Energy Explained: Theory, Design and Application</em>, 2nd ed., Wiley, 2009, Chapter 9 (Wake Models and Wind Farm Layout).</figcaption>\n  </figure>\n\n  <h3>2. Turbine Spacing and Array Optimisation</h3>\n\n  <p>Spacing rules are a starting point, not a design. The industry default is 7â10 rotor diameters (D) in the prevailing wind direction and 3â5 D crosswind. In practice, African projects often use 8â12 D downstream and 4â6 D crosswind to reduce wake losses where land is available, or accept tighter spacing where grid capacity and land parcels are constrained.</p>\n\n  <p>Array optimisation should be driven by levelised cost of energy (LCOE), not AEP alone. Adding turbines increases AEP but also increases wake losses, collection system losses, and O&amp;M cost. A 100 MW site with 20 turbines at 5 MW may produce more net energy than 25 turbines at 4 MW if the larger rotors capture more of the wind resource at lower specific power.</p>\n\n  <table>\n    <caption>Table 1: Typical spacing and wake loss ranges for onshore wind farms</caption>\n    <thead>\n      <tr>\n        <th>Parameter</th>\n        <th>Typical Range</th>\n        <th>African Context Notes</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>Downstream spacing (prevailing wind)</td>\n        <td>7â12 D</td>\n        <td>Use 10â12 D in single-direction Trade Wind sites (e.g., Kenya, Ethiopia, Somalia coast)</td>\n      </tr>\n      <tr>\n        <td>Crosswind spacing</td>\n        <td>3â6 D</td>\n        <td>Wider spacing where land is cheap; tighter where land parcels are fragmented</td>\n      </tr>\n      <tr>\n        <td>Wake loss (annual)</td>\n        <td>5â15%</td>\n        <td>Can exceed 20% in poorly optimised arrays or complex terrain</td>\n      </tr>\n      <tr>\n        <td>Wake steering gain</td>\n        <td>1â3% AEP</td>\n        <td>Requires accurate wind direction sensors and turbine-level control</td>\n      </tr>\n      <tr>\n        <td>Setback from dwellings</td>\n        <td>500â1,000 m</td>\n        <td>Varies by country; South Africa and Kenya typically require 500 m minimum</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><small>Sources: DNV GL, <em>Wind Farm Design and Layout</em> (2020); International Finance Corporation (IFC), <em>Environmental, Health, and Safety Guidelines for Wind Energy</em> (2015); South African National Standards (SANS) 10160-1:2019.</small></p>\n\n  <h3>3. Electrical Collection System Design</h3>\n\n  <p>The collection system connects individual turbines to the substation. In Africa, the choice between 33 kV and 66 kV collection voltage is often driven by cable availability, fault levels, and the distance to the point of interconnection. For a 100â250 MW farm, 33 kV is common; above that, 66 kV reduces losses and cable count.</p>\n\n  <p>Key commercial considerations include:</p>\n  <ul>\n    <li><strong>Cable routing:</strong> minimise trench length and avoid crossing roads, rivers, and community land. In many African jurisdictions, wayleaves and compensation for underground cables are negotiated separately from land lease agreements.</li>\n    <li><strong>Redundancy:</strong> ring or double-feed configurations reduce downtime but increase cost. For remote sites with limited spares, redundancy is often worth the premium.</li>\n    <li><strong>Losses:</strong> target &lt;2% collection system losses. At 33 kV, losses rise quickly beyond 10â15 km; consider 66 kV or a mid-site substation.</li>\n    <li><strong>Local content:</strong> some countries (e.g., South Africa, Nigeria) require local cable supply or installation content, which affects procurement strategy.</li>\n  </ul>\n\n  <h3>4. Substation and Grid Connection</h3>\n\n  <p>The substation steps up collection voltage to transmission voltage (typically 132 kV, 220 kV, or 400 kV in Africa). Grid connection is often the critical path. Weak grids, low fault levels, and inadequate reactive power capability can delay energisation or require expensive compensation equipment.</p>\n\n  <p>Practical steps for African projects:</p>\n  <ul>\n    <li>Obtain a grid impact study early. In South Africa, Eskomâs connection process can take 18â36 months; in Kenya, KPLC/KETRACO timelines vary by region.</li>\n    <li>Confirm fault level and short-circuit ratio (SCR). Low SCR (&lt;3) may require grid-forming inverters or synchronous condensers.</li>\n    <li>Design for reactive power capability at the point of interconnection, often Â±0.95 power factor or better.</li>\n    <li>Plan for black start and islanding capability where the grid is unreliable.</li>\n  </ul>\n\n  <table>\n    <caption>Table 2: Grid connection and substation design considerations in selected African markets</caption>\n    <thead>\n      <tr>\n        <th>Country</th>\n        <th>Typical Transmission Voltage</th>\n        <th>Grid Study Timeline</th>\n        <th>Key Risk</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>South Africa</td>\n        <td>132 / 220 / 400 kV</td>\n        <td>18â36 months</td>\n        <td>Eskom capacity constraints and curtailment risk</td>\n      </tr>\n      <tr>\n        <td>Kenya</td>\n        <td>132 / 220 kV</td>\n        <td>12â24 months</td>\n        <td>Weak grid in northern regions; KETRACO coordination</td>\n      </tr>\n      <tr>\n        <td>Morocco</td>\n        <td>225 / 400 kV</td>\n        <td>12â18 months</td>\n        <td>ONEE grid code compliance and reactive power</td>\n      </tr>\n      <tr>\n        <td>Nigeria</td>\n        <td>132 / 330 kV</td>\n        <td>18â30 months</td>\n        <td>Grid instability and transmission bottlenecks</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><small>Sources: Eskom Grid Connection Guide (2023); Kenya Power and Lighting Company (KPLC) Grid Code (2022); ONEE Morocco Grid Code (2021); Nigerian Electricity Regulatory Commission (NERC) Grid Code (2020).</small></p>\n\n  <h3>5. Environmental Impact Assessment</h3>\n\n  <p>An Environmental Impact Assessment (EIA) is mandatory in almost every African jurisdiction before construction. Key issues for wind farms include avian and bat mortality, noise, visual impact, and land disturbance. In Africa, migratory bird corridors (e.g., the East African-Eurasian flyway) and bat populations in rift valley and coastal areas require careful survey work.</p>\n\n  <p>Budget 12â24 months for EIA and public consultation. In Kenya, NEMA requires a full EIA and a licence; in South Africa, the National Environmental Management Act (NEMA) and the Department of Forestry, Fisheries and the Environment (DFFE) oversee the process. Early engagement with communities and traditional authorities is essential to avoid delays.</p>\n\n  <div style=\"border: 2px solid #c53030; background: #fff5f5; padding: 12px 16px; margin: 20px 0; border-radius: 4px;\">\n    <strong style=\"color:#c53030;\">â  SAFETY WARNING:</strong> Wind farm construction and O&amp;M involve high-voltage electrical systems, rotating machinery, and working at height. In African projects, ensure compliance with local occupational health and safety regulations (e.g., South Africaâs Occupational Health and Safety Act, 1993; Kenyaâs Occupational Safety and Health Act, 2007). Only trained and certified personnel should work on turbines, and lock-out/tag-out procedures must be enforced. Never bypass safety systems or work alone on electrical collection systems.\n  </div>\n\n  <h3>6. Permitting and Land Lease Agreements</h3>\n\n  <p>Land tenure in Africa is often customary, communal, or state-owned. A bankable project requires secure, long-term land rights, typically 20â25 years with renewal options. Key issues:</p>\n  <ul>\n    <li><strong>Land lease:</strong> negotiate option agreements during development, then convert to long-term leases at financial close. Include rent escalation, compensation for crops and structures, and restoration obligations.</li>\n    <li><strong>Community benefits:</strong> many jurisdictions require local content, employment, or community trust structures. In South Africa, the Renewable Energy Independent Power Producer Procurement Programme (REIPPPP) mandates community ownership and local content.</li>\n    <li><strong>Permits:</strong> beyond EIA, you may need construction permits, water use licences, aviation clearance (for radar and flight paths), and heritage approvals.</li>\n    <li><strong>Grid connection agreement:</strong> secure a connection agreement with the utility or transmission system operator before financial close.</li>\n  </ul>\n\n  <h3>Quick Reference Checklist</h3>\n  <ol>\n    <li><strong>Wind resource:</strong> confirm at least 12 months of on-site measurement data, ideally 24 months, with a bankable energy yield assessment.</li>\n    <li><strong>Micrositing:</strong> optimise turbine positions for wake losses &lt;10% and constructability (roads, crane pads, setbacks).</li>\n    <li><strong>Spacing:</strong> use 7â12 D downstream and 3â6 D crosswind; validate with wake modelling software (e.g., WindPRO, WAsP, OpenWind).</li>\n    <li><strong>Collection system:</strong> target &lt;2% electrical losses; confirm cable routes and wayleaves.</li>\n    <li><strong>Grid connection:</strong> complete grid impact study and secure connection agreement; confirm reactive power and fault ride-through requirements.</li>\n    <li><strong>EIA:</strong> start early; budget 12â24 months; engage communities and traditional authorities.</li>\n    <li><strong>Land lease:</strong> secure 20â25 year lease with clear compensation and restoration terms; register the lease where required.</li>\n    <li><strong>Permitting:</strong> map all permits (construction, aviation, heritage, water) and assign owners with deadlines.</li>\n  </ol>\n\n  <h3>Further Reading</h3>\n  <ul>\n    <li><a href=\"https://www.irena.org/publications/2019/Apr/Renewable-Energy-Market-Analysis-Africa\" target=\"_blank\" rel=\"noopener\">IRENA â Renewable Energy Market Analysis: Africa (2019)</a> â free, official overview of African renewable energy markets and policy.</li>\n    <li><a href=\"https://www.ifc.org/en/insights-reports/2015/environmental-health-and-safety-guidelines-wind-energy\" target=\"_blank\" rel=\"noopener\">IFC â Environmental, Health, and Safety Guidelines for Wind Energy (2015)</a> â free, official EHS guidance for wind projects.</li>\n    <li><a href=\"https://www.eskom.co.za/distribution/customer-service/grid-connection/\" target=\"_blank\" rel=\"noopener\">Eskom â Grid Connection Guide (South Africa)</a> â official utility guidance on grid connection processes.</li>\n    <li><a href=\"https://www.nema.go.ke/index.php?option=com_content&amp;view=article&amp;id=23&amp;Itemid=130\" target=\"_blank\" rel=\"noopener\">NEMA Kenya â Environmental Impact Assessment Guidelines</a> â official EIA requirements for Kenya.</li>\n    <li><a href=\"https://www.energy.gov.za/files/reipppp/reipppp.html\" target=\"_blank\" rel=\"noopener\">South African Department of Energy â REIPPPP Documents</a> â official procurement and land lease templates for wind IPPs.</li>\n  </ul>\n\n  <p style=\"margin-top:24px; font-size:0.9em; color:#4a5568;\">This module is part of the Rise AFRICA Skills course <em>Wind Turbine Basics</em>. Always verify local regulations and grid codes with the relevant authority before making investment decisions.</p>\n</section>"
+    }],
+  "quiz": [
+    {
+      "q": "What is the primary purpose of micrositing in wind farm design?",
+      "options": ["A) To maximize energy production by optimizing turbine positions", "B) To reduce the number of turbines needed", "C) To minimize land lease costs", "D) To increase turbine noise"],
+      "answer": "A",
+      "explanation": "Micrositing aims to place turbines where they capture the most wind and suffer least from wake effects, thus maximizing energy."
+    },
+    {
+      "q": "Which tool is commonly used for wake modeling in wind farm design?",
+      "options": ["A) AutoCAD", "B) WAsP", "C) MATLAB", "D) SolidWorks"],
+      "answer": "B",
+      "explanation": "WAsP is a standard software for wind resource assessment and wake modeling."
+    },
+    {
+      "q": "In flat terrain, what is a typical spacing between turbines in the prevailing wind direction?",
+      "options": ["A) 2-3 rotor diameters", "B) 7-10 rotor diameters", "C) 15-20 rotor diameters", "D) 1-2 rotor diameters"],
+      "answer": "B",
+      "explanation": "Spacing of 7-10 rotor diameters in the prevailing wind direction is common to reduce wake losses."
+    },
+    {
+      "q": "What is the main consequence of wake effect?",
+      "options": ["A) Increased wind speed for downstream turbines", "B) Reduced energy output for downstream turbines", "C) Increased turbulence for upstream turbines", "D) No effect on energy production"],
+      "answer": "B",
+      "explanation": "Wake effect reduces wind speed and increases turbulence, lowering the energy output of downstream turbines."
+    },
+    {
+      "q": "Which of the following is a key input for array optimization?",
+      "options": ["A) Turbine color", "B) Wind rose", "C) Soil type", "D) Road width"],
+      "answer": "B",
+      "explanation": "The wind rose shows the distribution of wind speed and direction, essential for optimizing turbine layout."
+    },
+    {
+      "q": "What is a common metric to compare different wind farm layouts?",
+      "options": ["A) Levelized cost of energy (LCOE)", "B) Number of turbines", "C) Land area", "D) Hub height"],
+      "answer": "A",
+      "explanation": "LCOE combines energy production, capital costs, and operational costs to compare layouts economically."
+    },
+    {
+      "q": "In complex terrain, what should guide turbine spacing?",
+      "options": ["A) A regular grid", "B) Following ridges and contours", "C) Random placement", "D) Minimum distance from roads"],
+      "answer": "B",
+      "explanation": "In complex terrain, turbines are often placed along ridges to capture higher wind speeds."
+    },
+    {
+      "q": "What is the typical voltage for the electrical collection system in African wind farms?",
+      "options": ["A) 690 V", "B) 11 kV", "C) 33 kV", "D) 132 kV"],
+      "answer": "C",
+      "explanation": "33 kV is a common medium voltage for collection systems in African wind farms."
+    },
+    {
+      "q": "What is the purpose of a turbine transformer in the collection system?",
+      "options": ["A) To step down voltage from 33 kV to 690 V", "B) To step up voltage from 690 V to 33 kV", "C) To convert AC to DC", "D) To store energy"],
+      "answer": "B",
+      "explanation": "Each turbine has a transformer to step up its low voltage (e.g., 690 V) to the collection system voltage (e.g., 33 kV)."
+    },
+    {
+      "q": "Which software is commonly used for electrical load flow analysis?",
+      "options": ["A) ETAP", "B) WindPRO", "C) WAsP", "D) AutoCAD"],
+      "answer": "A",
+      "explanation": "ETAP is a power system analysis tool used for load flow, short circuit, and protection studies."
+    },
+    {
+      "q": "What is a key consideration for cable selection in Africa?",
+      "options": ["A) Theft of copper cables", "B) Cable color", "C) Manufacturer country", "D) Cable weight"],
+      "answer": "A",
+      "explanation": "Copper theft is a significant issue in many African countries, so aluminum or armored cables may be preferred."
+    },
+    {
+      "q": "What is the typical voltage drop limit for collection system cables?",
+      "options": ["A) 1%", "B) 2-3%", "C) 5-10%", "D) 15%"],
+      "answer": "B",
+      "explanation": "Voltage drop should be kept below 2-3% to ensure efficient power transfer."
+    },
+    {
+      "q": "What is the main function of a substation in a wind farm?",
+      "options": ["A) To step up voltage for grid connection", "B) To store energy", "C) To convert DC to AC", "D) To control turbine yaw"],
+      "answer": "A",
+      "explanation": "The substation steps up the collection system voltage to the transmission voltage for grid connection."
+    },
+    {
+      "q": "Which grid code requirement is common in African countries?",
+      "options": ["A) Fault ride-through capability", "B) Turbine color", "C) Noise limits", "D) Blade length"],
+      "answer": "A",
+      "explanation": "Many grid codes require wind farms to ride through faults to maintain grid stability."
+    },
+    {
+      "q": "What is a typical cost for a 100 MW wind farm substation?",
+      "options": ["A) $1-2 million", "B) $5-10 million", "C) $20-30 million", "D) $50-100 million"],
+      "answer": "B",
+      "explanation": "A substation for a 100 MW wind farm typically costs between $5-10 million."
+    },
+    {
+      "q": "What is the purpose of a power purchase agreement (PPA)?",
+      "options": ["A) To buy turbines", "B) To sell electricity to a utility", "C) To lease land", "D) To hire staff"],
+      "answer": "B",
+      "explanation": "A PPA is a contract with a utility to sell the electricity generated by the wind farm."
+    },
+    {
+      "q": "What is a key environmental impact of wind farms on birds?",
+      "options": ["A) Collision risk", "B) Noise disturbance", "C) Habitat creation", "D) Increased food supply"],
+      "answer": "A",
+      "explanation": "Birds, especially raptors, can collide with turbine blades, which is a major environmental concern."
+    },
+    {
+      "q": "How long should baseline bird and bat surveys be conducted for an EIA?",
+      "options": ["A) 1 month", "B) 3 months", "C) At least 1 year", "D) 5 years"],
+      "answer": "C",
+      "explanation": "At least one year of surveys is needed to capture seasonal variations in bird and bat activity."
+    },
+    {
+      "q": "What is shadow flicker?",
+      "options": ["A) A visual effect caused by rotating blades", "B) A noise from the turbine", "C) A type of vibration", "D) An electrical fault"],
+      "answer": "A",
+      "explanation": "Shadow flicker occurs when rotating blades cast moving shadows on nearby buildings, causing annoyance."
+    },
+    {
+      "q": "Which authority is responsible for environmental approvals in Kenya?",
+      "options": ["A) NEMA", "B) NERC", "C) DEA", "D) EPA"],
+      "answer": "A",
+      "explanation": "NEMA (National Environment Management Authority) is the environmental regulator in Kenya."
+    },
+    {
+      "q": "What is a common mitigation measure for bird collisions?",
+      "options": ["A) Painting blades black", "B) Using bird deterrents", "C) Increasing turbine speed", "D) Removing all trees"],
+      "answer": "B",
+      "explanation": "Bird deterrents such as acoustic or visual devices can reduce collision risk."
+    },
+    {
+      "q": "What is typically included in a land lease agreement for a wind farm?",
+      "options": ["A) Annual rent per turbine", "B) Turbine model", "C) Grid voltage", "D) Blade length"],
+      "answer": "A",
+      "explanation": "Land lease agreements usually specify annual rent, often per turbine or per hectare."
+    },
+    {
+      "q": "In which country is land owned by the state, requiring lease from government?",
+      "options": ["A) Ethiopia", "B) Kenya", "C) South Africa", "D) Nigeria"],
+      "answer": "A",
+      "explanation": "In Ethiopia, all land is owned by the state, so wind farm developers lease land from the government."
+    },
+    {
+      "q": "What is a wayleave?",
+      "options": ["A) A permit for cable and road crossings", "B) A type of turbine", "C) A grid connection fee", "D) A land lease payment"],
+      "answer": "A",
+      "explanation": "A wayleave is a right-of-way permit for laying cables or building roads across land."
+    },
+    {
+      "q": "What is a common pitfall in land acquisition for wind farms?",
+      "options": ["A) Overlapping land claims", "B) Too many turbines", "C) High wind speeds", "D) Low noise"],
+      "answer": "A",
+      "explanation": "Overlapping or disputed land claims can delay projects, so a land audit is essential."
+    },
+    {
+      "q": "What is the typical duration of a land lease for a wind farm?",
+      "options": ["A) 5 years", "B) 10 years", "C) 20-30 years", "D) 50 years"],
+      "answer": "C",
+      "explanation": "Land leases for wind farms are typically 20-30 years with renewal options."
+    },
+    {
+      "q": "Which permit is required before construction can begin?",
+      "options": ["A) Environmental approval", "B) Turbine warranty", "C) PPA", "D) O&M contract"],
+      "answer": "A",
+      "explanation": "Environmental approval (e.g., EIA licence) is a prerequisite for construction."
+    },
+    {
+      "q": "What is the role of community engagement in permitting?",
+      "options": ["A) To build trust and address concerns", "B) To increase project cost", "C) To delay the project", "D) To avoid legal requirements"],
+      "answer": "A",
+      "explanation": "Community engagement helps build trust, address local concerns, and can smooth the permitting process."
+    },
+    {
+      "q": "What is a benefit-sharing agreement?",
+      "options": ["A) A contract to share project benefits with the community", "B) A type of turbine", "C) A grid connection agreement", "D) A land lease clause"],
+      "answer": "A",
+      "explanation": "Benefit-sharing agreements ensure local communities receive benefits such as jobs or scholarships."
+    },
+    {
+      "q": "What is the typical cost of permits as a percentage of project cost?",
+      "options": ["A) 0.1-0.5%", "B) 1-3%", "C) 5-10%", "D) 15-20%"],
+      "answer": "B",
+      "explanation": "Permitting costs typically range from 1-3% of total project cost."
+    }
+  ],
+  "videos": [
+    "wind farm micrositing tutorial",
+    "wind turbine spacing optimization",
+    "wind farm electrical collection system design"
+  ]
+}

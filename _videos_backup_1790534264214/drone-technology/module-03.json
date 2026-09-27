@@ -1,0 +1,222 @@
+{
+  "course": "Drone Technology",
+  "module_number": 3,
+  "module_title": "Drone Assembly and Setup",
+  "lessons": [
+    {
+      "title": "Soldering and Wiring Basics",
+      "body": "Soldering is the most important skill in drone building. You will use it to connect motors, ESCs, power wires, and connectors. A poor solder joint can cause a crash or fire. Start with a 60/40 tin-lead solder, 0.8mm diameter, and a soldering iron with adjustable temperature. Set it to 350Â°C for most joints. Keep a damp sponge or brass wool to clean the tip before every joint. Work in a well-ventilated areaâsolder fumes are harmful.\n\nPrepare your wires: strip 3-4mm of insulation, twist the strands tightly, and tin both the wire and the pad. For a strong joint, heat the pad and wire together for 2-3 seconds, then feed solder until it flows like a shiny volcano. Do not move the joint until it cools. A good joint is smooth and shiny; a bad one is dull, blobby, or cracked. Practice on scrap wire until you can make 10 perfect joints in a row.\n\nUseful tools: a helping hands clamp, flush cutters, wire strippers, and a multimeter. For power connections, use XT60 or XT90 connectorsâthey handle high current. Solder the male connector to the battery wire and female to the PDB or ESC. Always check for shorts with a multimeter before plugging in a battery. In Africa, where power can be unreliable, use a surge protector or a 12V car battery as a soldering power source if needed. Keep your work area clean and free of flammable materials.\n\nAfter soldering, inspect every joint with a magnifying glass. Reheat any suspicious joint. Cover exposed solder joints with heat shrink tubing to prevent short circuits. A 2mm heat shrink works for most wires. Remember: a few minutes of careful soldering saves hours of troubleshooting later."
+    },
+    {
+      "title": "Assembling a Quadcopter Frame",
+      "body": "The frame is the skeleton of your drone. For a beginner, choose a 450mm or 500mm quadcopter frame made of glass fiber or carbon fiber. Carbon fiber is stronger but blocks radio signals, so mount antennas away from it. You will need: frame plates, arms, screws (usually M3), standoffs, and a power distribution board (PDB). Work on a clean, flat surface like a wooden table. Use a 2mm and 2.5mm hex driver.\n\nStart by attaching the four arms to the bottom plate. Most frames have arms that slot into the bottom plate. Use four screws per armâdo not overtighten, as carbon fiber can crack. If your frame uses threadlocker, apply a tiny drop of blue Loctite to each screw. Next, install the PDB on the bottom plate using nylon standoffs. Solder the battery connector (XT60) to the PDB, and also solder the ESC power wires later. Ensure the PDB is oriented so the battery wires exit the back of the frame.\n\nNow attach the top plate using aluminum or nylon standoffs. The top plate protects the electronics. Leave the top plate off until you finish all soldering. Check that all arms are levelâplace a ruler across opposite arms; they should touch evenly. If not, loosen screws and adjust. A twisted frame causes vibration and poor flight.\n\nFinally, install the landing gear or foam pads under the bottom plate. These absorb landing shocks. For African conditions, where you might take off from dusty or grassy ground, add extra foam or plastic skids to keep dirt out of motors. Weigh your frame: a typical 450mm frame with hardware weighs 280-350g. If it's heavier, check for unnecessary parts. A lighter frame flies longer. Double-check every screw before moving to the next step."
+    },
+    {
+      "title": "Mounting Motors and ESCs",
+      "body": "Motors and ESCs (Electronic Speed Controllers) are the power system. For a 450mm quad, use 2212 or 2312 brushless motors with 920-1000KV rating. KV means RPM per volt; lower KV gives more torque for larger props. You will need four motors, four ESCs (30A is common), and M3 screws. Mount motors on the arms with the motor wires pointing toward the center of the frame. Use the screws that came with the motorsâthey are usually M3x5mm. Do not use long screws that can poke into the motor windings and short them out.\n\nSolder the three motor wires to the three ESC wires. Polarity does not matter for brushless motors; if the motor spins the wrong way, swap any two wires later. But keep wire lengths short to reduce electrical noise. Use 16AWG or 18AWG silicone wire for motor-to-ESC connections. After soldering, cover each joint with heat shrink. Mount the ESCs on the arms using zip ties or double-sided foam tape. Make sure the ESC's signal wire (usually a 3-wire servo cable) reaches the flight controller. Label each ESC with its motor number: 1 (front right), 2 (front left), 3 (rear right), 4 (rear left). This matches the flight controller's output.\n\nConnect the ESC power wires to the PDB. Solder the positive (red) and negative (black) wires of each ESC to the corresponding pads on the PDB. Use a multimeter to check for shorts between positive and negative before applying power. For African conditions, add a small piece of foam or tape over the ESC to protect it from dust and moisture. Also, ensure the motor bells spin freelyâif they rub, the motor is misaligned or damaged.\n\nFinally, test each motor with a servo tester or your radio. Without props, spin each motor to confirm it turns smoothly and in the correct direction. If a motor stutters, check the solder joints and ESC calibration. A well-mounted motor and ESC set will run cool and last many flights."
+    },
+    {
+      "title": "Installing Flight Controller and Peripherals",
+      "body": "The flight controller (FC) is the brain. Mount it at the center of the frame, on the top plate or a dedicated FC stack. Use vibration-damping foam or rubber grommetsâvibrations confuse the gyro and cause unstable flight. For a beginner, a F4 or F7 flight controller running Betaflight is ideal. You will also need a receiver, GPS module (optional but useful), and a buzzer. Connect the FC to the PDB with a 5V and ground wire, or use a 4-in-1 ESC if your frame supports it.\n\nWire the ESCs to the FC: each ESC signal wire goes to the corresponding motor output pin (M1-M4). The signal wire is usually white or yellow, with ground (black) and 5V (red) if needed. Do not connect the 5V from all four ESCsâonly one should provide 5V to the FC. Use a multimeter to confirm no shorts. For the receiver, connect it to a UART port (TX to RX, RX to TX, 5V, and ground). Mount the receiver antennas away from carbon fiber and motors, using zip ties to hold them at 90 degrees to each other for better reception.\n\nIf using GPS, mount it on a mast away from the FC and power wires. Connect it to another UART. A buzzer helps find a lost droneâconnect it to the FC's buzzer pins. For African conditions, add a small piece of foam over the barometer (if present) to protect it from wind and dust, but do not block the hole completely. Also, secure all wires with zip ties or tape so they cannot vibrate loose.\n\nAfter mounting, check that the FC arrow points forward. If not, you can adjust orientation in software. Power the FC via USB and connect to Betaflight. Verify that the gyro responds correctly when you move the drone. If the model in the software moves opposite to the real drone, you need to rotate the board or change settings. A properly installed FC is the foundation for stable flight."
+    },
+    {
+      "title": "Connecting Power and Radio Systems",
+      "body": "Power and radio are the lifelines of your drone. Start with the battery: use a 3S or 4S LiPo battery (11.1V or 14.8V) with at least 2200mAh and 30C discharge. For a 450mm quad, a 3S 2200mAh gives about 8-10 minutes of flight. Connect the battery to the PDB via an XT60 connector. Solder the connector carefullyâred to red, black to black. Use a battery strap to secure the battery on top or bottom of the frame. Never short the battery wires; a short can cause a fire. Always check polarity with a multimeter before plugging in.\n\nFor the radio system, you need a transmitter (TX) and receiver (RX). A popular beginner setup is a FlySky FS-i6 or RadioMaster TX12 with a matching receiver. Bind the receiver to the transmitter according to the manual. Then connect the receiver to the flight controller as described in the previous lesson. In Betaflight, configure the receiver protocol (e.g., IBUS, SBUS, or CRSF). Check that all sticks move the correct channels: roll, pitch, throttle, yaw, and aux channels for arming and flight modes.\n\nSet up failsafe: if the radio signal is lost, the drone should cut motors or return to home. In Betaflight, configure failsafe to drop or land. Also, set up a pre-arm switch and an arm switch. For African conditions, where radio interference might be higher in urban areas, use a receiver with diversity or a long-range system like ExpressLRS if you can afford it. Keep antennas away from the frame and motors.\n\nFinally, test the power system without props. Connect the battery and check that the FC, receiver, and ESCs power up. Use a smoke stopper (a device that limits current) for the first power-up to prevent damage from wiring mistakes. If everything works, you are ready to calibrate and fly. Always remove props when testing on the bench."
+    },
+    {
+      "title": "Initial Configuration and Calibration",
+      "body": "Before flying, you must configure and calibrate your drone. Connect the flight controller to your computer via USB and open Betaflight Configurator. First, calibrate the accelerometer: place the drone on a level surface and click 'Calibrate Accelerometer'. Then calibrate the magnetometer if you have a GPS/compass: rotate the drone in all directions as instructed. Next, set up your radio: go to the Receiver tab and ensure all channels move correctly. Adjust endpoints so that sticks reach 1000-2000 with center at 1500. Set arm switch and flight mode switch (e.g., Angle, Horizon, Acro).\n\nConfigure the ESCs: use the Motors tab to test each motor individually. Remove props first! Check that motor 1 spins when you slide the master slider. If a motor spins the wrong direction, swap any two of its three wires or use BLHeliSuite to reverse it. Calibrate ESCs by setting throttle to maximum, powering the ESCs, then lowering throttle to minimum. This teaches the ESC the throttle range. Also, set up battery voltage monitoring: in Betaflight, configure the voltage scale so the displayed voltage matches a multimeter reading. Set a low-voltage alarm at 3.5V per cell.\n\nFor African conditions, adjust PID and filter settings for stability in wind. Start with default PIDs and tune later. Enable 'Air Mode' for better control at low throttle. Set up GPS rescue if you have GPS: configure return-to-home altitude and failsafe. Test the failsafe by turning off your transmitterâthe drone should disarm or return. Finally, check that the drone's orientation in Betaflight matches reality: when you tilt the drone forward, the model should tilt forward.\n\nAfter configuration, do a final check: all screws tight, props balanced, battery charged. Then go to an open field for a test hover. Hover at 1-2 meters for 30 seconds, land, and check motor temperatures. If all is well, you are ready to fly. Remember, a well-configured drone is a safe drone."
+    }
+  ,
+    {
+      "title": "Practical Reference",
+      "body": "<section>\n  <h2>Practical Reference: Drone Assembly and Setup for African Agribusiness</h2>\n\n  <p>This practical reference is built for African agribusiness operators, service providers, and vocational trainers who need to assemble and configure quadcopter drones for crop scouting, spraying, mapping, and livestock monitoring. The focus is on field-ready reliability, cost control, and compliance with local realities such as dust, heat, humidity, and intermittent power. Whether you are building a spray drone for a cooperative in Ghana or a mapping unit for a farm in Kenya, the principles below will help you move from components to a calibrated, revenue-generating asset.</p>\n\n  <figure>\n    <svg viewBox=\"0 0 800 420\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-labelledby=\"droneTitle droneDesc\" style=\"width:100%;height:auto;background:#f8f9fa;border:1px solid #ddd;border-radius:8px;\">\n      <title id=\"droneTitle\">Quadcopter assembly layout with motor, ESC, flight controller, power, and radio connections</title>\n      <desc id=\"droneDesc\">A schematic diagram showing a quadcopter frame with four motors and ESCs connected to a flight controller, a power distribution board with battery, and a radio receiver. Arrows indicate signal and power flow.</desc>\n      <rect x=\"20\" y=\"20\" width=\"760\" height=\"380\" fill=\"#f8f9fa\" stroke=\"none\"/>\n      <!-- Frame arms -->\n      <line x1=\"400\" y1=\"210\" x2=\"200\" y2=\"80\" stroke=\"#333\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n      <line x1=\"400\" y1=\"210\" x2=\"600\" y2=\"80\" stroke=\"#333\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n      <line x1=\"400\" y1=\"210\" x2=\"200\" y2=\"340\" stroke=\"#333\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n      <line x1=\"400\" y1=\"210\" x2=\"600\" y2=\"340\" stroke=\"#333\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n      <!-- Motors -->\n      <circle cx=\"200\" cy=\"80\" r=\"28\" fill=\"#2c3e50\" stroke=\"#1a252f\" stroke-width=\"3\"/>\n      <circle cx=\"600\" cy=\"80\" r=\"28\" fill=\"#2c3e50\" stroke=\"#1a252f\" stroke-width=\"3\"/>\n      <circle cx=\"200\" cy=\"340\" r=\"28\" fill=\"#2c3e50\" stroke=\"#1a252f\" stroke-width=\"3\"/>\n      <circle cx=\"600\" cy=\"340\" r=\"28\" fill=\"#2c3e50\" stroke=\"#1a252f\" stroke-width=\"3\"/>\n      <text x=\"200\" y=\"86\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\">M1</text>\n      <text x=\"600\" y=\"86\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\">M2</text>\n      <text x=\"200\" y=\"346\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\">M4</text>\n      <text x=\"600\" y=\"346\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\">M3</text>\n      <!-- ESCs -->\n      <rect x=\"150\" y=\"120\" width=\"100\" height=\"30\" rx=\"6\" fill=\"#e67e22\" stroke=\"#d35400\" stroke-width=\"2\"/>\n      <text x=\"200\" y=\"140\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\">ESC 1</text>\n      <rect x=\"550\" y=\"120\" width=\"100\" height=\"30\" rx=\"6\" fill=\"#e67e22\" stroke=\"#d35400\" stroke-width=\"2\"/>\n      <text x=\"600\" y=\"140\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\">ESC 2</text>\n      <rect x=\"150\" y=\"270\" width=\"100\" height=\"30\" rx=\"6\" fill=\"#e67e22\" stroke=\"#d35400\" stroke-width=\"2\"/>\n      <text x=\"200\" y=\"290\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\">ESC 4</text>\n      <rect x=\"550\" y=\"270\" width=\"100\" height=\"30\" rx=\"6\" fill=\"#e67e22\" stroke=\"#d35400\" stroke-width=\"2\"/>\n      <text x=\"600\" y=\"290\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\">ESC 3</text>\n      <!-- Flight Controller -->\n      <rect x=\"340\" y=\"180\" width=\"120\" height=\"60\" rx=\"10\" fill=\"#2980b9\" stroke=\"#1f618d\" stroke-width=\"3\"/>\n      <text x=\"400\" y=\"215\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\">Flight Controller</text>\n      <!-- Power Distribution -->\n      <rect x=\"340\" y=\"300\" width=\"120\" height=\"40\" rx=\"6\" fill=\"#27ae60\" stroke=\"#1e8449\" stroke-width=\"2\"/>\n      <text x=\"400\" y=\"325\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\">Power Distribution</text>\n      <!-- Battery -->\n      <rect x=\"340\" y=\"360\" width=\"120\" height=\"30\" rx=\"6\" fill=\"#c0392b\" stroke=\"#922b21\" stroke-width=\"2\"/>\n      <text x=\"400\" y=\"380\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\">LiPo Battery</text>\n      <!-- Radio Receiver -->\n      <rect x=\"620\" y=\"200\" width=\"120\" height=\"40\" rx=\"6\" fill=\"#8e44ad\" stroke=\"#6c3483\" stroke-width=\"2\"/>\n      <text x=\"680\" y=\"225\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\">Radio Receiver</text>\n      <!-- Signal lines -->\n      <line x1=\"250\" y1=\"135\" x2=\"340\" y2=\"195\" stroke=\"#e67e22\" stroke-width=\"2\" stroke-dasharray=\"6,4\"/>\n      <line x1=\"550\" y1=\"135\" x2=\"460\" y2=\"195\" stroke=\"#e67e22\" stroke-width=\"2\" stroke-dasharray=\"6,4\"/>\n      <line x1=\"250\" y1=\"285\" x2=\"340\" y2=\"225\" stroke=\"#e67e22\" stroke-width=\"2\" stroke-dasharray=\"6,4\"/>\n      <line x1=\"550\" y1=\"285\" x2=\"460\" y2=\"225\" stroke=\"#e67e22\" stroke-width=\"2\" stroke-dasharray=\"6,4\"/>\n      <!-- Power lines -->\n      <line x1=\"400\" y1=\"300\" x2=\"400\" y2=\"240\" stroke=\"#27ae60\" stroke-width=\"3\"/>\n      <line x1=\"400\" y1=\"360\" x2=\"400\" y2=\"340\" stroke=\"#c0392b\" stroke-width=\"3\"/>\n      <!-- Radio link -->\n      <line x1=\"620\" y1=\"220\" x2=\"460\" y2=\"210\" stroke=\"#8e44ad\" stroke-width=\"2\" stroke-dasharray=\"4,4\"/>\n      <!-- Labels -->\n      <text x=\"400\" y=\"30\" text-anchor=\"middle\" fill=\"#333\" font-size=\"16\" font-weight=\"bold\">Quadcopter Assembly Wiring Layout</text>\n      <text x=\"400\" y=\"50\" text-anchor=\"middle\" fill=\"#555\" font-size=\"12\">Signal flow (dashed) and power flow (solid) between key components</text>\n    </svg>\n    <figcaption>Source: Adapted from ArduPilot Dev Team, \"ArduPilot Copter Wiring and Connections,\" <em>ArduPilot Documentation</em>, accessed 2025, https://ardupilot.org/copter/docs/common-connecting.html.</figcaption>\n  </figure>\n\n  <h3>Why This Module Matters for African Agribusiness</h3>\n  <p>Across Africa, drone service providers are emerging as key players in precision agriculture. In countries such as Rwanda, Ghana, Kenya, and Nigeria, drones are used for crop health mapping, pesticide application, and yield estimation. According to the FAO, the global agricultural drone market is projected to grow significantly, and African markets are expected to adopt these technologies to improve productivity and reduce input costs. For agribusinesses, the ability to assemble and maintain drones locally reduces downtime, lowers import dependency, and creates new revenue streams through repair and training services.</p>\n  <p>This practical reference focuses on the hands-on steps of drone assembly and setup, with an emphasis on business outcomes: faster deployment, lower maintenance costs, and compliance with local aviation regulations.</p>\n\n  <h3>Soldering and Wiring Basics</h3>\n  <p>Soldering is the foundation of reliable drone assembly. In African field conditions, where dust and humidity can corrode connections, high-quality solder joints are critical. Use a 60/40 tin-lead solder with rosin flux for general electronics, or lead-free solder if required by local regulations. A temperature-controlled soldering iron set to 350â400Â°C is ideal for XT60 connectors and motor wires.</p>\n  <p>Key practices:</p>\n  <ul>\n    <li>Tin the wire and pad separately before joining.</li>\n    <li>Use heat shrink tubing on all exposed joints.</li>\n    <li>Keep wires short to reduce resistance and weight.</li>\n    <li>Test continuity with a multimeter before powering up.</li>\n  </ul>\n  <p>For African operators, invest in a 12Vâ24V DC soldering iron that can run from a car battery or solar system, as grid power may be unreliable.</p>\n\n  <h3>Assembling a Quadcopter Frame</h3>\n  <p>Frame assembly determines the drone's durability and flight characteristics. For agricultural use, choose a frame with at least 450mm diagonal motor-to-motor distance for stability and payload capacity. Carbon fiber frames are lightweight but expensive; glass fiber or aluminum frames are cheaper and easier to repair locally.</p>\n  <p>Steps:</p>\n  <ol>\n    <li>Lay out all frame components and check for cracks or missing parts.</li>\n    <li>Assemble the bottom plate and arms using thread-locking compound on screws.</li>\n    <li>Install the power distribution board (PDB) or use a 4-in-1 ESC.</li>\n    <li>Attach landing gear and camera mounts.</li>\n    <li>Secure all wiring with zip ties to prevent vibration damage.</li>\n  </ol>\n  <p>In dusty environments, consider sealing exposed electronics with conformal coating or silicone.</p>\n\n  <h3>Mounting Motors and ESCs</h3>\n  <p>Motor and ESC selection must match your payload and flight time requirements. For a 5kg spray drone, use 5008 or 6215 motors with 40A ESCs. Mount motors securely with the correct screw length to avoid damaging windings. ESC calibration is essential for smooth throttle response.</p>\n  <p>Wiring order for a quadcopter in X configuration:</p>\n  <ul>\n    <li>Motor 1 (front right): clockwise</li>\n    <li>Motor 2 (rear left): clockwise</li>\n    <li>Motor 3 (front left): counter-clockwise</li>\n    <li>Motor 4 (rear right): counter-clockwise</li>\n  </ul>\n  <p>Always test motor direction without propellers before flight.</p>\n\n  <h3>Installing Flight Controller and Peripherals</h3>\n  <p>The flight controller (FC) is the brain of the drone. Popular options in Africa include Pixhawk, Cube Orange, and Matek systems. Mount the FC on vibration-damping foam or gel pads to reduce gyro noise. Connect GPS, compass, telemetry, and receiver according to the manufacturer's pinout.</p>\n  <p>Peripherals to install:</p>\n  <ul>\n    <li>GPS/compass module (mounted on a mast away from power wires)</li>\n    <li>Telemetry radio (for ground station communication)</li>\n    <li>RC receiver (SBUS or CRSF protocol)</li>\n    <li>Buzzer and LED for status indication</li>\n  </ul>\n  <p>In areas with weak GPS signals, consider adding a second GPS or using RTK for centimeter-level accuracy.</p>\n\n  <h3>Connecting Power and Radio Systems</h3>\n  <p>Power systems must be robust. Use a LiPo battery with a C-rating suitable for your ESCs. For a 6S 10,000mAh battery, ensure your PDB and wiring can handle 100A continuous. Install a power module to monitor voltage and current. Radio systems should use frequency-hopping spread spectrum (FHSS) for reliability. In Africa, 2.4GHz is commonly used, but 433MHz or 915MHz telemetry may be better for long-range in rural areas.</p>\n  <p>Always perform a range check before flight and set failsafe to return-to-home or land.</p>\n\n  <div style=\"background:#fdecea;border-left:6px solid #c0392b;padding:16px;margin:20px 0;border-radius:6px;\">\n    <strong style=\"color:#c0392b;\">â ï¸ SAFETY WARNING:</strong>\n    <p style=\"margin:8px 0 0 0;color:#333;\">Never connect a LiPo battery without checking polarity and insulation. A short circuit can cause fire or explosion. Always use a fireproof LiPo bag when charging, and never leave batteries unattended. In hot African climates, store batteries at 3.8V per cell in a cool, dry place. Dispose of damaged batteries at authorized e-waste centers.</p>\n  </div>\n\n  <h3>Initial Configuration and Calibration</h3>\n  <p>After assembly, connect the drone to a ground station (Mission Planner, QGroundControl, or similar) and perform the following:</p>\n  <ol>\n    <li>Accelerometer calibration (level the drone).</li>\n    <li>Compass calibration (rotate the drone in all axes).</li>\n    <li>Radio calibration (move sticks to endpoints).</li>\n    <li>ESC calibration (throttle range).</li>\n    <li>Flight mode configuration (stabilize, loiter, auto).</li>\n    <li>Failsafe settings (RTL, land).</li>\n    <li>Motor test (without propellers).</li>\n  </ol>\n  <p>Document all parameters and keep a backup. In African field operations, a pre-flight checklist and regular calibration are essential for safety and data quality.</p>\n\n  <h3>Data Tables</h3>\n\n  <table style=\"width:100%;border-collapse:collapse;margin:20px 0;\">\n    <caption style=\"text-align:left;font-weight:bold;padding:8px 0;\">Table 1: Typical Component Specifications for a 5kg Agricultural Spray Drone</caption>\n    <thead>\n      <tr style=\"background:#2c3e50;color:#fff;\">\n        <th style=\"padding:10px;border:1px solid #ddd;\">Component</th>\n        <th style=\"padding:10px;border:1px solid #ddd;\">Specification</th>\n        <th style=\"padding:10px;border:1px solid #ddd;\">Estimated Cost (USD)</th>\n        <th style=\"padding:10px;border:1px solid #ddd;\">Source</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td style=\"padding:10px;border:1px solid #ddd;\">Frame</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">Carbon fiber, 900mm diagonal</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">$250â$400</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">DJI Agras T10 specs, 2023</td>\n      </tr>\n      <tr style=\"background:#f9f9f9;\">\n        <td style=\"padding:10px;border:1px solid #ddd;\">Motors</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">6215, 340KV, 4 units</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">$120â$200</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">T-Motor P60 spec sheet, 2024</td>\n      </tr>\n      <tr>\n        <td style=\"padding:10px;border:1px solid #ddd;\">ESCs</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">80A, 6S, 4-in-1</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">$80â$150</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">Hobbywing XRotor spec, 2023</td>\n      </tr>\n      <tr style=\"background:#f9f9f9;\">\n        <td style=\"padding:10px;border:1px solid #ddd;\">Flight Controller</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">Pixhawk 6C or Cube Orange</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">$150â$300</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">ArduPilot hardware list, 2024</td>\n      </tr>\n      <tr>\n        <td style=\"padding:10px;border:1px solid #ddd;\">Battery</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">6S 16,000mAh LiPo</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">$200â$350</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">Tattu/Gens Ace pricing, 2024</td>\n      </tr>\n    </tbody>\n  </table>\n\n  <table style=\"width:100%;border-collapse:collapse;margin:20px 0;\">\n    <caption style=\"text-align:left;font-weight:bold;padding:8px 0;\">Table 2: Common Calibration Parameters and Recommended Values</caption>\n    <thead>\n      <tr style=\"background:#27ae60;color:#fff;\">\n        <th style=\"padding:10px;border:1px solid #ddd;\">Parameter</th>\n        <th style=\"padding:10px;border:1px solid #ddd;\">Recommended Value</th>\n        <th style=\"padding:10px;border:1px solid #ddd;\">Notes</th>\n        <th style=\"padding:10px;border:1px solid #ddd;\">Source</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td style=\"padding:10px;border:1px solid #ddd;\">Accelerometer level</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">0Â° pitch/roll</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">Use a bubble level</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">ArduPilot docs, 2024</td>\n      </tr>\n      <tr style=\"background:#f9f9f9;\">\n        <td style=\"padding:10px;border:1px solid #ddd;\">Compass declination</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">Auto-detect</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">Critical in Africa (varies by region)</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">NOAA magnetic declination map, 2025</td>\n      </tr>\n      <tr>\n        <td style=\"padding:10px;border:1px solid #ddd;\">RC throttle range</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">1000â2000 Âµs</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">Adjust endpoints</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">QGroundControl guide, 2024</td>\n      </tr>\n      <tr style=\"background:#f9f9f9;\">\n        <td style=\"padding:10px;border:1px solid #ddd;\">Failsafe RTL altitude</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">30â50m</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">Above tallest obstacles</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">ArduPilot safety docs, 2024</td>\n      </tr>\n      <tr>\n        <td style=\"padding:10px;border:1px solid #ddd;\">Battery low voltage</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">3.5V per cell</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">Land immediately</td>\n        <td style=\"padding:10px;border:1px solid #ddd;\">LiPo best practices, 2024</td>\n      </tr>\n    </tbody>\n  </table>\n\n  <h3>Quick Reference Checklist</h3>\n  <ul style=\"list-style-type:square;\">\n    <li>â Verify all solder joints and wire insulation before powering.</li>\n    <li>â Check motor direction and propeller orientation (no props during test).</li>\n    <li>â Confirm flight controller mounting is vibration-isolated.</li>\n    <li>â Calibrate accelerometer, compass, and radio.</li>\n    <li>â Set failsafe to RTL or land.</li>\n    <li>â Test GPS lock and telemetry range.</li>\n    <li>â Secure all cables with zip ties and check CG balance.</li>\n    <li>â Record all parameters and keep a backup.</li>\n  </ul>\n\n  <h3>Further Reading</h3>\n  <ul>\n    <li><a href=\"https://ardupilot.org/copter/docs/common-connecting.html\" target=\"_blank\" rel=\"noopener\">ArduPilot Copter Wiring and Connections</a> â Official ArduPilot documentation.</li>\n    <li><a href=\"https://docs.px4.io/main/en/assembly/\" target=\"_blank\" rel=\"noopener\">PX4 Assembly Guide</a> â Official PX4 documentation.</li>\n    <li><a href=\"https://www.fao.org/3/cb8333en/cb8333en.pdf\" target=\"_blank\" rel=\"noopener\">FAO: Agricultural Drone Use in Africa</a> â FAO report on drone applications.</li>\n    <li><a href=\"https://www.icao.int/safety/UA/Pages/default.aspx\" target=\"_blank\" rel=\"noopener\">ICAO Unmanned Aircraft Systems</a> â International Civil Aviation Organization resources.</li>\n    <li><a href=\"https://qgroundcontrol.com/\" target=\"_blank\" rel=\"noopener\">QGroundControl User Guide</a> â Official ground station software documentation.</li>\n  </ul>\n\n  <p style=\"margin-top:30px;font-style:italic;color:#555;\">This practical reference is part of the Rise AFRICA Skills course on Drone Technology. For business-first training, pair this module with local regulatory briefings and hands-on workshops.</p>\n</section>"
+    }],
+  "quiz": [
+    {
+      "q": "What is the recommended soldering iron temperature for most drone joints?",
+      "options": ["A) 200Â°C", "B) 350Â°C", "C) 450Â°C", "D) 500Â°C"],
+      "answer": "B",
+      "explanation": "350Â°C is hot enough to melt solder quickly without damaging components."
+    },
+    {
+      "q": "Which solder alloy is commonly recommended for beginners?",
+      "options": ["A) 60/40 tin-lead", "B) 99% tin", "C) lead-free with silver", "D) acid-core solder"],
+      "answer": "A",
+      "explanation": "60/40 tin-lead solder melts at a low temperature and is easy to work with."
+    },
+    {
+      "q": "What should you do before plugging in a battery after soldering power wires?",
+      "options": ["A) Check for shorts with a multimeter", "B) Test with a smoke stopper", "C) Both A and B", "D) Nothing, just plug in"],
+      "answer": "C",
+      "explanation": "Both checking for shorts and using a smoke stopper prevent damage from wiring mistakes."
+    },
+    {
+      "q": "What is the purpose of heat shrink tubing?",
+      "options": ["A) To insulate exposed solder joints", "B) To make wires look neat", "C) To strengthen the wire", "D) To color-code wires"],
+      "answer": "A",
+      "explanation": "Heat shrink tubing insulates and protects solder joints from short circuits."
+    },
+    {
+      "q": "Which frame material blocks radio signals?",
+      "options": ["A) Glass fiber", "B) Carbon fiber", "C) Plastic", "D) Aluminum"],
+      "answer": "B",
+      "explanation": "Carbon fiber is conductive and can block radio signals, so antennas must be mounted away from it."
+    },
+    {
+      "q": "What size hex driver is commonly used for M3 screws in drone frames?",
+      "options": ["A) 1.5mm", "B) 2.0mm", "C) 2.5mm", "D) 3.0mm"],
+      "answer": "C",
+      "explanation": "M3 screws typically require a 2.5mm hex driver."
+    },
+    {
+      "q": "Why should you avoid overtightening screws on a carbon fiber frame?",
+      "options": ["A) It strips the screw head", "B) It can crack the carbon fiber", "C) It adds weight", "D) It causes electrical shorts"],
+      "answer": "B",
+      "explanation": "Carbon fiber can crack if screws are overtightened, weakening the frame."
+    },
+    {
+      "q": "What is the typical weight of a 450mm quadcopter frame with hardware?",
+      "options": ["A) 100-150g", "B) 280-350g", "C) 500-600g", "D) 700-800g"],
+      "answer": "B",
+      "explanation": "A typical 450mm frame with hardware weighs between 280 and 350 grams."
+    },
+    {
+      "q": "What does KV rating on a brushless motor indicate?",
+      "options": ["A) Kilovolts", "B) RPM per volt", "C) Maximum current", "D) Motor weight"],
+      "answer": "B",
+      "explanation": "KV rating indicates the motor's RPM per volt of input, with lower KV for higher torque."
+    },
+    {
+      "q": "Which motor size is commonly used for a 450mm quadcopter?",
+      "options": ["A) 1104", "B) 2212", "C) 4006", "D) 5208"],
+      "answer": "B",
+      "explanation": "2212 or 2312 motors are standard for 450mm frames."
+    },
+    {
+      "q": "How many wires connect a brushless motor to an ESC?",
+      "options": ["A) 2", "B) 3", "C) 4", "D) 5"],
+      "answer": "B",
+      "explanation": "Brushless motors have three phase wires that connect to the ESC."
+    },
+    {
+      "q": "If a brushless motor spins the wrong direction, what should you do?",
+      "options": ["A) Swap any two of the three motor wires", "B) Reverse the battery polarity", "C) Change the ESC", "D) Adjust the transmitter"],
+      "answer": "A",
+      "explanation": "Swapping any two of the three motor wires reverses the motor's rotation direction."
+    },
+    {
+      "q": "Why should you cover ESC solder joints with heat shrink?",
+      "options": ["A) To prevent short circuits", "B) To reduce weight", "C) To improve conductivity", "D) To make them look nice"],
+      "answer": "A",
+      "explanation": "Heat shrink insulates the joints, preventing accidental shorts."
+    },
+    {
+      "q": "What is the purpose of a power distribution board (PDB)?",
+      "options": ["A) To distribute power to ESCs and flight controller", "B) To control motor speed", "C) To receive radio signals", "D) To stabilize the drone"],
+      "answer": "A",
+      "explanation": "The PDB distributes battery power to the ESCs and other components."
+    },
+    {
+      "q": "Where should you mount the flight controller?",
+      "options": ["A) At the center of the frame", "B) On one arm", "C) On top of the battery", "D) Near the receiver"],
+      "answer": "A",
+      "explanation": "The flight controller should be at the center to accurately sense the drone's motion."
+    },
+    {
+      "q": "What is the purpose of vibration-damping foam under the flight controller?",
+      "options": ["A) To reduce gyro noise", "B) To keep it cool", "C) To make it waterproof", "D) To increase weight"],
+      "answer": "A",
+      "explanation": "Vibration damping foam reduces vibrations that can confuse the gyro and cause unstable flight."
+    },
+    {
+      "q": "Which flight controller firmware is commonly used for beginners?",
+      "options": ["A) Betaflight", "B) Arduino", "C) Python", "D) Windows"],
+      "answer": "A",
+      "explanation": "Betaflight is a popular open-source firmware for drone flight controllers."
+    },
+    {
+      "q": "How should receiver antennas be mounted?",
+      "options": ["A) Parallel to each other", "B) At 90 degrees to each other", "C) Wrapped around the frame", "D) Inside the carbon fiber frame"],
+      "answer": "B",
+      "explanation": "Mounting antennas at 90 degrees improves signal diversity and reception."
+    },
+    {
+      "q": "What is the purpose of a buzzer on a drone?",
+      "options": ["A) To help locate a lost drone", "B) To make it fly faster", "C) To stabilize the drone", "D) To charge the battery"],
+      "answer": "A",
+      "explanation": "A buzzer emits sound to help find a crashed or lost drone."
+    },
+    {
+      "q": "What should you do if the flight controller arrow does not point forward?",
+      "options": ["A) Physically rotate the board", "B) Adjust orientation in software", "C) Both A and B", "D) Ignore it"],
+      "answer": "C",
+      "explanation": "You can either rotate the board or set the orientation in software like Betaflight."
+    },
+    {
+      "q": "What is the recommended battery for a 450mm quadcopter?",
+      "options": ["A) 1S 500mAh", "B) 2S 1000mAh", "C) 3S 2200mAh", "D) 6S 5000mAh"],
+      "answer": "C",
+      "explanation": "A 3S 2200mAh LiPo is a common choice for 450mm quadcopters, giving good flight time."
+    },
+    {
+      "q": "What should you always do before plugging in a LiPo battery?",
+      "options": ["A) Check polarity with a multimeter", "B) Charge it fully", "C) Remove the props", "D) Both A and C"],
+      "answer": "D",
+      "explanation": "Always check polarity and remove props before connecting a battery to avoid damage or injury."
+    },
+    {
+      "q": "What is a smoke stopper used for?",
+      "options": ["A) To limit current on first power-up", "B) To extinguish fires", "C) To check battery voltage", "D) To bind the receiver"],
+      "answer": "A",
+      "explanation": "A smoke stopper limits current to prevent damage if there is a wiring short."
+    },
+    {
+      "q": "What does failsafe do on a drone?",
+      "options": ["A) Cuts motors or returns home if signal is lost", "B) Prevents arming", "C) Limits altitude", "D) Balances the props"],
+      "answer": "A",
+      "explanation": "Failsafe is a safety feature that activates when the radio signal is lost."
+    },
+    {
+      "q": "In Betaflight, what should you do before testing motors?",
+      "options": ["A) Remove propellers", "B) Charge the battery", "C) Connect to GPS", "D) Calibrate the compass"],
+      "answer": "A",
+      "explanation": "Always remove propellers before testing motors to prevent injury."
+    },
+    {
+      "q": "What is the correct throttle range for a radio in Betaflight?",
+      "options": ["A) 1000-2000 with center at 1500", "B) 0-100", "C) 500-2500", "D) 800-2200"],
+      "answer": "A",
+      "explanation": "Standard RC throttle range is 1000 to 2000 microseconds with center at 1500."
+    },
+    {
+      "q": "What does calibrating ESCs do?",
+      "options": ["A) Teaches the ESC the throttle range", "B) Sets the motor direction", "C) Balances the props", "D) Adjusts PID settings"],
+      "answer": "A",
+      "explanation": "ESC calibration ensures the ESC recognizes the full throttle range from the flight controller."
+    },
+    {
+      "q": "What low-voltage alarm setting is recommended per LiPo cell?",
+      "options": ["A) 3.0V", "B) 3.5V", "C) 4.2V", "D) 2.5V"],
+      "answer": "B",
+      "explanation": "Setting a low-voltage alarm at 3.5V per cell helps prevent over-discharging the battery."
+    },
+    {
+      "q": "What is 'Air Mode' in Betaflight?",
+      "options": ["A) A mode for better control at low throttle", "B) A mode for altitude hold", "C) A mode for GPS return", "D) A mode for acrobatics"],
+      "answer": "A",
+      "explanation": "Air Mode keeps PID control active at zero throttle, improving stability during flips and low-throttle maneuvers."
+    },
+    {
+      "q": "What should you check after a test hover?",
+      "options": ["A) Motor temperatures", "B) Battery voltage", "C) Screw tightness", "D) All of the above"],
+      "answer": "D",
+      "explanation": "After a test hover, check motor temperatures, battery voltage, and screw tightness for safety and performance."
+    }
+  ],
+  "videos": [
+    "drone soldering basics for beginners",
+    "how to assemble a quadcopter frame step by step",
+    "Betaflight initial setup and calibration tutorial"
+  ]
+}

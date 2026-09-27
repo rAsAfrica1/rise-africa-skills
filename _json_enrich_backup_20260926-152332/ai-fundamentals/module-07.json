@@ -1,0 +1,218 @@
+﻿{
+  "course": "AI Fundamentals",
+  "module_number": 7,
+  "module_title": "Unsupervised Learning",
+  "lessons": [
+    {
+      "title": "K-Means Clustering",
+      "body": "K-Means is a workhorse for grouping customers, products, or locations without pre-labeled data. Imagine you run a mobile money agency in Kampala with 5,000 customers. You want to segment them for targeted SMS offers. K-Means will find groups based on their transaction frequency, average amount, and recency. You decide on K, the number of clusters. A common method is the elbow curve: plot the within-cluster sum of squares for K=1 to 10 and look for the bend. For your data, the bend might be at K=4, meaning four distinct customer types: high-value frequent, low-value frequent, high-value infrequent, and dormant.\n\nIn Python with scikit-learn, you would load your CSV, select features, scale them (e.g., using StandardScaler because transaction amounts are in shillings and frequency is a count), then run KMeans(n_clusters=4, random_state=42). The algorithm randomly places 4 centroids, assigns each customer to the nearest centroid, recalculates centroids as the mean of assigned points, and repeats until stable. You can then examine cluster centers to label them: cluster 0 might have mean frequency 20 per month and mean amount 50,000 UGX, so you call it 'loyal high spenders'.\n\nPractical tips for African contexts: Start with 3-6 clusters for interpretability. Use the silhouette score to check quality; above 0.5 is good. Beware of outliersâa single customer transacting 10 million UGX can skew centroids. Consider removing extreme values or using K-Medoids. Also, K-Means assumes spherical clusters of similar size, which may not hold for geographic data like boda boda routes. For those, DBSCAN might be better.\n\nOnce you have clusters, you can tailor interventions: send a 10% discount to dormant customers, offer a savings product to high-value frequent users, or deploy agents to areas with many low-value infrequent users. Re-run monthly to track migration between clusters. Tools: Python (scikit-learn, pandas), or no-code tools like Orange or KNIME if you prefer visual workflows. Always validate with domain expertsâa cluster that looks statistically strong might be meaningless if it just reflects a data entry error."
+    },
+    {
+      "title": "Hierarchical Clustering",
+      "body": "Hierarchical clustering builds a tree of clusters, called a dendrogram, that shows how individual points merge into larger groups. Unlike K-Means, you don't need to specify the number of clusters upfront. This is useful when you're exploring, say, 200 smallholder farmers in a cooperative and want to see natural groupings based on land size, crop type, and distance to market. You start with each farmer as its own cluster, then repeatedly merge the two closest clusters until all are in one. The dendrogram lets you cut the tree at any height to get a chosen number of clusters.\n\nThe two main approaches are agglomerative (bottom-up) and divisive (top-down). Agglomerative is more common. Linkage determines distance between clusters: single (nearest points), complete (farthest points), average (mean distance), or Ward (minimizes variance). Ward is often best for compact, equal-sized clusters. In Python, use scipy.cluster.hierarchy.linkage and dendrogram, or sklearn.cluster.AgglomerativeClustering. For 200 farmers, it runs instantly. For 10,000 customers, it may be slow (O(n^3)), so consider sampling or using K-Means first.\n\nA real example: A Nairobi-based agritech wants to group 500 farmers for input financing. They compute distances on three scaled features: hectares, years of experience, and average yield per acre. Using Ward linkage, the dendrogram shows a clear cut at three clusters: large commercial, medium improving, and small subsistence. They then target loans accordingly.\n\nPractical tips: Always scale features; otherwise, hectares (0-10) will dominate years (0-30). Use a distance matrix if you have mixed data types (e.g., Gower distance). The dendrogram can be hard to read for large datasetsâlimit to 50-100 leaves or use a truncated view. For African contexts, hierarchical clustering is great for small, interpretable groups like health facilities or market vendors. It also handles non-spherical clusters better than K-Means. Tools: Python (scipy, sklearn), R (hclust), or even Excel with add-ins. Validate by checking if clusters make sense to local expertsâe.g., do the 'medium improving' farmers actually share similar challenges?"
+    },
+    {
+      "title": "DBSCAN Clustering",
+      "body": "DBSCAN (Density-Based Spatial Clustering of Applications with Noise) finds clusters of arbitrary shape and flags outliers as noise. This is perfect for geographic data, like mapping 1,000 mobile money agents in Accra. K-Means would force circular clusters, but agents naturally cluster along market streets and transport hubs. DBSCAN defines clusters as dense regions separated by low-density areas. You set two parameters: eps (maximum distance between two points to be considered neighbors) and min_samples (minimum points to form a dense region). For agent locations in meters, you might try eps=500 (500 meters) and min_samples=5.\n\nThe algorithm works: for each point, count neighbors within eps. If count >= min_samples, it's a core point. Core points within eps of each other form a cluster. Border points are within eps of a core point but not core themselves. Everything else is noise. In scikit-learn, use DBSCAN(eps=500, min_samples=5).fit(X). The labels_ attribute gives cluster IDs; -1 means noise. You can then plot with matplotlib to see clusters and outliers.\n\nA real use case: A fintech in Lagos wants to identify dense areas for new agent recruitment. They run DBSCAN on agent GPS coordinates. It finds 12 clusters and 47 noise points (agents in isolated areas). They decide to recruit in the gaps between clusters to improve coverage. Another use: detecting fraudulent transactions. If you cluster transactions by amount and time, DBSCAN can flag unusual transactions as noise.\n\nPractical tips: Choosing eps is critical. Use a k-distance graph: sort distances to the k-th nearest neighbor (k=min_samples) and look for the elbow. For African cities, eps may vary by areaâdense markets vs. sparse suburbs. You can run DBSCAN per region. DBSCAN doesn't predict new points; for that, use a classifier on cluster labels. It also struggles with varying densities. If your data has both dense and sparse clusters, consider HDBSCAN. Tools: Python (sklearn, hdbscan), or QGIS with DBSCAN plugin for visual exploration. Always ground-truth with local knowledgeâa cluster might just be a data artifact."
+    },
+    {
+      "title": "Principal Component Analysis (PCA)",
+      "body": "PCA reduces many features into a few uncorrelated components that capture most of the variance. Imagine you have survey data from 2,000 Kenyan SMEs with 20 questions about business practices. Many questions are correlated (e.g., 'do you keep records?' and 'do you use accounting software?'). PCA can compress these into 3-4 components that explain 80% of the variation, making visualization and clustering easier. It's also useful for speeding up machine learning models and removing noise.\n\nThe math: PCA finds new axes (principal components) that are linear combinations of original features. The first component points in the direction of maximum variance. The second is orthogonal and captures the next most variance, and so on. You standardize features first (mean 0, variance 1) because PCA is sensitive to scale. In Python, use sklearn.decomposition.PCA(n_components=0.8) to keep components explaining 80% variance, or set an integer. Fit on training data, then transform both train and test.\n\nA concrete example: A Ugandan microfinance institution wants to segment borrowers using 15 financial behavior variables. They run PCA and find that 4 components explain 85% of variance. Component 1 is 'repayment reliability', component 2 is 'loan size preference', component 3 is 'savings frequency', and component 4 is 'digital channel use'. They then use these 4 components in K-Means, which runs faster and avoids multicollinearity. They can also plot the first two components to see borrower clusters.\n\nPractical tips: Interpret components by looking at loadings (correlations between original features and components). A loading above 0.5 in absolute value is significant. If components are hard to interpret, try rotating them (e.g., Varimax) for better separation. PCA assumes linear relationships; for nonlinear data, use kernel PCA or autoencoders. For African contexts, PCA is great for reducing high-dimensional survey data or satellite imagery. But always check that you're not losing critical informationâsometimes a single feature (e.g., mobile money usage) is more predictive than any component. Tools: Python (sklearn), R (prcomp), or Excel (XLSTAT add-in)."
+    },
+    {
+      "title": "t-SNE for Visualization",
+      "body": "t-SNE (t-distributed Stochastic Neighbor Embedding) is a dimensionality reduction technique specifically for visualization. It takes high-dimensional data and maps it to 2D or 3D, preserving local neighborhoods. This means points that are close in high-dimensional space stay close in the plot. It's excellent for exploring clusters in complex datasets, like customer behavior with 50 features, or image data. Unlike PCA, t-SNE is nonlinear, so it can reveal intricate structures.\n\nHow it works: t-SNE first computes pairwise similarities between points in high-dimensional space using a Gaussian kernel. Then it defines similar similarities in low-dimensional space using a t-distribution. It minimizes the Kullback-Leibler divergence between the two distributions using gradient descent. Key parameters: perplexity (roughly the number of effective neighbors, typically 5-50) and learning rate. In scikit-learn, use TSNE(n_components=2, perplexity=30, random_state=42).fit_transform(X). It can be slow for >10,000 points; consider PCA first to reduce to 50 dimensions, then t-SNE.\n\nA real use case: A South African e-commerce company has 5,000 customers with 30 features (purchase frequency, categories, returns, etc.). They run t-SNE and see distinct islands: one for bulk buyers, one for fashion shoppers, one for electronics. They color points by a known label (e.g., loyalty tier) and see if clusters align. This helps them design targeted campaigns. Another use: visualizing word embeddings for local languages, where similar words cluster together.\n\nPractical tips: t-SNE is stochasticârun multiple times with different seeds to check stability. Perplexity matters: small values focus on local structure, large values on global. For datasets under 1,000 points, try perplexity 5-15; for larger, 30-50. Don't over-interpret distances between clusters; t-SNE preserves local but not global distances. Also, it's not for clustering per seâuse it to explore, then apply K-Means or DBSCAN on the original data. For African contexts, t-SNE is great for visualizing survey data, mobile phone usage patterns, or agricultural data. Tools: Python (sklearn), R (Rtsne), or online tools like TensorFlow Embedding Projector. Always validate with domain experts."
+    },
+    {
+      "title": "Association Rules: Apriori Algorithm",
+      "body": "Association rules find interesting relationships in transactional data, like 'customers who buy bread also buy milk'. The Apriori algorithm is the classic method. It works on a set of transactions (e.g., market basket data) and finds frequent itemsets, then generates rules. Metrics: support (how often items appear together), confidence (how often the rule is true), and lift (how much more likely the consequent is given the antecedent). For a Kenyan supermarket chain with 10,000 transactions, you might find that 15% of baskets contain both maize flour and cooking oil, and 70% of those also contain sugar. That's a strong rule.\n\nApriori steps: 1) Set minimum support (e.g., 0.05). 2) Find all itemsets with support >= min_support. 3) Generate rules from these itemsets with confidence >= min_confidence (e.g., 0.6). 4) Rank by lift. In Python, use mlxtend.frequent_patterns.apriori and association_rules. The input is a one-hot encoded DataFrame (rows=transactions, columns=items, values=True/False). For 10,000 transactions and 100 items, it runs in seconds. For larger data, use FP-Growth (faster).\n\nA real example: A Nigerian online store wants to increase sales. They run Apriori on 50,000 orders. They find that customers who buy a phone case often buy a screen protector (support 0.08, confidence 0.75, lift 3.2). They create a bundle offer and increase average order value by 12%. Another use: In agriculture, analyzing crop purchases to recommend seeds and fertilizer together.\n\nPractical tips: Set min_support low enough to capture meaningful patterns but high enough to avoid noise. For small datasets, 0.01-0.05; for large, 0.001-0.01. Use lift > 1 to find positive associations; lift < 1 means negative. Beware of rare itemsâthey may have high confidence but low support, making rules unreliable. Also, consider time of day or season: in Africa, payday weekends may show different patterns. Tools: Python (mlxtend), R (arules), or Weka. Always validate rules with business logicâa rule might be spurious due to a promotion. Use Apriori to inform cross-selling, shelf placement, or recommendation engines. For mobile money, analyze transaction sequences to predict next product uptake."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is the main goal of K-Means clustering?",
+      "options": ["A) To predict a continuous target", "B) To group similar data points into K clusters", "C) To reduce dimensionality", "D) To find association rules"],
+      "answer": "B",
+      "explanation": "K-Means partitions data into K clusters based on similarity."
+    },
+    {
+      "q": "Which method is commonly used to choose K in K-Means?",
+      "options": ["A) Elbow curve", "B) Dendrogram", "C) Silhouette score only", "D) Apriori"],
+      "answer": "A",
+      "explanation": "The elbow curve plots within-cluster sum of squares against K to find a bend."
+    },
+    {
+      "q": "Why is feature scaling important before K-Means?",
+      "options": ["A) It makes the algorithm run faster", "B) It ensures all features contribute equally to distance", "C) It removes outliers", "D) It reduces the number of clusters"],
+      "answer": "B",
+      "explanation": "K-Means uses distance; unscaled features with larger ranges dominate."
+    },
+    {
+      "q": "What does a dendrogram show in hierarchical clustering?",
+      "options": ["A) The number of clusters", "B) The merge order of clusters", "C) The silhouette score", "D) The principal components"],
+      "answer": "B",
+      "explanation": "A dendrogram is a tree diagram showing how clusters merge at each step."
+    },
+    {
+      "q": "Which linkage method minimizes variance within clusters?",
+      "options": ["A) Single", "B) Complete", "C) Average", "D) Ward"],
+      "answer": "D",
+      "explanation": "Ward linkage merges clusters to minimize the increase in total within-cluster variance."
+    },
+    {
+      "q": "What is a key advantage of hierarchical clustering over K-Means?",
+      "options": ["A) It is faster for large datasets", "B) It does not require specifying the number of clusters in advance", "C) It handles noise better", "D) It always produces spherical clusters"],
+      "answer": "B",
+      "explanation": "Hierarchical clustering builds a tree, so you can cut it later to choose the number of clusters."
+    },
+    {
+      "q": "In DBSCAN, what does the 'eps' parameter represent?",
+      "options": ["A) The number of clusters", "B) The maximum distance between two points to be considered neighbors", "C) The minimum number of points to form a cluster", "D) The learning rate"],
+      "answer": "B",
+      "explanation": "Eps defines the radius for neighborhood search."
+    },
+    {
+      "q": "What does DBSCAN label points that do not belong to any cluster?",
+      "options": ["A) -1", "B) 0", "C) 1", "D) NaN"],
+      "answer": "A",
+      "explanation": "In scikit-learn, noise points are labeled -1."
+    },
+    {
+      "q": "Which type of data is DBSCAN particularly good at clustering?",
+      "options": ["A) Spherical clusters of equal size", "B) Arbitrarily shaped clusters with noise", "C) High-dimensional text data", "D) Time series data"],
+      "answer": "B",
+      "explanation": "DBSCAN finds dense regions of any shape and identifies outliers as noise."
+    },
+    {
+      "q": "What is the purpose of PCA?",
+      "options": ["A) To cluster data", "B) To reduce dimensionality while preserving variance", "C) To find association rules", "D) To visualize high-dimensional data in 2D"],
+      "answer": "B",
+      "explanation": "PCA transforms data into uncorrelated components that capture most variance."
+    },
+    {
+      "q": "How do you interpret the loadings in PCA?",
+      "options": ["A) They show the correlation between original features and components", "B) They show the number of clusters", "C) They show the distance between points", "D) They show the support of rules"],
+      "answer": "A",
+      "explanation": "Loadings indicate how much each original feature contributes to a component."
+    },
+    {
+      "q": "What does it mean if the first two principal components explain 80% of variance?",
+      "options": ["A) The data has 80% noise", "B) 80% of the information is captured in those two dimensions", "C) There are 80 clusters", "D) The data is not suitable for PCA"],
+      "answer": "B",
+      "explanation": "The explained variance ratio tells how much of the total variance is retained."
+    },
+    {
+      "q": "What is t-SNE primarily used for?",
+      "options": ["A) Clustering", "B) Visualization of high-dimensional data", "C) Association rule mining", "D) Feature scaling"],
+      "answer": "B",
+      "explanation": "t-SNE maps high-dimensional data to 2D or 3D for visual inspection."
+    },
+    {
+      "q": "What does the perplexity parameter in t-SNE roughly control?",
+      "options": ["A) The number of clusters", "B) The number of effective neighbors", "C) The learning rate", "D) The number of iterations"],
+      "answer": "B",
+      "explanation": "Perplexity balances attention between local and global aspects of the data."
+    },
+    {
+      "q": "Why should you not over-interpret distances between clusters in a t-SNE plot?",
+      "options": ["A) t-SNE preserves global distances perfectly", "B) t-SNE only preserves local neighborhoods", "C) t-SNE always produces spherical clusters", "D) t-SNE is deterministic"],
+      "answer": "B",
+      "explanation": "t-SNE focuses on keeping nearby points close, but far-apart clusters may not reflect true global distances."
+    },
+    {
+      "q": "What does the Apriori algorithm find?",
+      "options": ["A) Clusters", "B) Frequent itemsets and association rules", "C) Principal components", "D) Dendrograms"],
+      "answer": "B",
+      "explanation": "Apriori identifies items that co-occur frequently and generates if-then rules."
+    },
+    {
+      "q": "In association rules, what does 'support' measure?",
+      "options": ["A) How often the rule is correct", "B) How often the itemset appears in the dataset", "C) How much more likely the consequent is given the antecedent", "D) The number of items in the rule"],
+      "answer": "B",
+      "explanation": "Support is the proportion of transactions containing the itemset."
+    },
+    {
+      "q": "What does a lift value greater than 1 indicate?",
+      "options": ["A) Negative association", "B) Positive association", "C) No association", "D) The rule is always true"],
+      "answer": "B",
+      "explanation": "Lift > 1 means the consequent is more likely when the antecedent occurs."
+    },
+    {
+      "q": "Which Python library is commonly used for Apriori?",
+      "options": ["A) scikit-learn", "B) mlxtend", "C) TensorFlow", "D) PyTorch"],
+      "answer": "B",
+      "explanation": "mlxtend provides apriori and association_rules functions."
+    },
+    {
+      "q": "What is a potential issue with setting min_support too low?",
+      "options": ["A) You may miss important rules", "B) You may generate many spurious rules", "C) The algorithm runs too slowly", "D) You cannot compute lift"],
+      "answer": "B",
+      "explanation": "Low support captures rare itemsets that may not be meaningful."
+    },
+    {
+      "q": "In K-Means, what happens if you choose K too large?",
+      "options": ["A) Clusters become too broad", "B) Clusters become too small and may overfit", "C) The algorithm fails", "D) The silhouette score always increases"],
+      "answer": "B",
+      "explanation": "Too many clusters can split natural groups into artificial subgroups."
+    },
+    {
+      "q": "Which clustering method can identify outliers as noise?",
+      "options": ["A) K-Means", "B) Hierarchical clustering", "C) DBSCAN", "D) PCA"],
+      "answer": "C",
+      "explanation": "DBSCAN labels points that are not in dense regions as noise (-1)."
+    },
+    {
+      "q": "What is the first step in hierarchical clustering?",
+      "options": ["A) Choose number of clusters", "B) Treat each point as its own cluster", "C) Compute centroids", "D) Run PCA"],
+      "answer": "B",
+      "explanation": "Agglomerative hierarchical clustering starts with each point as a singleton cluster."
+    },
+    {
+      "q": "What does a scree plot in PCA show?",
+      "options": ["A) The number of clusters", "B) The variance explained by each principal component", "C) The distance between points", "D) The support of rules"],
+      "answer": "B",
+      "explanation": "A scree plot displays eigenvalues or explained variance per component."
+    },
+    {
+      "q": "Why is t-SNE often preceded by PCA?",
+      "options": ["A) To increase the number of features", "B) To reduce noise and speed up computation", "C) To find clusters", "D) To compute lift"],
+      "answer": "B",
+      "explanation": "PCA can reduce dimensions to 50, making t-SNE faster and less noisy."
+    },
+    {
+      "q": "In association rule mining, what is the confidence of a rule A -> B?",
+      "options": ["A) P(A and B) / P(A)", "B) P(A and B) / P(B)", "C) P(A) / P(B)", "D) P(B) / P(A)"],
+      "answer": "A",
+      "explanation": "Confidence is the conditional probability of B given A."
+    },
+    {
+      "q": "Which of the following is a real-world application of clustering in Africa?",
+      "options": ["A) Segmenting mobile money customers", "B) Predicting stock prices", "C) Classifying emails as spam", "D) Translating languages"],
+      "answer": "A",
+      "explanation": "Clustering can group customers by transaction behavior for targeted offers."
+    },
+    {
+      "q": "What does the silhouette score measure?",
+      "options": ["A) How well-separated clusters are", "B) The number of clusters", "C) The variance explained", "D) The lift of a rule"],
+      "answer": "A",
+      "explanation": "Silhouette score combines cohesion and separation to evaluate clustering quality."
+    },
+    {
+      "q": "Which algorithm is best for finding associations in a supermarket basket dataset?",
+      "options": ["A) K-Means", "B) DBSCAN", "C) Apriori", "D) t-SNE"],
+      "answer": "C",
+      "explanation": "Apriori is designed for market basket analysis."
+    },
+    {
+      "q": "What is a common challenge when using t-SNE on very large datasets?",
+      "options": ["A) It is too fast", "B) It can be computationally expensive", "C) It always produces perfect clusters", "D) It requires labeled data"],
+      "answer": "B",
+      "explanation": "t-SNE has O(n^2) complexity, so it slows down for large n."
+    }
+  ],
+  "videos": [
+    "K-Means clustering tutorial Python scikit-learn",
+    "DBSCAN clustering explained with example",
+    "Apriori algorithm association rules tutorial"
+  ]
+}

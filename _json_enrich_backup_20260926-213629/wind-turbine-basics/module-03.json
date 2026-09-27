@@ -1,0 +1,218 @@
+﻿{
+  "course": "Wind Turbine Basics",
+  "module_number": 3,
+  "module_title": "Aerodynamics of Wind Turbines",
+  "lessons": [
+    {
+      "title": "Lift and Drag Forces on Airfoils",
+      "body": "When wind hits a wind turbine blade, it doesn't just push it. The blade is shaped like an airplane wingâan airfoil. The wind splits, going faster over the curved top and slower underneath. This creates a pressure difference: low pressure on top, high pressure below. The result is lift, a force perpendicular to the wind direction. Lift is what actually turns the rotor. Drag is the force parallel to the wind, pulling the blade back. Your goal is to maximize lift and minimize drag.\n\nIn Africa, most small wind turbines use simple airfoils like the NACA 4412 or 2412. These are easy to carve from wood or mold from fiberglass. For a 1-meter blade, a lift coefficient (Cl) of 1.0 is typical at a 5Â° angle of attack. Drag coefficient (Cd) might be 0.01. The lift-to-drag ratio (Cl/Cd) tells you efficiency: 100 is good, 50 is poor. You can measure this with free software like XFOIL or QBlade on a laptop.\n\nPractical tip: Keep blades smooth. Dust, insect marks, or rough repairs increase drag. In dusty Sahel conditions, wipe blades monthly. If you're building from wood, sand with 400-grit and seal with polyurethane. For a 3-blade, 2-meter diameter turbine, a 10% increase in drag can cut power output by 5-8%.\n\nYou can test airfoil performance without a wind tunnel. Use a simple setup: a household fan, a kitchen scale, and a model blade. Mount the blade on a pivot, blow air, and measure the force with the scale. Compare different shapes. Even a flat plate generates lift, but a proper airfoil gives 3-5 times more. Remember: lift increases with speed squared. Double the wind speed, quadruple the liftâbut also quadruple the drag. That's why high winds need braking."
+    },
+    {
+      "title": "Angle of Attack and Stall",
+      "body": "Angle of attack (AoA) is the angle between the blade's chord line and the oncoming wind. It's the single most important number for blade performance. At low AoA (0-5Â°), lift rises steadily. At around 15-20Â°, lift peaks. Beyond that, the airflow separates from the blade's top surfaceâthis is stall. Lift drops sharply, drag skyrockets. The turbine loses power and may vibrate.\n\nFor small African wind turbines, design for an AoA of 5-10Â° at normal wind speeds. A typical 2-meter diameter, 3-blade turbine spinning at 300 rpm in 8 m/s wind has a relative wind angle of about 7Â° at the tip. But near the hub, the angle is higherâup to 20Â°âbecause the blade moves slower there. That's why blades are twisted: the root has a larger pitch angle to keep AoA optimal along the whole length.\n\nStall is not always bad. Some turbines use \"stall regulation\": blades are fixed, and in high winds the AoA increases until stall limits power. This is simple and cheapâgood for off-grid African installations. But it can cause noise and fatigue. Active stall uses pitch control to force stall earlier.\n\nHow to avoid unwanted stall: keep blades clean, avoid sudden yaw changes, and don't overspeed. If you hear a loud whooshing or feel vibration, the blade may be stalling. Reduce load or apply brake. For a DIY turbine, test stall by tying a string to the blade tip and watching airflow with a small tuft. At stall, the tuft flutters wildly. Adjust blade pitch by rotating the blade in its hubâ2Â° changes can make a big difference. In dusty conditions, stall happens earlier because dirt disrupts smooth flow. Clean blades monthly."
+    },
+    {
+      "title": "Blade Element Momentum Theory Basics",
+      "body": "Blade Element Momentum (BEM) theory is the workhorse for designing wind turbine blades. It combines two ideas: momentum theory (wind slows as it passes through the rotor) and blade element theory (each slice of blade generates lift and drag). You don't need a PhD to use it. Free tools like QBlade or HARP_Opt do the math for you.\n\nThe core idea: divide each blade into 10-20 elements from root to tip. For each element, calculate the local wind speed, angle of attack, and lift/drag coefficients. Then sum the forces to get total torque and power. The result tells you the optimal twist and chord (width) for each element. For a 1 kW turbine in 8 m/s wind, a typical blade might be 2.5 m long, with chord tapering from 0.25 m at root to 0.05 m at tip, and twist from 20Â° to 2Â°.\n\nIn Africa, you can build blades using BEM output. Print the shape on paper, cut plywood templates, and carve. Or use PVC pipe: cut a 200 mm diameter pipe lengthwise, heat it, and twist to match the BEM profile. This is cheap and works well for small turbines. For a 3-blade, 3-meter diameter turbine, BEM predicts about 1.5 kW at 10 m/s if efficiency is 40%.\n\nBEM has limits. It assumes no tip losses, but real blades lose energy at the tip. Add a tip loss factor (Prandtl) to correct. Also, BEM ignores turbulence and yaw misalignment. For African sites with gusty winds, use a safety factor of 1.5 on loads. If you don't have software, use the simpler \"Schmitz\" method: it gives good twist for small turbines. Start with a 5Â° angle of attack at the tip and 15Â° at the root. Test, measure power, and adjust."
+    },
+    {
+      "title": "Tip Speed Ratio and Efficiency",
+      "body": "Tip speed ratio (TSR) is the speed of the blade tip divided by the wind speed. It's written as Î» (lambda). If the tip moves at 30 m/s and wind is 10 m/s, TSR = 3. TSR determines how fast the rotor spins and how much energy you capture. Most 3-blade turbines run best at TSR 6-8. Two-blade turbines run faster, TSR 8-10. Many-blade farm windmills run slow, TSR 1-2.\n\nWhy does TSR matter? At low TSR, the blades see a high angle of attack and may stall. At high TSR, drag increases and efficiency drops. The maximum theoretical efficiency is 59.3% (Betz limit). Real turbines achieve 40-45% at optimal TSR. For a small African turbine, aim for 35-40%. If your TSR is too low, the rotor turns slowly and produces less power. Too high, and it may overspeed and break.\n\nYou can measure TSR easily. Use a bicycle speedometer on the shaft: set wheel circumference to 1 meter, and it reads tip speed directly if you multiply by rotor radius. Or use a smartphone tachometer app. Count revolutions per minute (RPM). TSR = (RPM Ã Ï Ã diameter) / (60 Ã wind speed). For a 2 m diameter rotor at 300 RPM in 8 m/s wind: TSR = (300 Ã 3.14 Ã 2) / (60 Ã 8) = 3.9. That's lowâyou'd want 6-7. Increase blade pitch or reduce load.\n\nIn Africa, many small turbines use car alternators. These need high RPM to charge. So you might run TSR 8-10 to get 1000+ RPM. But high TSR means more noise and wear. Balance by using a belt drive to step up RPM. For direct-drive PMG (permanent magnet generator), TSR 5-6 is fine. Always test: adjust load (battery voltage) and watch RPM. If RPM drops when you connect load, TSR is too lowâadd more blades or reduce generator resistance."
+    },
+    {
+      "title": "Pitch Control and Aerodynamic Braking",
+      "body": "Pitch control means rotating the blade around its long axis to change the angle of attack. This lets you optimize power at low winds and limit power at high winds. Small African turbines often use fixed pitch to keep costs down, but pitch control is worth it for turbines above 1 kW. You can pitch manually with a lever or automatically with a governor.\n\nAerodynamic braking uses pitch to stall the blades. Turn them to 90Â° (feather) and they stop producing liftâthe rotor slows. This is safer than mechanical brakes because it doesn't wear out. For a 3-blade turbine, pitch all blades equally. A simple system: a spring-loaded lever that twists blades when wind exceeds 15 m/s. Or use a centrifugal governor from a diesel engineâweights fly out and rotate the blades.\n\nIn Africa, dust and heat affect pitch mechanisms. Use sealed bearings and stainless steel cables. Lubricate monthly with graphite spray, not oil (oil attracts dust). Test pitch monthly: with the turbine stopped, move blades from 0Â° to 90Â° and check for smooth motion. If a blade sticks, the turbine may yaw violently in a storm.\n\nAerodynamic braking also works by yawing the rotor sideways (furling). But pitch braking is more controlled. For a 5 kW turbine, pitch braking can stop the rotor in 10 seconds from 20 m/s wind. Mechanical brakes would need a large disc and caliper. Combine both: pitch to feather, then apply a small mechanical brake to hold. For DIY, you can use a manual pitch lever with a locking pin. Never leave a turbine unattended in high winds without a braking method. In cyclone-prone areas like Mozambique, pitch to 90Â° and tie the rotor with a rope."
+    },
+    {
+      "title": "Yaw Control and Wind Direction Tracking",
+      "body": "Yaw is the rotation of the turbine around its vertical axis to face the wind. If the turbine is not facing the wind, you lose powerâup to 30% for 30Â° misalignment. Small turbines use a tail vane (like a weather vane) to passively yaw. Larger turbines use active yaw motors with wind sensors.\n\nFor a tail vane, size matters. The tail area should be about 10-15% of the rotor swept area. For a 2 m diameter rotor (area 3.14 mÂ²), tail area 0.3-0.5 mÂ². Mount the tail on a boom 1-1.5 m behind the rotor. The pivot point should be slightly ahead of the rotor's center of pressure so the turbine naturally turns into the wind. Test by pushing the tail sidewaysâit should swing back smoothly.\n\nIn Africa, wind direction can shift quickly, especially in coastal or mountainous areas. A tail vane with a damper (a small shock absorber or friction disc) prevents constant hunting. Without damping, the turbine yaws back and forth, causing wear. Use a simple rubber bumper or a spring-loaded hinge.\n\nActive yaw uses a wind vane sensor and a small motor (like a car window motor). This is more complex but needed for turbines above 10 kW. You can build a DIY yaw system with an Arduino, a potentiometer as wind vane, and a geared motor. Set a deadband of 10Â° so the motor doesn't jitter. Power the motor from the turbine's battery bank.\n\nMaintenance: grease the yaw bearing every 3 months. In dusty conditions, use a sealed bearing or a bronze bushing. Check cablesâthey twist as the turbine yaws. Use a slip ring or leave enough slack. For a small turbine, a simple cable loop works. In a storm, yaw can be locked with a pin to prevent damage. Always ensure the turbine can yaw freely in normal operation. If it sticks, the turbine may face sideways and overspeed."
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is the primary force that turns a wind turbine rotor?",
+      "options": ["A) Drag", "B) Lift", "C) Gravity", "D) Centrifugal force"],
+      "answer": "B",
+      "explanation": "Lift, created by pressure difference over the airfoil, is perpendicular to the wind and drives rotation."
+    },
+    {
+      "q": "Which airfoil is commonly used for small DIY wind turbine blades?",
+      "options": ["A) NACA 0012", "B) NACA 4412", "C) Clark Y", "D) Both B and C"],
+      "answer": "D",
+      "explanation": "NACA 4412 and Clark Y are popular for small turbines due to good lift and easy construction."
+    },
+    {
+      "q": "What happens to lift when wind speed doubles?",
+      "options": ["A) Doubles", "B) Triples", "C) Quadruples", "D) Stays the same"],
+      "answer": "C",
+      "explanation": "Lift is proportional to the square of wind speed, so doubling speed quadruples lift."
+    },
+    {
+      "q": "What is the angle of attack?",
+      "options": ["A) Angle between blade chord and wind", "B) Angle between blade and tower", "C) Angle of blade twist", "D) Angle of yaw"],
+      "answer": "A",
+      "explanation": "Angle of attack is the angle between the blade's chord line and the oncoming relative wind."
+    },
+    {
+      "q": "At what angle of attack does stall typically begin?",
+      "options": ["A) 5Â°", "B) 10Â°", "C) 15-20Â°", "D) 30Â°"],
+      "answer": "C",
+      "explanation": "Stall occurs when the angle of attack exceeds about 15-20Â°, causing airflow separation."
+    },
+    {
+      "q": "Why are wind turbine blades twisted along their length?",
+      "options": ["A) To look better", "B) To maintain optimal angle of attack", "C) To reduce weight", "D) To increase drag"],
+      "answer": "B",
+      "explanation": "Twist compensates for varying relative wind speeds along the blade, keeping angle of attack near optimal."
+    },
+    {
+      "q": "What is a sign that a blade is stalling?",
+      "options": ["A) Smooth rotation", "B) Loud whooshing and vibration", "C) Increased power", "D) Lower noise"],
+      "answer": "B",
+      "explanation": "Stall causes flow separation, leading to noise and vibration as lift drops."
+    },
+    {
+      "q": "What does BEM theory stand for?",
+      "options": ["A) Blade Energy Momentum", "B) Blade Element Momentum", "C) Basic Energy Method", "D) Blade Efficiency Model"],
+      "answer": "B",
+      "explanation": "BEM combines blade element theory and momentum theory to predict turbine performance."
+    },
+    {
+      "q": "How many elements are typically used in BEM analysis per blade?",
+      "options": ["A) 1-2", "B) 5", "C) 10-20", "D) 50-100"],
+      "answer": "C",
+      "explanation": "Dividing the blade into 10-20 elements gives a good balance of accuracy and computation time."
+    },
+    {
+      "q": "What is a cheap material for DIY blades in Africa?",
+      "options": ["A) Carbon fiber", "B) PVC pipe", "C) Titanium", "D) Aluminum sheet"],
+      "answer": "B",
+      "explanation": "PVC pipe can be cut, heated, and twisted to form effective airfoil shapes at low cost."
+    },
+    {
+      "q": "What is tip speed ratio (TSR)?",
+      "options": ["A) Tip speed divided by wind speed", "B) Wind speed divided by tip speed", "C) Rotor diameter divided by wind speed", "D) RPM divided by wind speed"],
+      "answer": "A",
+      "explanation": "TSR is the ratio of the blade tip's linear speed to the free-stream wind speed."
+    },
+    {
+      "q": "What TSR range is optimal for a typical 3-blade turbine?",
+      "options": ["A) 1-2", "B) 3-5", "C) 6-8", "D) 10-12"],
+      "answer": "C",
+      "explanation": "Most 3-blade turbines achieve peak efficiency at TSR 6-8."
+    },
+    {
+      "q": "What is the Betz limit?",
+      "options": ["A) 40.3%", "B) 59.3%", "C) 75%", "D) 100%"],
+      "answer": "B",
+      "explanation": "The Betz limit is the theoretical maximum efficiency of a wind turbine, about 59.3%."
+    },
+    {
+      "q": "How can you measure TSR without expensive equipment?",
+      "options": ["A) Use a bicycle speedometer", "B) Guess", "C) Use a thermometer", "D) Count blade passes by eye"],
+      "answer": "A",
+      "explanation": "A bicycle speedometer on the shaft can measure RPM, which you convert to TSR."
+    },
+    {
+      "q": "What does pitch control do?",
+      "options": ["A) Changes blade angle to the wind", "B) Changes rotor diameter", "C) Changes tower height", "D) Changes generator type"],
+      "answer": "A",
+      "explanation": "Pitch control rotates blades around their long axis to adjust angle of attack."
+    },
+    {
+      "q": "What is aerodynamic braking?",
+      "options": ["A) Using mechanical disc brakes", "B) Turning blades to stall or feather", "C) Using a parachute", "D) Shorting the generator"],
+      "answer": "B",
+      "explanation": "Aerodynamic braking uses pitch to stall or feather blades, reducing lift and slowing the rotor."
+    },
+    {
+      "q": "Why is aerodynamic braking preferred over mechanical braking?",
+      "options": ["A) It is cheaper", "B) It causes less wear", "C) It is faster", "D) It requires no maintenance"],
+      "answer": "B",
+      "explanation": "Aerodynamic braking avoids friction and wear on mechanical components."
+    },
+    {
+      "q": "In dusty conditions, what should you use to lubricate pitch mechanisms?",
+      "options": ["A) Oil", "B) Grease", "C) Graphite spray", "D) Water"],
+      "answer": "C",
+      "explanation": "Graphite spray lubricates without attracting dust, unlike oil or grease."
+    },
+    {
+      "q": "What is yaw in a wind turbine?",
+      "options": ["A) Rotation around vertical axis", "B) Rotation around horizontal axis", "C) Blade twist", "D) Generator rotation"],
+      "answer": "A",
+      "explanation": "Yaw is the rotation of the turbine to face the wind, around its vertical axis."
+    },
+    {
+      "q": "What is used for passive yaw control on small turbines?",
+      "options": ["A) Tail vane", "B) Electric motor", "C) Hydraulic pump", "D) Manual crank"],
+      "answer": "A",
+      "explanation": "A tail vane acts like a weather vane to keep the rotor facing the wind."
+    },
+    {
+      "q": "What tail area is recommended for a 2 m diameter rotor?",
+      "options": ["A) 0.1 mÂ²", "B) 0.3-0.5 mÂ²", "C) 1 mÂ²", "D) 2 mÂ²"],
+      "answer": "B",
+      "explanation": "Tail area should be about 10-15% of rotor swept area, which is 0.3-0.5 mÂ² for a 2 m rotor."
+    },
+    {
+      "q": "What is a deadband in active yaw control?",
+      "options": ["A) A range where motor doesn't move", "B) A type of bearing", "C) A wind speed limit", "D) A brake setting"],
+      "answer": "A",
+      "explanation": "Deadband prevents the yaw motor from constantly adjusting for small wind shifts."
+    },
+    {
+      "q": "What should you do to yaw bearing in dusty conditions?",
+      "options": ["A) Grease monthly", "B) Leave it dry", "C) Use oil", "D) Replace weekly"],
+      "answer": "A",
+      "explanation": "Monthly greasing with a sealed bearing or bronze bushing reduces wear in dust."
+    },
+    {
+      "q": "What happens if a turbine cannot yaw freely?",
+      "options": ["A) It produces more power", "B) It may face sideways and overspeed", "C) It stops", "D) It becomes quieter"],
+      "answer": "B",
+      "explanation": "A stuck yaw can cause the rotor to face sideways, reducing load and leading to overspeed."
+    },
+    {
+      "q": "What is the purpose of a damper on a tail vane?",
+      "options": ["A) To increase speed", "B) To prevent hunting", "C) To add weight", "D) To reduce noise"],
+      "answer": "B",
+      "explanation": "A damper (friction disc or shock absorber) stops the tail from oscillating back and forth."
+    },
+    {
+      "q": "Which of these is a real number for lift-to-drag ratio of a good airfoil?",
+      "options": ["A) 5", "B) 20", "C) 100", "D) 500"],
+      "answer": "C",
+      "explanation": "A lift-to-drag ratio of 100 is achievable with well-designed airfoils at optimal angle of attack."
+    },
+    {
+      "q": "What happens to drag when wind speed doubles?",
+      "options": ["A) Doubles", "B) Triples", "C) Quadruples", "D) Stays same"],
+      "answer": "C",
+      "explanation": "Drag is proportional to the square of wind speed, so it quadruples when speed doubles."
+    },
+    {
+      "q": "What is the typical efficiency of a small African wind turbine at optimal TSR?",
+      "options": ["A) 10-20%", "B) 35-40%", "C) 60-70%", "D) 90%"],
+      "answer": "B",
+      "explanation": "Small turbines typically achieve 35-40% efficiency, below the Betz limit of 59.3%."
+    },
+    {
+      "q": "Why might you use a belt drive on a small turbine?",
+      "options": ["A) To increase RPM for generator", "B) To reduce noise", "C) To change direction", "D) To add weight"],
+      "answer": "A",
+      "explanation": "A belt drive can step up RPM to match generator requirements, allowing lower TSR operation."
+    },
+    {
+      "q": "What should you do before a cyclone in Mozambique?",
+      "options": ["A) Pitch blades to 90Â° and tie rotor", "B) Remove blades", "C) Increase load", "D) Turn off yaw"],
+      "answer": "A",
+      "explanation": "Pitching to feather and tying the rotor prevents damage from extreme winds."
+    }
+  ],
+  "videos": [
+    "how to carve wind turbine blades from wood",
+    "DIY wind turbine pitch control mechanism",
+    "measuring tip speed ratio small wind turbine"
+  ]
+}

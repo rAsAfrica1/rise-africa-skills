@@ -1,0 +1,222 @@
+{
+  "course": "Robotics",
+  "module_number": 5,
+  "module_title": "Microcontrollers and Embedded Systems",
+  "lessons": [
+    {
+      "title": "Introduction to Arduino and Raspberry Pi",
+      "body": "Microcontrollers are the brains of most robots. In this lesson, you'll learn about two popular platforms: Arduino and Raspberry Pi. Arduino is a microcontroller board that runs one program repeatedly. It's great for controlling sensors, motors, and lights in real time. Raspberry Pi is a tiny computer that runs an operating system like Linux. It can do complex tasks like image processing but isn't as good at precise timing. For a line-following robot, Arduino is often the better choice because it reacts instantly to sensor inputs.\n\nIn Africa, Arduino Uno clones are widely available for about 5,000 to 10,000 Naira (or equivalent) in local electronics markets like Computer Village in Lagos or Alaba International. Raspberry Pi 4 costs around 50,000 to 80,000 Naira. Both can be powered by USB power banks or 9V batteries. You'll need a computer to program themâa laptop with Windows, Mac, or Linux works. The Arduino IDE is a free download, and it includes many example programs.\n\nTo get started, connect your Arduino to your computer with a USB cable. Open the Arduino IDE, select the correct board and port, and upload the 'Blink' example. This makes the built-in LED blink every second. That simple test confirms your setup works. For Raspberry Pi, you'll need to install an operating system on a microSD card using the Raspberry Pi Imager. Then you can connect a monitor, keyboard, and mouse to use it like a desktop.\n\nWhen choosing between them, consider your robot's needs. If you need to read sensors and control motors with precise timing, use Arduino. If you need to process camera images or connect to the internet, use Raspberry Pi. Many advanced robots use both: a Raspberry Pi for high-level decisions and an Arduino for low-level control. For this module, we'll focus on Arduino because it's cheaper, simpler, and perfect for a line-following robot. You can buy an Arduino Uno clone, a USB cable, and a few sensors for under 15,000 Naira total."
+    },
+    {
+      "title": "Digital and Analog I/O Programming",
+      "body": "Digital I/O means reading or writing only two states: HIGH (5V) or LOW (0V). Analog input reads a range of voltages, usually 0 to 5V, and converts them to a number between 0 and 1023. On Arduino, digital pins are numbered 0 to 13, and analog input pins are A0 to A5. You use pinMode() to set a pin as INPUT or OUTPUT, digitalWrite() to set an output HIGH or LOW, and digitalRead() to read an input. For analog, use analogRead() on an analog pin.\n\nA practical example: reading a push button. Connect one side of the button to 5V and the other side to pin 2, with a 10kÎ© resistor from pin 2 to ground. This is a pull-down resistor. When the button is pressed, pin 2 reads HIGH; otherwise, it reads LOW. In code, you'd set pinMode(2, INPUT) and then use digitalRead(2) to check the state. For analog, connect a potentiometer: middle pin to A0, outer pins to 5V and ground. analogRead(A0) will give 0 when turned fully left and 1023 when fully right.\n\nOutputs: To light an LED, connect it from pin 13 to a 220Î© resistor to ground. digitalWrite(13, HIGH) turns it on. For analog output, Arduino doesn't have true analog output, but it can simulate it using PWM (Pulse Width Modulation) on pins 3, 5, 6, 9, 10, and 11. analogWrite(pin, value) where value is 0 to 255 sets the duty cycle. This is useful for dimming LEDs or controlling motor speed.\n\nIn a line-following robot, you'll use digital inputs to read infrared sensors (which output HIGH or LOW depending on whether they see a line) and analog inputs to read more precise sensors. You'll use digital outputs to control motor driver pins. Always use current-limiting resistors with LEDs to avoid burning them out. A typical IR sensor module costs about 500 Naira in local markets, and you can build your own with an IR LED and photodiode for even less. Practice by writing a program that reads a button and turns on an LED when pressed, then modify it to use analog input to control LED brightness."
+    },
+    {
+      "title": "Interfacing Sensors and Actuators",
+      "body": "Sensors convert physical quantities into electrical signals. Actuators convert electrical signals into physical action. For robotics, common sensors include infrared (IR) reflectance sensors for line detection, ultrasonic sensors for distance measurement, and temperature sensors. Actuators include DC motors, servo motors, and stepper motors. In this lesson, you'll learn how to connect and program them with Arduino.\n\nStart with an IR reflectance sensor. It has two pins: one for power (5V and GND) and one for signal. The signal is digital: LOW when it sees a black line (because black absorbs IR light) and HIGH when it sees a white surface (reflects IR). Connect the signal pin to Arduino digital pin 2. In code, use digitalRead(2) to check. A typical module costs 300-500 Naira. For better precision, use an analog IR sensor or a QTR-8A array, which gives analog readings.\n\nUltrasonic sensor (HC-SR04) measures distance by sending a sound pulse and timing its echo. It has four pins: VCC, GND, Trig, and Echo. Connect Trig to pin 9 and Echo to pin 10. In code, send a 10-microsecond HIGH pulse to Trig, then measure the time Echo stays HIGH using pulseIn(10, HIGH). Distance in cm = time / 58. This sensor costs about 1,500 Naira and is great for obstacle avoidance.\n\nActuators: DC motors need more current than Arduino can provide, so you need a motor driver like L298N or L293D. The L298N module costs around 1,000 Naira and can control two motors. Connect Arduino pins to the driver's input pins, and the motors to the output pins. For a servo motor (like SG90), connect its signal wire to an Arduino PWM pin (e.g., 9). Use the Servo library: #include <Servo.h>, then myservo.attach(9) and myservo.write(angle). Servos are used for steering or moving arms.\n\nWhen interfacing, always check voltage and current ratings. Never connect a motor directly to Arduino pinsâyou'll damage the board. Use a separate power supply for motors if needed, and connect all grounds together. Practice by building a simple circuit: an IR sensor that turns on an LED when it detects a line, then replace the LED with a motor driver to spin a motor. This is the basis of your line-following robot."
+    },
+    {
+      "title": "Serial Communication: UART, I2C, SPI",
+      "body": "Serial communication allows microcontrollers to talk to each other, to sensors, and to computers. The three main protocols are UART, I2C, and SPI. UART (Universal Asynchronous Receiver-Transmitter) uses two wires: TX (transmit) and RX (receive). It's simple and used for programming Arduino and for connecting to devices like GPS modules. On Arduino Uno, pins 0 (RX) and 1 (TX) are used for UART. You can use the Serial library: Serial.begin(9600) sets the baud rate, Serial.print() sends data, and Serial.read() receives data.\n\nI2C (Inter-Integrated Circuit) uses two wires: SDA (data) and SCL (clock). It supports multiple devices on the same bus, each with a unique address. On Arduino Uno, SDA is A4 and SCL is A5. I2C is perfect for sensors like the MPU6050 (accelerometer and gyroscope) or OLED displays. You need the Wire library: Wire.begin(), Wire.beginTransmission(address), Wire.write(data), Wire.endTransmission(), and Wire.requestFrom(address, bytes). Typical I2C devices cost from 1,000 to 5,000 Naira.\n\nSPI (Serial Peripheral Interface) uses four wires: MOSI (Master Out Slave In), MISO (Master In Slave Out), SCK (clock), and SS (slave select). It's faster than I2C and used for SD cards, RFID readers, and some displays. On Arduino Uno, pins 11 (MOSI), 12 (MISO), 13 (SCK), and 10 (SS) are used. You use the SPI library: SPI.begin(), SPI.transfer(data). SPI devices can be more expensive but offer high speed.\n\nFor a line-following robot, you might use I2C to connect an LCD screen for debugging, or UART to send data to a computer for monitoring. If you add a Bluetooth module (HC-05) for remote control, it uses UART. Remember to connect grounds between devices. Also, ensure logic levels match: most Arduino sensors are 5V, but some are 3.3V. Use a logic level converter if needed. Practice by connecting an I2C OLED display and printing sensor readings on it, or by sending data from Arduino to your computer's serial monitor."
+    },
+    {
+      "title": "Real-Time Operating Systems for Robotics",
+      "body": "A Real-Time Operating System (RTOS) helps you manage multiple tasks with precise timing. In robotics, you often need to read sensors, control motors, and communicate simultaneously. Without an RTOS, you might use delay() or millis(), but that can cause missed sensor readings or jittery motor control. An RTOS like FreeRTOS allows you to create tasks that run concurrently, each with its own priority.\n\nFreeRTOS is free and works on Arduino (especially ESP32, which has two cores). On a standard Arduino Uno, memory is limited, but you can still use a simple scheduler. For more complex robots, consider an ESP32, which costs about 3,000 Naira and has built-in WiFi and Bluetooth. With FreeRTOS, you create tasks using xTaskCreate(). Each task is a function that runs in an infinite loop. You can set priorities: higher priority tasks run first. Use vTaskDelay() to yield control to other tasks.\n\nFor a line-following robot, you might have three tasks: one reads IR sensors every 5ms, one controls motors every 10ms, and one checks for commands via Bluetooth every 100ms. The sensor task has highest priority to ensure timely line detection. Use queues to send data between tasks safely. For example, the sensor task sends sensor values to a queue, and the motor task reads from that queue. This avoids race conditions.\n\nIf you don't use an RTOS, you can implement a simple cooperative scheduler using millis(). For example, check if 5ms have passed since last sensor read, then do it. This is called a state machine. It's simpler but requires careful coding to avoid blocking. For most beginner robots, a state machine is enough. But as your robot gets more complex, an RTOS becomes valuable. Practice by writing a program that blinks two LEDs at different rates without using delay(), using millis(). Then try FreeRTOS on an ESP32 if available."
+    },
+    {
+      "title": "Lab: Building a Line-Following Robot",
+      "body": "In this lab, you'll build a line-following robot using an Arduino Uno, two IR reflectance sensors, an L298N motor driver, two DC motors, a chassis, and a battery pack. The goal is to make the robot follow a black line on a white surface. Total cost: about 15,000 to 20,000 Naira if you source parts locally. You can use a cardboard or acrylic chassis, or buy a robot car kit for around 10,000 Naira.\n\nFirst, assemble the chassis. Mount the two DC motors with wheels on either side, and a caster wheel at the front or back for balance. Attach the IR sensors at the front, facing down, about 1-2 cm above the ground. Place them close together (about 2-3 cm apart) so they can detect the line. Connect the sensors: VCC to 5V, GND to GND, and signal pins to Arduino digital pins 2 (left sensor) and 3 (right sensor). Connect the L298N: input pins to Arduino pins 4, 5, 6, 7 (or use PWM pins for speed control), and motors to the output terminals. Power the L298N with a 6-12V battery pack (e.g., 4 AA batteries or a 9V battery). Connect Arduino GND to L298N GND.\n\nWrite the code. Define pins. In setup(), set sensor pins as INPUT and motor pins as OUTPUT. In loop(), read both sensors. If both see white (HIGH), go forward. If left sees black (LOW) and right sees white, turn left. If right sees black and left sees white, turn right. If both see black, stop or go forward (depending on line width). Use digitalWrite() to control the motor driver. For example, to go forward: digitalWrite(4, HIGH); digitalWrite(5, LOW); digitalWrite(6, HIGH); digitalWrite(7, LOW). To turn left: left motor backward, right motor forward.\n\nTest on a track made of black electrical tape on a white surface. Adjust sensor sensitivity using the potentiometers on the IR modules. If the robot oscillates, reduce speed or move sensors closer to the ground. If it loses the line, check sensor placement and code logic. Common issues: sensors not detecting due to ambient light, motors not turning due to insufficient power, or wiring errors. Use a multimeter to check voltages. Once working, you can add a buzzer or LED to indicate line detection. This lab gives you a complete robotics project you can show to employers or use as a base for more advanced robots."
+    }
+  ,
+    {
+      "title": "Practical Reference",
+      "body": "<section>\n  <h2>Practical Reference: Microcontrollers &amp; Embedded Systems for African Robotics Ventures</h2>\n\n  <p>This practical reference is written for African robotics entrepreneurs, TVET instructors, and agritech integrators who need to move from \"blinking an LED\" to shipping a working product. The lessons in this module cover Arduino and Raspberry Pi, digital and analog I/O, sensors and actuators, serial buses (UART, I2C, SPI), and real-time operating systems. This reference consolidates the engineering decisions that determine whether your robot prototype becomes a sellable product â or a drawer of dead boards.</p>\n\n  <p>Across Africa, the strongest robotics demand signals are in agriculture (weeding, spraying, yield mapping), logistics (warehouse and last-mile delivery), mining safety, and healthcare delivery. Your microcontroller choice should be driven by the customer's problem, not by what is trending on GitHub. A solar-powered soil-moisture logger for a smallholder cooperative in Kenya has different constraints than a warehouse AGV in Lagos or a mine-safety drone in Johannesburg.</p>\n\n  <figure>\n    <svg viewBox=\"0 0 720 320\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-labelledby=\"sysTitle sysDesc\" style=\"width:100%;height:auto;font-family:Arial,Helvetica,sans-serif;\">\n      <title id=\"sysTitle\">Typical embedded robotics system architecture</title>\n      <desc id=\"sysDesc\">Diagram showing sensors connecting to a microcontroller via analog, digital, I2C and SPI buses, the microcontroller driving actuators through motor drivers, and a Raspberry Pi companion computer linked over UART.</desc>\n      <rect x=\"0\" y=\"0\" width=\"720\" height=\"320\" fill=\"#f7f9fb\"/>\n      <rect x=\"20\" y=\"110\" width=\"150\" height=\"100\" rx=\"8\" fill=\"#e3f2fd\" stroke=\"#1565c0\" stroke-width=\"2\"/>\n      <text x=\"95\" y=\"150\" text-anchor=\"middle\" font-size=\"14\" fill=\"#0d47a1\" font-weight=\"bold\">Sensors</text>\n      <text x=\"95\" y=\"170\" text-anchor=\"middle\" font-size=\"11\" fill=\"#0d47a1\">IR / Ultrasonic</text>\n      <text x=\"95\" y=\"186\" text-anchor=\"middle\" font-size=\"11\" fill=\"#0d47a1\">IMU / Soil probe</text>\n\n      <rect x=\"270\" y=\"90\" width=\"180\" height=\"140\" rx=\"8\" fill=\"#fff8e1\" stroke=\"#f9a825\" stroke-width=\"2\"/>\n      <text x=\"360\" y=\"130\" text-anchor=\"middle\" font-size=\"14\" fill=\"#e65100\" font-weight=\"bold\">Microcontroller</text>\n      <text x=\"360\" y=\"150\" text-anchor=\"middle\" font-size=\"11\" fill=\"#e65100\">Arduino / STM32 / ESP32</text>\n      <text x=\"360\" y=\"168\" text-anchor=\"middle\" font-size=\"11\" fill=\"#e65100\">Real-time control loop</text>\n      <text x=\"360\" y=\"186\" text-anchor=\"middle\" font-size=\"11\" fill=\"#e65100\">ADC â¢ PWM â¢ Timers</text>\n\n      <rect x=\"550\" y=\"110\" width=\"150\" height=\"100\" rx=\"8\" fill=\"#e8f5e9\" stroke=\"#2e7d32\" stroke-width=\"2\"/>\n      <text x=\"625\" y=\"150\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1b5e20\" font-weight=\"bold\">Actuators</text>\n      <text x=\"625\" y=\"170\" text-anchor=\"middle\" font-size=\"11\" fill=\"#1b5e20\">Motors / Servos</text>\n      <text x=\"625\" y=\"186\" text-anchor=\"middle\" font-size=\"11\" fill=\"#1b5e20\">Pumps / Relays</text>\n\n      <rect x=\"270\" y=\"255\" width=\"180\" height=\"50\" rx=\"8\" fill=\"#ede7f6\" stroke=\"#4527a0\" stroke-width=\"2\"/>\n      <text x=\"360\" y=\"285\" text-anchor=\"middle\" font-size=\"13\" fill=\"#311b92\" font-weight=\"bold\">Raspberry Pi (UART)</text>\n\n      <line x1=\"170\" y1=\"150\" x2=\"270\" y2=\"145\" stroke=\"#1565c0\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n      <line x1=\"450\" y1=\"145\" x2=\"550\" y2=\"150\" stroke=\"#2e7d32\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n      <line x1=\"360\" y1=\"230\" x2=\"360\" y2=\"255\" stroke=\"#4527a0\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n      <text x=\"215\" y=\"138\" text-anchor=\"middle\" font-size=\"10\" fill=\"#1565c0\">I2C / SPI / ADC</text>\n      <text x=\"500\" y=\"138\" text-anchor=\"middle\" font-size=\"10\" fill=\"#2e7d32\">PWM / GPIO</text>\n      <text x=\"405\" y=\"248\" font-size=\"10\" fill=\"#4527a0\">UART</text>\n      <defs>\n        <marker id=\"arrow\" markerWidth=\"10\" markerHeight=\"10\" refX=\"8\" refY=\"3\" orient=\"auto\">\n          <path d=\"M0,0 L0,6 L9,3 z\" fill=\"#333\"/>\n        </marker>\n      </defs>\n    </svg>\n    <figcaption>Figure 1: Typical embedded robotics architecture â sensors â microcontroller â actuators, with a Raspberry Pi companion computer over UART. Adapted from the Arduino Reference (docs.arduino.cc) and Raspberry Pi Documentation (raspberrypi.com/documentation).</figcaption>\n  </figure>\n\n  <h3>Choosing Your Platform: Arduino vs Raspberry Pi vs ESP32</h3>\n\n  <p>The most common costly mistake in African robotics startups is picking a Raspberry Pi for a job that needs an Arduino, or vice versa. The Pi is a general-purpose Linux computer: excellent for vision, networking, and dashboards, but it has no hard real-time guarantees and can crash on a power dip. A microcontroller (Arduino, STM32, ESP32) runs one program deterministically, boots in milliseconds, and survives brownouts far better â critical when your robot runs off a solar-charged battery in rural Kenya or a generator-backed workshop in Accra.</p>\n\n  <p>The practical pattern that wins in the field: a microcontroller handles the real-time control loop (motor PID, sensor sampling, safety cutoffs), and a Raspberry Pi handles high-level tasks (camera, LTE upload, operator UI). They talk over UART. This split lets you ship a working product now and upgrade the brain later without rewriting the control firmware.</p>\n\n  <table border=\"1\" cellpadding=\"8\" cellspacing=\"0\" style=\"border-collapse:collapse;width:100%;font-size:14px;\">\n    <caption style=\"text-align:left;font-weight:bold;padding:6px 0;\">Table 1: Platform selection matrix for African robotics deployments</caption>\n    <thead style=\"background:#e3f2fd;\">\n      <tr>\n        <th>Criterion</th>\n        <th>Arduino Uno/Nano</th>\n        <th>ESP32</th>\n        <th>Raspberry Pi 4/5</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr><td>Real-time control</td><td>Excellent</td><td>Very good</td><td>Poor (Linux scheduling)</td></tr>\n      <tr><td>Connectivity</td><td>None (add shield)</td><td>Wi-Fi + BLE built-in</td><td>Wi-Fi + Ethernet + BLE</td></tr>\n      <tr><td>Power draw (typical)</td><td>~50 mA</td><td>~240 mA (Wi-Fi active)</td><td>~600â3000 mA</td></tr>\n      <tr><td>Camera / vision</td><td>No</td><td>Basic (ESP32-CAM)</td><td>Yes (CSI + USB)</td></tr>\n      <tr><td>Cost (approx. local retail)</td><td>$5â15</td><td>$6â12</td><td>$45â90</td></tr>\n      <tr><td>Best African use case</td><td>Irrigation valve, line-follower</td><td>Solar sensor node, LoRa gateway</td><td>Vision-based weeder, AGV</td></tr>\n    </tbody>\n  </table>\n  <p style=\"font-size:12px;color:#555;\">Sources: Arduino Hardware Documentation (docs.arduino.cc/hardware), Espressif ESP32 datasheet (espressif.com), Raspberry Pi Documentation (raspberrypi.com/documentation). Power figures are typical, not worst-case.</p>\n\n  <h3>Digital and Analog I/O: The Engineering Reality</h3>\n\n  <p>Digital I/O reads or writes HIGH/LOW. Analog input uses the ADC to read a voltage. Two numbers matter in every African deployment:</p>\n  <ul>\n    <li><strong>ADC resolution:</strong> Arduino Uno = 10-bit (0â1023 over 0â5 V). ESP32 = 12-bit (0â4095 over 0â3.3 V). Raspberry Pi has no ADC â you must add an external chip (e.g. MCP3008 over SPI).</li>\n    <li><strong>Logic voltage:</strong> Mixing 5 V Arduino sensors with 3.3 V ESP32 or Pi GPIO will destroy pins. Use a level shifter or a voltage divider. This is the single most common hardware failure we see in student and startup labs.</li>\n  </ul>\n\n  <p>For analog sensors in dusty, humid African environments (soil moisture, turbidity, gas), always calibrate in situ. A capacitive soil probe reading 2.1 V in the lab will read differently after two weeks in red Kenyan soil. Store calibration constants in EEPROM or flash so a power cycle does not lose them.</p>\n\n  <table border=\"1\" cellpadding=\"8\" cellspacing=\"0\" style=\"border-collapse:collapse;width:100%;font-size:14px;\">\n    <caption style=\"text-align:left;font-weight:bold;padding:6px 0;\">Table 2: Serial communication buses â selection and trade-offs</caption>\n    <thead style=\"background:#e8f5e9;\">\n      <tr>\n        <th>Bus</th>\n        <th>Wires</th>\n        <th>Typical speed</th>\n        <th>Distance</th>\n        <th>Best for</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr><td>UART</td><td>2 (TX/RX)</td><td>9.6kâ115.2k bps</td><td>~1â2 m on board</td><td>MCU â Pi, GPS, GSM/LTE modules</td></tr>\n      <tr><td>I2C</td><td>2 (SDA/SCL)</td><td>100kâ400k bps</td><td>~1 m (short)</td><td>IMU, OLED, RTC, multiple sensors</td></tr>\n      <tr><td>SPI</td><td>4 (MOSI/MISO/SCK/CS)</td><td>1â50 Mbps</td><td>~0.5â1 m</td><td>SD cards, ADC chips, displays, fast sensors</td></tr>\n    </tbody>\n  </table>\n  <p style=\"font-size:12px;color:#555;\">Sources: Arduino Communication protocols guide (docs.arduino.cc/learn/communication), NXP I2C-bus specification (UM10204), Raspberry Pi SPI/I2C documentation (raspberrypi.com/documentation/computers).</p>\n\n  <div style=\"border:2px solid #c62828;background:#ffebee;padding:14px;border-radius:6px;margin:20px 0;\">\n    <strong style=\"color:#b71c1c;\">â  SAFETY WARNING â Battery, Motor, and Mains Hazards</strong>\n    <p style=\"margin:8px 0 0;color:#b71c1c;\">Robotics in African field conditions combines high-current batteries, fast-spinning motors, and unreliable mains power. Never connect a motor directly to a microcontroller GPIO â the inrush current will destroy the pin and can start a fire. Always use a motor driver (L298N, TB6612, or DRV8833) with a properly rated fuse and a flyback diode. Lithium batteries (LiPo, 18650) must be charged on a balance charger in a fireproof bag, never unattended overnight, and never in a shack or vehicle. If your robot touches mains (pumps, chargers, workshop tools), use an RCD/earth-leakage breaker and keep 230 V wiring physically separated from 5 V logic. In areas with unstable grid power, add surge protection and a battery-backed UPS to protect both equipment and operators. When in doubt, de-energize and get a qualified electrician.</p>\n  </div>\n\n  <h3>Interfacing Sensors and Actuators â Field-Proven Practices</h3>\n\n  <p>Sensor selection in Africa is a supply-chain decision as much as an engineering one. Prefer parts you can reorder locally or via regional distributors (e.g. RS Components South Africa, Mouser, or trusted Alibaba vendors with local returns). Avoid exotic sensors with no local stock â a failed $80 sensor with a six-week lead time kills a harvest-season deployment.</p>\n\n  <ul>\n    <li><strong>Debounce everything mechanical.</strong> Limit switches, reed switches, and cheap buttons bounce. Software debounce (10â50 ms) or an RC filter saves you from phantom triggers.</li>\n    <li><strong>Filter analog sensors.</strong> Use a moving average or median filter. Dust, humidity, and long unshielded wires inject noise.</li>\n    <li><strong>Drive actuators through isolation.</strong> Relays for pumps and solenoids; motor drivers for DC/stepper motors; opto-isolators where ground loops are likely.</li>\n    <li><strong>Protect against brownouts.</strong> Add a watchdog timer; if the MCU hangs, it resets. Add a large bulk capacitor near the motor driver.</li>\n  </ul>\n\n  <h3>Real-Time Operating Systems for Robotics</h3>\n\n  <p>Bare-metal loops are fine for a line-follower. They break down when you add Wi-Fi, logging, and multiple sensors. An RTOS (FreeRTOS, Zephyr, or ChibiOS) gives you tasks, priorities, and deterministic scheduling. On ESP32, FreeRTOS is already there â use it. On a Raspberry Pi, use PREEMPT_RT or, better, offload hard timing to a microcontroller. For most African robotics startups, the winning architecture is: RTOS on the MCU for control, Linux on the Pi for intelligence.</p>\n\n  <h3>Lab: Building a Line-Following Robot â Business Notes</h3>\n\n  <p>The line-follower lab is not just a teaching exercise; it is a miniature of every autonomous ground vehicle. The skills map directly to:</p>\n  <ul>\n    <li><strong>Agritech:</strong> row-following weeders and sprayers (replace the line with a crop row via camera or IR).</li>\n    <li><strong>Warehouse:</strong> AGVs following magnetic or QR-coded paths.</li>\n    <li><strong>Education market:</strong> sell line-follower kits to schools and TVET colleges â a real revenue line for African robotics startups.</li>\n  </ul>\n  <p>Build it with an Arduino Nano, two IR reflectance sensors, an L298N driver, and a 2-cell 18650 pack. Get it working on a clean floor, then test it on uneven ground, in sunlight, and on dusty concrete â the conditions your customers actually have. If it survives that, you have a product.</p>\n\n  <h3>Quick Reference Checklist</h3>\n  <ol>\n    <li>Match platform to task: MCU for real-time control, Pi for vision/networking; link them over UART.</li>\n    <li>Check logic voltages before wiring â level-shift 5 V â 3.3 V to avoid frying pins.</li>\n    <li>Never drive motors or relays directly from GPIO; use a driver with fuse and flyback protection.</li>\n    <li>Calibrate analog sensors in the field and store constants in EEPROM/flash.</li>\n    <li>Debounce mechanical inputs and filter analog signals in software.</li>\n    <li>Choose buses deliberately: I2C for short multi-sensor, SPI for speed, UART for module links.</li>\n    <li>Add a watchdog timer and brownout protection for unstable power environments.</li>\n    <li>Test on real African terrain â dust, sun, uneven ground, intermittent power â before shipping.</li>\n  </ol>\n\n  <h3>Further Reading (Free Official Sources)</h3>\n  <ul>\n    <li><a href=\"https://docs.arduino.cc/\" target=\"_blank\" rel=\"noopener\">Arduino Official Documentation</a> â language reference, hardware, and communication guides.</li>\n    <li><a href=\"https://www.raspberrypi.com/documentation/\" target=\"_blank\" rel=\"noopener\">Raspberry Pi Documentation</a> â GPIO, I2C, SPI, UART, and power guidance.</li>\n    <li><a href=\"https://docs.espressif.com/projects/esp-idf/en/latest/esp32/\" target=\"_blank\" rel=\"noopener\">Espressif ESP-IDF Documentation</a> â ESP32 programming and FreeRTOS integration.</li>\n    <li><a href=\"https://www.freertos.org/Documentation/RTOS_book.html\" target=\"_blank\" rel=\"noopener\">FreeRTOS Official Documentation</a> â real-time scheduling for embedded robotics.</li>\n    <li><a href=\"https://www.i2c-bus.org/\" target=\"_blank\" rel=\"noopener\">I2C-Bus.org</a> â practical I2C reference for sensor integration.</li>\n  </ul>\n</section>"
+    }],
+  "quiz": [
+    {
+      "q": "Which platform is better for precise timing control in a line-following robot?",
+      "options": ["A) Raspberry Pi", "B) Arduino", "C) Both are equally good", "D) Neither"],
+      "answer": "B",
+      "explanation": "Arduino is a microcontroller with deterministic timing, while Raspberry Pi runs an OS that can introduce delays."
+    },
+    {
+      "q": "What is the typical cost of an Arduino Uno clone in Nigerian markets?",
+      "options": ["A) 500 Naira", "B) 5,000-10,000 Naira", "C) 50,000 Naira", "D) 100,000 Naira"],
+      "answer": "B",
+      "explanation": "Arduino Uno clones are affordable and widely available for 5,000-10,000 Naira."
+    },
+    {
+      "q": "Which pin mode is used to read a sensor?",
+      "options": ["A) OUTPUT", "B) INPUT", "C) INPUT_PULLUP", "D) Both B and C"],
+      "answer": "D",
+      "explanation": "Both INPUT and INPUT_PULLUP can be used for reading sensors, with INPUT_PULLUP enabling internal pull-up resistors."
+    },
+    {
+      "q": "What does analogRead() return on an Arduino Uno?",
+      "options": ["A) 0 or 1", "B) 0 to 255", "C) 0 to 1023", "D) 0 to 5"],
+      "answer": "C",
+      "explanation": "Arduino Uno has a 10-bit ADC, so analogRead() returns a value between 0 and 1023."
+    },
+    {
+      "q": "Which function is used to set an output pin HIGH?",
+      "options": ["A) digitalWrite(pin, HIGH)", "B) analogWrite(pin, HIGH)", "C) pinMode(pin, HIGH)", "D) digitalRead(pin, HIGH)"],
+      "answer": "A",
+      "explanation": "digitalWrite() sets a digital pin to HIGH or LOW."
+    },
+    {
+      "q": "What is the purpose of a pull-down resistor with a push button?",
+      "options": ["A) To limit current", "B) To ensure the pin reads LOW when button is not pressed", "C) To increase voltage", "D) To debounce the button"],
+      "answer": "B",
+      "explanation": "A pull-down resistor connects the pin to ground when the button is open, preventing floating input."
+    },
+    {
+      "q": "Which Arduino pins support PWM output?",
+      "options": ["A) 0,1,2,3,4,5", "B) 3,5,6,9,10,11", "C) A0-A5", "D) All digital pins"],
+      "answer": "B",
+      "explanation": "On Arduino Uno, PWM is available on pins 3,5,6,9,10, and 11."
+    },
+    {
+      "q": "How does an IR reflectance sensor detect a black line?",
+      "options": ["A) Black reflects more IR light", "B) Black absorbs IR light, so less is reflected", "C) It uses ultrasonic waves", "D) It measures capacitance"],
+      "answer": "B",
+      "explanation": "Black surfaces absorb IR light, so the sensor receives less reflection, often outputting a LOW signal."
+    },
+    {
+      "q": "What is the formula to calculate distance from an HC-SR04 ultrasonic sensor?",
+      "options": ["A) distance = time / 58", "B) distance = time * 58", "C) distance = time / 2", "D) distance = time * 2"],
+      "answer": "A",
+      "explanation": "The speed of sound is about 340 m/s, so distance in cm = time in microseconds / 58."
+    },
+    {
+      "q": "Why do DC motors need a motor driver?",
+      "options": ["A) To increase voltage", "B) Because Arduino pins cannot supply enough current", "C) To convert AC to DC", "D) To reduce noise"],
+      "answer": "B",
+      "explanation": "Arduino pins can only supply about 20mA, while motors require hundreds of milliamps."
+    },
+    {
+      "q": "Which library is used to control a servo motor?",
+      "options": ["A) Servo.h", "B) Motor.h", "C) PWM.h", "D) Wire.h"],
+      "answer": "A",
+      "explanation": "The Servo library provides functions like attach() and write() to control servo motors."
+    },
+    {
+      "q": "What is the typical cost of an L298N motor driver module?",
+      "options": ["A) 100 Naira", "B) 1,000 Naira", "C) 10,000 Naira", "D) 50,000 Naira"],
+      "answer": "B",
+      "explanation": "L298N modules are widely available for around 1,000 Naira in local markets."
+    },
+    {
+      "q": "Which protocol uses two wires: SDA and SCL?",
+      "options": ["A) UART", "B) I2C", "C) SPI", "D) USB"],
+      "answer": "B",
+      "explanation": "I2C uses SDA (data) and SCL (clock) lines for communication."
+    },
+    {
+      "q": "What is the baud rate commonly used for serial communication with Arduino?",
+      "options": ["A) 9600", "B) 100", "C) 1000000", "D) 50"],
+      "answer": "A",
+      "explanation": "9600 is a standard baud rate for Arduino serial communication."
+    },
+    {
+      "q": "Which Arduino pins are used for SPI on an Uno?",
+      "options": ["A) 0,1,2,3", "B) 10,11,12,13", "C) A0-A3", "D) 3,5,6,9"],
+      "answer": "B",
+      "explanation": "SPI uses pins 11 (MOSI), 12 (MISO), 13 (SCK), and 10 (SS) on Arduino Uno."
+    },
+    {
+      "q": "What is the advantage of I2C over SPI?",
+      "options": ["A) Faster speed", "B) Uses fewer wires", "C) Requires no addressing", "D) Works over longer distances"],
+      "answer": "B",
+      "explanation": "I2C uses only two wires, while SPI uses four, making I2C simpler for multiple devices."
+    },
+    {
+      "q": "Which library is used for I2C communication?",
+      "options": ["A) Wire.h", "B) SPI.h", "C) Serial.h", "D) I2C.h"],
+      "answer": "A",
+      "explanation": "The Wire library provides functions for I2C communication."
+    },
+    {
+      "q": "What is the purpose of an RTOS in robotics?",
+      "options": ["A) To run multiple tasks with precise timing", "B) To increase memory", "C) To replace Arduino", "D) To provide internet connectivity"],
+      "answer": "A",
+      "explanation": "An RTOS allows concurrent tasks with priorities and deterministic timing."
+    },
+    {
+      "q": "Which function is used to create a task in FreeRTOS?",
+      "options": ["A) xTaskCreate()", "B) createTask()", "C) taskInit()", "D) vTaskStart()"],
+      "answer": "A",
+      "explanation": "xTaskCreate() is the FreeRTOS API function to create a new task."
+    },
+    {
+      "q": "What is a common alternative to an RTOS for simple robots?",
+      "options": ["A) Using delay()", "B) Using millis() for scheduling", "C) Using interrupts only", "D) Using a Raspberry Pi"],
+      "answer": "B",
+      "explanation": "Using millis() to implement a state machine is a common lightweight scheduling method."
+    },
+    {
+      "q": "In a line-following robot, what does it mean if both sensors read HIGH?",
+      "options": ["A) Both sensors see black", "B) Both sensors see white", "C) One sees black, one sees white", "D) Sensors are disconnected"],
+      "answer": "B",
+      "explanation": "HIGH typically indicates white surface reflection, so both sensors see white."
+    },
+    {
+      "q": "What should you do if the robot oscillates on the line?",
+      "options": ["A) Increase speed", "B) Move sensors closer to ground", "C) Add more sensors", "D) Change battery"],
+      "answer": "B",
+      "explanation": "Moving sensors closer reduces stray light and improves detection, reducing oscillation."
+    },
+    {
+      "q": "Which component is used to power the L298N motor driver?",
+      "options": ["A) Arduino 5V pin", "B) Separate battery pack", "C) USB cable", "D) 3.3V pin"],
+      "answer": "B",
+      "explanation": "Motors require higher current and voltage, so a separate battery pack is needed."
+    },
+    {
+      "q": "What is the typical cost of an HC-SR04 ultrasonic sensor in Nigeria?",
+      "options": ["A) 200 Naira", "B) 1,500 Naira", "C) 10,000 Naira", "D) 50,000 Naira"],
+      "answer": "B",
+      "explanation": "HC-SR04 sensors are commonly available for around 1,500 Naira."
+    },
+    {
+      "q": "Which Arduino function is used to read a pulse duration?",
+      "options": ["A) pulseIn()", "B) digitalRead()", "C) analogRead()", "D) millis()"],
+      "answer": "A",
+      "explanation": "pulseIn() measures the duration of a pulse on a pin."
+    },
+    {
+      "q": "What is the purpose of a logic level converter?",
+      "options": ["A) To convert 5V to 3.3V and vice versa", "B) To increase current", "C) To convert analog to digital", "D) To change baud rate"],
+      "answer": "A",
+      "explanation": "Logic level converters are used when connecting devices with different voltage levels."
+    },
+    {
+      "q": "Which of these is NOT a serial communication protocol?",
+      "options": ["A) UART", "B) I2C", "C) SPI", "D) PWM"],
+      "answer": "D",
+      "explanation": "PWM is a method for analog output, not a serial communication protocol."
+    },
+    {
+      "q": "What is the first step in building a line-following robot?",
+      "options": ["A) Write code", "B) Assemble the chassis", "C) Buy sensors", "D) Test motors"],
+      "answer": "B",
+      "explanation": "Assembling the chassis provides the physical platform for all components."
+    },
+    {
+      "q": "Which sensor is best for detecting a black line on white surface?",
+      "options": ["A) Ultrasonic", "B) IR reflectance", "C) Temperature", "D) Sound"],
+      "answer": "B",
+      "explanation": "IR reflectance sensors detect differences in reflectivity, ideal for line following."
+    },
+    {
+      "q": "What is the typical voltage range for Arduino Uno digital pins?",
+      "options": ["A) 0-3.3V", "B) 0-5V", "C) 0-12V", "D) 0-1.8V"],
+      "answer": "B",
+      "explanation": "Arduino Uno operates at 5V logic, so digital pins output 0V or 5V."
+    }
+  ],
+  "videos": [
+    "Arduino line following robot tutorial",
+    "How to use IR sensor with Arduino",
+    "FreeRTOS Arduino tutorial for beginners"
+  ]
+}
