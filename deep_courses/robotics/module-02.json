@@ -32,132 +32,342 @@
       "title": "Lab: Simulating a 2-DOF Planar Arm in Python",
       "body": "In this lab, you will simulate a 2-DOF planar arm in Python. Use free tools: Python 3, NumPy, Matplotlib. First, define link lengths L1=0.4, L2=0.3. Write forward kinematics: def fk(theta1, theta2): x = L1*np.cos(theta1) + L2*np.cos(theta1+theta2); y = L1*np.sin(theta1) + L2*np.sin(theta1+theta2); return x, y. Test with theta1=0, theta2=0: (0.7, 0). Then theta1=np.pi/2, theta2=0: (0, 0.7). Next, plot the arm: use plt.plot([0, L1*np.cos(theta1), x], [0, L1*np.sin(theta1), y], 'o-'). Add a target point. Now implement inverse kinematics: def ik(x,y): r2 = x**2+y**2; cos_theta2 = (r2 - L1**2 - L2**2)/(2*L1*L2); if abs(cos_theta2)>1: return None; theta2 = np.arccos(cos_theta2); theta1 = np.arctan2(y,x) - np.arctan2(L2*np.sin(theta2), L1+L2*np.cos(theta2)); return theta1, theta2. Test with target (0.5,0.2): should give theta1=-0.2 rad, theta2=1.4 rad. Then simulate a trajectory: move the target in a circle of radius 0.2 around (0.4,0.2) for 100 steps. For each step, compute IK and plot the arm. Use matplotlib animation. This mimics a robot drawing a circle, like a CNC machine in a South African workshop. Finally, add velocity kinematics: compute Jacobian and joint velocities for a desired end-effector velocity. Save your script as arm_sim.py. Run it on a laptop or Raspberry Pi. If you have a real 2-DOF arm (e.g., from Arduino), send the angles to servos. This lab builds skills for more complex robots. Share your results on the rise AFRICA skills forum.",
       "word_count": 340
-    }
-  ,
+    },
     {
       "title": "Practical Reference",
       "body": "<section>\n  <h2>Practical Reference: Robot Kinematics and Dynamics for African Agribusiness</h2>\n\n  <p>Robotics in African agriculture is not a future concept â it is an operational reality. From automated maize planting in Kenya's Rift Valley to precision spraying drones in Ghana's cocoa belt and sorting arms in South African citrus packhouses, the demand for reliable, affordable robotic systems is rising. This practical reference distils the core kinematics and dynamics concepts you need to specify, deploy, and troubleshoot robotic manipulators and mobile platforms in field and packhouse conditions. The focus is on business outcomes: throughput, uptime, and return on investment.</p>\n\n  <p>Whether you are integrating a 2-DOF arm for seedling transplanting or a 6-DOF manipulator for fruit grading, understanding coordinate frames, forward and inverse kinematics, Jacobians, and dynamics is essential. These are not academic exercises â they determine whether your robot can reach a tomato on a conveyor, maintain speed under load, or avoid damaging delicate produce. This reference provides the formulas, tables, and checklists you need to make informed engineering and procurement decisions.</p>\n\n  <figure>\n    <svg viewBox=\"0 0 600 320\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-labelledby=\"figTitle figDesc\" style=\"width:100%;height:auto;background:#f9f9f9;border:1px solid #ddd;\">\n      <title id=\"figTitle\">2-DOF planar arm with coordinate frames</title>\n      <desc id=\"figDesc\">A two-link planar manipulator showing base frame, joint frames, link lengths, and end-effector position.</desc>\n      <!-- Base -->\n      <rect x=\"40\" y=\"240\" width=\"60\" height=\"20\" fill=\"#555\"/>\n      <text x=\"70\" y=\"275\" font-size=\"12\" text-anchor=\"middle\" fill=\"#333\">Base</text>\n      <!-- Link 1 -->\n      <line x1=\"70\" y1=\"240\" x2=\"220\" y2=\"140\" stroke=\"#2c7fb8\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n      <text x=\"130\" y=\"175\" font-size=\"13\" fill=\"#2c7fb8\" font-weight=\"bold\">Lâ</text>\n      <!-- Joint 1 -->\n      <circle cx=\"70\" cy=\"240\" r=\"6\" fill=\"#e6550d\"/>\n      <text x=\"45\" y=\"235\" font-size=\"12\" fill=\"#e6550d\" font-weight=\"bold\">Î¸â</text>\n      <!-- Link 2 -->\n      <line x1=\"220\" y1=\"140\" x2=\"420\" y2=\"200\" stroke=\"#31a354\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n      <text x=\"320\" y=\"155\" font-size=\"13\" fill=\"#31a354\" font-weight=\"bold\">Lâ</text>\n      <!-- Joint 2 -->\n      <circle cx=\"220\" cy=\"140\" r=\"6\" fill=\"#e6550d\"/>\n      <text x=\"230\" y=\"125\" font-size=\"12\" fill=\"#e6550d\" font-weight=\"bold\">Î¸â</text>\n      <!-- End effector -->\n      <circle cx=\"420\" cy=\"200\" r=\"8\" fill=\"#d62728\"/>\n      <text x=\"435\" y=\"195\" font-size=\"12\" fill=\"#d62728\" font-weight=\"bold\">End Effector (x,y)</text>\n      <!-- Base frame axes -->\n      <line x1=\"70\" y1=\"240\" x2=\"120\" y2=\"240\" stroke=\"#333\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n      <line x1=\"70\" y1=\"240\" x2=\"70\" y2=\"190\" stroke=\"#333\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n      <text x=\"125\" y=\"245\" font-size=\"11\" fill=\"#333\">Xâ</text>\n      <text x=\"75\" y=\"185\" font-size=\"11\" fill=\"#333\">Yâ</text>\n      <defs>\n        <marker id=\"arrow\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"3\" orient=\"auto\">\n          <path d=\"M0,0 L6,3 L0,6 Z\" fill=\"#333\"/>\n        </marker>\n      </defs>\n    </svg>\n    <figcaption>Figure 1: A 2-DOF planar arm with base frame {Xâ, Yâ}, joint angles Î¸â and Î¸â, link lengths Lâ and Lâ, and end-effector position. Adapted from Siciliano et al., <em>Robotics: Modelling, Planning and Control</em> (Springer, 2010), Fig. 2.4.</figcaption>\n  </figure>\n\n  <h3>1. Coordinate Frames and Transformations</h3>\n  <p>Every robotic system operates in a hierarchy of coordinate frames: world frame, base frame, joint frames, tool frame, and sensor frames. In African packhouses, where conveyor belts, bins, and human workers share space, misaligned frames cause collisions, missed picks, and costly downtime. The homogeneous transformation matrix <strong>T</strong> combines rotation <strong>R</strong> and translation <strong>p</strong>:</p>\n  <p style=\"text-align:center;font-family:monospace;background:#f0f0f0;padding:10px;\">T = [ R  p ]<br/>    [ 0  1 ]</p>\n  <p>For a rotation about the Z-axis by angle Î¸, R is:</p>\n  <p style=\"text-align:center;font-family:monospace;background:#f0f0f0;padding:10px;\">R_z(Î¸) = [ cosÎ¸  -sinÎ¸  0 ]<br/>         [ sinÎ¸   cosÎ¸  0 ]<br/>         [ 0      0     1 ]</p>\n  <p>In practice, you chain transforms: <strong>T<sub>worldâbase</sub> Â· T<sub>baseâjoint1</sub> Â· T<sub>joint1âjoint2</sub> Â· ... Â· T<sub>toolâend</sub></strong>. A common error in field deployments is assuming the base frame is level. On uneven terrain â common in smallholder plots â you must calibrate the base frame using an IMU or level sensor. A 2Â° tilt over a 1.5 m reach causes a 5 cm positioning error, enough to miss a tomato or crush a seedling.</p>\n\n  <h3>2. Forward Kinematics for Serial Manipulators</h3>\n  <p>Forward kinematics (FK) computes the end-effector pose given joint angles. For a 2-DOF planar arm (common in low-cost African agri-robots), FK is:</p>\n  <p style=\"text-align:center;font-family:monospace;background:#f0f0f0;padding:10px;\">x = Lâcos(Î¸â) + Lâcos(Î¸â+Î¸â)<br/>y = Lâsin(Î¸â) + Lâsin(Î¸â+Î¸â)</p>\n  <p>For 6-DOF arms, use Denavit-Hartenberg (DH) parameters. The table below shows DH parameters for a typical 6-DOF agricultural manipulator (e.g., for fruit picking).</p>\n\n  <table border=\"1\" cellpadding=\"6\" cellspacing=\"0\" style=\"width:100%;border-collapse:collapse;\">\n    <caption style=\"caption-side:top;text-align:left;font-weight:bold;padding:6px;\">Table 1: Denavit-Hartenberg parameters for a 6-DOF agricultural manipulator</caption>\n    <thead style=\"background:#2c7fb8;color:#fff;\">\n      <tr><th>Joint i</th><th>a<sub>i-1</sub> (m)</th><th>Î±<sub>i-1</sub> (deg)</th><th>d<sub>i</sub> (m)</th><th>Î¸<sub>i</sub> (deg)</th></tr>\n    </thead>\n    <tbody>\n      <tr><td>1</td><td>0</td><td>0</td><td>0.15</td><td>Î¸â</td></tr>\n      <tr><td>2</td><td>0.30</td><td>-90</td><td>0</td><td>Î¸â</td></tr>\n      <tr><td>3</td><td>0.25</td><td>0</td><td>0</td><td>Î¸â</td></tr>\n      <tr><td>4</td><td>0.05</td><td>-90</td><td>0.35</td><td>Î¸â</td></tr>\n      <tr><td>5</td><td>0</td><td>90</td><td>0</td><td>Î¸â</td></tr>\n      <tr><td>6</td><td>0</td><td>-90</td><td>0.10</td><td>Î¸â</td></tr>\n    </tbody>\n  </table>\n  <p style=\"font-size:0.9em;color:#555;\">Source: Adapted from Craig, J.J., <em>Introduction to Robotics: Mechanics and Control</em>, 4th ed., Pearson, 2018, Table 3.1. Parameters adjusted for a low-cost agricultural arm with 0.85 m reach.</p>\n\n  <h3>3. Inverse Kinematics: Analytical and Numerical Methods</h3>\n  <p>Inverse kinematics (IK) finds joint angles for a desired end-effector pose. For a 2-DOF planar arm, analytical IK is:</p>\n  <p style=\"text-align:center;font-family:monospace;background:#f0f0f0;padding:10px;\">cos(Î¸â) = (xÂ² + yÂ² - LâÂ² - LâÂ²) / (2LâLâ)<br/>Î¸â = Â±acos(cos(Î¸â))<br/>Î¸â = atan2(y, x) - atan2(Lâsin(Î¸â), Lâ + Lâcos(Î¸â))</p>\n  <p>The Â± sign gives elbow-up and elbow-down configurations. In packhouse sorting, elbow-up is preferred to avoid collisions with conveyor sides. For 6-DOF arms, numerical methods (Jacobian pseudo-inverse, damped least squares) are used. These are computationally heavier but handle redundancy and joint limits. In African field conditions, where power and compute are constrained, analytical IK for reduced-DOF arms is often more practical than full 6-DOF numerical IK.</p>\n\n  <h3>4. Jacobian and Velocity Kinematics</h3>\n  <p>The Jacobian <strong>J</strong> maps joint velocities to end-effector velocities: <strong>áº = J(q) Â· qÌ</strong>. For a 2-DOF planar arm:</p>\n  <p style=\"text-align:center;font-family:monospace;background:#f0f0f0;padding:10px;\">J = [ -Lâsin(Î¸â) - Lâsin(Î¸â+Î¸â)   -Lâsin(Î¸â+Î¸â) ]<br/>    [  Lâcos(Î¸â) + Lâcos(Î¸â+Î¸â)    Lâcos(Î¸â+Î¸â) ]</p>\n  <p>Singularities occur when det(J) = 0, i.e., when the arm is fully extended or folded. At singularities, small end-effector velocities require infinite joint velocities. In practice, avoid singular configurations by limiting workspace or using damped least squares. For a tomato-picking arm, operating near singularity causes jerky motion and fruit damage. Table 2 shows typical velocity limits for agricultural manipulators.</p>\n\n  <table border=\"1\" cellpadding=\"6\" cellspacing=\"0\" style=\"width:100%;border-collapse:collapse;\">\n    <caption style=\"caption-side:top;text-align:left;font-weight:bold;padding:6px;\">Table 2: Typical joint velocity and payload limits for agricultural manipulators</caption>\n    <thead style=\"background:#31a354;color:#fff;\">\n      <tr><th>Application</th><th>DOF</th><th>Max joint velocity (rad/s)</th><th>Payload (kg)</th><th>Repeatability (mm)</th></tr>\n    </thead>\n    <tbody>\n      <tr><td>Seedling transplanting</td><td>2</td><td>1.5</td><td>0.5</td><td>Â±2</td></tr>\n      <tr><td>Fruit picking (tomato)</td><td>4</td><td>2.0</td><td>1.0</td><td>Â±1</td></tr>\n      <tr><td>Citrus sorting</td><td>6</td><td>3.0</td><td>2.0</td><td>Â±0.5</td></tr>\n      <tr><td>Cocoa pod handling</td><td>3</td><td>1.0</td><td>1.5</td><td>Â±3</td></tr>\n    </tbody>\n  </table>\n  <p style=\"font-size:0.9em;color:#555;\">Source: Compiled from FAO, <em>Agricultural Robotics: Current Status and Future Directions</em>, 2022, Table 4; and industry datasheets from Universal Robots and Dobot for agri-specific configurations.</p>\n\n  <h3>5. Dynamics: Newton-Euler and Lagrangian Formulations</h3>\n  <p>Dynamics relates forces/torques to motion. The Newton-Euler formulation is recursive and computationally efficient for real-time control. The Lagrangian formulation is energy-based and gives closed-form equations:</p>\n  <p style=\"text-align:center;font-family:monospace;background:#f0f0f0;padding:10px;\">M(q)qÌ + C(q,qÌ)qÌ + g(q) = Ï</p>\n  <p>where <strong>M</strong> is the inertia matrix, <strong>C</strong> captures Coriolis and centrifugal effects, <strong>g</strong> is gravity, and <strong>Ï</strong> is joint torque. For a 2-DOF arm, M is 2Ã2. In African agri-robots, gravity compensation is critical when lifting heavy produce (e.g., a 1 kg mango). Underestimating torque leads to motor overheating and missed picks. For solar-powered robots, dynamics directly affect battery life: higher torque demands drain power faster.</p>\n\n  <div style=\"background:#ffe6e6;border-left:6px solid #d62728;padding:12px;margin:20px 0;\">\n    <strong style=\"color:#d62728;\">â ï¸ SAFETY WARNING:</strong> Robotic manipulators in agricultural settings pose serious hazards. A 6-DOF arm moving at 3 rad/s can cause severe injury. Always install emergency stop buttons, physical barriers, and light curtains. In field conditions, ensure IP65-rated enclosures to prevent dust and moisture ingress. Never operate a robot near workers without a risk assessment. In South Africa, comply with the Occupational Health and Safety Act (Act 85 of 1993); in Kenya, the Occupational Safety and Health Act (2007). Untrained operators must never override safety interlocks.\n  </div>\n\n  <h3>6. Lab: Simulating a 2-DOF Planar Arm in Python</h3>\n  <p>Use this Python snippet to simulate FK, IK, and Jacobian for a 2-DOF arm. This is the same code used in our Rise Africa Robotics lab.</p>\n  <pre style=\"background:#f4f4f4;padding:10px;overflow-x:auto;font-size:0.9em;\">\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nL1, L2 = 0.4, 0.3  # link lengths in meters\n\ndef fk(theta1, theta2):\n    x = L1*np.cos(theta1) + L2*np.cos(theta1+theta2)\n    y = L1*np.sin(theta1) + L2*np.sin(theta1+theta2)\n    return x, y\n\ndef ik(x, y):\n    c2 = (x**2 + y**2 - L1**2 - L2**2) / (2*L1*L2)\n    c2 = np.clip(c2, -1, 1)\n    theta2 = np.arccos(c2)\n    theta1 = np.arctan2(y, x) - np.arctan2(L2*np.sin(theta2), L1 + L2*np.cos(theta2))\n    return theta1, theta2\n\ndef jacobian(theta1, theta2):\n    J = np.array([\n        [-L1*np.sin(theta1) - L2*np.sin(theta1+theta2), -L2*np.sin(theta1+theta2)],\n        [ L1*np.cos(theta1) + L2*np.cos(theta1+theta2),  L2*np.cos(theta1+theta2)]\n    ])\n    return J\n\n# Example: reach a tomato at (0.5, 0.2)\ntheta1, theta2 = ik(0.5, 0.2)\nprint(f\"Joint angles: Î¸1={np.degrees(theta1):.1f}Â°, Î¸2={np.degrees(theta2):.1f}Â°\")\nprint(f\"FK check: {fk(theta1, theta2)}\")\nprint(f\"Jacobian:\\n{jacobian(theta1, theta2)}\")\n  </pre>\n  <p>Run this in Google Colab or locally. Experiment with singular configurations (Î¸â = 0 or Ï) and observe the Jacobian determinant approaching zero. This directly informs workspace design and motion planning for your agri-robot.</p>\n\n  <h3>Quick Reference Checklist</h3>\n  <ul style=\"list-style-type:none;padding-left:0;\">\n    <li>â <strong>Calibrate base frame</strong> on uneven terrain using IMU or level sensor before every field deployment.</li>\n    <li>â <strong>Verify DH parameters</strong> against manufacturer datasheets; a 1 mm error in link length causes centimetre-level end-effector error.</li>\n    <li>â <strong>Check for singularities</strong> (det(J) â 0) in your planned trajectory; avoid fully extended or folded configurations.</li>\n    <li>â <strong>Validate torque limits</strong> against payload and gravity; add 30% safety margin for dynamic loads.</li>\n    <li>â <strong>Implement emergency stop</strong> and light curtains; test weekly. Never bypass safety interlocks.</li>\n    <li>â <strong>Use IP65 enclosures</strong> for dust and moisture protection in field conditions.</li>\n    <li>â <strong>Simulate before deploying</strong> using Python or ROS; verify FK, IK, and Jacobian for your specific arm.</li>\n    <li>â <strong>Document all transformations</strong> and maintain a frame diagram for troubleshooting.</li>\n  </ul>\n\n  <h3>Further Reading</h3>\n  <ul>\n    <li><a href=\"https://www.fao.org/3/cb8339en/cb8339en.pdf\" target=\"_blank\" rel=\"noopener\">FAO â Agricultural Robotics: Current Status and Future Directions (2022)</a> â free PDF, covers global and African case studies.</li>\n    <li><a href=\"https://ocw.mit.edu/courses/2-12-introduction-to-robotics-fall-2005/\" target=\"_blank\" rel=\"noopener\">MIT OpenCourseWare â Introduction to Robotics (2.12)</a> â free lecture notes on kinematics and dynamics.</li>\n    <li><a href=\"https://www.ros.org/\" target=\"_blank\" rel=\"noopener\">ROS (Robot Operating System) â Official Documentation</a> â free tutorials on TF2 frames, kinematics, and simulation.</li>\n    <li><a href=\"https://www.au.int/en/agenda2063\" target=\"_blank\" rel=\"noopener\">African Union â Agenda 2063: The Africa We Want</a> â policy context for agricultural mechanisation and robotics.</li>\n    <li><a href=\"https://www.ieee-ras.org/\" target=\"_blank\" rel=\"noopener\">IEEE Robotics and Automation Society</a> â free access to some standards and educational resources.</li>\n  </ul>\n\n  <p style=\"margin-top:20px;font-style:italic;color:#555;\">This module is part of the Rise Africa Skills programme. For business enquiries, contact your regional agribusiness hub. All specifications are indicative; always consult the manufacturer's datasheet and conduct a site-specific risk assessment.</p>\n</section>"
-    }],
+    }
+  ],
   "quiz": [
     {
       "q": "What is the primary purpose of a coordinate frame in robotics?",
-      "options": ["A) To store the robot's battery level", "B) To describe the position and orientation of a part relative to a reference", "C) To calculate motor torque", "D) To define the robot's color"],
+      "options": [
+        "A) To store the robot's battery level",
+        "B) To describe the position and orientation of a part relative to a reference",
+        "C) To calculate motor torque",
+        "D) To define the robot's color"
+      ],
       "answer": "B",
       "explanation": "Coordinate frames provide a local reference for position and orientation, essential for transformations."
     },
     {
       "q": "In a 2D transformation matrix, what does the third column typically represent?",
-      "options": ["A) Rotation angle", "B) Scaling factor", "C) Translation in x and y", "D) Shear"],
+      "options": [
+        "A) Rotation angle",
+        "B) Scaling factor",
+        "C) Translation in x and y",
+        "D) Shear"
+      ],
       "answer": "C",
       "explanation": "The third column of a 3x3 homogeneous matrix holds the x and y translation components."
     },
     {
       "q": "For a 2-DOF planar arm with L1=0.5 m, L2=0.3 m, Î¸1=0Â°, Î¸2=90Â°, what is the end-effector x-coordinate?",
-      "options": ["A) 0.5 m", "B) 0.8 m", "C) 0.3 m", "D) 0.0 m"],
+      "options": [
+        "A) 0.5 m",
+        "B) 0.8 m",
+        "C) 0.3 m",
+        "D) 0.0 m"
+      ],
       "answer": "A",
       "explanation": "x = L1*cos(0) + L2*cos(90) = 0.5*1 + 0.3*0 = 0.5 m."
     },
     {
       "q": "Which of the following is NOT a Denavit-Hartenberg parameter?",
-      "options": ["A) Link length a", "B) Link twist alpha", "C) Joint angle theta", "D) Motor voltage"],
+      "options": [
+        "A) Link length a",
+        "B) Link twist alpha",
+        "C) Joint angle theta",
+        "D) Motor voltage"
+      ],
       "answer": "D",
       "explanation": "DH parameters are a, alpha, d, and theta; motor voltage is not part of the kinematic description."
     },
     {
       "q": "In forward kinematics for a serial manipulator, what operation combines joint transformations?",
-      "options": ["A) Addition", "B) Matrix multiplication", "C) Subtraction", "D) Division"],
+      "options": [
+        "A) Addition",
+        "B) Matrix multiplication",
+        "C) Subtraction",
+        "D) Division"
+      ],
       "answer": "B",
       "explanation": "Transformation matrices are multiplied in sequence from base to end-effector."
     },
     {
       "q": "For a 2-DOF planar arm, how many solutions typically exist for inverse kinematics?",
-      "options": ["A) One", "B) Two", "C) Three", "D) Infinite"],
+      "options": [
+        "A) One",
+        "B) Two",
+        "C) Three",
+        "D) Infinite"
+      ],
       "answer": "B",
       "explanation": "There are two solutions (elbow up and elbow down) for a given reachable point."
     },
     {
       "q": "What is the law of cosines used for in inverse kinematics?",
-      "options": ["A) To find the joint angles from the end-effector position", "B) To compute the Jacobian", "C) To calculate torque", "D) To determine motor power"],
+      "options": [
+        "A) To find the joint angles from the end-effector position",
+        "B) To compute the Jacobian",
+        "C) To calculate torque",
+        "D) To determine motor power"
+      ],
       "answer": "A",
       "explanation": "The law of cosines relates the sides of a triangle to an angle, allowing solution for Î¸2."
     },
     {
       "q": "If a target point is outside the workspace of a 2-DOF arm, what happens in analytical IK?",
-      "options": ["A) The cosine value exceeds 1, so no real solution", "B) The arm stretches automatically", "C) The Jacobian becomes zero", "D) The torque increases"],
+      "options": [
+        "A) The cosine value exceeds 1, so no real solution",
+        "B) The arm stretches automatically",
+        "C) The Jacobian becomes zero",
+        "D) The torque increases"
+      ],
       "answer": "A",
       "explanation": "For unreachable points, cos(Î¸2) > 1, which has no real solution."
     },
     {
       "q": "Which numerical method is commonly used for inverse kinematics of a 6-DOF arm?",
-      "options": ["A) Analytical solution", "B) Optimization (e.g., scipy.optimize.minimize)", "C) Direct matrix inversion", "D) Lookup table"],
+      "options": [
+        "A) Analytical solution",
+        "B) Optimization (e.g., scipy.optimize.minimize)",
+        "C) Direct matrix inversion",
+        "D) Lookup table"
+      ],
       "answer": "B",
       "explanation": "Numerical optimization minimizes the error between forward kinematics and target."
     },
     {
       "q": "What does the Jacobian matrix relate?",
-      "options": ["A) Joint positions to end-effector positions", "B) Joint velocities to end-effector velocities", "C) Joint torques to end-effector forces", "D) Motor currents to joint angles"],
+      "options": [
+        "A) Joint positions to end-effector positions",
+        "B) Joint velocities to end-effector velocities",
+        "C) Joint torques to end-effector forces",
+        "D) Motor currents to joint angles"
+      ],
       "answer": "B",
       "explanation": "The Jacobian maps joint velocities to Cartesian velocities."
     },
     {
       "q": "For a 2-DOF planar arm, what is the size of the Jacobian matrix?",
-      "options": ["A) 1x1", "B) 2x2", "C) 3x3", "D) 6x6"],
+      "options": [
+        "A) 1x1",
+        "B) 2x2",
+        "C) 3x3",
+        "D) 6x6"
+      ],
       "answer": "B",
       "explanation": "It relates two joint velocities to two Cartesian velocities, so it is 2x2."
     },
     {
       "q": "When does a singularity occur in a 2-DOF planar arm?",
-      "options": ["A) When Î¸2 = 0Â° or 180Â°", "B) When Î¸1 = 0Â°", "C) When the arm is at maximum reach", "D) When the determinant of the Jacobian is zero"],
+      "options": [
+        "A) When Î¸2 = 0Â° or 180Â°",
+        "B) When Î¸1 = 0Â°",
+        "C) When the arm is at maximum reach",
+        "D) When the determinant of the Jacobian is zero"
+      ],
       "answer": "D",
       "explanation": "Singularities occur when the Jacobian determinant is zero, often at fully stretched or folded configurations."
     },
     {
       "q": "If the Jacobian determinant is zero, what is the consequence?",
-      "options": ["A) The arm can move in any direction", "B) Some end-effector velocities are impossible", "C) The arm becomes stronger", "D) The motors overheat"],
+      "options": [
+        "A) The arm can move in any direction",
+        "B) Some end-effector velocities are impossible",
+        "C) The arm becomes stronger",
+        "D) The motors overheat"
+      ],
       "answer": "B",
       "explanation": "At singularities, the arm loses one or more degrees of freedom in Cartesian space."
     },
     {
       "q": "Which method is recursive and efficient for computing robot dynamics?",
-      "options": ["A) Lagrangian", "B) Newton-Euler", "C) Jacobian", "D) Forward kinematics"],
+      "options": [
+        "A) Lagrangian",
+        "B) Newton-Euler",
+        "C) Jacobian",
+        "D) Forward kinematics"
+      ],
       "answer": "B",
       "explanation": "Newton-Euler uses a two-pass recursion (forward for velocities, backward for forces)."
     },
     {
       "q": "In the Lagrangian formulation, what is L equal to?",
-      "options": ["A) Kinetic energy plus potential energy", "B) Kinetic energy minus potential energy", "C) Total torque", "D) Power"],
+      "options": [
+        "A) Kinetic energy plus potential energy",
+        "B) Kinetic energy minus potential energy",
+        "C) Total torque",
+        "D) Power"
+      ],
       "answer": "B",
       "explanation": "Lagrangian L = T - V, where T is kinetic and V is potential energy."
     },
     {
       "q": "For a 2-DOF arm with m1=1 kg, m2=0.5 kg, L1=0.4 m, L2=0.3 m, g=9.81, Î¸1=90Â°, Î¸2=0Â°, what is the gravity torque Ï1?",
-      "options": ["A) 0 Nm", "B) 3.92 Nm", "C) 5.88 Nm", "D) 1.96 Nm"],
+      "options": [
+        "A) 0 Nm",
+        "B) 3.92 Nm",
+        "C) 5.88 Nm",
+        "D) 1.96 Nm"
+      ],
       "answer": "A",
       "explanation": "At Î¸1=90Â°, cos(90)=0, so gravity torque is zero for both joints."
     },
     {
       "q": "What is the primary advantage of using Python for robot simulation?",
-      "options": ["A) It is free and has many libraries like NumPy and Matplotlib", "B) It is the only language for robotics", "C) It runs only on Windows", "D) It requires no programming knowledge"],
+      "options": [
+        "A) It is free and has many libraries like NumPy and Matplotlib",
+        "B) It is the only language for robotics",
+        "C) It runs only on Windows",
+        "D) It requires no programming knowledge"
+      ],
       "answer": "A",
       "explanation": "Python is open-source with powerful scientific libraries, ideal for learning and prototyping."
     },
     {
       "q": "In the lab, what function is used to plot the arm?",
-      "options": ["A) plt.plot", "B) plt.bar", "C) plt.scatter", "D) plt.hist"],
+      "options": [
+        "A) plt.plot",
+        "B) plt.bar",
+        "C) plt.scatter",
+        "D) plt.hist"
+      ],
       "answer": "A",
       "explanation": "plt.plot is used to draw lines connecting the joints."
     },
     {
       "q": "What does the inverse kinematics function return if the target is unreachable?",
-      "options": ["A) A random angle", "B) None", "C) Zero", "D) An error message"],
+      "options": [
+        "A) A random angle",
+        "B) None",
+        "C) Zero",
+        "D) An error message"
+      ],
       "answer": "B",
       "explanation": "The function checks if |cos(Î¸2)| > 1 and returns None if no solution exists."
     },
     {
       "q": "What is the end-effector position for a 2-DOF arm with L1=0.2, L2=0.2, Î¸1=45Â°, Î¸2=45Â°?",
-      "options": ["A) (0.2, 0.2)", "B) (0.282, 0.282)", "C) (0.4, 0.0)", "D) (0.0, 0.4)"],
+      "options": [
+        "A) (0.2, 0.2)",
+        "B) (0.282, 0.282)",
+        "C) (0.4, 0.0)",
+        "D) (0.0, 0.4)"
+      ],
       "answer": "B",
       "explanation": "x = 0.2*cos45 + 0.2*cos90 = 0.141 + 0 = 0.141? Wait, cos90=0, so x=0.141? Actually cos45=0.707, so x=0.2*0.707 + 0.2*cos90=0.141+0=0.141? That's not matching. Let's recalc: Î¸1+Î¸2=90Â°, cos90=0, so x=0.141, y=0.2*sin45 + 0.2*sin90 = 0.141+0.2=0.341. None of the options. I'll change to Î¸1=30Â°, Î¸2=60Â°: x=0.2*cos30 + 0.2*cos90 = 0.173+0=0.173, y=0.2*sin30 + 0.2*sin90 = 0.1+0.2=0.3. Not listed. I'll pick a simpler one: L1=0.3, L2=0.3, Î¸1=0, Î¸2=0: (0.6,0). Options: A) (0.6,0) B) (0,0.6) C) (0.3,0.3) D) (0,0). So answer A. Let me rewrite question: For L1=0.3, L2=0.3, Î¸1=0Â°, Î¸2=0Â°, what is end-effector position? Options: A) (0.6,0) B) (0,0.6) C) (0.3,0.3) D) (0,0). Answer A. Explanation: x=0.3+0.3=0.6, y=0."
+    },
+    {
+      "q": "In a robot arm used for sorting cocoa beans in Ghana, a coordinate frame attached to the end effector is called what?",
+      "options": [
+        "A) Base frame",
+        "B) Tool frame",
+        "C) World frame",
+        "D) Joint frame"
+      ],
+      "answer": "B",
+      "explanation": "The tool frame is attached to the end effector and moves with it, while the base frame is fixed to the robot base."
+    },
+    {
+      "q": "A 2-DOF planar arm in a Kenyan tea factory has link lengths 1 m and 1 m. With joint angles 0 and 90 degrees, what is the end effector x position?",
+      "options": [
+        "A) 0 m",
+        "B) 1 m",
+        "C) 1.41 m",
+        "D) 2 m"
+      ],
+      "answer": "B",
+      "explanation": "With the first link along x at angle 0, its tip is at x=1. The second link at 90 degrees adds no x displacement, so x=1 m."
+    },
+    {
+      "q": "Which method finds inverse kinematics by solving equations symbolically for a robot welding car parts in South Africa?",
+      "options": [
+        "A) Numerical method",
+        "B) Analytical method",
+        "C) Jacobian method",
+        "D) Newton-Euler method"
+      ],
+      "answer": "B",
+      "explanation": "Analytical inverse kinematics solves the kinematic equations in closed form, which is exact but depends on robot geometry."
+    },
+    {
+      "q": "The Jacobian matrix of a robot arm in a Nigerian bottling plant relates joint velocities to what?",
+      "options": [
+        "A) Joint torques",
+        "B) End effector forces",
+        "C) End effector velocities",
+        "D) Motor currents"
+      ],
+      "answer": "C",
+      "explanation": "The Jacobian maps joint velocity vector to end effector linear and angular velocity vector."
+    },
+    {
+      "q": "A singularity in the Jacobian of a robot arm means what?",
+      "options": [
+        "A) The arm reaches maximum speed",
+        "B) The arm loses some end effector degrees of freedom",
+        "C) The arm has infinite payload",
+        "D) The arm has zero joint angles"
+      ],
+      "answer": "B",
+      "explanation": "At a singularity the Jacobian loses rank, so certain end effector motions become impossible or require infinite joint velocities."
+    },
+    {
+      "q": "Which formulation computes robot dynamics by balancing forces and moments at each link?",
+      "options": [
+        "A) Lagrangian formulation",
+        "B) Newton-Euler formulation",
+        "C) Denavit-Hartenberg method",
+        "D) Forward kinematics"
+      ],
+      "answer": "B",
+      "explanation": "The Newton-Euler formulation applies Newtons and Eulers equations to each link recursively to obtain dynamic equations."
+    },
+    {
+      "q": "The Lagrangian formulation of robot dynamics is based on which quantities?",
+      "options": [
+        "A) Forces and moments",
+        "B) Kinetic and potential energy",
+        "C) Velocities and accelerations",
+        "D) Torques and currents"
+      ],
+      "answer": "B",
+      "explanation": "The Lagrangian is kinetic energy minus potential energy, and the equations of motion follow from it."
+    },
+    {
+      "q": "In a Python simulation of a 2-DOF planar arm in Egypt, which library is commonly used for numerical computation and plotting?",
+      "options": [
+        "A) Django",
+        "B) NumPy and Matplotlib",
+        "C) Flask",
+        "D) Requests"
+      ],
+      "answer": "B",
+      "explanation": "NumPy handles arrays and math while Matplotlib draws the arm configuration and trajectories."
+    },
+    {
+      "q": "A homogeneous transformation matrix in robotics includes rotation and what else?",
+      "options": [
+        "A) Velocity",
+        "B) Acceleration",
+        "C) Translation",
+        "D) Torque"
+      ],
+      "answer": "C",
+      "explanation": "A 4x4 homogeneous transform combines a 3x3 rotation matrix and a 3x1 translation vector."
+    },
+    {
+      "q": "For a 2-DOF planar arm in a Moroccan date packing line, how many independent end effector positions can be reached in the plane?",
+      "options": [
+        "A) 1",
+        "B) 2",
+        "C) 3",
+        "D) 4"
+      ],
+      "answer": "B",
+      "explanation": "A planar arm can position the end effector in x and y, giving two independent position degrees of freedom."
     }
   ],
   "videos": [
