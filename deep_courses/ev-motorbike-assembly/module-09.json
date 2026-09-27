@@ -26,197 +26,356 @@
     {
       "title": "Testing Control Inputs",
       "body": "Before you ride, you must test every control input to ensure they work correctly. This includes throttle, brake switches, side stand sensor, and any other switches like reverse or cruise. Start with a visual inspection: check all connectors are tight, wires are not pinched, and no bare wires are touching the frame. Use a multimeter set to continuity or DC volts. First, test the throttle. Turn on the key. Measure voltage at the controller's throttle signal wire (usually green or white) with the throttle released. It should be around 0.8V. Slowly twist to full and watch the voltage rise to about 4.2V. If it jumps or drops, the throttle is faulty. Next, test the brake switches. Squeeze the front brake lever. You should hear a click from the switch. Measure voltage at the controller's brake inputâit should change from 0V to 5V (or vice versa). Do the same for the rear brake. If no change, adjust the switch or replace it. Now test the side stand sensor. Put the stand down. Twist the throttleâthe motor should not spin. Put the stand upâmotor should spin. If not, check the switch wiring. Test the reverse switch if you have one. Engage reverse and slowly twist the throttleâthe motor should spin backwards. Be careful: reverse can be powerful. Test the lights, horn, and turn signals. For the horn, press the buttonâit should sound clearly. For turn signals, check all four corners. If a light doesn't work, check the bulb and connections. Finally, test the kill switch if equipped. It should cut power to the motor. After testing, take a short ride in a safe area. Start at low speed and test each control in motion. Brake hard to test the cut-off. If any control fails, fix it before riding on roads. Keep a log of test results and dates. In Africa, where roads can be rough, regular testing prevents breakdowns. A simple 10-minute check before each ride can save your life."
-    }
-  ,
+    },
     {
       "title": "Practical Reference",
       "body": "<section>\n  <h2>Practical Reference: Throttle and Control Systems for EV Motorbike Assembly</h2>\n\n  <p>In the African e-mobility market, the throttle and control system is the rider's primary interface with the machine. For assembly businesses in Nairobi, Kigali, Lagos, or Accra, getting this module right determines whether your product earns a reputation for reliability or returns to the workshop. This practical reference consolidates the six lessons in this module â installing the throttle assembly, connecting the throttle to the controller, mounting handlebar controls, adjusting throttle response, installing the side stand sensor, and testing control inputs â into one field-ready guide. It is written for technicians, assembly line supervisors, and workshop owners who need repeatable results, not just theory.</p>\n\n  <p>Throttle systems on electric motorbikes are deceptively simple: a Hall-effect sensor, three or five wires, and a controller that interprets a 0.8â4.2 V signal as \"go.\" But the failure modes are real â water ingress during the long rains, vibration on murram roads, and cheap potentiometer throttles that drift after 500 km. This reference helps you build control systems that survive African operating conditions and keep your customers on the road.</p>\n\n  <figure>\n    <svg viewBox=\"0 0 800 420\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"Wiring diagram showing throttle, handlebar controls, side stand sensor and controller connections\">\n      <rect x=\"0\" y=\"0\" width=\"800\" height=\"420\" fill=\"#f7f9fc\"/>\n      <text x=\"400\" y=\"28\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"18\" font-weight=\"bold\" fill=\"#1a2a3a\">EV Motorbike Throttle &amp; Control Wiring Overview</text>\n\n      <!-- Controller box -->\n      <rect x=\"300\" y=\"180\" width=\"200\" height=\"140\" rx=\"10\" fill=\"#dce9f7\" stroke=\"#2b6cb0\" stroke-width=\"2\"/>\n      <text x=\"400\" y=\"215\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"15\" font-weight=\"bold\" fill=\"#1a365d\">Motor Controller</text>\n      <text x=\"400\" y=\"240\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"11\" fill=\"#2a4365\">Signal input: 0.8â4.2 V</text>\n      <text x=\"400\" y=\"258\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"11\" fill=\"#2a4365\">5 V sensor supply</text>\n      <text x=\"400\" y=\"276\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"11\" fill=\"#2a4365\">Brake cut-off input</text>\n      <text x=\"400\" y=\"294\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"11\" fill=\"#2a4365\">Side stand cut-off input</text>\n\n      <!-- Throttle -->\n      <rect x=\"40\" y=\"70\" width=\"170\" height=\"80\" rx=\"8\" fill=\"#e6ffed\" stroke=\"#2f855a\" stroke-width=\"2\"/>\n      <text x=\"125\" y=\"100\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"14\" font-weight=\"bold\" fill=\"#22543d\">Throttle (Hall)</text>\n      <text x=\"125\" y=\"122\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"11\" fill=\"#276749\">Red +5 V | Black GND</text>\n      <text x=\"125\" y=\"138\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"11\" fill=\"#276749\">Green/White = Signal</text>\n\n      <!-- Brake lever -->\n      <rect x=\"40\" y=\"200\" width=\"170\" height=\"70\" rx=\"8\" fill=\"#fff5e6\" stroke=\"#c05621\" stroke-width=\"2\"/>\n      <text x=\"125\" y=\"228\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"14\" font-weight=\"bold\" fill=\"#7b341e\">Brake Cut-off</text>\n      <text x=\"125\" y=\"250\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"11\" fill=\"#9c4221\">2-wire switch, NC/NO</text>\n\n      <!-- Side stand -->\n      <rect x=\"40\" y=\"320\" width=\"170\" height=\"70\" rx=\"8\" fill=\"#fde8e8\" stroke=\"#c53030\" stroke-width=\"2\"/>\n      <text x=\"125\" y=\"348\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"14\" font-weight=\"bold\" fill=\"#822727\">Side Stand Sensor</text>\n      <text x=\"125\" y=\"370\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"11\" fill=\"#9b2c2c\">Magnetic reed / Hall</text>\n\n      <!-- Handlebar controls -->\n      <rect x=\"590\" y=\"70\" width=\"170\" height=\"80\" rx=\"8\" fill=\"#f0e6ff\" stroke=\"#6b46c1\" stroke-width=\"2\"/>\n      <text x=\"675\" y=\"100\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"14\" font-weight=\"bold\" fill=\"#44337a\">Handlebar Controls</text>\n      <text x=\"675\" y=\"122\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"11\" fill=\"#553c9a\">Mode switch, lights</text>\n      <text x=\"675\" y=\"138\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"11\" fill=\"#553c9a\">Kill switch</text>\n\n      <!-- Battery -->\n      <rect x=\"590\" y=\"320\" width=\"170\" height=\"70\" rx=\"8\" fill=\"#e2e8f0\" stroke=\"#4a5568\" stroke-width=\"2\"/>\n      <text x=\"675\" y=\"348\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"14\" font-weight=\"bold\" fill=\"#2d3748\">Battery Pack</text>\n      <text x=\"675\" y=\"370\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"11\" fill=\"#4a5568\">48 V / 60 V / 72 V</text>\n\n      <!-- Wires -->\n      <line x1=\"210\" y1=\"110\" x2=\"300\" y2=\"210\" stroke=\"#2f855a\" stroke-width=\"2\"/>\n      <line x1=\"210\" y1=\"235\" x2=\"300\" y2=\"240\" stroke=\"#c05621\" stroke-width=\"2\"/>\n      <line x1=\"210\" y1=\"355\" x2=\"300\" y2=\"290\" stroke=\"#c53030\" stroke-width=\"2\"/>\n      <line x1=\"590\" y1=\"110\" x2=\"500\" y2=\"210\" stroke=\"#6b46c1\" stroke-width=\"2\"/>\n      <line x1=\"590\" y1=\"355\" x2=\"500\" y2=\"300\" stroke=\"#4a5568\" stroke-width=\"2\"/>\n\n      <!-- labels -->\n      <text x=\"240\" y=\"155\" font-family=\"Arial\" font-size=\"10\" fill=\"#2f855a\">3-wire signal</text>\n      <text x=\"235\" y=\"230\" font-family=\"Arial\" font-size=\"10\" fill=\"#c05621\">cut-off</text>\n      <text x=\"235\" y=\"330\" font-family=\"Arial\" font-size=\"10\" fill=\"#c53030\">cut-off</text>\n      <text x=\"525\" y=\"155\" font-family=\"Arial\" font-size=\"10\" fill=\"#6b46c1\">12 V acc.</text>\n      <text x=\"525\" y=\"340\" font-family=\"Arial\" font-size=\"10\" fill=\"#4a5568\">DC bus</text>\n    </svg>\n    <figcaption>Wiring topology adapted from Grin Technologies' <em>Ebike Controller &amp; Throttle Wiring Guide</em> (ebikes.ca, 2023) and the Bosch eBike Systems dealer technical documentation.</figcaption>\n  </figure>\n\n  <h3>Understanding the Control Chain</h3>\n  <p>Every control input on an EV motorbike passes through the controller. The throttle is the only proportional input; brakes, side stand, and kill switch are digital cut-offs. In African assembly shops, the most common mistake is treating all three throttle wires as interchangeable. On a typical Hall throttle: red = +5 V, black = ground, and the third wire (green, white, or yellow depending on supplier) carries the signal. Reversing red and black destroys the Hall sensor instantly. Always verify with a multimeter before connecting to the controller.</p>\n\n  <h3>Throttle Signal Values You Should Know</h3>\n  <p>The table below gives the reference values you should see when testing a correctly installed throttle. These figures are drawn from Grin Technologies' published Hall sensor specifications and are consistent across the majority of 48 Vâ72 V controllers used in African assembly operations.</p>\n\n  <table border=\"1\" cellpadding=\"8\" cellspacing=\"0\" style=\"border-collapse:collapse;width:100%;font-family:Arial;font-size:14px;\">\n    <thead style=\"background:#2b6cb0;color:#fff;\">\n      <tr>\n        <th>Parameter</th>\n        <th>Expected Value</th>\n        <th>Out-of-Spec Indication</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr><td>Sensor supply voltage</td><td>4.8 â 5.2 V DC</td><td>Below 4.5 V: controller fault or voltage drop</td></tr>\n      <tr><td>Throttle closed (idle) signal</td><td>0.8 â 1.0 V</td><td>Above 1.2 V: controller may not arm; bike creeps</td></tr>\n      <tr><td>Throttle fully open (WOT)</td><td>4.0 â 4.2 V</td><td>Below 3.5 V: reduced top speed</td></tr>\n      <tr><td>Signal linearity</td><td>Â±0.15 V from linear</td><td>Dead spots or jumps: replace throttle</td></tr>\n      <tr><td>Brake cut-off resistance</td><td>&lt; 1 Î© closed</td><td>High resistance: intermittent cut-off</td></tr>\n      <tr><td>Side stand cut-off</td><td>Continuity when stand down</td><td>No continuity: bike will not start</td></tr>\n    </tbody>\n  </table>\n  <p style=\"font-size:12px;color:#555;\">Source: Grin Technologies, <em>Hall Sensor Throttle Specifications</em> (ebikes.ca, 2023); Kelly Controls KLS controller manual, Section 4.2.</p>\n\n  <h3>Torque and Tightening Reference</h3>\n  <p>Vibration is the silent killer of control systems on African roads. A throttle clamp that feels tight in the workshop will loosen after 200 km of corrugated murram. Use the torque values below and apply medium-strength threadlocker (Loctite 243 or equivalent) to all handlebar fasteners.</p>\n\n  <table border=\"1\" cellpadding=\"8\" cellspacing=\"0\" style=\"border-collapse:collapse;width:100%;font-family:Arial;font-size:14px;\">\n    <thead style=\"background:#2f855a;color:#fff;\">\n      <tr>\n        <th>Fastener / Component</th>\n        <th>Torque (Nm)</th>\n        <th>Notes</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr><td>Throttle housing clamp screws (M4)</td><td>2.5 â 3.0</td><td>Do not overtighten; plastic housing cracks</td></tr>\n      <tr><td>Handlebar switch cluster screws (M5)</td><td>4.0 â 5.0</td><td>Apply threadlocker</td></tr>\n      <tr><td>Brake lever pivot bolt (M6)</td><td>8.0 â 10.0</td><td>Check lever free play after tightening</td></tr>\n      <tr><td>Side stand pivot bolt (M8)</td><td>20 â 25</td><td>Must allow free swing, no binding</td></tr>\n      <tr><td>Side stand sensor bracket (M4)</td><td>2.5 â 3.0</td><td>Gap to magnet: 3â5 mm</td></tr>\n      <tr><td>Controller mounting bolts (M6)</td><td>6.0 â 8.0</td><td>Use rubber isolators where possible</td></tr>\n    </tbody>\n  </table>\n  <p style=\"font-size:12px;color:#555;\">Source: Compiled from manufacturer service manuals for generic 48 V/60 V hub-motor kits widely distributed in Kenya, Rwanda, and Nigeria (2022â2024); torque values cross-checked against Bosch eBike dealer technical bulletins.</p>\n\n  <div style=\"border:2px solid #c53030;background:#fff5f5;padding:16px;margin:24px 0;border-radius:6px;\">\n    <p style=\"margin:0;font-family:Arial;font-size:15px;color:#822727;\"><strong>â  SAFETY WARNING â THROTTLE-ON TESTING</strong></p>\n    <p style=\"margin:8px 0 0 0;font-family:Arial;font-size:14px;color:#742a2a;\">Never test throttle response with the rear wheel on the ground and the rider absent. An incorrectly wired throttle can command full power instantly, launching the bike off the stand. Always: (1) lift the rear wheel onto a stand, (2) keep one hand on the kill switch, (3) test in an open area away from customers and stock, and (4) disconnect the battery before any wiring change. In African workshops where floor space is shared with pedestrians and other trades, this rule prevents serious injury.</p>\n  </div>\n\n  <h3>Step-by-Step Assembly Notes</h3>\n  <p><strong>1. Installing the throttle assembly.</strong> Slide the throttle housing onto the right handlebar, leaving 2â3 mm clearance from the grip end. Route the cable along the existing loom, avoiding sharp bends below a 30 mm radius. Secure with cable ties every 150 mm.</p>\n\n  <p><strong>2. Connecting the throttle to the controller.</strong> Match colours by function, not by colour alone. Confirm with a multimeter: red to controller's +5 V pin, black to ground, signal to the throttle input. If the controller uses a 3-pin JST connector, check pinout against the controller label â some Chinese controllers use yellow for signal and green for +5 V.</p>\n\n  <p><strong>3. Mounting handlebar controls.</strong> Position the mode switch and kill switch so the rider's thumb reaches them without releasing the grip. On African commuter bikes, the left cluster typically carries the mode switch and the right carries the kill switch. Tighten to the torque table above.</p>\n\n  <p><strong>4. Adjusting throttle response.</strong> Most controllers offer three settings: soft, normal, and sport. For African city riding, soft or normal is recommended â it reduces wheel spin on loose surfaces and extends range. Where the controller supports programming via a display or PC cable, set the throttle response curve to \"linear\" for predictable delivery.</p>\n\n  <p><strong>5. Installing the side stand sensor.</strong> Mount the reed switch or Hall sensor on the frame, with the magnet on the stand. The gap should be 3â5 mm. Verify continuity when the stand is down and open circuit when up. This prevents the classic \"ride-off with stand down\" accident.</p>\n\n  <p><strong>6. Testing control inputs.</strong> With the rear wheel off the ground: power on, confirm the controller arms only with the stand up and brake released. Roll the throttle slowly and watch the wheel spin up smoothly. Press each brake lever â the motor must cut instantly. Toggle the kill switch â the controller must disarm. Test the mode switch and confirm the display changes.</p>\n\n  <h3>Quick Reference Checklist</h3>\n  <ul>\n    <li>Throttle housing clearance 2â3 mm from grip end; cable ties every 150 mm.</li>\n    <li>Multimeter confirms +5 V, ground, and signal before connecting to controller.</li>\n    <li>Idle signal 0.8â1.0 V; WOT 4.0â4.2 V; linearity Â±0.15 V.</li>\n    <li>All handlebar fasteners torqued to spec with medium threadlocker.</li>\n    <li>Throttle response set to soft or normal for African road conditions.</li>\n    <li>Side stand sensor gap 3â5 mm; continuity verified in both positions.</li>\n    <li>Brake cut-off tested on both levers before first ride.</li>\n    <li>Rear wheel off ground during all powered tests; kill switch within reach.</li>\n  </ul>\n\n  <h3>Further Reading</h3>\n  <ul>\n    <li>Grin Technologies â <a href=\"https://ebikes.ca/learn.html\" target=\"_blank\" rel=\"noopener\">Ebike Controller and Throttle Wiring Guide</a> (free technical library).</li>\n    <li>Bosch eBike Systems â <a href=\"https://www.bosch-ebike.com/en/service/dealer\" target=\"_blank\" rel=\"noopener\">Dealer Technical Documentation</a> (free registration for dealers).</li>\n    <li>Kelly Controls â <a href=\"https://www.kellycontroller.com/support/\" target=\"_blank\" rel=\"noopener\">KLS Controller Manuals and Wiring Diagrams</a>.</li>\n    <li>African E-Mobility Alliance â <a href=\"https://afema.org/resources\" target=\"_blank\" rel=\"noopener\">Technical Resources for Assemblers</a>.</li>\n    <li>United Nations Environment Programme â <a href=\"https://www.unep.org/explore-topics/transport/what-we-do/electric-mobility\" target=\"_blank\" rel=\"noopener\">Electric Mobility Programme (Africa)</a>.</li>\n  </ul>\n\n  <p>For assembly businesses, this module is where quality control pays for itself. A throttle system assembled to these standards will survive the rainy season, the potholes, and the daily 40 km commute that defines African e-mobility use. Document every test result, keep a torque wrench within reach, and treat the side stand sensor as a life-safety component â because it is.</p>\n</section>"
-    }],
+    }
+  ],
   "quiz": [
     {
       "q": "What is the typical handlebar diameter for most EV motorbikes?",
-      "options": ["A) 22.2mm", "B) 25.4mm", "C) 28.6mm", "D) 31.8mm"],
+      "options": [
+        "A) 22.2mm",
+        "B) 25.4mm",
+        "C) 28.6mm",
+        "D) 31.8mm"
+      ],
       "answer": "A",
       "explanation": "Most EV motorbikes use a 22.2mm handlebar, which is standard for many bicycles and small motorcycles."
     },
     {
       "q": "Which tool is best for tightening the throttle housing screws?",
-      "options": ["A) 10mm spanner", "B) 4mm Allen key", "C) Phillips screwdriver", "D) Pliers"],
+      "options": [
+        "A) 10mm spanner",
+        "B) 4mm Allen key",
+        "C) Phillips screwdriver",
+        "D) Pliers"
+      ],
       "answer": "B",
       "explanation": "Throttle housing screws are typically 4mm Allen bolts, so a 4mm Allen key is the correct tool."
     },
     {
       "q": "What should you use to lubricate a sticky throttle grip?",
-      "options": ["A) Engine oil", "B) WD-40", "C) Silicone spray", "D) Grease"],
+      "options": [
+        "A) Engine oil",
+        "B) WD-40",
+        "C) Silicone spray",
+        "D) Grease"
+      ],
       "answer": "C",
       "explanation": "Silicone spray lubricates without attracting dust, unlike oil or grease."
     },
     {
       "q": "How many wires does a hall-effect throttle typically have?",
-      "options": ["A) 2", "B) 3", "C) 4", "D) 5"],
+      "options": [
+        "A) 2",
+        "B) 3",
+        "C) 4",
+        "D) 5"
+      ],
       "answer": "B",
       "explanation": "A hall-effect throttle has three wires: 5V, ground, and signal."
     },
     {
       "q": "What voltage should you measure at the throttle signal wire at rest?",
-      "options": ["A) 0V", "B) 0.8V", "C) 2.5V", "D) 5V"],
+      "options": [
+        "A) 0V",
+        "B) 0.8V",
+        "C) 2.5V",
+        "D) 5V"
+      ],
       "answer": "B",
       "explanation": "At rest, the throttle signal is typically around 0.8V, rising to about 4.2V at full twist."
     },
     {
       "q": "What happens if you reverse the 5V and ground wires on a hall-effect throttle?",
-      "options": ["A) Nothing", "B) The throttle works backwards", "C) The sensor is destroyed", "D) The motor runs at full speed"],
+      "options": [
+        "A) Nothing",
+        "B) The throttle works backwards",
+        "C) The sensor is destroyed",
+        "D) The motor runs at full speed"
+      ],
       "answer": "C",
       "explanation": "Reversing 5V and ground will destroy the hall-effect sensor."
     },
     {
       "q": "What is the purpose of the controller's 'learning' mode?",
-      "options": ["A) To teach you how to ride", "B) To calibrate the throttle range", "C) To reset the battery", "D) To test the lights"],
+      "options": [
+        "A) To teach you how to ride",
+        "B) To calibrate the throttle range",
+        "C) To reset the battery",
+        "D) To test the lights"
+      ],
       "answer": "B",
       "explanation": "Learning mode calibrates the throttle so the controller knows the full range of the signal."
     },
     {
       "q": "What should you do if the motor runs at full speed without touching the throttle?",
-      "options": ["A) Ride it carefully", "B) Disconnect the battery immediately", "C) Adjust the throttle cable", "D) Ignore it"],
+      "options": [
+        "A) Ride it carefully",
+        "B) Disconnect the battery immediately",
+        "C) Adjust the throttle cable",
+        "D) Ignore it"
+      ],
       "answer": "B",
       "explanation": "This indicates a short or wrong throttle type, and disconnecting the battery prevents damage or injury."
     },
     {
       "q": "Why should throttle wires be kept away from high-current motor cables?",
-      "options": ["A) To save space", "B) To prevent electrical interference", "C) To avoid overheating", "D) To make them last longer"],
+      "options": [
+        "A) To save space",
+        "B) To prevent electrical interference",
+        "C) To avoid overheating",
+        "D) To make them last longer"
+      ],
       "answer": "B",
       "explanation": "High-current cables can induce noise in the throttle signal, causing erratic motor behavior."
     },
     {
       "q": "What is the recommended fuse size for testing a new controller connection?",
-      "options": ["A) 5A", "B) 20A", "C) 50A", "D) 100A"],
+      "options": [
+        "A) 5A",
+        "B) 20A",
+        "C) 50A",
+        "D) 100A"
+      ],
       "answer": "A",
       "explanation": "A small 5A fuse protects the controller during initial testing if there is a wiring fault."
     },
     {
       "q": "Which control should be closest to the grip on the left switch cluster?",
-      "options": ["A) Horn", "B) Turn signals", "C) Lights", "D) Kill switch"],
+      "options": [
+        "A) Horn",
+        "B) Turn signals",
+        "C) Lights",
+        "D) Kill switch"
+      ],
       "answer": "A",
       "explanation": "The horn button should be closest to the grip for quick access without moving your hand."
     },
     {
       "q": "What is the purpose of the brake lever switch?",
-      "options": ["A) To turn on the brake light", "B) To cut power to the motor when braking", "C) To adjust brake sensitivity", "D) To activate reverse"],
+      "options": [
+        "A) To turn on the brake light",
+        "B) To cut power to the motor when braking",
+        "C) To adjust brake sensitivity",
+        "D) To activate reverse"
+      ],
       "answer": "B",
       "explanation": "The brake switch cuts power to the motor when the brake is applied, preventing acceleration while braking."
     },
     {
       "q": "How often should you secure cables along the handlebar with zip ties?",
-      "options": ["A) Every 5cm", "B) Every 10cm", "C) Every 20cm", "D) Only at the ends"],
+      "options": [
+        "A) Every 5cm",
+        "B) Every 10cm",
+        "C) Every 20cm",
+        "D) Only at the ends"
+      ],
       "answer": "B",
       "explanation": "Zip ties every 10cm keep cables tidy and prevent them from snagging."
     },
     {
       "q": "What should you apply to connectors in dusty conditions?",
-      "options": ["A) Oil", "B) Dielectric grease", "C) Water", "D) Tape"],
+      "options": [
+        "A) Oil",
+        "B) Dielectric grease",
+        "C) Water",
+        "D) Tape"
+      ],
       "answer": "B",
       "explanation": "Dielectric grease protects connectors from dust and moisture without conducting electricity."
     },
     {
       "q": "What is a good acceleration ramp setting for slippery roads?",
-      "options": ["A) 0.1 seconds", "B) 0.5 seconds", "C) 2 seconds", "D) 5 seconds"],
+      "options": [
+        "A) 0.1 seconds",
+        "B) 0.5 seconds",
+        "C) 2 seconds",
+        "D) 5 seconds"
+      ],
       "answer": "B",
       "explanation": "A 0.5-second ramp provides a balance between responsiveness and traction on slippery surfaces."
     },
     {
       "q": "If your motor is 1000W and battery is 48V, what is the approximate maximum current?",
-      "options": ["A) 10A", "B) 20A", "C) 30A", "D) 40A"],
+      "options": [
+        "A) 10A",
+        "B) 20A",
+        "C) 30A",
+        "D) 40A"
+      ],
       "answer": "B",
       "explanation": "Power equals voltage times current, so 1000W / 48V â 20.8A, rounded to 20A."
     },
     {
       "q": "What does a 1k ohm resistor in series with the throttle signal wire do?",
-      "options": ["A) Increases top speed", "B) Reduces maximum signal voltage", "C) Improves acceleration", "D) Nothing"],
+      "options": [
+        "A) Increases top speed",
+        "B) Reduces maximum signal voltage",
+        "C) Improves acceleration",
+        "D) Nothing"
+      ],
       "answer": "B",
       "explanation": "The resistor drops the voltage, reducing the maximum signal and thus top speed and acceleration."
     },
     {
       "q": "What should you do if the throttle does not return to idle when released?",
-      "options": ["A) Ignore it", "B) Lubricate the grip and check spring tension", "C) Replace the controller", "D) Twist it harder"],
+      "options": [
+        "A) Ignore it",
+        "B) Lubricate the grip and check spring tension",
+        "C) Replace the controller",
+        "D) Twist it harder"
+      ],
       "answer": "B",
       "explanation": "A sticky throttle is dangerous; lubricating the grip and checking the spring can fix it."
     },
     {
       "q": "How is the side stand sensor typically wired to the controller?",
-      "options": ["A) In series with the battery", "B) To a dedicated input or in series with throttle signal", "C) To the brake switch", "D) To the lights"],
+      "options": [
+        "A) In series with the battery",
+        "B) To a dedicated input or in series with throttle signal",
+        "C) To the brake switch",
+        "D) To the lights"
+      ],
       "answer": "B",
       "explanation": "The side stand sensor connects to a dedicated input or in series with the throttle signal to cut motor power."
     },
     {
       "q": "What should happen when the side stand is down and you twist the throttle?",
-      "options": ["A) Motor spins slowly", "B) Motor does not spin", "C) Motor spins at full speed", "D) Motor beeps"],
+      "options": [
+        "A) Motor spins slowly",
+        "B) Motor does not spin",
+        "C) Motor spins at full speed",
+        "D) Motor beeps"
+      ],
       "answer": "B",
       "explanation": "The side stand sensor should cut power to the motor when the stand is down."
     },
     {
       "q": "How can you test a side stand switch with a multimeter?",
-      "options": ["A) Measure voltage at the battery", "B) Check continuity between switch wires", "C) Measure resistance of the motor", "D) Check the horn"],
+      "options": [
+        "A) Measure voltage at the battery",
+        "B) Check continuity between switch wires",
+        "C) Measure resistance of the motor",
+        "D) Check the horn"
+      ],
       "answer": "B",
       "explanation": "Continuity testing shows whether the switch is open or closed when the stand is up or down."
     },
     {
       "q": "What is a safe alternative if your controller lacks a side stand input?",
-      "options": ["A) Ignore the sensor", "B) Wire the switch in series with the throttle signal", "C) Connect it to the brake light", "D) Use a manual switch"],
+      "options": [
+        "A) Ignore the sensor",
+        "B) Wire the switch in series with the throttle signal",
+        "C) Connect it to the brake light",
+        "D) Use a manual switch"
+      ],
       "answer": "B",
       "explanation": "Wiring the switch in series with the throttle signal cuts the signal when the stand is down, disabling the motor."
     },
     {
       "q": "What should you carry in your tool kit in case the side stand sensor fails?",
-      "options": ["A) A spare controller", "B) A bypass wire", "C) A new motor", "D) A multimeter"],
+      "options": [
+        "A) A spare controller",
+        "B) A bypass wire",
+        "C) A new motor",
+        "D) A multimeter"
+      ],
       "answer": "B",
       "explanation": "A bypass wire lets you override a faulty side stand sensor to get home, but never ride with the stand down."
     },
     {
       "q": "When testing control inputs, what should you check first?",
-      "options": ["A) Throttle voltage", "B) Visual inspection of connectors", "C) Brake switches", "D) Side stand sensor"],
+      "options": [
+        "A) Throttle voltage",
+        "B) Visual inspection of connectors",
+        "C) Brake switches",
+        "D) Side stand sensor"
+      ],
       "answer": "B",
       "explanation": "A visual inspection catches loose connectors or pinched wires before electrical testing."
     },
     {
       "q": "What voltage change should you see at the brake input when squeezing the brake lever?",
-      "options": ["A) 0V to 5V", "B) 5V to 0V", "C) 0V to 12V", "D) No change"],
+      "options": [
+        "A) 0V to 5V",
+        "B) 5V to 0V",
+        "C) 0V to 12V",
+        "D) No change"
+      ],
       "answer": "A",
       "explanation": "Typically, the brake switch sends 5V to the controller when the brake is applied."
     },
     {
       "q": "How can you test the reverse function safely?",
-      "options": ["A) At full speed", "B) At low speed in a safe area", "C) While holding the brake", "D) On a busy road"],
+      "options": [
+        "A) At full speed",
+        "B) At low speed in a safe area",
+        "C) While holding the brake",
+        "D) On a busy road"
+      ],
       "answer": "B",
       "explanation": "Reverse can be powerful, so test at low speed in a safe area to avoid accidents."
     },
     {
       "q": "What should you do if a turn signal does not work?",
-      "options": ["A) Replace the controller", "B) Check the bulb and connections", "C) Ignore it", "D) Ride without it"],
+      "options": [
+        "A) Replace the controller",
+        "B) Check the bulb and connections",
+        "C) Ignore it",
+        "D) Ride without it"
+      ],
       "answer": "B",
       "explanation": "Most turn signal issues are due to a burnt bulb or loose connection."
     },
     {
       "q": "Why is it important to test controls before every ride?",
-      "options": ["A) To impress your friends", "B) To prevent breakdowns and accidents", "C) To waste time", "D) To charge the battery"],
+      "options": [
+        "A) To impress your friends",
+        "B) To prevent breakdowns and accidents",
+        "C) To waste time",
+        "D) To charge the battery"
+      ],
       "answer": "B",
       "explanation": "Regular testing catches problems early, ensuring safety and reliability."
     },
     {
       "q": "What should you do if the kill switch does not cut power?",
-      "options": ["A) Ignore it", "B) Fix it before riding", "C) Use the brake instead", "D) Ride carefully"],
+      "options": [
+        "A) Ignore it",
+        "B) Fix it before riding",
+        "C) Use the brake instead",
+        "D) Ride carefully"
+      ],
       "answer": "B",
       "explanation": "A faulty kill switch is a safety hazard and must be fixed before riding."
     },
     {
       "q": "What is the best way to document your control tests?",
-      "options": ["A) Memorize them", "B) Keep a log with dates and results", "C) Tell a friend", "D) Take photos"],
+      "options": [
+        "A) Memorize them",
+        "B) Keep a log with dates and results",
+        "C) Tell a friend",
+        "D) Take photos"
+      ],
       "answer": "B",
       "explanation": "A written log helps track issues and ensures regular maintenance."
     }
   ],
   "videos": [
-    "EV motorbike throttle installation",
-    "how to connect throttle to controller electric bike",
-    "side stand sensor wiring electric motorcycle"
+    {
+      "title": "EV motorbike throttle installation",
+      "query": "EV motorbike throttle installation"
+    },
+    {
+      "title": "How to connect throttle to controller electric bike",
+      "query": "how to connect throttle to controller electric bike"
+    },
+    {
+      "title": "Side stand sensor wiring electric motorcycle",
+      "query": "side stand sensor wiring electric motorcycle"
+    }
   ]
 }

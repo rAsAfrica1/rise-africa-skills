@@ -26,197 +26,356 @@
     {
       "title": "Inspecting SMT Solder Joints",
       "body": "Inspection is how you catch defects before they cause failures. For SMT, you need good lighting and magnification. A 10x loupe or a USB microscope (e.g., Andonstar ADSM302, around $80) works well. A stereo microscope with 20xâ40x is better for fine pitch. In African workshops, a simple magnifying lamp with a 5-inch lens and a bright LED ring light is affordable and effective. Always inspect under bright, white lightânot yellow.\n\nStart with a visual check. A good solder joint is shiny, smooth, and concave, like a tiny fillet. It should cover the pad and the component terminal. For lead-free solder, the joint may look slightly grainy but should still be continuous. Look for these defects: (1) Cold joint: dull, blobby, or wrinkledâcaused by insufficient heat or movement during cooling. (2) Solder bridge: solder connects two adjacent pins or pads. (3) Tombstone: component stands up on one end. (4) Insufficient solder: joint looks thin or missing. (5) Excess solder: ball of solder covering the pad. (6) Cracked joint: visible crack, often from thermal stress.\n\nUse a systematic approach. Inspect each component one by one, from one corner of the board to the other. For ICs, check every pin. For QFN, you cannot see the joints from the topâuse a side-view mirror or X-ray if available. In many African settings, X-ray is not accessible, so you rely on electrical testing. After visual inspection, use a multimeter to check for shorts and opens. Set it to continuity mode. Test between adjacent pins on ICsâif it beeps, you have a bridge. Test from component pad to a known test point to confirm connection.\n\nIf you find a defect, fix it. For bridges, add flux and use solder wick or a clean iron tip to drag the solder away. For cold joints, reheat with flux and a small amount of fresh solder. For tombstones, remove the component, clean the pads, and re-solder. Always clean flux residue with isopropyl alcohol and a brushâleftover flux can cause corrosion or shorts over time. In humid climates, flux residue absorbs moisture and can cause leakage currents.\n\nRecord your defects. Keep a log of what you find and how you fix it. If you see the same defect repeatedly, adjust your processâmaybe your iron is too cold, or your paste is too old. Good inspection saves time and money. A board that passes inspection will work reliably for years. Practice by inspecting scrap boards and identifying defects. With 10 hours of practice, you'll spot a cold joint in under 5 seconds."
-    }
-  ,
+    },
     {
       "title": "Practical Reference",
       "body": "<section>\n  <h2>Practical Reference: SMT Fundamentals for African Electronics Assembly Businesses</h2>\n\n  <p>Surface Mount Technology (SMT) is the backbone of modern electronics manufacturing. For African electronics assembly businessesâwhether you are producing power inverters in Lagos, LED lighting in Nairobi, or IoT sensors in Kigaliâmastering SMT fundamentals is not optional. It is the difference between a product that survives the market and one that fails in the field. This practical reference distills the six core lessons of this module into actionable guidance for your production floor.</p>\n\n  <p>This reference is designed for business owners, production supervisors, and technicians who need to make decisions about equipment, materials, and quality control. It assumes you are working in a resource-constrained environment where every component, every gram of solder paste, and every hour of production time carries real cost.</p>\n\n  <h3>1. Introduction to SMT: Why It Matters for Your Business</h3>\n\n  <p>SMT involves mounting components directly onto the surface of a printed circuit board (PCB) rather than inserting leads through holes. This allows for smaller boards, higher component density, and faster automated assembly. For African manufacturers, SMT opens doors to contracts with telecom companies, solar energy firms, and consumer electronics brands that demand compact, reliable products.</p>\n\n  <p>The business case is straightforward: SMT reduces board size by 30â50%, lowers material costs through smaller components, and enables automated production that scales with demand. However, it also demands tighter process control. A through-hole joint can be visually inspected and reworked easily; an SMT joint may be hidden under a component and require X-ray or careful optical inspection.</p>\n\n  <figure>\n    <svg viewBox=\"0 0 600 300\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"Cross-section diagram of an SMT solder joint showing PCB, copper pad, solder fillet, and component termination\">\n      <rect x=\"0\" y=\"0\" width=\"600\" height=\"300\" fill=\"#f8f9fa\"/>\n      <!-- PCB substrate -->\n      <rect x=\"50\" y=\"180\" width=\"500\" height=\"60\" fill=\"#2d6a4f\" stroke=\"#1b4332\" stroke-width=\"2\"/>\n      <text x=\"300\" y=\"215\" text-anchor=\"middle\" fill=\"white\" font-size=\"14\" font-family=\"Arial\">PCB Substrate (FR-4)</text>\n      <!-- Copper pad -->\n      <rect x=\"120\" y=\"160\" width=\"120\" height=\"20\" fill=\"#b87333\" stroke=\"#8b5a2b\" stroke-width=\"1.5\"/>\n      <rect x=\"360\" y=\"160\" width=\"120\" height=\"20\" fill=\"#b87333\" stroke=\"#8b5a2b\" stroke-width=\"1.5\"/>\n      <text x=\"180\" y=\"175\" text-anchor=\"middle\" fill=\"white\" font-size=\"11\" font-family=\"Arial\">Copper Pad</text>\n      <text x=\"420\" y=\"175\" text-anchor=\"middle\" fill=\"white\" font-size=\"11\" font-family=\"Arial\">Copper Pad</text>\n      <!-- Solder fillets -->\n      <path d=\"M120 160 Q140 130 180 130 L240 130 Q260 130 240 160 Z\" fill=\"#c0c0c0\" stroke=\"#808080\" stroke-width=\"1.5\"/>\n      <path d=\"M360 160 Q380 130 420 130 L480 130 Q500 130 480 160 Z\" fill=\"#c0c0c0\" stroke=\"#808080\" stroke-width=\"1.5\"/>\n      <text x=\"180\" y=\"148\" text-anchor=\"middle\" fill=\"#333\" font-size=\"11\" font-family=\"Arial\">Solder Fillet</text>\n      <text x=\"420\" y=\"148\" text-anchor=\"middle\" fill=\"#333\" font-size=\"11\" font-family=\"Arial\">Solder Fillet</text>\n      <!-- Component body -->\n      <rect x=\"160\" y=\"80\" width=\"280\" height=\"50\" fill=\"#444\" stroke=\"#222\" stroke-width=\"2\" rx=\"4\"/>\n      <text x=\"300\" y=\"110\" text-anchor=\"middle\" fill=\"white\" font-size=\"14\" font-family=\"Arial\">SMT Component (e.g., 0805 Resistor)</text>\n      <!-- Component terminations -->\n      <rect x=\"140\" y=\"120\" width=\"30\" height=\"15\" fill=\"#888\" stroke=\"#555\" stroke-width=\"1\"/>\n      <rect x=\"430\" y=\"120\" width=\"30\" height=\"15\" fill=\"#888\" stroke=\"#555\" stroke-width=\"1\"/>\n      <!-- Labels -->\n      <line x1=\"180\" y1=\"130\" x2=\"180\" y2=\"70\" stroke=\"#333\" stroke-width=\"1\" stroke-dasharray=\"4\"/>\n      <text x=\"185\" y=\"65\" fill=\"#333\" font-size=\"11\" font-family=\"Arial\">Component Termination</text>\n      <line x1=\"300\" y1=\"240\" x2=\"300\" y2=\"270\" stroke=\"#333\" stroke-width=\"1\" stroke-dasharray=\"4\"/>\n      <text x=\"300\" y=\"285\" text-anchor=\"middle\" fill=\"#333\" font-size=\"11\" font-family=\"Arial\">Solder Mask Layer</text>\n    </svg>\n    <figcaption>Cross-section of a typical SMT solder joint. Source: IPC-A-610H, \"Acceptability of Electronic Assemblies,\" IPC International, 2020, Figure 5-3.</figcaption>\n  </figure>\n\n  <h3>2. SMT Component Identification and Handling</h3>\n\n  <p>SMT components come in standardized package sizes. The most common are resistors and capacitors in 0402, 0603, 0805, and 1206 packages, where the number indicates dimensions in hundredths of an inch. For African assembly businesses, 0805 and 1206 are the most practical starting pointsâthey are large enough for manual placement and inspection without magnification, yet small enough to keep boards compact.</p>\n\n  <p>Handling these components requires care. Moisture sensitivity is a real threat: components absorb moisture from the air, and during reflow, that moisture turns to steam and causes internal cracks (popcorning). In humid African climatesâLagos, Accra, Mombasaâthis risk is elevated. Store moisture-sensitive components in sealed bags with desiccant and use a moisture sensitivity level (MSL) rating to determine floor life.</p>\n\n  <table>\n    <caption>Table 1: Common SMT Package Sizes and Practical Considerations</caption>\n    <thead>\n      <tr>\n        <th>Package</th>\n        <th>Dimensions (mm)</th>\n        <th>Typical Use</th>\n        <th>Handling Difficulty</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>0402</td>\n        <td>1.0 Ã 0.5</td>\n        <td>High-density mobile devices</td>\n        <td>Very High (requires magnification)</td>\n      </tr>\n      <tr>\n        <td>0603</td>\n        <td>1.6 Ã 0.8</td>\n        <td>Consumer electronics</td>\n        <td>High</td>\n      </tr>\n      <tr>\n        <td>0805</td>\n        <td>2.0 Ã 1.25</td>\n        <td>General-purpose assembly</td>\n        <td>Moderate</td>\n      </tr>\n      <tr>\n        <td>1206</td>\n        <td>3.2 Ã 1.6</td>\n        <td>Power circuits, filters</td>\n        <td>Low</td>\n      </tr>\n      <tr>\n        <td>SOT-23</td>\n        <td>2.9 Ã 1.3</td>\n        <td>Transistors, diodes</td>\n        <td>Moderate</td>\n      </tr>\n      <tr>\n        <td>QFP-44</td>\n        <td>10 Ã 10</td>\n        <td>Microcontrollers</td>\n        <td>High (fine pitch)</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><em>Source: IPC-7351B, \"Generic Requirements for Surface Mount Design and Land Pattern Standard,\" IPC International, 2010.</em></p>\n\n  <h3>3. SMT Adhesives and Their Application</h3>\n\n  <p>SMT adhesivesâoften called \"red glue\" due to their colorâserve two purposes: they hold components in place during wave soldering of through-hole parts on the same board, and they prevent component movement during reflow if the board is double-sided. For businesses doing mixed-technology assembly (SMT + through-hole), adhesive dispensing is a critical step.</p>\n\n  <p>Adhesives are typically epoxy-based and applied via syringe, stencil printing, or automated dispenser. The key parameters are dot size, placement accuracy, and cure schedule. In African workshops without automated dispensers, manual syringe application works but requires practice to achieve consistent dots. A dot that is too small will not hold the component; too large will contaminate pads and cause solder defects.</p>\n\n  <p>Business tip: If you are not doing wave soldering or double-sided reflow, you may not need adhesive at all. Many small African assembly shops skip adhesive entirely by using solder paste's natural tackiness to hold components during reflow. This simplifies the process and reduces material costs.</p>\n\n  <h3>4. Manual SMT Soldering Techniques</h3>\n\n  <p>Manual SMT soldering is a viable production method for low-to-medium volumes. It requires a temperature-controlled soldering iron with a fine tip (0.5â1.0 mm), fine solder wire (0.3â0.5 mm diameter), flux, and tweezers. The technique is:</p>\n\n  <ol>\n    <li>Apply flux to the pads.</li>\n    <li>Tin one pad with a small amount of solder.</li>\n    <li>Place the component with tweezers, holding it in position.</li>\n    <li>Reflow the tinned pad while keeping the component aligned.</li>\n    <li>Solder the remaining pads.</li>\n    <li>Inspect the joints under magnification.</li>\n  </ol>\n\n  <p>For African technicians, the biggest challenge is heat management. Too much heat damages components and lifts pads; too little creates cold joints. Practice on scrap boards before working on production units. A good rule: use a 30â40 W iron set to 320â350Â°C for lead-free solder, or 300â320Â°C for leaded solder.</p>\n\n  <div style=\"background-color: #ffe6e6; border-left: 6px solid #cc0000; padding: 15px; margin: 20px 0;\">\n    <strong style=\"color: #cc0000;\">â ï¸ SAFETY WARNING: Lead Exposure</strong>\n    <p style=\"margin-top: 8px;\">Leaded solder (SnPb) is still common in African markets due to lower cost and easier handling. However, lead is toxic. Always solder in a well-ventilated area, use a fume extractor or fan, wash hands thoroughly after handling, and never eat or drink at the workbench. Keep leaded solder away from children. If possible, transition to lead-free solder (SAC305) despite its higher melting point and cost. Lead-free is required for products exported to the EU and increasingly for African markets as well.</p>\n  </div>\n\n  <h3>5. Reflow Soldering Basics</h3>\n\n  <p>Reflow soldering is the preferred method for SMT production. The process involves printing solder paste onto pads, placing components, and heating the board through a controlled temperature profile. The profile has four zones: preheat, soak, reflow, and cooling.</p>\n\n  <table>\n    <caption>Table 2: Typical Reflow Profile Parameters for Leaded and Lead-Free Solder</caption>\n    <thead>\n      <tr>\n        <th>Zone</th>\n        <th>Leaded (Sn63Pb37)</th>\n        <th>Lead-Free (SAC305)</th>\n        <th>Purpose</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>Preheat</td>\n        <td>1â3Â°C/sec to 100â120Â°C</td>\n        <td>1â3Â°C/sec to 120â150Â°C</td>\n        <td>Activate flux, avoid thermal shock</td>\n      </tr>\n      <tr>\n        <td>Soak</td>\n        <td>60â90 sec at 120â150Â°C</td>\n        <td>60â90 sec at 150â180Â°C</td>\n        <td>Uniform temperature, flux activation</td>\n      </tr>\n      <tr>\n        <td>Reflow</td>\n        <td>30â60 sec above 183Â°C (peak 210â220Â°C)</td>\n        <td>30â60 sec above 217Â°C (peak 235â245Â°C)</td>\n        <td>Form solder joints</td>\n      </tr>\n      <tr>\n        <td>Cooling</td>\n        <td>â¤4Â°C/sec to below 100Â°C</td>\n        <td>â¤4Â°C/sec to below 100Â°C</td>\n        <td>Solidify joints, avoid cracks</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><em>Source: IPC/JEDEC J-STD-020E, \"Moisture/Reflow Sensitivity Classification for Nonhermetic Solid State Surface Mount Devices,\" IPC International, 2015.</em></p>\n\n  <p>In Africa, many small businesses use modified toaster ovens or hot plates for reflow. While not ideal, these can work if you monitor temperature with a thermocouple and follow a profile. For higher volumes, a benchtop reflow oven (e.g., from Chinese manufacturers) costs $500â$2,000 and is a worthwhile investment. The key is repeatability: a consistent profile produces consistent joints.</p>\n\n  <h3>6. Inspecting SMT Solder Joints</h3>\n\n  <p>Inspection is where quality is confirmed. A good SMT solder joint has a shiny, concave fillet; a bad joint is dull, convex, or has insufficient solder. Common defects include:</p>\n\n  <ul>\n    <li><strong>Tombstoning:</strong> Component stands up on one end due to uneven heating.</li>\n    <li><strong>Bridging:</strong> Solder connects two adjacent pads.</li>\n    <li><strong>Cold joint:</strong> Dull, grainy surface from insufficient heat.</li>\n    <li><strong>Insufficient solder:</strong> Weak connection, often from poor paste deposition.</li>\n    <li><strong>Solder balls:</strong> Small spheres that can cause short circuits.</li>\n  </ul>\n\n  <p>For African businesses, visual inspection with a 10Ã magnifying lamp is the minimum. For fine-pitch components (QFP, QFN), a USB microscope ($50â$150) is a good investment. X-ray inspection is expensive and usually not practical for small shops, but you can outsource it for critical boards.</p>\n\n  <h3>Quick Reference Checklist</h3>\n  <ul>\n    <li>â Verify component package sizes match your PCB land patterns (IPC-7351).</li>\n    <li>â Check moisture sensitivity level (MSL) and bake components if needed.</li>\n    <li>â Store solder paste refrigerated at 2â10Â°C; allow to warm to room temperature before use.</li>\n    <li>â Print solder paste with consistent thickness (0.10â0.15 mm stencil).</li>\n    <li>â Place components with proper alignment; use vacuum pen or tweezers.</li>\n    <li>â Follow the correct reflow profile for your solder type (leaded vs. lead-free).</li>\n    <li>â Inspect joints under magnification; rework defects immediately.</li>\n    <li>â Record process parameters and defects for continuous improvement.</li>\n  </ul>\n\n  <h3>Further Reading</h3>\n  <ul>\n    <li><a href=\"https://www.ipc.org/TOC/IPC-A-610H-TOC.pdf\" target=\"_blank\" rel=\"noopener\">IPC-A-610H: Acceptability of Electronic Assemblies</a> â The global standard for solder joint inspection.</li>\n    <li><a href=\"https://www.ipc.org/TOC/IPC-7351B-TOC.pdf\" target=\"_blank\" rel=\"noopener\">IPC-7351B: Land Pattern Standard</a> â Essential for PCB design and component footprint selection.</li>\n    <li><a href=\"https://www.jedec.org/standards-documents/docs/jstd-020e\" target=\"_blank\" rel=\"noopener\">JEDEC J-STD-020E: Moisture/Reflow Sensitivity</a> â Critical for handling moisture-sensitive components.</li>\n    <li><a href=\"https://www.smta.org/\" target=\"_blank\" rel=\"noopener\">SMTA (Surface Mount Technology Association)</a> â Free resources, webinars, and local chapters in Africa.</li>\n    <li><a href=\"https://www.eevblog.com/\" target=\"_blank\" rel=\"noopener\">EEVblog</a> â Practical electronics tutorials, including SMT soldering and reflow.</li>\n  </ul>\n\n  <p><strong>Business takeaway:</strong> SMT is not just a technical skillâit is a competitive advantage. African electronics businesses that master SMT can produce smaller, cheaper, and more reliable products, winning contracts that would otherwise go to importers. Start with 0805 components, a good soldering iron, and a consistent reflow process. Invest in training and inspection. Your quality will speak for itself in the market.</p>\n</section>"
-    }],
+    }
+  ],
   "quiz": [
     {
       "q": "What does SMT stand for?",
-      "options": ["A) Surface Mount Technology", "B) Soldering Mount Technique", "C) Standard Manufacturing Tool", "D) Surface Material Transfer"],
+      "options": [
+        "A) Surface Mount Technology",
+        "B) Soldering Mount Technique",
+        "C) Standard Manufacturing Tool",
+        "D) Surface Material Transfer"
+      ],
       "answer": "A",
       "explanation": "SMT is the abbreviation for Surface Mount Technology, where components are mounted directly onto the board surface."
     },
     {
       "q": "Which component size is smallest for hand soldering?",
-      "options": ["A) 1206", "B) 0805", "C) 0603", "D) 0402"],
+      "options": [
+        "A) 1206",
+        "B) 0805",
+        "C) 0603",
+        "D) 0402"
+      ],
       "answer": "D",
       "explanation": "0402 (1.0 mm x 0.5 mm) is the smallest size commonly hand-soldered; 0201 is generally too small for manual work."
     },
     {
       "q": "What is the purpose of solder paste in SMT?",
-      "options": ["A) To glue components to the board", "B) To provide solder and flux for joints", "C) To clean the board", "D) To insulate components"],
+      "options": [
+        "A) To glue components to the board",
+        "B) To provide solder and flux for joints",
+        "C) To clean the board",
+        "D) To insulate components"
+      ],
       "answer": "B",
       "explanation": "Solder paste is a mixture of solder particles and flux that melts during reflow to form electrical and mechanical joints."
     },
     {
       "q": "Which tool is best for picking up tiny SMT components?",
-      "options": ["A) Your fingers", "B) Fine-point tweezers", "C) Pliers", "D) A screwdriver"],
+      "options": [
+        "A) Your fingers",
+        "B) Fine-point tweezers",
+        "C) Pliers",
+        "D) A screwdriver"
+      ],
       "answer": "B",
       "explanation": "Fine-point tweezers allow precise placement without touching the component with skin oils."
     },
     {
       "q": "What does a resistor marked '103' indicate?",
-      "options": ["A) 103 ohms", "B) 10,000 ohms", "C) 1,000 ohms", "D) 103,000 ohms"],
+      "options": [
+        "A) 103 ohms",
+        "B) 10,000 ohms",
+        "C) 1,000 ohms",
+        "D) 103,000 ohms"
+      ],
       "answer": "B",
       "explanation": "The code 103 means 10 x 10^3 = 10,000 ohms (10k)."
     },
     {
       "q": "Why should you wear an anti-static wrist strap when handling SMT ICs?",
-      "options": ["A) To keep your hands clean", "B) To prevent static electricity from damaging the IC", "C) To improve soldering speed", "D) To avoid burns"],
+      "options": [
+        "A) To keep your hands clean",
+        "B) To prevent static electricity from damaging the IC",
+        "C) To improve soldering speed",
+        "D) To avoid burns"
+      ],
       "answer": "B",
       "explanation": "Static discharge can destroy sensitive integrated circuits; a wrist strap safely grounds you."
     },
     {
       "q": "What is the typical curing temperature for SMT adhesive?",
-      "options": ["A) 50Â°C", "B) 120â150Â°C", "C) 250â300Â°C", "D) 400Â°C"],
+      "options": [
+        "A) 50Â°C",
+        "B) 120â150Â°C",
+        "C) 250â300Â°C",
+        "D) 400Â°C"
+      ],
       "answer": "B",
       "explanation": "Most epoxy SMT adhesives cure at 120â150Â°C for 5â10 minutes."
     },
     {
       "q": "Where should SMT adhesive be applied?",
-      "options": ["A) On the pads", "B) On the component body", "C) On the board between the pads", "D) On the soldering iron tip"],
+      "options": [
+        "A) On the pads",
+        "B) On the component body",
+        "C) On the board between the pads",
+        "D) On the soldering iron tip"
+      ],
       "answer": "C",
       "explanation": "Adhesive is dispensed on the board where the component body sits, not on the pads, to avoid interfering with soldering."
     },
     {
       "q": "What is a common sign of a cold solder joint?",
-      "options": ["A) Shiny and concave", "B) Dull and blobby", "C) Smooth and rounded", "D) Bright and convex"],
+      "options": [
+        "A) Shiny and concave",
+        "B) Dull and blobby",
+        "C) Smooth and rounded",
+        "D) Bright and convex"
+      ],
       "answer": "B",
       "explanation": "A cold joint looks dull and blobby because the solder did not melt and flow properly."
     },
     {
       "q": "What temperature range is recommended for lead-free manual soldering?",
-      "options": ["A) 200â250Â°C", "B) 250â300Â°C", "C) 350â380Â°C", "D) 400â450Â°C"],
+      "options": [
+        "A) 200â250Â°C",
+        "B) 250â300Â°C",
+        "C) 350â380Â°C",
+        "D) 400â450Â°C"
+      ],
       "answer": "C",
       "explanation": "Lead-free solder melts at higher temperatures, so 350â380Â°C is typical for manual soldering."
     },
     {
       "q": "Which method is used to solder a QFN package?",
-      "options": ["A) Drag soldering with an iron", "B) Hot air rework station", "C) Wave soldering", "D) Dip soldering"],
+      "options": [
+        "A) Drag soldering with an iron",
+        "B) Hot air rework station",
+        "C) Wave soldering",
+        "D) Dip soldering"
+      ],
       "answer": "B",
       "explanation": "QFN has pads underneath, so hot air is needed to reach the hidden joints."
     },
     {
       "q": "What is the purpose of flux in soldering?",
-      "options": ["A) To glue components", "B) To clean and prevent oxidation", "C) To cool the joint", "D) To add strength"],
+      "options": [
+        "A) To glue components",
+        "B) To clean and prevent oxidation",
+        "C) To cool the joint",
+        "D) To add strength"
+      ],
       "answer": "B",
       "explanation": "Flux removes oxides and helps solder flow smoothly."
     },
     {
       "q": "What is a solder bridge?",
-      "options": ["A) A good joint", "B) Unwanted solder connecting two pads", "C) A type of component", "D) A tool for soldering"],
+      "options": [
+        "A) A good joint",
+        "B) Unwanted solder connecting two pads",
+        "C) A type of component",
+        "D) A tool for soldering"
+      ],
       "answer": "B",
       "explanation": "A solder bridge is an accidental connection between adjacent pads or pins, causing a short circuit."
     },
     {
       "q": "What is the correct order of a reflow profile?",
-      "options": ["A) Reflow, soak, preheat, cool", "B) Preheat, soak, reflow, cool", "C) Soak, preheat, reflow, cool", "D) Preheat, reflow, soak, cool"],
+      "options": [
+        "A) Reflow, soak, preheat, cool",
+        "B) Preheat, soak, reflow, cool",
+        "C) Soak, preheat, reflow, cool",
+        "D) Preheat, reflow, soak, cool"
+      ],
       "answer": "B",
       "explanation": "The standard reflow profile is preheat, soak, reflow (peak), then cooling."
     },
     {
       "q": "What is tombstoning?",
-      "options": ["A) A component standing on one end", "B) A type of solder", "C) A tool for inspection", "D) A board material"],
+      "options": [
+        "A) A component standing on one end",
+        "B) A type of solder",
+        "C) A tool for inspection",
+        "D) A board material"
+      ],
       "answer": "A",
       "explanation": "Tombstoning occurs when one end of a component lifts off the pad during reflow."
     },
     {
       "q": "Why is it important to clean flux residue after soldering?",
-      "options": ["A) It looks messy", "B) It can cause corrosion and shorts", "C) It improves conductivity", "D) It makes the board heavier"],
+      "options": [
+        "A) It looks messy",
+        "B) It can cause corrosion and shorts",
+        "C) It improves conductivity",
+        "D) It makes the board heavier"
+      ],
       "answer": "B",
       "explanation": "Flux residue can absorb moisture and cause corrosion or leakage currents, especially in humid climates."
     },
     {
       "q": "What magnification is recommended for inspecting SMT joints?",
-      "options": ["A) 1x", "B) 5x", "C) 10xâ40x", "D) 100x"],
+      "options": [
+        "A) 1x",
+        "B) 5x",
+        "C) 10xâ40x",
+        "D) 100x"
+      ],
       "answer": "C",
       "explanation": "10x to 40x magnification is sufficient to see defects like cold joints and bridges."
     },
     {
       "q": "What does a multimeter continuity test check for?",
-      "options": ["A) Resistance value", "B) Voltage", "C) Shorts and opens", "D) Capacitance"],
+      "options": [
+        "A) Resistance value",
+        "B) Voltage",
+        "C) Shorts and opens",
+        "D) Capacitance"
+      ],
       "answer": "C",
       "explanation": "Continuity mode beeps if there is a low-resistance path, indicating a short or a good connection."
     },
     {
       "q": "What is the purpose of a stencil in SMT?",
-      "options": ["A) To hold components", "B) To apply solder paste evenly", "C) To clean the board", "D) To test circuits"],
+      "options": [
+        "A) To hold components",
+        "B) To apply solder paste evenly",
+        "C) To clean the board",
+        "D) To test circuits"
+      ],
       "answer": "B",
       "explanation": "A stencil is a thin sheet with cutouts that allows precise application of solder paste to pads."
     },
     {
       "q": "How should solder paste be stored?",
-      "options": ["A) In a warm place", "B) In the refrigerator", "C) In direct sunlight", "D) In a freezer"],
+      "options": [
+        "A) In a warm place",
+        "B) In the refrigerator",
+        "C) In direct sunlight",
+        "D) In a freezer"
+      ],
       "answer": "B",
       "explanation": "Solder paste should be stored at 2â8Â°C to extend shelf life and prevent drying."
     },
     {
       "q": "What is popcorning?",
-      "options": ["A) A type of solder joint", "B) Cracks in components due to moisture", "C) A method of soldering", "D) A cleaning process"],
+      "options": [
+        "A) A type of solder joint",
+        "B) Cracks in components due to moisture",
+        "C) A method of soldering",
+        "D) A cleaning process"
+      ],
       "answer": "B",
       "explanation": "Popcorning occurs when trapped moisture in components turns to steam during reflow, causing cracks."
     },
     {
       "q": "Which pin 1 indicator is common on SOIC chips?",
-      "options": ["A) A red dot", "B) A chamfered edge or dot", "C) A stripe", "D) A number"],
+      "options": [
+        "A) A red dot",
+        "B) A chamfered edge or dot",
+        "C) A stripe",
+        "D) A number"
+      ],
       "answer": "B",
       "explanation": "SOIC packages often have a dot or a chamfered corner to mark pin 1."
     },
     {
       "q": "What is the recommended iron tip temperature for leaded solder?",
-      "options": ["A) 200â250Â°C", "B) 300â350Â°C", "C) 400â450Â°C", "D) 500Â°C"],
+      "options": [
+        "A) 200â250Â°C",
+        "B) 300â350Â°C",
+        "C) 400â450Â°C",
+        "D) 500Â°C"
+      ],
       "answer": "B",
       "explanation": "Leaded solder melts at 183Â°C, so 300â350Â°C provides enough heat without damaging components."
     },
     {
       "q": "What is drag soldering used for?",
-      "options": ["A) Soldering through-hole components", "B) Soldering IC pins on two sides", "C) Removing components", "D) Cleaning boards"],
+      "options": [
+        "A) Soldering through-hole components",
+        "B) Soldering IC pins on two sides",
+        "C) Removing components",
+        "D) Cleaning boards"
+      ],
       "answer": "B",
       "explanation": "Drag soldering is a technique to solder multiple pins of an IC quickly by dragging the iron across them."
     },
     {
       "q": "What is the first step before applying solder paste?",
-      "options": ["A) Place components", "B) Clean the board with isopropyl alcohol", "C) Reflow", "D) Inspect"],
+      "options": [
+        "A) Place components",
+        "B) Clean the board with isopropyl alcohol",
+        "C) Reflow",
+        "D) Inspect"
+      ],
       "answer": "B",
       "explanation": "Cleaning removes dirt and oils, ensuring good solder adhesion."
     },
     {
       "q": "What does a 0-ohm resistor look like?",
-      "options": ["A) Marked '0' or '000'", "B) Marked '103'", "C) No marking", "D) A stripe"],
+      "options": [
+        "A) Marked '0' or '000'",
+        "B) Marked '103'",
+        "C) No marking",
+        "D) A stripe"
+      ],
       "answer": "A",
       "explanation": "A zero-ohm resistor is marked '0' or '000' and acts as a jumper."
     },
     {
       "q": "Why is it important to preheat the board before reflow?",
-      "options": ["A) To save time", "B) To avoid thermal shock and activate flux", "C) To melt solder faster", "D) To cool the board"],
+      "options": [
+        "A) To save time",
+        "B) To avoid thermal shock and activate flux",
+        "C) To melt solder faster",
+        "D) To cool the board"
+      ],
       "answer": "B",
       "explanation": "Preheating gradually raises the board temperature, preventing thermal shock and allowing flux to work."
     },
     {
       "q": "What is a common defect when too much solder paste is applied?",
-      "options": ["A) Open circuit", "B) Solder bridge", "C) Tombstone", "D) Cold joint"],
+      "options": [
+        "A) Open circuit",
+        "B) Solder bridge",
+        "C) Tombstone",
+        "D) Cold joint"
+      ],
       "answer": "B",
       "explanation": "Excess paste can squeeze out and connect adjacent pads, forming a bridge."
     },
     {
       "q": "What is the best way to remove a solder bridge?",
-      "options": ["A) Use a file", "B) Use solder wick and flux", "C) Scrape with a knife", "D) Heat with a hair dryer"],
+      "options": [
+        "A) Use a file",
+        "B) Use solder wick and flux",
+        "C) Scrape with a knife",
+        "D) Heat with a hair dryer"
+      ],
       "answer": "B",
       "explanation": "Solder wick with flux safely removes excess solder without damaging the board."
     },
     {
       "q": "What should you do if you find a cold joint?",
-      "options": ["A) Ignore it", "B) Reheat with flux and add fresh solder", "C) Remove the component", "D) Replace the board"],
+      "options": [
+        "A) Ignore it",
+        "B) Reheat with flux and add fresh solder",
+        "C) Remove the component",
+        "D) Replace the board"
+      ],
       "answer": "B",
       "explanation": "Reheating with flux and a little fresh solder reflows the joint and fixes the cold connection."
     }
   ],
   "videos": [
-    "SMT hand soldering tutorial for beginners",
-    "how to use solder paste and stencil SMT",
-    "SMT reflow soldering with toaster oven"
+    {
+      "title": "SMT hand soldering tutorial for beginners",
+      "query": "SMT hand soldering tutorial for beginners"
+    },
+    {
+      "title": "How to use solder paste and stencil SMT",
+      "query": "how to use solder paste and stencil SMT"
+    },
+    {
+      "title": "SMT reflow soldering with toaster oven",
+      "query": "SMT reflow soldering with toaster oven"
+    }
   ]
 }

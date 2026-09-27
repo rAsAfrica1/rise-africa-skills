@@ -32,197 +32,356 @@
       "title": "Troubleshooting Common Panel and Controller Issues",
       "body": "Even with good installation, problems happen. Here's how to troubleshoot common issues. First, if your system isn't charging, check the obvious: are panels clean? Dust, bird droppings, or shade can cut output by 50% or more. Clean with water and a soft brush early morning. Next, check connections: loose or corroded wires cause voltage drop. Use a multimeter to measure panel voltage at the controller. If it's zero, check panel cables and fuses. If voltage is low (e.g., 12V instead of 18V), a panel may be faulty or shaded. Test each panel individually. For parallel panels, one bad panel can drag down the whole array. Disconnect and test each one.\n\nIf the controller shows no lights, check battery voltage. If battery is dead (below 10V), the controller may not start. Charge the battery with a grid charger first. If controller is hot or smells burnt, it's likely damagedâreplace it. If it's not charging, check settings: is it set to the correct battery type? Is the PV voltage within range? Some controllers need PV voltage to be at least battery voltage +5V to start. For MPPT, if PV voltage is too low, it won't charge. Also, check for error codes (blinking lights). Common codes: overvoltage, overtemp, reverse polarity. Fix accordingly.\n\nIf your battery is overcharging, the controller may be faulty or set to wrong voltage. Measure battery voltage during charging; if it exceeds 14.8V for lead-acid, stop charging and adjust settings. If battery is not holding charge, it may be old or sulfated. Load test it: a healthy 12V battery should read 12.6V fully charged, and not drop below 10.5V under load. If it drops quickly, replace it. For panels, check for cracks or hot spots using a thermal camera or by feeling for unusually hot areas. Bypass diodes can fail, causing partial panel failure. If a panel's voltage is zero, check the junction box for loose connections. Always turn off the system before working on it. Keep a log of voltages and currents to spot trends. Most issues are due to loose connections, dirty panels, or wrong settings. Regular maintenance prevents 80% of problems.",
       "word_count": 350
-    }
-  ,
+    },
     {
       "title": "Practical Reference",
       "body": "<section>\n  <h2>Practical Reference: Installing Solar Panels &amp; Charge Controllers in African Conditions</h2>\n\n  <p>This reference pulls the six lessons of this module into one working document you can print, laminate and keep in the van. It assumes you are installing small to mid-size off-grid and hybrid systems â 100 W to 5 kW â for homes, shops, clinics, boreholes, irrigation pumps, cold rooms and phone-charging kiosks. The money question is always the same: <strong>how do I get the most kilowatt-hours per dollar of panel, controller and battery, given dust, heat, voltage drop, theft risk and irregular grid supply?</strong> Everything below is written to protect your margin and your warranty.</p>\n\n  <figure>\n    <svg viewBox=\"0 0 900 420\" role=\"img\" aria-labelledby=\"wiringTitle wiringDesc\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width:100%;height:auto;border:1px solid #ddd;background:#fbfbf7\">\n      <title id=\"wiringTitle\">Typical solar array to charge controller to battery wiring layout</title>\n      <desc id=\"wiringDesc\">Diagram showing two solar panels wired in series, feeding a DC isolator, then an MPPT charge controller, then a battery bank with fuse and shunt, and a DC load output.</desc>\n      <rect x=\"0\" y=\"0\" width=\"900\" height=\"420\" fill=\"#fbfbf7\"/>\n      <!-- Panels -->\n      <g>\n        <rect x=\"40\" y=\"60\" width=\"150\" height=\"100\" fill=\"#1f4e79\" stroke=\"#123\" stroke-width=\"2\"/>\n        <line x1=\"55\" y1=\"75\" x2=\"175\" y2=\"75\" stroke=\"#8ab\" stroke-width=\"1\"/>\n        <line x1=\"55\" y1=\"95\" x2=\"175\" y2=\"95\" stroke=\"#8ab\" stroke-width=\"1\"/>\n        <line x1=\"55\" y1=\"115\" x2=\"175\" y2=\"115\" stroke=\"#8ab\" stroke-width=\"1\"/>\n        <line x1=\"55\" y1=\"135\" x2=\"175\" y2=\"135\" stroke=\"#8ab\" stroke-width=\"1\"/>\n        <text x=\"115\" y=\"185\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"14\" fill=\"#123\">Panel 1</text>\n        <text x=\"115\" y=\"200\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#555\">~37 V Voc</text>\n      </g>\n      <g>\n        <rect x=\"40\" y=\"240\" width=\"150\" height=\"100\" fill=\"#1f4e79\" stroke=\"#123\" stroke-width=\"2\"/>\n        <line x1=\"55\" y1=\"255\" x2=\"175\" y2=\"255\" stroke=\"#8ab\" stroke-width=\"1\"/>\n        <line x1=\"55\" y1=\"275\" x2=\"175\" y2=\"275\" stroke=\"#8ab\" stroke-width=\"1\"/>\n        <line x1=\"55\" y1=\"295\" x2=\"175\" y2=\"295\" stroke=\"#8ab\" stroke-width=\"1\"/>\n        <line x1=\"55\" y1=\"315\" x2=\"175\" y2=\"315\" stroke=\"#8ab\" stroke-width=\"1\"/>\n        <text x=\"115\" y=\"365\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"14\" fill=\"#123\">Panel 2</text>\n        <text x=\"115\" y=\"380\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#555\">~37 V Voc</text>\n      </g>\n      <!-- Series wiring -->\n      <line x1=\"190\" y1=\"110\" x2=\"230\" y2=\"110\" stroke=\"#c00\" stroke-width=\"3\"/>\n      <line x1=\"190\" y1=\"290\" x2=\"230\" y2=\"290\" stroke=\"#000\" stroke-width=\"3\"/>\n      <line x1=\"230\" y1=\"110\" x2=\"230\" y2=\"290\" stroke=\"#c00\" stroke-width=\"3\"/>\n      <text x=\"245\" y=\"205\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#c00\">series: 74 V</text>\n      <!-- Isolator -->\n      <rect x=\"270\" y=\"170\" width=\"80\" height=\"60\" fill=\"#fff\" stroke=\"#333\" stroke-width=\"2\"/>\n      <text x=\"310\" y=\"195\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"12\">DC</text>\n      <text x=\"310\" y=\"212\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"12\">isolator</text>\n      <line x1=\"230\" y1=\"200\" x2=\"270\" y2=\"200\" stroke=\"#c00\" stroke-width=\"3\"/>\n      <line x1=\"350\" y1=\"200\" x2=\"390\" y2=\"200\" stroke=\"#c00\" stroke-width=\"3\"/>\n      <!-- Controller -->\n      <rect x=\"390\" y=\"140\" width=\"140\" height=\"120\" fill=\"#e8f0e0\" stroke=\"#2a5\" stroke-width=\"2\"/>\n      <text x=\"460\" y=\"180\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">MPPT</text>\n      <text x=\"460\" y=\"200\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\">charge controller</text>\n      <text x=\"460\" y=\"220\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\">e.g. 40 A / 12-24 V</text>\n      <text x=\"460\" y=\"240\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"10\" fill=\"#666\">PV in / BAT / LOAD</text>\n      <!-- Battery -->\n      <rect x=\"620\" y=\"150\" width=\"140\" height=\"100\" fill=\"#fff7cc\" stroke=\"#a80\" stroke-width=\"2\"/>\n      <text x=\"690\" y=\"185\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">Battery bank</text>\n      <text x=\"690\" y=\"205\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\">12 V / 24 V / 48 V</text>\n      <text x=\"690\" y=\"225\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\">LiFePOâ or lead-acid</text>\n      <line x1=\"530\" y1=\"200\" x2=\"620\" y2=\"200\" stroke=\"#000\" stroke-width=\"3\"/>\n      <rect x=\"555\" y=\"185\" width=\"40\" height=\"30\" fill=\"#fff\" stroke=\"#c00\" stroke-width=\"2\"/>\n      <text x=\"575\" y=\"205\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"10\" fill=\"#c00\">fuse</text>\n      <!-- Load -->\n      <rect x=\"620\" y=\"300\" width=\"140\" height=\"70\" fill=\"#eef\" stroke=\"#369\" stroke-width=\"2\"/>\n      <text x=\"690\" y=\"330\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"13\">DC load / inverter</text>\n      <text x=\"690\" y=\"350\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"10\" fill=\"#666\">via LOAD terminal</text>\n      <line x1=\"690\" y1=\"250\" x2=\"690\" y2=\"300\" stroke=\"#369\" stroke-width=\"3\"/>\n      <!-- Earth -->\n      <line x1=\"460\" y1=\"260\" x2=\"460\" y2=\"380\" stroke=\"#2a5\" stroke-width=\"2\" stroke-dasharray=\"5 4\"/>\n      <line x1=\"440\" y1=\"380\" x2=\"480\" y2=\"380\" stroke=\"#2a5\" stroke-width=\"3\"/>\n      <line x1=\"448\" y1=\"388\" x2=\"472\" y2=\"388\" stroke=\"#2a5\" stroke-width=\"3\"/>\n      <line x1=\"456\" y1=\"396\" x2=\"464\" y2=\"396\" stroke=\"#2a5\" stroke-width=\"3\"/>\n      <text x=\"500\" y=\"385\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#2a5\">earth / array frame bonding</text>\n    </svg>\n    <figcaption>Array-to-battery wiring layout for a small off-grid system, showing series-connected panels, DC isolator, MPPT charge controller, fused battery connection and separate load output. Diagram adapted from the general system architecture described in Victron Energy's <em>Wiring Unlimited</em> (Victron Energy B.V., current edition, victronenergy.com) and classic series/parallel wiring practice documented by Home Power Magazine / Solar Energy International.</figcaption>\n  </figure>\n\n  <h2>Choosing Panels: Mono vs Poly â What Actually Matters at the Till</h2>\n  <p>Monocrystalline panels are cut from single-crystal silicon; polycrystalline (multi) from cast ingots. Mono cells are typically darker and more uniform, poly cells show a speckled blue pattern. In the last five years the price gap has collapsed in most African markets, so the practical decision is no longer \"mono vs poly\" but \"what is the cost per watt, and what is the warranty and physical size?\"</p>\n\n  <p>Mono panels generally deliver 15â22% module efficiency versus 13â17% for poly. That matters when roof area is your constraint â a 5 kWp mono array can be roughly 15â25% smaller in area than the equivalent poly array. For ground mounts, area is rarely the limit, so price per watt dominates. In dusty or high-temperature sites, mono's slightly better temperature coefficient (typically â0.35%/Â°C vs â0.40%/Â°C) gives a small yield edge.</p>\n\n  <table>\n    <caption>Table 1 â Typical module characteristics, 2024â2025 African market</caption>\n    <thead>\n      <tr>\n        <th>Parameter</th>\n        <th>Monocrystalline (PERC/TOPCon)</th>\n        <th>Polycrystalline</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr><td>Module efficiency</td><td>19â22% (TOPCon up to 23%)</td><td>15â17%</td></tr>\n      <tr><td>Temperature coefficient (Pmax)</td><td>â0.30 to â0.35 %/Â°C</td><td>â0.38 to â0.42 %/Â°C</td></tr>\n      <tr><td>Area for 1 kWp</td><td>~4.5â5.3 mÂ²</td><td>~5.9â6.7 mÂ²</td></tr>\n      <tr><td>Typical price band (USD/Wp, ex-works Asia)</td><td>0.11â0.16</td><td>0.10â0.14</td></tr>\n      <tr><td>Warranty (product / performance)</td><td>12â15 yr / 25â30 yr</td><td>10â12 yr / 25 yr</td></tr>\n      <tr><td>Best use case in Africa</td><td>Limited roof area, high dust, hot climates, premium installs</td><td>Large ground mounts, budget-sensitive boreholes, schools</td></tr>\n    </tbody>\n  </table>\n  <p style=\"font-size:0.85em;color:#555\">Sources: module datasheets from JinkoSolar, Longi and Canadian Solar (Tier-1 manufacturers, 2024â2025); price ranges cross-checked against pvXchange and PVinsights spot indices and typical Nairobi, Lagos and Johannesburg distributor quotes.</p>\n\n  <h2>Mounting in African Sun</h2>\n  <p>Roof mounts must respect the roof: corrugated iron needs proper Z-brackets and sealing washers, tile roofs need hooks, and thatch or shingle requires stand-off rails. Ground mounts need concrete footings or driven posts, and â critically â clearance of at least 0.5â1 m to allow airflow and to survive flash floods in the rainy season. In dusty regions, tilt panels 5â10Â° above the latitude-optimal angle so rain and washing water self-clean. Keep panels away from the shadow of water tanks, trees, masts and future building extensions. In areas with theft risk, use tamper-proof bolts and consider mounting the array on the roof rather than at ground level.</p>\n\n  <h2>PWM vs MPPT: The Controller Decision</h2>\n  <p>A PWM controller simply connects the array to the battery for part of each cycle, forcing the panel to operate near battery voltage. An MPPT controller tracks the array's maximum power point and converts the surplus voltage into extra current. The gain is roughly the ratio of array Vmp to battery voltage, minus conversion losses (typically 92â98%).</p>\n\n  <table>\n    <caption>Table 2 â PWM vs MPPT charge controllers compared</caption>\n    <thead>\n      <tr>\n        <th>Feature</th>\n        <th>PWM</th>\n        <th>MPPT</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr><td>Typical efficiency (array to battery)</td><td>60â75% for a 36-cell \"12 V\" panel on 12 V battery; lower if array voltage is higher</td><td>92â98%</td></tr>\n      <tr><td>Array voltage flexibility</td><td>Must match battery (nominal)</td><td>Array Voc can be 1.5â3Ã battery voltage</td></tr>\n      <tr><td>Cost (40 A, 12/24 V)</td><td>USD 20â60</td><td>USD 120â350</td></tr>\n      <tr><td>Best for</td><td>Very small systems: 10â200 W, single 12 V panel, tight budget</td><td>Anything over ~200 W, long cable runs, larger arrays, cold mornings</td></tr>\n      <tr><td>Yield gain over PWM</td><td>baseline</td><td>15â30% typical; up to 40% in cold, high-irradiance conditions</td></tr>\n      <tr><td>Typical African use</td><td>Phone charging kiosks, small lantern kits</td><td>Home systems, boreholes, clinics, cold rooms, hybrid inverters</td></tr>\n    </tbody>\n  </table>\n  <p style=\"font-size:0.85em;color:#555\">Sources: Victron Energy MPPT technical papers; Morningstar Corporation \"PWM vs MPPT\" application notes; manufacturer datasheets (EPEver, Renogy, Victron, Outback).</p>\n\n  <p>Business rule of thumb: if the array is more than about 200 W, an MPPT pays for itself within one to two years through higher yield and thinner, cheaper DC cable. If you are building a 50 W kit for a rural shop, PWM is fine. Never mix the two on the same battery bank without understanding the charge profile conflict.</p>\n\n  <h2>Wiring Panels to Controller and Battery Safely</h2>\n  <p>Series wiring raises voltage and keeps current low â good for long runs. Parallel wiring raises current and keeps voltage low â good for shade tolerance but needs thicker cable. Use the voltage drop formula: Vdrop = 2 Ã L Ã I Ã Ï / A, where L is one-way length in metres, Ï is copper resistivity (~0.0175 Î©Â·mmÂ²/m), and A is conductor cross-section in mmÂ². Aim for under 3% on the array side and under 2% on the battery side.</p>\n\n  <p>Always connect the battery to the controller first, then the array. Disconnect in reverse. Use DC-rated breakers or isolators, never AC breakers, on the PV side. Fuse the battery positive with a fuse rated at or just above the controller's maximum output current. Torque terminals to manufacturer specification â loose DC terminals are a leading cause of fires.</p>\n\n  <div style=\"border-left:6px solid #c00;background:#fff2f2;padding:14px 18px;margin:18px 0\">\n    <strong style=\"color:#c00\">â  SAFETY WARNING â HIGH VOLTAGE DC AND BATTERY HAZARDS</strong>\n    <p style=\"margin:8px 0 0 0\">Solar arrays cannot be switched off by daylight. A single 550 W panel can produce over 50 V open-circuit and several amps; a series string can exceed 600 V DC, which is lethal and does not self-extinguish like AC. Cover panels with an opaque sheet before working on wiring. Never short a battery to test it â a 12 V 200 Ah lithium bank can deliver thousands of amps and will weld tools, melt jewellery and cause arc flash. Use insulated tools, remove metal watches and rings, and wear safety glasses. Ventilated lead-acid batteries release explosive hydrogen during charging. Lithium batteries must use a BMS and a charge controller set to the exact chemistry profile â wrong settings cause thermal runaway and fire. Install a DC-rated isolator and a fuse or breaker on the battery positive. In lightning-prone regions, bond array frames and mount a DC surge protection device. If you are not trained for DC work, do not open the controller or battery enclosure.</p>\n  </div>\n\n  <h2>Preventing Overcharging and Deep Discharge</h2>\n  <p>Overcharge cooks lead-acid batteries and stresses lithium. Deep discharge below 50% state of charge (lead-acid) or below the BMS low-voltage cutoff (lithium) shortens life dramatically. Set the controller's absorption, float and equalisation voltages to the battery manufacturer's data sheet â not to a generic default. Use temperature compensation if the controller supports it, because African battery rooms routinely swing between 15 Â°C at night and 40 Â°C+ by afternoon. For lithium, disable equalisation and set the low-temperature charge cutoff if the BMS does not already do it. Size the battery so daily depth of discharge stays under 50% for lead-acid and under 80% for LiFePOâ. A battery monitor with a shunt gives you the state of charge and is worth every dollar on a commercial installation.</p>\n\n  <h2>Troubleshooting Common Panel and Controller Issues</h2>\n  <p>Work through the system in order: array, wiring, controller, battery, load. Measure open-circuit voltage at the array, then at the controller input, then the battery voltage at the controller terminals. A big drop between array and controller means a broken connector, blown fuse or corroded MC4. A controller that is hot and showing low output may be in derating due to ambient temperature â improve ventilation. If the battery never reaches float, either the array is undersized, there is a parasitic load, or the absorption voltage is set too low. If the controller shows PV voltage but no charge current, suspect reverse polarity, a failed controller or a battery that is already full. In dusty conditions, a 30â40% output loss from soiling is normal â clean panels monthly or more often during harmattan or dry season.</p>\n\n  <h2>Quick Reference Checklist</h2>\n  <ol>\n    <li><strong>Size the array first</strong> from daily kWh demand, then pick mono or poly on price per watt and available area.</li>\n    <li><strong>Choose MPPT for arrays over 200 W</strong> or any long cable run; PWM only for tiny 12 V kits.</li>\n    <li><strong>Match controller voltage and current</strong> to the array Voc (with cold-temperature margin) and battery bank voltage.</li>\n    <li><strong>Calculate voltage drop</strong> and keep it under 3% on the PV side and under 2% on the battery side.</li>\n    <li><strong>Fuse and isolate</strong> the battery positive and the PV positive; use DC-rated devices only.</li>\n    <li><strong>Set charge voltages</strong> to the battery data sheet, enable temperature compensation, and disable equalisation for lithium.</li>\n    <li><strong>Bond and earth</strong> array frames and mount a DC surge protection device in lightning-prone areas.</li>\n    <li><strong>Clean, inspect and log</strong> monthly: panel soiling, connector corrosion, terminal torque and state of charge.</li>\n  </ol>\n\n  <h2>Further Reading</h2>\n  <ul>\n    <li>Victron Energy â <em>Wiring Unlimited</em> (free PDF): <a href=\"https://www.victronenergy.com/support-and-downloads/technical-information\">victronenergy.com/support-and-downloads/technical-information</a></li>\n    <li>Morningstar Corporation â charge controller application notes and PWM vs MPPT papers: <a href=\"https://www.morningstarcorp.com/resources/\">morningstarcorp.com/resources</a></li>\n    <li>National Renewable Energy Laboratory (NREL) â PVWatts and solar resource data: <a href=\"https://pvwatts.nrel.gov/\">pvwatts.nrel.gov</a></li>\n    <li>Global Solar Atlas (World Bank / Solargis) â free country-level irradiance maps for Africa: <a href=\"https://globalsolaratlas.info/\">globalsolaratlas.info</a></li>\n    <li>Solar Energy International (SEI) â free articles and course outlines on off-grid system design: <a href=\"https://www.solarenergy.org/\">solarenergy.org</a></li>\n  </ul>\n</section>"
-    }],
+    }
+  ],
   "quiz": [
     {
       "q": "Which type of solar panel is more efficient per square meter?",
-      "options": ["A) Monocrystalline", "B) Polycrystalline", "C) Both are equal", "D) Thin film"],
+      "options": [
+        "A) Monocrystalline",
+        "B) Polycrystalline",
+        "C) Both are equal",
+        "D) Thin film"
+      ],
       "answer": "A",
       "explanation": "Monocrystalline panels have higher efficiency (20-22%) compared to polycrystalline (15-17%)."
     },
     {
       "q": "What is the typical efficiency range of polycrystalline panels?",
-      "options": ["A) 10-12%", "B) 15-17%", "C) 20-22%", "D) 25-30%"],
+      "options": [
+        "A) 10-12%",
+        "B) 15-17%",
+        "C) 20-22%",
+        "D) 25-30%"
+      ],
       "answer": "B",
       "explanation": "Polycrystalline panels typically have efficiencies between 15% and 17%."
     },
     {
       "q": "In which direction should solar panels face in the Southern Hemisphere?",
-      "options": ["A) North", "B) South", "C) East", "D) West"],
+      "options": [
+        "A) North",
+        "B) South",
+        "C) East",
+        "D) West"
+      ],
       "answer": "A",
       "explanation": "In the Southern Hemisphere, panels should face north to capture maximum sunlight."
     },
     {
       "q": "What is the recommended tilt angle for solar panels?",
-      "options": ["A) Equal to latitude", "B) 45 degrees always", "C) 0 degrees", "D) 90 degrees"],
+      "options": [
+        "A) Equal to latitude",
+        "B) 45 degrees always",
+        "C) 0 degrees",
+        "D) 90 degrees"
+      ],
       "answer": "A",
       "explanation": "For year-round performance, tilt panels at an angle equal to your latitude."
     },
     {
       "q": "Why should you leave a gap between panels and the mounting surface?",
-      "options": ["A) To allow airflow and cooling", "B) To make them easier to steal", "C) To increase weight", "D) To collect dust"],
+      "options": [
+        "A) To allow airflow and cooling",
+        "B) To make them easier to steal",
+        "C) To increase weight",
+        "D) To collect dust"
+      ],
       "answer": "A",
       "explanation": "Airflow helps cool the panels, improving efficiency and preventing overheating."
     },
     {
       "q": "What is the main advantage of MPPT over PWM charge controllers?",
-      "options": ["A) Lower cost", "B) Higher efficiency", "C) Simpler design", "D) Smaller size"],
+      "options": [
+        "A) Lower cost",
+        "B) Higher efficiency",
+        "C) Simpler design",
+        "D) Smaller size"
+      ],
       "answer": "B",
       "explanation": "MPPT controllers extract more power from panels, especially in cool or cloudy conditions."
     },
     {
       "q": "For a small system under 200W, which controller is more cost-effective?",
-      "options": ["A) PWM", "B) MPPT", "C) Both are equal", "D) None"],
+      "options": [
+        "A) PWM",
+        "B) MPPT",
+        "C) Both are equal",
+        "D) None"
+      ],
       "answer": "A",
       "explanation": "PWM controllers are cheaper and adequate for small systems where efficiency loss is acceptable."
     },
     {
       "q": "What is the correct order for connecting a charge controller?",
-      "options": ["A) Battery first, then panels", "B) Panels first, then battery", "C) Either order", "D) Connect both simultaneously"],
+      "options": [
+        "A) Battery first, then panels",
+        "B) Panels first, then battery",
+        "C) Either order",
+        "D) Connect both simultaneously"
+      ],
       "answer": "A",
       "explanation": "Connecting the battery first allows the controller to sense voltage and configure itself safely."
     },
     {
       "q": "What size cable is recommended for a 300W panel at 12V for runs up to 5 meters?",
-      "options": ["A) 1.5mmÂ²", "B) 4mmÂ²", "C) 6mmÂ²", "D) 10mmÂ²"],
+      "options": [
+        "A) 1.5mmÂ²",
+        "B) 4mmÂ²",
+        "C) 6mmÂ²",
+        "D) 10mmÂ²"
+      ],
       "answer": "C",
       "explanation": "6mmÂ² cable handles the ~25A current safely and minimizes voltage drop."
     },
     {
       "q": "What is the absorption voltage for a 12V flooded lead-acid battery?",
-      "options": ["A) 12.6V", "B) 13.2V", "C) 14.4V", "D) 15.0V"],
+      "options": [
+        "A) 12.6V",
+        "B) 13.2V",
+        "C) 14.4V",
+        "D) 15.0V"
+      ],
       "answer": "C",
       "explanation": "Absorption voltage for flooded lead-acid is typically 14.4V."
     },
     {
       "q": "What is the recommended low-voltage disconnect setting for a lead-acid battery?",
-      "options": ["A) 10.5V", "B) 11.5V", "C) 12.0V", "D) 12.6V"],
+      "options": [
+        "A) 10.5V",
+        "B) 11.5V",
+        "C) 12.0V",
+        "D) 12.6V"
+      ],
       "answer": "B",
       "explanation": "Setting LVD to 11.5V prevents deep discharge, roughly 50% state of charge."
     },
     {
       "q": "What causes overcharging of a battery?",
-      "options": ["A) Controller failure", "B) Too many panels", "C) Low battery voltage", "D) Cold weather"],
+      "options": [
+        "A) Controller failure",
+        "B) Too many panels",
+        "C) Low battery voltage",
+        "D) Cold weather"
+      ],
       "answer": "A",
       "explanation": "Overcharging occurs when the charge controller fails to stop charging at the correct voltage."
     },
     {
       "q": "What is the first thing to check if your system is not charging?",
-      "options": ["A) Panel cleanliness", "B) Battery age", "C) Inverter settings", "D) Controller brand"],
+      "options": [
+        "A) Panel cleanliness",
+        "B) Battery age",
+        "C) Inverter settings",
+        "D) Controller brand"
+      ],
       "answer": "A",
       "explanation": "Dirty panels are a common cause of reduced or zero charging."
     },
     {
       "q": "What does a blinking error code on a charge controller indicate?",
-      "options": ["A) Normal operation", "B) A fault condition", "C) Low battery", "D) Full charge"],
+      "options": [
+        "A) Normal operation",
+        "B) A fault condition",
+        "C) Low battery",
+        "D) Full charge"
+      ],
       "answer": "B",
       "explanation": "Blinking lights usually indicate a specific fault like overvoltage or overtemp."
     },
     {
       "q": "Which tool is essential for checking voltage and current in a solar system?",
-      "options": ["A) Hammer", "B) Multimeter", "C) Screwdriver", "D) Saw"],
+      "options": [
+        "A) Hammer",
+        "B) Multimeter",
+        "C) Screwdriver",
+        "D) Saw"
+      ],
       "answer": "B",
       "explanation": "A multimeter measures voltage, current, and resistance to diagnose issues."
     },
     {
       "q": "What is the purpose of a bypass diode in a solar panel?",
-      "options": ["A) To increase voltage", "B) To prevent hot spots when shaded", "C) To reduce cost", "D) To store energy"],
+      "options": [
+        "A) To increase voltage",
+        "B) To prevent hot spots when shaded",
+        "C) To reduce cost",
+        "D) To store energy"
+      ],
       "answer": "B",
       "explanation": "Bypass diodes allow current to bypass shaded cells, preventing overheating and power loss."
     },
     {
       "q": "How often should you clean solar panels in dusty African regions?",
-      "options": ["A) Once a year", "B) Once a month", "C) Weekly", "D) Never"],
+      "options": [
+        "A) Once a year",
+        "B) Once a month",
+        "C) Weekly",
+        "D) Never"
+      ],
       "answer": "C",
       "explanation": "Weekly cleaning is recommended in dusty areas to maintain output."
     },
     {
       "q": "What is the maximum depth of discharge for a lead-acid battery to maximize life?",
-      "options": ["A) 20%", "B) 50%", "C) 80%", "D) 100%"],
+      "options": [
+        "A) 20%",
+        "B) 50%",
+        "C) 80%",
+        "D) 100%"
+      ],
       "answer": "B",
       "explanation": "Limiting discharge to 50% significantly extends lead-acid battery life."
     },
     {
       "q": "Which battery type requires temperature compensation for charging?",
-      "options": ["A) Lithium", "B) Lead-acid", "C) Both", "D) None"],
+      "options": [
+        "A) Lithium",
+        "B) Lead-acid",
+        "C) Both",
+        "D) None"
+      ],
       "answer": "B",
       "explanation": "Lead-acid batteries require voltage adjustment based on temperature to avoid over/undercharging."
     },
     {
       "q": "What is the typical float voltage for a 12V sealed lead-acid battery?",
-      "options": ["A) 12.0V", "B) 13.2V", "C) 14.4V", "D) 15.0V"],
+      "options": [
+        "A) 12.0V",
+        "B) 13.2V",
+        "C) 14.4V",
+        "D) 15.0V"
+      ],
       "answer": "B",
       "explanation": "Float voltage for sealed lead-acid is about 13.2V to maintain full charge."
     },
     {
       "q": "What should you do before working on solar panel wiring?",
-      "options": ["A) Cover panels", "B) Turn on inverter", "C) Disconnect battery", "D) Both A and C"],
+      "options": [
+        "A) Cover panels",
+        "B) Turn on inverter",
+        "C) Disconnect battery",
+        "D) Both A and C"
+      ],
       "answer": "D",
       "explanation": "Covering panels stops power generation, and disconnecting the battery prevents shocks."
     },
     {
       "q": "What is the main risk of deep discharge?",
-      "options": ["A) Overheating", "B) Reduced battery life", "C) Increased efficiency", "D) Higher voltage"],
+      "options": [
+        "A) Overheating",
+        "B) Reduced battery life",
+        "C) Increased efficiency",
+        "D) Higher voltage"
+      ],
       "answer": "B",
       "explanation": "Deep discharge shortens battery life by damaging plates."
     },
     {
       "q": "Which charge controller feature prevents over-discharge?",
-      "options": ["A) MPPT", "B) LVD", "C) PWM", "D) Equalization"],
+      "options": [
+        "A) MPPT",
+        "B) LVD",
+        "C) PWM",
+        "D) Equalization"
+      ],
       "answer": "B",
       "explanation": "Low Voltage Disconnect (LVD) cuts off loads when battery voltage drops too low."
     },
     {
       "q": "What is the recommended fuse rating for a 300W panel with Isc of 10A?",
-      "options": ["A) 5A", "B) 10A", "C) 12.5A", "D) 20A"],
+      "options": [
+        "A) 5A",
+        "B) 10A",
+        "C) 12.5A",
+        "D) 20A"
+      ],
       "answer": "C",
       "explanation": "Fuse should be rated 1.25 times Isc, so 10A x 1.25 = 12.5A."
     },
     {
       "q": "What does MPPT stand for?",
-      "options": ["A) Maximum Power Point Tracking", "B) Minimum Power Point Tracking", "C) Multiple Panel Power Transfer", "D) Motor Power Pulse Technology"],
+      "options": [
+        "A) Maximum Power Point Tracking",
+        "B) Minimum Power Point Tracking",
+        "C) Multiple Panel Power Transfer",
+        "D) Motor Power Pulse Technology"
+      ],
       "answer": "A",
       "explanation": "MPPT stands for Maximum Power Point Tracking."
     },
     {
       "q": "Why is it important to match panel voltage to controller rating?",
-      "options": ["A) To avoid damage", "B) To increase cost", "C) To reduce efficiency", "D) To void warranty"],
+      "options": [
+        "A) To avoid damage",
+        "B) To increase cost",
+        "C) To reduce efficiency",
+        "D) To void warranty"
+      ],
       "answer": "A",
       "explanation": "Exceeding controller's max PV voltage can damage it permanently."
     },
     {
       "q": "What is a common sign of a faulty solar panel?",
-      "options": ["A) Zero voltage output", "B) High voltage", "C) Cool temperature", "D) Bright color"],
+      "options": [
+        "A) Zero voltage output",
+        "B) High voltage",
+        "C) Cool temperature",
+        "D) Bright color"
+      ],
       "answer": "A",
       "explanation": "A panel with zero voltage output is likely faulty or disconnected."
     },
     {
       "q": "How can you test a battery's state of charge?",
-      "options": ["A) Measure voltage", "B) Shake it", "C) Look at color", "D) Smell it"],
+      "options": [
+        "A) Measure voltage",
+        "B) Shake it",
+        "C) Look at color",
+        "D) Smell it"
+      ],
       "answer": "A",
       "explanation": "Measuring voltage gives an approximate state of charge for lead-acid batteries."
     },
     {
       "q": "What is the benefit of using a shunt-based battery monitor?",
-      "options": ["A) Accurate state of charge", "B) Lower cost", "C) Simpler wiring", "D) Higher voltage"],
+      "options": [
+        "A) Accurate state of charge",
+        "B) Lower cost",
+        "C) Simpler wiring",
+        "D) Higher voltage"
+      ],
       "answer": "A",
       "explanation": "Shunt monitors measure current in/out to accurately track state of charge."
     },
     {
       "q": "What should you do if a charge controller smells burnt?",
-      "options": ["A) Keep using it", "B) Replace it", "C) Add water", "D) Ignore it"],
+      "options": [
+        "A) Keep using it",
+        "B) Replace it",
+        "C) Add water",
+        "D) Ignore it"
+      ],
       "answer": "B",
       "explanation": "A burnt smell indicates internal damage; the controller must be replaced."
     }
   ],
   "videos": [
-    "How to install solar panels and charge controller step by step",
-    "MPPT vs PWM charge controller test and comparison",
-    "Solar panel troubleshooting common problems and fixes"
+    {
+      "title": "How to install solar panels and charge controller step by step",
+      "query": "How to install solar panels and charge controller step by step"
+    },
+    {
+      "title": "MPPT vs PWM charge controller test and comparison",
+      "query": "MPPT vs PWM charge controller test and comparison"
+    },
+    {
+      "title": "Solar panel troubleshooting common problems and fixes",
+      "query": "Solar panel troubleshooting common problems and fixes"
+    }
   ]
 }

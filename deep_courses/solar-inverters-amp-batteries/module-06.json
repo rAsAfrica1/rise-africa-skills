@@ -32,197 +32,356 @@
       "title": "Labelling and Documenting Your Solar Installation",
       "body": "Good labelling and documentation save time and prevent accidents. Start by labelling every cable at both ends: 'PV+', 'PV-', 'Battery+', 'Battery-', 'AC Out', 'Grid In'. Use durable labels or heat-shrink tubing with printed text. Label breakers and switches clearly: 'Main DC', 'Inverter AC Out', 'Solar Breaker'. Create a system diagram showing all components, cable sizes, breaker ratings, and battery wiring. Note the date of installation and battery water topping schedule (if lead-acid). Keep a logbook: record daily energy production (kWh), battery voltage in the morning, and any faults. Take photos of the wiring before closing panels. For the client, provide a simple user manual: how to turn on/off, what to do if breaker trips, and emergency contacts. In Africa, where technicians may be scarce, clear documentation helps anyone service the system. Use a permanent marker or label maker. Avoid paper labels that fall off. Also, document the settings of your hybrid inverter: battery type, charging current, grid charging times. If you sell the business, this documentation adds value. Store a copy in a plastic sleeve near the system. Update it whenever you change anything. A well-documented system is safer, easier to troubleshoot, and more reliable.",
       "body_word_count": 350
-    }
-  ,
+    },
     {
       "title": "Practical Reference",
       "body": "<section>\n  <h2>Practical Reference: Integrating Inverter, Battery, and Solar Panels</h2>\n\n  <p>For a small African business â a maize mill, a barbershop, a cold room, a phone-charging kiosk, or a tailoring workshop â the solar system is only as good as the wiring that ties it together. A correctly integrated inverter, battery bank, and PV array will run your loads reliably for years. A poorly integrated one will trip breakers, cook batteries, or burn out your equipment â often within weeks.</p>\n\n  <p>This practical reference walks you through the physical and electrical integration of a small hybrid system. It assumes you already have your components sized (see previous modules) and are now ready to connect them. Every step here is written for the African context: variable grid quality, generator backup, high ambient temperatures, and the need for systems that a local technician can service.</p>\n\n  <h3>1. Step-by-Step System Wiring Overview</h3>\n\n  <p>The integration follows a simple energy flow: <strong>PV array â charge controller (or inverter's built-in MPPT) â battery bank â inverter â AC distribution â loads</strong>. In a hybrid system, the grid or generator feeds in through a changeover switch or the inverter's AC input.</p>\n\n  <figure>\n    <svg viewBox=\"0 0 900 520\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"Wiring diagram of a small hybrid solar system showing PV array, charge controller, battery bank, inverter, changeover switch, grid or generator, and AC loads\">\n      <style>\n        .box { fill: #f4f9f4; stroke: #2e7d32; stroke-width: 2; rx: 6; }\n        .box-alt { fill: #fff8e1; stroke: #f9a825; stroke-width: 2; rx: 6; }\n        .box-grid { fill: #e3f2fd; stroke: #1565c0; stroke-width: 2; rx: 6; }\n        .lbl { font-family: Arial, sans-serif; font-size: 13px; fill: #1b1b1b; text-anchor: middle; }\n        .lbl-sm { font-family: Arial, sans-serif; font-size: 11px; fill: #333; text-anchor: middle; }\n        .wire { stroke: #333; stroke-width: 2.5; fill: none; }\n        .wire-dc { stroke: #c62828; stroke-width: 2.5; fill: none; }\n        .wire-ac { stroke: #1565c0; stroke-width: 2.5; fill: none; }\n        .title { font-family: Arial, sans-serif; font-size: 15px; font-weight: bold; fill: #1b1b1b; text-anchor: middle; }\n      </style>\n\n      <text x=\"450\" y=\"28\" class=\"title\">Small Hybrid Solar System â Single-Line Wiring Reference</text>\n\n      <!-- PV Array -->\n      <rect x=\"40\" y=\"60\" width=\"150\" height=\"70\" class=\"box\"/>\n      <text x=\"115\" y=\"90\" class=\"lbl\">PV Array</text>\n      <text x=\"115\" y=\"110\" class=\"lbl-sm\">(2â4 panels, series/parallel)</text>\n\n      <!-- DC Disconnect -->\n      <rect x=\"240\" y=\"70\" width=\"110\" height=\"50\" class=\"box-alt\"/>\n      <text x=\"295\" y=\"92\" class=\"lbl\">DC Breaker</text>\n      <text x=\"295\" y=\"110\" class=\"lbl-sm\">/ Isolator</text>\n\n      <!-- Charge Controller -->\n      <rect x=\"400\" y=\"60\" width=\"150\" height=\"70\" class=\"box\"/>\n      <text x=\"475\" y=\"88\" class=\"lbl\">Charge Controller</text>\n      <text x=\"475\" y=\"108\" class=\"lbl-sm\">or Inverter MPPT</text>\n\n      <!-- Battery Bank -->\n      <rect x=\"400\" y=\"200\" width=\"150\" height=\"80\" class=\"box\"/>\n      <text x=\"475\" y=\"232\" class=\"lbl\">Battery Bank</text>\n      <text x=\"475\" y=\"252\" class=\"lbl-sm\">(48V / 24V / 12V)</text>\n      <text x=\"475\" y=\"268\" class=\"lbl-sm\">Fuse + DC Breaker</text>\n\n      <!-- Inverter -->\n      <rect x=\"620\" y=\"60\" width=\"150\" height=\"80\" class=\"box\"/>\n      <text x=\"695\" y=\"90\" class=\"lbl\">Hybrid Inverter</text>\n      <text x=\"695\" y=\"110\" class=\"lbl-sm\">DCâAC + AC charger</text>\n\n      <!-- Grid / Generator -->\n      <rect x=\"620\" y=\"200\" width=\"150\" height=\"70\" class=\"box-grid\"/>\n      <text x=\"695\" y=\"228\" class=\"lbl\">Grid / Generator</text>\n      <text x=\"695\" y=\"248\" class=\"lbl-sm\">AC Input (backup)</text>\n\n      <!-- Changeover -->\n      <rect x=\"620\" y=\"310\" width=\"150\" height=\"60\" class=\"box-alt\"/>\n      <text x=\"695\" y=\"335\" class=\"lbl\">Changeover Switch</text>\n      <text x=\"695\" y=\"353\" class=\"lbl-sm\">(manual / automatic)</text>\n\n      <!-- AC Distribution -->\n      <rect x=\"400\" y=\"380\" width=\"150\" height=\"70\" class=\"box\"/>\n      <text x=\"475\" y=\"408\" class=\"lbl\">AC Distribution</text>\n      <text x=\"475\" y=\"428\" class=\"lbl-sm\">Breakers + RCD</text>\n\n      <!-- Loads -->\n      <rect x=\"180\" y=\"380\" width=\"150\" height=\"70\" class=\"box\"/>\n      <text x=\"255\" y=\"408\" class=\"lbl\">Business Loads</text>\n      <text x=\"255\" y=\"428\" class=\"lbl-sm\">Lights, fridge, tools</text>\n\n      <!-- Wires: PV to DC breaker -->\n      <line x1=\"190\" y1=\"95\" x2=\"240\" y2=\"95\" class=\"wire-dc\"/>\n      <!-- DC breaker to controller -->\n      <line x1=\"350\" y1=\"95\" x2=\"400\" y2=\"95\" class=\"wire-dc\"/>\n      <!-- Controller to battery -->\n      <line x1=\"475\" y1=\"130\" x2=\"475\" y2=\"200\" class=\"wire-dc\"/>\n      <!-- Battery to inverter -->\n      <line x1=\"550\" y1=\"240\" x2=\"620\" y2=\"240\" class=\"wire-dc\"/>\n      <line x1=\"620\" y1=\"240\" x2=\"695\" y2=\"240\" class=\"wire-dc\"/>\n      <line x1=\"695\" y1=\"240\" x2=\"695\" y2=\"140\" class=\"wire-dc\"/>\n      <!-- Inverter to changeover -->\n      <line x1=\"695\" y1=\"140\" x2=\"695\" y2=\"310\" class=\"wire-ac\"/>\n      <!-- Grid to changeover -->\n      <line x1=\"695\" y1=\"270\" x2=\"695\" y2=\"310\" class=\"wire-ac\"/>\n      <!-- Changeover to AC distribution -->\n      <line x1=\"695\" y1=\"370\" x2=\"695\" y2=\"415\" class=\"wire-ac\"/>\n      <line x1=\"695\" y1=\"415\" x2=\"550\" y2=\"415\" class=\"wire-ac\"/>\n      <!-- AC distribution to loads -->\n      <line x1=\"400\" y1=\"415\" x2=\"330\" y2=\"415\" class=\"wire-ac\"/>\n\n      <!-- Labels -->\n      <text x=\"215\" y=\"88\" class=\"lbl-sm\" fill=\"#c62828\">DC</text>\n      <text x=\"585\" y=\"232\" class=\"lbl-sm\" fill=\"#c62828\">DC</text>\n      <text x=\"710\" y=\"175\" class=\"lbl-sm\" fill=\"#1565c0\">AC</text>\n      <text x=\"710\" y=\"295\" class=\"lbl-sm\" fill=\"#1565c0\">AC</text>\n      <text x=\"625\" y=\"405\" class=\"lbl-sm\" fill=\"#1565c0\">AC</text>\n\n      <!-- Legend -->\n      <line x1=\"60\" y1=\"490\" x2=\"100\" y2=\"490\" class=\"wire-dc\"/>\n      <text x=\"150\" y=\"494\" class=\"lbl-sm\">DC circuit</text>\n      <line x1=\"260\" y1=\"490\" x2=\"300\" y2=\"490\" class=\"wire-ac\"/>\n      <text x=\"350\" y=\"494\" class=\"lbl-sm\">AC circuit</text>\n    </svg>\n    <figcaption>Single-line wiring reference for a small hybrid solar system. Adapted from the wiring topology described in the <a href=\"https://www.energy.gov/eere/solar/solar-energy-technologies-office\" target=\"_blank\" rel=\"noopener\">U.S. Department of Energy, Solar Energy Technologies Office</a> and the <a href=\"https://www.irena.org/publications\" target=\"_blank\" rel=\"noopener\">IRENA off-grid solar PV installation guidance</a>.</figcaption>\n  </figure>\n\n  <h3>2. Connecting Inverter to Battery Bank and AC Loads</h3>\n\n  <p>Battery-to-inverter wiring is where most small African installations fail. The DC current is high (a 3 kW inverter at 24 V draws over 125 A), so cable sizing and torque matter more than anything else.</p>\n\n  <p><strong>Steps:</strong></p>\n  <ol>\n    <li>Confirm the inverter's DC input voltage matches the battery bank (12 V, 24 V, or 48 V). Never mix.</li>\n    <li>Use the shortest possible cable run. Keep inverter within 1â2 m of the battery bank.</li>\n    <li>Size cables for the full surge current, not just continuous. Use the manufacturer's table.</li>\n    <li>Install a DC-rated fuse or breaker on the positive cable, close to the battery terminal.</li>\n    <li>Connect battery positive last, and use a torque wrench to the manufacturer's spec (typically 4â6 Nm for M8 terminals).</li>\n    <li>For AC loads, run from the inverter's AC output through a distribution board with individual breakers per circuit.</li>\n  </ol>\n\n  <table>\n    <caption>Table 1: Minimum DC cable size for copper cable, by inverter size and battery voltage (typical 1â2 m run)</caption>\n    <thead>\n      <tr>\n        <th>Inverter continuous rating</th>\n        <th>12 V system</th>\n        <th>24 V system</th>\n        <th>48 V system</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr><td>1 kW</td><td>35 mmÂ²</td><td>16 mmÂ²</td><td>10 mmÂ²</td></tr>\n      <tr><td>2 kW</td><td>70 mmÂ²</td><td>35 mmÂ²</td><td>16 mmÂ²</td></tr>\n      <tr><td>3 kW</td><td>95 mmÂ²</td><td>50 mmÂ²</td><td>25 mmÂ²</td></tr>\n      <tr><td>5 kW</td><td>Not recommended</td><td>70 mmÂ²</td><td>35 mmÂ²</td></tr>\n      <tr><td>8 kW</td><td>Not recommended</td><td>Not recommended</td><td>70 mmÂ²</td></tr>\n    </tbody>\n  </table>\n  <p><em>Source: Adapted from cable sizing tables in the <a href=\"https://www.victronenergy.com/media/pg/Energy_Unlimited_Book/en/index-en.html\" target=\"_blank\" rel=\"noopener\">Victron Energy \"Energy Unlimited\" guide</a> and <a href=\"https://www.schneider-electric.com\" target=\"_blank\" rel=\"noopener\">Schneider Electric solar installation manuals</a>.</em></p>\n\n  <h3>3. Setting Up a Hybrid System with Grid or Generator Backup</h3>\n\n  <p>In most African urban and peri-urban settings, the grid is unreliable â frequent outages, voltage sags, and surges. A generator may fill the gap. A hybrid inverter handles both automatically, but only if wired correctly.</p>\n\n  <p><strong>Key integration points:</strong></p>\n  <ul>\n    <li><strong>AC input:</strong> Grid or generator feeds the inverter's AC input terminal. The inverter uses this to charge batteries and pass through to loads.</li>\n    <li><strong>Generator sizing:</strong> Must be at least 1.5Ã the inverter's charger rating, or the generator will stall when the charger kicks in.</li>\n    <li><strong>Grid quality:</strong> If grid voltage regularly drops below 180 V or spikes above 260 V, install an AVR or a voltage protection relay before the inverter.</li>\n    <li><strong>Priority settings:</strong> Configure the inverter to prioritise solar â battery â grid â generator, so you minimise fuel and grid costs.</li>\n  </ul>\n\n  <table>\n    <caption>Table 2: Typical hybrid inverter AC input requirements and generator sizing</caption>\n    <thead>\n      <tr>\n        <th>Inverter size</th>\n        <th>Max AC charge current</th>\n        <th>Min generator size (kVA)</th>\n        <th>Recommended grid breaker</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr><td>3 kW</td><td>40 A</td><td>5 kVA</td><td>32 A</td></tr>\n      <tr><td>5 kW</td><td>60 A</td><td>8 kVA</td><td>40 A</td></tr>\n      <tr><td>8 kW</td><td>80 A</td><td>12 kVA</td><td>63 A</td></tr>\n      <tr><td>10 kW</td><td>100 A</td><td>15 kVA</td><td>63 A</td></tr>\n    </tbody>\n  </table>\n  <p><em>Source: Compiled from <a href=\"https://www.victronenergy.com/inverters-chargers\" target=\"_blank\" rel=\"noopener\">Victron MultiPlus/Quattro datasheets</a> and <a href=\"https://www.growatt.com\" target=\"_blank\" rel=\"noopener\">Growatt hybrid inverter manuals</a>.</em></p>\n\n  <h3>4. Using Changeover Switches and Breakers Safely</h3>\n\n  <p>A changeover switch lets you manually select between inverter output and grid/generator supply. In many small businesses, this is the cheapest way to add backup without a fully automatic hybrid inverter.</p>\n\n  <p><strong>Rules for safe changeover wiring:</strong></p>\n  <ul>\n    <li>Use a <strong>break-before-make</strong> changeover switch. A make-before-make switch will short grid and inverter together â a fire risk.</li>\n    <li>Mount the switch in a lockable enclosure, clearly labelled \"GRID\" and \"SOLAR\".</li>\n    <li>Never switch under load if the switch is not rated for it. Turn off the main breaker first.</li>\n    <li>Install an RCD (residual current device) on the AC output to protect against earth leakage â critical in damp or dusty environments.</li>\n    <li>Use DC-rated breakers on the PV and battery circuits. AC breakers will arc and fail on DC.</li>\n  </ul>\n\n  <div style=\"border: 3px solid #c62828; background: #ffebee; padding: 16px; margin: 20px 0; border-radius: 6px;\">\n    <p style=\"margin: 0; font-weight: bold; color: #c62828; font-size: 1.05em;\">â ï¸ SAFETY WARNING â DC ARC AND ELECTROCUTION HAZARD</p>\n    <p style=\"margin: 8px 0 0 0; color: #1b1b1b;\">PV arrays and battery banks cannot be \"switched off\" at the source. A PV array generates voltage whenever there is light, and a battery bank stores lethal energy 24/7. <strong>Never work on DC wiring without first isolating the array at the DC breaker, disconnecting the battery positive terminal, and verifying with a multimeter.</strong> DC arcs do not self-extinguish like AC arcs â they sustain and cause fires. Use only DC-rated breakers, fuses, and MC4 connectors. Wear insulated gloves and use insulated tools. In high-temperature African conditions, check terminal torque every 6 months â loose DC connections are the number one cause of solar fires.</p>\n  </div>\n\n  <h3>5. Testing Your System Before Powering Your Equipment</h3>\n\n  <p>Never connect your business loads on day one. Test in stages:</p>\n  <ol>\n    <li><strong>PV open-circuit voltage:</strong> Measure each string. Confirm it matches the charge controller's max input voltage.</li>\n    <li><strong>Battery voltage:</strong> Check each battery and the full bank. Confirm polarity before connecting the inverter.</li>\n    <li><strong>Insulation resistance:</strong> Use a megohmmeter on the DC and AC circuits to check for leakage to earth.</li>\n    <li><strong>Inverter no-load test:</strong> Power the inverter with no AC loads. Confirm output voltage (230 V Â±5%) and frequency (50 Hz Â±1%).</li>\n    <li><strong>Progressive load test:</strong> Add loads one at a time â a light, then a fan, then a fridge. Watch for voltage drop and inverter alarms.</li>\n    <li><strong>Changeover test:</strong> Simulate a grid outage. Confirm the switch transfers cleanly and the inverter carries the load.</li>\n    <li><strong>Thermal check:</strong> After 30 minutes at full load, check terminal temperatures with an IR thermometer. Anything above 60 Â°C is a problem.</li>\n  </ol>\n\n  <h3>6. Labelling and Documenting Your Installation</h3>\n\n  <p>Good documentation is what separates a professional installation from a hobby project. It also protects your investment when you sell the business or hand over to a technician.</p>\n\n  <ul>\n    <li>Label every cable at both ends: \"PV+ String 1\", \"Battery+\", \"AC Out â Fridge Circuit\".</li>\n    <li>Post a single-line diagram inside the enclosure door.</li>\n    <li>Record: panel model and serial numbers, battery install date, inverter settings, breaker ratings.</li>\n    <li>Keep a maintenance log: terminal torque checks, water top-ups (for flooded batteries), cleaning dates.</li>\n    <li>Store a digital copy â WhatsApp it to yourself or email it. Paper gets lost.</li>\n  </ul>\n\n  <h3>Quick Reference Checklist</h3>\n  <ul>\n    <li>â Battery bank voltage matches inverter DC input rating</li>\n    <li>â DC fuse/breaker installed on positive cable within 30 cm of battery</li>\n    <li>â All DC cables sized for surge current, torque-checked to spec</li>\n    <li>â Changeover switch is break-before-make and clearly labelled</li>\n    <li>â RCD installed on AC output circuit</li>\n    <li>â PV open-circuit voltage verified against controller max input</li>\n    <li>â Progressive load test completed before connecting business equipment</li>\n    <li>â Single-line diagram posted and all cables labelled</li>\n  </ul>\n\n  <h3>Further Reading</h3>\n  <ul>\n    <li><a href=\"https://www.irena.org/publications\" target=\"_blank\" rel=\"noopener\">IRENA â Off-grid Renewable Energy Statistics and Installation Guides</a></li>\n    <li><a href=\"https://www.energy.gov/eere/solar/solar-energy-technologies-office\" target=\"_blank\" rel=\"noopener\">U.S. DOE Solar Energy Technologies Office â System Design Resources</a></li>\n    <li><a href=\"https://www.victronenergy.com/media/pg/Energy_Unlimited_Book/en/index-en.html\" target=\"_blank\" rel=\"noopener\">Victron Energy â Energy Unlimited (free book on battery systems)</a></li>\n    <li><a href=\"https://www.iea.org/reports/africa-energy-outlook\" target=\"_blank\" rel=\"noopener\">IEA â Africa Energy Outlook (context on grid reliability and off-grid markets)</a></li>\n    <li><a href=\"https://www.cleanenergybusinesscouncil.com\" target=\"_blank\" rel=\"noopener\">Clean Energy Business Council â SME Solar Toolkit (MENA/Africa)</a></li>\n  </ul>\n\n  <p><strong>Business-first takeaway:</strong> Your solar system is a business asset. Wire it to last, document it for the next owner, and test it before you trust it with your income. A well-integrated system pays for itself; a badly integrated one becomes a repair bill.</p>\n</section>"
-    }],
+    }
+  ],
   "quiz": [
     {
       "q": "What is the correct order to connect a charge controller?",
-      "options": ["A) Connect panels first, then battery", "B) Connect battery first, then panels", "C) Connect load first, then battery", "D) Connect inverter first, then panels"],
+      "options": [
+        "A) Connect panels first, then battery",
+        "B) Connect battery first, then panels",
+        "C) Connect load first, then battery",
+        "D) Connect inverter first, then panels"
+      ],
       "answer": "B",
       "explanation": "Connecting the battery first allows the controller to sense system voltage and avoid damage."
     },
     {
       "q": "For a 3kVA 24V inverter, what size DC breaker is recommended for battery connection?",
-      "options": ["A) 50A", "B) 100A", "C) 150A", "D) 200A"],
+      "options": [
+        "A) 50A",
+        "B) 100A",
+        "C) 150A",
+        "D) 200A"
+      ],
       "answer": "C",
       "explanation": "Max current is about 125A, so a 150A breaker provides safe margin."
     },
     {
       "q": "What cable size is typically used for battery-to-inverter connections in a small system?",
-      "options": ["A) 4mmÂ²", "B) 10mmÂ²", "C) 25mmÂ²", "D) 50mmÂ²"],
+      "options": [
+        "A) 4mmÂ²",
+        "B) 10mmÂ²",
+        "C) 25mmÂ²",
+        "D) 50mmÂ²"
+      ],
       "answer": "C",
       "explanation": "25mmÂ² handles high current with minimal voltage drop for short runs."
     },
     {
       "q": "Which terminal should be connected last when wiring batteries to an inverter?",
-      "options": ["A) Positive", "B) Negative", "C) Earth", "D) AC output"],
+      "options": [
+        "A) Positive",
+        "B) Negative",
+        "C) Earth",
+        "D) AC output"
+      ],
       "answer": "B",
       "explanation": "Connecting negative last reduces spark risk if tools touch metal."
     },
     {
       "q": "What is the purpose of a changeover switch?",
-      "options": ["A) To increase voltage", "B) To switch between power sources safely", "C) To charge batteries", "D) To convert DC to AC"],
+      "options": [
+        "A) To increase voltage",
+        "B) To switch between power sources safely",
+        "C) To charge batteries",
+        "D) To convert DC to AC"
+      ],
       "answer": "B",
       "explanation": "It allows manual or automatic transfer between grid, generator, and inverter."
     },
     {
       "q": "What should you check first before powering AC loads?",
-      "options": ["A) Battery water level", "B) AC output voltage and polarity", "C) Solar panel tilt", "D) Inverter fan speed"],
+      "options": [
+        "A) Battery water level",
+        "B) AC output voltage and polarity",
+        "C) Solar panel tilt",
+        "D) Inverter fan speed"
+      ],
       "answer": "B",
       "explanation": "Incorrect voltage or polarity can damage equipment."
     },
     {
       "q": "In a hybrid system, what is the typical priority order?",
-      "options": ["A) Grid > Battery > Solar", "B) Solar > Battery > Grid", "C) Battery > Solar > Grid", "D) Grid > Solar > Battery"],
+      "options": [
+        "A) Grid > Battery > Solar",
+        "B) Solar > Battery > Grid",
+        "C) Battery > Solar > Grid",
+        "D) Grid > Solar > Battery"
+      ],
       "answer": "B",
       "explanation": "Solar is used first, then battery, then grid as backup."
     },
     {
       "q": "What size generator is recommended for a 5kVA hybrid inverter?",
-      "options": ["A) 2kVA", "B) 5kVA", "C) 7.5kVA", "D) 10kVA"],
+      "options": [
+        "A) 2kVA",
+        "B) 5kVA",
+        "C) 7.5kVA",
+        "D) 10kVA"
+      ],
       "answer": "C",
       "explanation": "Generator should be at least 1.5 times inverter continuous power to handle surge."
     },
     {
       "q": "What is the purpose of a DC breaker in a solar circuit?",
-      "options": ["A) To convert DC to AC", "B) To protect against overcurrent", "C) To increase voltage", "D) To store energy"],
+      "options": [
+        "A) To convert DC to AC",
+        "B) To protect against overcurrent",
+        "C) To increase voltage",
+        "D) To store energy"
+      ],
       "answer": "B",
       "explanation": "DC breakers interrupt fault currents and protect wiring."
     },
     {
       "q": "What does a multimeter measure when testing a battery bank?",
-      "options": ["A) AC current", "B) DC voltage", "C) Resistance", "D) Frequency"],
+      "options": [
+        "A) AC current",
+        "B) DC voltage",
+        "C) Resistance",
+        "D) Frequency"
+      ],
       "answer": "B",
       "explanation": "DC voltage indicates state of charge and system health."
     },
     {
       "q": "What is a common cause of inverter overheating?",
-      "options": ["A) Too much solar input", "B) Loose battery connections", "C) Low AC load", "D) High battery voltage"],
+      "options": [
+        "A) Too much solar input",
+        "B) Loose battery connections",
+        "C) Low AC load",
+        "D) High battery voltage"
+      ],
       "answer": "B",
       "explanation": "Loose connections create resistance and heat."
     },
     {
       "q": "Why should you label cables in a solar installation?",
-      "options": ["A) For aesthetics", "B) To identify connections for troubleshooting", "C) To increase efficiency", "D) To meet warranty requirements"],
+      "options": [
+        "A) For aesthetics",
+        "B) To identify connections for troubleshooting",
+        "C) To increase efficiency",
+        "D) To meet warranty requirements"
+      ],
       "answer": "B",
       "explanation": "Labels help anyone service the system safely and quickly."
     },
     {
       "q": "What is the recommended tilt angle for solar panels in southern Africa?",
-      "options": ["A) 0 degrees", "B) 20-30 degrees", "C) 45-60 degrees", "D) 90 degrees"],
+      "options": [
+        "A) 0 degrees",
+        "B) 20-30 degrees",
+        "C) 45-60 degrees",
+        "D) 90 degrees"
+      ],
       "answer": "B",
       "explanation": "This angle captures optimal sunlight year-round."
     },
     {
       "q": "What should you do if an inverter beeps continuously?",
-      "options": ["A) Ignore it", "B) Disconnect and check connections", "C) Increase load", "D) Turn off solar"],
+      "options": [
+        "A) Ignore it",
+        "B) Disconnect and check connections",
+        "C) Increase load",
+        "D) Turn off solar"
+      ],
       "answer": "B",
       "explanation": "Beeping indicates a fault, often from wiring or overload."
     },
     {
       "q": "What is the purpose of a surge protection device (SPD)?",
-      "options": ["A) To increase voltage", "B) To protect against power surges", "C) To store energy", "D) To convert AC to DC"],
+      "options": [
+        "A) To increase voltage",
+        "B) To protect against power surges",
+        "C) To store energy",
+        "D) To convert AC to DC"
+      ],
       "answer": "B",
       "explanation": "SPDs divert excess voltage to ground, protecting equipment."
     },
     {
       "q": "What is the first step in testing a newly wired system?",
-      "options": ["A) Plug in all loads", "B) Check all connections are tight", "C) Turn on inverter", "D) Connect grid"],
+      "options": [
+        "A) Plug in all loads",
+        "B) Check all connections are tight",
+        "C) Turn on inverter",
+        "D) Connect grid"
+      ],
       "answer": "B",
       "explanation": "Loose connections can cause fires or damage."
     },
     {
       "q": "What should battery voltage be for a fully charged 24V lead-acid bank?",
-      "options": ["A) 12V", "B) 24V", "C) 25.6V", "D) 28V"],
+      "options": [
+        "A) 12V",
+        "B) 24V",
+        "C) 25.6V",
+        "D) 28V"
+      ],
       "answer": "C",
       "explanation": "A fully charged 24V bank reads about 25.6V at rest."
     },
     {
       "q": "What is the maximum allowable voltage drop for battery cables?",
-      "options": ["A) 1%", "B) 3%", "C) 5%", "D) 10%"],
+      "options": [
+        "A) 1%",
+        "B) 3%",
+        "C) 5%",
+        "D) 10%"
+      ],
       "answer": "B",
       "explanation": "Keeping voltage drop under 3% ensures efficient power transfer."
     },
     {
       "q": "What is a hybrid inverter?",
-      "options": ["A) Only uses solar", "B) Can use solar, battery, and grid", "C) Only uses grid", "D) Only uses generator"],
+      "options": [
+        "A) Only uses solar",
+        "B) Can use solar, battery, and grid",
+        "C) Only uses grid",
+        "D) Only uses generator"
+      ],
       "answer": "B",
       "explanation": "Hybrid inverters manage multiple power sources."
     },
     {
       "q": "What is the purpose of a distribution board in a solar system?",
-      "options": ["A) To house breakers for circuits", "B) To charge batteries", "C) To convert DC to AC", "D) To monitor solar panels"],
+      "options": [
+        "A) To house breakers for circuits",
+        "B) To charge batteries",
+        "C) To convert DC to AC",
+        "D) To monitor solar panels"
+      ],
       "answer": "A",
       "explanation": "It provides a central point for AC circuit protection."
     },
     {
       "q": "How often should you test breakers?",
-      "options": ["A) Daily", "B) Weekly", "C) Monthly", "D) Yearly"],
+      "options": [
+        "A) Daily",
+        "B) Weekly",
+        "C) Monthly",
+        "D) Yearly"
+      ],
       "answer": "C",
       "explanation": "Monthly testing ensures they will operate when needed."
     },
     {
       "q": "What is the risk of bypassing a breaker?",
-      "options": ["A) Higher efficiency", "B) Fire or equipment damage", "C) Lower voltage", "D) Longer battery life"],
+      "options": [
+        "A) Higher efficiency",
+        "B) Fire or equipment damage",
+        "C) Lower voltage",
+        "D) Longer battery life"
+      ],
       "answer": "B",
       "explanation": "Bypassing removes overcurrent protection, risking fire."
     },
     {
       "q": "What tool is essential for checking polarity?",
-      "options": ["A) Hammer", "B) Multimeter", "C) Saw", "D) Drill"],
+      "options": [
+        "A) Hammer",
+        "B) Multimeter",
+        "C) Saw",
+        "D) Drill"
+      ],
       "answer": "B",
       "explanation": "A multimeter measures voltage and indicates polarity."
     },
     {
       "q": "What should you do before working on AC wiring?",
-      "options": ["A) Turn off inverter", "B) Turn on all loads", "C) Disconnect solar panels", "D) Increase battery charging"],
+      "options": [
+        "A) Turn off inverter",
+        "B) Turn on all loads",
+        "C) Disconnect solar panels",
+        "D) Increase battery charging"
+      ],
       "answer": "A",
       "explanation": "Turning off inverter prevents electric shock."
     },
     {
       "q": "What is the recommended cable size for AC loads in a small business?",
-      "options": ["A) 1.5mmÂ²", "B) 2.5mmÂ²", "C) 6mmÂ²", "D) 10mmÂ²"],
+      "options": [
+        "A) 1.5mmÂ²",
+        "B) 2.5mmÂ²",
+        "C) 6mmÂ²",
+        "D) 10mmÂ²"
+      ],
       "answer": "B",
       "explanation": "2.5mmÂ² is standard for 16-20A circuits."
     },
     {
       "q": "What does a charge controller do?",
-      "options": ["A) Converts DC to AC", "B) Regulates battery charging", "C) Stores energy", "D) Switches power sources"],
+      "options": [
+        "A) Converts DC to AC",
+        "B) Regulates battery charging",
+        "C) Stores energy",
+        "D) Switches power sources"
+      ],
       "answer": "B",
       "explanation": "It prevents overcharging and optimizes solar input."
     },
     {
       "q": "What is the first thing to check if a breaker trips?",
-      "options": ["A) Reset it immediately", "B) Find the fault", "C) Replace it", "D) Ignore it"],
+      "options": [
+        "A) Reset it immediately",
+        "B) Find the fault",
+        "C) Replace it",
+        "D) Ignore it"
+      ],
       "answer": "B",
       "explanation": "Resetting without finding fault can cause repeated trips or damage."
     },
     {
       "q": "What is the purpose of documenting your solar installation?",
-      "options": ["A) To increase power output", "B) To help future maintenance", "C) To reduce cost", "D) To meet government rules"],
+      "options": [
+        "A) To increase power output",
+        "B) To help future maintenance",
+        "C) To reduce cost",
+        "D) To meet government rules"
+      ],
       "answer": "B",
       "explanation": "Documentation aids troubleshooting and servicing."
     },
     {
       "q": "What should you record in a system logbook?",
-      "options": ["A) Daily energy production", "B) Battery voltage", "C) Faults", "D) All of the above"],
+      "options": [
+        "A) Daily energy production",
+        "B) Battery voltage",
+        "C) Faults",
+        "D) All of the above"
+      ],
       "answer": "D",
       "explanation": "All these data help monitor system health."
     },
     {
       "q": "What is a safe practice when connecting batteries?",
-      "options": ["A) Wear metal jewelry", "B) Use insulated tools", "C) Connect positive last", "D) Work on wet ground"],
+      "options": [
+        "A) Wear metal jewelry",
+        "B) Use insulated tools",
+        "C) Connect positive last",
+        "D) Work on wet ground"
+      ],
       "answer": "B",
       "explanation": "Insulated tools prevent short circuits and sparks."
     }
   ],
   "videos": [
-    "solar inverter battery wiring diagram step by step",
-    "how to connect hybrid inverter to grid and generator",
-    "solar system testing and commissioning for beginners"
+    {
+      "title": "Solar inverter battery wiring diagram step by step",
+      "query": "solar inverter battery wiring diagram step by step"
+    },
+    {
+      "title": "How to connect hybrid inverter to grid and generator",
+      "query": "how to connect hybrid inverter to grid and generator"
+    },
+    {
+      "title": "Solar system testing and commissioning for beginners",
+      "query": "solar system testing and commissioning for beginners"
+    }
   ]
 }

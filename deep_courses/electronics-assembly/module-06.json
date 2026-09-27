@@ -26,197 +26,356 @@
     {
       "title": "PCB Cleaning and Contamination Control",
       "body": "After soldering, PCBs often have flux residue, dust, and other contaminants. Flux can be corrosive, conductive, and can cause short circuits or poor adhesion of conformal coating. Cleaning is essential for reliability, especially in humid African climates where moisture combines with flux to cause corrosion.\n\nThere are three main flux types: rosin (RA), water-soluble (WS), and no-clean (NC). Rosin flux leaves a sticky residue that must be cleaned with isopropyl alcohol (IPA) or a commercial flux remover. Water-soluble flux must be cleaned with deionized water, often with a brush, within a few hours. No-clean flux can be left on, but it's still best to remove it for high-reliability applications.\n\nFor manual cleaning, use a soft-bristle brush (like an anti-static brush) and 99% isopropyl alcohol. Pour IPA into a small container, dip the brush, and scrub the board gently. Work in a well-ventilated area away from sparks. For stubborn residue, use a flux remover spray like Chemtronics Flux-Off. After scrubbing, rinse with fresh IPA and blow dry with compressed air or a lint-free cloth. Do not use cotton swabs; they leave fibers.\n\nFor water-soluble flux, use warm deionized water (about 60Â°C) and a brush. Rinse thoroughly and dry immediately with compressed air. Do not let water sit on the board. For no-clean flux, you can often skip cleaning, but if you need to remove it, use IPA.\n\nUltrasonic cleaning is effective but can damage certain components (crystals, relays). Use only if your components are compatible. In Africa, many workshops use simple manual cleaning. Always wear gloves and eye protection.\n\nAfter cleaning, inspect the board under a magnifying glass for remaining residue, solder splashes, or loose metal. Remove any splashes with tweezers. If you plan to apply conformal coating, clean first and let the board dry completely. Contamination control also means storing boards in anti-static bags with desiccant. Clean boards solder better and last longer."
-    }
-  ,
+    },
     {
       "title": "Practical Reference",
       "body": "<section>\n  <h2>Practical Reference: PCB Handling and Component Placement</h2>\n\n  <p>This practical reference gives electronics assemblers, workshop supervisors, and small-batch manufacturers in Africa a working guide to handling printed circuit boards (PCBs) and placing components reliably. It is written for real production floors â from a two-person workshop in Kumasi assembling inverter boards to a contract manufacturer in Nairobi running SMT lines for solar charge controllers. The emphasis is on decisions that protect yield, reduce rework, and keep your business profitable.</p>\n\n  <p>Poor PCB handling and placement are among the most common causes of field failures in locally assembled electronics. Contamination, electrostatic discharge (ESD), and reversed polarity account for a large share of warranty returns. Each of these is preventable with disciplined process control, and each prevention step costs far less than a returned unit.</p>\n\n  <figure>\n    <svg viewBox=\"0 0 640 320\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-labelledby=\"pcbTitle pcbDesc\" width=\"100%\" height=\"auto\">\n      <title id=\"pcbTitle\">Cross-section of a typical FR-4 PCB stack-up</title>\n      <desc id=\"pcbDesc\">Diagram showing solder mask, copper layers, FR-4 core, and silkscreen legend layers of a four-layer PCB.</desc>\n      <rect x=\"0\" y=\"0\" width=\"640\" height=\"320\" fill=\"#f7f9fb\"/>\n      <rect x=\"60\" y=\"40\" width=\"520\" height=\"18\" fill=\"#2e7d32\"/>\n      <text x=\"60\" y=\"32\" font-size=\"13\" fill=\"#1b5e20\" font-family=\"sans-serif\">Solder mask (green)</text>\n      <rect x=\"60\" y=\"58\" width=\"520\" height=\"24\" fill=\"#c47f17\"/>\n      <text x=\"590\" y=\"75\" font-size=\"13\" fill=\"#7a4f00\" font-family=\"sans-serif\">Cu</text>\n      <rect x=\"60\" y=\"82\" width=\"520\" height=\"70\" fill=\"#d9c9a3\"/>\n      <text x=\"60\" y=\"120\" font-size=\"14\" fill=\"#5a4a20\" font-family=\"sans-serif\">FR-4 core (woven glass + epoxy resin)</text>\n      <rect x=\"60\" y=\"152\" width=\"520\" height=\"24\" fill=\"#c47f17\"/>\n      <text x=\"590\" y=\"169\" font-size=\"13\" fill=\"#7a4f00\" font-family=\"sans-serif\">Cu</text>\n      <rect x=\"60\" y=\"176\" width=\"520\" height=\"18\" fill=\"#2e7d32\"/>\n      <text x=\"60\" y=\"212\" font-size=\"13\" fill=\"#1b5e20\" font-family=\"sans-serif\">Solder mask (bottom)</text>\n      <rect x=\"60\" y=\"230\" width=\"520\" height=\"14\" fill=\"#ffffff\" stroke=\"#333\" stroke-width=\"1\"/>\n      <text x=\"60\" y=\"262\" font-size=\"13\" fill=\"#333\" font-family=\"sans-serif\">Silkscreen legend / reference designators</text>\n      <text x=\"60\" y=\"300\" font-size=\"12\" fill=\"#555\" font-family=\"sans-serif\">Not to scale. Layers shown for illustration of a 4-layer FR-4 board.</text>\n    </svg>\n    <figcaption>PCB stack-up illustration adapted from IPC-2221B, <em>Generic Standard on Printed Board Design</em> (IPC, 2012), which defines typical FR-4 construction and layer arrangements.</figcaption>\n  </figure>\n\n  <h3>Why This Matters for Your Business</h3>\n  <p>In African assembly operations, PCB defects rarely surface immediately. A board with a partially contaminated pad may pass a quick functional test but fail after three months in a solar inverter or a vehicle tracker. Rework and warranty costs can consume 10â25% of gross margin on a low-volume product line. Standardising handling and placement procedures is one of the fastest routes to protecting that margin.</p>\n\n  <h3>PCB Types and Materials â Selection Guide</h3>\n  <p>Choose the board material based on operating temperature, humidity, and mechanical stress. FR-4 remains the default for most African assembly work because it is widely available through importers in Lagos, Nairobi, and Johannesburg, and it tolerates typical tropical conditions when properly coated.</p>\n\n  <table border=\"1\" cellpadding=\"6\" cellspacing=\"0\" style=\"border-collapse:collapse;width:100%;font-size:14px;\">\n    <caption style=\"text-align:left;font-weight:bold;padding:6px;\">Table 1: Common PCB substrate materials and typical applications</caption>\n    <thead style=\"background:#e8f0e8;\">\n      <tr>\n        <th>Material</th>\n        <th>Typical Tg (Â°C)</th>\n        <th>Cost index</th>\n        <th>Best-fit application</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr><td>Standard FR-4</td><td>130â140</td><td>1.0</td><td>Consumer electronics, LED drivers, low-power controllers</td></tr>\n      <tr><td>High-Tg FR-4</td><td>170â180</td><td>1.3</td><td>Solar inverters, motor drives, lead-free reflow</td></tr>\n      <tr><td>Aluminium-backed</td><td>n/a</td><td>1.6</td><td>High-power LED lighting, thermal-critical boards</td></tr>\n      <tr><td>Polyimide (flex/rigid)</td><td>250+</td><td>3.0+</td><td>Automotive under-hood, wearable, high-reliability</td></tr>\n      <tr><td>Ceramic (AlâOâ)</td><td>n/a</td><td>5.0+</td><td>RF modules, high-temperature sensors</td></tr>\n    </tbody>\n  </table>\n  <p style=\"font-size:12px;color:#555;\">Source: Data compiled from IPC-4101E, <em>Specification for Base Materials for Rigid and Multilayer Printed Boards</em> (IPC, 2023), and manufacturer datasheets (Isola, Shengyi).</p>\n\n  <h3>ESD-Safe PCB Handling</h3>\n  <p>Static electricity is invisible but destructive. In dry African highland climates (for example, Addis Ababa and Nairobi during the dry season), relative humidity can fall below 30%, dramatically increasing ESD risk. A single discharge from a technician's finger can exceed 3,000 V and puncture a MOSFET gate oxide without leaving visible damage.</p>\n\n  <p>Minimum controls for any assembly bench:</p>\n  <ul>\n    <li>Grounded ESD wrist strap, tested daily (target resistance 1 MÎ©).</li>\n    <li>Dissipative work surface mat bonded to the same earth point.</li>\n    <li>PCB storage in pink or black conductive bags, never bare on plastic trays.</li>\n    <li>Ionisers where humidity is consistently below 40%.</li>\n    <li>No synthetic clothing or plastic chairs at the assembly bench.</li>\n  </ul>\n\n  <div style=\"border:2px solid #c62828;background:#fdecea;padding:12px 16px;margin:16px 0;\">\n    <strong style=\"color:#c62828;\">â  SAFETY WARNING â ELECTROSTATIC DISCHARGE AND SOLDERING HAZARDS</strong>\n    <p style=\"margin:8px 0 0 0;\">Never handle bare PCBs or moisture-sensitive components (MSDs) without a verified ESD ground. Do not touch board contacts with bare fingers â skin oils and salts cause corrosion and leakage currents. When using leaded solder, work under fume extraction; lead exposure is cumulative and hazardous. Treat all boards as live until proven otherwise, and never place a populated board on a conductive surface during testing.</p>\n  </div>\n\n  <h3>Component Placement Guidelines</h3>\n  <p>Placement quality determines solder joint reliability, thermal performance, and assembly speed. Follow a consistent sequence: place low-profile passives first, then ICs, then connectors and tall components last. This prevents taller parts from interfering with the placement nozzle or hand tool.</p>\n\n  <p>Key placement rules:</p>\n  <ul>\n    <li>Keep 0.5 mm minimum clearance between component bodies for hand soldering; 0.2 mm for reflow.</li>\n    <li>Orient all polarised components in the same direction where the layout allows (reduces inspection errors).</li>\n    <li>Place decoupling capacitors within 2 mm of the IC power pin, with the shortest possible trace to ground.</li>\n    <li>Keep heat-sensitive parts away from power resistors and regulators.</li>\n    <li>Respect courtyard boundaries defined in the CAD library â do not overlap.</li>\n  </ul>\n\n  <table border=\"1\" cellpadding=\"6\" cellspacing=\"0\" style=\"border-collapse:collapse;width:100%;font-size:14px;\">\n    <caption style=\"text-align:left;font-weight:bold;padding:6px;\">Table 2: Recommended placement clearances and process parameters</caption>\n    <thead style=\"background:#e8f0e8;\">\n      <tr>\n        <th>Parameter</th>\n        <th>Hand assembly</th>\n        <th>Reflow (SMT)</th>\n        <th>Source</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr><td>Min. component-to-component gap</td><td>0.5 mm</td><td>0.2 mm</td><td>IPC-7351B</td></tr>\n      <tr><td>Decoupling cap to IC pin</td><td>â¤ 3 mm</td><td>â¤ 2 mm</td><td>IPC-2221B</td></tr>\n      <tr><td>Peak reflow temperature (SAC305)</td><td>n/a</td><td>245â250 Â°C</td><td>IPC/JEDEC J-STD-020E</td></tr>\n      <tr><td>MSL floor life (MSL 3, 30 Â°C/60% RH)</td><td>168 h</td><td>168 h</td><td>J-STD-033D</td></tr>\n      <tr><td>ESD wrist strap resistance</td><td>0.75â1.5 MÎ©</td><td>0.75â1.5 MÎ©</td><td>ANSI/ESD S20.20</td></tr>\n    </tbody>\n  </table>\n  <p style=\"font-size:12px;color:#555;\">Sources: IPC-7351B <em>Generic Requirements for Surface Mount Design and Land Pattern Standard</em>; IPC-2221B; IPC/JEDEC J-STD-020E; J-STD-033D; ANSI/ESD S20.20-2021.</p>\n\n  <h3>Polarity and Orientation Checks</h3>\n  <p>Reversed electrolytic capacitors, LEDs, diodes, and ICs are the single most common assembly defect in small workshops. Build a verification habit: mark the polarity on your assembly drawing, then verify with a multimeter in diode mode before power-up. For ICs, confirm pin 1 orientation against the silkscreen dot or chamfer. For LEDs, confirm anode/cathode against the flat side of the package.</p>\n\n  <h3>Adhesive and Staking Compounds</h3>\n  <p>Adhesives hold components during wave soldering, damp vibration, and protect large parts (electrolytics, inductors, connectors) from mechanical shock. Use red-dot epoxy for bottom-side SMT parts before wave soldering, and silicone or polyurethane staking for tall through-hole parts. Cure schedules matter: most epoxies require 30â60 minutes at 120â150 Â°C, while RTV silicones cure at room temperature over 24 hours. In humid African conditions, ensure full cure before conformal coating or enclosure sealing.</p>\n\n  <h3>PCB Cleaning and Contamination Control</h3>\n  <p>Flux residues, dust, and finger oils cause leakage currents, corrosion, and electrochemical migration. For no-clean fluxes, cleaning is optional if the process window is respected â but in high-humidity environments, cleaning is strongly recommended. Use isopropyl alcohol (IPA â¥ 99%) with lint-free wipes for manual cleaning, or a water-based saponifier system for volume production. After cleaning, dry boards thoroughly (bake at 60 Â°C for 30 minutes) before coating or enclosure.</p>\n\n  <h3>Quick Reference Checklist</h3>\n  <ol>\n    <li>ESD wrist strap tested and connected before touching any board.</li>\n    <li>Boards stored in conductive bags; MSD parts logged with open-date.</li>\n    <li>Placement drawing shows polarity and pin-1 orientation for every polarised part.</li>\n    <li>Decoupling capacitors within 2 mm of IC power pin.</li>\n    <li>Clearances verified against IPC-7351B courtyard rules.</li>\n    <li>Adhesive applied and fully cured before wave soldering or enclosure.</li>\n    <li>Boards cleaned with IPA or saponifier; dried before coating.</li>\n    <li>Final visual and electrical inspection signed off by a second technician.</li>\n  </ol>\n\n  <h3>Further Reading</h3>\n  <ul>\n    <li><a href=\"https://www.ipc.org/TOC/IPC-2221B.pdf\" target=\"_blank\" rel=\"noopener\">IPC-2221B â Generic Standard on Printed Board Design</a></li>\n    <li><a href=\"https://www.jedec.org/standards-documents/docs/jstd-020e\" target=\"_blank\" rel=\"noopener\">JEDEC J-STD-020E â Moisture/Reflow Sensitivity Classification</a></li>\n    <li><a href=\"https://www.esda.org/standards/ansi-esd-s20-20/\" target=\"_blank\" rel=\"noopener\">ANSI/ESD S20.20 â Protection of Electrical and Electronic Parts</a></li>\n    <li><a href=\"https://www.ipc.org/ipc-a-610\" target=\"_blank\" rel=\"noopener\">IPC-A-610 â Acceptability of Electronic Assemblies</a></li>\n    <li><a href=\"https://www.itu.int/en/ITU-D/Technology/Documents/Electronics-Waste-Management.pdf\" target=\"_blank\" rel=\"noopener\">ITU â E-waste and Electronics Manufacturing in Africa</a></li>\n  </ul>\n\n  <p style=\"font-size:12px;color:#555;\">Prepared for the rise AFRICA Skills Programme â Electronics Assembly. Business-first guidance for African assembly enterprises.</p>\n</section>"
-    }],
+    }
+  ],
   "quiz": [
     {
       "q": "Which PCB type has copper traces on both sides?",
-      "options": ["A) Single-sided", "B) Double-sided", "C) Multilayer", "D) Flexible"],
+      "options": [
+        "A) Single-sided",
+        "B) Double-sided",
+        "C) Multilayer",
+        "D) Flexible"
+      ],
       "answer": "B",
       "explanation": "Double-sided PCBs have copper on both sides, allowing more complex circuits."
     },
     {
       "q": "What does FR-4 stand for in PCB materials?",
-      "options": ["A) Flame Retardant 4", "B) Fiberglass Resin 4", "C) Flexible Resin 4", "D) Fire Resistant 4"],
+      "options": [
+        "A) Flame Retardant 4",
+        "B) Fiberglass Resin 4",
+        "C) Flexible Resin 4",
+        "D) Fire Resistant 4"
+      ],
       "answer": "A",
       "explanation": "FR-4 is a flame-retardant fiberglass-epoxy composite commonly used in PCBs."
     },
     {
       "q": "What is the typical copper thickness for standard PCBs?",
-      "options": ["A) 0.5 oz", "B) 1 oz", "C) 2 oz", "D) 3 oz"],
+      "options": [
+        "A) 0.5 oz",
+        "B) 1 oz",
+        "C) 2 oz",
+        "D) 3 oz"
+      ],
       "answer": "B",
       "explanation": "1 oz copper (about 35 micrometers) is the standard thickness for most PCBs."
     },
     {
       "q": "Which of these is a sign of a good PCB?",
-      "options": ["A) Warped board", "B) Scratched solder mask", "C) Flat board", "D) Dull copper"],
+      "options": [
+        "A) Warped board",
+        "B) Scratched solder mask",
+        "C) Flat board",
+        "D) Dull copper"
+      ],
       "answer": "C",
       "explanation": "A good PCB lies flat; warping can cause assembly and soldering issues."
     },
     {
       "q": "What is the purpose of the silkscreen on a PCB?",
-      "options": ["A) To protect copper traces", "B) To show component locations and polarity", "C) To conduct electricity", "D) To provide structural support"],
+      "options": [
+        "A) To protect copper traces",
+        "B) To show component locations and polarity",
+        "C) To conduct electricity",
+        "D) To provide structural support"
+      ],
       "answer": "B",
       "explanation": "The silkscreen provides printed text and symbols for component placement and polarity."
     },
     {
       "q": "What is ESD?",
-      "options": ["A) Electrostatic discharge", "B) Electronic static damage", "C) Electrical surge damage", "D) Electrostatic destruction"],
+      "options": [
+        "A) Electrostatic discharge",
+        "B) Electronic static damage",
+        "C) Electrical surge damage",
+        "D) Electrostatic destruction"
+      ],
       "answer": "A",
       "explanation": "ESD stands for electrostatic discharge, a sudden flow of electricity that can damage components."
     },
     {
       "q": "What is the purpose of a wrist strap in ESD protection?",
-      "options": ["A) To keep your hands warm", "B) To ground you and prevent static buildup", "C) To hold components", "D) To measure voltage"],
+      "options": [
+        "A) To keep your hands warm",
+        "B) To ground you and prevent static buildup",
+        "C) To hold components",
+        "D) To measure voltage"
+      ],
       "answer": "B",
       "explanation": "A wrist strap connects you to ground through a resistor, safely discharging static."
     },
     {
       "q": "Which material is best to wear when handling PCBs?",
-      "options": ["A) Polyester", "B) Nylon", "C) Cotton", "D) Wool"],
+      "options": [
+        "A) Polyester",
+        "B) Nylon",
+        "C) Cotton",
+        "D) Wool"
+      ],
       "answer": "C",
       "explanation": "Cotton is less likely to generate static electricity than synthetic fabrics."
     },
     {
       "q": "How should you store PCBs to prevent ESD damage?",
-      "options": ["A) In ordinary plastic bags", "B) In anti-static bags", "C) In paper envelopes", "D) In metal boxes"],
+      "options": [
+        "A) In ordinary plastic bags",
+        "B) In anti-static bags",
+        "C) In paper envelopes",
+        "D) In metal boxes"
+      ],
       "answer": "B",
       "explanation": "Anti-static bags (silver or pink) dissipate static and protect components."
     },
     {
       "q": "What is latent ESD damage?",
-      "options": ["A) Immediate failure", "B) Damage that weakens components over time", "C) Damage that only affects the PCB", "D) Damage that cannot be detected"],
+      "options": [
+        "A) Immediate failure",
+        "B) Damage that weakens components over time",
+        "C) Damage that only affects the PCB",
+        "D) Damage that cannot be detected"
+      ],
       "answer": "B",
       "explanation": "Latent ESD damage may not cause immediate failure but reduces component lifespan."
     },
     {
       "q": "In what order should you place components on a PCB?",
-      "options": ["A) Tallest to shortest", "B) Shortest to tallest", "C) Random order", "D) Alphabetical"],
+      "options": [
+        "A) Tallest to shortest",
+        "B) Shortest to tallest",
+        "C) Random order",
+        "D) Alphabetical"
+      ],
       "answer": "B",
       "explanation": "Placing shortest components first makes soldering easier and prevents obstruction."
     },
     {
       "q": "How should you orient a resistor on a PCB?",
-      "options": ["A) Color code readable from left to right", "B) Any orientation", "C) With the tolerance band on the left", "D) With the first band at the bottom"],
+      "options": [
+        "A) Color code readable from left to right",
+        "B) Any orientation",
+        "C) With the tolerance band on the left",
+        "D) With the first band at the bottom"
+      ],
       "answer": "A",
       "explanation": "Readable color code aids troubleshooting and verification."
     },
     {
       "q": "What indicates pin 1 on an IC?",
-      "options": ["A) A dot or notch", "B) A red stripe", "C) A plus sign", "D) A square pad only"],
+      "options": [
+        "A) A dot or notch",
+        "B) A red stripe",
+        "C) A plus sign",
+        "D) A square pad only"
+      ],
       "answer": "A",
       "explanation": "A dot or notch on the IC package marks pin 1, which must align with the PCB mark."
     },
     {
       "q": "Why should you keep components close to the board?",
-      "options": ["A) To save space", "B) To prevent vibration damage", "C) To reduce cost", "D) To improve appearance"],
+      "options": [
+        "A) To save space",
+        "B) To prevent vibration damage",
+        "C) To reduce cost",
+        "D) To improve appearance"
+      ],
       "answer": "B",
       "explanation": "Components sitting flush against the board are less likely to break under vibration."
     },
     {
       "q": "What is the risk of placing a heat-sensitive component near a power resistor?",
-      "options": ["A) It may overheat and fail", "B) It may short circuit", "C) It may change value", "D) It may become conductive"],
+      "options": [
+        "A) It may overheat and fail",
+        "B) It may short circuit",
+        "C) It may change value",
+        "D) It may become conductive"
+      ],
       "answer": "A",
       "explanation": "Heat from power resistors can damage or degrade nearby heat-sensitive components."
     },
     {
       "q": "What is the polarity of an electrolytic capacitor?",
-      "options": ["A) The longer lead is negative", "B) The stripe marks positive", "C) The longer lead is positive", "D) There is no polarity"],
+      "options": [
+        "A) The longer lead is negative",
+        "B) The stripe marks positive",
+        "C) The longer lead is positive",
+        "D) There is no polarity"
+      ],
       "answer": "C",
       "explanation": "The longer lead is positive; the stripe on the body marks negative."
     },
     {
       "q": "How is the cathode marked on a diode?",
-      "options": ["A) A dot", "B) A band", "C) A plus sign", "D) A square pad"],
+      "options": [
+        "A) A dot",
+        "B) A band",
+        "C) A plus sign",
+        "D) A square pad"
+      ],
       "answer": "B",
       "explanation": "A band on the diode body indicates the cathode (negative) lead."
     },
     {
       "q": "What happens if you install an electrolytic capacitor backwards?",
-      "options": ["A) It works normally", "B) It may explode", "C) It becomes a resistor", "D) It shorts the circuit"],
+      "options": [
+        "A) It works normally",
+        "B) It may explode",
+        "C) It becomes a resistor",
+        "D) It shorts the circuit"
+      ],
       "answer": "B",
       "explanation": "Reversed electrolytic capacitors can overheat, leak, or explode."
     },
     {
       "q": "How can you identify pin 1 on a TO-92 transistor?",
-      "options": ["A) The flat side faces you when reading the part number", "B) The longest lead is pin 1", "C) A dot on the package", "D) The middle lead is pin 1"],
+      "options": [
+        "A) The flat side faces you when reading the part number",
+        "B) The longest lead is pin 1",
+        "C) A dot on the package",
+        "D) The middle lead is pin 1"
+      ],
       "answer": "A",
       "explanation": "For TO-92, the flat side faces you when reading the part number, and pin 1 is on the left."
     },
     {
       "q": "What should you do before powering up a newly assembled PCB?",
-      "options": ["A) Apply power immediately", "B) Check all polarities and orientations", "C) Clean with water", "D) Apply conformal coating"],
+      "options": [
+        "A) Apply power immediately",
+        "B) Check all polarities and orientations",
+        "C) Clean with water",
+        "D) Apply conformal coating"
+      ],
       "answer": "B",
       "explanation": "A visual check of polarity and orientation prevents damage from assembly errors."
     },
     {
       "q": "What is the purpose of staking compounds?",
-      "options": ["A) To conduct electricity", "B) To secure components and protect against vibration", "C) To clean the PCB", "D) To mark component values"],
+      "options": [
+        "A) To conduct electricity",
+        "B) To secure components and protect against vibration",
+        "C) To clean the PCB",
+        "D) To mark component values"
+      ],
       "answer": "B",
       "explanation": "Staking compounds hold components in place and protect against mechanical stress."
     },
     {
       "q": "Which adhesive is suitable for electronics?",
-      "options": ["A) Super glue", "B) Loctite 3609", "C) Wood glue", "D) Hot glue"],
+      "options": [
+        "A) Super glue",
+        "B) Loctite 3609",
+        "C) Wood glue",
+        "D) Hot glue"
+      ],
       "answer": "B",
       "explanation": "Loctite 3609 is an electronics-grade adhesive safe for PCB use."
     },
     {
       "q": "When should you apply staking compound?",
-      "options": ["A) Before soldering", "B) After soldering and cleaning", "C) During soldering", "D) Never"],
+      "options": [
+        "A) Before soldering",
+        "B) After soldering and cleaning",
+        "C) During soldering",
+        "D) Never"
+      ],
       "answer": "B",
       "explanation": "Apply after soldering and cleaning to avoid trapping flux or contaminants."
     },
     {
       "q": "Which staking compound is best for high-vibration environments?",
-      "options": ["A) Silicone", "B) Epoxy", "C) Polyurethane", "D) Cyanoacrylate"],
+      "options": [
+        "A) Silicone",
+        "B) Epoxy",
+        "C) Polyurethane",
+        "D) Cyanoacrylate"
+      ],
       "answer": "B",
       "explanation": "Epoxy provides rigid, strong mechanical support for high-vibration applications."
     },
     {
       "q": "How should you store adhesives?",
-      "options": ["A) In a warm place", "B) In a cool, dry place", "C) In direct sunlight", "D) In a freezer"],
+      "options": [
+        "A) In a warm place",
+        "B) In a cool, dry place",
+        "C) In direct sunlight",
+        "D) In a freezer"
+      ],
       "answer": "B",
       "explanation": "Cool, dry storage extends shelf life and prevents premature curing."
     },
     {
       "q": "Why is cleaning a PCB after soldering important?",
-      "options": ["A) To make it look shiny", "B) To remove corrosive flux residue", "C) To increase conductivity", "D) To reduce weight"],
+      "options": [
+        "A) To make it look shiny",
+        "B) To remove corrosive flux residue",
+        "C) To increase conductivity",
+        "D) To reduce weight"
+      ],
       "answer": "B",
       "explanation": "Flux residue can be corrosive and conductive, leading to reliability issues."
     },
     {
       "q": "What is the best solvent for cleaning rosin flux?",
-      "options": ["A) Water", "B) Isopropyl alcohol", "C) Acetone", "D) Petrol"],
+      "options": [
+        "A) Water",
+        "B) Isopropyl alcohol",
+        "C) Acetone",
+        "D) Petrol"
+      ],
       "answer": "B",
       "explanation": "Isopropyl alcohol (99%) effectively dissolves rosin flux without damaging most components."
     },
     {
       "q": "How should you dry a PCB after cleaning?",
-      "options": ["A) Air dry in sunlight", "B) Wipe with a cloth", "C) Blow dry with compressed air", "D) Bake in an oven"],
+      "options": [
+        "A) Air dry in sunlight",
+        "B) Wipe with a cloth",
+        "C) Blow dry with compressed air",
+        "D) Bake in an oven"
+      ],
       "answer": "C",
       "explanation": "Compressed air removes moisture quickly and prevents water spots."
     },
     {
       "q": "What is a risk of ultrasonic cleaning?",
-      "options": ["A) It removes solder mask", "B) It can damage crystals and relays", "C) It leaves residue", "D) It causes ESD"],
+      "options": [
+        "A) It removes solder mask",
+        "B) It can damage crystals and relays",
+        "C) It leaves residue",
+        "D) It causes ESD"
+      ],
       "answer": "B",
       "explanation": "Ultrasonic cleaning can damage delicate components like crystals and relays."
     },
     {
       "q": "How should you store cleaned PCBs?",
-      "options": ["A) In open air", "B) In anti-static bags with desiccant", "C) In water", "D) In a plastic bag"],
+      "options": [
+        "A) In open air",
+        "B) In anti-static bags with desiccant",
+        "C) In water",
+        "D) In a plastic bag"
+      ],
       "answer": "B",
       "explanation": "Anti-static bags with desiccant protect against ESD and moisture."
     }
   ],
   "videos": [
-    "PCB handling and ESD protection tutorial",
-    "how to place components on PCB correctly",
-    "PCB cleaning and flux removal techniques"
+    {
+      "title": "PCB handling and ESD protection tutorial",
+      "query": "PCB handling and ESD protection tutorial"
+    },
+    {
+      "title": "How to place components on PCB correctly",
+      "query": "how to place components on PCB correctly"
+    },
+    {
+      "title": "PCB cleaning and flux removal techniques",
+      "query": "PCB cleaning and flux removal techniques"
+    }
   ]
 }

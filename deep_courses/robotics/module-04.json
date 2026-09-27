@@ -26,197 +26,356 @@
     {
       "title": "Lab: Controlling a DC Motor with Arduino",
       "body": "In this lab, you'll control a DC motor's speed and direction using an Arduino, an L298N motor driver, and a 6V battery pack. You need: Arduino Uno, L298N module, DC motor (6â12V, 1A max), 4 AA batteries (6V), jumper wires, and a small switch. First, wire the L298N: connect battery + to 12V terminal and battery â to GND. Connect motor to OUT1 and OUT2. Connect Arduino pin 9 to ENA (enable A), pin 8 to IN1, pin 7 to IN2. Also connect Arduino GND to L298N GND. Now write the code. In setup(), set pins 8, 7, and 9 as OUTPUT. In loop(), first test direction: digitalWrite(IN1, HIGH); digitalWrite(IN2, LOW); then analogWrite(ENA, 200); delay(2000); then stop: analogWrite(ENA, 0); delay(1000); then reverse: digitalWrite(IN1, LOW); digitalWrite(IN2, HIGH); analogWrite(ENA, 200); delay(2000); stop. Upload and observe. If the motor doesn't spin, check battery voltage (should be >5V) and wiring. If it spins but not smoothly, adjust the PWM valueâtry 100, 150, 255. For a speed sweep, use a for loop: for (int speed=0; speed<=255; speed+=5) { analogWrite(ENA, speed); delay(50); } then reverse. To control with a potentiometer, connect its middle pin to A0, and map the value (0â1023) to PWM (0â255). This gives you a manual speed knob. For African makers, this lab uses cheap, available parts. You can salvage the motor from a toy car and the L298N from an old printer. Always use a separate battery for motorsânever the Arduino's 5V. Add a 100nF capacitor across the motor terminals to reduce noise. If you hear a high-pitched whine, that's normal PWM. For a challenge, add a second motor and make a small robot car. Remember to common the grounds. This lab is the foundation for all motorized robots."
-    }
-  ,
+    },
     {
       "title": "Practical Reference",
       "body": "<section>\n  <h2>Practical Reference: Actuators and Drive Systems for African Agribusiness Robotics</h2>\n\n  <p>In African agribusiness, robotics is not a laboratory curiosityâit is a practical response to labour shortages, rising input costs, and the need for precision in planting, spraying, harvesting, and post-harvest handling. Whether you are building a solar-powered weeding robot for a smallholder cooperative in Ghana, an automated irrigation boom for a commercial farm in Kenya, or a sorting arm for a maize mill in Zambia, the actuator and drive system you choose determines whether your machine works reliably in dusty, hot, and humid conditionsâand whether it pays for itself within a season.</p>\n\n  <p>This Practical Reference consolidates the key engineering decisions across DC motors, stepper and servo motors, pneumatic and hydraulic actuators, mechanical power transmission, and closed-loop control. It is written for the African context: intermittent power, high ambient temperatures, dust, vibration, and the need for locally available spare parts. Every recommendation is framed around business outcomesâthroughput, downtime, maintenance cost, and return on investment.</p>\n\n  <figure>\n    <svg viewBox=\"0 0 800 420\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-labelledby=\"driveTitle driveDesc\" style=\"max-width:100%;height:auto;background:#f8f9fa;border:1px solid #ccc;\">\n      <title id=\"driveTitle\">Typical DC motor drive system with PWM and PID control</title>\n      <desc id=\"driveDesc\">Block diagram showing battery, motor driver, DC motor, encoder feedback, microcontroller with PWM and PID, and mechanical load such as a wheel or conveyor.</desc>\n      <rect x=\"20\" y=\"40\" width=\"120\" height=\"60\" rx=\"8\" fill=\"#e3f2fd\" stroke=\"#1565c0\" stroke-width=\"2\"/>\n      <text x=\"80\" y=\"75\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"14\" fill=\"#0d47a1\">Battery / Solar</text>\n\n      <rect x=\"200\" y=\"40\" width=\"140\" height=\"60\" rx=\"8\" fill=\"#fff3e0\" stroke=\"#ef6c00\" stroke-width=\"2\"/>\n      <text x=\"270\" y=\"68\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"14\" fill=\"#e65100\">Motor Driver</text>\n      <text x=\"270\" y=\"86\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"12\" fill=\"#e65100\">(H-Bridge / MOSFET)</text>\n\n      <rect x=\"400\" y=\"40\" width=\"120\" height=\"60\" rx=\"8\" fill=\"#e8f5e9\" stroke=\"#2e7d32\" stroke-width=\"2\"/>\n      <text x=\"460\" y=\"75\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"14\" fill=\"#1b5e20\">DC Motor</text>\n\n      <rect x=\"580\" y=\"40\" width=\"140\" height=\"60\" rx=\"8\" fill=\"#f3e5f5\" stroke=\"#6a1b9a\" stroke-width=\"2\"/>\n      <text x=\"650\" y=\"68\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"14\" fill=\"#4a148c\">Mechanical Load</text>\n      <text x=\"650\" y=\"86\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"12\" fill=\"#4a148c\">(Wheel / Conveyor / Pump)</text>\n\n      <rect x=\"200\" y=\"200\" width=\"180\" height=\"70\" rx=\"8\" fill=\"#e0f7fa\" stroke=\"#00838f\" stroke-width=\"2\"/>\n      <text x=\"290\" y=\"228\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"14\" fill=\"#006064\">Microcontroller</text>\n      <text x=\"290\" y=\"248\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"12\" fill=\"#006064\">(PWM + PID Loop)</text>\n\n      <rect x=\"460\" y=\"200\" width=\"140\" height=\"70\" rx=\"8\" fill=\"#fce4ec\" stroke=\"#c2185b\" stroke-width=\"2\"/>\n      <text x=\"530\" y=\"228\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"14\" fill=\"#880e4f\">Encoder / Sensor</text>\n      <text x=\"530\" y=\"248\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"12\" fill=\"#880e4f\">(Speed / Position)</text>\n\n      <line x1=\"140\" y1=\"70\" x2=\"200\" y2=\"70\" stroke=\"#333\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n      <line x1=\"340\" y1=\"70\" x2=\"400\" y2=\"70\" stroke=\"#333\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n      <line x1=\"520\" y1=\"70\" x2=\"580\" y2=\"70\" stroke=\"#333\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n      <line x1=\"460\" y1=\"100\" x2=\"460\" y2=\"200\" stroke=\"#333\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n      <line x1=\"600\" y1=\"235\" x2=\"600\" y2=\"100\" stroke=\"#333\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n      <line x1=\"460\" y1=\"235\" x2=\"380\" y2=\"235\" stroke=\"#333\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n      <line x1=\"200\" y1=\"235\" x2=\"160\" y2=\"235\" stroke=\"#333\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n      <line x1=\"160\" y1=\"235\" x2=\"160\" y2=\"100\" stroke=\"#333\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n\n      <defs>\n        <marker id=\"arrow\" markerWidth=\"10\" markerHeight=\"10\" refX=\"8\" refY=\"3\" orient=\"auto\">\n          <path d=\"M0,0 L0,6 L9,3 z\" fill=\"#333\"/>\n        </marker>\n      </defs>\n\n      <text x=\"400\" y=\"330\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"13\" fill=\"#555\">Closed-loop control: PWM adjusts motor speed; encoder feedback corrects PID error in real time.</text>\n      <text x=\"400\" y=\"360\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"12\" fill=\"#777\">Adapted from: Ibrahim, D. (2019). Microcontroller Projects in C for the 8051. Newnes.</text>\n    </svg>\n    <figcaption>Figure 1: Closed-loop DC motor drive architecture for agricultural robotics. Source: Adapted from Ibrahim, D. (2019), <em>Microcontroller Projects in C for the 8051</em>, Newnes, and Arduino Documentation (2024), \"Arduino Motor Control Tutorials.\"</figcaption>\n  </figure>\n\n  <h3>1. DC Motors and Motor Drivers</h3>\n  <p>DC brushed motors remain the workhorse of African agribusiness robotics because they are cheap, widely available in informal markets, and easy to drive with simple H-bridge modules. For solar-powered systems, choose motors rated at 12V or 24V to match battery banks. A 24V system halves current for the same power, reducing cable thickness and voltage dropâcritical when your robot operates 50 metres from the power source.</p>\n\n  <p>Motor drivers must be sized for stall current, not running current. A motor that draws 2A running may pull 10A when stalled against a rock or dense weed. Use MOSFET-based drivers (e.g., BTS7960, VNH2SP30) for currents above 5A. In dusty environments, enclose drivers in IP54-rated boxes with conformal coating on PCBs to prevent corrosion from humidity and fertiliser dust.</p>\n\n  <table>\n    <caption>Table 1: Typical DC motor and driver specifications for agribusiness robots</caption>\n    <thead>\n      <tr>\n        <th>Application</th>\n        <th>Voltage</th>\n        <th>Running Current</th>\n        <th>Stall Current</th>\n        <th>Recommended Driver</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>Small weeding robot</td>\n        <td>12V</td>\n        <td>1.5A</td>\n        <td>6A</td>\n        <td>L298N (with heatsink)</td>\n      </tr>\n      <tr>\n        <td>Conveyor sorting belt</td>\n        <td>24V</td>\n        <td>3A</td>\n        <td>12A</td>\n        <td>BTS7960</td>\n      </tr>\n      <tr>\n        <td>Irrigation valve actuator</td>\n        <td>12V</td>\n        <td>0.8A</td>\n        <td>3A</td>\n        <td>DRV8871</td>\n      </tr>\n      <tr>\n        <td>Solar tracker drive</td>\n        <td>24V</td>\n        <td>2A</td>\n        <td>8A</td>\n        <td>VNH2SP30</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><small>Source: Data compiled from Pololu Robotics & Electronics (2024), \"Motor Driver Selection Guide\"; and Texas Instruments (2023), \"DRV8871 Datasheet.\"</small></p>\n\n  <h3>2. Stepper Motors and Servo Motors</h3>\n  <p>Stepper motors excel where precise positioning matters without feedbackâseed metering, chemical dosing, and camera pan-tilt systems. They are open-loop, so they can lose steps under sudden load, which is common when a planter hits a clod of dry soil. Use steppers with a torque margin of at least 2Ã the calculated load, and always pair them with a current-limiting driver (e.g., A4988, TMC2209) to prevent overheating in 35Â°C+ ambient temperatures.</p>\n\n  <p>Servo motors (both hobby and industrial) are closed-loop by design and are ideal for steering, arm joints, and valve control. For agricultural robots, choose IP-rated servos or retrofit seals. In West Africa, where Harmattan dust penetrates everything, a standard hobby servo will fail within weeks unless protected. Industrial servos with IP65 rating cost more but reduce downtimeâa critical factor when harvest windows are short.</p>\n\n  <h3>3. Pneumatic and Hydraulic Actuators</h3>\n  <p>Pneumatics are fast, clean, and forgiving of overloadâperfect for pick-and-place fruit sorting or actuating seed singulation gates. However, they require a compressor, which adds cost and maintenance. In off-grid areas, a small 12V compressor charged by solar can work for low-duty-cycle applications.</p>\n\n  <p>Hydraulics deliver high force in a compact packageâessential for lifting heavy loads like cassava roots or bales of hay. But hydraulic systems demand clean oil, leak-free seals, and skilled maintenance. In African agribusiness, hydraulic robots are best suited to large commercial operations with existing tractor hydraulics. For smallholders, electric actuators are usually more practical.</p>\n\n  <table>\n    <caption>Table 2: Actuator technology comparison for African agribusiness robotics</caption>\n    <thead>\n      <tr>\n        <th>Technology</th>\n        <th>Force/Torque</th>\n        <th>Speed</th>\n        <th>Cost</th>\n        <th>Maintenance</th>\n        <th>Best Use Case</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>DC Motor</td>\n        <td>Medium</td>\n        <td>High</td>\n        <td>Low</td>\n        <td>Low</td>\n        <td>Wheels, conveyors, pumps</td>\n      </tr>\n      <tr>\n        <td>Stepper</td>\n        <td>Medium</td>\n        <td>Medium</td>\n        <td>Medium</td>\n        <td>Low</td>\n        <td>Dosing, positioning, metering</td>\n      </tr>\n      <tr>\n        <td>Servo</td>\n        <td>Medium-High</td>\n        <td>High</td>\n        <td>Medium-High</td>\n        <td>Medium</td>\n        <td>Steering, arms, valves</td>\n      </tr>\n      <tr>\n        <td>Pneumatic</td>\n        <td>High</td>\n        <td>Very High</td>\n        <td>Medium</td>\n        <td>Medium</td>\n        <td>Sorting, pick-and-place</td>\n      </tr>\n      <tr>\n        <td>Hydraulic</td>\n        <td>Very High</td>\n        <td>Medium</td>\n        <td>High</td>\n        <td>High</td>\n        <td>Heavy lifting, tractors</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><small>Source: Adapted from Bolton, W. (2021), <em>Mechatronics: Electronic Control Systems in Mechanical and Electrical Engineering</em>, 7th ed., Pearson; and FAO (2022), \"Agricultural Mechanization and Automation in Africa.\"</small></p>\n\n  <h3>4. Gearing, Belts, and Pulleys</h3>\n  <p>Motors are fast and weak; gears make them slow and strong. A 10:1 gearbox multiplies torque by ten and divides speed by ten. For African agribusiness robots, use metal gears (not plastic) in high-load applications. Planetary gearboxes offer high torque density but are expensive; worm gearboxes are cheap and self-locking but less efficient.</p>\n\n  <p>Belts and pulleys are ideal for transmitting power over distanceâe.g., driving a conveyor from a motor mounted away from dust and heat. Use timing belts (not V-belts) for precise speed control. In humid environments, choose neoprene or polyurethane belts over natural rubber to resist rot.</p>\n\n  <h3>5. Motor Control: PWM and PID</h3>\n  <p>Pulse Width Modulation (PWM) is the standard method for controlling motor speed. By switching the motor on and off rapidly (typically 1â20 kHz), you control average voltage without resistive losses. For agricultural robots, use PWM frequencies above 15 kHz to avoid audible whining that stresses livestock.</p>\n\n  <p>PID (Proportional-Integral-Derivative) control closes the loop. The proportional term corrects current error; the integral term eliminates steady-state error; the derivative term dampens oscillation. In practice, tune PID empirically: start with P only, add I to eliminate drift, add D to reduce overshoot. For a wheeled robot on uneven soil, a well-tuned PID keeps speed constant regardless of loadâcritical for uniform seed spacing.</p>\n\n  <div style=\"border:2px solid #c62828; background:#ffebee; padding:16px; border-radius:8px; margin:20px 0;\">\n    <strong style=\"color:#c62828;\">â ï¸ SAFETY WARNING: Electrical and Mechanical Hazards</strong>\n    <p style=\"margin:8px 0 0 0; color:#b71c1c;\">DC motors and drivers can deliver high currents that cause burns, fires, or battery explosions. Always fuse the positive battery line within 20 cm of the battery terminal. Never disconnect a motor while the driver is poweredâinductive kickback can destroy the driver and injure you. Hydraulic systems operate at pressures exceeding 200 bar; a pinhole leak can inject oil into your skin, causing serious injury. Depressurise before maintenance. Pneumatic actuators can move unexpectedlyâalways lock out air supply before working on the mechanism. In African field conditions, ensure all enclosures are sealed against dust and water; a short circuit in a dusty environment can ignite crop residue.</p>\n  </div>\n\n  <h3>6. Lab: Controlling a DC Motor with Arduino</h3>\n  <p>This lab uses an Arduino Uno, an L298N driver, a 12V DC motor, and a potentiometer. Wire the motor to the driver, the driver to the Arduino, and the potentiometer to analog input A0. The Arduino reads the potentiometer and outputs a PWM signal to the driver's enable pin. This is the foundation for speed control in seeders, sprayers, and conveyors.</p>\n\n  <p>For African agribusiness, extend the lab by adding an encoder and implementing PID. Use a slotted optical sensor or a hall-effect encoder salvaged from a printer. The Arduino PID Library (Brett Beauregard) is free and well-documented. Test on a bench, then on a mock conveyor with variable load (e.g., bags of maize) to simulate field conditions.</p>\n\n  <h3>Quick Reference Checklist</h3>\n  <ul>\n    <li><strong>Size drivers for stall current, not running current.</strong> Add 30% margin for dust and heat.</li>\n    <li><strong>Use 24V systems where possible.</strong> Lower current means thinner cables and less voltage drop over long runs.</li>\n    <li><strong>Protect against dust and moisture.</strong> IP54 enclosures, conformal coating, and sealed connectors are non-negotiable.</li>\n    <li><strong>Choose metal gears for high-torque applications.</strong> Plastic gears fail in heat and under shock loads.</li>\n    <li><strong>Tune PID empirically.</strong> Start with P, add I, then D. Test under real load, not just on the bench.</li>\n    <li><strong>Fuse every battery line.</strong> A 20A fuse costs less than a burnt-out robotâor a burnt-down barn.</li>\n    <li><strong>Keep spare drivers and motors on hand.</strong> In rural areas, replacement parts may take weeks to arrive.</li>\n    <li><strong>Document your wiring and settings.</strong> A simple notebook can save hours of troubleshooting when you scale to multiple units.</li>\n  </ul>\n\n  <h3>Further Reading</h3>\n  <ul>\n    <li><a href=\"https://www.arduino.cc/en/Tutorial/HomePage\" target=\"_blank\" rel=\"noopener\">Arduino Official Tutorials</a> â Free, practical guides on motor control, PWM, and sensors.</li>\n    <li><a href=\"https://www.pololu.com/docs/0J69\" target=\"_blank\" rel=\"noopener\">Pololu Motor Driver Selection Guide</a> â Detailed technical reference for H-bridge and MOSFET drivers.</li>\n    <li><a href=\"https://www.fao.org/agriculture/crops/thematic-sitemap/theme/spi/agricultural-mechanization/en/\" target=\"_blank\" rel=\"noopener\">FAO Agricultural Mechanization</a> â Reports on appropriate technology for African farms.</li>\n    <li><a href=\"https://www.ti.com/lit/ds/symlink/drv8871.pdf\" target=\"_blank\" rel=\"noopener\">Texas Instruments DRV8871 Datasheet</a> â Example of a robust, low-cost motor driver for 12â24V systems.</li>\n    <li><a href=\"https://www.nxp.com/docs/en/application-note/AN4590.pdf\" target=\"_blank\" rel=\"noopener\">NXP PID Control Application Note</a> â Clear explanation of PID tuning for motor control.</li>\n  </ul>\n\n  <p><em>This module is part of the Rise AFRICA Skills programme. For business-first robotics training that works in African conditions, contact your local Rise AFRICA hub.</em></p>\n</section>"
-    }],
+    }
+  ],
   "quiz": [
     {
       "q": "What is the typical stall current of a small yellow TT gear motor?",
-      "options": ["A) 0.2A", "B) 1.2A", "C) 5A", "D) 10A"],
+      "options": [
+        "A) 0.2A",
+        "B) 1.2A",
+        "C) 5A",
+        "D) 10A"
+      ],
       "answer": "B",
       "explanation": "The TT gear motor stalls at about 1.2A at 6V."
     },
     {
       "q": "Why do you need a motor driver to control a DC motor with an Arduino?",
-      "options": ["A) Arduino pins can only supply 20mA", "B) Arduino cannot output PWM", "C) Motors run on AC", "D) Motor drivers are optional"],
+      "options": [
+        "A) Arduino pins can only supply 20mA",
+        "B) Arduino cannot output PWM",
+        "C) Motors run on AC",
+        "D) Motor drivers are optional"
+      ],
       "answer": "A",
       "explanation": "Arduino pins can only source 20mA, while motors need hundreds of milliamps."
     },
     {
       "q": "Which motor driver can handle 2A per channel?",
-      "options": ["A) L293D", "B) L298N", "C) TB6612FNG", "D) ULN2003"],
+      "options": [
+        "A) L293D",
+        "B) L298N",
+        "C) TB6612FNG",
+        "D) ULN2003"
+      ],
       "answer": "B",
       "explanation": "The L298N is rated for 2A per channel."
     },
     {
       "q": "What should you use to power a DC motor in a robot?",
-      "options": ["A) Arduino 5V pin", "B) Separate battery pack", "C) USB port", "D) 9V battery directly to Arduino"],
+      "options": [
+        "A) Arduino 5V pin",
+        "B) Separate battery pack",
+        "C) USB port",
+        "D) 9V battery directly to Arduino"
+      ],
       "answer": "B",
       "explanation": "Motors should have a separate power supply to avoid damaging the Arduino."
     },
     {
       "q": "How many steps per revolution does a typical NEMA 17 stepper motor have?",
-      "options": ["A) 100", "B) 200", "C) 400", "D) 512"],
+      "options": [
+        "A) 100",
+        "B) 200",
+        "C) 400",
+        "D) 512"
+      ],
       "answer": "B",
       "explanation": "NEMA 17 steppers usually have 200 steps per revolution (1.8Â° per step)."
     },
     {
       "q": "Which driver is commonly used for stepper motors?",
-      "options": ["A) L298N", "B) A4988", "C) LM7805", "D) NE555"],
+      "options": [
+        "A) L298N",
+        "B) A4988",
+        "C) LM7805",
+        "D) NE555"
+      ],
       "answer": "B",
       "explanation": "The A4988 is a popular stepper driver with microstepping."
     },
     {
       "q": "What is the typical torque of an SG90 micro servo?",
-      "options": ["A) 1.8 kgÂ·cm", "B) 11 kgÂ·cm", "C) 20 kgÂ·cm", "D) 0.5 kgÂ·cm"],
+      "options": [
+        "A) 1.8 kgÂ·cm",
+        "B) 11 kgÂ·cm",
+        "C) 20 kgÂ·cm",
+        "D) 0.5 kgÂ·cm"
+      ],
       "answer": "A",
       "explanation": "The SG90 has about 1.8 kgÂ·cm of torque at 4.8V."
     },
     {
       "q": "How many wires does a standard hobby servo have?",
-      "options": ["A) 2", "B) 3", "C) 4", "D) 5"],
+      "options": [
+        "A) 2",
+        "B) 3",
+        "C) 4",
+        "D) 5"
+      ],
       "answer": "B",
       "explanation": "Servos have power, ground, and signal wires."
     },
     {
       "q": "What PWM pulse width corresponds to 90Â° on a typical servo?",
-      "options": ["A) 1ms", "B) 1.5ms", "C) 2ms", "D) 2.5ms"],
+      "options": [
+        "A) 1ms",
+        "B) 1.5ms",
+        "C) 2ms",
+        "D) 2.5ms"
+      ],
       "answer": "B",
       "explanation": "1.5ms pulse width centers the servo at 90Â°."
     },
     {
       "q": "Why is it important to use a separate power supply for multiple servos?",
-      "options": ["A) To increase speed", "B) To prevent jitter and brownouts", "C) To reduce torque", "D) To save battery"],
+      "options": [
+        "A) To increase speed",
+        "B) To prevent jitter and brownouts",
+        "C) To reduce torque",
+        "D) To save battery"
+      ],
       "answer": "B",
       "explanation": "Servos draw high current spikes; a separate supply prevents voltage drops."
     },
     {
       "q": "What force can a 32mm bore pneumatic cylinder produce at 6 bar?",
-      "options": ["A) 48N", "B) 480N", "C) 4800N", "D) 48kN"],
+      "options": [
+        "A) 48N",
+        "B) 480N",
+        "C) 4800N",
+        "D) 48kN"
+      ],
       "answer": "B",
       "explanation": "Force = pressure Ã area; 6 bar â 600,000 Pa, area â 0.0008 mÂ², force â 480N."
     },
     {
       "q": "Which component controls the flow of air in a pneumatic system?",
-      "options": ["A) Compressor", "B) Solenoid valve", "C) Cylinder", "D) Filter"],
+      "options": [
+        "A) Compressor",
+        "B) Solenoid valve",
+        "C) Cylinder",
+        "D) Filter"
+      ],
       "answer": "B",
       "explanation": "Solenoid valves open or close to direct air flow."
     },
     {
       "q": "Why are hydraulics rarely used in small African robotics projects?",
-      "options": ["A) They are too slow", "B) They are messy and expensive", "C) They need no maintenance", "D) They are banned"],
+      "options": [
+        "A) They are too slow",
+        "B) They are messy and expensive",
+        "C) They need no maintenance",
+        "D) They are banned"
+      ],
       "answer": "B",
       "explanation": "Hydraulic systems require oil, high pressure, and careful maintenance."
     },
     {
       "q": "What is a common low-cost air compressor source for African makers?",
-      "options": ["A) Car tyre inflator", "B) Refrigerator compressor", "C) Bicycle pump", "D) All of the above"],
+      "options": [
+        "A) Car tyre inflator",
+        "B) Refrigerator compressor",
+        "C) Bicycle pump",
+        "D) All of the above"
+      ],
       "answer": "D",
       "explanation": "All can be repurposed, but each has limitations."
     },
     {
       "q": "What safety device should be installed on pneumatic exhaust ports?",
-      "options": ["A) Silencer", "B) Filter", "C) Regulator", "D) Lubricator"],
+      "options": [
+        "A) Silencer",
+        "B) Filter",
+        "C) Regulator",
+        "D) Lubricator"
+      ],
       "answer": "A",
       "explanation": "Silencers reduce noise from escaping air."
     },
     {
       "q": "If a 10-tooth gear drives a 50-tooth gear, what is the gear ratio?",
-      "options": ["A) 1:5", "B) 5:1", "C) 10:1", "D) 50:1"],
+      "options": [
+        "A) 1:5",
+        "B) 5:1",
+        "C) 10:1",
+        "D) 50:1"
+      ],
       "answer": "B",
       "explanation": "Ratio = driven/driver = 50/10 = 5:1."
     },
     {
       "q": "Which type of belt is best for precision motion without slipping?",
-      "options": ["A) V-belt", "B) Timing belt", "C) Flat belt", "D) Round belt"],
+      "options": [
+        "A) V-belt",
+        "B) Timing belt",
+        "C) Flat belt",
+        "D) Round belt"
+      ],
       "answer": "B",
       "explanation": "Timing belts have teeth that mesh with pulleys, preventing slip."
     },
     {
       "q": "What is the torque required to move a 1kg robot with 3cm wheels up a 10Â° slope?",
-      "options": ["A) 0.05 NÂ·m", "B) 0.5 NÂ·m", "C) 5 NÂ·m", "D) 50 NÂ·m"],
+      "options": [
+        "A) 0.05 NÂ·m",
+        "B) 0.5 NÂ·m",
+        "C) 5 NÂ·m",
+        "D) 50 NÂ·m"
+      ],
       "answer": "B",
       "explanation": "Torque = force Ã radius; force â 1kg Ã 9.8 Ã sin(10Â°) â 1.7N, radius 0.03m, torque â 0.05 NÂ·m, but with friction and acceleration, 0.5 NÂ·m is a safe estimate."
     },
     {
       "q": "Which gear type provides self-locking and high reduction?",
-      "options": ["A) Spur gear", "B) Bevel gear", "C) Worm gear", "D) Rack and pinion"],
+      "options": [
+        "A) Spur gear",
+        "B) Bevel gear",
+        "C) Worm gear",
+        "D) Rack and pinion"
+      ],
       "answer": "C",
       "explanation": "Worm gears can be self-locking and offer high reduction ratios."
     },
     {
       "q": "What is a cheap source of robust gearing in Africa?",
-      "options": ["A) Bicycle chain and sprockets", "B) 3D printed gears only", "C) Lego gears", "D) Car engines"],
+      "options": [
+        "A) Bicycle chain and sprockets",
+        "B) 3D printed gears only",
+        "C) Lego gears",
+        "D) Car engines"
+      ],
       "answer": "A",
       "explanation": "Bicycle chains and sprockets are widely available and durable."
     },
     {
       "q": "What does PWM stand for?",
-      "options": ["A) Pulse Width Modulation", "B) Power Width Management", "C) Pulse Wave Modulation", "D) Proportional Width Modulation"],
+      "options": [
+        "A) Pulse Width Modulation",
+        "B) Power Width Management",
+        "C) Pulse Wave Modulation",
+        "D) Proportional Width Modulation"
+      ],
       "answer": "A",
       "explanation": "PWM is Pulse Width Modulation, used to control average voltage."
     },
     {
       "q": "What is the PWM frequency on most Arduino Uno pins?",
-      "options": ["A) 50Hz", "B) 490Hz", "C) 1kHz", "D) 10kHz"],
+      "options": [
+        "A) 50Hz",
+        "B) 490Hz",
+        "C) 1kHz",
+        "D) 10kHz"
+      ],
       "answer": "B",
       "explanation": "Most Arduino Uno PWM pins default to about 490Hz."
     },
     {
       "q": "In PID, what does the 'I' term do?",
-      "options": ["A) Reacts to current error", "B) Eliminates steady-state error", "C) Predicts future error", "D) Amplifies noise"],
+      "options": [
+        "A) Reacts to current error",
+        "B) Eliminates steady-state error",
+        "C) Predicts future error",
+        "D) Amplifies noise"
+      ],
       "answer": "B",
       "explanation": "The integral term accumulates past error to eliminate steady-state offset."
     },
     {
       "q": "What sensor is needed for closed-loop motor speed control?",
-      "options": ["A) Potentiometer", "B) Encoder", "C) Thermistor", "D) Light sensor"],
+      "options": [
+        "A) Potentiometer",
+        "B) Encoder",
+        "C) Thermistor",
+        "D) Light sensor"
+      ],
       "answer": "B",
       "explanation": "An encoder provides feedback on actual motor speed."
     },
     {
       "q": "What is a good starting value for Kp in PID tuning?",
-      "options": ["A) 0.01", "B) 1", "C) 100", "D) 1000"],
+      "options": [
+        "A) 0.01",
+        "B) 1",
+        "C) 100",
+        "D) 1000"
+      ],
       "answer": "B",
       "explanation": "Start with Kp=1, then adjust based on response."
     },
     {
       "q": "How often should a PID loop run for a typical DC motor?",
-      "options": ["A) Every 1 second", "B) Every 10â50ms", "C) Every 5 minutes", "D) Only once"],
+      "options": [
+        "A) Every 1 second",
+        "B) Every 10â50ms",
+        "C) Every 5 minutes",
+        "D) Only once"
+      ],
       "answer": "B",
       "explanation": "A 10â50ms loop is fast enough for most motor control."
     },
     {
       "q": "In the lab, which Arduino pin is connected to ENA on the L298N?",
-      "options": ["A) Pin 9", "B) Pin 8", "C) Pin 7", "D) Pin 6"],
+      "options": [
+        "A) Pin 9",
+        "B) Pin 8",
+        "C) Pin 7",
+        "D) Pin 6"
+      ],
       "answer": "A",
       "explanation": "Pin 9 is used for PWM to control speed via ENA."
     },
     {
       "q": "What should you do if the motor does not spin in the lab?",
-      "options": ["A) Increase PWM to 255", "B) Check battery voltage and wiring", "C) Replace Arduino", "D) Change motor"],
+      "options": [
+        "A) Increase PWM to 255",
+        "B) Check battery voltage and wiring",
+        "C) Replace Arduino",
+        "D) Change motor"
+      ],
       "answer": "B",
       "explanation": "First verify power and connections before assuming component failure."
     },
     {
       "q": "Why add a capacitor across motor terminals?",
-      "options": ["A) To increase speed", "B) To reduce electrical noise", "C) To store energy", "D) To reverse direction"],
+      "options": [
+        "A) To increase speed",
+        "B) To reduce electrical noise",
+        "C) To store energy",
+        "D) To reverse direction"
+      ],
       "answer": "B",
       "explanation": "Capacitors suppress voltage spikes and noise from motor brushes."
     },
     {
       "q": "What is the purpose of the potentiometer in the lab extension?",
-      "options": ["A) To measure temperature", "B) To manually control motor speed", "C) To set direction", "D) To limit current"],
+      "options": [
+        "A) To measure temperature",
+        "B) To manually control motor speed",
+        "C) To set direction",
+        "D) To limit current"
+      ],
       "answer": "B",
       "explanation": "The potentiometer provides an analog input to set PWM speed."
     }
   ],
   "videos": [
-    "Arduino DC motor control L298N tutorial",
-    "Stepper motor A4988 Arduino wiring",
-    "PID motor control Arduino encoder"
+    {
+      "title": "Arduino DC motor control L298N tutorial",
+      "query": "Arduino DC motor control L298N tutorial"
+    },
+    {
+      "title": "Stepper motor A4988 Arduino wiring",
+      "query": "Stepper motor A4988 Arduino wiring"
+    },
+    {
+      "title": "PID motor control Arduino encoder",
+      "query": "PID motor control Arduino encoder"
+    }
   ]
 }

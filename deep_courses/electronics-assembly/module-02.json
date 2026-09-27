@@ -32,197 +32,356 @@
       "title": "Rework and Touch-Up of Through-Hole Assemblies",
       "body": "Rework means fixing defects found during inspection. Touch-up means improving a joint that is not perfect but not yet failed. You need a soldering iron, solder sucker or solder wick, flux pen, tweezers, and a heat-resistant mat. Start by identifying the defect. For a cold joint, reheat the joint with the iron and add a tiny amount of fresh solder. The flux in the new solder will clean the joint. Hold the iron for 1-2 seconds, then remove. For a solder bridge, use solder wick: place the wick over the bridge, press with the iron, and the wick will absorb excess solder. Alternatively, use a solder sucker â heat the bridge and quickly suck the molten solder. For a component that needs replacement, first remove solder from all pads using wick or sucker. Then gently pull the component out with tweezers while heating one lead at a time. Do not force it â you can lift pads. If a pad lifts, you may need to run a jumper wire to the next component. For touch-up, if a joint looks dull but is electrically good, add a little flux and reheat. Do not add more solder unless needed. After rework, clean the area with isopropyl alcohol. Always test the board after rework with a multimeter to ensure no shorts and correct continuity. In African workshops, rework is common because components are often salvaged. Practice rework on a scrap board: create 10 cold joints, then fix them. Time yourself â a skilled technician can fix a cold joint in 10 seconds. Remember: never rework a joint more than 3 times â repeated heating can damage the pad and the component. If a pad is damaged, use a small wire to bridge to the nearest connected point. Keep your iron tip clean and tinned. After rework, re-inspect the joint. A good rework is invisible â it looks like a factory joint. Finally, log what you fixed and why. This helps you improve your assembly process and avoid repeating mistakes.",
       "body_word_count": 382
-    }
-  ,
+    },
     {
       "title": "Practical Reference",
       "body": "<section>\n  <h2>Practical Reference: Through-Hole Component Assembly</h2>\n\n  <p>Through-hole assembly remains the backbone of electronics manufacturing across Africa â from small workshops in Kumasi and Nairobi to contract manufacturers supplying solar inverters, radio transmitters, and agricultural sensor boards. Unlike surface-mount work, through-hole assembly is forgiving of modest equipment, tolerates high-vibration environments, and produces mechanically robust joints that survive heat, dust, and humidity. For an African SME, mastering through-hole assembly is a direct route to revenue: repair contracts, low-volume production runs, and prototype services for universities and agritech startups.</p>\n\n  <p>This practical reference condenses the six lessons in this module into a single working document. Use it on the bench, print it for the workshop wall, or adapt it into a training handout for apprentices.</p>\n\n  <figure>\n    <svg viewBox=\"0 0 700 320\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"Cross-section diagram of a through-hole solder joint showing copper barrel, component lead, and fillet\">\n      <rect x=\"0\" y=\"0\" width=\"700\" height=\"320\" fill=\"#f7f7f2\"/>\n      <!-- PCB body -->\n      <rect x=\"60\" y=\"120\" width=\"580\" height=\"80\" fill=\"#2e7d32\" stroke=\"#1b5e20\" stroke-width=\"2\"/>\n      <text x=\"350\" y=\"165\" text-anchor=\"middle\" fill=\"#ffffff\" font-family=\"sans-serif\" font-size=\"14\">FR-4 PCB substrate</text>\n      <!-- Top copper -->\n      <rect x=\"60\" y=\"112\" width=\"580\" height=\"10\" fill=\"#c9a227\"/>\n      <!-- Bottom copper -->\n      <rect x=\"60\" y=\"198\" width=\"580\" height=\"10\" fill=\"#c9a227\"/>\n      <!-- Plated through hole barrel -->\n      <rect x=\"330\" y=\"112\" width=\"40\" height=\"96\" fill=\"#b87333\" stroke=\"#7a4a1e\" stroke-width=\"1.5\"/>\n      <!-- Component lead -->\n      <rect x=\"344\" y=\"20\" width=\"12\" height=\"260\" fill=\"#9e9e9e\" stroke=\"#616161\" stroke-width=\"1\"/>\n      <text x=\"290\" y=\"40\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#333\">Component lead</text>\n      <line x1=\"330\" y1=\"42\" x2=\"344\" y2=\"42\" stroke=\"#333\" stroke-width=\"1\"/>\n      <!-- Top fillet -->\n      <path d=\"M300 112 Q350 70 400 112 Z\" fill=\"#d4d4d4\" stroke=\"#8a8a8a\" stroke-width=\"1.5\"/>\n      <text x=\"430\" y=\"95\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#333\">Top-side fillet</text>\n      <line x1=\"400\" y1=\"98\" x2=\"428\" y2=\"95\" stroke=\"#333\" stroke-width=\"1\"/>\n      <!-- Bottom fillet -->\n      <path d=\"M300 208 Q350 250 400 208 Z\" fill=\"#d4d4d4\" stroke=\"#8a8a8a\" stroke-width=\"1.5\"/>\n      <text x=\"430\" y=\"240\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#333\">Bottom-side fillet</text>\n      <line x1=\"400\" y1=\"232\" x2=\"428\" y2=\"238\" stroke=\"#333\" stroke-width=\"1\"/>\n      <!-- Labels -->\n      <text x=\"90\" y=\"108\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#5d4037\">Copper pad</text>\n      <text x=\"90\" y=\"230\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#5d4037\">Copper pad</text>\n      <text x=\"380\" y=\"290\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#333\">Plated barrel (barrel plating)</text>\n    </svg>\n    <figcaption>Cross-section of a properly formed through-hole solder joint. Adapted from NASA-STD-8739.3, <em>Soldered Electrical Connections</em> (NASA Technical Standard, 2012), and IPC-A-610, <em>Acceptability of Electronic Assemblies</em>.</figcaption>\n  </figure>\n\n  <h3>1. Identifying Through-Hole Components</h3>\n  <p>Through-hole parts are classified by function and by lead count. Resistors, capacitors, and diodes are axial or radial; ICs come in DIP (dual in-line package); connectors and relays are typically large and mechanically stressed. In the African market, component sourcing is the first business constraint: counterfeit electrolytics and recycled ICs are common. Build a verified supplier list and inspect incoming stock with a multimeter and capacitance meter before accepting a consignment.</p>\n\n  <table>\n    <caption>Table 1: Common through-hole component types and African market sourcing notes</caption>\n    <thead>\n      <tr>\n        <th>Component</th>\n        <th>Typical Marking</th>\n        <th>Orientation Sensitive?</th>\n        <th>Local Sourcing Note</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr><td>Carbon film resistor</td><td>Color bands</td><td>No</td><td>Widely available; buy 1% metal film for instrumentation work.</td></tr>\n      <tr><td>Electrolytic capacitor</td><td>Value, voltage, polarity stripe</td><td>Yes â polarity</td><td>Counterfeits common; verify ESR and capacitance on receipt.</td></tr>\n      <tr><td>Ceramic capacitor</td><td>3-digit code (e.g., 104)</td><td>No</td><td>Reliable; check voltage rating for solar/automotive use.</td></tr>\n      <tr><td>Diode (1N400x)</td><td>Part number, band</td><td>Yes â cathode band</td><td>Cheap and plentiful; test forward drop.</td></tr>\n      <tr><td>LED</td><td>Flat side = cathode</td><td>Yes</td><td>Verify color and forward voltage before assembly.</td></tr>\n      <tr><td>DIP IC</td><td>Part number, pin-1 notch/dot</td><td>Yes</td><td>Recycled parts common; test in socket first.</td></tr>\n      <tr><td>Transistor (TO-92)</td><td>Part number, pinout</td><td>Yes</td><td>Check pinout â TO-92 variants differ.</td></tr>\n      <tr><td>Relay / connector</td><td>Part number</td><td>Often yes</td><td>Prefer branded parts for mains-switching duty.</td></tr>\n    </tbody>\n  </table>\n\n  <h3>2. Component Preparation and Lead Forming</h3>\n  <p>Leads must be cleaned, straightened, and formed to match the hole pitch. Use lead-forming pliers or a simple jig to bend leads without stressing the component body. Oxidation on recycled leads is the leading cause of cold joints in African workshops â clean with isopropyl alcohol or a soft eraser before insertion.</p>\n\n  <h3>3. Inserting and Securing Components</h3>\n  <p>Insert components from the non-solder side, working from lowest profile to tallest. Bend leads outward at 30â45Â° to hold parts in place during soldering. For heavy parts (transformers, large relays), use mechanical fasteners or silicone adhesive in addition to solder â vibration from generators and vehicles will otherwise crack joints.</p>\n\n  <h3>4. Soldering Through-Hole Components</h3>\n  <p>Use a temperature-controlled iron at 350â370 Â°C with lead-free SAC305 or, where permitted, Sn63/Pb37. Apply heat to both pad and lead for 1â2 seconds, feed solder, then remove solder first, then iron. Target a shiny, concave fillet on both sides of the board. In humid coastal environments, use no-clean flux with adequate solids to prevent dendritic growth.</p>\n\n  <table>\n    <caption>Table 2: Recommended soldering parameters for through-hole assembly</caption>\n    <thead>\n      <tr>\n        <th>Parameter</th>\n        <th>Sn63/Pb37 (leaded)</th>\n        <th>SAC305 (lead-free)</th>\n        <th>Source</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr><td>Iron tip temperature</td><td>315â345 Â°C</td><td>350â370 Â°C</td><td>IPC J-STD-001</td></tr>\n      <tr><td>Contact time (typical)</td><td>2â3 s</td><td>3â4 s</td><td>IPC J-STD-001</td></tr>\n      <tr><td>Tip size (typical pad)</td><td>2.4 mm chisel</td><td>2.4 mm chisel</td><td>Manufacturer guidance</td></tr>\n      <tr><td>Flux type</td><td>RMA / no-clean</td><td>No-clean, halide-free</td><td>IPC J-STD-004</td></tr>\n      <tr><td>Fillet appearance</td><td>Shiny, concave</td><td>Matte, concave</td><td>IPC-A-610 Class 2</td></tr>\n    </tbody>\n  </table>\n\n  <div style=\"border:2px solid #b71c1c; background:#ffebee; padding:12px 16px; margin:16px 0; border-radius:4px;\">\n    <strong style=\"color:#b71c1c;\">â  SAFETY WARNING â Lead and Flux Fumes</strong>\n    <p style=\"margin:8px 0 0 0; color:#4a0000;\">Leaded solder and rosin flux produce toxic fumes. Solder only in a well-ventilated area with an activated-carbon fume extractor or cross-draft fan. Wash hands thoroughly after handling leaded solder â never eat or drink at the bench. In shared workshops, keep a dedicated soldering zone away from food preparation and child-accessible areas. Store solder and flux in sealed containers; dispose of dross and used tips as hazardous waste, not general refuse.</p>\n  </div>\n\n  <h3>5. Inspecting Through-Hole Solder Joints</h3>\n  <p>Inspect at 5â10Ã magnification or with a loupe. Acceptable joints show a bright, concave fillet wetting both pad and lead, with lead outline visible. Reject: cold joints (dull, blobby), insufficient solder (no fillet), excess solder (convex ball), bridges between pads, disturbed joints (frosty, cracked), and lifted pads. For Class 2 and Class 3 work, follow IPC-A-610 acceptance criteria exactly â this is what export customers and telecoms operators will audit.</p>\n\n  <h3>6. Rework and Touch-Up</h3>\n  <p>Rework is a business cost, not a failure. Use a solder sucker or desoldering braid to remove excess solder; use flux-cored wire and a clean tip for touch-up. Never reheat a joint more than twice without removing and re-preparing the lead â repeated heating damages pads and components. Document every rework in a simple logbook; this becomes evidence of quality control when bidding for larger contracts.</p>\n\n  <h3>Quick Reference Checklist</h3>\n  <ul>\n    <li>Verify component value, polarity, and pin-1 orientation against the BOM and silkscreen before insertion.</li>\n    <li>Clean oxidized leads with isopropyl alcohol or a soft eraser.</li>\n    <li>Form leads to match hole pitch â never bend directly at the component body.</li>\n    <li>Insert lowest-profile parts first; secure tall or heavy parts mechanically.</li>\n    <li>Set iron to 350â370 Â°C for lead-free, 315â345 Â°C for leaded solder.</li>\n    <li>Heat pad and lead together for 1â2 s before feeding solder.</li>\n    <li>Inspect every joint at 5â10Ã magnification against IPC-A-610 criteria.</li>\n    <li>Log all rework; retrain on any recurring defect pattern.</li>\n  </ul>\n\n  <h3>Further Reading</h3>\n  <ul>\n    <li><a href=\"https://www.ipc.org/TOC/J-STD-001.pdf\" target=\"_blank\" rel=\"noopener\">IPC J-STD-001 â Requirements for Soldered Electrical and Electronic Assemblies</a></li>\n    <li><a href=\"https://www.ipc.org/TOC/IPC-A-610.pdf\" target=\"_blank\" rel=\"noopener\">IPC-A-610 â Acceptability of Electronic Assemblies</a></li>\n    <li><a href=\"https://standards.nasa.gov/standard/nasa/nasa-std-87393\" target=\"_blank\" rel=\"noopener\">NASA-STD-8739.3 â Soldered Electrical Connections</a></li>\n    <li><a href=\"https://www.itu.int/en/ITU-D/Technology/Documents/Publications/ITU-Green-Standards.pdf\" target=\"_blank\" rel=\"noopener\">ITU â Green Standards and E-Waste Guidance for Developing Markets</a></li>\n    <li><a href=\"https://www.unido.org/sites/default/files/2017-06/UNIDO_Electronics_Report.pdf\" target=\"_blank\" rel=\"noopener\">UNIDO â Electronics Manufacturing in Developing Economies</a></li>\n  </ul>\n\n  <p><strong>Business takeaway:</strong> Through-hole assembly is the entry point for African electronics SMEs. It requires low capital, tolerates local supply-chain imperfections, and produces products that survive African operating conditions. Master the six steps above, document your quality control, and you can credibly bid for repair, prototype, and low-volume production contracts from agritech, telecoms, and solar companies across the continent.</p>\n</section>"
-    }],
+    }
+  ],
   "quiz": [
     {
       "q": "What colour bands does a 10k ohm resistor have?",
-      "options": ["A) Brown, black, orange, gold", "B) Red, red, red, gold", "C) Brown, black, red, gold", "D) Yellow, violet, orange, gold"],
+      "options": [
+        "A) Brown, black, orange, gold",
+        "B) Red, red, red, gold",
+        "C) Brown, black, red, gold",
+        "D) Yellow, violet, orange, gold"
+      ],
       "answer": "A",
       "explanation": "Brown (1), black (0), orange (x1000) gives 10,000 ohms or 10k."
     },
     {
       "q": "Which component has a white stripe marking the negative lead?",
-      "options": ["A) Ceramic capacitor", "B) Electrolytic capacitor", "C) Resistor", "D) Diode"],
+      "options": [
+        "A) Ceramic capacitor",
+        "B) Electrolytic capacitor",
+        "C) Resistor",
+        "D) Diode"
+      ],
       "answer": "B",
       "explanation": "Electrolytic capacitors are polarized and the stripe indicates the negative terminal."
     },
     {
       "q": "What does the silver band on a diode indicate?",
-      "options": ["A) Anode", "B) Cathode", "C) Positive lead", "D) No polarity"],
+      "options": [
+        "A) Anode",
+        "B) Cathode",
+        "C) Positive lead",
+        "D) No polarity"
+      ],
       "answer": "B",
       "explanation": "The band marks the cathode, the negative end of the diode."
     },
     {
       "q": "How many legs does a BC547 transistor have?",
-      "options": ["A) 2", "B) 3", "C) 4", "D) 8"],
+      "options": [
+        "A) 2",
+        "B) 3",
+        "C) 4",
+        "D) 8"
+      ],
       "answer": "B",
       "explanation": "A BC547 is a standard three-leg bipolar transistor."
     },
     {
       "q": "Why should you clean component leads before soldering?",
-      "options": ["A) To make them shiny", "B) To remove oxidation for better solder flow", "C) To change their resistance", "D) To make them shorter"],
+      "options": [
+        "A) To make them shiny",
+        "B) To remove oxidation for better solder flow",
+        "C) To change their resistance",
+        "D) To make them shorter"
+      ],
       "answer": "B",
       "explanation": "Oxidation prevents solder from wetting the lead, causing bad joints."
     },
     {
       "q": "When forming leads, how far from the component body should you bend?",
-      "options": ["A) Right at the body", "B) 1 mm away", "C) 5 mm away", "D) 10 mm away"],
+      "options": [
+        "A) Right at the body",
+        "B) 1 mm away",
+        "C) 5 mm away",
+        "D) 10 mm away"
+      ],
       "answer": "B",
       "explanation": "Bending too close can crack the seal or damage the component."
     },
     {
       "q": "What is the purpose of clinching leads after insertion?",
-      "options": ["A) To make a better electrical connection", "B) To hold the component in place before soldering", "C) To shorten the leads", "D) To mark polarity"],
+      "options": [
+        "A) To make a better electrical connection",
+        "B) To hold the component in place before soldering",
+        "C) To shorten the leads",
+        "D) To mark polarity"
+      ],
       "answer": "B",
       "explanation": "Clinching (bending leads outward) mechanically secures the part during soldering."
     },
     {
       "q": "Which component should be inserted first on a board?",
-      "options": ["A) Tallest components", "B) Lowest-profile components", "C) Heaviest components", "D) Connectors"],
+      "options": [
+        "A) Tallest components",
+        "B) Lowest-profile components",
+        "C) Heaviest components",
+        "D) Connectors"
+      ],
       "answer": "B",
       "explanation": "Lowest-profile parts go first so taller parts donât block access."
     },
     {
       "q": "What is the correct soldering iron temperature for leaded solder?",
-      "options": ["A) 250Â°C", "B) 300Â°C", "C) 350Â°C", "D) 400Â°C"],
+      "options": [
+        "A) 250Â°C",
+        "B) 300Â°C",
+        "C) 350Â°C",
+        "D) 400Â°C"
+      ],
       "answer": "C",
       "explanation": "350Â°C is ideal for 60/40 leaded solder; higher may damage pads."
     },
     {
       "q": "What does a good solder joint look like?",
-      "options": ["A) Dull and blobby", "B) Shiny and concave", "C) Ball-shaped", "D) Flat and wide"],
+      "options": [
+        "A) Dull and blobby",
+        "B) Shiny and concave",
+        "C) Ball-shaped",
+        "D) Flat and wide"
+      ],
       "answer": "B",
       "explanation": "A shiny, concave fillet indicates proper wetting and heating."
     },
     {
       "q": "How long should you apply heat to a through-hole joint?",
-      "options": ["A) 1 second", "B) 2-3 seconds", "C) 10 seconds", "D) 30 seconds"],
+      "options": [
+        "A) 1 second",
+        "B) 2-3 seconds",
+        "C) 10 seconds",
+        "D) 30 seconds"
+      ],
       "answer": "B",
       "explanation": "2-3 seconds is enough to melt solder without damaging the board."
     },
     {
       "q": "What tool removes excess solder from a bridge?",
-      "options": ["A) Tweezers", "B) Solder wick", "C) Pliers", "D) Toothbrush"],
+      "options": [
+        "A) Tweezers",
+        "B) Solder wick",
+        "C) Pliers",
+        "D) Toothbrush"
+      ],
       "answer": "B",
       "explanation": "Solder wick absorbs molten solder when heated over the bridge."
     },
     {
       "q": "What is a cold solder joint?",
-      "options": ["A) A joint soldered at low temperature", "B) A dull, lumpy joint with poor electrical contact", "C) A joint with too much solder", "D) A joint that is too shiny"],
+      "options": [
+        "A) A joint soldered at low temperature",
+        "B) A dull, lumpy joint with poor electrical contact",
+        "C) A joint with too much solder",
+        "D) A joint that is too shiny"
+      ],
       "answer": "B",
       "explanation": "Cold joints result from insufficient heat and look dull and irregular."
     },
     {
       "q": "Why is flux residue harmful?",
-      "options": ["A) It causes corrosion over time", "B) It makes the board heavier", "C) It changes resistance", "D) It attracts insects"],
+      "options": [
+        "A) It causes corrosion over time",
+        "B) It makes the board heavier",
+        "C) It changes resistance",
+        "D) It attracts insects"
+      ],
       "answer": "A",
       "explanation": "Flux residue can be corrosive, especially in humid climates."
     },
     {
       "q": "What should you use to clean a board after soldering?",
-      "options": ["A) Water", "B) Isopropyl alcohol", "C) Petrol", "D) Soap"],
+      "options": [
+        "A) Water",
+        "B) Isopropyl alcohol",
+        "C) Petrol",
+        "D) Soap"
+      ],
       "answer": "B",
       "explanation": "Isopropyl alcohol dissolves flux without damaging components."
     },
     {
       "q": "How many defects per 100 joints is a good target?",
-      "options": ["A) Less than 2", "B) Less than 10", "C) Less than 20", "D) Less than 50"],
+      "options": [
+        "A) Less than 2",
+        "B) Less than 10",
+        "C) Less than 20",
+        "D) Less than 50"
+      ],
       "answer": "A",
       "explanation": "High-quality assembly aims for fewer than 2 defects per 100 joints."
     },
     {
       "q": "What is the first step in rework of a cold joint?",
-      "options": ["A) Add more solder", "B) Reheat the joint with the iron", "C) Remove the component", "D) Cut the leads"],
+      "options": [
+        "A) Add more solder",
+        "B) Reheat the joint with the iron",
+        "C) Remove the component",
+        "D) Cut the leads"
+      ],
       "answer": "B",
       "explanation": "Reheating with a small amount of fresh solder reflows the joint."
     },
     {
       "q": "What should you do if a pad lifts during rework?",
-      "options": ["A) Glue it back", "B) Run a jumper wire to the next component", "C) Ignore it", "D) Use more solder"],
+      "options": [
+        "A) Glue it back",
+        "B) Run a jumper wire to the next component",
+        "C) Ignore it",
+        "D) Use more solder"
+      ],
       "answer": "B",
       "explanation": "A lifted pad breaks the circuit; a jumper wire restores connectivity."
     },
     {
       "q": "How many times can you safely rework a joint?",
-      "options": ["A) 1 time", "B) 2 times", "C) 3 times", "D) Unlimited"],
+      "options": [
+        "A) 1 time",
+        "B) 2 times",
+        "C) 3 times",
+        "D) Unlimited"
+      ],
       "answer": "C",
       "explanation": "Repeated heating can damage the pad and component; limit to 3 times."
     },
     {
       "q": "What is the purpose of a fume extractor when soldering?",
-      "options": ["A) To cool the board", "B) To remove harmful solder fumes", "C) To hold components", "D) To test joints"],
+      "options": [
+        "A) To cool the board",
+        "B) To remove harmful solder fumes",
+        "C) To hold components",
+        "D) To test joints"
+      ],
       "answer": "B",
       "explanation": "Solder fumes contain flux vapours that are harmful if inhaled."
     },
     {
       "q": "Which component is non-polarized?",
-      "options": ["A) Electrolytic capacitor", "B) Diode", "C) Resistor", "D) LED"],
+      "options": [
+        "A) Electrolytic capacitor",
+        "B) Diode",
+        "C) Resistor",
+        "D) LED"
+      ],
       "answer": "C",
       "explanation": "Resistors have no polarity and can be inserted either way."
     },
     {
       "q": "What does a solder bridge cause?",
-      "options": ["A) Open circuit", "B) Short circuit", "C) High resistance", "D) No effect"],
+      "options": [
+        "A) Open circuit",
+        "B) Short circuit",
+        "C) High resistance",
+        "D) No effect"
+      ],
       "answer": "B",
       "explanation": "A bridge connects two pads that should be separate, causing a short."
     },
     {
       "q": "What is the recommended lead length below the board after soldering?",
-      "options": ["A) 0 mm (flush)", "B) 5 mm", "C) 10 mm", "D) 20 mm"],
+      "options": [
+        "A) 0 mm (flush)",
+        "B) 5 mm",
+        "C) 10 mm",
+        "D) 20 mm"
+      ],
       "answer": "A",
       "explanation": "Leads should be trimmed flush with the solder joint to prevent shorts."
     },
     {
       "q": "Why should you not force a component into holes?",
-      "options": ["A) It may bend leads or damage the board", "B) It will change its value", "C) It will melt", "D) It will short circuit"],
+      "options": [
+        "A) It may bend leads or damage the board",
+        "B) It will change its value",
+        "C) It will melt",
+        "D) It will short circuit"
+      ],
       "answer": "A",
       "explanation": "Forcing can bend leads, crack pads, or break the component."
     },
     {
       "q": "What is the purpose of a heat sink when soldering?",
-      "options": ["A) To cool the iron", "B) To protect heat-sensitive components", "C) To hold the board", "D) To clean the tip"],
+      "options": [
+        "A) To cool the iron",
+        "B) To protect heat-sensitive components",
+        "C) To hold the board",
+        "D) To clean the tip"
+      ],
       "answer": "B",
       "explanation": "Heat sinks clip onto leads to draw heat away from sensitive parts."
     },
     {
       "q": "Which of these is a through-hole component?",
-      "options": ["A) Surface-mount resistor", "B) BGA chip", "C) DIP IC", "D) QFN package"],
+      "options": [
+        "A) Surface-mount resistor",
+        "B) BGA chip",
+        "C) DIP IC",
+        "D) QFN package"
+      ],
       "answer": "C",
       "explanation": "DIP (dual in-line package) ICs have through-hole leads."
     },
     {
       "q": "What is the first step in identifying a component?",
-      "options": ["A) Solder it", "B) Read its markings and shape", "C) Cut its leads", "D) Test it with a multimeter"],
+      "options": [
+        "A) Solder it",
+        "B) Read its markings and shape",
+        "C) Cut its leads",
+        "D) Test it with a multimeter"
+      ],
       "answer": "B",
       "explanation": "Visual inspection of markings and shape is the quickest way to identify."
     },
     {
       "q": "How can you test a resistorâs value?",
-      "options": ["A) With a multimeter set to ohms", "B) With a magnifying glass", "C) By its colour bands", "D) Both A and C"],
+      "options": [
+        "A) With a multimeter set to ohms",
+        "B) With a magnifying glass",
+        "C) By its colour bands",
+        "D) Both A and C"
+      ],
       "answer": "D",
       "explanation": "Colour bands give the nominal value, and a multimeter confirms it."
     },
     {
       "q": "What does a continuity test check for?",
-      "options": ["A) Resistance value", "B) Capacitance", "C) Whether a circuit is complete", "D) Voltage"],
+      "options": [
+        "A) Resistance value",
+        "B) Capacitance",
+        "C) Whether a circuit is complete",
+        "D) Voltage"
+      ],
       "answer": "C",
       "explanation": "Continuity checks if there is a low-resistance path between two points."
     },
     {
       "q": "Why is it important to log rework actions?",
-      "options": ["A) To improve future assembly", "B) To waste time", "C) To impress the boss", "D) To meet safety rules"],
+      "options": [
+        "A) To improve future assembly",
+        "B) To waste time",
+        "C) To impress the boss",
+        "D) To meet safety rules"
+      ],
       "answer": "A",
       "explanation": "Logging helps identify recurring defects and improve technique."
     }
   ],
   "videos": [
-    "how to identify through-hole electronic components",
-    "through-hole soldering technique tutorial",
-    "solder joint inspection and rework"
+    {
+      "title": "How to identify through-hole electronic components",
+      "query": "how to identify through-hole electronic components"
+    },
+    {
+      "title": "Through-hole soldering technique tutorial",
+      "query": "through-hole soldering technique tutorial"
+    },
+    {
+      "title": "Solder joint inspection and rework",
+      "query": "solder joint inspection and rework"
+    }
   ]
 }

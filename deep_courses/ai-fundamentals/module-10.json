@@ -26,200 +26,356 @@
     {
       "title": "Introduction to Transformers",
       "body": "Transformers are a type of neural network architecture that relies entirely on attention mechanisms, eliminating the need for recurrence. Introduced in 2017, they have become the state-of-the-art for most NLP tasks, including translation, text generation, and sentiment analysis. In Africa, transformers power models like AfroLM and Masakhane's translation systems for local languages. They are faster to train than RNNs because they process sequences in parallel.\n\nThe core idea of a transformer is self-attention: each word in a sequence attends to all other words to compute its representation. This is done in multiple 'heads' (multi-head attention) to capture different types of relationships. A transformer consists of an encoder and a decoder, each with multiple layers. The encoder processes the input sequence, and the decoder generates the output. Unlike RNNs, transformers have no inherent sense of order, so they add positional encodings to the input embeddings to provide sequence order information.\n\nTo use transformers, you don't need to build from scratch. Hugging Face's Transformers library provides pre-trained models like BERT, GPT, and T5. For African languages, you can find models on the Hugging Face Hub, such as 'Davlan/afro-xlmr-base' for multilingual tasks. For example, to do sentiment analysis in Swahili, you can load a pre-trained model and fine-tune on your data: from transformers import pipeline; classifier = pipeline('sentiment-analysis', model='Davlan/afro-xlmr-base'); classifier('Nampenda mahindi'). Fine-tuning requires a dataset of labeled examples. With 1,000 samples, you can achieve good accuracy in a few epochs using a GPU (e.g., on Google Colab).\n\nTransformers are computationally heavy. Training a large model from scratch is expensive, but fine-tuning a pre-trained model is feasible on a single GPU. For deployment in Africa, consider using distilled versions (e.g., DistilBERT) or quantization to reduce size. Also, you can use ONNX Runtime for efficient inference on CPUs. Start by experimenting with pre-trained models for your task. Many African NLP projects are built on transformers, so joining communities like Masakhane can provide resources and support. Remember to handle text preprocessing carefully: transformers use subword tokenization (e.g., WordPiece), so you don't need to tokenize manually. Just feed raw text to the tokenizer."
-    }
-  ,
+    },
     {
       "title": "Practical Reference",
       "body": "<section>\n  <h2>Practical Reference: RNNs, NLP &amp; AI for African Agribusiness</h2>\n\n  <p>This practical reference consolidates the key ideas from the module <strong>Recurrent Neural Networks (RNNs) and NLP</strong> and translates them into decisions an African agribusiness operator, agritech founder, or extension manager can act on. The lessons â RNN Basics and Vanishing Gradient, LSTM and GRU Cells, Word Embeddings (Word2Vec and GloVe), Sequence-to-Sequence Models, Attention Mechanism, and Introduction to Transformers â are not academic curiosities. They are the machinery behind SMS advisory engines, crop-yield forecasting, market-price prediction, and multilingual farmer support tools. This reference is business-first: what to build, what to buy, what to avoid, and what to watch for.</p>\n\n  <h3>Why Sequence Models Matter to African Agriculture</h3>\n\n  <p>Agriculture is a sequence problem. Rainfall arrives in ordered days. Maize prices move in ordered weeks. A farmer's SMS questions arrive in ordered turns. Pest outbreaks unfold in ordered stages. Any model that ignores order throws away signal. That is the core reason RNNs and their descendants dominate agricultural forecasting and conversational advisory.</p>\n\n  <p>For an African agribusiness, the practical value chain looks like this:</p>\n\n  <ul>\n    <li><strong>Input sequences:</strong> weather station readings, satellite NDVI time series, market price ticks, farmer SMS logs.</li>\n    <li><strong>Sequence models:</strong> LSTM/GRU for forecasting, Transformers for language and multi-variable attention.</li>\n    <li><strong>Outputs:</strong> yield forecasts, price alerts, planting-date advice, pest-risk warnings, chatbot replies in Swahili, Hausa, Amharic, or French.</li>\n  </ul>\n\n  <p>The business case is not \"use AI.\" The business case is fewer failed harvests, better-timed input purchases, reduced extension cost per farmer, and higher trust in advisory channels.</p>\n\n  <h3>Core Concepts in Business Terms</h3>\n\n  <p><strong>RNN Basics and Vanishing Gradient.</strong> A plain RNN reads a sequence one step at a time and carries a hidden state forward. It is simple and cheap, but gradients shrink as sequences lengthen, so it forgets early context. For a 90-day rainfall sequence, a vanilla RNN will effectively ignore the first weeks. Business implication: do not deploy vanilla RNNs for season-length forecasting.</p>\n\n  <p><strong>LSTM and GRU Cells.</strong> These add gates that decide what to remember, forget, and output. LSTMs handle long dependencies; GRUs are lighter and often train faster on small datasets. For African agritech teams with limited GPU budgets and modest data volumes, GRUs are frequently the pragmatic choice. LSTMs are preferred when sequences are long and data is plentiful.</p>\n\n  <p><strong>Word Embeddings: Word2Vec and GloVe.</strong> Embeddings turn words into vectors so that \"maize\" and \"corn\" sit near each other, and \"drought\" sits near \"dry spell.\" For African NLP, off-the-shelf English embeddings underperform on local languages and code-switched SMS (\"bei ya mahindi\" â price of maize). Business implication: budget for domain-specific embeddings trained on your own farmer-message corpus.</p>\n\n  <p><strong>Sequence-to-Sequence Models.</strong> Encoder-decoder architectures map one sequence to another: English question to Swahili answer, or 30 days of weather to 7 days of forecast. They power translation, summarization, and dialogue.</p>\n\n  <p><strong>Attention Mechanism.</strong> Attention lets the model weigh which input steps matter most for each output step. For a price forecast, attention can highlight the last three market days and the pre-harvest month. This improves accuracy and, critically, gives interpretability you can show to a lender or cooperative board.</p>\n\n  <p><strong>Introduction to Transformers.</strong> Transformers replace recurrence with self-attention, enabling parallel training and strong performance on long sequences. They are the backbone of modern multilingual models and are increasingly viable on edge devices via quantized versions. For African agribusiness, transformers are the right choice for multilingual advisory chatbots and for fusing satellite, weather, and text data.</p>\n\n  <figure>\n    <svg viewBox=\"0 0 720 320\" role=\"img\" aria-labelledby=\"rnnTitle rnnDesc\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width:100%;height:auto;background:#f8f9f4;border:1px solid #d8dcc8;border-radius:8px;\">\n      <title id=\"rnnTitle\">Sequence model pipeline for agricultural advisory</title>\n      <desc id=\"rnnDesc\">Diagram showing input sequences flowing through embedding or feature layers into an LSTM or Transformer encoder, then attention, then outputs such as yield forecast, price alert, and SMS reply.</desc>\n      <defs>\n        <marker id=\"arrow\" markerWidth=\"10\" markerHeight=\"10\" refX=\"8\" refY=\"3\" orient=\"auto\">\n          <path d=\"M0,0 L0,6 L9,3 z\" fill=\"#4a5d23\"/>\n        </marker>\n      </defs>\n      <g font-family=\"Arial, sans-serif\" font-size=\"13\" fill=\"#2b2b2b\">\n        <rect x=\"20\" y=\"40\" width=\"140\" height=\"60\" rx=\"8\" fill=\"#e6efd4\" stroke=\"#4a5d23\"/>\n        <text x=\"90\" y=\"65\" text-anchor=\"middle\" font-weight=\"bold\">Inputs</text>\n        <text x=\"90\" y=\"85\" text-anchor=\"middle\" font-size=\"11\">Weather Â· NDVI Â· SMS</text>\n\n        <rect x=\"200\" y=\"40\" width=\"140\" height=\"60\" rx=\"8\" fill=\"#e6efd4\" stroke=\"#4a5d23\"/>\n        <text x=\"270\" y=\"65\" text-anchor=\"middle\" font-weight=\"bold\">Embedding /</text>\n        <text x=\"270\" y=\"85\" text-anchor=\"middle\" font-size=\"11\">Feature Layer</text>\n\n        <rect x=\"380\" y=\"40\" width=\"140\" height=\"60\" rx=\"8\" fill=\"#f3e6c8\" stroke=\"#8a6d1f\"/>\n        <text x=\"450\" y=\"65\" text-anchor=\"middle\" font-weight=\"bold\">LSTM / GRU</text>\n        <text x=\"450\" y=\"85\" text-anchor=\"middle\" font-size=\"11\">or Transformer Encoder</text>\n\n        <rect x=\"560\" y=\"40\" width=\"140\" height=\"60\" rx=\"8\" fill=\"#f3e6c8\" stroke=\"#8a6d1f\"/>\n        <text x=\"630\" y=\"65\" text-anchor=\"middle\" font-weight=\"bold\">Attention</text>\n        <text x=\"630\" y=\"85\" text-anchor=\"middle\" font-size=\"11\">weights per step</text>\n\n        <line x1=\"160\" y1=\"70\" x2=\"195\" y2=\"70\" stroke=\"#4a5d23\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n        <line x1=\"340\" y1=\"70\" x2=\"375\" y2=\"70\" stroke=\"#4a5d23\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n        <line x1=\"520\" y1=\"70\" x2=\"555\" y2=\"70\" stroke=\"#4a5d23\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n\n        <rect x=\"200\" y=\"180\" width=\"140\" height=\"60\" rx=\"8\" fill=\"#d9e8f5\" stroke=\"#2c5f8a\"/>\n        <text x=\"270\" y=\"205\" text-anchor=\"middle\" font-weight=\"bold\">Yield Forecast</text>\n        <text x=\"270\" y=\"225\" text-anchor=\"middle\" font-size=\"11\">next 7â30 days</text>\n\n        <rect x=\"380\" y=\"180\" width=\"140\" height=\"60\" rx=\"8\" fill=\"#d9e8f5\" stroke=\"#2c5f8a\"/>\n        <text x=\"450\" y=\"205\" text-anchor=\"middle\" font-weight=\"bold\">Price Alert</text>\n        <text x=\"450\" y=\"225\" text-anchor=\"middle\" font-size=\"11\">market timing</text>\n\n        <rect x=\"560\" y=\"180\" width=\"140\" height=\"60\" rx=\"8\" fill=\"#d9e8f5\" stroke=\"#2c5f8a\"/>\n        <text x=\"630\" y=\"205\" text-anchor=\"middle\" font-weight=\"bold\">SMS Reply</text>\n        <text x=\"630\" y=\"225\" text-anchor=\"middle\" font-size=\"11\">multilingual</text>\n\n        <line x1=\"630\" y1=\"100\" x2=\"630\" y2=\"175\" stroke=\"#2c5f8a\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n        <line x1=\"630\" y1=\"140\" x2=\"450\" y2=\"175\" stroke=\"#2c5f8a\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n        <line x1=\"630\" y1=\"140\" x2=\"270\" y2=\"175\" stroke=\"#2c5f8a\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n      </g>\n    </svg>\n    <figcaption>Sequence-model pipeline for agricultural advisory. Concept adapted from the encoderâdecoder and attention architecture described in Vaswani et al., \"Attention Is All You Need,\" <em>Advances in Neural Information Processing Systems</em>, 2017 (arXiv:1706.03762).</figcaption>\n  </figure>\n\n  <h3>Model Selection Table for Agribusiness Use Cases</h3>\n\n  <table border=\"1\" cellpadding=\"8\" cellspacing=\"0\" style=\"border-collapse:collapse;width:100%;font-size:14px;\">\n    <thead style=\"background:#e6efd4;\">\n      <tr>\n        <th align=\"left\">Use Case</th>\n        <th align=\"left\">Recommended Architecture</th>\n        <th align=\"left\">Why</th>\n        <th align=\"left\">Data Requirement</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>7-day rainfall / yield forecast</td>\n        <td>LSTM or GRU encoder</td>\n        <td>Handles medium-length sequences; GRU trains faster on small data</td>\n        <td>3â5 seasons of daily weather + yield</td>\n      </tr>\n      <tr>\n        <td>Market price direction alert</td>\n        <td>GRU + attention</td>\n        <td>Attention highlights recent price shocks and harvest windows</td>\n        <td>2+ years of daily/weekly prices</td>\n      </tr>\n      <tr>\n        <td>Multilingual SMS advisory bot</td>\n        <td>Transformer (fine-tuned multilingual model)</td>\n        <td>Strong cross-lingual transfer; parallel training</td>\n        <td>10k+ labeled farmer messages per language</td>\n      </tr>\n      <tr>\n        <td>Pest outbreak early warning</td>\n        <td>Seq2Seq with attention</td>\n        <td>Maps environmental sequence to risk-stage sequence</td>\n        <td>Historical outbreak + weather records</td>\n      </tr>\n      <tr>\n        <td>Voice advisory (IVR)</td>\n        <td>Transformer ASR + Transformer NLU</td>\n        <td>Robust to accent and code-switching</td>\n        <td>Hours of transcribed local-language audio</td>\n      </tr>\n    </tbody>\n  </table>\n  <p style=\"font-size:12px;color:#555;\">Sources: Architecture guidance adapted from Goodfellow, Bengio &amp; Courville, <em>Deep Learning</em> (MIT Press, 2016), Ch. 10; and Vaswani et al. (2017). Data-requirement estimates are practical ranges from published agritech deployments and should be validated per dataset.</p>\n\n  <h3>Build vs. Buy Decision Table</h3>\n\n  <table border=\"1\" cellpadding=\"8\" cellspacing=\"0\" style=\"border-collapse:collapse;width:100%;font-size:14px;\">\n    <thead style=\"background:#f3e6c8;\">\n      <tr>\n        <th align=\"left\">Capability</th>\n        <th align=\"left\">Build In-House</th>\n        <th align=\"left\">Buy / Use Managed API</th>\n        <th align=\"left\">Africa-Specific Consideration</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>Weather sequence forecasting</td>\n        <td>Only if you own proprietary station data</td>\n        <td>Use regional weather APIs + light GRU layer</td>\n        <td>Station density is low; blend satellite data</td>\n      </tr>\n      <tr>\n        <td>Multilingual chatbot</td>\n        <td>Rarely worth it unless you have 50k+ messages</td>\n        <td>Fine-tune an open multilingual transformer</td>\n        <td>Code-switching and low-resource languages need local data</td>\n      </tr>\n      <tr>\n        <td>Price prediction</td>\n        <td>Yes â your market data is your edge</td>\n        <td>Not advisable; generic APIs miss local markets</td>\n        <td>Informal market prices vary by town and day</td>\n      </tr>\n      <tr>\n        <td>Speech / IVR</td>\n        <td>Only with a speech team</td>\n        <td>Use managed ASR with custom vocabulary</td>\n        <td>Accent and dialect coverage varies widely</td>\n      </tr>\n    </tbody>\n  </table>\n  <p style=\"font-size:12px;color:#555;\">Sources: Build/buy framing adapted from standard MLOps practice; language-resource constraints informed by Masakhane NLP community reports on African language technology (masakhane.io).</p>\n\n  <div style=\"border:2px solid #b00020;background:#fdecec;padding:14px;border-radius:8px;margin:20px 0;\">\n    <strong style=\"color:#b00020;\">â  SAFETY WARNING â Do Not Deploy Advisory Models Without Human Review</strong>\n    <p style=\"margin:8px 0 0 0;\">Sequence models can produce confident but wrong advice. A model that mispredicts rainfall or pest risk can cause a farmer to lose an entire season's investment. Never push automated planting, pesticide, or credit decisions directly to farmers without agronomist review, especially in low-resource language contexts where training data is thin. Always: (1) validate forecasts against local extension officer knowledge; (2) label outputs as \"advisory, not guarantee\"; (3) keep a human-in-the-loop for any recommendation involving money or chemicals; (4) monitor for drift as climate patterns shift. In regulated markets, check national data-protection and agricultural advisory rules before collecting farmer data.</p>\n  </div>\n\n  <h3>Quick Reference Checklist</h3>\n  <ol>\n    <li><strong>Define the sequence and the horizon.</strong> Daily weather for 30 days? Weekly prices for 12 weeks? Write it down before choosing a model.</li>\n    <li><strong>Start with GRU, not LSTM or Transformer,</strong> when data is under ~50k sequences and compute is limited.</li>\n    <li><strong>Never use a vanilla RNN</strong> for sequences longer than ~20 steps â vanishing gradients will silently degrade accuracy.</li>\n    <li><strong>Train or fine-tune embeddings on your own farmer corpus.</strong> Off-the-shelf English embeddings miss local terms and code-switching.</li>\n    <li><strong>Add attention when interpretability matters</strong> â lenders, cooperatives, and regulators will ask why the model made a call.</li>\n    <li><strong>Reserve transformers for multilingual or multi-modal fusion</strong> (text + satellite + weather), where their parallel training pays off.</li>\n    <li><strong>Split data by time, not randomly.</strong> A random split leaks future information and inflates accuracy.</li>\n    <li><strong>Keep a human agronomist in the loop</strong> for any output that touches planting, chemicals, credit, or insurance.</li>\n  </ol>\n\n  <h3>Further Reading (Free Official Sources)</h3>\n  <ul>\n    <li><a href=\"https://arxiv.org/abs/1706.03762\" target=\"_blank\" rel=\"noopener\">Vaswani et al., \"Attention Is All You Need\" (arXiv:1706.03762)</a> â the original transformer paper, free on arXiv.</li>\n    <li><a href=\"https://www.deeplearningbook.org/\" target=\"_blank\" rel=\"noopener\">Goodfellow, Bengio &amp; Courville, <em>Deep Learning</em> (MIT Press)</a> â free online; Chapter 10 covers sequence modeling and RNNs.</li>\n    <li><a href=\"https://web.stanford.edu/class/cs224n/\" target=\"_blank\" rel=\"noopener\">Stanford CS224N: Natural Language Processing with Deep Learning</a> â free lecture notes and slides on RNNs, embeddings, and transformers.</li>\n    <li><a href=\"https://masakhane.io/\" target=\"_blank\" rel=\"noopener\">Masakhane</a> â open research community for African NLP; free datasets, papers, and models for local languages.</li>\n    <li><a href=\"https://developers.google.com/machine-learning/crash-course\" target=\"_blank\" rel=\"noopener\">Google Machine Learning Crash Course</a> â free, practical foundation including sequence and NLP modules.</li>\n  </ul>\n\n  <p style=\"margin-top:24px;font-size:13px;color:#444;\"><em>Prepared for the RISE AFRICA Skills course \"AI Fundamentals,\" module: Recurrent Neural Networks (RNNs) and NLP. Business-first reference for African agribusiness practitioners.</em></p>\n</section>"
-    }],
+    }
+  ],
   "quiz": [
     {
       "q": "What is the main advantage of RNNs over standard feedforward networks?",
-      "options": ["A) They can process images", "B) They have memory of previous inputs", "C) They are faster to train", "D) They require less data"],
+      "options": [
+        "A) They can process images",
+        "B) They have memory of previous inputs",
+        "C) They are faster to train",
+        "D) They require less data"
+      ],
       "answer": "B",
       "explanation": "RNNs have a hidden state that carries information across time steps, giving them memory."
     },
     {
       "q": "What problem does the vanishing gradient cause in basic RNNs?",
-      "options": ["A) The model trains too slowly", "B) The model cannot learn long-range dependencies", "C) The model overfits", "D) The model outputs wrong dimensions"],
+      "options": [
+        "A) The model trains too slowly",
+        "B) The model cannot learn long-range dependencies",
+        "C) The model overfits",
+        "D) The model outputs wrong dimensions"
+      ],
       "answer": "B",
       "explanation": "Vanishing gradients make it hard for the network to learn relationships between distant steps in a sequence."
     },
     {
       "q": "Which technique can help mitigate vanishing gradients?",
-      "options": ["A) Increasing learning rate", "B) Gradient clipping", "C) Adding more layers", "D) Using ReLU activation"],
+      "options": [
+        "A) Increasing learning rate",
+        "B) Gradient clipping",
+        "C) Adding more layers",
+        "D) Using ReLU activation"
+      ],
       "answer": "B",
       "explanation": "Gradient clipping limits gradient values to a threshold, preventing them from becoming too small."
     },
     {
       "q": "How many gates does an LSTM cell have?",
-      "options": ["A) 1", "B) 2", "C) 3", "D) 4"],
+      "options": [
+        "A) 1",
+        "B) 2",
+        "C) 3",
+        "D) 4"
+      ],
       "answer": "C",
       "explanation": "LSTM has input, forget, and output gates."
     },
     {
       "q": "What is the key difference between GRU and LSTM?",
-      "options": ["A) GRU has more gates", "B) GRU has no cell state", "C) GRU cannot handle long sequences", "D) GRU uses convolution"],
+      "options": [
+        "A) GRU has more gates",
+        "B) GRU has no cell state",
+        "C) GRU cannot handle long sequences",
+        "D) GRU uses convolution"
+      ],
       "answer": "B",
       "explanation": "GRU combines the cell state and hidden state, and has only two gates (reset and update)."
     },
     {
       "q": "Which is generally faster to train?",
-      "options": ["A) LSTM", "B) GRU", "C) Both same", "D) Depends on data"],
+      "options": [
+        "A) LSTM",
+        "B) GRU",
+        "C) Both same",
+        "D) Depends on data"
+      ],
       "answer": "B",
       "explanation": "GRU has fewer parameters and operations, so it often trains faster than LSTM."
     },
     {
       "q": "What is the purpose of word embeddings?",
-      "options": ["A) To reduce vocabulary size", "B) To represent words as dense vectors", "C) To translate languages", "D) To tokenize text"],
+      "options": [
+        "A) To reduce vocabulary size",
+        "B) To represent words as dense vectors",
+        "C) To translate languages",
+        "D) To tokenize text"
+      ],
       "answer": "B",
       "explanation": "Word embeddings map words to continuous vector space where similar words are close."
     },
     {
       "q": "Which Word2Vec architecture predicts context from a target word?",
-      "options": ["A) CBOW", "B) Skip-gram", "C) GloVe", "D) Transformer"],
+      "options": [
+        "A) CBOW",
+        "B) Skip-gram",
+        "C) GloVe",
+        "D) Transformer"
+      ],
       "answer": "B",
       "explanation": "Skip-gram takes a target word and predicts its surrounding context words."
     },
     {
       "q": "What does the 'vector_size' parameter in Word2Vec control?",
-      "options": ["A) Number of training epochs", "B) Dimension of word vectors", "C) Size of context window", "D) Minimum word count"],
+      "options": [
+        "A) Number of training epochs",
+        "B) Dimension of word vectors",
+        "C) Size of context window",
+        "D) Minimum word count"
+      ],
       "answer": "B",
       "explanation": "vector_size sets the dimensionality of the embedding vectors."
     },
     {
       "q": "Why might pre-trained GloVe vectors be less effective for African languages?",
-      "options": ["A) They are too large", "B) They are trained on English data", "C) They use too much memory", "D) They are not free"],
+      "options": [
+        "A) They are too large",
+        "B) They are trained on English data",
+        "C) They use too much memory",
+        "D) They are not free"
+      ],
       "answer": "B",
       "explanation": "GloVe vectors are typically trained on English corpora, so they may not capture African language semantics."
     },
     {
       "q": "In a seq2seq model, what is the role of the encoder?",
-      "options": ["A) Generate output sequence", "B) Summarize input into context vector", "C) Compute attention weights", "D) Tokenize text"],
+      "options": [
+        "A) Generate output sequence",
+        "B) Summarize input into context vector",
+        "C) Compute attention weights",
+        "D) Tokenize text"
+      ],
       "answer": "B",
       "explanation": "The encoder processes the input sequence and produces a context vector (final hidden state)."
     },
     {
       "q": "What is teacher forcing in seq2seq training?",
-      "options": ["A) Using a teacher model", "B) Feeding actual previous word to decoder", "C) Forcing the model to learn faster", "D) Using a pre-trained model"],
+      "options": [
+        "A) Using a teacher model",
+        "B) Feeding actual previous word to decoder",
+        "C) Forcing the model to learn faster",
+        "D) Using a pre-trained model"
+      ],
       "answer": "B",
       "explanation": "Teacher forcing means the decoder receives the true previous word as input during training."
     },
     {
       "q": "What challenge is common for seq2seq in African languages?",
-      "options": ["A) Too much data", "B) Limited parallel corpora", "C) Too many GPUs", "D) Simple grammar"],
+      "options": [
+        "A) Too much data",
+        "B) Limited parallel corpora",
+        "C) Too many GPUs",
+        "D) Simple grammar"
+      ],
       "answer": "B",
       "explanation": "Many African language pairs lack large parallel datasets for training."
     },
     {
       "q": "Which technique can help with rare words in agglutinative languages?",
-      "options": ["A) Subword tokenization", "B) One-hot encoding", "C) Stemming", "D) Stopword removal"],
+      "options": [
+        "A) Subword tokenization",
+        "B) One-hot encoding",
+        "C) Stemming",
+        "D) Stopword removal"
+      ],
       "answer": "A",
       "explanation": "Subword tokenization like BPE breaks words into smaller units, handling rare and complex words."
     },
     {
       "q": "What does the attention mechanism allow the decoder to do?",
-      "options": ["A) Focus on relevant input parts", "B) Skip decoding steps", "C) Use less memory", "D) Avoid training"],
+      "options": [
+        "A) Focus on relevant input parts",
+        "B) Skip decoding steps",
+        "C) Use less memory",
+        "D) Avoid training"
+      ],
       "answer": "A",
       "explanation": "Attention computes weights over encoder hidden states, letting the decoder focus on relevant input words."
     },
     {
       "q": "How are attention weights computed?",
-      "options": ["A) By softmax over scores", "B) By sigmoid over scores", "C) By averaging hidden states", "D) By random selection"],
+      "options": [
+        "A) By softmax over scores",
+        "B) By sigmoid over scores",
+        "C) By averaging hidden states",
+        "D) By random selection"
+      ],
       "answer": "A",
       "explanation": "Scores between decoder and encoder states are normalized with softmax to produce weights."
     },
     {
       "q": "Which attention type is additive?",
-      "options": ["A) Luong", "B) Bahdanau", "C) Dot-product", "D) Scaled dot-product"],
+      "options": [
+        "A) Luong",
+        "B) Bahdanau",
+        "C) Dot-product",
+        "D) Scaled dot-product"
+      ],
       "answer": "B",
       "explanation": "Bahdanau attention uses an additive alignment score."
     },
     {
       "q": "What is a benefit of attention for interpretability?",
-      "options": ["A) It shows which input words are important", "B) It reduces model size", "C) It speeds up training", "D) It eliminates bias"],
+      "options": [
+        "A) It shows which input words are important",
+        "B) It reduces model size",
+        "C) It speeds up training",
+        "D) It eliminates bias"
+      ],
       "answer": "A",
       "explanation": "Attention weights can be visualized to see which input words the model focuses on."
     },
     {
       "q": "What is the main difference between Transformers and RNNs?",
-      "options": ["A) Transformers use recurrence", "B) Transformers use only attention", "C) Transformers are slower", "D) Transformers cannot handle sequences"],
+      "options": [
+        "A) Transformers use recurrence",
+        "B) Transformers use only attention",
+        "C) Transformers are slower",
+        "D) Transformers cannot handle sequences"
+      ],
       "answer": "B",
       "explanation": "Transformers rely entirely on attention mechanisms, not recurrence."
     },
     {
       "q": "Why do Transformers need positional encodings?",
-      "options": ["A) To add order information", "B) To reduce parameters", "C) To speed up training", "D) To handle images"],
+      "options": [
+        "A) To add order information",
+        "B) To reduce parameters",
+        "C) To speed up training",
+        "D) To handle images"
+      ],
       "answer": "A",
       "explanation": "Transformers process sequences in parallel, so positional encodings provide order information."
     },
     {
       "q": "Which library provides pre-trained Transformer models?",
-      "options": ["A) TensorFlow", "B) PyTorch", "C) Hugging Face", "D) Keras"],
+      "options": [
+        "A) TensorFlow",
+        "B) PyTorch",
+        "C) Hugging Face",
+        "D) Keras"
+      ],
       "answer": "C",
       "explanation": "Hugging Face's Transformers library offers many pre-trained models."
     },
     {
       "q": "What is a common African language model on Hugging Face?",
-      "options": ["A) BERT", "B) Afro-xlmr", "C) GPT-3", "D) T5"],
+      "options": [
+        "A) BERT",
+        "B) Afro-xlmr",
+        "C) GPT-3",
+        "D) T5"
+      ],
       "answer": "B",
       "explanation": "Afro-xlmr is a multilingual model fine-tuned for African languages."
     },
     {
       "q": "What is fine-tuning in the context of Transformers?",
-      "options": ["A) Training from scratch", "B) Adapting a pre-trained model to a new task", "C) Pruning the model", "D) Quantizing the model"],
+      "options": [
+        "A) Training from scratch",
+        "B) Adapting a pre-trained model to a new task",
+        "C) Pruning the model",
+        "D) Quantizing the model"
+      ],
       "answer": "B",
       "explanation": "Fine-tuning means continuing training of a pre-trained model on a specific dataset."
     },
     {
       "q": "Which technique reduces Transformer model size for deployment?",
-      "options": ["A) Quantization", "B) Adding layers", "C) Increasing hidden size", "D) Using larger batches"],
+      "options": [
+        "A) Quantization",
+        "B) Adding layers",
+        "C) Increasing hidden size",
+        "D) Using larger batches"
+      ],
       "answer": "A",
       "explanation": "Quantization reduces precision of weights, making the model smaller and faster."
     },
     {
       "q": "What tokenization method do Transformers typically use?",
-      "options": ["A) Word-level", "B) Character-level", "C) Subword", "D) Sentence-level"],
+      "options": [
+        "A) Word-level",
+        "B) Character-level",
+        "C) Subword",
+        "D) Sentence-level"
+      ],
       "answer": "C",
       "explanation": "Transformers use subword tokenization like WordPiece or BPE."
     },
     {
       "q": "What is the vanishing gradient problem?",
-      "options": ["A) Gradients become too large", "B) Gradients become too small", "C) Gradients become zero", "D) Gradients become negative"],
+      "options": [
+        "A) Gradients become too large",
+        "B) Gradients become too small",
+        "C) Gradients become zero",
+        "D) Gradients become negative"
+      ],
       "answer": "B",
       "explanation": "Vanishing gradients shrink exponentially during backpropagation through time."
     },
     {
       "q": "Which gate in LSTM decides what to forget?",
-      "options": ["A) Input gate", "B) Forget gate", "C) Output gate", "D) Reset gate"],
+      "options": [
+        "A) Input gate",
+        "B) Forget gate",
+        "C) Output gate",
+        "D) Reset gate"
+      ],
       "answer": "B",
       "explanation": "The forget gate controls what information to discard from the cell state."
     },
     {
       "q": "What is the output of the encoder in a seq2seq model?",
-      "options": ["A) A sequence of words", "B) A context vector", "C) Attention weights", "D) A probability distribution"],
+      "options": [
+        "A) A sequence of words",
+        "B) A context vector",
+        "C) Attention weights",
+        "D) A probability distribution"
+      ],
       "answer": "B",
       "explanation": "The encoder's final hidden state serves as the context vector for the decoder."
     },
     {
       "q": "What does the attention context vector depend on?",
-      "options": ["A) Only decoder state", "B) Only encoder states", "C) Both decoder and encoder states", "D) Neither"],
+      "options": [
+        "A) Only decoder state",
+        "B) Only encoder states",
+        "C) Both decoder and encoder states",
+        "D) Neither"
+      ],
       "answer": "C",
       "explanation": "Attention weights are computed using both decoder and encoder hidden states."
     },
     {
       "q": "What is a key advantage of Transformers over RNNs?",
-      "options": ["A) Parallel processing", "B) Less memory", "C) Simpler architecture", "D) No need for data"],
+      "options": [
+        "A) Parallel processing",
+        "B) Less memory",
+        "C) Simpler architecture",
+        "D) No need for data"
+      ],
       "answer": "A",
       "explanation": "Transformers can process all positions in parallel, unlike sequential RNNs."
     }
   ],
   "videos": [
-    "RNN vanishing gradient explained",
-    "LSTM vs GRU tutorial",
-    "Word2Vec and GloVe explained",
-    "Sequence to sequence models tutorial",
-    "Attention mechanism in NLP",
-    "Introduction to Transformers NLP"
+    {
+      "title": "RNN vanishing gradient explained",
+      "query": "RNN vanishing gradient explained"
+    },
+    {
+      "title": "LSTM vs GRU tutorial",
+      "query": "LSTM vs GRU tutorial"
+    },
+    {
+      "title": "Word2Vec and GloVe explained",
+      "query": "Word2Vec and GloVe explained"
+    }
   ]
 }

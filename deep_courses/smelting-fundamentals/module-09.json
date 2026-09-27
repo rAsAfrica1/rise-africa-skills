@@ -32,197 +32,356 @@
       "title": "Process Optimization Techniques",
       "body": "Process optimization means getting more product with less fuel, less time, and fewer defects. In smelting, you can optimize by adjusting air-to-fuel ratio, charge composition, and furnace temperature. Start by measuring your baseline. Record fuel consumption per ton of metal, furnace efficiency, and product quality for one week. Then change one variable at a time.\n\nAir-to-fuel ratio: Too little air wastes fuel (incomplete combustion). Too much air carries away heat. For natural gas, the stoichiometric ratio is about 10:1 air to gas. But for smelting, you often need 10-20% excess air. Use an oxygen sensor in the flue gas ($200) to measure excess oxygen. Target 2-4% oxygen. Adjust the combustion air damper until you reach that. You can save 10-15% fuel.\n\nCharge composition: If your ore or scrap has too much moisture, you waste heat evaporating water. Dry your charge in the sun or with waste heat. If your flux is too fine, it blows out. Briquette it. If your coke has high ash, you need more flux. Test each batch. Keep a log of charge weight, moisture, and analysis. For a small cupola, a 5% reduction in coke consumption saves $50 per ton of iron.\n\nFurnace temperature: Higher temperature speeds up melting but increases refractory wear and energy use. Find the minimum temperature that gives good slag fluidity and metal quality. For iron, 1,400-1,500Â°C is typical. Use a pyrometer to check. If you run at 1,550Â°C unnecessarily, you waste 20% energy.\n\nOther techniques: Preheat combustion air using a recuperator (heat exchanger). A simple shell-and-tube recuperator costs $1,000 and saves 15% fuel. Use variable frequency drives (VFDs) on blowers and pumps. A 5 kW VFD costs $300 and saves 30% on electricity. Schedule smelting during off-peak hours if your utility offers lower rates. Train operators to follow best practices. Small changes add up. A 20% reduction in fuel cost can double your profit margin.",
       "word_count": 350
-    }
-  ,
+    },
     {
       "title": "Practical Reference",
       "body": "<section>\n  <h2>Practical Reference: Process Control and Instrumentation in African Smelting Operations</h2>\n\n  <p>In African smelting operations â from ferrochrome plants in South Africa's Bushveld to copper smelters in Zambia and DRC, and gold refineries across Ghana and Tanzania â process control and instrumentation determine whether a furnace runs profitably or bleeds cash. A single degree of temperature drift in a submerged arc furnace can cost thousands of dollars in electrode consumption; a miscalibrated flow meter can throw off flux ratios and destroy a heat. This practical reference gives operators, plant managers, and metallurgical engineers a working toolkit for the instruments, control loops, data systems, and optimization techniques that matter most on the African smelter floor.</p>\n\n  <p>The business case is straightforward: well-instrumented smelters in Africa report 3â8% improvements in specific energy consumption, 10â20% reductions in refractory wear, and measurable gains in metal recovery. Poorly instrumented ones run blind, react to problems instead of preventing them, and lose margin on every tap.</p>\n\n  <h3>Core Instrumentation: What You Actually Need</h3>\n\n  <p>Temperature and pressure sensors form the backbone of furnace control. In African smelters, Type K and Type S thermocouples dominate for bath and off-gas temperature measurement, while RTDs (Pt100) are preferred where accuracy matters more than range â for example, in cooling water circuits. Pressure transmitters monitor off-gas ducts, compressed air lines, and hydraulic systems on electrode positioning.</p>\n\n  <p>Flow measurement typically uses electromagnetic flowmeters for cooling water (conductive fluid, no obstruction), orifice plates for combustion air, and Coriolis meters where mass flow accuracy justifies the cost â for example, in fuel oil or reductant injection lines. In many Zambian and DRC copper smelters, older differential-pressure flow elements remain in service and require regular zero-checks to avoid drift.</p>\n\n  <p>Automated control systems range from single-loop PID controllers on older furnaces to full DCS (Distributed Control Systems) on newer installations. PLC-based systems are common in mid-sized African operations because they balance cost, robustness, and local technical support availability.</p>\n\n  <figure>\n    <svg viewBox=\"0 0 700 380\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"Process control loop diagram for a smelting furnace\">\n      <rect x=\"0\" y=\"0\" width=\"700\" height=\"380\" fill=\"#f7f7f7\"/>\n      <text x=\"350\" y=\"25\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"bold\" fill=\"#222\">Closed-Loop Process Control in a Smelting Furnace</text>\n\n      <!-- Controller -->\n      <rect x=\"40\" y=\"140\" width=\"120\" height=\"60\" fill=\"#cfe2f3\" stroke=\"#333\" stroke-width=\"2\"/>\n      <text x=\"100\" y=\"165\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\">Controller</text>\n      <text x=\"100\" y=\"185\" text-anchor=\"middle\" font-size=\"11\">(PLC / DCS / PID)</text>\n\n      <!-- Setpoint -->\n      <rect x=\"40\" y=\"50\" width=\"120\" height=\"40\" fill=\"#fff2cc\" stroke=\"#333\" stroke-width=\"1.5\"/>\n      <text x=\"100\" y=\"75\" text-anchor=\"middle\" font-size=\"12\">Setpoint (SP)</text>\n\n      <!-- Actuator -->\n      <rect x=\"240\" y=\"140\" width=\"120\" height=\"60\" fill=\"#d9ead3\" stroke=\"#333\" stroke-width=\"2\"/>\n      <text x=\"300\" y=\"165\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\">Actuator</text>\n      <text x=\"300\" y=\"185\" text-anchor=\"middle\" font-size=\"11\">(Valve / Feeder)</text>\n\n      <!-- Process -->\n      <rect x=\"440\" y=\"120\" width=\"140\" height=\"100\" fill=\"#f4cccc\" stroke=\"#333\" stroke-width=\"2\"/>\n      <text x=\"510\" y=\"150\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\">Furnace</text>\n      <text x=\"510\" y=\"170\" text-anchor=\"middle\" font-size=\"11\">Process Variable</text>\n      <text x=\"510\" y=\"188\" text-anchor=\"middle\" font-size=\"11\">(Temp / Flow)</text>\n\n      <!-- Sensor -->\n      <rect x=\"440\" y=\"270\" width=\"140\" height=\"55\" fill=\"#e6d0f0\" stroke=\"#333\" stroke-width=\"2\"/>\n      <text x=\"510\" y=\"295\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\">Sensor</text>\n      <text x=\"510\" y=\"313\" text-anchor=\"middle\" font-size=\"11\">(TC / RTD / Flowmeter)</text>\n\n      <!-- Arrows -->\n      <line x1=\"160\" y1=\"90\" x2=\"160\" y2=\"140\" stroke=\"#333\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n      <line x1=\"160\" y1=\"170\" x2=\"240\" y2=\"170\" stroke=\"#333\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n      <line x1=\"360\" y1=\"170\" x2=\"440\" y2=\"170\" stroke=\"#333\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n      <line x1=\"510\" y1=\"220\" x2=\"510\" y2=\"270\" stroke=\"#333\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n      <line x1=\"440\" y1=\"297\" x2=\"160\" y2=\"297\" stroke=\"#333\" stroke-width=\"2\"/>\n      <line x1=\"160\" y1=\"297\" x2=\"160\" y2=\"200\" stroke=\"#333\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n\n      <!-- Feedback label -->\n      <text x=\"300\" y=\"320\" text-anchor=\"middle\" font-size=\"11\" font-style=\"italic\">Feedback signal</text>\n\n      <defs>\n        <marker id=\"arrow\" markerWidth=\"10\" markerHeight=\"10\" refX=\"8\" refY=\"3\" orient=\"auto\" markerUnits=\"strokeWidth\">\n          <path d=\"M0,0 L0,6 L9,3 z\" fill=\"#333\"/>\n        </marker>\n      </defs>\n    </svg>\n    <figcaption>Closed-loop control architecture for a smelting furnace, adapted from ISA-5.1 Instrumentation Symbols and Identification standard (International Society of Automation, 2009) and typical DCS configurations described by <em>Outotec</em> in <em>Smelting Process Control Handbook</em> (2018).</figcaption>\n  </figure>\n\n  <h3>Data Acquisition, Alarms, and Interlocks</h3>\n\n  <p>Data acquisition systems (SCADA or historian platforms) capture temperature, pressure, flow, power, and off-gas composition at frequencies from 1 Hz to 1 kHz depending on the variable. In African operations, reliable data logging is often the difference between diagnosing a recurring problem and guessing at it. Historians allow trend analysis â for example, correlating electrode current spikes with bath temperature excursions over weeks.</p>\n\n  <p>Alarm and safety interlock systems are non-negotiable. Cooling water flow loss, off-gas pressure spikes, and electrode over-current conditions must trigger automatic protective actions. In South African ferroalloy smelters, interlocks typically trip the furnace power within 2â5 seconds of a critical cooling water loss.</p>\n\n  <div style=\"border:3px solid #c00; background:#ffe6e6; padding:14px 18px; margin:20px 0; border-radius:6px;\">\n    <p style=\"margin:0; font-weight:bold; color:#900; font-size:15px;\">â  SAFETY WARNING â CRITICAL INTERLOCK TESTING</p>\n    <p style=\"margin:8px 0 0 0; color:#400;\">Never bypass or disable a safety interlock on a smelting furnace without a formal Management of Change (MOC) procedure and written authorization from the Plant Manager and Safety Officer. In African operations, bypassed cooling-water interlocks have been directly linked to catastrophic water ingress into molten bath, causing steam explosions and fatalities. Test all interlocks at least monthly, and document results. In accordance with South African Mine Health and Safety Act (Act 29 of 1996) and similar regulations across SADC, untested safety systems constitute a legal liability.</p>\n  </div>\n\n  <h3>Process Optimization Techniques</h3>\n\n  <p>Once instrumentation is reliable, optimization becomes possible. Common techniques in African smelters include:</p>\n\n  <ul>\n    <li><strong>PID tuning:</strong> Reducing oscillation in temperature and flow loops saves energy and extends equipment life.</li>\n    <li><strong>Model Predictive Control (MPC):</strong> Used on larger furnaces to anticipate changes in feed composition and adjust power and reductant feed proactively.</li>\n    <li><strong>Statistical Process Control (SPC):</strong> Tracking key variables against control limits to detect drift before it becomes a defect.</li>\n    <li><strong>Energy optimization:</strong> Shifting load to off-peak hours where tariffs allow (common in South Africa and Zambia), and minimizing idle power.</li>\n    <li><strong>Feed-forward control:</strong> Using ore assay data to adjust flux and reductant addition ahead of the furnace, rather than reacting after the fact.</li>\n  </ul>\n\n  <h3>Data Tables</h3>\n\n  <table border=\"1\" cellpadding=\"8\" cellspacing=\"0\" style=\"border-collapse:collapse; width:100%; font-size:14px;\">\n    <caption style=\"font-weight:bold; text-align:left; padding:6px 0;\">Table 1: Typical Instrumentation Specifications for African Smelting Furnaces</caption>\n    <thead style=\"background:#d9e2f3;\">\n      <tr>\n        <th>Variable</th>\n        <th>Instrument Type</th>\n        <th>Typical Range</th>\n        <th>Accuracy</th>\n        <th>Common Application</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>Bath Temperature</td>\n        <td>Type S Thermocouple</td>\n        <td>1200â1700 Â°C</td>\n        <td>Â±1.5 Â°C</td>\n        <td>Submerged arc furnace</td>\n      </tr>\n      <tr>\n        <td>Off-gas Temperature</td>\n        <td>Type K Thermocouple</td>\n        <td>200â900 Â°C</td>\n        <td>Â±2.5 Â°C</td>\n        <td>Waste heat boiler inlet</td>\n      </tr>\n      <tr>\n        <td>Cooling Water Flow</td>\n        <td>Electromagnetic Flowmeter</td>\n        <td>0â500 mÂ³/h</td>\n        <td>Â±0.5%</td>\n        <td>Furnace shell cooling</td>\n      </tr>\n      <tr>\n        <td>Off-gas Pressure</td>\n        <td>Differential Pressure Transmitter</td>\n        <td>-5 to +5 kPa</td>\n        <td>Â±0.25%</td>\n        <td>Furnace draft control</td>\n      </tr>\n      <tr>\n        <td>Electrode Current</td>\n        <td>Current Transformer (CT)</td>\n        <td>0â100 kA</td>\n        <td>Â±1%</td>\n        <td>Power input control</td>\n      </tr>\n    </tbody>\n  </table>\n  <p style=\"font-size:12px; color:#555;\">Source: Adapted from <em>Ferroalloy Production Technology</em> (SINTEF, 2019) and manufacturer datasheets from Endress+Hauser and Siemens Process Instrumentation.</p>\n\n  <table border=\"1\" cellpadding=\"8\" cellspacing=\"0\" style=\"border-collapse:collapse; width:100%; font-size:14px; margin-top:20px;\">\n    <caption style=\"font-weight:bold; text-align:left; padding:6px 0;\">Table 2: Business Impact of Process Control Improvements in African Smelters</caption>\n    <thead style=\"background:#d9e2f3;\">\n      <tr>\n        <th>Improvement Area</th>\n        <th>Typical Gain</th>\n        <th>Cost Driver Affected</th>\n        <th>Payback Period</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>PID Loop Optimization</td>\n        <td>2â5% energy reduction</td>\n        <td>Electricity / reductant</td>\n        <td>3â6 months</td>\n      </tr>\n      <tr>\n        <td>Predictive Maintenance via Historian</td>\n        <td>15â25% less unplanned downtime</td>\n        <td>Repair + lost production</td>\n        <td>6â12 months</td>\n      </tr>\n      <tr>\n        <td>Advanced Flow Control</td>\n        <td>1â3% recovery improvement</td>\n        <td>Metal yield</td>\n        <td>4â9 months</td>\n      </tr>\n      <tr>\n        <td>Alarm Rationalization</td>\n        <td>30â50% fewer nuisance alarms</td>\n        <td>Operator response time</td>\n        <td>Immediate</td>\n      </tr>\n      <tr>\n        <td>MPC on Furnace Power</td>\n        <td>3â7% specific energy reduction</td>\n        <td>Electricity + electrode wear</td>\n        <td>12â18 months</td>\n      </tr>\n    </tbody>\n  </table>\n  <p style=\"font-size:12px; color:#555;\">Source: Compiled from case studies published by Mintek (South Africa), Zambia Chamber of Mines, and the Southern African Institute of Mining and Metallurgy (SAIMM) conference proceedings, 2018â2023.</p>\n\n  <h3>Quick Reference Checklist</h3>\n  <ol>\n    <li>Verify all temperature sensors are calibrated against a certified reference at least every 6 months.</li>\n    <li>Zero-check all differential-pressure flow elements weekly; document readings.</li>\n    <li>Confirm cooling water flow interlocks are armed and tested monthly.</li>\n    <li>Review alarm history weekly â investigate any repeated or chattering alarms.</li>\n    <li>Ensure historian is logging all critical loops at required frequency and data is backed up offsite.</li>\n    <li>Check PID loop performance quarterly â retune if oscillation or offset exceeds 5% of span.</li>\n    <li>Verify emergency shutdown (ESD) logic with a simulated trip test every 3 months.</li>\n    <li>Confirm all instrument air supply pressure is within spec â moisture and oil contamination destroy transmitters.</li>\n  </ol>\n\n  <h3>Further Reading</h3>\n  <ul>\n    <li><a href=\"https://www.mintek.co.za\" target=\"_blank\" rel=\"noopener\">Mintek (South Africa) â Pyrometallurgy and Process Control Research</a></li>\n    <li><a href=\"https://www.saimm.co.za\" target=\"_blank\" rel=\"noopener\">Southern African Institute of Mining and Metallurgy (SAIMM) â Conference Proceedings</a></li>\n    <li><a href=\"https://www.isa.org\" target=\"_blank\" rel=\"noopener\">International Society of Automation (ISA) â Standards and Technical Papers</a></li>\n    <li><a href=\"https://www.endress.com\" target=\"_blank\" rel=\"noopener\">Endress+Hauser â Flow, Pressure, and Temperature Instrumentation Guides</a></li>\n    <li><a href=\"https://www.siemens.com/processinstrumentation\" target=\"_blank\" rel=\"noopener\">Siemens Process Instrumentation â Technical Documentation and Application Notes</a></li>\n  </ul>\n</section>"
-    }],
+    }
+  ],
   "quiz": [
     {
       "q": "What type of thermocouple is commonly used for temperatures up to 1,200Â°C?",
-      "options": ["A) Type K", "B) Type S", "C) Type R", "D) Type B"],
+      "options": [
+        "A) Type K",
+        "B) Type S",
+        "C) Type R",
+        "D) Type B"
+      ],
       "answer": "A",
       "explanation": "Type K thermocouples are inexpensive and measure up to 1,200Â°C."
     },
     {
       "q": "What is the typical output signal of a pressure transmitter for automation?",
-      "options": ["A) 0-10 V", "B) 4-20 mA", "C) 0-5 V", "D) 1-5 V"],
+      "options": [
+        "A) 0-10 V",
+        "B) 4-20 mA",
+        "C) 0-5 V",
+        "D) 1-5 V"
+      ],
       "answer": "B",
       "explanation": "4-20 mA is the industry standard for transmitting analog signals over long distances."
     },
     {
       "q": "How often should you calibrate a thermocouple in a smelting furnace?",
-      "options": ["A) Every day", "B) Every week", "C) Every 3 months", "D) Every 5 years"],
+      "options": [
+        "A) Every day",
+        "B) Every week",
+        "C) Every 3 months",
+        "D) Every 5 years"
+      ],
       "answer": "C",
       "explanation": "Thermocouples drift over time and should be checked every 3 months with a known reference."
     },
     {
       "q": "What is the purpose of a siphon tube on a pressure gauge?",
-      "options": ["A) To increase pressure", "B) To protect the sensor from steam", "C) To measure flow", "D) To reduce cost"],
+      "options": [
+        "A) To increase pressure",
+        "B) To protect the sensor from steam",
+        "C) To measure flow",
+        "D) To reduce cost"
+      ],
       "answer": "B",
       "explanation": "A pigtail siphon tube condenses steam before it reaches the sensor, preventing damage."
     },
     {
       "q": "What should you do if a thermocouple reading jumps by 50Â°C in one minute?",
-      "options": ["A) Ignore it", "B) Increase fuel", "C) Check for loose connection or replace sensor", "D) Add water"],
+      "options": [
+        "A) Ignore it",
+        "B) Increase fuel",
+        "C) Check for loose connection or replace sensor",
+        "D) Add water"
+      ],
       "answer": "C",
       "explanation": "A sudden jump indicates a loose connection or failing sensor, which must be fixed immediately."
     },
     {
       "q": "Which flow meter is best for dirty gases like exhaust?",
-      "options": ["A) Orifice plate", "B) Rotameter", "C) Thermal mass flow meter", "D) Turbine meter"],
+      "options": [
+        "A) Orifice plate",
+        "B) Rotameter",
+        "C) Thermal mass flow meter",
+        "D) Turbine meter"
+      ],
       "answer": "C",
       "explanation": "Thermal mass flow meters have no moving parts and handle dust well."
     },
     {
       "q": "What is the typical cost of a basic rotameter for 0-100 L/min?",
-      "options": ["A) $5", "B) $50", "C) $500", "D) $5,000"],
+      "options": [
+        "A) $5",
+        "B) $50",
+        "C) $500",
+        "D) $5,000"
+      ],
       "answer": "B",
       "explanation": "A small rotameter costs around $50 and gives a direct flow reading."
     },
     {
       "q": "Why should you install a bypass around a control valve?",
-      "options": ["A) To increase flow", "B) To service the valve without shutting down", "C) To reduce cost", "D) To measure pressure"],
+      "options": [
+        "A) To increase flow",
+        "B) To service the valve without shutting down",
+        "C) To reduce cost",
+        "D) To measure pressure"
+      ],
       "answer": "B",
       "explanation": "A bypass allows manual flow control while the control valve is being repaired."
     },
     {
       "q": "What does PID stand for in control systems?",
-      "options": ["A) Proportional-Integral-Derivative", "B) Pressure-Indicating Device", "C) Process Instrumentation Data", "D) Pneumatic-Industrial Drive"],
+      "options": [
+        "A) Proportional-Integral-Derivative",
+        "B) Pressure-Indicating Device",
+        "C) Process Instrumentation Data",
+        "D) Pneumatic-Industrial Drive"
+      ],
       "answer": "A",
       "explanation": "PID is the standard control algorithm using proportional, integral, and derivative terms."
     },
     {
       "q": "What is the first step when tuning a PID controller?",
-      "options": ["A) Set derivative to maximum", "B) Set integral to maximum", "C) Start with only proportional band", "D) Turn off the controller"],
+      "options": [
+        "A) Set derivative to maximum",
+        "B) Set integral to maximum",
+        "C) Start with only proportional band",
+        "D) Turn off the controller"
+      ],
       "answer": "C",
       "explanation": "Start with only proportional control, adjust until slight oscillation, then add integral and derivative."
     },
     {
       "q": "What is a common PLC brand used in small African smelters?",
-      "options": ["A) Siemens S7-1200", "B) Allen-Bradley", "C) Delta", "D) All of the above"],
+      "options": [
+        "A) Siemens S7-1200",
+        "B) Allen-Bradley",
+        "C) Delta",
+        "D) All of the above"
+      ],
       "answer": "D",
       "explanation": "Siemens, Allen-Bradley, and Delta are all used, with Delta being cheaper."
     },
     {
       "q": "What is the typical cost of a basic PLC for 10-20 loops?",
-      "options": ["A) $50", "B) $500", "C) $5,000", "D) $50,000"],
+      "options": [
+        "A) $50",
+        "B) $500",
+        "C) $5,000",
+        "D) $50,000"
+      ],
       "answer": "B",
       "explanation": "A basic PLC like Siemens S7-1200 costs around $500."
     },
     {
       "q": "What should you do if your automated controller fails?",
-      "options": ["A) Stop production", "B) Use manual bypass valve", "C) Call the supplier", "D) Ignore it"],
+      "options": [
+        "A) Stop production",
+        "B) Use manual bypass valve",
+        "C) Call the supplier",
+        "D) Ignore it"
+      ],
       "answer": "B",
       "explanation": "A manual bypass valve allows continued operation until the controller is repaired."
     },
     {
       "q": "What is the simplest method for data acquisition?",
-      "options": ["A) Paper chart recorder", "B) SCADA", "C) PLC", "D) Cloud system"],
+      "options": [
+        "A) Paper chart recorder",
+        "B) SCADA",
+        "C) PLC",
+        "D) Cloud system"
+      ],
       "answer": "A",
       "explanation": "A paper chart recorder is the simplest and cheapest way to record data over time."
     },
     {
       "q": "How often should you record critical process data?",
-      "options": ["A) Every hour", "B) Every 5 seconds", "C) Every day", "D) Every week"],
+      "options": [
+        "A) Every hour",
+        "B) Every 5 seconds",
+        "C) Every day",
+        "D) Every week"
+      ],
       "answer": "B",
       "explanation": "Critical loops should be recorded every 5 seconds to capture fast changes."
     },
     {
       "q": "Why should you avoid cloud-only SCADA systems in Africa?",
-      "options": ["A) Too expensive", "B) Internet may be unreliable", "C) Not secure", "D) Too slow"],
+      "options": [
+        "A) Too expensive",
+        "B) Internet may be unreliable",
+        "C) Not secure",
+        "D) Too slow"
+      ],
       "answer": "B",
       "explanation": "Unreliable internet can cause loss of monitoring and control, so local SCADA is preferred."
     },
     {
       "q": "What does a slow rise in furnace temperature over a week indicate?",
-      "options": ["A) Normal operation", "B) Sensor drift or refractory problem", "C) Fuel increase", "D) Good control"],
+      "options": [
+        "A) Normal operation",
+        "B) Sensor drift or refractory problem",
+        "C) Fuel increase",
+        "D) Good control"
+      ],
       "answer": "B",
       "explanation": "A gradual rise often means the thermocouple is drifting or the refractory is thinning."
     },
     {
       "q": "What is the purpose of an alarm switch?",
-      "options": ["A) To control flow", "B) To warn before something goes wrong", "C) To measure temperature", "D) To reduce pressure"],
+      "options": [
+        "A) To control flow",
+        "B) To warn before something goes wrong",
+        "C) To measure temperature",
+        "D) To reduce pressure"
+      ],
       "answer": "B",
       "explanation": "Alarms provide early warning so operators can take corrective action."
     },
     {
       "q": "What is the difference between an alarm and an interlock?",
-      "options": ["A) Alarms are louder", "B) Interlocks automatically shut down equipment", "C) Alarms are cheaper", "D) Interlocks are only for gas"],
+      "options": [
+        "A) Alarms are louder",
+        "B) Interlocks automatically shut down equipment",
+        "C) Alarms are cheaper",
+        "D) Interlocks are only for gas"
+      ],
       "answer": "B",
       "explanation": "Interlocks take automatic action to prevent accidents, while alarms only warn."
     },
     {
       "q": "How often should you test alarms and interlocks?",
-      "options": ["A) Daily", "B) Weekly", "C) Monthly", "D) Yearly"],
+      "options": [
+        "A) Daily",
+        "B) Weekly",
+        "C) Monthly",
+        "D) Yearly"
+      ],
       "answer": "C",
       "explanation": "Monthly testing ensures they work when needed."
     },
     {
       "q": "What should you never do with a safety interlock?",
-      "options": ["A) Test it", "B) Bypass it without approval", "C) Log it", "D) Train on it"],
+      "options": [
+        "A) Test it",
+        "B) Bypass it without approval",
+        "C) Log it",
+        "D) Train on it"
+      ],
       "answer": "B",
       "explanation": "Bypassing an interlock without written approval can lead to accidents."
     },
     {
       "q": "What is the target excess oxygen in flue gas for efficient combustion?",
-      "options": ["A) 0%", "B) 2-4%", "C) 10-15%", "D) 20%"],
+      "options": [
+        "A) 0%",
+        "B) 2-4%",
+        "C) 10-15%",
+        "D) 20%"
+      ],
       "answer": "B",
       "explanation": "2-4% excess oxygen ensures complete combustion without excessive heat loss."
     },
     {
       "q": "How can you reduce fuel consumption by 10-15%?",
-      "options": ["A) Increase air", "B) Optimize air-to-fuel ratio", "C) Add more ore", "D) Run at higher temperature"],
+      "options": [
+        "A) Increase air",
+        "B) Optimize air-to-fuel ratio",
+        "C) Add more ore",
+        "D) Run at higher temperature"
+      ],
       "answer": "B",
       "explanation": "Proper air-to-fuel ratio minimizes wasted fuel."
     },
     {
       "q": "What is a recuperator used for?",
-      "options": ["A) Cooling water", "B) Preheating combustion air", "C) Measuring flow", "D) Controlling pressure"],
+      "options": [
+        "A) Cooling water",
+        "B) Preheating combustion air",
+        "C) Measuring flow",
+        "D) Controlling pressure"
+      ],
       "answer": "B",
       "explanation": "A recuperator recovers waste heat to preheat combustion air, saving fuel."
     },
     {
       "q": "What is the benefit of using a VFD on a blower?",
-      "options": ["A) Increases noise", "B) Saves electricity", "C) Reduces flow", "D) Increases cost"],
+      "options": [
+        "A) Increases noise",
+        "B) Saves electricity",
+        "C) Reduces flow",
+        "D) Increases cost"
+      ],
       "answer": "B",
       "explanation": "VFDs adjust motor speed to match demand, saving up to 30% electricity."
     },
     {
       "q": "Why should you dry your charge before smelting?",
-      "options": ["A) To save water", "B) To avoid wasting heat on evaporation", "C) To increase weight", "D) To reduce dust"],
+      "options": [
+        "A) To save water",
+        "B) To avoid wasting heat on evaporation",
+        "C) To increase weight",
+        "D) To reduce dust"
+      ],
       "answer": "B",
       "explanation": "Moisture in charge absorbs heat that should melt metal, wasting fuel."
     },
     {
       "q": "What is the typical smelting temperature for iron?",
-      "options": ["A) 800-900Â°C", "B) 1,000-1,100Â°C", "C) 1,400-1,500Â°C", "D) 1,800-2,000Â°C"],
+      "options": [
+        "A) 800-900Â°C",
+        "B) 1,000-1,100Â°C",
+        "C) 1,400-1,500Â°C",
+        "D) 1,800-2,000Â°C"
+      ],
       "answer": "C",
       "explanation": "Iron melts around 1,400-1,500Â°C, and smelting requires this range."
     },
     {
       "q": "What should you do if your coke has high ash?",
-      "options": ["A) Use less coke", "B) Add more flux", "C) Increase air", "D) Reduce temperature"],
+      "options": [
+        "A) Use less coke",
+        "B) Add more flux",
+        "C) Increase air",
+        "D) Reduce temperature"
+      ],
       "answer": "B",
       "explanation": "High ash requires more flux to maintain slag fluidity."
     },
     {
       "q": "What is the first step in process optimization?",
-      "options": ["A) Change everything", "B) Measure baseline", "C) Buy new equipment", "D) Hire consultant"],
+      "options": [
+        "A) Change everything",
+        "B) Measure baseline",
+        "C) Buy new equipment",
+        "D) Hire consultant"
+      ],
       "answer": "B",
       "explanation": "You must know your current performance before making changes."
     },
     {
       "q": "What is a simple way to reduce electricity costs in smelting?",
-      "options": ["A) Run during peak hours", "B) Schedule smelting during off-peak hours", "C) Use more power", "D) Ignore rates"],
+      "options": [
+        "A) Run during peak hours",
+        "B) Schedule smelting during off-peak hours",
+        "C) Use more power",
+        "D) Ignore rates"
+      ],
       "answer": "B",
       "explanation": "Off-peak rates are lower, reducing electricity costs."
     }
   ],
   "videos": [
-    "thermocouple calibration procedure",
-    "PID controller tuning for furnace",
-    "smelting process optimization techniques"
+    {
+      "title": "Thermocouple calibration procedure",
+      "query": "thermocouple calibration procedure"
+    },
+    {
+      "title": "PID controller tuning for furnace",
+      "query": "PID controller tuning for furnace"
+    },
+    {
+      "title": "Smelting process optimization techniques",
+      "query": "smelting process optimization techniques"
+    }
   ]
 }

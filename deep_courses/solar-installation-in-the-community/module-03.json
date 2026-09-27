@@ -26,197 +26,356 @@
     {
       "title": "Designing a Simple Solar System",
       "body": "Designing a solar system starts with an energy audit. List every appliance, its wattage, and hours used per day. For example: 5 LED lights (5W each, 4 hours) = 100Wh; phone charger (10W, 2 hours) = 20Wh; TV (60W, 3 hours) = 180Wh; fridge (150W, 8 hours, but cycles 50% of time) = 600Wh. Total = 900Wh/day. Add 30% for losses: 1170Wh. Round to 1.2kWh/day. This is your daily energy need.\n\nNext, size the solar array. In Africa, average peak sun hours are 4-6. Divide daily energy by peak sun hours. For 1.2kWh and 5 hours, you need 240W. But panels rarely produce 100%, so add 20-30%: 300W. So one 300W panel works. If you want to run a fridge, you might need 600W. Use the formula: Array size (W) = Daily energy (Wh) / Peak sun hours. Then round up to standard panel sizes (e.g., 300W, 450W, 550W).\n\nBattery sizing: Decide days of autonomy (usually 1-2 days). For 1.2kWh/day and 2 days, you need 2.4kWh storage. For lead-acid (50% DoD): 2.4kWh / 0.5 = 4.8kWh. At 12V, that's 400Ah. For lithium (80% DoD): 2.4kWh / 0.8 = 3kWh, or 250Ah at 12V. Choose battery voltage: 12V for small systems (<1kW), 24V or 48V for larger. Higher voltage means smaller cables and lower losses.\n\nInverter sizing: Add the wattage of appliances that run simultaneously. For example, fridge (150W) + TV (60W) + lights (25W) = 235W. Add 30% surge: 300W. So a 500W inverter is fine. But if you run a pump (750W), you need 1000W. Charge controller: Array wattage / battery voltage = 300W / 12V = 25A. Use a 30A MPPT controller. Cables: Use the voltage drop formula. For 300W at 12V, current is 25A. For a 5m run, 6mmÂ² cable gives 1.5% dropâacceptable. Fuses: 30A controller -> 40A fuse; 500W inverter -> 80A fuse.\n\nFinally, draw a diagram. Label all components and wire sizes. Consider future expansion. In Africa, dust and heat reduce performance, so oversize by 20%. Test the system step by step: connect battery to controller, then panels, then inverter. Monitor for a week. Adjust tilt if needed. A well-designed system pays for itself in 2-3 years compared to generator fuel."
-    }
-  ,
+    },
     {
       "title": "Practical Reference",
       "body": "<section>\n  <h2>Practical Reference: Solar Components and System Design for African Communities</h2>\n\n  <p>This practical reference consolidates the core technical knowledge from the module <strong>Solar Components and System Design</strong> into an actionable guide for technicians, entrepreneurs, and community energy providers across Africa. Whether you are installing a 200 W solar home system in rural Tanzania or a 5 kW hybrid system for a health clinic in Ghana, the principles remain the same: match components carefully, size the system for real-world conditions, and always design for safety and serviceability. The business case depends on reliability â a system that fails in the first rainy season destroys customer trust and your reputation.</p>\n\n  <h3>1. Solar Panels: Types and Characteristics</h3>\n  <p>Three main photovoltaic (PV) technologies dominate the African market: monocrystalline, polycrystalline, and thin-film. Monocrystalline panels offer the highest efficiency (18â22%) and perform better in high heat and low-light conditions, making them ideal for space-constrained urban rooftops. Polycrystalline panels (15â17% efficiency) are slightly cheaper per watt and widely available through local distributors. Thin-film panels (10â13%) are flexible, lightweight, and perform relatively well in extreme heat, but require more surface area â suitable for large ground-mounted installations or curved surfaces.</p>\n  <p>For most community projects in Africa, monocrystalline or polycrystalline panels from tier-1 manufacturers (with 25-year performance warranties) are the safest business choice. Always check for IEC 61215 and IEC 61730 certification, and verify the panel's temperature coefficient â in the Sahel, panel temperatures can reach 70Â°C, reducing output by 10â15%.</p>\n\n  <h3>2. Inverters and Charge Controllers</h3>\n  <p>Inverters convert DC power from panels and batteries into AC for household appliances. Two main types exist: <strong>pure sine wave</strong> (required for sensitive electronics, motors, and medical equipment) and <strong>modified sine wave</strong> (cheaper but unsuitable for many devices). For community systems, always specify pure sine wave inverters with efficiency above 90%.</p>\n  <p>Charge controllers regulate voltage and current from panels to batteries. <strong>PWM controllers</strong> are inexpensive but waste up to 30% of panel output. <strong>MPPT controllers</strong> extract 20â30% more energy, especially in high-temperature or low-irradiance conditions. For any system above 200 W, MPPT is the standard. Look for controllers with temperature compensation and low-voltage disconnect to protect batteries.</p>\n\n  <h3>3. Batteries and Energy Storage</h3>\n  <p>Battery selection is the most critical financial decision in off-grid solar. <strong>Flooded lead-acid</strong> batteries are cheap upfront but require maintenance and last only 2â4 years. <strong>Sealed AGM/Gel</strong> batteries are maintenance-free but cost more and still have limited cycle life. <strong>Lithium iron phosphate (LiFePO4)</strong> batteries cost 2â3Ã more upfront but last 8â12 years, tolerate deeper discharge (80â90% depth of discharge vs. 50% for lead-acid), and require no maintenance â making them the most cost-effective over the system lifetime.</p>\n  <p>For African conditions, LiFePO4 is increasingly the preferred choice due to high ambient temperatures and unreliable grid charging. Always size battery banks to provide at least 2â3 days of autonomy for critical loads (lights, phone charging, refrigeration for vaccines).</p>\n\n  <h3>4. Mounting and Racking Systems</h3>\n  <p>Mounting structures must withstand wind loads, corrosion, and theft. In coastal regions, use anodized aluminum or hot-dip galvanized steel. In dusty or snowy areas, tilt panels at latitude angle or steeper to encourage self-cleaning. Ground mounts are easier to access and maintain, while roof mounts save space but require careful waterproofing. For community systems, consider elevated mounts to prevent theft and animal damage.</p>\n\n  <h3>5. Wiring and Cabling Basics</h3>\n  <p>Use UV-resistant, double-insulated solar cable (PV1-F or H1Z2Z2-K) for DC circuits. Size cables to keep voltage drop below 3% â undersized cables waste energy and can overheat. MC4 connectors are standard for panel connections but must be crimped correctly to avoid fire risk. AC wiring must follow local electrical codes, with proper earthing and surge protection.</p>\n\n  <figure>\n    <svg viewBox=\"0 0 800 400\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"Diagram of a simple solar system showing solar panels, charge controller, battery, inverter, and AC loads\">\n      <rect x=\"0\" y=\"0\" width=\"800\" height=\"400\" fill=\"#f8f9fa\" rx=\"8\"/>\n      <text x=\"400\" y=\"30\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"18\" font-weight=\"bold\" fill=\"#1a3a5c\">Simple Solar System Design â Off-Grid Configuration</text>\n      \n      <!-- Solar Panel -->\n      <rect x=\"40\" y=\"80\" width=\"120\" height=\"80\" fill=\"#2c5f8a\" rx=\"4\"/>\n      <text x=\"100\" y=\"115\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"12\" fill=\"white\" font-weight=\"bold\">SOLAR</text>\n      <text x=\"100\" y=\"132\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"12\" fill=\"white\" font-weight=\"bold\">PANELS</text>\n      \n      <!-- Charge Controller -->\n      <rect x=\"240\" y=\"80\" width=\"120\" height=\"80\" fill=\"#3a7ca5\" rx=\"4\"/>\n      <text x=\"300\" y=\"115\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"white\" font-weight=\"bold\">CHARGE</text>\n      <text x=\"300\" y=\"132\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"white\" font-weight=\"bold\">CONTROLLER</text>\n      \n      <!-- Battery -->\n      <rect x=\"440\" y=\"80\" width=\"120\" height=\"80\" fill=\"#1e6f5c\" rx=\"4\"/>\n      <text x=\"500\" y=\"115\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"12\" fill=\"white\" font-weight=\"bold\">BATTERY</text>\n      <text x=\"500\" y=\"132\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"12\" fill=\"white\" font-weight=\"bold\">BANK</text>\n      \n      <!-- Inverter -->\n      <rect x=\"640\" y=\"80\" width=\"120\" height=\"80\" fill=\"#d97706\" rx=\"4\"/>\n      <text x=\"700\" y=\"115\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"12\" fill=\"white\" font-weight=\"bold\">INVERTER</text>\n      <text x=\"700\" y=\"132\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"12\" fill=\"white\" font-weight=\"bold\">DCâAC</text>\n      \n      <!-- Arrows -->\n      <line x1=\"160\" y1=\"120\" x2=\"235\" y2=\"120\" stroke=\"#333\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n      <line x1=\"360\" y1=\"120\" x2=\"435\" y2=\"120\" stroke=\"#333\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n      <line x1=\"560\" y1=\"120\" x2=\"635\" y2=\"120\" stroke=\"#333\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n      \n      <!-- Arrow marker -->\n      <defs>\n        <marker id=\"arrow\" markerWidth=\"10\" markerHeight=\"7\" refX=\"10\" refY=\"3.5\" orient=\"auto\">\n          <polygon points=\"0 0, 10 3.5, 0 7\" fill=\"#333\"/>\n        </marker>\n      </defs>\n      \n      <!-- DC labels -->\n      <text x=\"197\" y=\"105\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"10\" fill=\"#555\">DC</text>\n      <text x=\"397\" y=\"105\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"10\" fill=\"#555\">DC</text>\n      <text x=\"597\" y=\"105\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"10\" fill=\"#555\">DC</text>\n      \n      <!-- AC Loads -->\n      <rect x=\"640\" y=\"220\" width=\"120\" height=\"60\" fill=\"#6b7280\" rx=\"4\"/>\n      <text x=\"700\" y=\"245\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"white\" font-weight=\"bold\">AC LOADS</text>\n      <text x=\"700\" y=\"262\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"9\" fill=\"white\">Lights, Phones, TV, Fridge</text>\n      <line x1=\"700\" y1=\"160\" x2=\"700\" y2=\"215\" stroke=\"#333\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n      <text x=\"715\" y=\"192\" font-family=\"Arial, sans-serif\" font-size=\"10\" fill=\"#555\">AC</text>\n      \n      <!-- Ground/Earth -->\n      <line x1=\"500\" y1=\"160\" x2=\"500\" y2=\"200\" stroke=\"#555\" stroke-width=\"2\"/>\n      <line x1=\"480\" y1=\"200\" x2=\"520\" y2=\"200\" stroke=\"#555\" stroke-width=\"2\"/>\n      <line x1=\"488\" y1=\"208\" x2=\"512\" y2=\"208\" stroke=\"#555\" stroke-width=\"1.5\"/>\n      <line x1=\"494\" y1=\"216\" x2=\"506\" y2=\"216\" stroke=\"#555\" stroke-width=\"1\"/>\n      <text x=\"530\" y=\"210\" font-family=\"Arial, sans-serif\" font-size=\"10\" fill=\"#555\">Earth</text>\n      \n      <!-- Note -->\n      <text x=\"400\" y=\"340\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#666\" font-style=\"italic\">All DC connections must be fused or breakered. AC output must have RCD protection.</text>\n      <text x=\"400\" y=\"360\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"10\" fill=\"#888\">Source: Adapted from IRENA (2016) \"Solar PV in Africa: Costs and Markets\" and Practical Action (2020) \"Solar Photovoltaic Systems Technical Brief\"</text>\n    </svg>\n    <figcaption>Figure 1: Typical off-grid solar system configuration for community applications. Source: Adapted from IRENA (2016) <em>Solar PV in Africa: Costs and Markets</em> and Practical Action (2020) <em>Solar Photovoltaic Systems Technical Brief</em>.</figcaption>\n  </figure>\n\n  <h3>6. Designing a Simple Solar System</h3>\n  <p>Follow these steps for a reliable design:</p>\n  <ol>\n    <li><strong>Load audit:</strong> List every appliance, its wattage, and daily hours of use. Calculate total Wh/day.</li>\n    <li><strong>Battery sizing:</strong> Multiply daily Wh by autonomy days (2â3), divide by depth of discharge (0.5 for lead-acid, 0.8 for LiFePO4), then divide by system voltage.</li>\n    <li><strong>Panel sizing:</strong> Divide daily Wh by peak sun hours for your location (4â6 in most of Africa), then add 30% for losses.</li>\n    <li><strong>Controller sizing:</strong> Match controller amperage to panel short-circuit current Ã 1.25.</li>\n    <li><strong>Inverter sizing:</strong> Total simultaneous AC loads Ã 1.25 for surge capacity.</li>\n  </ol>\n\n  <h3>Data Tables</h3>\n\n  <table border=\"1\" cellpadding=\"8\" cellspacing=\"0\" style=\"border-collapse:collapse; width:100%; font-family:Arial, sans-serif; font-size:14px;\">\n    <caption style=\"font-weight:bold; padding:8px; text-align:left;\">Table 1: Comparison of Battery Technologies for Off-Grid Solar in Africa</caption>\n    <thead>\n      <tr style=\"background:#1a3a5c; color:white;\">\n        <th>Technology</th>\n        <th>Upfront Cost (USD/kWh)</th>\n        <th>Cycle Life (80% DoD)</th>\n        <th>Maintenance</th>\n        <th>Best For</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>Flooded Lead-Acid</td>\n        <td>150â250</td>\n        <td>500â800</td>\n        <td>Monthly watering, ventilation</td>\n        <td>Low-budget, accessible systems</td>\n      </tr>\n      <tr style=\"background:#f0f4f8;\">\n        <td>AGM/Gel</td>\n        <td>250â400</td>\n        <td>600â1,000</td>\n        <td>None</td>\n        <td>Remote, maintenance-free needs</td>\n      </tr>\n      <tr>\n        <td>LiFePO4</td>\n        <td>500â900</td>\n        <td>3,000â5,000</td>\n        <td>None</td>\n        <td>Long-term, high-temp, critical loads</td>\n      </tr>\n    </tbody>\n  </table>\n  <p style=\"font-size:12px; color:#555;\">Source: IRENA (2017) <em>Electricity Storage and Renewables: Costs and Markets to 2030</em>; BloombergNEF (2023) <em>Battery Price Survey</em>; manufacturer datasheets (BYD, Pylontech, Trojan).</p>\n\n  <table border=\"1\" cellpadding=\"8\" cellspacing=\"0\" style=\"border-collapse:collapse; width:100%; font-family:Arial, sans-serif; font-size:14px; margin-top:20px;\">\n    <caption style=\"font-weight:bold; padding:8px; text-align:left;\">Table 2: Typical Peak Sun Hours and Recommended Panel Tilt for Selected African Cities</caption>\n    <thead>\n      <tr style=\"background:#1a3a5c; color:white;\">\n        <th>City</th>\n        <th>Country</th>\n        <th>Peak Sun Hours (annual avg)</th>\n        <th>Optimal Tilt (latitude + 5Â°)</th>\n        <th>Recommended Panel Type</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>Nairobi</td>\n        <td>Kenya</td>\n        <td>5.5</td>\n        <td>10Â°</td>\n        <td>Monocrystalline</td>\n      </tr>\n      <tr style=\"background:#f0f4f8;\">\n        <td>Lagos</td>\n        <td>Nigeria</td>\n        <td>4.5</td>\n        <td>11Â°</td>\n        <td>Polycrystalline</td>\n      </tr>\n      <tr>\n        <td>Accra</td>\n        <td>Ghana</td>\n        <td>4.8</td>\n        <td>10Â°</td>\n        <td>Monocrystalline</td>\n      </tr>\n      <tr style=\"background:#f0f4f8;\">\n        <td>Dakar</td>\n        <td>Senegal</td>\n        <td>5.8</td>\n        <td>19Â°</td>\n        <td>Monocrystalline</td>\n      </tr>\n      <tr>\n        <td>Kampala</td>\n        <td>Uganda</td>\n        <td>5.2</td>\n        <td>5Â°</td>\n        <td>Polycrystalline</td>\n      </tr>\n      <tr style=\"background:#f0f4f8;\">\n        <td>Dar es Salaam</td>\n        <td>Tanzania</td>\n        <td>5.0</td>\n        <td>12Â°</td>\n        <td>Monocrystalline</td>\n      </tr>\n    </tbody>\n  </table>\n  <p style=\"font-size:12px; color:#555;\">Source: Global Solar Atlas (World Bank/ESMAP, 2023); NASA POWER Database (2023); Solargis (2023).</p>\n\n  <div style=\"background:#fff3f3; border-left:6px solid #d32f2f; padding:16px; margin:24px 0; border-radius:4px;\">\n    <h4 style=\"color:#d32f2f; margin-top:0;\">â ï¸ SAFETY WARNING â Electrical and Battery Hazards</h4>\n    <p style=\"margin-bottom:0;\">Solar DC circuits can produce lethal voltages and currents. <strong>Never</strong> work on live DC cables without proper insulation and lockout/tagout procedures. Battery banks store enormous energy â a short circuit can cause arc flashes, burns, and explosions. Always use insulated tools, wear PPE (gloves, goggles, arc-rated clothing), and ensure proper ventilation when working with flooded lead-acid batteries (hydrogen gas is explosive). In Africa, where formal electrical safety training may be limited, <strong>never</strong> attempt installation without certified training or supervision. Improper earthing and lack of surge protection have caused numerous fires and electrocutions in community solar projects. Follow local electrical codes and IEC 60364 standards.</p>\n  </div>\n\n  <h3>Quick Reference Checklist</h3>\n  <ul style=\"list-style-type: none; padding-left: 0;\">\n    <li>â <strong>Load audit completed:</strong> All appliances listed with wattage and daily hours; total Wh/day calculated.</li>\n    <li>â <strong>Battery bank sized:</strong> Autonomy days (2â3) Ã daily Wh Ã· DoD Ã· system voltage; LiFePO4 preferred for longevity.</li>\n    <li>â <strong>Panel array sized:</strong> Daily Wh Ã· peak sun hours Ã 1.3 (losses); tilt set to latitude + 5Â° for optimal yield.</li>\n    <li>â <strong>MPPT charge controller selected:</strong> Rated for panel Isc Ã 1.25; temperature compensation enabled.</li>\n    <li>â <strong>Pure sine wave inverter installed:</strong> Sized for simultaneous loads Ã 1.25 surge; efficiency >90%.</li>\n    <li>â <strong>Cables and protection:</strong> Voltage drop <3%; DC fuses/breakers on all circuits; RCD on AC output; proper earthing.</li>\n    <li>â <strong>Mounting secure:</strong> Corrosion-resistant, theft-deterrent, wind-rated for local conditions.</li>\n    <li>â <strong>Safety and documentation:</strong> PPE used, system labeled, user manual provided, maintenance schedule agreed with community.</li>\n  </ul>\n\n  <h3>Further Reading (Free Official Resources)</h3>\n  <ul>\n    <li><a href=\"https://www.irena.org/publications/2016/Oct/Solar-PV-in-Africa-Costs-and-Markets\" target=\"_blank\" rel=\"noopener\">IRENA (2016) â Solar PV in Africa: Costs and Markets</a> â Comprehensive market and cost analysis for African solar deployment.</li>\n    <li><a href=\"https://www.worldbank.org/en/topic/energy/publication/global-solar-atlas\" target=\"_blank\" rel=\"noopener\">Global Solar Atlas (World Bank/ESMAP)</a> â Free interactive tool for solar resource assessment and system design in Africa.</li>\n    <li><a href=\"https://practicalaction.org/knowledge-centre/resources/solar-photovoltaic-systems-technical-brief/\" target=\"_blank\" rel=\"noopener\">Practical Action (2020) â Solar Photovoltaic Systems Technical Brief</a> â Practical guidance for off-grid system design in developing countries.</li>\n    <li><a href=\"https://www.iea.org/reports/africa-energy-outlook-2022\" target=\"_blank\" rel=\"noopener\">IEA (2022) â Africa Energy Outlook</a> â Policy, investment, and technology trends for African energy access.</li>\n    <li><a href=\"https://www.irena.org/publications/2017/Oct/Electricity-Storage-and-Renewables-Costs-and-Markets\" target=\"_blank\" rel=\"noopener\">IRENA (2017) â Electricity Storage and Renewables: Costs and Markets to 2030</a> â Battery cost and performance data for system sizing.</li>\n  </ul>\n\n  <p style=\"margin-top:24px; font-style:italic; color:#555;\">This practical reference is part of the <strong>Rise Africa Skills</strong> course <em>Solar Installation in the Community</em>. Use it alongside hands-on training and always prioritize safety, quality, and customer service to build a sustainable solar business in Africa.</p>\n</section>"
-    }],
+    }
+  ],
   "quiz": [
     {
       "q": "Which type of solar panel is the most efficient for home systems in Africa?",
-      "options": ["A) Monocrystalline", "B) Polycrystalline", "C) Thin-film", "D) Amorphous"],
+      "options": [
+        "A) Monocrystalline",
+        "B) Polycrystalline",
+        "C) Thin-film",
+        "D) Amorphous"
+      ],
       "answer": "A",
       "explanation": "Monocrystalline panels have the highest efficiency (15-22%) and perform better in high heat and low light."
     },
     {
       "q": "What does Vmp stand for on a solar panel?",
-      "options": ["A) Voltage maximum power", "B) Voltage minimum power", "C) Variable maximum power", "D) Volts measured peak"],
+      "options": [
+        "A) Voltage maximum power",
+        "B) Voltage minimum power",
+        "C) Variable maximum power",
+        "D) Volts measured peak"
+      ],
       "answer": "A",
       "explanation": "Vmp is the voltage at which the panel produces maximum power under load."
     },
     {
       "q": "Why should you avoid shading on solar panels?",
-      "options": ["A) It makes panels dirty", "B) It can cut output by 50% or more", "C) It increases voltage", "D) It cools the panel"],
+      "options": [
+        "A) It makes panels dirty",
+        "B) It can cut output by 50% or more",
+        "C) It increases voltage",
+        "D) It cools the panel"
+      ],
       "answer": "B",
       "explanation": "Even a small shadow on one cell can significantly reduce the panel's overall power output."
     },
     {
       "q": "What is the recommended cleaning frequency for solar panels in dusty African areas?",
-      "options": ["A) Once a year", "B) Once a month", "C) Weekly", "D) Never"],
+      "options": [
+        "A) Once a year",
+        "B) Once a month",
+        "C) Weekly",
+        "D) Never"
+      ],
       "answer": "C",
       "explanation": "Dust reduces efficiency, so weekly cleaning with a soft cloth and water is recommended."
     },
     {
       "q": "Which inverter type is best for sensitive electronics like laptops?",
-      "options": ["A) Modified sine wave", "B) Pure sine wave", "C) Square wave", "D) Hybrid wave"],
+      "options": [
+        "A) Modified sine wave",
+        "B) Pure sine wave",
+        "C) Square wave",
+        "D) Hybrid wave"
+      ],
       "answer": "B",
       "explanation": "Pure sine wave inverters produce clean AC power that safely runs all appliances, including sensitive electronics."
     },
     {
       "q": "What is the main advantage of an MPPT charge controller over PWM?",
-      "options": ["A) Cheaper", "B) 20-30% more efficient", "C) Smaller size", "D) No need for fuses"],
+      "options": [
+        "A) Cheaper",
+        "B) 20-30% more efficient",
+        "C) Smaller size",
+        "D) No need for fuses"
+      ],
       "answer": "B",
       "explanation": "MPPT controllers harvest more power from panels, especially in cold or cloudy conditions, by tracking the maximum power point."
     },
     {
       "q": "How do you size a charge controller for a 600W panel array and 12V battery?",
-      "options": ["A) 600/12 = 50A", "B) 600/24 = 25A", "C) 600/48 = 12.5A", "D) 600/120 = 5A"],
+      "options": [
+        "A) 600/12 = 50A",
+        "B) 600/24 = 25A",
+        "C) 600/48 = 12.5A",
+        "D) 600/120 = 5A"
+      ],
       "answer": "A",
       "explanation": "Divide total panel wattage by battery voltage: 600W / 12V = 50A, so use a 50A controller."
     },
     {
       "q": "What is the purpose of a fuse between the battery and inverter?",
-      "options": ["A) To increase voltage", "B) To prevent fires from overcurrent", "C) To convert DC to AC", "D) To store energy"],
+      "options": [
+        "A) To increase voltage",
+        "B) To prevent fires from overcurrent",
+        "C) To convert DC to AC",
+        "D) To store energy"
+      ],
       "answer": "B",
       "explanation": "Fuses protect against overcurrent that can cause fires or damage equipment."
     },
     {
       "q": "Which battery type can be discharged deeper and lasts longer?",
-      "options": ["A) Flooded lead-acid", "B) AGM", "C) Gel", "D) Lithium LiFePO4"],
+      "options": [
+        "A) Flooded lead-acid",
+        "B) AGM",
+        "C) Gel",
+        "D) Lithium LiFePO4"
+      ],
       "answer": "D",
       "explanation": "Lithium batteries can be discharged to 80-90% and last 8-15 years, compared to 50% and 3-5 years for lead-acid."
     },
     {
       "q": "How do you connect two 12V batteries to get 24V?",
-      "options": ["A) In parallel", "B) In series", "C) In series-parallel", "D) In reverse"],
+      "options": [
+        "A) In parallel",
+        "B) In series",
+        "C) In series-parallel",
+        "D) In reverse"
+      ],
       "answer": "B",
       "explanation": "Connecting batteries in series adds their voltages while capacity remains the same."
     },
     {
       "q": "What is the recommended depth of discharge for lead-acid batteries?",
-      "options": ["A) 80%", "B) 50%", "C) 20%", "D) 100%"],
+      "options": [
+        "A) 80%",
+        "B) 50%",
+        "C) 20%",
+        "D) 100%"
+      ],
       "answer": "B",
       "explanation": "Discharging lead-acid batteries beyond 50% significantly shortens their lifespan."
     },
     {
       "q": "Why should batteries be installed in a ventilated, shaded area in Africa?",
-      "options": ["A) To keep them cool and prevent overheating", "B) To increase voltage", "C) To reduce weight", "D) To improve aesthetics"],
+      "options": [
+        "A) To keep them cool and prevent overheating",
+        "B) To increase voltage",
+        "C) To reduce weight",
+        "D) To improve aesthetics"
+      ],
       "answer": "A",
       "explanation": "High temperatures reduce battery life and can cause damage, so ventilation and shade are important."
     },
     {
       "q": "What is the best tilt angle for solar panels in Nairobi (1Â°S)?",
-      "options": ["A) 0Â°", "B) 5-10Â°", "C) 30-35Â°", "D) 45Â°"],
+      "options": [
+        "A) 0Â°",
+        "B) 5-10Â°",
+        "C) 30-35Â°",
+        "D) 45Â°"
+      ],
       "answer": "B",
       "explanation": "For locations near the equator, a nearly flat tilt (5-10Â°) is optimal for year-round output."
     },
     {
       "q": "Which direction should solar panels face in the Southern Hemisphere?",
-      "options": ["A) True north", "B) True south", "C) East", "D) West"],
+      "options": [
+        "A) True north",
+        "B) True south",
+        "C) East",
+        "D) West"
+      ],
       "answer": "A",
       "explanation": "In the Southern Hemisphere, panels should face true north to capture maximum sunlight."
     },
     {
       "q": "What material is best for mounting rails to resist rust?",
-      "options": ["A) Mild steel", "B) Galvanized steel or aluminum", "C) Copper", "D) Wood"],
+      "options": [
+        "A) Mild steel",
+        "B) Galvanized steel or aluminum",
+        "C) Copper",
+        "D) Wood"
+      ],
       "answer": "B",
       "explanation": "Galvanized steel and aluminum resist rust and are durable for outdoor use."
     },
     {
       "q": "How deep should holes be for ground mount posts?",
-      "options": ["A) 10 cm", "B) 30 cm", "C) 50 cm", "D) 1 meter"],
+      "options": [
+        "A) 10 cm",
+        "B) 30 cm",
+        "C) 50 cm",
+        "D) 1 meter"
+      ],
       "answer": "C",
       "explanation": "Holes should be at least 50 cm deep and filled with concrete for stability."
     },
     {
       "q": "What is the maximum recommended voltage drop for solar wiring?",
-      "options": ["A) 1%", "B) 3%", "C) 10%", "D) 20%"],
+      "options": [
+        "A) 1%",
+        "B) 3%",
+        "C) 10%",
+        "D) 20%"
+      ],
       "answer": "B",
       "explanation": "Voltage drop should be less than 3% to minimize power loss and ensure efficient operation."
     },
     {
       "q": "Which connector type is standard for solar panel connections?",
-      "options": ["A) MC4", "B) USB", "C) HDMI", "D) RCA"],
+      "options": [
+        "A) MC4",
+        "B) USB",
+        "C) HDMI",
+        "D) RCA"
+      ],
       "answer": "A",
       "explanation": "MC4 connectors are waterproof and designed for solar panels."
     },
     {
       "q": "Why should you use dielectric grease on battery terminals?",
-      "options": ["A) To increase voltage", "B) To prevent corrosion", "C) To reduce weight", "D) To improve appearance"],
+      "options": [
+        "A) To increase voltage",
+        "B) To prevent corrosion",
+        "C) To reduce weight",
+        "D) To improve appearance"
+      ],
       "answer": "B",
       "explanation": "Dielectric grease protects terminals from corrosion and ensures good contact."
     },
     {
       "q": "What is the first step in designing a solar system?",
-      "options": ["A) Buy panels", "B) Conduct an energy audit", "C) Install batteries", "D) Choose an inverter"],
+      "options": [
+        "A) Buy panels",
+        "B) Conduct an energy audit",
+        "C) Install batteries",
+        "D) Choose an inverter"
+      ],
       "answer": "B",
       "explanation": "An energy audit determines your daily energy needs, which drives all other sizing decisions."
     },
     {
       "q": "If your daily energy need is 1.2kWh and you get 5 peak sun hours, what size solar array do you need before losses?",
-      "options": ["A) 100W", "B) 240W", "C) 500W", "D) 1000W"],
+      "options": [
+        "A) 100W",
+        "B) 240W",
+        "C) 500W",
+        "D) 1000W"
+      ],
       "answer": "B",
       "explanation": "Array size = Daily energy / Peak sun hours = 1200Wh / 5h = 240W."
     },
     {
       "q": "For a 1.2kWh daily need and 2 days autonomy with lead-acid batteries (50% DoD), what capacity at 12V do you need?",
-      "options": ["A) 100Ah", "B) 200Ah", "C) 400Ah", "D) 800Ah"],
+      "options": [
+        "A) 100Ah",
+        "B) 200Ah",
+        "C) 400Ah",
+        "D) 800Ah"
+      ],
       "answer": "C",
       "explanation": "2 days x 1.2kWh = 2.4kWh. At 50% DoD, need 4.8kWh. At 12V, 4800Wh / 12V = 400Ah."
     },
     {
       "q": "What size inverter for a fridge (150W), TV (60W), and 5 lights (25W) running simultaneously?",
-      "options": ["A) 200W", "B) 300W", "C) 500W", "D) 1000W"],
+      "options": [
+        "A) 200W",
+        "B) 300W",
+        "C) 500W",
+        "D) 1000W"
+      ],
       "answer": "C",
       "explanation": "Total = 235W, add 30% surge = 300W, so a 500W inverter provides a safe margin."
     },
     {
       "q": "What is the formula to size a charge controller?",
-      "options": ["A) Panel wattage / Battery voltage", "B) Battery voltage / Panel wattage", "C) Panel wattage x Battery voltage", "D) Battery voltage x 2"],
+      "options": [
+        "A) Panel wattage / Battery voltage",
+        "B) Battery voltage / Panel wattage",
+        "C) Panel wattage x Battery voltage",
+        "D) Battery voltage x 2"
+      ],
       "answer": "A",
       "explanation": "Charge controller amps = Total panel wattage / Battery voltage."
     },
     {
       "q": "Why should you oversize a solar system by 20% in Africa?",
-      "options": ["A) To account for dust and heat losses", "B) To increase voltage", "C) To reduce cost", "D) To make it look bigger"],
+      "options": [
+        "A) To account for dust and heat losses",
+        "B) To increase voltage",
+        "C) To reduce cost",
+        "D) To make it look bigger"
+      ],
       "answer": "A",
       "explanation": "Dust and high temperatures reduce panel performance, so oversizing ensures you meet your energy needs."
     },
     {
       "q": "What is the purpose of a DC isolator switch?",
-      "options": ["A) To safely disconnect panels", "B) To convert DC to AC", "C) To store energy", "D) To increase current"],
+      "options": [
+        "A) To safely disconnect panels",
+        "B) To convert DC to AC",
+        "C) To store energy",
+        "D) To increase current"
+      ],
       "answer": "A",
       "explanation": "A DC isolator allows you to safely disconnect the solar panels from the system for maintenance."
     },
     {
       "q": "Which tool is essential for checking voltage and continuity?",
-      "options": ["A) Hammer", "B) Multimeter", "C) Screwdriver", "D) Saw"],
+      "options": [
+        "A) Hammer",
+        "B) Multimeter",
+        "C) Screwdriver",
+        "D) Saw"
+      ],
       "answer": "B",
       "explanation": "A multimeter measures voltage, current, and continuity, essential for testing solar systems."
     },
     {
       "q": "What should you do before working on solar wiring?",
-      "options": ["A) Turn off the system", "B) Wear gloves", "C) Use a ladder", "D) Call a friend"],
+      "options": [
+        "A) Turn off the system",
+        "B) Wear gloves",
+        "C) Use a ladder",
+        "D) Call a friend"
+      ],
       "answer": "A",
       "explanation": "Always turn off the system to prevent electric shock or damage."
     },
     {
       "q": "What is the typical lifespan of a well-maintained solar panel?",
-      "options": ["A) 5 years", "B) 10 years", "C) 25 years", "D) 50 years"],
+      "options": [
+        "A) 5 years",
+        "B) 10 years",
+        "C) 25 years",
+        "D) 50 years"
+      ],
       "answer": "C",
       "explanation": "Solar panels can last 25 years or more with proper care."
     },
     {
       "q": "Why is it important to label cables at both ends?",
-      "options": ["A) For aesthetics", "B) To identify connections during maintenance", "C) To increase voltage", "D) To reduce cost"],
+      "options": [
+        "A) For aesthetics",
+        "B) To identify connections during maintenance",
+        "C) To increase voltage",
+        "D) To reduce cost"
+      ],
       "answer": "B",
       "explanation": "Labeling helps troubleshoot and maintain the system efficiently."
     }
   ],
   "videos": [
-    "solar panel types monocrystalline polycrystalline comparison",
-    "how to size solar charge controller and inverter",
-    "solar panel mounting roof ground installation Africa"
+    {
+      "title": "Solar panel types monocrystalline polycrystalline comparison",
+      "query": "solar panel types monocrystalline polycrystalline comparison"
+    },
+    {
+      "title": "How to size solar charge controller and inverter",
+      "query": "how to size solar charge controller and inverter"
+    },
+    {
+      "title": "Solar panel mounting roof ground installation Africa",
+      "query": "solar panel mounting roof ground installation Africa"
+    }
   ]
 }

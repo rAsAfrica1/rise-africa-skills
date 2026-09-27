@@ -26,197 +26,356 @@
     {
       "title": "Upgrading Your Battery Bank as Your Business Grows",
       "body": "As your business grows, you will add appliances, extend hours, or add a fridge. Your battery bank must grow too. But you cannot simply add new batteries to an old bank. Mixing old and new lead-acid batteries causes the new ones to age quickly because the old ones have higher internal resistance. The best practice: replace the entire bank at once, or add batteries that are less than 6 months old and same brand/model.\n\nPlan for expansion from the start. Buy an inverter and charge controller that can handle future voltage and current. For example, if you start with 12V 200Ah, buy a 24V-capable inverter and charge controller. Later, you can reconfigure to 24V and add batteries. Also, leave space in your battery rack and use cables that can carry the future current.\n\nWhen upgrading, calculate new daily energy and required Ah. If you double your load, you need double the Ah. But also check your solar panels and charge controller can recharge the larger bank. A 200Ah bank needs at least 400W of solar in sunny Africa (assuming 4 peak sun hours). A 400Ah bank needs 800W. If you add batteries without adding solar, they will never fully charge and will sulfate.\n\nReal example: A welder in Zambia started with 12V 200Ah and 300W solar. After one year, he added a fridge and lights, doubling his load. He replaced the 200Ah bank with 4 Ã 6V 225Ah batteries (24V 450Ah) and added 600W more solar, plus a new 24V 3kVA inverter. He sold the old batteries to a car mechanic. His business now runs 24/7 without grid. Always upgrade in steps and keep records of dates and costs."
-    }
-  ,
+    },
     {
       "title": "Practical Reference",
       "body": "<section>\n  <h2>Practical Reference: Designing Your Battery Bank</h2>\n\n  <p>For a solar business in Africaâwhether you are running a cold room in Kumasi, a maize mill in Mbeya, or a phone-charging kiosk in Kanoâthe battery bank is the heart of your system. Panels only make power when the sun shines; the battery bank decides whether your business keeps running after dark, on cloudy days, and during grid outages. This reference lesson gives you the formulas, wiring rules, safety checks, and monitoring habits you need to design a bank that pays for itself and grows with your business.</p>\n\n  <p>Work through it with a pencil and your own load list. Every figure here should be replaced with your real numbers before you buy a single cell.</p>\n\n  <h2>1. Calculating Battery Bank Size for Your Daily Energy Use</h2>\n\n  <p>Start with energy, not amp-hours. List every load, its power in watts, and the hours it runs per day. Multiply watts Ã hours to get watt-hours (Wh). Add them up for your total daily energy consumption. Then apply two correction factors:</p>\n\n  <ul>\n    <li><strong>Depth of discharge (DoD):</strong> lead-acid batteries should not be discharged below 50% regularly; lithium (LiFePO4) can go to 80â90%. Divide by the usable fraction.</li>\n    <li><strong>System efficiency and autonomy:</strong> inverters, wiring, and ageing lose 10â20%. Add days of autonomy (1â2 for most African businesses with a backup generator or grid).</li>\n  </ul>\n\n  <p><strong>Formula:</strong> Battery bank capacity (Wh) = Daily energy use (Wh) Ã Days of autonomy Ã· (DoD Ã system efficiency).</p>\n\n  <p>To convert to amp-hours at your system voltage: Ah = Wh Ã· system voltage (12 V, 24 V, or 48 V).</p>\n\n  <p><em>Example:</em> A small poultry incubator and lighting business uses 3,200 Wh/day, wants 1.5 days autonomy, uses lead-acid at 50% DoD and 85% efficiency. Required capacity = 3,200 Ã 1.5 Ã· (0.5 Ã 0.85) â 11,294 Wh. At 48 V that is about 235 Ah.</p>\n\n  <figure>\n    <svg viewBox=\"0 0 800 420\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-labelledby=\"batterySizingTitle batterySizingDesc\" style=\"width:100%;height:auto;background:#f7f9fc;border:1px solid #d7dee8;border-radius:8px;\">\n      <title id=\"batterySizingTitle\">Battery bank sizing flow diagram</title>\n      <desc id=\"batterySizingDesc\">A flow diagram showing daily energy use feeding into depth of discharge, days of autonomy, and system efficiency to produce required battery bank capacity in watt-hours and amp-hours.</desc>\n      <rect x=\"40\" y=\"40\" width=\"200\" height=\"70\" rx=\"10\" fill=\"#1f6f8b\" />\n      <text x=\"140\" y=\"72\" text-anchor=\"middle\" fill=\"#ffffff\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"bold\">Daily energy use</text>\n      <text x=\"140\" y=\"92\" text-anchor=\"middle\" fill=\"#ffffff\" font-family=\"Arial, sans-serif\" font-size=\"13\">(Wh = W Ã hours)</text>\n\n      <rect x=\"300\" y=\"40\" width=\"200\" height=\"70\" rx=\"10\" fill=\"#2e8b57\" />\n      <text x=\"400\" y=\"68\" text-anchor=\"middle\" fill=\"#ffffff\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\">Depth of Discharge</text>\n      <text x=\"400\" y=\"88\" text-anchor=\"middle\" fill=\"#ffffff\" font-family=\"Arial, sans-serif\" font-size=\"13\">Lead-acid 50% | Li 80â90%</text>\n\n      <rect x=\"560\" y=\"40\" width=\"200\" height=\"70\" rx=\"10\" fill=\"#b8860b\" />\n      <text x=\"660\" y=\"68\" text-anchor=\"middle\" fill=\"#ffffff\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\">Days of Autonomy</text>\n      <text x=\"660\" y=\"88\" text-anchor=\"middle\" fill=\"#ffffff\" font-family=\"Arial, sans-serif\" font-size=\"13\">1â2 days typical</text>\n\n      <rect x=\"300\" y=\"160\" width=\"200\" height=\"70\" rx=\"10\" fill=\"#8b4513\" />\n      <text x=\"400\" y=\"188\" text-anchor=\"middle\" fill=\"#ffffff\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\">System Efficiency</text>\n      <text x=\"400\" y=\"208\" text-anchor=\"middle\" fill=\"#ffffff\" font-family=\"Arial, sans-serif\" font-size=\"13\">0.80â0.90</text>\n\n      <rect x=\"240\" y=\"290\" width=\"320\" height=\"80\" rx=\"10\" fill=\"#333333\" />\n      <text x=\"400\" y=\"322\" text-anchor=\"middle\" fill=\"#ffffff\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"bold\">Required bank capacity</text>\n      <text x=\"400\" y=\"345\" text-anchor=\"middle\" fill=\"#ffffff\" font-family=\"Arial, sans-serif\" font-size=\"13\">Wh Ã· (DoD Ã efficiency) Ã autonomy</text>\n\n      <line x1=\"140\" y1=\"110\" x2=\"140\" y2=\"330\" stroke=\"#555\" stroke-width=\"2\" />\n      <line x1=\"140\" y1=\"330\" x2=\"240\" y2=\"330\" stroke=\"#555\" stroke-width=\"2\" />\n      <line x1=\"400\" y1=\"110\" x2=\"400\" y2=\"160\" stroke=\"#555\" stroke-width=\"2\" />\n      <line x1=\"400\" y1=\"230\" x2=\"400\" y2=\"290\" stroke=\"#555\" stroke-width=\"2\" />\n      <line x1=\"660\" y1=\"110\" x2=\"660\" y2=\"330\" stroke=\"#555\" stroke-width=\"2\" />\n      <line x1=\"660\" y1=\"330\" x2=\"560\" y2=\"330\" stroke=\"#555\" stroke-width=\"2\" />\n    </svg>\n    <figcaption>Sizing logic adapted from the standalone PV system sizing method in <a href=\"https://www.irena.org/publications\" target=\"_blank\" rel=\"noopener\">IRENA, Off-grid Renewable Energy Solutions</a> and <a href=\"https://www.nrel.gov/docs/fy15osti/63441.pdf\" target=\"_blank\" rel=\"noopener\">NREL, PV System Sizing for Battery Banks</a>.</figcaption>\n  </figure>\n\n  <p>Table 1 shows typical capacities for common African micro-enterprise loads. Use it as a starting point, then recalculate with your own figures.</p>\n\n  <table border=\"1\" cellpadding=\"8\" cellspacing=\"0\" style=\"border-collapse:collapse;width:100%;font-family:Arial,sans-serif;font-size:14px;\">\n    <caption style=\"text-align:left;font-weight:bold;padding:6px 0;\">Table 1. Indicative daily energy use and battery bank size at 48 V (lead-acid, 50% DoD, 85% efficiency, 1.5 days autonomy)</caption>\n    <thead style=\"background:#1f6f8b;color:#fff;\">\n      <tr>\n        <th>Business type</th>\n        <th>Typical daily load (Wh)</th>\n        <th>Required bank (Wh)</th>\n        <th>Required bank (Ah at 48 V)</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr><td>Phone-charging kiosk + LED lighting</td><td>1,200</td><td>4,235</td><td>88</td></tr>\n      <tr><td>Small shop: fridge, lights, phone charging</td><td>3,500</td><td>12,353</td><td>257</td></tr>\n      <tr><td>Poultry incubator + lighting</td><td>3,200</td><td>11,294</td><td>235</td></tr>\n      <tr><td>Maize mill (small, 3 kW motor, 4 h/day)</td><td>12,000</td><td>42,353</td><td>882</td></tr>\n      <tr><td>Cold room (small, 2 kW compressor, 8 h/day)</td><td>16,000</td><td>56,471</td><td>1,176</td></tr>\n    </tbody>\n  </table>\n  <p style=\"font-size:13px;color:#555;\">Source: Load profiles adapted from <a href=\"https://www.gogla.org/sites/default/files/resource_docs/gogla_off-grid_appliance_report.pdf\" target=\"_blank\" rel=\"noopener\">GOGLA, Off-Grid Appliance Market Data</a> and <a href=\"https://www.seforall.org/data-and-reports\" target=\"_blank\" rel=\"noopener\">SEforALL Energizing Finance reports</a>.</p>\n\n  <h2>2. Series and Parallel Connections: Getting the Right Voltage and Ah</h2>\n\n  <p>Batteries are like workers: in <strong>series</strong>, voltages add and amp-hour capacity stays the same. In <strong>parallel</strong>, amp-hours add and voltage stays the same. You almost always need both to reach your target voltage and capacity.</p>\n\n  <p><strong>Rule:</strong> Series strings first, then parallel strings. Keep parallel strings to a maximum of four for lead-acid; more strings make balancing difficult.</p>\n\n  <p><em>Example:</em> You need 48 V and 235 Ah. Using 12 V, 100 Ah batteries: four in series gives 48 V, 100 Ah. Two such strings in parallel gives 48 V, 200 Ah. Three strings gives 300 Ahâslightly oversized but acceptable and easier to expand later.</p>\n\n  <table border=\"1\" cellpadding=\"8\" cellspacing=\"0\" style=\"border-collapse:collapse;width:100%;font-family:Arial,sans-serif;font-size:14px;\">\n    <caption style=\"text-align:left;font-weight:bold;padding:6px 0;\">Table 2. Series vs parallel battery configurations using 12 V, 100 Ah batteries</caption>\n    <thead style=\"background:#2e8b57;color:#fff;\">\n      <tr>\n        <th>Configuration</th>\n        <th>Batteries</th>\n        <th>Voltage</th>\n        <th>Amp-hours</th>\n        <th>Energy (Wh)</th>\n        <th>Typical use</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr><td>1 battery</td><td>1</td><td>12 V</td><td>100 Ah</td><td>1,200</td><td>Very small lighting</td></tr>\n      <tr><td>2 in series</td><td>2</td><td>24 V</td><td>100 Ah</td><td>2,400</td><td>Small shop, 24 V inverter</td></tr>\n      <tr><td>4 in series</td><td>4</td><td>48 V</td><td>100 Ah</td><td>4,800</td><td>Entry-level 48 V system</td></tr>\n      <tr><td>4 series + 2 parallel</td><td>8</td><td>48 V</td><td>200 Ah</td><td>9,600</td><td>Shop with fridge</td></tr>\n      <tr><td>4 series + 3 parallel</td><td>12</td><td>48 V</td><td>300 Ah</td><td>14,400</td><td>Incubator, mill, cold room</td></tr>\n    </tbody>\n  </table>\n  <p style=\"font-size:13px;color:#555;\">Source: Configuration rules from <a href=\"https://www.victronenergy.com/upload/documents/Wiring-Unlimited-EN.pdf\" target=\"_blank\" rel=\"noopener\">Victron Energy, Wiring Unlimited</a> and <a href=\"https://www.solar-electric.com/learning-center/batteries.html\" target=\"_blank\" rel=\"noopener\">NABCEP-aligned battery bank design guidance</a>.</p>\n\n  <h2>3. Wiring Batteries Safely with Correct Cable Sizes and Fuses</h2>\n\n  <p>Undersized cables waste energy as heat and can start fires. Size cables for the maximum current your inverter and loads can draw, then check voltage drop. In Africa, high ambient temperatures mean you should derate cable current-carrying capacity by about 10â20%.</p>\n\n  <p><strong>Current:</strong> I = P Ã· V. A 3,000 W inverter at 48 V draws about 62.5 A continuous, but surge can be double. Size cables for surge, not just continuous.</p>\n\n  <p><strong>Fuses:</strong> Every positive cable from the battery bank must have a fuse or DC breaker rated just above the expected maximum current. Use DC-rated fuses (not AC), and mount them within 200 mm of the battery terminal. This is your last line of defence if a cable shorts.</p>\n\n  <div style=\"border:2px solid #b00020;background:#fff0f0;padding:14px;border-radius:8px;margin:20px 0;\">\n    <strong style=\"color:#b00020;\">â  SAFETY WARNING:</strong> Never work on a live battery bank with metal tools, watches, or rings. A shorted 48 V lead-acid bank can deliver thousands of amps, causing arc flashes, burns, and explosions. Always disconnect the negative terminal first, use insulated tools, wear eye protection, and provide ventilationâlead-acid batteries release explosive hydrogen gas during charging. In hot African climates, keep batteries out of direct sun and above 10Â°C at night where possible.\n  </div>\n\n  <h2>4. Battery Monitoring: Voltmeters, Shunts, and State of Charge</h2>\n\n  <p>Voltage alone is a poor indicator of state of charge (SoC) because it sags under load and recovers at rest. A <strong>shunt-based battery monitor</strong> measures current in and out and calculates SoC accurately. This is the single most valuable instrument for a business that depends on batteries.</p>\n\n  <p>Install a shunt on the negative cable between the battery bank and everything else. The monitor tracks amp-hours consumed and remaining, and can trigger alarms or generator start. Pair it with a temperature sensor, because lead-acid capacity drops in heat and lithium charging must stop near freezing.</p>\n\n  <p>For a low-cost start, use a digital voltmeter and a hydrometer for flooded lead-acid. But for any business with more than 5 kWh of storage, budget for a proper shunt monitorâit prevents the deep discharges that kill battery banks early.</p>\n\n  <h2>5. Balancing and Equalizing Lead-Acid Battery Banks</h2>\n\n  <p>In a series string, weak cells limit the whole bank. Over time, cells drift apart. <strong>Equalization</strong> is a controlled overcharge (typically 2.4â2.5 V per cell for flooded lead-acid) that stirs the electrolyte, reverses sulfation, and brings cells back into balance. Do it monthly or when specific gravity varies by more than 0.03 between cells.</p>\n\n  <p>Do not equalize sealed (AGM/GEL) or lithium batteries unless the manufacturer explicitly allows it. For lithium, use a battery management system (BMS) that balances cells automatically. For lead-acid, check specific gravity with a hydrometer after a full charge and record it in a logbookâthis is your early warning system.</p>\n\n  <h2>6. Upgrading Your Battery Bank as Your Business Grows</h2>\n\n  <p>Design for expansion from day one. Use a 48 V system even if you start small, because higher voltage means lower current, thinner cables, and cheaper upgrades. Keep parallel strings equal in age, type, and capacity. Never mix old and new batteries in the same stringâthe old ones drag the new ones down.</p>\n\n  <p>When you add capacity, add a complete series string rather than individual batteries. If your inverter can handle it, move to lithium for longer life, faster charging, and deeper usable capacityâoften cheaper per usable kWh over five years despite a higher upfront price.</p>\n\n  <h2>Quick Reference Checklist</h2>\n  <ul>\n    <li>Calculate daily Wh from a written load list, then apply DoD, autonomy, and efficiency factors.</li>\n    <li>Choose system voltage first: 12 V for tiny loads, 24 V for small shops, 48 V for growing businesses.</li>\n    <li>Build series strings to reach voltage, then parallel strings to reach Ahâmaximum four parallel strings for lead-acid.</li>\n    <li>Size cables for surge current and keep voltage drop under 3%; derate for African heat.</li>\n    <li>Fuse every positive battery cable with a DC-rated fuse within 200 mm of the terminal.</li>\n    <li>Install a shunt-based battery monitor and a temperature sensor; log SoC weekly.</li>\n    <li>Equalize flooded lead-acid monthly; never equalize sealed or lithium unless specified.</li>\n    <li>Plan expansion: same age, type, and capacity; add whole strings, not single batteries.</li>\n  </ul>\n\n  <h2>Further Reading</h2>\n  <ul>\n    <li><a href=\"https://www.victronenergy.com/upload/documents/Wiring-Unlimited-EN.pdf\" target=\"_blank\" rel=\"noopener\">Victron Energy â Wiring Unlimited (free PDF)</a></li>\n    <li><a href=\"https://www.nrel.gov/docs/fy15osti/63441.pdf\" target=\"_blank\" rel=\"noopener\">NREL â PV System Sizing for Battery Banks (free PDF)</a></li>\n    <li><a href=\"https://www.irena.org/publications\" target=\"_blank\" rel=\"noopener\">IRENA â Off-grid Renewable Energy Solutions</a></li>\n    <li><a href=\"https://www.gogla.org/sites/default/files/resource_docs/gogla_off-grid_appliance_report.pdf\" target=\"_blank\" rel=\"noopener\">GOGLA â Off-Grid Appliance Market Data</a></li>\n    <li><a href=\"https://www.seforall.org/data-and-reports\" target=\"_blank\" rel=\"noopener\">SEforALL â Energizing Finance Reports</a></li>\n  </ul>\n</section>"
-    }],
+    }
+  ],
   "quiz": [
     {
       "q": "What is the first step to calculate battery bank size?",
-      "options": ["A) Buy the biggest battery available", "B) List all appliances and their daily hours", "C) Measure the voltage of your inverter", "D) Count the number of solar panels"],
+      "options": [
+        "A) Buy the biggest battery available",
+        "B) List all appliances and their daily hours",
+        "C) Measure the voltage of your inverter",
+        "D) Count the number of solar panels"
+      ],
       "answer": "B",
       "explanation": "You must know your daily energy use in Wh before sizing the bank."
     },
     {
       "q": "If your daily energy need is 1000Wh and you want 2 days autonomy with 50% depth of discharge on a 12V system, what Ah bank do you need?",
-      "options": ["A) 83Ah", "B) 167Ah", "C) 333Ah", "D) 500Ah"],
+      "options": [
+        "A) 83Ah",
+        "B) 167Ah",
+        "C) 333Ah",
+        "D) 500Ah"
+      ],
       "answer": "C",
       "explanation": "1000Wh Ã 2 days = 2000Wh; Ã·12V = 167Ah; Ã·0.5 DoD = 333Ah."
     },
     {
       "q": "What is the depth of discharge (DoD) for lead-acid batteries to maximize life?",
-      "options": ["A) 100%", "B) 80%", "C) 50%", "D) 20%"],
+      "options": [
+        "A) 100%",
+        "B) 80%",
+        "C) 50%",
+        "D) 20%"
+      ],
       "answer": "C",
       "explanation": "Lead-acid batteries should not be discharged below 50% regularly."
     },
     {
       "q": "For lithium batteries, what DoD is typically safe?",
-      "options": ["A) 50%", "B) 80%", "C) 100%", "D) 20%"],
+      "options": [
+        "A) 50%",
+        "B) 80%",
+        "C) 100%",
+        "D) 20%"
+      ],
       "answer": "B",
       "explanation": "Lithium batteries can safely use 80% DoD without major life reduction."
     },
     {
       "q": "How do you connect two 12V 100Ah batteries to get 24V 100Ah?",
-      "options": ["A) Parallel", "B) Series", "C) Series-parallel", "D) Not possible"],
+      "options": [
+        "A) Parallel",
+        "B) Series",
+        "C) Series-parallel",
+        "D) Not possible"
+      ],
       "answer": "B",
       "explanation": "Series adds voltage while keeping Ah the same."
     },
     {
       "q": "What happens to voltage and Ah when batteries are connected in parallel?",
-      "options": ["A) Voltage adds, Ah stays same", "B) Voltage stays same, Ah adds", "C) Both add", "D) Both stay same"],
+      "options": [
+        "A) Voltage adds, Ah stays same",
+        "B) Voltage stays same, Ah adds",
+        "C) Both add",
+        "D) Both stay same"
+      ],
       "answer": "B",
       "explanation": "Parallel connections increase capacity (Ah) while voltage remains constant."
     },
     {
       "q": "Why should you use batteries of the same age and capacity in a bank?",
-      "options": ["A) To look neat", "B) To prevent imbalance and early failure", "C) To increase voltage", "D) To reduce cable size"],
+      "options": [
+        "A) To look neat",
+        "B) To prevent imbalance and early failure",
+        "C) To increase voltage",
+        "D) To reduce cable size"
+      ],
       "answer": "B",
       "explanation": "Mixing old and new causes uneven charging and discharging, killing the bank faster."
     },
     {
       "q": "What size fuse for a 12V 1000W inverter (assuming 85% efficiency)?",
-      "options": ["A) 50A", "B) 100A", "C) 150A", "D) 200A"],
+      "options": [
+        "A) 50A",
+        "B) 100A",
+        "C) 150A",
+        "D) 200A"
+      ],
       "answer": "C",
       "explanation": "Current = 1000W Ã· 12V Ã· 0.85 = 98A, so a 150A fuse is safe."
     },
     {
       "q": "What is the rule of thumb for copper cable current capacity for short runs?",
-      "options": ["A) 1mmÂ² per 4A", "B) 1mmÂ² per 10A", "C) 1mmÂ² per 1A", "D) 1mmÂ² per 20A"],
+      "options": [
+        "A) 1mmÂ² per 4A",
+        "B) 1mmÂ² per 10A",
+        "C) 1mmÂ² per 1A",
+        "D) 1mmÂ² per 20A"
+      ],
       "answer": "A",
       "explanation": "About 4A per mmÂ² is a safe conservative estimate for short cables."
     },
     {
       "q": "Why should battery cables between batteries be equal length?",
-      "options": ["A) For neatness", "B) To ensure even charging and discharging", "C) To reduce cost", "D) To increase voltage"],
+      "options": [
+        "A) For neatness",
+        "B) To ensure even charging and discharging",
+        "C) To reduce cost",
+        "D) To increase voltage"
+      ],
       "answer": "B",
       "explanation": "Unequal lengths cause different resistance, leading to imbalance."
     },
     {
       "q": "What should you apply to battery terminals to prevent corrosion?",
-      "options": ["A) Water", "B) Oil", "C) Petroleum jelly", "D) Paint"],
+      "options": [
+        "A) Water",
+        "B) Oil",
+        "C) Petroleum jelly",
+        "D) Paint"
+      ],
       "answer": "C",
       "explanation": "Petroleum jelly seals out moisture and acid fumes."
     },
     {
       "q": "What is a shunt-based battery monitor used for?",
-      "options": ["A) Measuring voltage only", "B) Measuring current and counting amp-hours", "C) Measuring temperature", "D) Measuring specific gravity"],
+      "options": [
+        "A) Measuring voltage only",
+        "B) Measuring current and counting amp-hours",
+        "C) Measuring temperature",
+        "D) Measuring specific gravity"
+      ],
       "answer": "B",
       "explanation": "A shunt measures current flow to calculate state of charge accurately."
     },
     {
       "q": "For a 12V lead-acid battery at rest, what voltage indicates 50% state of charge?",
-      "options": ["A) 12.7V", "B) 12.4V", "C) 12.2V", "D) 11.9V"],
+      "options": [
+        "A) 12.7V",
+        "B) 12.4V",
+        "C) 12.2V",
+        "D) 11.9V"
+      ],
       "answer": "C",
       "explanation": "12.2V is approximately 50% SoC for a rested lead-acid battery."
     },
     {
       "q": "Why is a voltmeter unreliable for lithium batteries?",
-      "options": ["A) Voltage is too high", "B) Voltage stays flat until nearly empty", "C) Voltage fluctuates wildly", "D) Voltmeters don't work on lithium"],
+      "options": [
+        "A) Voltage is too high",
+        "B) Voltage stays flat until nearly empty",
+        "C) Voltage fluctuates wildly",
+        "D) Voltmeters don't work on lithium"
+      ],
       "answer": "B",
       "explanation": "Lithium has a very flat discharge curve, so voltage does not indicate SoC well."
     },
     {
       "q": "What is the purpose of equalizing flooded lead-acid batteries?",
-      "options": ["A) To add water", "B) To balance cells and remove sulfation", "C) To increase voltage", "D) To reduce capacity"],
+      "options": [
+        "A) To add water",
+        "B) To balance cells and remove sulfation",
+        "C) To increase voltage",
+        "D) To reduce capacity"
+      ],
       "answer": "B",
       "explanation": "Equalization is a controlled overcharge that stirs electrolyte and reverses sulfation."
     },
     {
       "q": "How often should you equalize flooded lead-acid batteries?",
-      "options": ["A) Daily", "B) Weekly", "C) Every 1-3 months", "D) Yearly"],
+      "options": [
+        "A) Daily",
+        "B) Weekly",
+        "C) Every 1-3 months",
+        "D) Yearly"
+      ],
       "answer": "C",
       "explanation": "Every 1-3 months, or when specific gravity varies by more than 0.03."
     },
     {
       "q": "What voltage per cell is used for equalization of flooded lead-acid?",
-      "options": ["A) 2.1V", "B) 2.3V", "C) 2.5V", "D) 2.7V"],
+      "options": [
+        "A) 2.1V",
+        "B) 2.3V",
+        "C) 2.5V",
+        "D) 2.7V"
+      ],
       "answer": "C",
       "explanation": "2.5V per cell (e.g., 15V for a 12V battery) is typical for equalization."
     },
     {
       "q": "What tool checks specific gravity of lead-acid cells?",
-      "options": ["A) Multimeter", "B) Hydrometer", "C) Clamp meter", "D) Thermometer"],
+      "options": [
+        "A) Multimeter",
+        "B) Hydrometer",
+        "C) Clamp meter",
+        "D) Thermometer"
+      ],
       "answer": "B",
       "explanation": "A hydrometer measures the density of the electrolyte, indicating state of charge."
     },
     {
       "q": "Can you equalize sealed AGM batteries?",
-      "options": ["A) Yes, always", "B) Only if manufacturer allows", "C) No, never", "D) Yes, but only with distilled water"],
+      "options": [
+        "A) Yes, always",
+        "B) Only if manufacturer allows",
+        "C) No, never",
+        "D) Yes, but only with distilled water"
+      ],
       "answer": "B",
       "explanation": "Most AGM manufacturers prohibit equalization unless explicitly stated."
     },
     {
       "q": "What is the risk of adding new batteries to an old bank?",
-      "options": ["A) New batteries will overcharge", "B) Old batteries will fail faster", "C) New batteries will age quickly due to old ones", "D) Voltage will drop"],
+      "options": [
+        "A) New batteries will overcharge",
+        "B) Old batteries will fail faster",
+        "C) New batteries will age quickly due to old ones",
+        "D) Voltage will drop"
+      ],
       "answer": "C",
       "explanation": "Old batteries have higher resistance, causing new ones to work harder and degrade."
     },
     {
       "q": "When upgrading a battery bank, what else must you check?",
-      "options": ["A) Solar panel and charge controller capacity", "B) Inverter color", "C) Battery brand", "D) Cable color"],
+      "options": [
+        "A) Solar panel and charge controller capacity",
+        "B) Inverter color",
+        "C) Battery brand",
+        "D) Cable color"
+      ],
       "answer": "A",
       "explanation": "You need enough solar and charge controller to recharge the larger bank."
     },
     {
       "q": "How many watts of solar are needed to charge a 200Ah 12V bank in 4 peak sun hours?",
-      "options": ["A) 100W", "B) 200W", "C) 400W", "D) 800W"],
+      "options": [
+        "A) 100W",
+        "B) 200W",
+        "C) 400W",
+        "D) 800W"
+      ],
       "answer": "C",
       "explanation": "200Ah Ã 12V = 2400Wh; Ã·4 hours = 600W, but with losses, 400W is a minimum rule of thumb? Actually 2400/4=600W, so 400W is too low. Let's recalc: 200Ah Ã 12V = 2400Wh. To charge in 4 hours, need 600W. But typical rule is 10% of Ah in C/10: 20A Ã 12V = 240W? This is confusing. Better: Use 400W as a common rule for 200Ah? Many say 200W per 100Ah. So 400W for 200Ah. That's 400W. So answer C."
     },
     {
       "q": "What is the maximum current for a 24V 3000VA inverter at 85% efficiency?",
-      "options": ["A) 100A", "B) 147A", "C) 200A", "D) 250A"],
+      "options": [
+        "A) 100A",
+        "B) 147A",
+        "C) 200A",
+        "D) 250A"
+      ],
       "answer": "B",
       "explanation": "3000VA Ã· 24V Ã· 0.85 = 147A."
     },
     {
       "q": "What is the first thing to do before wiring a battery bank?",
-      "options": ["A) Draw a diagram", "B) Buy batteries", "C) Turn on inverter", "D) Check voltage"],
+      "options": [
+        "A) Draw a diagram",
+        "B) Buy batteries",
+        "C) Turn on inverter",
+        "D) Check voltage"
+      ],
       "answer": "A",
       "explanation": "A diagram prevents wiring mistakes that can cause short circuits."
     },
     {
       "q": "What should you use to crimp cable lugs?",
-      "options": ["A) Pliers", "B) Hammer", "C) Hydraulic crimper", "D) Soldering iron"],
+      "options": [
+        "A) Pliers",
+        "B) Hammer",
+        "C) Hydraulic crimper",
+        "D) Soldering iron"
+      ],
       "answer": "C",
       "explanation": "A hydraulic crimper ensures a solid, low-resistance connection."
     },
     {
       "q": "What is the recommended torque for M8 battery terminals?",
-      "options": ["A) 1-2 Nm", "B) 5-7 Nm", "C) 10-12 Nm", "D) 15-20 Nm"],
+      "options": [
+        "A) 1-2 Nm",
+        "B) 5-7 Nm",
+        "C) 10-12 Nm",
+        "D) 15-20 Nm"
+      ],
       "answer": "B",
       "explanation": "5-7 Nm is typical for M8 bolts; too loose causes heat, too tight damages threads."
     },
     {
       "q": "What does a low-voltage alarm do?",
-      "options": ["A) Alerts you when battery is overcharged", "B) Alerts you when battery is too low", "C) Turns off inverter", "D) Increases voltage"],
+      "options": [
+        "A) Alerts you when battery is overcharged",
+        "B) Alerts you when battery is too low",
+        "C) Turns off inverter",
+        "D) Increases voltage"
+      ],
       "answer": "B",
       "explanation": "It warns you before deep discharge damages the battery."
     },
     {
       "q": "What is the Peukert exponent for lead-acid batteries?",
-      "options": ["A) 1.0", "B) 1.05", "C) 1.25", "D) 1.5"],
+      "options": [
+        "A) 1.0",
+        "B) 1.05",
+        "C) 1.25",
+        "D) 1.5"
+      ],
       "answer": "C",
       "explanation": "Lead-acid typically has a Peukert exponent around 1.25."
     },
     {
       "q": "Why log battery monitor readings weekly?",
-      "options": ["A) To pass time", "B) To spot trends and predict failures", "C) To increase voltage", "D) To reduce load"],
+      "options": [
+        "A) To pass time",
+        "B) To spot trends and predict failures",
+        "C) To increase voltage",
+        "D) To reduce load"
+      ],
       "answer": "B",
       "explanation": "Trends show if capacity is declining or if loads are increasing."
     },
     {
       "q": "What is the best way to add capacity to a 12V 200Ah bank if you need 24V 400Ah?",
-      "options": ["A) Add two 12V 200Ah in parallel", "B) Reconfigure to 24V with 4 Ã 12V 200Ah (2 series, 2 parallel)", "C) Add one 12V 200Ah in series", "D) Buy a new inverter"],
+      "options": [
+        "A) Add two 12V 200Ah in parallel",
+        "B) Reconfigure to 24V with 4 Ã 12V 200Ah (2 series, 2 parallel)",
+        "C) Add one 12V 200Ah in series",
+        "D) Buy a new inverter"
+      ],
       "answer": "B",
       "explanation": "Two in series gives 24V 200Ah; two such strings in parallel gives 24V 400Ah."
     }
   ],
   "videos": [
-    "how to calculate battery bank size for solar",
-    "series parallel battery connection diagram",
-    "battery monitor shunt installation"
+    {
+      "title": "How to calculate battery bank size for solar",
+      "query": "how to calculate battery bank size for solar"
+    },
+    {
+      "title": "Series parallel battery connection diagram",
+      "query": "series parallel battery connection diagram"
+    },
+    {
+      "title": "Battery monitor shunt installation",
+      "query": "battery monitor shunt installation"
+    }
   ]
 }

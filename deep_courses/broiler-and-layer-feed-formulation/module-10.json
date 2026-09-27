@@ -32,197 +32,356 @@
       "title": "Case Study: Optimizing a Broiler Diet Under Price Volatility",
       "body": "In 2023, a small poultry farm in Uganda faced volatile prices: maize jumped from $0.25/kg to $0.40/kg due to drought, while soybean meal rose from $0.55/kg to $0.70/kg. Fishmeal was $1.30/kg. The farm needed to produce broiler finisher feed (18% protein, 3000 kcal ME/kg) for 1000 birds. The original formulation was 60% maize, 30% soybean meal, 5% fishmeal, 3% wheat bran, 1% limestone, 0.5% premix, and 0.5% salt. Cost per ton was $420. With new prices, the same mix cost $510 per ton, a 21% increase. The farm wanted to reduce cost without hurting performance.\n\nThe manager used Excel Solver to re-optimize. Constraints: protein â¥ 18%, ME â¥ 3000 kcal/kg, calcium 0.9-1.0%, available phosphorus â¥ 0.45%, lysine â¥ 1.0%, methionine â¥ 0.45%. Ingredient limits: maize 40-65%, soybean meal 15-30%, fishmeal 0-5%, wheat bran 0-15%, cassava peels 0-15%, palm kernel cake 0-10%, limestone 1-1.5%, premix 0.25%, salt 0.25%. The solver found a new mix: 50% maize, 20% soybean meal, 3% fishmeal, 10% wheat bran, 12% cassava peels, 3% palm kernel cake, 1.2% limestone, 0.3% premix, 0.5% salt. This mix met all nutrients and cost $440 per ton, a 14% saving from the original adjusted cost. The farm also added 0.1% lysine and 0.05% methionine to balance amino acids.\n\nThey conducted a small trial with 100 birds on the new diet and 100 on the old diet. After 4 weeks, the new diet group had similar weight gain (1.8 kg vs 1.82 kg) and feed conversion ratio (1.65 vs 1.63). Feed cost per kg gain was $0.73 for the new diet vs $0.83 for the old, saving $0.10 per kg. For 1000 birds, that's a saving of $180. The farm also learned to buy cassava peels and palm kernel cake in bulk during harvest when prices are low. They now monitor prices weekly and re-run the formulation when any ingredient price changes by more than 10%. This case shows that with simple tools and local alternatives, you can maintain profitability even when prices fluctuate. Key lessons: use least-cost software, test alternatives gradually, and always calculate cost per kg of gain, not just per ton.",
       "word_count": 350
-    }
-  ,
+    },
     {
       "title": "Practical Reference",
       "body": "<section>\n  <h2>Practical Reference: Feed Cost Optimization and Economic Considerations</h2>\n\n  <p>Feed represents 65â75% of the total cost of producing a kilogram of broiler meat or a dozen eggs in most African poultry enterprises. For a commercial farm in Kenya, Nigeria, Ghana, or South Africa, a 5% reduction in feed cost per tonne can translate directly into a 3â4% improvement in net margin â often the difference between profit and loss. This practical reference consolidates the core principles of least-cost formulation, alternative ingredient use, price sensitivity, linear programming, nutrient-cost evaluation, and volatility management into a single working document for farm managers, feed millers, and agribusiness advisors.</p>\n\n  <figure>\n    <svg viewBox=\"0 0 720 340\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"Diagram showing feed cost drivers and optimization levers in African poultry production\">\n      <rect x=\"0\" y=\"0\" width=\"720\" height=\"340\" fill=\"#f8f9f4\" rx=\"8\"/>\n      <text x=\"360\" y=\"28\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"bold\" fill=\"#1a3c1a\">Feed Cost Optimization: Drivers and Levers</text>\n\n      <!-- Central box -->\n      <rect x=\"270\" y=\"130\" width=\"180\" height=\"70\" rx=\"10\" fill=\"#2e6b2e\" stroke=\"#1a3c1a\" stroke-width=\"2\"/>\n      <text x=\"360\" y=\"160\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"bold\" fill=\"#ffffff\">COST PER UNIT</text>\n      <text x=\"360\" y=\"178\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"bold\" fill=\"#ffffff\">OF NUTRIENT</text>\n\n      <!-- Inputs left -->\n      <rect x=\"30\" y=\"60\" width=\"150\" height=\"50\" rx=\"8\" fill=\"#e8f0e0\" stroke=\"#4a8a4a\" stroke-width=\"1.5\"/>\n      <text x=\"105\" y=\"80\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#1a3c1a\">Ingredient Prices</text>\n      <text x=\"105\" y=\"96\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"10\" fill=\"#555\">(maize, soy, fishmeal)</text>\n\n      <rect x=\"30\" y=\"140\" width=\"150\" height=\"50\" rx=\"8\" fill=\"#e8f0e0\" stroke=\"#4a8a4a\" stroke-width=\"1.5\"/>\n      <text x=\"105\" y=\"160\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#1a3c1a\">Nutrient Requirements</text>\n      <text x=\"105\" y=\"176\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"10\" fill=\"#555\">(energy, protein, AA)</text>\n\n      <rect x=\"30\" y=\"220\" width=\"150\" height=\"50\" rx=\"8\" fill=\"#e8f0e0\" stroke=\"#4a8a4a\" stroke-width=\"1.5\"/>\n      <text x=\"105\" y=\"240\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#1a3c1a\">Local Availability</text>\n      <text x=\"105\" y=\"256\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"10\" fill=\"#555\">(by-products, agro-waste)</text>\n\n      <!-- Outputs right -->\n      <rect x=\"540\" y=\"60\" width=\"150\" height=\"50\" rx=\"8\" fill=\"#fff3e0\" stroke=\"#c07a1a\" stroke-width=\"1.5\"/>\n      <text x=\"615\" y=\"80\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#5a3a00\">Least-Cost Mix</text>\n      <text x=\"615\" y=\"96\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"10\" fill=\"#555\">(LP solution)</text>\n\n      <rect x=\"540\" y=\"140\" width=\"150\" height=\"50\" rx=\"8\" fill=\"#fff3e0\" stroke=\"#c07a1a\" stroke-width=\"1.5\"/>\n      <text x=\"615\" y=\"160\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#5a3a00\">Lower Feed Cost/t</text>\n      <text x=\"615\" y=\"176\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"10\" fill=\"#555\">(5â15% savings)</text>\n\n      <rect x=\"540\" y=\"220\" width=\"150\" height=\"50\" rx=\"8\" fill=\"#fff3e0\" stroke=\"#c07a1a\" stroke-width=\"1.5\"/>\n      <text x=\"615\" y=\"240\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#5a3a00\">Better Margin</text>\n      <text x=\"615\" y=\"256\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"10\" fill=\"#555\">(per bird / per egg)</text>\n\n      <!-- Arrows -->\n      <line x1=\"180\" y1=\"85\" x2=\"270\" y2=\"150\" stroke=\"#4a8a4a\" stroke-width=\"2\" marker-end=\"url(#arrowGreen)\"/>\n      <line x1=\"180\" y1=\"165\" x2=\"270\" y2=\"165\" stroke=\"#4a8a4a\" stroke-width=\"2\" marker-end=\"url(#arrowGreen)\"/>\n      <line x1=\"180\" y1=\"245\" x2=\"270\" y2=\"180\" stroke=\"#4a8a4a\" stroke-width=\"2\" marker-end=\"url(#arrowGreen)\"/>\n      <line x1=\"450\" y1=\"150\" x2=\"540\" y2=\"85\" stroke=\"#c07a1a\" stroke-width=\"2\" marker-end=\"url(#arrowOrange)\"/>\n      <line x1=\"450\" y1=\"165\" x2=\"540\" y2=\"165\" stroke=\"#c07a1a\" stroke-width=\"2\" marker-end=\"url(#arrowOrange)\"/>\n      <line x1=\"450\" y1=\"180\" x2=\"540\" y2=\"245\" stroke=\"#c07a1a\" stroke-width=\"2\" marker-end=\"url(#arrowOrange)\"/>\n\n      <defs>\n        <marker id=\"arrowGreen\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"3\" orient=\"auto\">\n          <path d=\"M0,0 L6,3 L0,6 Z\" fill=\"#4a8a4a\"/>\n        </marker>\n        <marker id=\"arrowOrange\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"3\" orient=\"auto\">\n          <path d=\"M0,0 L6,3 L0,6 Z\" fill=\"#c07a1a\"/>\n        </marker>\n      </defs>\n    </svg>\n    <figcaption>Figure 1: Conceptual framework for feed cost optimization in African poultry production. Adapted from FAO (2013), <em>Poultry Development Review</em>, and Nkukwana (2018), \"The Effect of Feed Cost on Poultry Production in Africa,\" <em>Journal of Applied Poultry Research</em>.</figcaption>\n  </figure>\n\n  <h3>1. Least-Cost Formulation Principles</h3>\n  <p>Least-cost formulation is not about buying the cheapest ingredients â it is about meeting the bird's nutrient requirements at the lowest possible cost per unit of nutrient delivered. The core principle is simple: the value of an ingredient is determined by its nutrient content relative to its price, not by its price alone. A tonne of maize at US$280 may be cheaper than a tonne of cassava chips at US$200, but if the cassava chips require additional synthetic amino acids and enzyme supplementation to match maize's energy density, the true cost per megajoule of metabolizable energy (ME) may be higher.</p>\n  <p>In practice, least-cost formulation requires three inputs: (1) a nutrient specification matrix for each ingredient (ME, crude protein, lysine, methionine, calcium, available phosphorus, etc.), (2) a set of nutrient constraints for the target bird class (starter, grower, finisher, layer phase 1â3), and (3) current market prices for all available ingredients. The formulation algorithm then selects the combination that minimizes total cost while satisfying all constraints. In Africa, where ingredient quality varies widely, regular laboratory analysis of local ingredients is essential â book values from international tables often overestimate nutrient content of locally sourced maize, soy cake, or fishmeal.</p>\n\n  <h3>2. Using Alternative Ingredients to Reduce Cost</h3>\n  <p>Africa has a rich supply of alternative feed ingredients that are underutilized in commercial poultry diets. These include cassava chips, sweet potato meal, palm kernel cake, cottonseed cake, groundnut cake, sunflower cake, brewers' dried grains, molasses, and various leaf meals (e.g., Moringa oleifera, Leucaena). The key is to use them within safe inclusion limits and with appropriate enzyme or amino acid supplementation.</p>\n\n  <table>\n    <caption>Table 1: Selected alternative ingredients for African poultry diets â nutrient profile and recommended inclusion limits</caption>\n    <thead>\n      <tr>\n        <th>Ingredient</th>\n        <th>ME (kcal/kg)</th>\n        <th>Crude Protein (%)</th>\n        <th>Key Limitation</th>\n        <th>Max Inclusion (%)</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr><td>Cassava chips</td><td>2,950</td><td>2.5</td><td>Low protein, HCN risk if poorly processed</td><td>20â30 (broiler), 30â40 (layer)</td></tr>\n      <tr><td>Palm kernel cake</td><td>1,900</td><td>16.0</td><td>High fibre, low digestibility</td><td>10â15 (broiler), 15â20 (layer)</td></tr>\n      <tr><td>Cottonseed cake</td><td>2,200</td><td>32.0</td><td>Gossypol toxicity, lysine deficiency</td><td>5â10 (broiler), 10â15 (layer)</td></tr>\n      <tr><td>Groundnut cake</td><td>2,450</td><td>45.0</td><td>Aflatoxin risk, variable quality</td><td>15â20 (broiler), 20â25 (layer)</td></tr>\n      <tr><td>Sunflower cake</td><td>1,800</td><td>28.0</td><td>High fibre, low lysine</td><td>10â15 (broiler), 15â20 (layer)</td></tr>\n      <tr><td>Brewers' dried grains</td><td>1,850</td><td>25.0</td><td>High fibre, variable protein</td><td>5â10 (broiler), 10â15 (layer)</td></tr>\n      <tr><td>Moringa leaf meal</td><td>2,100</td><td>27.0</td><td>Anti-nutritional factors, bulk</td><td>5â10 (broiler), 10â15 (layer)</td></tr>\n    </tbody>\n  </table>\n  <p><em>Source: FAO (2013), Poultry Development Review; Nkukwana (2018), Journal of Applied Poultry Research; Ravindran (2013), Poultry Development Review â \"Poultry feed availability and nutrition in developing countries.\"</em></p>\n\n  <h3>3. Impact of Ingredient Prices on Formulation Decisions</h3>\n  <p>Ingredient prices in Africa are volatile due to currency fluctuations, import dependency (especially for soy and fishmeal), seasonal harvest cycles, and logistical constraints. A 10% increase in maize price can shift the optimal inclusion of cassava chips upward by 5â8 percentage points in a broiler diet. Similarly, a spike in soy cake price often triggers increased use of groundnut cake, cottonseed cake, or synthetic amino acids to maintain protein and lysine levels.</p>\n  <p>The practical implication is that formulation should not be static. Feed millers should re-run least-cost formulations weekly or bi-weekly, or whenever a key ingredient price moves by more than 5%. Sensitivity analysis â testing how the optimal mix changes when key prices vary by Â±10% â is a powerful tool for anticipating changes before they occur.</p>\n\n  <table>\n    <caption>Table 2: Sensitivity of broiler finisher diet cost to key ingredient price changes (indicative, 1-tonne batch)</caption>\n    <thead>\n      <tr>\n        <th>Scenario</th>\n        <th>Maize Price (US$/t)</th>\n        <th>Soy Cake Price (US$/t)</th>\n        <th>Cost per Tonne (US$)</th>\n        <th>Change vs. Base</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr><td>Base case</td><td>280</td><td>520</td><td>410</td><td>â</td></tr>\n      <tr><td>Maize +10%</td><td>308</td><td>520</td><td>423</td><td>+3.2%</td></tr>\n      <tr><td>Soy +10%</td><td>280</td><td>572</td><td>428</td><td>+4.4%</td></tr>\n      <tr><td>Both +10%</td><td>308</td><td>572</td><td>441</td><td>+7.6%</td></tr>\n      <tr><td>Maize +20%, Soy +10%</td><td>336</td><td>572</td><td>456</td><td>+11.2%</td></tr>\n    </tbody>\n  </table>\n  <p><em>Source: Author's calculations based on feed formulation principles and indicative African market prices (2024â2025). Actual costs vary by country, season, and supplier.</em></p>\n\n  <h3>4. Linear Programming for Cost Minimization</h3>\n  <p>Linear programming (LP) is the mathematical engine behind least-cost formulation. The objective function is to minimize total feed cost (sum of ingredient quantities Ã prices), subject to constraints: nutrient requirements (minimum and maximum levels), ingredient inclusion limits, and availability. Modern feed formulation software (e.g., WinFeed, Bestmix, Brill, or open-source tools like R) solves these problems in seconds.</p>\n  <p>For small and medium African feed millers, LP can be implemented even in a spreadsheet (Excel Solver) with 10â20 ingredients and 15â25 nutrient constraints. The key is accurate data: ingredient nutrient composition, prices, and bird requirements. Where laboratory analysis is not available, use conservative book values and build in safety margins.</p>\n\n  <h3>5. Evaluating Cost per Unit of Nutrient vs. Cost per Tonne</h3>\n  <p>The most common mistake in African feed purchasing is comparing ingredients on a cost-per-tonne basis. The correct metric is cost per unit of the limiting nutrient â usually metabolizable energy (ME) or digestible lysine. For example:</p>\n  <ul>\n    <li>Maize at US$280/t with 3,350 kcal ME/kg = US$0.084 per 1,000 kcal ME</li>\n    <li>Cassava chips at US$200/t with 2,950 kcal ME/kg = US$0.068 per 1,000 kcal ME</li>\n  </ul>\n  <p>On a cost-per-tonne basis, cassava looks cheaper. On a cost-per-unit-of-energy basis, cassava is also cheaper â but only if the diet can accommodate its lower protein and higher fibre. When protein supplementation costs are included, the advantage may disappear. Always evaluate ingredients on a nutrient-cost basis, and always consider the full diet context.</p>\n\n  <div style=\"border-left:6px solid #c0392b; background:#fdecea; padding:12px 16px; margin:20px 0; border-radius:4px;\">\n    <strong style=\"color:#c0392b;\">â  SAFETY WARNING â Aflatoxin and Mycotoxin Risk</strong>\n    <p style=\"margin:8px 0 0 0; color:#7a1a1a;\">Alternative ingredients such as groundnut cake, cottonseed cake, and maize are highly susceptible to aflatoxin contamination, especially in humid African climates with poor storage. Aflatoxin B1 is a potent carcinogen and causes liver damage, reduced growth, and immunosuppression in poultry. <strong>Never use mouldy or discoloured ingredients.</strong> Test every batch of high-risk ingredients for aflatoxin (using rapid test kits or laboratory analysis) and reject any batch exceeding 20 ppb total aflatoxin for poultry feed. Use a proven mycotoxin binder (e.g., hydrated sodium calcium aluminosilicate or yeast cell wall products) in finished feed, and store ingredients in dry, well-ventilated conditions with moisture below 12%. Failure to manage mycotoxins can wipe out the entire economic benefit of using cheaper alternative ingredients.</p>\n  </div>\n\n  <h3>6. Case Study: Optimizing a Broiler Diet Under Price Volatility</h3>\n  <p>A commercial broiler farm in Ghana, producing 20,000 birds per cycle, faced a 25% increase in maize price and a 15% increase in soy cake price over six months. The farm's original finisher diet cost US$430 per tonne. Using least-cost formulation with LP, the farm manager introduced cassava chips (25%), palm kernel cake (8%), and supplemented with synthetic lysine and methionine, plus a phytase enzyme. The new diet met all nutrient requirements (ME 3,100 kcal/kg, CP 18%, digestible lysine 0.85%) at a cost of US$385 per tonne â a saving of US$45 per tonne, or US$10,800 per cycle (assuming 240 tonnes per cycle). The farm also implemented weekly price monitoring and re-formulated whenever key ingredient prices moved by more than 5%. Over 12 months, the farm reduced feed cost per kilogram of live weight from US$0.92 to US$0.83, improving net margin by approximately 18%.</p>\n\n  <h3>Quick Reference Checklist</h3>\n  <ol>\n    <li><strong>Analyze local ingredients regularly</strong> â do not rely solely on book values; nutrient content varies by source, season, and processing.</li>\n    <li><strong>Formulate on cost per unit of nutrient</strong> (ME, lysine, methionine, calcium, available phosphorus), not cost per tonne.</li>\n    <li><strong>Re-run least-cost formulations weekly</strong> or whenever a key ingredient price changes by more than 5%.</li>\n    <li><strong>Use alternative ingredients within safe inclusion limits</strong> and supplement with enzymes, amino acids, or mycotoxin binders as needed.</li>\n    <li><strong>Test every batch of high-risk ingredients</strong> (maize, groundnut cake, cottonseed cake) for aflatoxin before use.</li>\n    <li><strong>Maintain a price database</strong> for at least 10â15 ingredients and update it at least monthly.</li>\n    <li><strong>Run sensitivity analysis</strong> to anticipate how price changes affect the optimal mix and total cost.</li>\n    <li><strong>Track cost per kilogram of live weight or per egg</strong> â not just feed cost per tonne â to measure true economic impact.</li>\n  </ol>\n\n  <h3>Further Reading</h3>\n  <ul>\n    <li><a href=\"https://www.fao.org/3/i3531e/i3531e.pdf\" target=\"_blank\" rel=\"noopener\">FAO (2013) â Poultry Development Review</a> â comprehensive open-access review of poultry feed resources and nutrition in developing countries.</li>\n    <li><a href=\"https://www.fao.org/3/y5019e/y5019e00.htm\" target=\"_blank\" rel=\"noopener\">FAO â Feed Formulation and Least-Cost Diet Principles</a> â practical guidance on feed formulation for small and medium-scale producers.</li>\n    <li><a href=\"https://www.ilri.org/publications\" target=\"_blank\" rel=\"noopener\">ILRI â International Livestock Research Institute Publications</a> â research on alternative feed ingredients and feed systems in Africa.</li>\n    <li><a href=\"https://www.africabio.com\" target=\"_blank\" rel=\"noopener\">AfricaBio â Poultry Feed Resources</a> â regional resources on feed ingredient availability and quality.</li>\n    <li><a href=\"https://www.wpsa.com\" target=\"_blank\" rel=\"noopener\">World's Poultry Science Association (WPSA)</a> â scientific journals and technical articles on poultry nutrition and feed formulation.</li>\n  </ul>\n\n  <p style=\"margin-top:24px; font-size:0.95em; color:#555;\"><em>This practical reference is part of the Rise AFRICA Skills course \"Broiler and Layer Feed Formulation,\" Module: Feed Cost Optimization and Economic Considerations. For training and advisory support, contact your local Rise AFRICA hub.</em></p>\n</section>"
-    }],
+    }
+  ],
   "quiz": [
     {
       "q": "What percentage of total poultry production cost is typically attributed to feed?",
-      "options": ["A) 30-40%", "B) 50-60%", "C) 65-75%", "D) 80-90%"],
+      "options": [
+        "A) 30-40%",
+        "B) 50-60%",
+        "C) 65-75%",
+        "D) 80-90%"
+      ],
       "answer": "C",
       "explanation": "Feed is the largest cost in poultry production, often accounting for 65-75% of total costs."
     },
     {
       "q": "What is the primary goal of least-cost formulation?",
-      "options": ["A) To use only the cheapest ingredients", "B) To meet nutrient requirements at the lowest cost per ton", "C) To maximize protein content", "D) To minimize the number of ingredients"],
+      "options": [
+        "A) To use only the cheapest ingredients",
+        "B) To meet nutrient requirements at the lowest cost per ton",
+        "C) To maximize protein content",
+        "D) To minimize the number of ingredients"
+      ],
       "answer": "B",
       "explanation": "Least-cost formulation aims to meet the bird's nutrient needs at the lowest possible cost, not just using cheap ingredients."
     },
     {
       "q": "Which tool is commonly used by small mills in Africa for least-cost formulation?",
-      "options": ["A) Microsoft Excel with Solver", "B) MATLAB", "C) Python", "D) AutoCAD"],
+      "options": [
+        "A) Microsoft Excel with Solver",
+        "B) MATLAB",
+        "C) Python",
+        "D) AutoCAD"
+      ],
       "answer": "A",
       "explanation": "Excel with Solver is widely used because it is affordable and available."
     },
     {
       "q": "In the example, what is the approximate cost per kg of a least-cost broiler finisher mix?",
-      "options": ["A) $0.30", "B) $0.42", "C) $0.60", "D) $0.75"],
+      "options": [
+        "A) $0.30",
+        "B) $0.42",
+        "C) $0.60",
+        "D) $0.75"
+      ],
       "answer": "B",
       "explanation": "The example mix costs around $0.42/kg."
     },
     {
       "q": "Why must least-cost formulations be updated regularly?",
-      "options": ["A) Because bird nutrient requirements change daily", "B) Because ingredient prices fluctuate", "C) Because the weather changes", "D) Because feed labels expire"],
+      "options": [
+        "A) Because bird nutrient requirements change daily",
+        "B) Because ingredient prices fluctuate",
+        "C) Because the weather changes",
+        "D) Because feed labels expire"
+      ],
       "answer": "B",
       "explanation": "Ingredient prices change frequently, so the least-cost mix must be recalculated."
     },
     {
       "q": "Which alternative ingredient can replace part of maize but is low in protein and high in fibre?",
-      "options": ["A) Soybean meal", "B) Cassava peels", "C) Fishmeal", "D) Limestone"],
+      "options": [
+        "A) Soybean meal",
+        "B) Cassava peels",
+        "C) Fishmeal",
+        "D) Limestone"
+      ],
       "answer": "B",
       "explanation": "Cassava peels are low in protein (2-3%) and high in fibre, but can replace some maize."
     },
     {
       "q": "What is the maximum recommended inclusion rate of palm kernel cake in broiler diets?",
-      "options": ["A) 5%", "B) 10-15%", "C) 25%", "D) 40%"],
+      "options": [
+        "A) 5%",
+        "B) 10-15%",
+        "C) 25%",
+        "D) 40%"
+      ],
       "answer": "B",
       "explanation": "Palm kernel cake is high in fibre, so it should be limited to 10-15% in broiler diets."
     },
     {
       "q": "Which anti-nutritional factor is found in cottonseed cake?",
-      "options": ["A) Trypsin inhibitor", "B) Gossypol", "C) Phytate", "D) Tannin"],
+      "options": [
+        "A) Trypsin inhibitor",
+        "B) Gossypol",
+        "C) Phytate",
+        "D) Tannin"
+      ],
       "answer": "B",
       "explanation": "Cottonseed cake contains gossypol, which is toxic to poultry, so it must be limited."
     },
     {
       "q": "What is a good strategy when using alternative ingredients?",
-      "options": ["A) Replace all conventional ingredients at once", "B) Start with small trials and gradually increase inclusion", "C) Ignore nutrient balance", "D) Use only one alternative ingredient"],
+      "options": [
+        "A) Replace all conventional ingredients at once",
+        "B) Start with small trials and gradually increase inclusion",
+        "C) Ignore nutrient balance",
+        "D) Use only one alternative ingredient"
+      ],
       "answer": "B",
       "explanation": "Gradual introduction allows you to monitor performance and adjust as needed."
     },
     {
       "q": "Which enzyme can be added to improve digestibility of alternative ingredients?",
-      "options": ["A) Amylase", "B) Phytase", "C) Lipase", "D) Protease"],
+      "options": [
+        "A) Amylase",
+        "B) Phytase",
+        "C) Lipase",
+        "D) Protease"
+      ],
       "answer": "B",
       "explanation": "Phytase helps release phosphorus from plant ingredients, improving digestibility."
     },
     {
       "q": "What is the correct way to compare the cost of two feeds?",
-      "options": ["A) Cost per ton", "B) Cost per bag", "C) Cost per unit of nutrient", "D) Cost per kg of feed"],
+      "options": [
+        "A) Cost per ton",
+        "B) Cost per bag",
+        "C) Cost per unit of nutrient",
+        "D) Cost per kg of feed"
+      ],
       "answer": "C",
       "explanation": "Comparing cost per unit of nutrient (e.g., per kg protein) gives a fair comparison."
     },
     {
       "q": "If maize costs $300/ton and has 8.5% protein, what is the cost per kg of protein?",
-      "options": ["A) $2.55", "B) $3.53", "C) $4.00", "D) $1.36"],
+      "options": [
+        "A) $2.55",
+        "B) $3.53",
+        "C) $4.00",
+        "D) $1.36"
+      ],
       "answer": "B",
       "explanation": "Cost per kg protein = $300 / (1000 * 0.085) = $3.53."
     },
     {
       "q": "Which ingredient is cheaper per unit of protein: maize at $300/ton (8.5% protein) or soybean meal at $600/ton (44% protein)?",
-      "options": ["A) Maize", "B) Soybean meal", "C) They are equal", "D) Cannot be determined"],
+      "options": [
+        "A) Maize",
+        "B) Soybean meal",
+        "C) They are equal",
+        "D) Cannot be determined"
+      ],
       "answer": "B",
       "explanation": "Soybean meal costs $1.36/kg protein vs maize at $3.53/kg protein."
     },
     {
       "q": "What does a high shadow price for protein in linear programming indicate?",
-      "options": ["A) Protein is cheap", "B) Relaxing the protein constraint could save money", "C) Protein is not important", "D) The solver is wrong"],
+      "options": [
+        "A) Protein is cheap",
+        "B) Relaxing the protein constraint could save money",
+        "C) Protein is not important",
+        "D) The solver is wrong"
+      ],
       "answer": "B",
       "explanation": "A high shadow price means that loosening the protein constraint would reduce cost significantly."
     },
     {
       "q": "In Excel Solver, what is the target cell set to?",
-      "options": ["A) Total nutrient", "B) Total cost", "C) Ingredient amount", "D) Number of constraints"],
+      "options": [
+        "A) Total nutrient",
+        "B) Total cost",
+        "C) Ingredient amount",
+        "D) Number of constraints"
+      ],
       "answer": "B",
       "explanation": "The target cell is the total cost, which is minimized."
     },
     {
       "q": "Which of the following is a constraint in a least-cost formulation?",
-      "options": ["A) Protein â¥ 18%", "B) Cost per ton", "C) Number of birds", "D) Farmer's name"],
+      "options": [
+        "A) Protein â¥ 18%",
+        "B) Cost per ton",
+        "C) Number of birds",
+        "D) Farmer's name"
+      ],
       "answer": "A",
       "explanation": "Nutrient requirements like protein â¥ 18% are constraints."
     },
     {
       "q": "What is the main advantage of linear programming over manual formulation?",
-      "options": ["A) It is faster and considers all constraints simultaneously", "B) It requires no computer", "C) It always uses the cheapest ingredient", "D) It ignores nutrient requirements"],
+      "options": [
+        "A) It is faster and considers all constraints simultaneously",
+        "B) It requires no computer",
+        "C) It always uses the cheapest ingredient",
+        "D) It ignores nutrient requirements"
+      ],
       "answer": "A",
       "explanation": "LP quickly finds the optimal mix while satisfying all constraints."
     },
     {
       "q": "Which free software is mentioned for feed formulation?",
-      "options": ["A) WinFeed", "B) Adobe Photoshop", "C) Google Chrome", "D) VLC"],
+      "options": [
+        "A) WinFeed",
+        "B) Adobe Photoshop",
+        "C) Google Chrome",
+        "D) VLC"
+      ],
       "answer": "A",
       "explanation": "WinFeed is a free feed formulation software mentioned in the lesson."
     },
     {
       "q": "Why is cost per ton misleading when comparing feeds?",
-      "options": ["A) It ignores nutrient density", "B) It is always higher", "C) It is not used in Africa", "D) It includes labour"],
+      "options": [
+        "A) It ignores nutrient density",
+        "B) It is always higher",
+        "C) It is not used in Africa",
+        "D) It includes labour"
+      ],
       "answer": "A",
       "explanation": "A cheaper feed per ton may have lower nutrient density, making it more expensive per unit of nutrient."
     },
     {
       "q": "For layers, what is a better measure than cost per ton?",
-      "options": ["A) Cost per kg of feed", "B) Cost per dozen eggs", "C) Cost per bag", "D) Cost per bird"],
+      "options": [
+        "A) Cost per kg of feed",
+        "B) Cost per dozen eggs",
+        "C) Cost per bag",
+        "D) Cost per bird"
+      ],
       "answer": "B",
       "explanation": "Cost per dozen eggs reflects the true economic value of the feed."
     },
     {
       "q": "What is the first step in evaluating cost per unit of nutrient?",
-      "options": ["A) Buy ingredients", "B) Obtain nutrient composition of ingredients", "C) Mix feed", "D) Feed birds"],
+      "options": [
+        "A) Buy ingredients",
+        "B) Obtain nutrient composition of ingredients",
+        "C) Mix feed",
+        "D) Feed birds"
+      ],
       "answer": "B",
       "explanation": "You need nutrient composition to calculate cost per unit of nutrient."
     },
     {
       "q": "Which nutrient is often the most expensive to supply in African poultry diets?",
-      "options": ["A) Carbohydrates", "B) Protein", "C) Fat", "D) Fibre"],
+      "options": [
+        "A) Carbohydrates",
+        "B) Protein",
+        "C) Fat",
+        "D) Fibre"
+      ],
       "answer": "B",
       "explanation": "Protein sources like soybean meal and fishmeal are expensive, so cost per kg protein is critical."
     },
     {
       "q": "In the case study, what was the original cost per ton of the broiler finisher feed?",
-      "options": ["A) $420", "B) $510", "C) $440", "D) $400"],
+      "options": [
+        "A) $420",
+        "B) $510",
+        "C) $440",
+        "D) $400"
+      ],
       "answer": "A",
       "explanation": "The original formulation cost $420 per ton before price increases."
     },
     {
       "q": "What was the new cost per ton after optimization in the case study?",
-      "options": ["A) $420", "B) $510", "C) $440", "D) $400"],
+      "options": [
+        "A) $420",
+        "B) $510",
+        "C) $440",
+        "D) $400"
+      ],
       "answer": "C",
       "explanation": "The optimized mix cost $440 per ton, saving 14% from the adjusted cost."
     },
     {
       "q": "Which alternative ingredient was used in the optimized mix in the case study?",
-      "options": ["A) Cassava peels and palm kernel cake", "B) Fishmeal and soybean meal", "C) Maize and wheat bran", "D) Limestone and salt"],
+      "options": [
+        "A) Cassava peels and palm kernel cake",
+        "B) Fishmeal and soybean meal",
+        "C) Maize and wheat bran",
+        "D) Limestone and salt"
+      ],
       "answer": "A",
       "explanation": "The new mix included cassava peels and palm kernel cake to reduce cost."
     },
     {
       "q": "What was the feed cost per kg gain for the new diet in the case study?",
-      "options": ["A) $0.83", "B) $0.73", "C) $0.63", "D) $0.93"],
+      "options": [
+        "A) $0.83",
+        "B) $0.73",
+        "C) $0.63",
+        "D) $0.93"
+      ],
       "answer": "B",
       "explanation": "The new diet cost $0.73 per kg gain, compared to $0.83 for the old diet."
     },
     {
       "q": "What did the farm do after the trial?",
-      "options": ["A) Reverted to the old diet", "B) Monitored prices weekly and re-ran formulation when prices changed by >10%", "C) Stopped using alternatives", "D) Increased protein level"],
+      "options": [
+        "A) Reverted to the old diet",
+        "B) Monitored prices weekly and re-ran formulation when prices changed by >10%",
+        "C) Stopped using alternatives",
+        "D) Increased protein level"
+      ],
       "answer": "B",
       "explanation": "They adopted a strategy of regular price monitoring and reformulation."
     },
     {
       "q": "Which of the following is a key lesson from the case study?",
-      "options": ["A) Always use the cheapest ingredients regardless of nutrients", "B) Use least-cost software and test alternatives gradually", "C) Never change formulations", "D) Ignore cost per kg of gain"],
+      "options": [
+        "A) Always use the cheapest ingredients regardless of nutrients",
+        "B) Use least-cost software and test alternatives gradually",
+        "C) Never change formulations",
+        "D) Ignore cost per kg of gain"
+      ],
       "answer": "B",
       "explanation": "The case study showed the value of least-cost software and gradual testing."
     },
     {
       "q": "What is the recommended maximum inclusion of fishmeal in broiler diets?",
-      "options": ["A) 0-5%", "B) 10-15%", "C) 20%", "D) 30%"],
+      "options": [
+        "A) 0-5%",
+        "B) 10-15%",
+        "C) 20%",
+        "D) 30%"
+      ],
       "answer": "A",
       "explanation": "Fishmeal is expensive and typically limited to 0-5% in broiler diets."
     },
     {
       "q": "What is the main risk of using cheap but poor-quality ingredients?",
-      "options": ["A) They may be unavailable", "B) They can reduce bird performance and increase total cost", "C) They are always toxic", "D) They are hard to store"],
+      "options": [
+        "A) They may be unavailable",
+        "B) They can reduce bird performance and increase total cost",
+        "C) They are always toxic",
+        "D) They are hard to store"
+      ],
       "answer": "B",
       "explanation": "Poor quality can lead to poor performance, negating cost savings."
     }
   ],
   "videos": [
-    "least cost feed formulation excel solver poultry",
-    "alternative feed ingredients for poultry in Africa",
-    "linear programming feed formulation tutorial"
+    {
+      "title": "Least cost feed formulation excel solver poultry",
+      "query": "least cost feed formulation excel solver poultry"
+    },
+    {
+      "title": "Alternative feed ingredients for poultry in Africa",
+      "query": "alternative feed ingredients for poultry in Africa"
+    },
+    {
+      "title": "Linear programming feed formulation tutorial",
+      "query": "linear programming feed formulation tutorial"
+    }
   ]
 }

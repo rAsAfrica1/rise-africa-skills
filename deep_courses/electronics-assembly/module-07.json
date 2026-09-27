@@ -26,197 +26,356 @@
     {
       "title": "Quality Control Tools and Techniques",
       "body": "Quality control is not just inspectionâit's a system. Start with the 'Plan-Do-Check-Act' cycle. Plan: set a quality target (e.g., 95% first-pass yield). Do: assemble boards. Check: inspect and record defects. Act: fix the root cause. For root cause analysis, use the '5 Whys' method. Ask 'why' five times. Example: Why did the board fail? A solder bridge. Why? Too much solder. Why? The iron tip was too large. Why? We didn't have the right tip. Why? We never ordered it. So the fix is to order the correct tip. Other tools: a 'fishbone diagram' (also called Ishikawa) helps you brainstorm causes. Draw a spine and branches for Man, Machine, Material, Method, Measurement, and Environment. For electronics, common causes are: wrong iron temperature (Method), expired flux (Material), humid air (Environment), or uncalibrated multimeter (Measurement). Use a multimeter to check for shorts and opens. A cheap $20 multimeter is fine. For continuity, set it to beep mode. For voltage, set to DC 20V. For current, use a bench power supply with current limiting. Also use a 'test jig'âa simple board with pogo pins that connects to your board's test points. This speeds up functional testing. In Africa, you can make a test jig from a wooden block, pogo pins (from AliExpress), and a multimeter. Finally, do 'sampling inspection'âinspect every 5th board fully, but do a quick visual on all. That balances speed and quality. Train everyone on these tools. Post the Pareto chart on the wall. Celebrate when you hit your target. Quality is a habit, not an accident."
-    }
-  ,
+    },
     {
       "title": "Practical Reference",
       "body": "<section>\n  <h2>Practical Reference: Inspection and Quality Control for Electronics Assembly</h2>\n\n  <p>In African electronics assembly operations â from contract manufacturers in Lagos and Nairobi to solar inverter assemblers in Accra and Johannesburg â inspection is not a bureaucratic afterthought. It is the gate that decides whether a batch ships, gets reworked, or becomes warranty cost. For an SME running a small SMT line or hand-assembly bench, a disciplined inspection routine protects cash flow, customer relationships, and the ability to win the next order.</p>\n\n  <p>This lesson is a practical reference you can pin to the wall of your inspection station. It covers what to look for, how to look for it, the standards that define acceptable work, and the tools that make quality measurable rather than a matter of opinion.</p>\n\n  <figure>\n    <svg viewBox=\"0 0 640 380\" role=\"img\" aria-labelledby=\"ipcFigTitle ipcFigDesc\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width:100%;height:auto;border:1px solid #ddd;background:#fafafa\">\n      <title id=\"ipcFigTitle\">Acceptable and defective solder joints</title>\n      <desc id=\"ipcFigDesc\">Diagram showing four solder joint cross-sections: a good concave fillet, insufficient solder, a cold joint, and a solder bridge.</desc>\n      <text x=\"320\" y=\"28\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"bold\" fill=\"#222\">Solder Joint Acceptance Reference</text>\n\n      <!-- Good joint -->\n      <g transform=\"translate(40,60)\">\n        <rect x=\"0\" y=\"0\" width=\"120\" height=\"90\" fill=\"#fff\" stroke=\"#bbb\"/>\n        <rect x=\"10\" y=\"70\" width=\"100\" height=\"14\" fill=\"#c9a227\"/>\n        <rect x=\"45\" y=\"20\" width=\"30\" height=\"50\" fill=\"#8a6d1f\"/>\n        <path d=\"M10 70 Q60 40 110 70 L110 70 L10 70 Z\" fill=\"#9e9e9e\" stroke=\"#555\"/>\n        <text x=\"60\" y=\"105\" text-anchor=\"middle\" font-size=\"11\" fill=\"#333\">Good concave fillet</text>\n      </g>\n\n      <!-- Insufficient -->\n      <g transform=\"translate(180,60)\">\n        <rect x=\"0\" y=\"0\" width=\"120\" height=\"90\" fill=\"#fff\" stroke=\"#bbb\"/>\n        <rect x=\"10\" y=\"70\" width=\"100\" height=\"14\" fill=\"#c9a227\"/>\n        <rect x=\"45\" y=\"20\" width=\"30\" height=\"50\" fill=\"#8a6d1f\"/>\n        <path d=\"M40 70 Q60 60 80 70 L80 70 L40 70 Z\" fill=\"#9e9e9e\" stroke=\"#555\"/>\n        <text x=\"60\" y=\"105\" text-anchor=\"middle\" font-size=\"11\" fill=\"#333\">Insufficient solder</text>\n      </g>\n\n      <!-- Cold joint -->\n      <g transform=\"translate(320,60)\">\n        <rect x=\"0\" y=\"0\" width=\"120\" height=\"90\" fill=\"#fff\" stroke=\"#bbb\"/>\n        <rect x=\"10\" y=\"70\" width=\"100\" height=\"14\" fill=\"#c9a227\"/>\n        <rect x=\"45\" y=\"20\" width=\"30\" height=\"50\" fill=\"#8a6d1f\"/>\n        <circle cx=\"60\" cy=\"66\" r=\"14\" fill=\"#b0b0b0\" stroke=\"#555\"/>\n        <text x=\"60\" y=\"105\" text-anchor=\"middle\" font-size=\"11\" fill=\"#333\">Cold / dull joint</text>\n      </g>\n\n      <!-- Bridge -->\n      <g transform=\"translate(460,60)\">\n        <rect x=\"0\" y=\"0\" width=\"120\" height=\"90\" fill=\"#fff\" stroke=\"#bbb\"/>\n        <rect x=\"10\" y=\"70\" width=\"100\" height=\"14\" fill=\"#c9a227\"/>\n        <rect x=\"25\" y=\"20\" width=\"20\" height=\"50\" fill=\"#8a6d1f\"/>\n        <rect x=\"75\" y=\"20\" width=\"20\" height=\"50\" fill=\"#8a6d1f\"/>\n        <path d=\"M25 70 Q60 55 95 70 L95 70 L25 70 Z\" fill=\"#9e9e9e\" stroke=\"#555\"/>\n        <text x=\"60\" y=\"105\" text-anchor=\"middle\" font-size=\"11\" fill=\"#333\">Solder bridge</text>\n      </g>\n\n      <text x=\"320\" y=\"200\" text-anchor=\"middle\" font-size=\"11\" fill=\"#555\">Cross-section view â pad (gold), lead (dark), solder (grey)</text>\n      <text x=\"320\" y=\"222\" text-anchor=\"middle\" font-size=\"10\" fill=\"#777\">Based on IPC-A-610 acceptability criteria for through-hole solder joints</text>\n\n      <!-- Legend -->\n      <g transform=\"translate(120,250)\">\n        <rect x=\"0\" y=\"0\" width=\"400\" height=\"100\" fill=\"#fff\" stroke=\"#ccc\"/>\n        <text x=\"12\" y=\"22\" font-size=\"12\" font-weight=\"bold\" fill=\"#222\">Inspection sequence</text>\n        <text x=\"12\" y=\"44\" font-size=\"11\" fill=\"#333\">1. Verify magnification &amp; lighting before touching the board</text>\n        <text x=\"12\" y=\"62\" font-size=\"11\" fill=\"#333\">2. Inspect at 3â10Ã depending on feature size</text>\n        <text x=\"12\" y=\"80\" font-size=\"11\" fill=\"#333\">3. Compare each joint against the workmanship standard</text>\n        <text x=\"12\" y=\"98\" font-size=\"11\" fill=\"#333\">4. Record defects with location, type, and photo</text>\n      </g>\n    </svg>\n    <figcaption>Adapted from IPC-A-610 \"Acceptability of Electronic Assemblies\" solder fillet criteria (IPC International, current revision).</figcaption>\n  </figure>\n\n  <h3>Visual Inspection Criteria</h3>\n  <p>Visual inspection is the first and cheapest line of defence. At a minimum, every assembled board should pass a structured check covering: correct component orientation and value, no missing or extra parts, no tombstoning or billboarding, no solder bridges, no disturbed joints, clean flux residue within limits, and no physical damage to pads, traces, or connectors. In African workshops where reflow ovens may be older or hand-soldering is common, the two most frequent defects are insufficient solder and cold joints â both visible under good light.</p>\n\n  <p>Inspection must be done against a written standard, not against the inspector's mood. The reference for most commercial work is IPC-A-610, which defines three classes: Class 1 (general electronics), Class 2 (dedicated service, the default for most African contract work), and Class 3 (high reliability â medical, aerospace, automotive safety). Know which class your customer is paying for before you start rejecting boards.</p>\n\n  <h3>Using Magnification and Lighting</h3>\n  <p>Human visual acuity limits reliable inspection to features around 0.2 mm without aid. For 0402 chip components, fine-pitch QFN, or BGA perimeter inspection, you need 3Ã to 10Ã magnification. A stereo microscope with 10Ãâ40Ã is the workshop standard; a 5Ã loupe is acceptable for coarse through-hole work but not for fine pitch.</p>\n\n  <p>Lighting matters as much as magnification. Use diffuse, shadow-free illumination from at least two angles. Ring lights are common but can hide fillet shape; a combination of ring and oblique light reveals both presence and profile of solder. Avoid single-point LED torches â they create glare that hides cold joints. In dusty or humid environments (common in coastal West Africa and East African industrial parks), keep lenses capped and clean them with lint-free wipes before each shift.</p>\n\n  <h3>IPC-A-610 Standards Overview</h3>\n  <p>IPC-A-610 is the most widely used workmanship standard in the world and is the de facto requirement for most export-bound African electronics. It is a visual acceptance document â it tells you what a joint, a component placement, or a PCB surface should look like, not how to achieve it. Key sections cover soldering (through-hole and SMT), component mounting, mechanical assembly, and cleanliness.</p>\n\n  <p>For an SME, the practical move is to buy or borrow the current revision, extract the criteria relevant to your product family, and build a one-page acceptance sheet per product. This turns a 400-page standard into a usable shop-floor tool. Training on IPC-A-610 is available through IPC-certified centres, and some African technical universities and industry associations now offer short courses.</p>\n\n  <h3>Solder Joint Inspection</h3>\n  <p>A good solder joint has a smooth, shiny, concave fillet that wets both the pad and the lead. The wetting angle should be low â solder should flow onto the surfaces, not ball up. For lead-free solder (now standard in most export work due to RoHS), the surface is slightly matte but should still be smooth and continuous; do not confuse this with a cold joint, which is rough, dull, and lumpy.</p>\n\n  <p>Common defects and their causes:</p>\n  <ul>\n    <li><strong>Insufficient solder:</strong> too little paste, poor stencil aperture, or short reflow. Reject if the fillet does not cover the pad.</li>\n    <li><strong>Excess solder:</strong> too much paste or poor pad design. Acceptable only if it does not hide the lead or bridge to a neighbour.</li>\n    <li><strong>Cold joint:</strong> insufficient heat or contaminated surface. Dull, grainy, and unreliable â always reject.</li>\n    <li><strong>Bridging:</strong> excess paste or poor stencil release. Always reject; it causes shorts.</li>\n    <li><strong>Disturbed joint:</strong> movement during cooling. Frosty appearance â reject.</li>\n    <li><strong>Lifted pad or cracked fillet:</strong> thermal stress or handling damage â reject and investigate process.</li>\n  </ul>\n\n  <h3>Documenting Inspection Results</h3>\n  <p>Documentation is what converts inspection from a cost into a business asset. Without records, you cannot prove conformance to a customer, cannot trace a field failure back to a batch, and cannot see which defect keeps recurring. At minimum, record: date, batch/lot number, inspector name, product and revision, inspection class, defects found (type, location, quantity), disposition (accept, rework, scrap), and rework actions taken.</p>\n\n  <p>Photograph every defect. A phone camera with a cheap macro clip-on lens is enough. Store images by batch number. When a customer complains six months later, you can show exactly what left your facility and what your process was. This is also the evidence base for continuous improvement â Pareto your defect types monthly.</p>\n\n  <table>\n    <caption>Table 1: Defect frequency observed in SME electronics assembly (illustrative, based on industry inspection data)</caption>\n    <thead>\n      <tr><th>Defect type</th><th>Typical share of defects</th><th>Primary process cause</th><th>Detection tool</th></tr>\n    </thead>\n    <tbody>\n      <tr><td>Insufficient solder</td><td>~25%</td><td>Stencil aperture / paste volume</td><td>Visual, 5â10Ã</td></tr>\n      <tr><td>Solder bridge</td><td>~20%</td><td>Paste excess, stencil release</td><td>Visual, 5â10Ã</td></tr>\n      <tr><td>Cold / disturbed joint</td><td>~18%</td><td>Reflow profile, handling</td><td>Visual, oblique light</td></tr>\n      <tr><td>Component misalignment</td><td>~15%</td><td>Placement accuracy, vibration</td><td>Visual, AOI if available</td></tr>\n      <tr><td>Tombstoning</td><td>~10%</td><td>Uneven pad heating</td><td>Visual, 10Ã</td></tr>\n      <tr><td>Missing / wrong component</td><td>~7%</td><td>Feeder error, kit error</td><td>Visual + BOM check</td></tr>\n      <tr><td>Pad / trace damage</td><td>~5%</td><td>Handling, rework</td><td>Visual, 10Ã</td></tr>\n    </tbody>\n  </table>\n  <p style=\"font-size:0.85em;color:#555\">Source: compiled from IPC defect trend reports and SME assembly line observations; percentages are indicative and vary by product mix.</p>\n\n  <h3>Quality Control Tools and Techniques</h3>\n  <p>Inspection alone does not create quality â it detects it. The tools below are the ones that make sense for an African SME without a full metrology lab.</p>\n\n  <ul>\n    <li><strong>First Article Inspection (FAI):</strong> fully inspect the first board of a new batch or after any process change. Do not release the batch until FAI passes.</li>\n    <li><strong>In-Process Checks:</strong> inspect after paste printing (paste height/volume), after placement (orientation), and after reflow (joints). Catching defects early is far cheaper than at final test.</li>\n    <li><strong>Statistical Process Control (SPC):</strong> track defect rate per batch on a simple chart. If it trends up, stop and investigate before shipping.</li>\n    <li><strong>Pareto Analysis:</strong> rank defect types monthly. Attack the top one or two â this is where most of your rework cost sits.</li>\n    <li><strong>5 Whys / Root Cause:</strong> for every recurring defect, ask why five times. Fix the process, not the symptom.</li>\n    <li><strong>Calibration:</strong> verify your microscope, light source, and any measurement tools on a schedule. An uncalibrated tool gives false confidence.</li>\n    <li><strong>Supplier Quality:</strong> inspect incoming PCBs and components. A bad batch of boards from a cheap supplier will cost you more in rework than you saved.</li>\n  </ul>\n\n  <table>\n    <caption>Table 2: Inspection stage, tool, and acceptance reference by product class</caption>\n    <thead>\n      <tr><th>Stage</th><th>Tool / method</th><th>Class 1</th><th>Class 2</th><th>Class 3</th></tr>\n    </thead>\n    <tbody>\n      <tr><td>Paste print</td><td>Visual, 10Ã</td><td>Spot check</td><td>Per batch</td><td>Per board</td></tr>\n      <tr><td>Placement</td><td>Visual, 5â10Ã</td><td>Spot check</td><td>Per batch</td><td>Per board + AOI</td></tr>\n      <tr><td>Reflow joints</td><td>Visual, oblique light</td><td>Spot check</td><td>100% visual</td><td>100% + X-ray for BGA</td></tr>\n      <tr><td>Cleaning</td><td>Visual, ionic test</td><td>Visual</td><td>Visual</td><td>Ionic contamination test</td></tr>\n      <tr><td>Final</td><td>Functional test</td><td>Sample</td><td>100%</td><td>100% + burn-in</td></tr>\n    </tbody>\n  </table>\n  <p style=\"font-size:0.85em;color:#555\">Source: IPC-A-610 acceptability classes and IPC-J-STD-001 process requirements (IPC International).</p>\n\n  <div style=\"border:2px solid #c0392b;background:#fdecea;padding:14px 18px;margin:22px 0;border-radius:6px\">\n    <strong style=\"color:#c0392b\">â  SAFETY WARNING â Lead and Flux Exposure</strong>\n    <p style=\"margin:8px 0 0 0\">Solder wire, paste, and flux fumes are hazardous. Lead-containing solder (still used in some repair and legacy work) can be absorbed through skin and ingested. Flux fumes irritate airways. In African workshops with limited ventilation, this is a real occupational health risk.</p>\n    <ul style=\"margin:8px 0 0 0\">\n      <li>Always solder and inspect under fume extraction or with an open window and fan moving air away from your face.</li>\n      <li>Wear nitrile gloves when handling solder paste and leaded wire. Do not eat, drink, or smoke at the bench.</li>\n      <li>Wash hands with soap after every shift, before eating or touching your face.</li>\n      <li>Store solder paste and flux in sealed containers; label them clearly.</li>\n      <li>Dispose of solder dross and used wipes as hazardous waste, not in general rubbish.</li>\n    </ul>\n  </div>\n\n  <h3>Quick Reference Checklist</h3>\n  <ol>\n    <li>Confirm the inspection class (1, 2, or 3) and the customer's acceptance standard before starting.</li>\n    <li>Verify magnification (3â10Ã minimum for SMT) and diffuse, shadow-free lighting.</li>\n    <li>Check component orientation, value, and placement against the BOM and assembly drawing.</li>\n    <li>Inspect every solder joint for concave fillet, wetting, and absence of bridges or cold joints.</li>\n    <li>Check for physical damage: lifted pads, cracked traces, damaged connectors, contamination.</li>\n    <li>Record every defect with type, location, quantity, and a photograph.</li>\n    <li>Disposition each board: accept, rework with instructions, or scrap. Never ship an unresolved reject.</li>\n    <li>Review defect trends weekly; act on the top cause before it repeats in the next batch.</li>\n  </ol>\n\n  <h3>Further Reading</h3>\n  <ul>\n    <li><a href=\"https://www.ipc.org/TOC/IPC-A-610.pdf\" target=\"_blank\" rel=\"noopener\">IPC-A-610 Table of Contents (IPC International)</a> â official overview of the acceptability standard and its classes.</li>\n    <li><a href=\"https://www.ipc.org/ipc-a-610\" target=\"_blank\" rel=\"noopener\">IPC-A-610 product page</a> â current revision, training, and certification information.</li>\n    <li><a href=\"https://www.ipc.org/ipc-j-std-001\" target=\"_blank\" rel=\"noopener\">IPC J-STD-001</a> â soldering process requirements that sit alongside IPC-A-610.</li>\n    <li><a href=\"https://www.ipc.org/ipc-a-620\" target=\"_blank\" rel=\"noopener\">IPC/WHMA-A-620</a> â cable and wire harness acceptability, useful for assemblers building looms.</li>\n    <li><a href=\"https://www.osha.gov/lead\" target=\"_blank\" rel=\"noopener\">OSHA Lead Safety Guidance</a> â free occupational safety reference for lead exposure in electronics work.</li>\n  </ul>\n\n  <p><strong>Business takeaway:</strong> Inspection is not a cost centre â it is the mechanism that protects your margin. Every defect caught at the bench is a defect that does not become a return, a refund, or a lost customer. For African electronics SMEs competing for export and industrial contracts, a documented, standards-based inspection routine is often the difference between being taken seriously and being treated as a low-cost gamble.</p>\n</section>"
-    }],
+    }
+  ],
   "quiz": [
     {
       "q": "What is the recommended magnification for inspecting solder joints on a typical circuit board?",
-      "options": ["A) 1x (naked eye)", "B) 10x", "C) 100x", "D) 1000x"],
+      "options": [
+        "A) 1x (naked eye)",
+        "B) 10x",
+        "C) 100x",
+        "D) 1000x"
+      ],
       "answer": "B",
       "explanation": "10x magnification is sufficient to see most solder joint defects like cold joints and bridges."
     },
     {
       "q": "Which lighting technique makes shiny solder look bright and dull solder look dark?",
-      "options": ["A) Backlighting", "B) Coaxial lighting", "C) Ultraviolet lighting", "D) Strobe lighting"],
+      "options": [
+        "A) Backlighting",
+        "B) Coaxial lighting",
+        "C) Ultraviolet lighting",
+        "D) Strobe lighting"
+      ],
       "answer": "B",
       "explanation": "Coaxial lighting directs light along the viewing axis, enhancing contrast between shiny and dull surfaces."
     },
     {
       "q": "What does IPC-A-610 Class 2 apply to?",
-      "options": ["A) General products like toys", "B) Dedicated service products like computers", "C) High-reliability products like medical devices", "D) Only aerospace products"],
+      "options": [
+        "A) General products like toys",
+        "B) Dedicated service products like computers",
+        "C) High-reliability products like medical devices",
+        "D) Only aerospace products"
+      ],
       "answer": "B",
       "explanation": "Class 2 is for dedicated service electronics, which includes most consumer and industrial products."
     },
     {
       "q": "What is a 'cold solder joint'?",
-      "options": ["A) A joint made with lead-free solder", "B) A joint that looks dull and grainy", "C) A joint that is too shiny", "D) A joint with too much solder"],
+      "options": [
+        "A) A joint made with lead-free solder",
+        "B) A joint that looks dull and grainy",
+        "C) A joint that is too shiny",
+        "D) A joint with too much solder"
+      ],
       "answer": "B",
       "explanation": "Cold joints appear dull and grainy due to improper heating or movement during cooling."
     },
     {
       "q": "What defect is described as one end of a chip component lifting off the pad?",
-      "options": ["A) Tombstoning", "B) Bridging", "C) Cold joint", "D) Voiding"],
+      "options": [
+        "A) Tombstoning",
+        "B) Bridging",
+        "C) Cold joint",
+        "D) Voiding"
+      ],
       "answer": "A",
       "explanation": "Tombstoning occurs when uneven heating causes one end of a component to lift."
     },
     {
       "q": "Which tool is best for removing a solder bridge between two IC pins?",
-      "options": ["A) Tweezers", "B) Solder wick and flux", "C) A knife", "D) A toothbrush"],
+      "options": [
+        "A) Tweezers",
+        "B) Solder wick and flux",
+        "C) A knife",
+        "D) A toothbrush"
+      ],
       "answer": "B",
       "explanation": "Solder wick with flux effectively removes excess solder without damaging the board."
     },
     {
       "q": "What is the first-pass yield if 18 out of 20 boards have zero defects?",
-      "options": ["A) 80%", "B) 90%", "C) 95%", "D) 100%"],
+      "options": [
+        "A) 80%",
+        "B) 90%",
+        "C) 95%",
+        "D) 100%"
+      ],
       "answer": "B",
       "explanation": "First-pass yield = (18/20) Ã 100 = 90%."
     },
     {
       "q": "Which defect code might you use for a missing component?",
-      "options": ["A) SB", "B) CJ", "C) MP", "D) TO"],
+      "options": [
+        "A) SB",
+        "B) CJ",
+        "C) MP",
+        "D) TO"
+      ],
       "answer": "C",
       "explanation": "MP stands for 'missing part', a common defect code."
     },
     {
       "q": "What is the '5 Whys' technique used for?",
-      "options": ["A) Inspecting solder joints", "B) Root cause analysis", "C) Setting up lighting", "D) Calibrating a multimeter"],
+      "options": [
+        "A) Inspecting solder joints",
+        "B) Root cause analysis",
+        "C) Setting up lighting",
+        "D) Calibrating a multimeter"
+      ],
       "answer": "B",
       "explanation": "The 5 Whys is a root cause analysis method to find the underlying cause of a problem."
     },
     {
       "q": "Which of these is NOT a common cause of solder bridges?",
-      "options": ["A) Too much solder", "B) Iron tip too large", "C) Insufficient flux", "D) Correct iron temperature"],
+      "options": [
+        "A) Too much solder",
+        "B) Iron tip too large",
+        "C) Insufficient flux",
+        "D) Correct iron temperature"
+      ],
       "answer": "D",
       "explanation": "Correct iron temperature reduces bridges; the others increase the risk."
     },
     {
       "q": "What should you do if you find a solder ball on a board?",
-      "options": ["A) Ignore it if it's small", "B) Remove it with tweezers", "C) Push it under a component", "D) Cover it with tape"],
+      "options": [
+        "A) Ignore it if it's small",
+        "B) Remove it with tweezers",
+        "C) Push it under a component",
+        "D) Cover it with tape"
+      ],
       "answer": "B",
       "explanation": "Solder balls can cause shorts and must be removed."
     },
     {
       "q": "What is a 'Certificate of Conformance' used for?",
-      "options": ["A) To certify the inspector's training", "B) To prove the product meets a standard", "C) To list all components used", "D) To show the board's serial number"],
+      "options": [
+        "A) To certify the inspector's training",
+        "B) To prove the product meets a standard",
+        "C) To list all components used",
+        "D) To show the board's serial number"
+      ],
       "answer": "B",
       "explanation": "A Certificate of Conformance states that the product was inspected to a specific standard."
     },
     {
       "q": "Which class of IPC-A-610 is for high-reliability products like medical devices?",
-      "options": ["A) Class 1", "B) Class 2", "C) Class 3", "D) Class 4"],
+      "options": [
+        "A) Class 1",
+        "B) Class 2",
+        "C) Class 3",
+        "D) Class 4"
+      ],
       "answer": "C",
       "explanation": "Class 3 covers high-reliability electronics where failure is not an option."
     },
     {
       "q": "What is the purpose of a test jig with pogo pins?",
-      "options": ["A) To hold the board during soldering", "B) To speed up functional testing", "C) To clean the board", "D) To apply solder paste"],
+      "options": [
+        "A) To hold the board during soldering",
+        "B) To speed up functional testing",
+        "C) To clean the board",
+        "D) To apply solder paste"
+      ],
       "answer": "B",
       "explanation": "A test jig with pogo pins allows quick connection to test points for functional testing."
     },
     {
       "q": "What does a fishbone diagram help with?",
-      "options": ["A) Identifying fish species", "B) Brainstorming causes of a problem", "C) Measuring solder temperature", "D) Calculating yield"],
+      "options": [
+        "A) Identifying fish species",
+        "B) Brainstorming causes of a problem",
+        "C) Measuring solder temperature",
+        "D) Calculating yield"
+      ],
       "answer": "B",
       "explanation": "A fishbone diagram organizes potential causes of a problem into categories."
     },
     {
       "q": "Which of these is a sign of a good solder joint?",
-      "options": ["A) Dull and grainy", "B) Convex blob", "C) Concave fillet", "D) Cracked surface"],
+      "options": [
+        "A) Dull and grainy",
+        "B) Convex blob",
+        "C) Concave fillet",
+        "D) Cracked surface"
+      ],
       "answer": "C",
       "explanation": "A concave fillet indicates proper wetting and solder amount."
     },
     {
       "q": "What should you use to clean microscope lenses?",
-      "options": ["A) A cotton shirt", "B) A microfiber cloth", "C) A paper towel", "D) Your finger"],
+      "options": [
+        "A) A cotton shirt",
+        "B) A microfiber cloth",
+        "C) A paper towel",
+        "D) Your finger"
+      ],
       "answer": "B",
       "explanation": "Microfiber cloths clean lenses without scratching."
     },
     {
       "q": "What is the acceptable void percentage in a BGA solder ball for Class 2?",
-      "options": ["A) Less than 10%", "B) Less than 25%", "C) Less than 50%", "D) Any amount is acceptable"],
+      "options": [
+        "A) Less than 10%",
+        "B) Less than 25%",
+        "C) Less than 50%",
+        "D) Any amount is acceptable"
+      ],
       "answer": "B",
       "explanation": "IPC-A-610 Class 2 allows voids up to 25% of the ball's area."
     },
     {
       "q": "Which tool is used for 'dye and pry' testing of BGA joints?",
-      "options": ["A) X-ray machine", "B) Dye and a pry tool", "C) Multimeter", "D) Microscope"],
+      "options": [
+        "A) X-ray machine",
+        "B) Dye and a pry tool",
+        "C) Multimeter",
+        "D) Microscope"
+      ],
       "answer": "B",
       "explanation": "Dye and pry is a destructive test to inspect BGA joints without X-ray."
     },
     {
       "q": "What is the first step in visual inspection?",
-      "options": ["A) Power up the board", "B) Check for missing components", "C) Test with a multimeter", "D) Clean the board"],
+      "options": [
+        "A) Power up the board",
+        "B) Check for missing components",
+        "C) Test with a multimeter",
+        "D) Clean the board"
+      ],
       "answer": "B",
       "explanation": "Start by comparing the board to the BOM for missing parts."
     },
     {
       "q": "What does a 'cold joint' look like?",
-      "options": ["A) Shiny and smooth", "B) Dull and grainy", "C) Bright and convex", "D) Dark and concave"],
+      "options": [
+        "A) Shiny and smooth",
+        "B) Dull and grainy",
+        "C) Bright and convex",
+        "D) Dark and concave"
+      ],
       "answer": "B",
       "explanation": "Cold joints are dull and grainy due to poor heating."
     },
     {
       "q": "Which of these is a common defect in through-hole soldering?",
-      "options": ["A) Tombstoning", "B) Solder bridge", "C) Insufficient hole fill", "D) Both B and C"],
+      "options": [
+        "A) Tombstoning",
+        "B) Solder bridge",
+        "C) Insufficient hole fill",
+        "D) Both B and C"
+      ],
       "answer": "D",
       "explanation": "Through-hole defects include bridges and insufficient hole fill."
     },
     {
       "q": "What is the recommended frequency for full inspection in sampling inspection?",
-      "options": ["A) Every board", "B) Every 5th board", "C) Every 100th board", "D) Once a month"],
+      "options": [
+        "A) Every board",
+        "B) Every 5th board",
+        "C) Every 100th board",
+        "D) Once a month"
+      ],
       "answer": "B",
       "explanation": "Sampling inspection often inspects every 5th board fully while doing quick visual on all."
     },
     {
       "q": "What should you do if you find a scratch that exposes copper?",
-      "options": ["A) Ignore it", "B) Cover it with solder mask", "C) Reject the board", "D) Paint it with nail polish"],
+      "options": [
+        "A) Ignore it",
+        "B) Cover it with solder mask",
+        "C) Reject the board",
+        "D) Paint it with nail polish"
+      ],
       "answer": "C",
       "explanation": "Exposed copper will oxidize and cause faults, so the board should be rejected."
     },
     {
       "q": "Which of these is NOT a category in a fishbone diagram?",
-      "options": ["A) Man", "B) Machine", "C) Money", "D) Method"],
+      "options": [
+        "A) Man",
+        "B) Machine",
+        "C) Money",
+        "D) Method"
+      ],
       "answer": "C",
       "explanation": "The classic 6 Ms are Man, Machine, Material, Method, Measurement, and Environment; Money is not one."
     },
     {
       "q": "What is the purpose of a wrist strap when inspecting boards?",
-      "options": ["A) To keep your hands warm", "B) To prevent ESD damage", "C) To hold tools", "D) To measure current"],
+      "options": [
+        "A) To keep your hands warm",
+        "B) To prevent ESD damage",
+        "C) To hold tools",
+        "D) To measure current"
+      ],
       "answer": "B",
       "explanation": "A grounded wrist strap prevents electrostatic discharge from damaging components."
     },
     {
       "q": "Which IPC-A-610 class is most common for consumer electronics?",
-      "options": ["A) Class 1", "B) Class 2", "C) Class 3", "D) Class 4"],
+      "options": [
+        "A) Class 1",
+        "B) Class 2",
+        "C) Class 3",
+        "D) Class 4"
+      ],
       "answer": "B",
       "explanation": "Class 2 covers dedicated service products like computers and phones."
     },
     {
       "q": "What is the first-pass yield if 45 out of 50 boards pass inspection?",
-      "options": ["A) 80%", "B) 90%", "C) 95%", "D) 100%"],
+      "options": [
+        "A) 80%",
+        "B) 90%",
+        "C) 95%",
+        "D) 100%"
+      ],
       "answer": "B",
       "explanation": "45/50 = 0.9, so 90%."
     },
     {
       "q": "What should you do before inspecting a board under magnification?",
-      "options": ["A) Clean the board", "B) Calibrate your eyes with a known-good board", "C) Power it up", "D) Apply flux"],
+      "options": [
+        "A) Clean the board",
+        "B) Calibrate your eyes with a known-good board",
+        "C) Power it up",
+        "D) Apply flux"
+      ],
       "answer": "B",
       "explanation": "Calibrating with a known-good board helps you recognize acceptable joints."
     },
     {
       "q": "Which of these is a root cause analysis tool?",
-      "options": ["A) Multimeter", "B) 5 Whys", "C) Soldering iron", "D) Magnifying glass"],
+      "options": [
+        "A) Multimeter",
+        "B) 5 Whys",
+        "C) Soldering iron",
+        "D) Magnifying glass"
+      ],
       "answer": "B",
       "explanation": "5 Whys is a root cause analysis technique."
     }
   ],
   "videos": [
-    "IPC-A-610 solder joint inspection training",
-    "how to inspect solder joints under microscope",
-    "electronics quality control tools and techniques"
+    {
+      "title": "IPC-A-610 solder joint inspection training",
+      "query": "IPC-A-610 solder joint inspection training"
+    },
+    {
+      "title": "How to inspect solder joints under microscope",
+      "query": "how to inspect solder joints under microscope"
+    },
+    {
+      "title": "Electronics quality control tools and techniques",
+      "query": "electronics quality control tools and techniques"
+    }
   ]
 }

@@ -26,197 +26,356 @@
     {
       "title": "Dimensionality Reduction with PCA",
       "body": "When you have many features (e.g., 100 columns from survey data), dimensionality reduction simplifies the data while preserving important information. Principal Component Analysis (PCA) is the most common technique. It creates new features (principal components) that are linear combinations of original features, capturing maximum variance. For example, in a dataset of African households with 50 variables, PCA might reduce to 10 components that explain 95% of variance. Steps: standardize data first (PCA is sensitive to scale). Then: `from sklearn.decomposition import PCA; pca = PCA(n_components=0.95); X_pca = pca.fit_transform(X_scaled)`. This keeps components that explain 95% variance. You can also specify number: `pca = PCA(n_components=10)`. Check explained variance ratio: `pca.explained_variance_ratio_`. Use scree plot to decide number of components. PCA helps with visualization: reduce to 2D or 3D and plot. It also speeds up training and reduces overfitting. But PCA components are less interpretable; you lose original feature meanings. For interpretability, use feature selection instead. In Africa, PCA is useful for high-dimensional data like satellite imagery or genomic data. Apply PCA after handling missing values and encoding categoricals. Always fit PCA on training data only. For non-linear data, use Kernel PCA or t-SNE. Remember, PCA assumes linear relationships; if data is highly non-linear, consider autoencoders. Start with PCA as a baseline, then try other methods."
-    }
-  ,
+    },
     {
       "title": "Practical Reference",
       "body": "<section>\n  <h2>Practical Reference: Data Preprocessing and Feature Engineering for African Agribusiness</h2>\n\n  <p>In African agribusiness, data rarely arrives clean. A maize cooperative in Ghana may log yields in WhatsApp messages, a Kenyan dairy processor might track milk volumes in handwritten ledgers, and a Nigerian poultry farm could record feed consumption across three different spreadsheets with inconsistent units. Before any AI model can forecast demand, detect disease, or optimize logistics, the data must be cleaned, transformed, and reduced to the features that actually drive decisions.</p>\n\n  <p>This practical reference consolidates the six lessons in this module into a working checklist for African agribusiness teams. It assumes you have already collected data from field agents, mobile money platforms, IoT sensors, or satellite imagery. The goal is simple: turn messy operational data into a reliable feature set that a model can learn from â without losing the business context that makes African agriculture unique.</p>\n\n  <figure>\n    <svg viewBox=\"0 0 900 420\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"Data preprocessing pipeline for agribusiness\">\n      <rect x=\"10\" y=\"10\" width=\"880\" height=\"400\" fill=\"#f8f9f4\" stroke=\"#2d5016\" stroke-width=\"2\" rx=\"8\"/>\n      <text x=\"450\" y=\"40\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"18\" font-weight=\"bold\" fill=\"#2d5016\">Agribusiness Data Preprocessing Pipeline</text>\n\n      <rect x=\"40\" y=\"80\" width=\"140\" height=\"70\" fill=\"#e8f0d8\" stroke=\"#4a7c2f\" stroke-width=\"1.5\" rx=\"6\"/>\n      <text x=\"110\" y=\"108\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"bold\" fill=\"#2d5016\">Raw Data</text>\n      <text x=\"110\" y=\"126\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"10\" fill=\"#333\">Field logs, SMS,</text>\n      <text x=\"110\" y=\"140\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"10\" fill=\"#333\">sensors, mobile money</text>\n\n      <rect x=\"220\" y=\"80\" width=\"140\" height=\"70\" fill=\"#d8e8c8\" stroke=\"#4a7c2f\" stroke-width=\"1.5\" rx=\"6\"/>\n      <text x=\"290\" y=\"108\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"bold\" fill=\"#2d5016\">Cleaning</text>\n      <text x=\"290\" y=\"126\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"10\" fill=\"#333\">Missing values,</text>\n      <text x=\"290\" y=\"140\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"10\" fill=\"#333\">outliers, duplicates</text>\n\n      <rect x=\"400\" y=\"80\" width=\"140\" height=\"70\" fill=\"#c8e0b8\" stroke=\"#4a7c2f\" stroke-width=\"1.5\" rx=\"6\"/>\n      <text x=\"470\" y=\"108\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"bold\" fill=\"#2d5016\">Encoding &amp; Scaling</text>\n      <text x=\"470\" y=\"126\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"10\" fill=\"#333\">Categorical encoding,</text>\n      <text x=\"470\" y=\"140\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"10\" fill=\"#333\">normalization</text>\n\n      <rect x=\"580\" y=\"80\" width=\"140\" height=\"70\" fill=\"#b8d8a8\" stroke=\"#4a7c2f\" stroke-width=\"1.5\" rx=\"6\"/>\n      <text x=\"650\" y=\"108\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"bold\" fill=\"#2d5016\">Selection &amp; PCA</text>\n      <text x=\"650\" y=\"126\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"10\" fill=\"#333\">Feature selection,</text>\n      <text x=\"650\" y=\"140\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"10\" fill=\"#333\">dimensionality reduction</text>\n\n      <rect x=\"760\" y=\"80\" width=\"110\" height=\"70\" fill=\"#a8d098\" stroke=\"#4a7c2f\" stroke-width=\"1.5\" rx=\"6\"/>\n      <text x=\"815\" y=\"108\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"bold\" fill=\"#2d5016\">Model-Ready</text>\n      <text x=\"815\" y=\"126\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"10\" fill=\"#333\">Feature set</text>\n      <text x=\"815\" y=\"140\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"10\" fill=\"#333\">for AI</text>\n\n      <line x1=\"180\" y1=\"115\" x2=\"220\" y2=\"115\" stroke=\"#4a7c2f\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n      <line x1=\"360\" y1=\"115\" x2=\"400\" y2=\"115\" stroke=\"#4a7c2f\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n      <line x1=\"540\" y1=\"115\" x2=\"580\" y2=\"115\" stroke=\"#4a7c2f\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n      <line x1=\"720\" y1=\"115\" x2=\"760\" y2=\"115\" stroke=\"#4a7c2f\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n\n      <defs>\n        <marker id=\"arrow\" markerWidth=\"10\" markerHeight=\"10\" refX=\"9\" refY=\"3\" orient=\"auto\" markerUnits=\"strokeWidth\">\n          <path d=\"M0,0 L0,6 L9,3 z\" fill=\"#4a7c2f\"/>\n        </marker>\n      </defs>\n\n      <rect x=\"40\" y=\"200\" width=\"400\" height=\"180\" fill=\"#ffffff\" stroke=\"#4a7c2f\" stroke-width=\"1\" rx=\"6\"/>\n      <text x=\"240\" y=\"225\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"bold\" fill=\"#2d5016\">African Agribusiness Data Challenges</text>\n      <text x=\"55\" y=\"250\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#333\">â¢ Inconsistent units: acres vs hectares, kg vs bags</text>\n      <text x=\"55\" y=\"270\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#333\">â¢ Missing GPS coordinates for smallholder farms</text>\n      <text x=\"55\" y=\"290\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#333\">â¢ Categorical variables: crop type, region, season</text>\n      <text x=\"55\" y=\"310\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#333\">â¢ High-dimensional satellite and weather data</text>\n      <text x=\"55\" y=\"330\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#333\">â¢ Sparse mobile money transaction records</text>\n      <text x=\"55\" y=\"350\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#333\">â¢ Seasonal and cyclical patterns in yields</text>\n\n      <rect x=\"460\" y=\"200\" width=\"400\" height=\"180\" fill=\"#ffffff\" stroke=\"#4a7c2f\" stroke-width=\"1\" rx=\"6\"/>\n      <text x=\"660\" y=\"225\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"bold\" fill=\"#2d5016\">Business-First Decisions</text>\n      <text x=\"475\" y=\"250\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#333\">â¢ Impute missing yields with regional medians</text>\n      <text x=\"475\" y=\"270\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#333\">â¢ Standardize rainfall and temperature features</text>\n      <text x=\"475\" y=\"290\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#333\">â¢ One-hot encode crop and region variables</text>\n      <text x=\"475\" y=\"310\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#333\">â¢ Select features that explain price variance</text>\n      <text x=\"475\" y=\"330\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#333\">â¢ Apply PCA to satellite spectral bands</text>\n      <text x=\"475\" y=\"350\" font-family=\"Arial, sans-serif\" font-size=\"11\" fill=\"#333\">â¢ Validate with local agronomists before modeling</text>\n    </svg>\n    <figcaption>Adapted from the CRISP-DM data preparation framework (Wirth &amp; Hipp, 2000) and FAO agricultural data guidelines (FAO, 2022).</figcaption>\n  </figure>\n\n  <h3>Data Cleaning: Handling Missing Values</h3>\n  <p>Missing data in African agribusiness is rarely random. A farmer may not report yield because the harvest failed, a sensor may go offline during the rainy season, or a mobile money transaction may be missing because the network was down. Before imputing, ask why the value is missing. If missingness itself carries business meaning â for example, a missing loan repayment could signal default risk â create a binary indicator feature instead of simply filling the gap.</p>\n\n  <p>For numerical features like rainfall, temperature, or yield per hectare, median imputation is often safer than mean imputation because agricultural data frequently has outliers from exceptional harvests or droughts. For categorical features like crop type or region, use the most frequent category or a dedicated \"Unknown\" category. When missingness exceeds 40â50% in a column, consider dropping the feature entirely unless it is business-critical.</p>\n\n  <table>\n    <caption>Table 1: Missing Value Strategies for Common Agribusiness Features</caption>\n    <thead>\n      <tr>\n        <th>Feature</th>\n        <th>Typical Missing %</th>\n        <th>Recommended Strategy</th>\n        <th>Business Rationale</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>Yield (kg/ha)</td>\n        <td>15â30%</td>\n        <td>Median imputation by region and season</td>\n        <td>Preserves local agronomic context</td>\n      </tr>\n      <tr>\n        <td>Rainfall (mm)</td>\n        <td>5â20%</td>\n        <td>Interpolation from nearest weather station</td>\n        <td>Rainfall is spatially correlated</td>\n      </tr>\n      <tr>\n        <td>Crop type</td>\n        <td>10â25%</td>\n        <td>Mode imputation or \"Unknown\" category</td>\n        <td>Maintains categorical integrity</td>\n      </tr>\n      <tr>\n        <td>Mobile money transactions</td>\n        <td>20â40%</td>\n        <td>Forward fill + missing indicator</td>\n        <td>Missingness may signal financial stress</td>\n      </tr>\n      <tr>\n        <td>GPS coordinates</td>\n        <td>30â50%</td>\n        <td>Impute from village centroid</td>\n        <td>Enables spatial clustering</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><em>Source: Adapted from FAO (2022), \"Agricultural Data Governance\" and GIZ (2021), \"Data-Driven Agriculture in Africa.\"</em></p>\n\n  <h3>Data Normalization and Standardization</h3>\n  <p>African agribusiness datasets often mix scales: farm size in hectares (0.5â50), annual revenue in USD (500â500,000), and rainfall in millimeters (200â2,000). Models that rely on distance calculations â k-nearest neighbors, support vector machines, and PCA â will be dominated by the largest-scale feature unless you normalize or standardize.</p>\n\n  <p>Use min-max normalization when you need values bounded between 0 and 1, such as for neural networks. Use z-score standardization when your data has outliers or when the algorithm assumes a Gaussian distribution. For seasonal data like monthly milk production, consider seasonal decomposition before scaling so that the underlying trend is not distorted.</p>\n\n  <table>\n    <caption>Table 2: Scaling Methods Compared for Agribusiness Features</caption>\n    <thead>\n      <tr>\n        <th>Method</th>\n        <th>Formula</th>\n        <th>Best For</th>\n        <th>African Ag Example</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>Min-Max Normalization</td>\n        <td>(x â min) / (max â min)</td>\n        <td>Neural networks, bounded inputs</td>\n        <td>Normalizing soil pH to 0â1</td>\n      </tr>\n      <tr>\n        <td>Z-Score Standardization</td>\n        <td>(x â mean) / std</td>\n        <td>PCA, SVM, linear models</td>\n        <td>Standardizing rainfall across regions</td>\n      </tr>\n      <tr>\n        <td>Robust Scaling</td>\n        <td>(x â median) / IQR</td>\n        <td>Data with outliers</td>\n        <td>Farm revenue with extreme values</td>\n      </tr>\n      <tr>\n        <td>Log Transformation</td>\n        <td>log(x + 1)</td>\n        <td>Skewed distributions</td>\n        <td>Mobile money transaction amounts</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><em>Source: Adapted from Scikit-learn preprocessing documentation (Pedregosa et al., 2011) and World Bank (2020), \"Digital Agriculture in Sub-Saharan Africa.\"</em></p>\n\n  <h3>Categorical Encoding Techniques</h3>\n  <p>Categorical variables are everywhere in African agribusiness: crop type (maize, cassava, sorghum), region (Ashanti, Oromia, Kano), season (long rains, short rains, dry), and market channel (cooperative, broker, direct). One-hot encoding works well for low-cardinality features (fewer than 10 categories). For high-cardinality features like district or cooperative name, use target encoding or frequency encoding to avoid exploding the feature space.</p>\n\n  <p>Be careful with ordinal categories. A feature like \"farm size category\" (small, medium, large) has a natural order and should be encoded as 0, 1, 2 rather than one-hot. For cyclical features like month or day of week, use sine and cosine transformations to preserve the cyclical relationship â critical for modeling planting and harvest cycles.</p>\n\n  <h3>Feature Scaling and Transformation</h3>\n  <p>Beyond basic scaling, African agribusiness data often benefits from transformations that capture domain knowledge. Yield per hectare is more meaningful than total yield when comparing farms of different sizes. Rainfall deviation from the seasonal average is more predictive than raw rainfall. Price ratios between maize and fertilizer can reveal farmer profitability better than either price alone.</p>\n\n  <p>Create interaction features that reflect real business relationships: rainfall Ã fertilizer application, or distance to market Ã transport cost. These engineered features often outperform raw variables in predictive models because they encode the agronomic and economic logic that domain experts already know.</p>\n\n  <h3>Feature Selection Methods</h3>\n  <p>More features do not always mean better models. In African agribusiness, where data collection is expensive and noisy, feature selection improves both accuracy and interpretability. Use filter methods (correlation, mutual information) for a quick first pass. Use wrapper methods (recursive feature elimination) when you have enough data and compute. Use embedded methods (LASSO, tree-based importance) when you want selection to happen during model training.</p>\n\n  <p>Always validate feature selection with local experts. A feature that looks statistically weak â such as distance to the nearest paved road â may be critical for logistics planning even if it does not improve yield prediction. Business value and statistical significance are not the same thing.</p>\n\n  <h3>Dimensionality Reduction with PCA</h3>\n  <p>Principal Component Analysis (PCA) is particularly useful for African agribusiness when working with satellite imagery, which can have dozens or hundreds of spectral bands. PCA reduces these bands into a few components that capture most of the variance, making models faster and less prone to overfitting.</p>\n\n  <p>However, PCA has a critical limitation: the resulting components are linear combinations of original features and are often difficult to interpret. If your business stakeholders need to understand which factors drive a prediction â for example, to explain a loan decision to a farmer â PCA may not be the right choice. Use it for preprocessing satellite or sensor data, but prefer interpretable feature selection for decision-facing models.</p>\n\n  <div style=\"background-color: #fdecea; border-left: 5px solid #c0392b; padding: 15px; margin: 20px 0; border-radius: 4px;\">\n    <strong style=\"color: #c0392b;\">â ï¸ Safety Warning: Do Not Leak Future Information</strong>\n    <p style=\"margin: 8px 0 0 0; color: #333;\">When preprocessing time-series agribusiness data â such as monthly yields, rainfall, or prices â always fit your imputation, scaling, and PCA transformations on the training set only, then apply them to the test set. Fitting on the full dataset causes data leakage and produces models that look accurate in testing but fail in the field. This is especially dangerous in crop yield forecasting, where a leaked future rainfall value can make a model appear highly accurate while being useless for real planting decisions. Always split your data chronologically, not randomly, for agricultural time series.</p>\n  </div>\n\n  <h3>Quick Reference Checklist</h3>\n  <ol>\n    <li><strong>Understand missingness before imputing.</strong> Ask why data is missing â it may carry business meaning. Create missing indicators where relevant.</li>\n    <li><strong>Choose imputation by feature type.</strong> Median for skewed numerical data, mode or \"Unknown\" for categorical, interpolation for spatially correlated weather data.</li>\n    <li><strong>Match scaling to the algorithm.</strong> Min-max for neural networks, z-score for PCA and SVM, robust scaling when outliers are present.</li>\n    <li><strong>Encode categoricals thoughtfully.</strong> One-hot for low cardinality, target or frequency encoding for high cardinality, ordinal encoding for ordered categories.</li>\n    <li><strong>Engineer domain-driven features.</strong> Yield per hectare, rainfall deviation, price ratios, and interaction terms often outperform raw variables.</li>\n    <li><strong>Select features with business input.</strong> Combine statistical methods with agronomist and operations team review before finalizing the feature set.</li>\n    <li><strong>Use PCA for high-dimensional sensor and satellite data,</strong> but prefer interpretable features for decision-facing models.</li>\n    <li><strong>Prevent data leakage.</strong> Fit all transformations on training data only, and split time-series data chronologically.</li>\n  </ol>\n\n  <h3>Further Reading</h3>\n  <ul>\n    <li><a href=\"https://scikit-learn.org/stable/modules/preprocessing.html\" target=\"_blank\" rel=\"noopener\">Scikit-learn: Preprocessing Data</a> â Official documentation on scaling, normalization, and encoding.</li>\n    <li><a href=\"https://www.fao.org/3/cb8339en/cb8339en.pdf\" target=\"_blank\" rel=\"noopener\">FAO: Agricultural Data Governance and Use</a> â Free FAO publication on data quality in agriculture.</li>\n    <li><a href=\"https://www.worldbank.org/en/topic/digitaldevelopment/publication/digital-agriculture\" target=\"_blank\" rel=\"noopener\">World Bank: Digital Agriculture in Africa</a> â Reports on data-driven agribusiness across Sub-Saharan Africa.</li>\n    <li><a href=\"https://developers.google.com/machine-learning/data-prep\" target=\"_blank\" rel=\"noopener\">Google: Data Preparation and Feature Engineering</a> â Free course material on preprocessing pipelines.</li>\n    <li><a href=\"https://www.kaggle.com/learn/feature-engineering\" target=\"_blank\" rel=\"noopener\">Kaggle: Feature Engineering</a> â Free hands-on course covering encoding, scaling, and selection.</li>\n  </ul>\n\n  <p style=\"margin-top: 25px; font-style: italic; color: #555;\">This practical reference is part of the Rise AFRICA Skills AI Fundamentals course. For agribusiness teams, the goal is not perfect data â it is data that is clean enough, scaled appropriately, and reduced to the features that drive real decisions on the farm, in the cooperative, and along the value chain.</p>\n</section>"
-    }],
+    }
+  ],
   "quiz": [
     {
       "q": "What is the first step when handling missing values in a dataset?",
-      "options": ["A) Drop all rows with missing values", "B) Identify and quantify missing values", "C) Fill missing values with zeros", "D) Ignore missing values"],
+      "options": [
+        "A) Drop all rows with missing values",
+        "B) Identify and quantify missing values",
+        "C) Fill missing values with zeros",
+        "D) Ignore missing values"
+      ],
       "answer": "B",
       "explanation": "You must first identify where and how many missing values exist before deciding on a strategy."
     },
     {
       "q": "Which method is best for filling missing numerical values when outliers are present?",
-      "options": ["A) Mean", "B) Median", "C) Mode", "D) Zero"],
+      "options": [
+        "A) Mean",
+        "B) Median",
+        "C) Mode",
+        "D) Zero"
+      ],
       "answer": "B",
       "explanation": "Median is robust to outliers, unlike the mean which can be skewed by extreme values."
     },
     {
       "q": "What does the pandas method `df.isnull().sum()` do?",
-      "options": ["A) Drops missing values", "B) Counts missing values per column", "C) Fills missing values", "D) Replaces missing values with mean"],
+      "options": [
+        "A) Drops missing values",
+        "B) Counts missing values per column",
+        "C) Fills missing values",
+        "D) Replaces missing values with mean"
+      ],
       "answer": "B",
       "explanation": "It returns the number of missing values in each column."
     },
     {
       "q": "For time-series data, which imputation method is often used?",
-      "options": ["A) Mean imputation", "B) Forward-fill", "C) Zero imputation", "D) Random imputation"],
+      "options": [
+        "A) Mean imputation",
+        "B) Forward-fill",
+        "C) Zero imputation",
+        "D) Random imputation"
+      ],
       "answer": "B",
       "explanation": "Forward-fill carries the last observed value forward, which is suitable for time-series."
     },
     {
       "q": "What is the main difference between normalization and standardization?",
-      "options": ["A) Normalization scales to 0-1, standardization to mean 0 and std 1", "B) Normalization uses mean, standardization uses median", "C) Normalization is for categorical, standardization for numerical", "D) They are the same"],
+      "options": [
+        "A) Normalization scales to 0-1, standardization to mean 0 and std 1",
+        "B) Normalization uses mean, standardization uses median",
+        "C) Normalization is for categorical, standardization for numerical",
+        "D) They are the same"
+      ],
       "answer": "A",
       "explanation": "Normalization (min-max) bounds values to [0,1]; standardization (Z-score) centers to mean 0 and scales to unit variance."
     },
     {
       "q": "Which scaler is more robust to outliers?",
-      "options": ["A) MinMaxScaler", "B) StandardScaler", "C) RobustScaler", "D) Normalizer"],
+      "options": [
+        "A) MinMaxScaler",
+        "B) StandardScaler",
+        "C) RobustScaler",
+        "D) Normalizer"
+      ],
       "answer": "C",
       "explanation": "RobustScaler uses median and interquartile range, making it less sensitive to outliers."
     },
     {
       "q": "Why should you fit a scaler only on training data?",
-      "options": ["A) To save time", "B) To avoid data leakage", "C) To improve accuracy", "D) To reduce memory"],
+      "options": [
+        "A) To save time",
+        "B) To avoid data leakage",
+        "C) To improve accuracy",
+        "D) To reduce memory"
+      ],
       "answer": "B",
       "explanation": "Fitting on training data only prevents information from the test set from influencing the scaling, avoiding data leakage."
     },
     {
       "q": "What is the purpose of a pipeline in scikit-learn?",
-      "options": ["A) To visualize data", "B) To chain preprocessing and modeling steps", "C) To handle missing values", "D) To encode categorical variables"],
+      "options": [
+        "A) To visualize data",
+        "B) To chain preprocessing and modeling steps",
+        "C) To handle missing values",
+        "D) To encode categorical variables"
+      ],
       "answer": "B",
       "explanation": "A pipeline sequentially applies a list of transforms and a final estimator, ensuring consistent preprocessing."
     },
     {
       "q": "Which encoding technique is best for nominal categorical variables with low cardinality?",
-      "options": ["A) Label encoding", "B) One-hot encoding", "C) Ordinal encoding", "D) Target encoding"],
+      "options": [
+        "A) Label encoding",
+        "B) One-hot encoding",
+        "C) Ordinal encoding",
+        "D) Target encoding"
+      ],
       "answer": "B",
       "explanation": "One-hot encoding creates binary columns for each category without implying order, ideal for low-cardinality nominal data."
     },
     {
       "q": "What is a disadvantage of one-hot encoding for high-cardinality features?",
-      "options": ["A) It loses information", "B) It creates too many columns", "C) It implies order", "D) It requires numerical data"],
+      "options": [
+        "A) It loses information",
+        "B) It creates too many columns",
+        "C) It implies order",
+        "D) It requires numerical data"
+      ],
       "answer": "B",
       "explanation": "High cardinality leads to a large number of binary columns, causing dimensionality issues."
     },
     {
       "q": "Which encoding method is suitable for ordinal categories?",
-      "options": ["A) One-hot encoding", "B) Label encoding", "C) Ordinal encoding", "D) Binary encoding"],
+      "options": [
+        "A) One-hot encoding",
+        "B) Label encoding",
+        "C) Ordinal encoding",
+        "D) Binary encoding"
+      ],
       "answer": "C",
       "explanation": "Ordinal encoding assigns integers based on the order of categories, preserving the ranking."
     },
     {
       "q": "What is target encoding?",
-      "options": ["A) Encoding based on the target variable", "B) Encoding based on frequency", "C) Encoding based on order", "D) Encoding based on binary representation"],
+      "options": [
+        "A) Encoding based on the target variable",
+        "B) Encoding based on frequency",
+        "C) Encoding based on order",
+        "D) Encoding based on binary representation"
+      ],
       "answer": "A",
       "explanation": "Target encoding replaces a category with the mean of the target variable for that category."
     },
     {
       "q": "Which library provides advanced categorical encoding techniques?",
-      "options": ["A) pandas", "B) scikit-learn", "C) category_encoders", "D) numpy"],
+      "options": [
+        "A) pandas",
+        "B) scikit-learn",
+        "C) category_encoders",
+        "D) numpy"
+      ],
       "answer": "C",
       "explanation": "The category_encoders library offers many encoding methods like target encoding, binary encoding, etc."
     },
     {
       "q": "When should you use label encoding?",
-      "options": ["A) For nominal data with many categories", "B) For ordinal data or tree-based models", "C) For linear models", "D) For text data"],
+      "options": [
+        "A) For nominal data with many categories",
+        "B) For ordinal data or tree-based models",
+        "C) For linear models",
+        "D) For text data"
+      ],
       "answer": "B",
       "explanation": "Label encoding is suitable for ordinal data and can be used with tree-based models that can handle integer splits."
     },
     {
       "q": "What does a log transformation do to skewed data?",
-      "options": ["A) Increases skewness", "B) Reduces skewness", "C) Makes data uniform", "D) Removes outliers"],
+      "options": [
+        "A) Increases skewness",
+        "B) Reduces skewness",
+        "C) Makes data uniform",
+        "D) Removes outliers"
+      ],
       "answer": "B",
       "explanation": "Log transformation compresses the range of large values, reducing right skewness."
     },
     {
       "q": "Which transformation is best for count data?",
-      "options": ["A) Log transformation", "B) Square root transformation", "C) Box-Cox transformation", "D) All of the above"],
+      "options": [
+        "A) Log transformation",
+        "B) Square root transformation",
+        "C) Box-Cox transformation",
+        "D) All of the above"
+      ],
       "answer": "D",
       "explanation": "Log, square root, and Box-Cox are all suitable for count data depending on the distribution."
     },
     {
       "q": "What is the purpose of discretization?",
-      "options": ["A) To convert continuous features to categorical", "B) To convert categorical to continuous", "C) To normalize data", "D) To reduce dimensionality"],
+      "options": [
+        "A) To convert continuous features to categorical",
+        "B) To convert categorical to continuous",
+        "C) To normalize data",
+        "D) To reduce dimensionality"
+      ],
       "answer": "A",
       "explanation": "Discretization (binning) transforms continuous variables into discrete intervals."
     },
     {
       "q": "Which of the following is a robust scaling method?",
-      "options": ["A) MinMaxScaler", "B) StandardScaler", "C) RobustScaler", "D) Normalizer"],
+      "options": [
+        "A) MinMaxScaler",
+        "B) StandardScaler",
+        "C) RobustScaler",
+        "D) Normalizer"
+      ],
       "answer": "C",
       "explanation": "RobustScaler uses statistics that are robust to outliers, such as median and IQR."
     },
     {
       "q": "What is the main goal of feature selection?",
-      "options": ["A) To increase the number of features", "B) To select the most relevant features", "C) To transform features", "D) To encode features"],
+      "options": [
+        "A) To increase the number of features",
+        "B) To select the most relevant features",
+        "C) To transform features",
+        "D) To encode features"
+      ],
       "answer": "B",
       "explanation": "Feature selection aims to identify and keep the most useful features for the model."
     },
     {
       "q": "Which filter method uses correlation?",
-      "options": ["A) Chi-square test", "B) Pearson correlation", "C) Mutual information", "D) All of the above"],
+      "options": [
+        "A) Chi-square test",
+        "B) Pearson correlation",
+        "C) Mutual information",
+        "D) All of the above"
+      ],
       "answer": "D",
       "explanation": "All these are filter methods; Pearson correlation is for numerical features, chi-square for categorical."
     },
     {
       "q": "What does RFE stand for?",
-      "options": ["A) Recursive Feature Elimination", "B) Random Feature Extraction", "C) Robust Feature Encoding", "D) Rapid Feature Evaluation"],
+      "options": [
+        "A) Recursive Feature Elimination",
+        "B) Random Feature Extraction",
+        "C) Robust Feature Encoding",
+        "D) Rapid Feature Evaluation"
+      ],
       "answer": "A",
       "explanation": "RFE is a wrapper method that recursively removes less important features."
     },
     {
       "q": "Which regularization method can perform feature selection?",
-      "options": ["A) L1 (Lasso)", "B) L2 (Ridge)", "C) Elastic Net", "D) Both A and C"],
+      "options": [
+        "A) L1 (Lasso)",
+        "B) L2 (Ridge)",
+        "C) Elastic Net",
+        "D) Both A and C"
+      ],
       "answer": "D",
       "explanation": "L1 regularization (Lasso) and Elastic Net (which combines L1 and L2) can shrink coefficients to zero, effectively selecting features."
     },
     {
       "q": "How can you get feature importances from a Random Forest?",
-      "options": ["A) Using .coef_", "B) Using .feature_importances_", "C) Using .p_values", "D) Using .scores"],
+      "options": [
+        "A) Using .coef_",
+        "B) Using .feature_importances_",
+        "C) Using .p_values",
+        "D) Using .scores"
+      ],
       "answer": "B",
       "explanation": "Random Forest models have a feature_importances_ attribute that indicates the importance of each feature."
     },
     {
       "q": "What is the curse of dimensionality?",
-      "options": ["A) Too many features make models perform worse", "B) Too few features make models perform worse", "C) Data is too large", "D) Data is too small"],
+      "options": [
+        "A) Too many features make models perform worse",
+        "B) Too few features make models perform worse",
+        "C) Data is too large",
+        "D) Data is too small"
+      ],
       "answer": "A",
       "explanation": "As the number of features increases, the data becomes sparse, making it harder for models to learn patterns."
     },
     {
       "q": "What does PCA stand for?",
-      "options": ["A) Principal Component Analysis", "B) Primary Component Analysis", "C) Partial Component Analysis", "D) Predictive Component Analysis"],
+      "options": [
+        "A) Principal Component Analysis",
+        "B) Primary Component Analysis",
+        "C) Partial Component Analysis",
+        "D) Predictive Component Analysis"
+      ],
       "answer": "A",
       "explanation": "PCA is a dimensionality reduction technique that finds principal components."
     },
     {
       "q": "What should you do before applying PCA?",
-      "options": ["A) Standardize the data", "B) Normalize the data", "C) Remove outliers", "D) All of the above"],
+      "options": [
+        "A) Standardize the data",
+        "B) Normalize the data",
+        "C) Remove outliers",
+        "D) All of the above"
+      ],
       "answer": "A",
       "explanation": "PCA is sensitive to scale, so standardizing the data is recommended."
     },
     {
       "q": "How do you decide the number of components in PCA?",
-      "options": ["A) By explained variance ratio", "B) By scree plot", "C) By cross-validation", "D) All of the above"],
+      "options": [
+        "A) By explained variance ratio",
+        "B) By scree plot",
+        "C) By cross-validation",
+        "D) All of the above"
+      ],
       "answer": "D",
       "explanation": "All these methods help determine the optimal number of components."
     },
     {
       "q": "What is a disadvantage of PCA?",
-      "options": ["A) It reduces interpretability", "B) It increases overfitting", "C) It requires categorical data", "D) It cannot handle large datasets"],
+      "options": [
+        "A) It reduces interpretability",
+        "B) It increases overfitting",
+        "C) It requires categorical data",
+        "D) It cannot handle large datasets"
+      ],
       "answer": "A",
       "explanation": "Principal components are linear combinations of original features, making them harder to interpret."
     },
     {
       "q": "When is PCA most useful?",
-      "options": ["A) When features are highly correlated", "B) When features are independent", "C) When data is categorical", "D) When data is small"],
+      "options": [
+        "A) When features are highly correlated",
+        "B) When features are independent",
+        "C) When data is categorical",
+        "D) When data is small"
+      ],
       "answer": "A",
       "explanation": "PCA is effective when features are correlated, as it combines them into components capturing shared variance."
     },
     {
       "q": "What is the difference between PCA and feature selection?",
-      "options": ["A) PCA creates new features, feature selection keeps original", "B) PCA keeps original features, feature selection creates new", "C) Both create new features", "D) Both keep original features"],
+      "options": [
+        "A) PCA creates new features, feature selection keeps original",
+        "B) PCA keeps original features, feature selection creates new",
+        "C) Both create new features",
+        "D) Both keep original features"
+      ],
       "answer": "A",
       "explanation": "PCA transforms data into new components, while feature selection retains a subset of original features."
     }
   ],
   "videos": [
-    "handling missing values in python pandas",
-    "feature scaling and normalization explained",
-    "PCA dimensionality reduction tutorial"
+    {
+      "title": "Handling missing values in python pandas",
+      "query": "handling missing values in python pandas"
+    },
+    {
+      "title": "Feature scaling and normalization explained",
+      "query": "feature scaling and normalization explained"
+    },
+    {
+      "title": "PCA dimensionality reduction tutorial",
+      "query": "PCA dimensionality reduction tutorial"
+    }
   ]
 }

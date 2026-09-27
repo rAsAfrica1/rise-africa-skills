@@ -26,197 +26,356 @@
     {
       "title": "L6",
       "body": "In this final lesson, you will learn to diagnose and fix common electrical problems. Start with a multimeterâa must-have tool. Set it to DC volts to check battery and charging. A fully charged battery reads 12.6 volts; 12.0 volts means 50% charged. If your pump won't start, check these in order: battery voltage, fuse, relay, switch, and motor connections. Use a test light to trace power from battery to pump. If the relay clicks but pump doesn't run, the relay contacts may be burntâreplace it. If the pump hums but doesn't turn, the capacitor may be bad (for AC motors) or the motor is seized. For DC motors, check brushes. A common problem in Africa is corroded connections due to humidity. Clean all terminals with a wire brush and apply dielectric grease. If the alternator isn't charging, check the belt, then the voltage regulator. A quick test: run engine at 2000 RPM and measure battery voltageâshould be 13.8-14.4V. If not, replace the alternator. For intermittent faults, wiggle wires while the pump runs to find loose connections. Keep a logbook of all electrical issues and fixes. Carry spare fuses, relays, and a multimeter in your toolbox. If you smell burning, disconnect battery immediatelyâit's a short circuit. Never work on live circuits. With practice, you'll diagnose most problems in minutes. Remember: 90% of electrical issues are bad connections or dead batteries. Start there."
-    }
-  ,
+    },
     {
       "title": "Practical Reference",
       "body": "<section>\n  <h2>Practical Reference: Electrical and Control Systems for a Car-Engine Irrigation Pump</h2>\n\n  <p>This practical reference supports Lessons L1âL6 of the <strong>Electrical and Control Systems</strong> module in the course <em>Convert a Car Engine to an Irrigation Water Pump</em>. It is written for African agribusiness operators who want a reliable, low-cost, and commercially viable pumping set built from a salvaged petrol or diesel car engine. The focus is on the electrical and control side: starting, charging, protection, and automation. Every decision here should be judged by one business question: <strong>does this keep water flowing at the lowest cost per hectare irrigated?</strong></p>\n\n  <p>In most African smallholder and commercial contexts, the engine is the cheapest part of the system because salvaged units are abundant. The expensive failures are electrical: flat batteries, burnt starters, corroded wiring, and uncontrolled dry-running that destroys pumps. A disciplined electrical and control design turns a rough conversion into a bankable asset that can be rented out, sold as a service, or used to irrigate high-value crops such as vegetables, orchards, or fodder.</p>\n\n  <figure>\n    <svg viewBox=\"0 0 900 520\" width=\"100%\" height=\"auto\" role=\"img\" aria-labelledby=\"wiringTitle wiringDesc\" xmlns=\"http://www.w3.org/2000/svg\">\n      <title id=\"wiringTitle\">Typical 12 V electrical and control schematic for a car-engine irrigation pump</title>\n      <desc id=\"wiringDesc\">Diagram showing battery, starter motor, alternator, ignition switch, fuse box, relay, low-oil and low-water sensors, and pump contactor feeding a surface pump.</desc>\n      <rect x=\"0\" y=\"0\" width=\"900\" height=\"520\" fill=\"#f7f9f7\"/>\n      <style>\n        .box{fill:#ffffff;stroke:#2f6b3a;stroke-width:2.5;rx:8}\n        .lbl{font-family:Arial,Helvetica,sans-serif;font-size:15px;fill:#1c3a22}\n        .sm{font-family:Arial,Helvetica,sans-serif;font-size:12px;fill:#444}\n        .wire{stroke:#333;stroke-width:2.5;fill:none}\n        .hot{stroke:#c0392b;stroke-width:3;fill:none}\n        .gnd{stroke:#111;stroke-width:3;fill:none}\n        .ctrl{stroke:#1f6fb2;stroke-width:2.5;fill:none;stroke-dasharray:7 5}\n      </style>\n\n      <rect class=\"box\" x=\"40\" y=\"60\" width=\"150\" height=\"80\"/>\n      <text class=\"lbl\" x=\"60\" y=\"95\">12 V Battery</text>\n      <text class=\"sm\" x=\"60\" y=\"118\">70â100 Ah</text>\n\n      <rect class=\"box\" x=\"40\" y=\"200\" width=\"150\" height=\"80\"/>\n      <text class=\"lbl\" x=\"60\" y=\"235\">Starter Motor</text>\n      <text class=\"sm\" x=\"60\" y=\"258\">Solenoid + motor</text>\n\n      <rect class=\"box\" x=\"40\" y=\"340\" width=\"150\" height=\"80\"/>\n      <text class=\"lbl\" x=\"60\" y=\"375\">Alternator</text>\n      <text class=\"sm\" x=\"60\" y=\"398\">40â70 A</text>\n\n      <rect class=\"box\" x=\"280\" y=\"60\" width=\"170\" height=\"80\"/>\n      <text class=\"lbl\" x=\"300\" y=\"95\">Ignition Switch</text>\n      <text class=\"sm\" x=\"300\" y=\"118\">OFF / ON / START</text>\n\n      <rect class=\"box\" x=\"280\" y=\"200\" width=\"170\" height=\"80\"/>\n      <text class=\"lbl\" x=\"300\" y=\"235\">Fuse Box</text>\n      <text class=\"sm\" x=\"300\" y=\"258\">Main + branch fuses</text>\n\n      <rect class=\"box\" x=\"280\" y=\"340\" width=\"170\" height=\"80\"/>\n      <text class=\"lbl\" x=\"300\" y=\"375\">Control Relay</text>\n      <text class=\"sm\" x=\"300\" y=\"398\">Starter inhibit</text>\n\n      <rect class=\"box\" x=\"530\" y=\"60\" width=\"170\" height=\"80\"/>\n      <text class=\"lbl\" x=\"550\" y=\"95\">Oil Pressure</text>\n      <text class=\"sm\" x=\"550\" y=\"118\">Low-oil cut-out</text>\n\n      <rect class=\"box\" x=\"530\" y=\"200\" width=\"170\" height=\"80\"/>\n      <text class=\"lbl\" x=\"550\" y=\"235\">Water Level</text>\n      <text class=\"sm\" x=\"550\" y=\"258\">Float / electrode</text>\n\n      <rect class=\"box\" x=\"530\" y=\"340\" width=\"170\" height=\"80\"/>\n      <text class=\"lbl\" x=\"550\" y=\"375\">Pump Contactor</text>\n      <text class=\"sm\" x=\"550\" y=\"398\">30â60 A</text>\n\n      <rect class=\"box\" x=\"760\" y=\"200\" width=\"120\" height=\"80\"/>\n      <text class=\"lbl\" x=\"778\" y=\"235\">Pump</text>\n      <text class=\"sm\" x=\"778\" y=\"258\">Surface / sub.</text>\n\n      <path class=\"hot\" d=\"M115 140 L115 200\"/>\n      <path class=\"hot\" d=\"M115 280 L115 340\"/>\n      <path class=\"hot\" d=\"M190 100 L280 100\"/>\n      <path class=\"hot\" d=\"M190 240 L280 240\"/>\n      <path class=\"hot\" d=\"M190 380 L280 380\"/>\n      <path class=\"hot\" d=\"M450 100 L530 100\"/>\n      <path class=\"hot\" d=\"M450 240 L530 240\"/>\n      <path class=\"hot\" d=\"M450 380 L530 380\"/>\n      <path class=\"hot\" d=\"M700 240 L760 240\"/>\n      <path class=\"ctrl\" d=\"M365 140 L365 200\"/>\n      <path class=\"ctrl\" d=\"M365 280 L365 340\"/>\n      <path class=\"ctrl\" d=\"M615 140 L615 200\"/>\n      <path class=\"ctrl\" d=\"M615 280 L615 340\"/>\n      <path class=\"gnd\" d=\"M115 420 L115 470 L700 470\"/>\n      <circle cx=\"700\" cy=\"470\" r=\"5\" fill=\"#111\"/>\n      <text class=\"sm\" x=\"640\" y=\"495\">Chassis earth (bonded to engine block)</text>\n      <text class=\"sm\" x=\"40\" y=\"40\">Red = battery positive / load. Blue dashed = control signal. Black = earth.</text>\n    </svg>\n    <figcaption>Adapted from the 12 V starting and charging architecture described in <em>FAO Irrigation Manual: Irrigation Water Lifting Devices</em> (FAO Land and Water Division) and standard automotive practice. Sources: FAO, <a href=\"https://www.fao.org/4/s8684e/s8684e00.htm\" target=\"_blank\" rel=\"noopener\">Irrigation Water Lifting Devices</a>; and <a href=\"https://www.fao.org/3/x5746e/x5746e00.htm\" target=\"_blank\" rel=\"noopener\">FAO Small-Scale Pumping</a>.</figcaption>\n  </figure>\n\n  <h2>1. Starting and Charging System</h2>\n  <p>A car engine needs a battery, a starter, and an alternator. In an irrigation conversion, the battery must do more than crank the engine: it must also power control relays, sensors, and, in many cases, the pump contactor. A 12 V, 70â100 Ah lead-acid or AGM battery is the practical baseline for engines up to about 2.0 litres. For diesel engines, especially indirect-injection units common in African workshops, use a larger battery (100â120 Ah) and heavier cables (25â35 mmÂ²) to avoid voltage drop on cold starts.</p>\n\n  <p>The alternator should be matched to the battery and to the duty cycle. A 40â70 A alternator is usually sufficient for a pump running 4â8 hours per day, but if you add lighting, a water-level controller, or a mobile-phone charging point for a farm shop, upgrade to 70â90 A. Always fit a charge warning lamp or a voltmeter; a failed alternator is the most common cause of a \"dead\" irrigation set in the field.</p>\n\n  <table>\n    <caption>Table 1. Recommended electrical ratings by engine size and duty (Africa smallholder and commercial context)</caption>\n    <thead>\n      <tr>\n        <th>Engine size</th>\n        <th>Battery</th>\n        <th>Alternator</th>\n        <th>Starter cable</th>\n        <th>Typical pump duty</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr><td>1.0â1.3 L petrol</td><td>45â60 Ah</td><td>35â50 A</td><td>16â25 mmÂ²</td><td>2â4 h/day, 0.5â1.5 ha</td></tr>\n      <tr><td>1.4â1.8 L petrol</td><td>60â80 Ah</td><td>50â70 A</td><td>25â35 mmÂ²</td><td>4â6 h/day, 1â3 ha</td></tr>\n      <tr><td>1.8â2.5 L diesel</td><td>80â120 Ah</td><td>70â90 A</td><td>35â50 mmÂ²</td><td>6â8 h/day, 2â5 ha</td></tr>\n      <tr><td>2.5â3.5 L diesel</td><td>100â150 Ah</td><td>90â120 A</td><td>50â70 mmÂ²</td><td>8â10 h/day, 4â8 ha</td></tr>\n    </tbody>\n  </table>\n  <p class=\"sm\">Sources: derived from FAO <em>Irrigation Water Lifting Devices</em> and Practical Action <em>Small-Scale Irrigation</em> guidance on engine-driven pumps. See <a href=\"https://practicalaction.org/\" target=\"_blank\" rel=\"noopener\">Practical Action</a> and <a href=\"https://www.fao.org/4/s8684e/s8684e00.htm\" target=\"_blank\" rel=\"noopener\">FAO</a>.</p>\n\n  <h2>2. Protection and Control</h2>\n  <p>Control is where the business case is protected. An unprotected engine can be destroyed in minutes by low oil pressure or by running dry. Fit three layers of protection:</p>\n  <ul>\n    <li><strong>Low-oil cut-out:</strong> a pressure switch that breaks the ignition circuit if oil pressure falls below about 0.5 bar.</li>\n    <li><strong>Low-water cut-out:</strong> a float switch or electrode probe in the sump, tank, or borehole that stops the engine or closes the pump contactor when water is absent.</li>\n    <li><strong>Overload / overcurrent:</strong> a thermal-magnetic breaker or a contactor with a thermal overload relay sized to the pump motor.</li>\n  </ul>\n  <p>Use a 4-pin or 5-pin automotive relay to isolate the starter circuit from the control circuit. This prevents the starter from being engaged while the engine is running, a common failure when operators are untrained. Label every wire with a number and a function; in the field, a labelled loom saves hours of fault-finding and protects your service margin.</p>\n\n  <table>\n    <caption>Table 2. Control and protection devices, typical ratings, and field notes</caption>\n    <thead>\n      <tr>\n        <th>Device</th>\n        <th>Typical rating</th>\n        <th>Function</th>\n        <th>Field note</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr><td>Main fuse</td><td>30â60 A</td><td>Protects battery cable</td><td>Fit within 300 mm of battery +</td></tr>\n      <tr><td>Starter relay</td><td>30â40 A, 12 V</td><td>Switches starter solenoid</td><td>Use a suppression diode</td></tr>\n      <tr><td>Oil pressure switch</td><td>0.3â0.7 bar</td><td>Low-oil cut-out</td><td>Test monthly with a gauge</td></tr>\n      <tr><td>Float switch</td><td>10 A, 250 V AC / 12 V DC</td><td>Dry-run protection</td><td>Keep contacts clean of silt</td></tr>\n      <tr><td>Pump contactor</td><td>20â60 A</td><td>Switches pump motor</td><td>Size to 125% of FLC</td></tr>\n      <tr><td>Thermal overload</td><td>Set to motor FLC</td><td>Overload protection</td><td>Re-set only after cooling</td></tr>\n    </tbody>\n  </table>\n  <p class=\"sm\">Sources: adapted from FAO pumping guidance and IEC 60947 low-voltage switchgear practice. See <a href=\"https://www.fao.org/4/s8684e/s8684e00.htm\" target=\"_blank\" rel=\"noopener\">FAO</a> and <a href=\"https://www.iec.ch/\" target=\"_blank\" rel=\"noopener\">IEC</a>.</p>\n\n  <div style=\"border:3px solid #c0392b;background:#fdecea;padding:16px;border-radius:8px;margin:24px 0;\">\n    <h3 style=\"color:#c0392b;margin-top:0;\">â  SAFETY WARNING â Electrical and Fuel Hazards</h3>\n    <p style=\"margin-bottom:0;\">Petrol engines produce explosive vapours and high-voltage ignition. <strong>Never</strong> work on the electrical system with the engine running or the battery connected. Disconnect the negative terminal first and reconnect it last. Use insulated tools, remove jewellery, and keep a dry-powder or COâ extinguisher within reach. In Africa, where workshop power may be unstable, never bypass fuses with wire or foil; a bypassed fuse has started more fires than any other single fault. Ensure all metal enclosures and the engine block are bonded to a common earth. If you are not a qualified auto-electrician, engage one for the starter and alternator circuits.</p>\n  </div>\n\n  <h2>3. Automation for Business Reliability</h2>\n  <p>Automation is not a luxury; it is a labour-saving and asset-protecting investment. A simple timer, a float switch, and a contactor can turn an irrigation set into a semi-automatic system that runs without an operator present. This allows a single operator to manage multiple plots, or to irrigate at night when evaporation losses are lowest and electricity or fuel demand is lower.</p>\n  <p>For off-grid sites, consider a 12 V DC pump for small plots and a 230 V AC pump driven by an inverter or a generator for larger plots. In both cases, the control logic is the same: sense water, sense oil pressure, allow start, run, and stop on fault. Document the logic on a laminated card in the pump house; this is a selling point when you rent the set to neighbouring farmers.</p>\n\n  <h2>Quick Reference Checklist</h2>\n  <ol>\n    <li>Battery terminals clean, tight, and greased; voltage above 12.4 V at rest.</li>\n    <li>Main fuse within 300 mm of the battery positive terminal and correctly rated.</li>\n    <li>Starter and alternator cables sized to Table 1 and free of chafing.</li>\n    <li>Low-oil cut-out tested and set to 0.3â0.7 bar.</li>\n    <li>Low-water cut-out tested by lifting the float or shorting the probe.</li>\n    <li>Pump contactor and thermal overload set to motor full-load current.</li>\n    <li>All wires labelled, loomed, and bonded to a common earth.</li>\n    <li>Emergency stop and fire extinguisher accessible and checked monthly.</li>\n  </ol>\n\n  <h2>Further Reading</h2>\n  <ul>\n    <li><a href=\"https://www.fao.org/4/s8684e/s8684e00.htm\" target=\"_blank\" rel=\"noopener\">FAO â Irrigation Water Lifting Devices</a> (free official manual).</li>\n    <li><a href=\"https://www.fao.org/3/x5746e/x5746e00.htm\" target=\"_blank\" rel=\"noopener\">FAO â Small-Scale Pumping and Irrigation</a> (free official guide).</li>\n    <li><a href=\"https://practicalaction.org/\" target=\"_blank\" rel=\"noopener\">Practical Action â Small-Scale Irrigation and Pumping</a> (free technical briefs).</li>\n    <li><a href=\"https://www.iec.ch/\" target=\"_blank\" rel=\"noopener\">IEC â Low-Voltage Switchgear and Controlgear Standards</a> (official standards portal).</li>\n    <li><a href=\"https://www.energy.gov/eere/water/articles\" target=\"_blank\" rel=\"noopener\">U.S. Department of Energy â Water Pumping and Motor Efficiency</a> (free technical resources).</li>\n  </ul>\n\n  <p><strong>Business takeaway:</strong> the electrical and control system is the difference between a converted engine that runs for a season and one that runs for a decade. Invest in correct cable sizing, real protection devices, and clear labelling. That investment pays back through fewer breakdowns, lower repair costs, and the ability to rent your pumping service to other farmers â a direct path to higher income per hectare in African agribusiness.</p>\n</section>"
-    }],
+    }
+  ],
   "quiz": [
     {
       "q": "What is the correct charging voltage range for a 12-volt car alternator?",
-      "options": ["A) 11.5-12.5 volts", "B) 13.8-14.4 volts", "C) 15.0-16.0 volts", "D) 12.0-13.0 volts"],
+      "options": [
+        "A) 11.5-12.5 volts",
+        "B) 13.8-14.4 volts",
+        "C) 15.0-16.0 volts",
+        "D) 12.0-13.0 volts"
+      ],
       "answer": "B",
       "explanation": "A healthy alternator should output 13.8 to 14.4 volts to properly charge a 12-volt battery."
     },
     {
       "q": "Which terminal on the alternator connects to the warning light?",
-      "options": ["A) B+", "B) D+", "C) W", "D) Ground"],
+      "options": [
+        "A) B+",
+        "B) D+",
+        "C) W",
+        "D) Ground"
+      ],
       "answer": "B",
       "explanation": "The D+ terminal is used for the indicator light circuit."
     },
     {
       "q": "What size fuse should be used between the alternator B+ and battery?",
-      "options": ["A) 10-amp", "B) 30-amp", "C) 60-amp", "D) 100-amp"],
+      "options": [
+        "A) 10-amp",
+        "B) 30-amp",
+        "C) 60-amp",
+        "D) 100-amp"
+      ],
       "answer": "C",
       "explanation": "A 60-amp fuse protects the charging circuit from overload."
     },
     {
       "q": "What type of battery is best for irrigation pump systems?",
-      "options": ["A) Car starting battery", "B) Deep-cycle lead-acid", "C) Lithium-ion", "D) NiCad"],
+      "options": [
+        "A) Car starting battery",
+        "B) Deep-cycle lead-acid",
+        "C) Lithium-ion",
+        "D) NiCad"
+      ],
       "answer": "B",
       "explanation": "Deep-cycle batteries can handle slow, deep discharges typical of pump operation."
     },
     {
       "q": "How often should you check battery water level in hot African climates?",
-      "options": ["A) Every 6 months", "B) Once a year", "C) Weekly", "D) Every 2 years"],
+      "options": [
+        "A) Every 6 months",
+        "B) Once a year",
+        "C) Weekly",
+        "D) Every 2 years"
+      ],
       "answer": "C",
       "explanation": "High temperatures cause faster evaporation, so weekly checks are needed."
     },
     {
       "q": "What should you apply to battery terminals to prevent corrosion?",
-      "options": ["A) Engine oil", "B) Petroleum jelly", "C) Water", "D) Paint"],
+      "options": [
+        "A) Engine oil",
+        "B) Petroleum jelly",
+        "C) Water",
+        "D) Paint"
+      ],
       "answer": "B",
       "explanation": "Petroleum jelly seals terminals from air and moisture, preventing corrosion."
     },
     {
       "q": "What is the minimum voltage a 12V battery should not go below?",
-      "options": ["A) 10.5 volts", "B) 11.8 volts", "C) 12.0 volts", "D) 12.6 volts"],
+      "options": [
+        "A) 10.5 volts",
+        "B) 11.8 volts",
+        "C) 12.0 volts",
+        "D) 12.6 volts"
+      ],
       "answer": "B",
       "explanation": "Discharging below 11.8 volts damages lead-acid batteries."
     },
     {
       "q": "How do you connect two 12V batteries to get 24 volts?",
-      "options": ["A) Parallel", "B) Series", "C) Series-parallel", "D) Star"],
+      "options": [
+        "A) Parallel",
+        "B) Series",
+        "C) Series-parallel",
+        "D) Star"
+      ],
       "answer": "B",
       "explanation": "Series connection adds voltages: positive of one to negative of the other."
     },
     {
       "q": "What is the purpose of a relay in the control panel?",
-      "options": ["A) To increase voltage", "B) To allow small current to control large current", "C) To store energy", "D) To convert AC to DC"],
+      "options": [
+        "A) To increase voltage",
+        "B) To allow small current to control large current",
+        "C) To store energy",
+        "D) To convert AC to DC"
+      ],
       "answer": "B",
       "explanation": "A relay uses a small control current to switch a larger power circuit."
     },
     {
       "q": "Which terminal on a relay is the common terminal?",
-      "options": ["A) 85", "B) 86", "C) 30", "D) 87"],
+      "options": [
+        "A) 85",
+        "B) 86",
+        "C) 30",
+        "D) 87"
+      ],
       "answer": "C",
       "explanation": "Terminal 30 is the common terminal that receives power."
     },
     {
       "q": "What device automatically stops the pump when the water tank is full?",
-      "options": ["A) Pressure switch", "B) Float switch", "C) Timer", "D) Relay"],
+      "options": [
+        "A) Pressure switch",
+        "B) Float switch",
+        "C) Timer",
+        "D) Relay"
+      ],
       "answer": "B",
       "explanation": "A float switch opens the circuit when water reaches a set level."
     },
     {
       "q": "What size fuse should be used for a 30-amp pump circuit?",
-      "options": ["A) 15-amp", "B) 30-amp", "C) 40-amp", "D) 60-amp"],
+      "options": [
+        "A) 15-amp",
+        "B) 30-amp",
+        "C) 40-amp",
+        "D) 60-amp"
+      ],
       "answer": "C",
       "explanation": "A 40-amp fuse provides protection while allowing normal current."
     },
     {
       "q": "What is the purpose of a thermal overload relay?",
-      "options": ["A) To increase motor speed", "B) To protect motor from excessive current", "C) To convert DC to AC", "D) To store energy"],
+      "options": [
+        "A) To increase motor speed",
+        "B) To protect motor from excessive current",
+        "C) To convert DC to AC",
+        "D) To store energy"
+      ],
       "answer": "B",
       "explanation": "It trips when motor current exceeds a set value, preventing burnout."
     },
     {
       "q": "At what percentage of full load amps should a thermal overload be set?",
-      "options": ["A) 90%", "B) 100%", "C) 110%", "D) 150%"],
+      "options": [
+        "A) 90%",
+        "B) 100%",
+        "C) 110%",
+        "D) 150%"
+      ],
       "answer": "C",
       "explanation": "Setting to 110% allows for normal starting surge without nuisance tripping."
     },
     {
       "q": "What does a low-voltage disconnect do?",
-      "options": ["A) Boosts voltage", "B) Stops pump when battery voltage is too low", "C) Increases current", "D) Converts AC to DC"],
+      "options": [
+        "A) Boosts voltage",
+        "B) Stops pump when battery voltage is too low",
+        "C) Increases current",
+        "D) Converts AC to DC"
+      ],
       "answer": "B",
       "explanation": "It prevents deep discharge by cutting power below a safe voltage."
     },
     {
       "q": "What is the recommended voltage for a single-phase AC pump in Africa?",
-      "options": ["A) 110 volts", "B) 230 volts", "C) 400 volts", "D) 12 volts"],
+      "options": [
+        "A) 110 volts",
+        "B) 230 volts",
+        "C) 400 volts",
+        "D) 12 volts"
+      ],
       "answer": "B",
       "explanation": "Most African countries use 220-240 volts AC for domestic and small industrial equipment."
     },
     {
       "q": "What type of inverter is best for running AC motors?",
-      "options": ["A) Modified sine wave", "B) Pure sine wave", "C) Square wave", "D) Triangular wave"],
+      "options": [
+        "A) Modified sine wave",
+        "B) Pure sine wave",
+        "C) Square wave",
+        "D) Triangular wave"
+      ],
       "answer": "B",
       "explanation": "Pure sine wave inverters produce cleaner power, reducing motor heat and noise."
     },
     {
       "q": "What size inverter is needed for a 1.5 kW pump?",
-      "options": ["A) 1000 watts", "B) 1500 watts", "C) 3000 watts", "D) 500 watts"],
+      "options": [
+        "A) 1000 watts",
+        "B) 1500 watts",
+        "C) 3000 watts",
+        "D) 500 watts"
+      ],
       "answer": "C",
       "explanation": "Inverters should be sized at least twice the motor's running watts to handle starting surge."
     },
     {
       "q": "What is the maximum recommended cable length between battery and inverter?",
-      "options": ["A) 0.5 meters", "B) 1.5 meters", "C) 3 meters", "D) 5 meters"],
+      "options": [
+        "A) 0.5 meters",
+        "B) 1.5 meters",
+        "C) 3 meters",
+        "D) 5 meters"
+      ],
       "answer": "B",
       "explanation": "Short cables reduce voltage drop and power loss."
     },
     {
       "q": "What should you use to protect the inverter from overcurrent?",
-      "options": ["A) 30-amp fuse", "B) 300-amp fuse", "C) 10-amp fuse", "D) No fuse needed"],
+      "options": [
+        "A) 30-amp fuse",
+        "B) 300-amp fuse",
+        "C) 10-amp fuse",
+        "D) No fuse needed"
+      ],
       "answer": "B",
       "explanation": "A large fuse like 300-amp is required for high-current inverter circuits."
     },
     {
       "q": "What is the first thing to check if the pump won't start?",
-      "options": ["A) Motor windings", "B) Battery voltage", "C) Relay contacts", "D) Capacitor"],
+      "options": [
+        "A) Motor windings",
+        "B) Battery voltage",
+        "C) Relay contacts",
+        "D) Capacitor"
+      ],
       "answer": "B",
       "explanation": "Battery voltage is the most common cause and easiest to check."
     },
     {
       "q": "What does a reading of 12.0 volts on a 12V battery indicate?",
-      "options": ["A) Fully charged", "B) 50% charged", "C) Overcharged", "D) Dead"],
+      "options": [
+        "A) Fully charged",
+        "B) 50% charged",
+        "C) Overcharged",
+        "D) Dead"
+      ],
       "answer": "B",
       "explanation": "12.0 volts corresponds to about 50% state of charge."
     },
     {
       "q": "If the relay clicks but pump doesn't run, what is likely faulty?",
-      "options": ["A) Battery", "B) Relay contacts", "C) Fuse", "D) Switch"],
+      "options": [
+        "A) Battery",
+        "B) Relay contacts",
+        "C) Fuse",
+        "D) Switch"
+      ],
       "answer": "B",
       "explanation": "Burnt relay contacts can prevent power from reaching the pump."
     },
     {
       "q": "What should you apply to electrical connections to prevent corrosion?",
-      "options": ["A) Water", "B) Dielectric grease", "C) Oil", "D) Vinegar"],
+      "options": [
+        "A) Water",
+        "B) Dielectric grease",
+        "C) Oil",
+        "D) Vinegar"
+      ],
       "answer": "B",
       "explanation": "Dielectric grease seals connections from moisture and air."
     },
     {
       "q": "What should you do if you smell burning from electrical system?",
-      "options": ["A) Continue running", "B) Disconnect battery immediately", "C) Add water", "D) Ignore it"],
+      "options": [
+        "A) Continue running",
+        "B) Disconnect battery immediately",
+        "C) Add water",
+        "D) Ignore it"
+      ],
       "answer": "B",
       "explanation": "Burning smell indicates a short circuit or overheating; disconnect power to prevent fire."
     },
     {
       "q": "What percentage of electrical issues are due to bad connections or dead batteries?",
-      "options": ["A) 50%", "B) 70%", "C) 90%", "D) 10%"],
+      "options": [
+        "A) 50%",
+        "B) 70%",
+        "C) 90%",
+        "D) 10%"
+      ],
       "answer": "C",
       "explanation": "Most electrical problems stem from simple connection or battery issues."
     },
     {
       "q": "What tool is essential for diagnosing electrical problems?",
-      "options": ["A) Hammer", "B) Multimeter", "C) Wrench", "D) Screwdriver"],
+      "options": [
+        "A) Hammer",
+        "B) Multimeter",
+        "C) Wrench",
+        "D) Screwdriver"
+      ],
       "answer": "B",
       "explanation": "A multimeter measures voltage, current, and resistance for troubleshooting."
     },
     {
       "q": "How often should you test protection devices like overload relays?",
-      "options": ["A) Daily", "B) Weekly", "C) Monthly", "D) Yearly"],
+      "options": [
+        "A) Daily",
+        "B) Weekly",
+        "C) Monthly",
+        "D) Yearly"
+      ],
       "answer": "C",
       "explanation": "Monthly testing ensures they will operate when needed."
     },
     {
       "q": "What is the purpose of a phase failure relay?",
-      "options": ["A) To increase voltage", "B) To protect three-phase motors from lost phase", "C) To convert DC to AC", "D) To store energy"],
+      "options": [
+        "A) To increase voltage",
+        "B) To protect three-phase motors from lost phase",
+        "C) To convert DC to AC",
+        "D) To store energy"
+      ],
       "answer": "B",
       "explanation": "It disconnects power if one phase is lost, preventing motor damage."
     },
     {
       "q": "What should you do before working on the control panel?",
-      "options": ["A) Wear gloves", "B) Disconnect battery", "C) Turn on pump", "D) Add water"],
+      "options": [
+        "A) Wear gloves",
+        "B) Disconnect battery",
+        "C) Turn on pump",
+        "D) Add water"
+      ],
       "answer": "B",
       "explanation": "Always disconnect power to avoid electric shock."
     }
   ],
   "videos": [
-    "how to wire car alternator to battery",
-    "12v deep cycle battery maintenance for solar pump",
-    "DIY pump control panel with relay and float switch"
+    {
+      "title": "How to wire car alternator to battery",
+      "query": "how to wire car alternator to battery"
+    },
+    {
+      "title": "12v deep cycle battery maintenance for solar pump",
+      "query": "12v deep cycle battery maintenance for solar pump"
+    },
+    {
+      "title": "DIY pump control panel with relay and float switch",
+      "query": "DIY pump control panel with relay and float switch"
+    }
   ]
 }
