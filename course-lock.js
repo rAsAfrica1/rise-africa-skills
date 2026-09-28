@@ -2,7 +2,11 @@
   const SUPABASE_URL = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc';
 
-  document.documentElement.style.visibility = 'hidden'; (function () { if (!/-module-?\d+$/i.test(location.pathname.split('/').pop().replace('.html',''))) return; var mt = document.createElement('meta'); mt.name = 'robots'; mt.content = 'noindex,nofollow'; document.head.appendChild(mt); })();
+  if (/-module-?\d+\.html$/i.test(window.location.pathname)) {
+    if (/-module-?\d+\.html$/i.test(window.location.pathname)) {
+    document.documentElement.style.visibility = 'hidden';
+  }
+  } (function () { if (!/-module-?\d+$/i.test(location.pathname.split('/').pop().replace('.html',''))) return; var mt = document.createElement('meta'); mt.name = 'robots'; mt.content = 'noindex,nofollow'; document.head.appendChild(mt); })();
 
   (function () { var t = document.createElement('script'); t.src = '/track.js'; t.defer = true; document.head.appendChild(t); })(); function getCourseSlug() {
     if (window.RAS_COURSE_SLUG) return window.RAS_COURSE_SLUG;
