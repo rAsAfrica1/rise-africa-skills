@@ -126,5 +126,10 @@
     }
   }
 
-  checkAccess();
+  // Only run the enrollment check on module pages. Skip everything else.
+  (function() {
+    var file = window.location.pathname.split('/').pop();
+    if (!/-module-\d+\.html$/i.test(file)) return;
+    checkAccess();
+  })();
 })();
