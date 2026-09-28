@@ -4,12 +4,12 @@
 
   <p>This lesson is a hands-on reference for teams deploying the Robot Operating System (ROS) in African agricultural and logistics settings. It assumes you have completed the earlier lessons on nodes, topics, services, publishers, subscribers, packages, launch files, TF2, and Gazebo/RViz simulation. Here, we consolidate the practical details that matter when robots must operate reliably on farms, in warehouses, and along rural routes where bandwidth is scarce, power is intermittent, and maintenance windows are short.</p>
 
-  <p>The business case is straightforward. A ROS-based mobile robot that autonomously scouts crop rows, carries inputs, or moves produce in a packhouse can reduce labour dependency, extend operating hours, and generate data that improves yield forecasting. But ROS is not a product â it is a middleware framework. Value comes from disciplined configuration, reproducible packages, and safe operating procedures. This reference gives you the checklists, tables, and diagram needed to move from a lab demo to a field-deployable system.</p>
+  <p>The business case is straightforward. A ROS-based mobile robot that autonomously scouts crop rows, carries inputs, or moves produce in a packhouse can reduce labour dependency, extend operating hours, and generate data that improves yield forecasting. But ROS is not a product  it is a middleware framework. Value comes from disciplined configuration, reproducible packages, and safe operating procedures. This reference gives you the checklists, tables, and diagram needed to move from a lab demo to a field-deployable system.</p>
 
   <figure>
     <svg viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ROS 2 computation graph showing nodes, topics, services, and TF2 transforms">
       <rect x="0" y="0" width="900" height="480" fill="#f8f9fa"/>
-      <text x="450" y="34" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#1a1a2e">ROS 2 Computation Graph â Mobile Robot with TF2 Transform Tree</text>
+      <text x="450" y="34" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#1a1a2e">ROS 2 Computation Graph  Mobile Robot with TF2 Transform Tree</text>
 
       <!-- Nodes -->
       <rect x="40" y="70" width="150" height="60" rx="10" fill="#2d6a4f" stroke="#1b4332" stroke-width="2"/>
@@ -70,7 +70,7 @@
       <!-- TF2 tree -->
       <rect x="40" y="390" width="820" height="70" rx="8" fill="#e9ecef" stroke="#adb5bd" stroke-width="1.5"/>
       <text x="60" y="415" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#1a1a2e">TF2 Transform Tree:</text>
-      <text x="60" y="440" font-family="Arial, sans-serif" font-size="12" fill="#343a40">map â odom â base_link â {camera_link, lidar_link, gps_link, wheel_left, wheel_right}</text>
+      <text x="60" y="440" font-family="Arial, sans-serif" font-size="12" fill="#343a40">map  odom  base_link  {camera_link, lidar_link, gps_link, wheel_left, wheel_right}</text>
       <text x="60" y="458" font-family="Arial, sans-serif" font-size="11" fill="#6c757d">Published by robot_state_publisher, AMCL, and sensor drivers. Use static_transform_publisher for fixed offsets.</text>
 
       <!-- Services note -->
@@ -180,8 +180,8 @@
   <p style="font-size:12px; color:#6c757d;">Source: ROS 2 Documentation, "CLI Tools" (docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools.html), Open Robotics.</p>
 
   <div style="border:3px solid #d00000; background:#fff3f3; padding:16px; margin:24px 0; border-radius:8px;">
-    <p style="margin:0; font-family:Arial, sans-serif; font-size:15px; color:#d00000; font-weight:bold;">â ï¸ SAFETY WARNING â EMERGENCY STOP AND DEADMAN SWITCH</p>
-    <p style="margin:8px 0 0 0; font-family:Arial, sans-serif; font-size:14px; color:#333;">Never operate a ROS-based mobile robot in the field without a hardware emergency stop (E-stop) that cuts motor power independently of the ROS graph. Software E-stop services (e.g., <code>/emergency_stop</code>) can fail if the node crashes, the Wi-Fi drops, or the compute board overheats. In African field conditions â dust, heat, uneven terrain, and proximity to workers â always install a physical latching E-stop on the robot and a wireless deadman switch for the operator. Test the E-stop before every shift. A robot that cannot be stopped instantly is a liability, not an asset.</p>
+    <p style="margin:0; font-family:Arial, sans-serif; font-size:15px; color:#d00000; font-weight:bold;">  SAFETY WARNING  EMERGENCY STOP AND DEADMAN SWITCH</p>
+    <p style="margin:8px 0 0 0; font-family:Arial, sans-serif; font-size:14px; color:#333;">Never operate a ROS-based mobile robot in the field without a hardware emergency stop (E-stop) that cuts motor power independently of the ROS graph. Software E-stop services (e.g., <code>/emergency_stop</code>) can fail if the node crashes, the Wi-Fi drops, or the compute board overheats. In African field conditions  dust, heat, uneven terrain, and proximity to workers  always install a physical latching E-stop on the robot and a wireless deadman switch for the operator. Test the E-stop before every shift. A robot that cannot be stopped instantly is a liability, not an asset.</p>
   </div>
 
   <h3>Quick Reference Checklist: Field Deployment of a ROS-Based Agricultural Robot</h3>
@@ -189,7 +189,7 @@
   <ol style="font-family:Arial, sans-serif; font-size:14px; line-height:1.8;">
     <li><strong>Verify ROS 2 distribution and support window.</strong> Use Humble (LTS to 2027) or Jazzy (LTS to 2029). Confirm all packages are built for your Ubuntu version and ARM architecture (Raspberry Pi, Jetson).</li>
     <li><strong>Launch the full system with a single launch file.</strong> Use <code>ros2 launch</code> with a bringup file that starts sensor drivers, TF2 static transforms, Nav2, and your motor controller. Avoid manual node startup in the field.</li>
-    <li><strong>Confirm TF2 tree integrity.</strong> Run <code>ros2 run tf2_tools view_frames</code> and check that <code>map â odom â base_link â sensors</code> is complete. A missing transform will silently break navigation.</li>
+    <li><strong>Confirm TF2 tree integrity.</strong> Run <code>ros2 run tf2_tools view_frames</code> and check that <code>map  odom  base_link  sensors</code> is complete. A missing transform will silently break navigation.</li>
     <li><strong>Check topic rates and latency.</strong> Use <code>ros2 topic hz</code> on <code>/scan</code>, <code>/image_raw</code>, and <code>/odom</code>. Rates below expected values indicate power, USB, or thermal issues.</li>
     <li><strong>Record a bag before and during operation.</strong> <code>ros2 bag record -a</code> captures all topics. This is your black box for diagnosing failures when you have no internet access.</li>
     <li><strong>Validate parameters for your environment.</strong> Set <code>max_vel_x</code>, <code>max_vel_theta</code>, and <code>inflation_radius</code> in Nav2 for your crop row width, soil conditions, and worker safety margins.</li>
@@ -208,11 +208,11 @@
   <h3>Further Reading (Free Official Resources)</h3>
 
   <ul style="font-family:Arial, sans-serif; font-size:14px; line-height:1.8;">
-    <li><a href="https://docs.ros.org/en/humble/index.html" target="_blank" rel="noopener">ROS 2 Humble Documentation</a> â Official tutorials, installation guides, and API reference for the most widely deployed LTS distribution.</li>
-    <li><a href="https://docs.ros.org/en/jazzy/index.html" target="_blank" rel="noopener">ROS 2 Jazzy Documentation</a> â Latest LTS release with modern Gazebo and DDS improvements.</li>
-    <li><a href="https://docs.nav2.org/" target="_blank" rel="noopener">Nav2 Documentation</a> â Official guide to the ROS 2 navigation stack, including configuration for outdoor and agricultural robots.</li>
-    <li><a href="https://gazebosim.org/docs" target="_blank" rel="noopener">Gazebo Sim Documentation</a> â Simulation environment for testing robot behaviour before field deployment.</li>
-    <li><a href="https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools.html" target="_blank" rel="noopener">ROS 2 CLI Tools Tutorial</a> â Hands-on guide to <code>ros2 topic</code>, <code>ros2 node</code>, <code>ros2 bag</code>, and other diagnostic commands used in this reference.</li>
+    <li><a href="https://docs.ros.org/en/humble/index.html" target="_blank" rel="noopener">ROS 2 Humble Documentation</a>  Official tutorials, installation guides, and API reference for the most widely deployed LTS distribution.</li>
+    <li><a href="https://docs.ros.org/en/jazzy/index.html" target="_blank" rel="noopener">ROS 2 Jazzy Documentation</a>  Latest LTS release with modern Gazebo and DDS improvements.</li>
+    <li><a href="https://docs.nav2.org/" target="_blank" rel="noopener">Nav2 Documentation</a>  Official guide to the ROS 2 navigation stack, including configuration for outdoor and agricultural robots.</li>
+    <li><a href="https://gazebosim.org/docs" target="_blank" rel="noopener">Gazebo Sim Documentation</a>  Simulation environment for testing robot behaviour before field deployment.</li>
+    <li><a href="https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools.html" target="_blank" rel="noopener">ROS 2 CLI Tools Tutorial</a>  Hands-on guide to <code>ros2 topic</code>, <code>ros2 node</code>, <code>ros2 bag</code>, and other diagnostic commands used in this reference.</li>
   </ul>
 
   <p style="font-family:Arial, sans-serif; font-size:14px; color:#495057; margin-top:24px;">This module is part of the Rise AFRICA Skills programme. For lab exercises and assessment, refer to the module workbook. Always prioritise safety, reproducibility, and local support capacity when deploying ROS in African agribusiness environments.</p>

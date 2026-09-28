@@ -4,7 +4,7 @@
 
   <p>This practical reference consolidates the core methods and tools used by commercial feed millers, farm managers, and agribusiness entrepreneurs across Africa to formulate broiler and layer rations that are technically sound and financially viable. Whether you are mixing 500 kg on-farm or producing 50 tonnes per day in a commercial mill, the principles in this module determine your feed conversion ratio (FCR), your cost per kilogram of gain, and ultimately your profit margin.</p>
 
-  <p>Feed represents 65â75% of total production cost in poultry enterprises (FAO, 2013). In many African markets, maize and soybean meal prices fluctuate sharply due to rainfall patterns, currency movements, and import restrictions. A formulator who cannot adapt quickly to changing ingredient prices will lose money even with excellent birds. This lesson gives you the practical techniques, software considerations, constraint-setting rules, and troubleshooting habits that separate profitable operations from struggling ones.</p>
+  <p>Feed represents 6575% of total production cost in poultry enterprises (FAO, 2013). In many African markets, maize and soybean meal prices fluctuate sharply due to rainfall patterns, currency movements, and import restrictions. A formulator who cannot adapt quickly to changing ingredient prices will lose money even with excellent birds. This lesson gives you the practical techniques, software considerations, constraint-setting rules, and troubleshooting habits that separate profitable operations from struggling ones.</p>
 
   <figure>
     <svg viewBox="0 0 720 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram showing the least-cost feed formulation decision flow from nutrient requirements through ingredient selection and constraint setting to software output">
@@ -42,7 +42,7 @@
       <!-- Step 4 -->
       <rect x="230" y="180" width="260" height="80" rx="8" fill="#1a3d2b" stroke="#0d2618" stroke-width="2"/>
       <text x="360" y="208" text-anchor="middle" font-size="12" fill="#fff" font-weight="bold">STEP 4: Linear Programming Engine</text>
-      <text x="360" y="228" text-anchor="middle" font-size="11" fill="#c8e6c9">Minimise Cost = Î£ (Ingredient Price Ã Quantity)</text>
+      <text x="360" y="228" text-anchor="middle" font-size="11" fill="#c8e6c9">Minimise Cost =  (Ingredient Price  Quantity)</text>
       <text x="360" y="248" text-anchor="middle" font-size="11" fill="#c8e6c9">Subject to Nutrient + Ingredient Constraints</text>
 
       <!-- Down arrow -->
@@ -52,18 +52,18 @@
       <rect x="180" y="300" width="360" height="90" rx="8" fill="#ffd54f" stroke="#1a3d2b" stroke-width="2"/>
       <text x="360" y="328" text-anchor="middle" font-size="12" fill="#1a3d2b" font-weight="bold">STEP 5: Evaluate &amp; Troubleshoot Output</text>
       <text x="360" y="348" text-anchor="middle" font-size="11" fill="#1a3d2b">Check: nutrient specs met? cost per kg? ingredient availability?</text>
-      <text x="360" y="368" text-anchor="middle" font-size="11" fill="#1a3d2b">If infeasible â relax constraints, substitute ingredients, re-run</text>
+      <text x="360" y="368" text-anchor="middle" font-size="11" fill="#1a3d2b">If infeasible  relax constraints, substitute ingredients, re-run</text>
 
       <!-- Feedback loop -->
       <path d="M180,345 C100,345 100,95 220,95" fill="none" stroke="#c62828" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
       <text x="80" y="220" text-anchor="middle" font-size="10" fill="#c62828" transform="rotate(-90,80,220)">Iterate</text>
     </svg>
-    <figcaption>Adapted from FAO (2013), <em>Poultry Development Review</em> â "Least-cost feed formulation using linear programming." The iterative loop reflects standard practice in commercial formulation software such as Brill, Bestmix, and AFOS.</figcaption>
+    <figcaption>Adapted from FAO (2013), <em>Poultry Development Review</em>  "Least-cost feed formulation using linear programming." The iterative loop reflects standard practice in commercial formulation software such as Brill, Bestmix, and AFOS.</figcaption>
   </figure>
 
   <h3>1. Pearson Square Method for Simple Formulations</h3>
 
-  <p>The Pearson Square is the fastest manual method for blending two ingredients to hit a single target nutrient level â most commonly crude protein (CP). It is ideal for small-scale on-farm mixing where only two protein sources are available.</p>
+  <p>The Pearson Square is the fastest manual method for blending two ingredients to hit a single target nutrient level  most commonly crude protein (CP). It is ideal for small-scale on-farm mixing where only two protein sources are available.</p>
 
   <p><strong>How it works:</strong> Place the target nutrient level in the centre of a square. Put the nutrient content of Ingredient A at the top-left and Ingredient B at the bottom-left. Cross-subtract. The differences give the parts of each ingredient required.</p>
 
@@ -84,21 +84,21 @@
       <tr>
         <td>Maize</td>
         <td>9.0</td>
-        <td>44 â 20 = 24</td>
+        <td>44  20 = 24</td>
         <td>24</td>
-        <td>24 Ã· 35 Ã 100 = 68.6%</td>
+        <td>24  35  100 = 68.6%</td>
       </tr>
       <tr>
         <td>Soybean meal</td>
         <td>44.0</td>
-        <td>20 â 9 = 11</td>
+        <td>20  9 = 11</td>
         <td>11</td>
-        <td>11 Ã· 35 Ã 100 = 31.4%</td>
+        <td>11  35  100 = 31.4%</td>
       </tr>
       <tr>
         <td><strong>Total</strong></td>
-        <td>â</td>
-        <td>â</td>
+        <td></td>
+        <td></td>
         <td><strong>35</strong></td>
         <td><strong>100%</strong></td>
       </tr>
@@ -112,9 +112,9 @@
 
   <p>Linear programming (LP) solves the problem: <em>minimise total cost while meeting all nutrient specifications and respecting ingredient limits</em>. The objective function is:</p>
 
-  <p style="text-align:center; font-style:italic;">Minimise Z = Î£ (P<sub>i</sub> Ã X<sub>i</sub>)</p>
+  <p style="text-align:center; font-style:italic;">Minimise Z =  (P<sub>i</sub>  X<sub>i</sub>)</p>
 
-  <p>where P<sub>i</sub> is the price per kg of ingredient i, and X<sub>i</sub> is the quantity used. Constraints include minimum CP, minimum metabolisable energy (ME), calcium range, available phosphorus range, maximum crude fibre, minimum lysine and methionine, and ingredient inclusion limits (e.g., maize â¤ 65%, fishmeal â¤ 5%).</p>
+  <p>where P<sub>i</sub> is the price per kg of ingredient i, and X<sub>i</sub> is the quantity used. Constraints include minimum CP, minimum metabolisable energy (ME), calcium range, available phosphorus range, maximum crude fibre, minimum lysine and methionine, and ingredient inclusion limits (e.g., maize  65%, fishmeal  5%).</p>
 
   <p>In Africa, the critical binding constraints are usually <strong>lysine and methionine</strong> (expensive to supplement), <strong>available phosphorus</strong> (monocalcium phosphate is often imported and costly), and <strong>maize inclusion limits</strong> (aflatoxin risk in humid zones).</p>
 
@@ -131,7 +131,7 @@
     <li>Report export for mill operators</li>
   </ul>
 
-  <p><strong>Best practices:</strong> Always verify the software's ingredient nutrient values against your own laboratory analyses. Local maize in Zimbabwe or Zambia may differ significantly from US or Brazilian database values. Update prices weekly â not monthly â in volatile markets.</p>
+  <p><strong>Best practices:</strong> Always verify the software's ingredient nutrient values against your own laboratory analyses. Local maize in Zimbabwe or Zambia may differ significantly from US or Brazilian database values. Update prices weekly  not monthly  in volatile markets.</p>
 
   <h3>4. Setting Nutrient Constraints and Ingredient Limits</h3>
 
@@ -148,11 +148,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr><td>Crude protein (%)</td><td>22â23</td><td>19â20</td><td>16â17</td></tr>
-      <tr><td>ME (kcal/kg)</td><td>2,900â3,000</td><td>3,000â3,100</td><td>2,700â2,800</td></tr>
+      <tr><td>Crude protein (%)</td><td>2223</td><td>1920</td><td>1617</td></tr>
+      <tr><td>ME (kcal/kg)</td><td>2,9003,000</td><td>3,0003,100</td><td>2,7002,800</td></tr>
       <tr><td>Lysine (%)</td><td>1.20 min</td><td>1.00 min</td><td>0.75 min</td></tr>
       <tr><td>Methionine (%)</td><td>0.50 min</td><td>0.42 min</td><td>0.35 min</td></tr>
-      <tr><td>Calcium (%)</td><td>0.90â1.00</td><td>0.85â0.95</td><td>3.50â4.00</td></tr>
+      <tr><td>Calcium (%)</td><td>0.901.00</td><td>0.850.95</td><td>3.504.00</td></tr>
       <tr><td>Avail. phosphorus (%)</td><td>0.45 min</td><td>0.40 min</td><td>0.35 min</td></tr>
       <tr><td>Crude fibre (%)</td><td>5.0 max</td><td>6.0 max</td><td>7.0 max</td></tr>
       <tr><td>Maize limit (%)</td><td>65 max</td><td>70 max</td><td>60 max</td></tr>
@@ -162,17 +162,17 @@
   <p><em>Source: Adapted from NRC (1994), <em>Nutrient Requirements of Poultry</em>, 9th ed.; and AIC (2020), <em>Animal Feed Manual for East Africa</em>, Arusha, Tanzania.</em></p>
 
   <div style="border:2px solid #c62828; background:#fdecea; padding:14px; border-radius:6px; margin:18px 0;">
-    <strong style="color:#c62828;">â  SAFETY WARNING â Aflatoxin and Mycotoxin Contamination</strong>
-    <p style="margin:8px 0 0; color:#5d1a1a;">Never formulate with maize or groundnut cake that has not been tested for aflatoxin. In humid tropical zones (Nigeria, Ghana, Uganda, coastal Kenya), Aspergillus flavus contamination can exceed 100 ppb â well above the 20 ppb safe limit for poultry feed. Aflatoxin causes liver damage, reduced egg production, poor FCR, and mortality. Always set a <strong>maximum maize inclusion limit of 60â65%</strong> and use a proven mycotoxin binder (e.g., hydrated sodium calcium aluminosilicate at 1â2 kg/tonne). Test every incoming batch with a rapid test kit. The cost of testing is far lower than the cost of a flock wipe-out.</p>
+    <strong style="color:#c62828;">  SAFETY WARNING  Aflatoxin and Mycotoxin Contamination</strong>
+    <p style="margin:8px 0 0; color:#5d1a1a;">Never formulate with maize or groundnut cake that has not been tested for aflatoxin. In humid tropical zones (Nigeria, Ghana, Uganda, coastal Kenya), Aspergillus flavus contamination can exceed 100 ppb  well above the 20 ppb safe limit for poultry feed. Aflatoxin causes liver damage, reduced egg production, poor FCR, and mortality. Always set a <strong>maximum maize inclusion limit of 6065%</strong> and use a proven mycotoxin binder (e.g., hydrated sodium calcium aluminosilicate at 12 kg/tonne). Test every incoming batch with a rapid test kit. The cost of testing is far lower than the cost of a flock wipe-out.</p>
   </div>
 
   <h3>5. Formulating with Variable Ingredient Prices and Availability</h3>
 
-  <p>In African markets, prices can shift 20â40% within a single season. Practical strategies:</p>
+  <p>In African markets, prices can shift 2040% within a single season. Practical strategies:</p>
   <ul>
-    <li><strong>Maintain 2â3 alternative formulations</strong> for each diet type, using different ingredient combinations (e.g., maize-soy vs. maize-sunflower cake vs. cassava-maize-soy).</li>
-    <li><strong>Use "shadow prices"</strong> from your LP output. The shadow price tells you how much cost would drop if you had one more kg of a limiting ingredient â this guides purchasing decisions.</li>
-    <li><strong>Substitute strategically:</strong> When soybean meal is expensive, replace 5â10% with sunflower cake or cottonseed cake (respecting gossypol and fibre limits). When maize is scarce, use cassava chips (up to 20% with enzyme supplementation) or sorghum.</li>
+    <li><strong>Maintain 23 alternative formulations</strong> for each diet type, using different ingredient combinations (e.g., maize-soy vs. maize-sunflower cake vs. cassava-maize-soy).</li>
+    <li><strong>Use "shadow prices"</strong> from your LP output. The shadow price tells you how much cost would drop if you had one more kg of a limiting ingredient  this guides purchasing decisions.</li>
+    <li><strong>Substitute strategically:</strong> When soybean meal is expensive, replace 510% with sunflower cake or cottonseed cake (respecting gossypol and fibre limits). When maize is scarce, use cassava chips (up to 20% with enzyme supplementation) or sorghum.</li>
     <li><strong>Buy forward</strong> when shadow prices indicate a binding constraint will persist.</li>
   </ul>
 
@@ -189,24 +189,24 @@
   <div style="background:#e8f5e9; border-left:5px solid #2e7d4f; padding:14px; margin:20px 0; border-radius:4px;">
     <h3 style="margin-top:0; color:#1a3d2b;">Quick Reference Checklist</h3>
     <ol>
-      <li>â Verify all ingredient nutrient values against local lab analysis â do not rely solely on software defaults.</li>
-      <li>â Update ingredient prices at least weekly; daily in volatile markets.</li>
-      <li>â Set realistic min/max inclusion limits for every ingredient (especially maize, fishmeal, and limestone).</li>
-      <li>â Always include lysine, methionine, calcium, and available phosphorus as separate constraints â not just crude protein.</li>
-      <li>â Test every incoming maize batch for aflatoxin before formulation.</li>
-      <li>â Run at least two alternative formulations per diet to maintain flexibility.</li>
-      <li>â Check shadow prices to guide purchasing and substitution decisions.</li>
-      <li>â Sample and analyse finished feed monthly to detect nutrient drift.</li>
+      <li> Verify all ingredient nutrient values against local lab analysis  do not rely solely on software defaults.</li>
+      <li> Update ingredient prices at least weekly; daily in volatile markets.</li>
+      <li> Set realistic min/max inclusion limits for every ingredient (especially maize, fishmeal, and limestone).</li>
+      <li> Always include lysine, methionine, calcium, and available phosphorus as separate constraints  not just crude protein.</li>
+      <li> Test every incoming maize batch for aflatoxin before formulation.</li>
+      <li> Run at least two alternative formulations per diet to maintain flexibility.</li>
+      <li> Check shadow prices to guide purchasing and substitution decisions.</li>
+      <li> Sample and analyse finished feed monthly to detect nutrient drift.</li>
     </ol>
   </div>
 
   <h3>Further Reading</h3>
   <ul>
-    <li><a href="https://www.fao.org/3/i3531e/i3531e.pdf" target="_blank" rel="noopener">FAO â Poultry Development Review (2013)</a> â free PDF covering least-cost formulation principles and developing-country feed contexts.</li>
-    <li><a href="https://www.nap.edu/catalog/2114/nutrient-requirements-of-poultry" target="_blank" rel="noopener">NRC â Nutrient Requirements of Poultry, 9th Edition (1994)</a> â the global reference for nutrient specifications; free to read online.</li>
-    <li><a href="https://www.ifpri.org/publication/feed-formulation-software-small-scale-feed-producers" target="_blank" rel="noopener">IFPRI â Feed Formulation Software for Small-Scale Producers</a> â research on appropriate software tools for developing-country feed mills.</li>
-    <li><a href="https://www.feedipedia.org" target="_blank" rel="noopener">Feedipedia â Animal Feed Resources Information System</a> â free database of ingredient nutrient profiles, including many African feedstuffs.</li>
-    <li><a href="https://www.africanfeeds.org" target="_blank" rel="noopener">African Feed Manufacturers Association</a> â regional resources, training, and market updates.</li>
+    <li><a href="https://www.fao.org/3/i3531e/i3531e.pdf" target="_blank" rel="noopener">FAO  Poultry Development Review (2013)</a>  free PDF covering least-cost formulation principles and developing-country feed contexts.</li>
+    <li><a href="https://www.nap.edu/catalog/2114/nutrient-requirements-of-poultry" target="_blank" rel="noopener">NRC  Nutrient Requirements of Poultry, 9th Edition (1994)</a>  the global reference for nutrient specifications; free to read online.</li>
+    <li><a href="https://www.ifpri.org/publication/feed-formulation-software-small-scale-feed-producers" target="_blank" rel="noopener">IFPRI  Feed Formulation Software for Small-Scale Producers</a>  research on appropriate software tools for developing-country feed mills.</li>
+    <li><a href="https://www.feedipedia.org" target="_blank" rel="noopener">Feedipedia  Animal Feed Resources Information System</a>  free database of ingredient nutrient profiles, including many African feedstuffs.</li>
+    <li><a href="https://www.africanfeeds.org" target="_blank" rel="noopener">African Feed Manufacturers Association</a>  regional resources, training, and market updates.</li>
   </ul>
 
   <p style="margin-top:24px; font-size:0.9em; color:#555;"><em>This practical reference is part of the RISE AFRICA Skills course "Broiler and Layer Feed Formulation," Module: Feed Formulation Techniques and Software. Always consult a qualified animal nutritionist before implementing new formulations at commercial scale.</em></p>
