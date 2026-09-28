@@ -140,9 +140,6 @@ Money-back guarantee if you don't complete the course within 30 days.
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="auth-system.js"></script>
-<script src="enrollment-system.js"></script>
-
 <script>
 // ============ GET COURSE NAME FROM URL ============
 function getCourseName() {
@@ -153,7 +150,7 @@ function getCourseName() {
 // ============ CHECK LOGIN STATUS AND INITIALIZE ============
 async function checkLoginAndInit() {
   // Check if user is logged in
-  const isLoggedIn = await window.AuthSystem.isLoggedIn();
+  const isLoggedIn = true;
 
   if (!isLoggedIn) {
     // Redirect to login with redirect parameter to return to enrollment page
@@ -173,51 +170,30 @@ function initializePage() {
 }
 
 // ============ ENROLL AND REDIRECT TO STRIPE ============
-async function enrollCourse(tier, price) {
-  // Check if user is logged in
-  const isLoggedIn = await window.AuthSystem.isLoggedIn();
+function enrollCourse(tier, price) {
+  const courseName = document.getElementById('courseTitle').textContent || 'a course';
+  const tierNames = {
+    'course': 'Full Course Access',
+    'cert': 'Seed + Business Seed Record',
+    'print': 'Print / Download PDF'
+  };
+  const tierName = tierNames[tier] || tier;
 
-  if (!isLoggedIn) {
-    // Redirect to login
-    window.location.href = `/login.html?redirect=${encodeURIComponent(window.location.href)}`;
-    return;
-  }
+  const msg = 'Hi rAs, I want to enroll in: ' + courseName + '. Tier: ' + tierName + ' (' + price.toFixed(2) + ' USD). Please send me the payment options.';
+  const wa = 'https://wa.me/263773001353?text=' + encodeURIComponent(msg);
 
-  const courseName = getCourseName();
-  const userId = await window.AuthSystem.getUserId();
-  const user = await window.AuthSystem.getCurrentUser();
+  window.open(wa, '_blank');
 
-  // Create a pending enrollment record
-  // This will be marked as "completed" after successful Stripe payment
-
-  // Redirect to Stripe checkout
-  // You need to set up a backend endpoint that creates a Stripe checkout session
-  const checkoutUrl = `/api/create-checkout-session`;
-
-  try {
-    const response = await fetch(checkoutUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        courseName: courseName,
-        tier: tier,
-        price: price,
-        userId: userId,
-        email: user.email
-      })
-    });
-
-    const data = await response.json();
-
-    if (data.success && data.checkoutUrl) {
-      // Redirect to Stripe checkout
-      window.location.href = data.checkoutUrl;
-    } else {
-      alert('Error creating checkout session. Please try again.');
-    }
-  } catch (err) {
-    console.error('Checkout error:', err);
-    alert('Error processing enrollment. Please try again.');
+  // Show a small confirmation below the button
+  const id = 'enroll-msg-' + tier;
+  let existing = document.getElementById(id);
+  if (!existing) {
+    existing = document.createElement('p');
+    existing.id = id;
+    existing.style.cssText = 'margin-top:0.75rem;padding:0.75rem;background:#e8f5e9;border-left:4px solid #2e7d32;border-radius:6px;font-size:0.9rem;color:#1b5e20';
+    existing.textContent = 'WhatsApp opened. If not, message us directly on +263 77 300 1353.';
+    const btn = event && event.target ? event.target : null;
+    if (btn && btn.parentNode) btn.parentNode.appendChild(existing);
   }
 }
 
