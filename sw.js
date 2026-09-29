@@ -1,4 +1,4 @@
-﻿const CACHE = 'ras-v2';
+const CACHE = 'ras-v2';
 const CORE = [
   '/',
   '/index.html',
