@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - Video Library - rise AFRICA skills</title>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,sans-serif;background:#f7f7f7;color:#222;line-height:1.6;padding:20px}
+.container{max-width:900px;margin:0 auto}
+h1{color:#006c35;margin-bottom:20px}
+.card{background:#fff;border-radius:10px;padding:24px;box-shadow:0 2px 6px rgba(0,0,0,.06);margin-bottom:20px}
+label{display:block;font-weight:600;margin:12px 0 4px;font-size:.9rem}
+input,select,textarea{width:100%;padding:10px;border:1px solid #ccc;border-radius:6px;font-family:inherit;font-size:.95rem}
+textarea{min-height:70px;resize:vertical}
+button{background:#006c35;color:#fff;border:none;padding:12px 24px;border-radius:6px;font-weight:600;cursor:pointer;margin-top:16px;font-size:.95rem}
+button:hover{background:#005a2c}
+button.danger{background:#b00020}
+button.danger:hover{background:#8a001a}
+.status{margin-top:12px;padding:10px;border-radius:6px;display:none;font-size:.9rem}
+.status.show{display:block}
+.status.ok{background:#d4edda;color:#155724}
+.status.err{background:#f8d7da;color:#721c24}
+.video-row{background:#fafafa;padding:12px;border-radius:6px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.video-row .info{flex:1;font-size:.9rem}
+.video-row .info b{color:#006c35}
+.video-row button{padding:6px 14px;font-size:.8rem;margin:0}
+.hidden{display:none}
+small{color:#666;font-size:.8rem;display:block;margin-top:4px}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Video Library Admin</h1>
+
+<div id="loginBox" class="card">
+  <h2 style="font-size:1.1rem;margin-bottom:12px">Log In</h2>
+  <label>Email</label>
+  <input type="email" id="email" value="all@riseafricaskills.com" autocomplete="username">
+  <label>Password</label>
+  <input type="password" id="password" autocomplete="current-password">
+  <button onclick="doLogin()">Log In</button>
+  <div id="loginStatus" class="status"></div>
+</div>
+
+<div id="appBox" class="card hidden">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+    <h2 style="font-size:1.1rem">Add Video</h2>
+    <button onclick="doLogout()" style="background:#888;padding:8px 16px;font-size:.85rem">Log Out</button>
+  </div>
+
+  <label>Category <small>e.g. POULTRY, AGRICULTURE, FOOD PROCESSING</small></label>
+  <input type="text" id="v_cat" placeholder="POULTRY">
+
+  <label>Title</label>
+  <input type="text" id="v_title" placeholder="Chicken Profits">
+
+  <label>Description</label>
+  <textarea id="v_desc" placeholder="Real, practical and profitable poultry farming."></textarea>
+
+  <label>Channel Name</label>
+  <input type="text" id="v_channel" placeholder="Chicken Profits">
+
+  <label>YouTube URL</label>
+  <input type="url" id="v_url" placeholder="https://www.youtube.com/@ChickenProfits.24H">
+
+  <button onclick="addVideo()">Add Video</button>
+  <div id="addStatus" class="status"></div>
+</div>
+
+<div id="listBox" class="card hidden">
+  <h2 style="font-size:1.1rem;margin-bottom:12px">Existing Videos</h2>
+  <div id="videoList"></div>
+</div>
+
+</div>
+
+<script>
+const SUPA = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
+const KEY = 'sb_publishable_zAO9Nei4xwd_aCdqF0tNlg_Be2SYl5K';
+const client = window.supabase.createClient(SUPA, KEY);
+
+function show(id, msg, ok) {
+  const el = document.getElementById(id);
+  el.className = 'status show ' + (ok ? 'ok' : 'err');
+  el.textContent = msg;
+}
+
+async function doLogin() {
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  show('loginStatus', 'Logging in...', true);
+  const { data, error } = await client.auth.signInWithPassword({ email, password });
+  if (error) { show('loginStatus', 'Login failed: ' + error.message, false); return; }
+  show('loginStatus', 'Logged in as ' + data.user.email, true);
+  document.getElementById('loginBox').classList.add('hidden');
+  document.getElementById('appBox').classList.remove('hidden');
+  document.getElementById('listBox').classList.remove('hidden');
+  loadVideos();
+}
+
+async function doLogout() {
+  await client.auth.signOut();
+  location.reload();
+}
+
+async function addVideo() {
+  const cat = document.getElementById('v_cat').value.trim().toUpperCase();
+  const title = document.getElementById('v_title').value.trim();
+  const description = document.getElementById('v_desc').value.trim();
+  const channel = document.getElementById('v_channel').value.trim();
+  const url = document.getElementById('v_url').value.trim();
+
+  if (!cat || !title || !url) { show('addStatus', 'Category, Title and URL are required', false); return; }
+
+  show('addStatus', 'Saving...', true);
+  const { error } = await client.from('videos').insert({ cat, title, description, channel, url });
+  if (error) { show('addStatus', 'Failed: ' + error.message, false); return; }
+  show('addStatus', 'Video added successfully', true);
+  document.getElementById('v_title').value = '';
+  document.getElementById('v_desc').value = '';
+  document.getElementById('v_channel').value = '';
+  document.getElementById('v_url').value = '';
+  loadVideos();
+}
+
+async function loadVideos() {
+  const { data, error } = await client.from('videos').select('*').order('created_at', { ascending: false });
+  if (error) { document.getElementById('videoList').textContent = 'Error: ' + error.message; return; }
+  const box = document.getElementById('videoList');
+  if (!data.length) { box.innerHTML = '<p style="color:#666">No videos yet.</p>'; return; }
+  box.innerHTML = data.map(v =>
+    '<div class="video-row">' +
+      '<div class="info"><b>' + v.cat + '</b> - ' + v.title + '<br><span style="color:#666">' + v.url + '</span></div>' +
+      '<button class="danger" onclick="deleteVideo(' + v.id + ')">Delete</button>' +
+    '</div>'
+  ).join('');
+}
+
+async function deleteVideo(id) {
+  if (!confirm('Delete this video?')) return;
+  const { error } = await client.from('videos').delete().eq('id', id);
+  if (error) { alert('Delete failed: ' + error.message); return; }
+  loadVideos();
+}
+
+client.auth.getSession().then(({ data }) => {
+  if (data.session) {
+    document.getElementById('loginBox').classList.add('hidden');
+    document.getElementById('appBox').classList.remove('hidden');
+    document.getElementById('listBox').classList.remove('hidden');
+    loadVideos();
+  }
+});
+</script>
+</body>
+</html>
