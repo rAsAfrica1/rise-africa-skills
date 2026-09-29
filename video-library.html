@@ -23,6 +23,7 @@
   .footer { margin-top:3rem; padding-top:1.5rem; border-top:1px solid #e5e5e5; font-size:.85rem; color:#666; text-align:center; }
   .footer a { color:#2a7; }
 </style>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -131,6 +132,51 @@ cats.forEach((c, i) => {
   };
   filterBox.appendChild(b);
 });
+
+
+// ---------- Admin-added videos from Supabase ----------
+(function(){
+  if (window._supabaseVideosFetched) return;
+  window._supabaseVideosFetched = true;
+  if (!window.supabase || !window.supabase.createClient) return;
+  var SUPA = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
+  var KEY = 'sb_publishable_zAO9Nei4xwd_aCdqF0tNlg_Be2SYl5K';
+  try {
+    var client = window.supabase.createClient(SUPA, KEY);
+    client.from('videos').select('*').order('created_at', { ascending: false }).then(function(res){
+      if (res.error) { console.warn('Supabase videos fetch failed:', res.error.message); return; }
+      if (!res.data || !res.data.length) return;
+      var existingUrls = new Set(videos.map(function(v){ return v.url; }));
+      res.data.forEach(function(row){
+        if (existingUrls.has(row.url)) return;
+        videos.push({
+          cat: row.cat || 'MISC',
+          title: row.title || '',
+          desc: row.description || '',
+          channel: row.channel || '',
+          url: row.url
+        });
+      });
+      // Rebuild filter buttons
+      filterBox.innerHTML = '';
+      var newCats = ['All'].concat(Array.from(new Set(videos.map(function(v){ return v.cat; }))).sort());
+      newCats.forEach(function(c, i){
+        var b = document.createElement('button');
+        b.textContent = c === 'All' ? ('All (' + videos.length + ')') : (c + ' (' + videos.filter(function(v){ return v.cat === c; }).length + ')');
+        if (i === 0) b.classList.add('active');
+        b.onclick = function(){
+          document.querySelectorAll('.filters button').forEach(function(x){ x.classList.remove('active'); });
+          b.classList.add('active');
+          render(c === 'All' ? videos : videos.filter(function(v){ return v.cat === c; }));
+        };
+        filterBox.appendChild(b);
+      });
+      render(videos);
+    });
+  } catch (e) {
+    console.warn('Supabase init failed:', e.message);
+  }
+})();
 
 render(videos);
 </script>
