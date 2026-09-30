@@ -1,6 +1,13 @@
 (function () {
   const SUPABASE_URL = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc';
+  // -----------------------------------------------------------------
+  // Free content: kids courses and language courses are never locked.
+  // -----------------------------------------------------------------
+  var _rasPath = window.location.pathname.toLowerCase();
+  if (/\/kids-|\/kids\.html$/.test(_rasPath) || /-language-/.test(_rasPath)) {
+    return;
+  }
 
   if (/-module-?\d+\.html$/i.test(window.location.pathname)) {
     if (/-module-?\d+\.html$/i.test(window.location.pathname)) {
