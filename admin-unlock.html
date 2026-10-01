@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin - Unlock a course | rise AFRICA skills</title>
+<meta name="robots" content="noindex,nofollow">
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f0f1a;color:#e8e3f0;line-height:1.6}
+.wrap{max-width:900px;margin:0 auto;padding:24px 18px}
+header{background:rgba(15,15,26,.96);border-bottom:1px solid rgba(201,162,39,.22);padding:14px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+header .brand{font-weight:800;font-size:1rem;color:#C9A227;font-family:'Baloo 2',sans-serif}
+header .user{margin-left:auto;color:#9a9ab0;font-size:.85rem}
+header button.signout{background:transparent;border:1px solid #C9A227;color:#C9A227;padding:6px 14px;border-radius:20px;cursor:pointer;font:inherit;font-size:.82rem;font-weight:700}
+h1{font-family:'Baloo 2',sans-serif;color:#C9A227;font-size:1.6rem;margin-bottom:8px}
+h2{font-family:'Baloo 2',sans-serif;color:#C9A227;font-size:1.15rem;margin-bottom:12px}
+.card{background:#1a1730;border:1px solid rgba(201,162,39,.18);border-radius:14px;padding:20px;margin-bottom:16px}
+label{display:block;font-size:.85rem;font-weight:600;margin-bottom:6px;color:#c8c2d8}
+input,select,textarea{width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(201,162,39,.25);background:#12101f;color:#e8e3f0;font:inherit;font-size:.95rem;margin-bottom:14px}
+input:focus,select:focus,textarea:focus{outline:2px solid #C9A227;outline-offset:1px}
+button.primary{background:#2ecc71;color:#0a0a14;border:none;padding:12px 24px;border-radius:8px;font:inherit;font-weight:800;font-size:.95rem;cursor:pointer;width:100%}
+button.primary:hover{opacity:.9}
+button.primary:disabled{opacity:.5;cursor:not-allowed}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.grid2{grid-template-columns:1fr}}
+.msg{padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:.9rem;display:none}
+.msg.ok{background:rgba(46,204,113,.15);border-left:4px solid #2ecc71;color:#a7f3d0;display:block}
+.msg.err{background:rgba(231,76,60,.15);border-left:4px solid #e74c3c;color:#fecaca;display:block}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid rgba(255,255,255,.06)}
+th{color:#9a9ab0;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+td.ok{color:#a7f3d0}
+.login-box{max-width:420px;margin:80px auto;background:#1a1730;border:1px solid rgba(201,162,39,.25);border-radius:14px;padding:28px}
+.login-box h1{text-align:center;margin-bottom:6px}
+.login-box p.sub{text-align:center;color:#9a9ab0;font-size:.9rem;margin-bottom:20px}
+.hint{font-size:.8rem;color:#9a9ab0;margin-top:-8px;margin-bottom:12px}
+</style>
+</head>
+<body>
+
+<header id="hdr" style="display:none">
+  <span class="brand">rAs Admin</span>
+  <span class="user" id="userEmail"></span>
+  <button class="signout" id="signOutBtn">Sign out</button>
+</header>
+
+<div id="app" class="wrap"><p style="text-align:center;padding:60px 0;color:#9a9ab0">Loading...</p></div>
+
+<script>
+const SUPA_URL = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc';
+
+const sb = supabase.createClient(SUPA_URL, SUPA_KEY);
+const app = document.getElementById('app');
+const hdr = document.getElementById('hdr');
+const userEmailEl = document.getElementById('userEmail');
+
+function esc(s){ return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+async function init() {
+  const { data: { user } } = await sb.auth.getUser();
+  if (!user) return renderLogin();
+
+  const { data: adminRow } = await sb.from('admins').select('email').eq('email', user.email).maybeSingle();
+  if (!adminRow) return renderNotAdmin(user);
+
+  hdr.style.display = 'flex';
+  userEmailEl.textContent = user.email;
+  renderAdmin(user);
+}
+
+function renderLogin() {
+  hdr.style.display = 'none';
+  app.innerHTML = `
+    <div class="login-box">
+      <h1>Admin sign in</h1>
+      <p class="sub">rise AFRICA skills</p>
+      <div class="msg err" id="err"></div>
+      <form id="loginForm">
+        <label>Email</label>
+        <input type="email" id="email" required autocomplete="email">
+        <label>Password</label>
+        <input type="password" id="password" required autocomplete="current-password">
+        <button type="submit" class="primary">Sign in</button>
+      </form>
+    </div>`;
+  document.getElementById('loginForm').onsubmit = async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const err = document.getElementById('err');
+    err.className = 'msg err';
+    err.textContent = '';
+    const { error } = await sb.auth.signInWithPassword({ email, password });
+    if (error) { err.textContent = error.message; return; }
+    init();
+  };
+}
+
+function renderNotAdmin(user) {
+  hdr.style.display = 'none';
+  app.innerHTML = `<div class="login-box">
+    <h1>Not authorized</h1>
+    <p class="sub">Signed in as ${esc(user.email)}</p>
+    <p style="color:#fecaca;font-size:.9rem;margin-bottom:16px">This account is not in the admins list.</p>
+    <button class="primary" id="so">Sign out</button>
+  </div>`;
+  document.getElementById('so').onclick = async () => { await sb.auth.signOut(); init(); };
+}
+
+function renderAdmin(user) {
+  app.innerHTML = `
+    <h1>Unlock a course</h1>
+    <p style="color:#9a9ab0;font-size:.92rem;margin-bottom:20px">Customer paid by EcoCash or WhatsApp? Type their email and the course slug below. One click gives them access.</p>
+
+    <div class="msg" id="msg"></div>
+
+    <div class="card">
+      <h2>New unlock</h2>
+      <form id="unlockForm">
+        <label>Customer email</label>
+        <input type="email" id="custEmail" required placeholder="customer@example.com">
+        <label>Course slug</label>
+        <input type="text" id="courseSlug" required placeholder="organic-seed" list="slugList">
+        <datalist id="slugList">
+          <option value="organic-seed">
+          <option value="bakery">
+          <option value="pig-farming">
+          <option value="poultry">
+          <option value="fish-farming">
+          <option value="beef-farming">
+          <option value="tomato-farming">
+          <option value="how-to-start-a-business-in-africa">
+        </datalist>
+        <div class="hint">The slug is the filename without -course.html or -module-N.html. Example: organic-seed</div>
+
+        <div class="grid2">
+          <div>
+            <label>Amount (USD)</label>
+            <input type="number" id="amount" step="0.01" value="1.00">
+          </div>
+          <div>
+            <label>Payment method</label>
+            <select id="method">
+              <option value="ecocash">EcoCash</option>
+              <option value="onemoney">OneMoney</option>
+              <option value="mpesa">M-Pesa</option>
+              <option value="airtel">Airtel Money</option>
+              <option value="whatsapp">WhatsApp / other</option>
+              <option value="bank">Bank transfer</option>
+              <option value="cash">Cash</option>
+            </select>
+          </div>
+        </div>
+
+        <label>Reference (optional)</label>
+        <input type="text" id="ref" placeholder="Transaction ID or note">
+
+        <button type="submit" class="primary" id="submitBtn">Unlock course</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Recent unlocks <button class="signout" id="refresh" style="float:right">Refresh</button></h2>
+      <div id="recent"><p style="color:#9a9ab0">Loading...</p></div>
+    </div>
+  `;
+
+  document.getElementById('refresh').onclick = loadRecent;
+  document.getElementById('unlockForm').onsubmit = async (e) => {
+    e.preventDefault();
+    await doUnlock();
+  };
+  loadRecent();
+}
+
+async function doUnlock() {
+  const msg = document.getElementById('msg');
+  const btn = document.getElementById('submitBtn');
+  msg.className = 'msg';
+
+  const email = document.getElementById('custEmail').value.trim().toLowerCase();
+  const slug = document.getElementById('courseSlug').value.trim().toLowerCase();
+  const amount = parseFloat(document.getElementById('amount').value) || 1;
+  const method = document.getElementById('method').value;
+  const ref = document.getElementById('ref').value.trim();
+
+  if (!email || !slug) { msg.className='msg err'; msg.textContent='Email and course slug are required.'; return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Unlocking...';
+
+  try {
+    // 1. Insert into enrollments (this is what gives access)
+    const { error: e1 } = await sb.from('enrollments').insert({
+      user_email: email,
+      course_id: slug,
+      tier: 'course',
+      status: 'active',
+      progress_percent: 0,
+      is_gift: false,
+      archived: false
+    });
+    if (e1 && !String(e1.message).includes('duplicate')) throw new Error('Enrollment: ' + e1.message);
+
+    // 2. Log to payments for record keeping
+    await sb.from('payments').insert({
+      course_id: slug,
+      amount: amount,
+      currency: 'USD',
+      payment_method: method,
+      status: 'completed',
+      transaction_id: ref || ('WHATSAPP-' + Date.now())
+    }).then(()=>{}).catch(()=>{});
+
+    msg.className = 'msg ok';
+    msg.innerHTML = 'Unlocked <strong>' + esc(slug) + '</strong> for <strong>' + esc(email) + '</strong>. They have access now.';
+    document.getElementById('unlockForm').reset();
+    document.getElementById('amount').value = '1.00';
+    loadRecent();
+  } catch (err) {
+    msg.className = 'msg err';
+    msg.textContent = 'Error: ' + err.message;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Unlock course';
+  }
+}
+
+async function loadRecent() {
+  const el = document.getElementById('recent');
+  const { data, error } = await sb
+    .from('enrollments')
+    .select('user_email,course_id,tier,status,enrolled_at')
+    .order('enrolled_at', { ascending: false })
+    .limit(25);
+
+  if (error) { el.innerHTML = '<p style="color:#fecaca">' + esc(error.message) + '</p>'; return; }
+  if (!data || !data.length) { el.innerHTML = '<p style="color:#9a9ab0">No enrollments yet.</p>'; return; }
+
+  el.innerHTML = '<table><thead><tr><th>Email</th><th>Course</th><th>Status</th><th>When</th></tr></thead><tbody>' +
+    data.map(r => {
+      const t = r.enrolled_at ? new Date(r.enrolled_at).toLocaleString() : '';
+      return '<tr><td>' + esc(r.user_email||'') + '</td><td>' + esc(r.course_id||'') + '</td><td class="ok">' + esc(r.status||'') + '</td><td>' + esc(t) + '</td></tr>';
+    }).join('') +
+    '</tbody></table>';
+}
+
+document.getElementById('signOutBtn').onclick = async () => { await sb.auth.signOut(); init(); };
+
+init();
+</script>
+</body>
+</html>
