@@ -28,6 +28,7 @@ button.primary:disabled{opacity:.5;cursor:not-allowed}
 .msg{padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:.9rem;display:none}
 .msg.ok{background:rgba(46,204,113,.15);border-left:4px solid #2ecc71;color:#a7f3d0;display:block}
 .msg.err{background:rgba(231,76,60,.15);border-left:4px solid #e74c3c;color:#fecaca;display:block}
+.msg.info{background:rgba(52,152,219,.15);border-left:4px solid #3498db;color:#bfdbfe;display:block}
 table{width:100%;border-collapse:collapse;font-size:.88rem}
 th,td{text-align:left;padding:10px 8px;border-bottom:1px solid rgba(255,255,255,.06)}
 th{color:#9a9ab0;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700}
@@ -59,6 +60,10 @@ const userEmailEl = document.getElementById('userEmail');
 
 function esc(s){ return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
+function slugToTitle(slug) {
+  return slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+}
+
 async function init() {
   const { data: { user } } = await sb.auth.getUser();
   if (!user) return renderLogin();
@@ -73,19 +78,7 @@ async function init() {
 
 function renderLogin() {
   hdr.style.display = 'none';
-  app.innerHTML = `
-    <div class="login-box">
-      <h1>Admin sign in</h1>
-      <p class="sub">rise AFRICA skills</p>
-      <div class="msg err" id="err"></div>
-      <form id="loginForm">
-        <label>Email</label>
-        <input type="email" id="email" required autocomplete="email">
-        <label>Password</label>
-        <input type="password" id="password" required autocomplete="current-password">
-        <button type="submit" class="primary">Sign in</button>
-      </form>
-    </div>`;
+  app.innerHTML = '<div class="login-box"><h1>Admin sign in</h1><p class="sub">rise AFRICA skills</p><div class="msg err" id="err"></div><form id="loginForm"><label>Email</label><input type="email" id="email" required autocomplete="email"><label>Password</label><input type="password" id="password" required autocomplete="current-password"><button type="submit" class="primary">Sign in</button></form></div>';
   document.getElementById('loginForm').onsubmit = async (e) => {
     e.preventDefault();
     const email = document.getElementById('email').value;
@@ -101,72 +94,32 @@ function renderLogin() {
 
 function renderNotAdmin(user) {
   hdr.style.display = 'none';
-  app.innerHTML = `<div class="login-box">
-    <h1>Not authorized</h1>
-    <p class="sub">Signed in as ${esc(user.email)}</p>
-    <p style="color:#fecaca;font-size:.9rem;margin-bottom:16px">This account is not in the admins list.</p>
-    <button class="primary" id="so">Sign out</button>
-  </div>`;
+  app.innerHTML = '<div class="login-box"><h1>Not authorized</h1><p class="sub">Signed in as ' + esc(user.email) + '</p><p style="color:#fecaca;font-size:.9rem;margin-bottom:16px">This account is not in the admins list.</p><button class="primary" id="so">Sign out</button></div>';
   document.getElementById('so').onclick = async () => { await sb.auth.signOut(); init(); };
 }
 
 function renderAdmin(user) {
-  app.innerHTML = `
-    <h1>Unlock a course</h1>
-    <p style="color:#9a9ab0;font-size:.92rem;margin-bottom:20px">Customer paid by EcoCash or WhatsApp? Type their email and the course slug below. One click gives them access.</p>
-
-    <div class="msg" id="msg"></div>
-
-    <div class="card">
-      <h2>New unlock</h2>
-      <form id="unlockForm">
-        <label>Customer email</label>
-        <input type="email" id="custEmail" required placeholder="customer@example.com">
-        <label>Course slug</label>
-        <input type="text" id="courseSlug" required placeholder="organic-seed" list="slugList">
-        <datalist id="slugList">
-          <option value="organic-seed">
-          <option value="bakery">
-          <option value="pig-farming">
-          <option value="poultry">
-          <option value="fish-farming">
-          <option value="beef-farming">
-          <option value="tomato-farming">
-          <option value="how-to-start-a-business-in-africa">
-        </datalist>
-        <div class="hint">The slug is the filename without -course.html or -module-N.html. Example: organic-seed</div>
-
-        <div class="grid2">
-          <div>
-            <label>Amount (USD)</label>
-            <input type="number" id="amount" step="0.01" value="1.00">
-          </div>
-          <div>
-            <label>Payment method</label>
-            <select id="method">
-              <option value="ecocash">EcoCash</option>
-              <option value="onemoney">OneMoney</option>
-              <option value="mpesa">M-Pesa</option>
-              <option value="airtel">Airtel Money</option>
-              <option value="whatsapp">WhatsApp / other</option>
-              <option value="bank">Bank transfer</option>
-              <option value="cash">Cash</option>
-            </select>
-          </div>
-        </div>
-
-        <label>Reference (optional)</label>
-        <input type="text" id="ref" placeholder="Transaction ID or note">
-
-        <button type="submit" class="primary" id="submitBtn">Unlock course</button>
-      </form>
-    </div>
-
-    <div class="card">
-      <h2>Recent unlocks <button class="signout" id="refresh" style="float:right">Refresh</button></h2>
-      <div id="recent"><p style="color:#9a9ab0">Loading...</p></div>
-    </div>
-  `;
+  app.innerHTML = '<h1>Unlock a course</h1><p style="color:#9a9ab0;font-size:.92rem;margin-bottom:20px">Customer paid by EcoCash or WhatsApp? Type their email and the course slug. If the course does not exist in the database yet, it will be created automatically.</p>'
+    + '<div class="msg" id="msg"></div>'
+    + '<div class="card"><h2>New unlock</h2>'
+    + '<form id="unlockForm">'
+    + '<label>Customer email</label>'
+    + '<input type="email" id="custEmail" required placeholder="customer@example.com">'
+    + '<label>Course slug</label>'
+    + '<input type="text" id="courseSlug" required placeholder="organic-seed" list="slugList">'
+    + '<datalist id="slugList">'
+    + '<option value="organic-seed"><option value="bakery"><option value="pig-farming"><option value="poultry"><option value="fish-farming"><option value="beef-farming"><option value="tomato-farming"><option value="how-to-start-a-business-in-africa"><option value="kids-claude-junior"><option value="kids-drones-junior">'
+    + '</datalist>'
+    + '<div class="hint">The slug is the filename without -course.html or -module-N.html. Example: organic-seed</div>'
+    + '<div class="grid2">'
+    + '<div><label>Amount (USD)</label><input type="number" id="amount" step="0.01" value="1.00"></div>'
+    + '<div><label>Payment method</label><select id="method"><option value="ecocash">EcoCash</option><option value="onemoney">OneMoney</option><option value="mpesa">M-Pesa</option><option value="airtel">Airtel Money</option><option value="whatsapp">WhatsApp / other</option><option value="bank">Bank transfer</option><option value="cash">Cash</option></select></div>'
+    + '</div>'
+    + '<label>Reference (optional)</label>'
+    + '<input type="text" id="ref" placeholder="Transaction ID or note">'
+    + '<button type="submit" class="primary" id="submitBtn">Unlock course</button>'
+    + '</form></div>'
+    + '<div class="card"><h2>Recent unlocks <button class="signout" id="refresh" style="float:right">Refresh</button></h2><div id="recent"><p style="color:#9a9ab0">Loading...</p></div></div>';
 
   document.getElementById('refresh').onclick = loadRecent;
   document.getElementById('unlockForm').onsubmit = async (e) => {
@@ -190,11 +143,48 @@ async function doUnlock() {
   if (!email || !slug) { msg.className='msg err'; msg.textContent='Email and course slug are required.'; return; }
 
   btn.disabled = true;
-  btn.textContent = 'Unlocking...';
+  btn.textContent = 'Working...';
 
   try {
-    // 1. Insert into enrollments (this is what gives access)
-    const { error: e1 } = await sb.from('enrollments').insert({
+    // Step 1: Check if course exists
+    msg.className = 'msg info';
+    msg.textContent = 'Checking course...';
+
+    const { data: existingCourse, error: checkErr } = await sb
+      .from('courses')
+      .select('slug,title')
+      .eq('slug', slug)
+      .maybeSingle();
+
+    if (checkErr) throw new Error('Course check: ' + checkErr.message);
+
+    let courseCreated = false;
+
+    // Step 2: Create course if missing
+    if (!existingCourse) {
+      msg.textContent = 'Course not found. Creating "' + slugToTitle(slug) + '"...';
+
+      const { error: createErr } = await sb.from('courses').insert({
+        id: slug,
+        slug: slug,
+        title: slugToTitle(slug),
+        instructor: 'rise AFRICA Skills',
+        price: 1,
+        level: 'Beginner',
+        duration_minutes: 0,
+        enrollment_count: 0,
+        rating: 0,
+        description: 'Auto-created from admin panel'
+      });
+
+      if (createErr) throw new Error('Create course: ' + createErr.message);
+      courseCreated = true;
+    }
+
+    // Step 3: Insert enrollment (gives access)
+    msg.textContent = 'Inserting enrollment...';
+
+    const { error: enrollErr } = await sb.from('enrollments').insert({
       user_email: email,
       course_id: slug,
       tier: 'premium',
@@ -203,9 +193,12 @@ async function doUnlock() {
       is_gift: false,
       archived: false
     });
-    if (e1 && !String(e1.message).includes('duplicate')) throw new Error('Enrollment: ' + e1.message);
 
-    // 2. Log to payments for record keeping
+    if (enrollErr && !String(enrollErr.message).includes('duplicate')) {
+      throw new Error('Enrollment: ' + enrollErr.message);
+    }
+
+    // Step 4: Log to payments (best effort, ignore errors)
     await sb.from('payments').insert({
       course_id: slug,
       amount: amount,
@@ -216,10 +209,16 @@ async function doUnlock() {
     }).then(()=>{}).catch(()=>{});
 
     msg.className = 'msg ok';
-    msg.innerHTML = 'Unlocked <strong>' + esc(slug) + '</strong> for <strong>' + esc(email) + '</strong>. They have access now.';
+    let html = 'Unlocked <strong>' + esc(slug) + '</strong> for <strong>' + esc(email) + '</strong>.';
+    if (courseCreated) {
+      html += ' <br>(Also created the course entry in the database.)';
+    }
+    msg.innerHTML = html;
+
     document.getElementById('unlockForm').reset();
     document.getElementById('amount').value = '1.00';
     loadRecent();
+
   } catch (err) {
     msg.className = 'msg err';
     msg.textContent = 'Error: ' + err.message;
@@ -240,12 +239,12 @@ async function loadRecent() {
   if (error) { el.innerHTML = '<p style="color:#fecaca">' + esc(error.message) + '</p>'; return; }
   if (!data || !data.length) { el.innerHTML = '<p style="color:#9a9ab0">No enrollments yet.</p>'; return; }
 
-  el.innerHTML = '<table><thead><tr><th>Email</th><th>Course</th><th>Status</th><th>When</th></tr></thead><tbody>' +
-    data.map(r => {
+  el.innerHTML = '<table><thead><tr><th>Email</th><th>Course</th><th>Status</th><th>When</th></tr></thead><tbody>'
+    + data.map(r => {
       const t = r.enrolled_at ? new Date(r.enrolled_at).toLocaleString() : '';
       return '<tr><td>' + esc(r.user_email||'') + '</td><td>' + esc(r.course_id||'') + '</td><td class="ok">' + esc(r.status||'') + '</td><td>' + esc(t) + '</td></tr>';
-    }).join('') +
-    '</tbody></table>';
+    }).join('')
+    + '</tbody></table>';
 }
 
 document.getElementById('signOutBtn').onclick = async () => { await sb.auth.signOut(); init(); };
