@@ -168,7 +168,9 @@ function initializePage() {
   document.getElementById('courseDesc').textContent = `Enroll in ${courseName} and start learning today.`;
 }
 
-// ============ ENROLL VIA WHATSAPP ============
+// ============ ENROLL VIA STRIPE ============
+const STRIPE_ONE_DOLLAR = 'https://buy.stripe.com/00wfZh9203p33m3eQ42sM06';
+
 function enrollCourse(tier, price) {
   const courseName = document.getElementById('courseTitle').textContent || 'a course';
   const tierNames = {
@@ -178,28 +180,26 @@ function enrollCourse(tier, price) {
   };
   const tierName = tierNames[tier] || tier;
 
-  const msg = 'Hi rAs, I want to enroll in: ' + courseName + '. Tier: ' + tierName + ' (' + price.toFixed(2) + ' USD). Please send me the payment options.';
-  const wa = 'https://wa.me/447359724755?text=' + encodeURIComponent(msg);
+  const ref = courseName + ' - ' + tierName;
+  const stripeUrl = STRIPE_ONE_DOLLAR + '?client_reference_id=' + encodeURIComponent(ref);
 
-  window.open(wa, '_blank');
+  window.open(stripeUrl, '_blank');
 
-  // Show a small confirmation below the button
+  // Small confirmation below the button
   const id = 'enroll-msg-' + tier;
   let existing = document.getElementById(id);
   if (!existing) {
     existing = document.createElement('p');
     existing.id = id;
     existing.style.cssText = 'margin-top:0.75rem;padding:0.75rem;background:#e8f5e9;border-left:4px solid #2e7d32;border-radius:6px;font-size:0.9rem;color:#1b5e20';
-    existing.textContent = 'WhatsApp opened. If not, message us directly on +44 7359 724755.';
+    existing.textContent = 'Stripe checkout opened in a new tab. Complete your $1 payment there.';
     const btn = event && event.target ? event.target : null;
     if (btn && btn.parentNode) btn.parentNode.appendChild(existing);
   }
 }
-
 // Initialize when page loads - checks login status first
 document.addEventListener('DOMContentLoaded', checkLoginAndInit);
 </script>
 
 </body>
 </html>
-
