@@ -6,7 +6,7 @@
        window.RAS_COURSE_SLUG   e.g. "butchery"
        window.RAS_MODULE_NUM    e.g. 10
        window.RAS_MODULE_TITLE  e.g. "Curing, Smoking and Drying"
-       window.RAS_WHATSAPP      e.g. "263773001353"
+       window.RAS_WHATSAPP      e.g. "447359834272"
 
    Students record on a phone, upload to their own YouTube account as
    Unlisted, and paste the link here. Nothing is stored on our servers except
@@ -25,7 +25,7 @@
   var COURSE = window.RAS_COURSE_SLUG || '';
   var MODULE = parseInt(window.RAS_MODULE_NUM, 10) || 0;
   var MTITLE = window.RAS_MODULE_TITLE || '';
-  var WA     = window.RAS_WHATSAPP || '263773001353';
+  var WA     = window.RAS_WHATSAPP || '447359834272';
 
   var client = null;
   var email  = null;

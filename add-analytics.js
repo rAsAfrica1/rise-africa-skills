@@ -1,4 +1,4 @@
-﻿const fs = require('fs');
+const fs = require('fs');
 let h = fs.readFileSync('course.html','utf8');
 
 if (h.indexOf('rAs-analytics') >= 0) {
@@ -35,8 +35,8 @@ const snippet = `
     var href=a.getAttribute('href')||'';
     if(href.indexOf('wa.me/')<0)return;
     var ch='unknown';
-    if(href.indexOf('263776881941')>=0)ch='zim';
-    else if(href.indexOf('447359724755')>=0)ch='uk';
+    if(href.indexOf('447359834272')>=0)ch='zim';
+    else if(href.indexOf('447359834272')>=0)ch='uk';
     else return;
     track('pay_click',{course_id:courseId,channel:ch});
   },true);

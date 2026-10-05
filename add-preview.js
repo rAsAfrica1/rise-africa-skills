@@ -1,4 +1,4 @@
-﻿const fs = require('fs');
+const fs = require('fs');
 let h = fs.readFileSync('course.html', 'utf8');
 
 if (h.indexOf('rAs-preview') >= 0) {
@@ -22,8 +22,8 @@ const NEW = `  function locked(notLoggedIn){
     var actions = notLoggedIn
       ? '<a class="btn" href="my-courses.html">Log in or create account</a>' + syllabus
       : '<a class="btn" href="enroll.html?course=' + encodeURIComponent(slug) + '&tier=course">Pay $8 to unlock</a>' +
-        '<a class="btn alt" href="https://wa.me/263776881941?text=' + encodeURIComponent('Hi rAs, I want to pay for ' + slug + ' (Zimbabwe) by EcoCash') + '">💚 Pay via WhatsApp (Zimbabwe)</a>' +
-        '<a class="btn alt" href="https://wa.me/447359724755?text=' + encodeURIComponent('Hi rAs, I want to pay for ' + slug + ' (UK)') + '">💚 Pay via WhatsApp (UK)</a>' +
+        '<a class="btn alt" href="https://wa.me/447359834272?text=' + encodeURIComponent('Hi rAs, I want to pay for ' + slug + ' (Zimbabwe) by EcoCash') + '">💚 Pay via WhatsApp (Zimbabwe)</a>' +
+        '<a class="btn alt" href="https://wa.me/447359834272?text=' + encodeURIComponent('Hi rAs, I want to pay for ' + slug + ' (UK)') + '">💚 Pay via WhatsApp (UK)</a>' +
         syllabus;
     msg.innerHTML = '<div class="icon">🔒</div><h1>' + pretty + ' is locked</h1>' +
       '<p>Pay once, $8, to unlock all modules and lifetime access.</p>' +

@@ -62,7 +62,7 @@
 
     window.RAS_COURSE_SLUG = getCourseSlug();
     window.RAS_MODULE_NUM = parseInt(m[1], 10);
-    window.RAS_WHATSAPP = window.RAS_WHATSAPP || '263773001353';
+    window.RAS_WHATSAPP = window.RAS_WHATSAPP || '447359834272';
 
     if (!window.RAS_MODULE_TITLE) {
       const h1 = document.querySelector('main h1, .hero h1, h1');
