@@ -3956,7 +3956,7 @@ window.openEnroll = function(btn){
 var card = btn.closest('.course-card');
 if(!card) return;
 var h3 = card.querySelector('h3');
-var courseTitle = h3 ? h3.textContent.trim() : '';
+var courseTitle = h3 ? h3.textContent.trim() : ''; var openLink = card.querySelector('.card-btn.open'); var slug = openLink ? (openLink.getAttribute('href') || '').replace(/-course\.html$/, '') : '';
 var tier = btn.dataset.tier || 'course';
 var price = btn.dataset.price || '';
 if(courseTitle){
@@ -3964,7 +3964,7 @@ if(courseTitle){
   // and then dropped, so enroll.html fell back to its default $1 radio and
   // sent the buyer to the $1 Stripe link no matter which button they pressed.
   var url = 'enroll.html?course=' + encodeURIComponent(courseTitle)
-          + '&tier=' + encodeURIComponent(tier);
+          + '&tier=' + encodeURIComponent(tier) + '&slug=' + encodeURIComponent(slug);
   if(price) url += '&price=' + encodeURIComponent(price);
   try { localStorage.setItem('rasPendingEnrolment',
         JSON.stringify({course: courseTitle, tier: tier, price: price, at: Date.now()})); } catch(e){}

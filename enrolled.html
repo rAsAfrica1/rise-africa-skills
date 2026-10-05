@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>You're enrolled - rise AFRICA skills</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--g:#c9a227;--d:#0f0f1a;--c:#1e1e32}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--d);color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.card{background:var(--c);border:1px solid rgba(201,162,39,.25);border-radius:16px;padding:40px 32px;max-width:520px;width:100%;text-align:center}
+h1{color:var(--g);font-size:1.6rem;margin-bottom:12px}
+p{color:#ddd;line-height:1.6;margin-bottom:16px}
+.btn{display:inline-block;background:var(--g);color:var(--d);padding:14px 28px;border-radius:10px;text-decoration:none;font-weight:700;margin:8px 4px}
+.btn-outline{display:inline-block;background:transparent;color:var(--g);border:2px solid var(--g);padding:12px 26px;border-radius:10px;text-decoration:none;font-weight:700;margin:8px 4px}
+.spinner{width:48px;height:48px;border:4px solid rgba(201,162,39,.2);border-top-color:var(--g);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 20px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.summary{background:rgba(201,162,39,.08);border-left:3px solid var(--g);border-radius:6px;padding:14px 18px;text-align:left;margin:20px 0;font-size:.92rem;color:#f0e6c8;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="card">
+  <div id="loading"><div class="spinner"></div><p>Activating your course...</p></div>
+  <div id="success" style="display:none">
+    <h1>You're in &#10003;</h1>
+    <div class="summary" id="summary"></div>
+    <a id="courseLink" class="btn" href="#">Open your course</a>
+    <a class="btn-outline" href="my-courses.html">My Courses</a>
+  </div>
+  <div id="error" style="display:none">
+    <h1>Almost there</h1>
+    <p id="errmsg"></p>
+    <a class="btn" href="index.html">Back to home</a>
+    <a class="btn-outline" href="my-courses.html">My Courses</a>
+  </div>
+</div>
+<script>
+(async function () {
+  const SUPABASE_URL = 'https://lsvmykrentkbcdrzsaqj.supabase.co';
+  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxzdm15a3JlbnRrYmNkcnpzYXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4MDkzMjYsImV4cCI6MjEwMTM4NTMyNn0.6cbb7S-5Me8UNJDpn9aWkPHdK18Y8GEqOfypx16Fkdc';
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+  const $ = (id) => document.getElementById(id);
+  const show = (id) => { ['loading','success','error'].forEach(x => $(x).style.display = 'none'); $(id).style.display = 'block'; };
+  const fail = (msg) => { $('errmsg').textContent = msg; show('error'); };
+
+  let pending = {};
+  try { pending = JSON.parse(localStorage.getItem('rasPendingCourse') || '{}'); } catch (e) {}
+  const urlParams = new URLSearchParams(location.search);
+  const slug = ((pending.slug || urlParams.get('slug') || '')).trim();
+  const courseTitle = (pending.course || '').trim();
+
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session || !session.user || !session.user.email) {
+    try { localStorage.setItem('rasReturnTo', location.href); } catch (e) {}
+    location.href = 'index.html#signup';
+    return;
+  }
+
+  const email = session.user.email;
+
+  if (!slug) {
+    $('summary').innerHTML = '<strong>You are logged in.</strong><br>If your course is not in My Courses, email <a href="mailto:all@riseafricaskills.com" style="color:#c9a227">all@riseafricaskills.com</a> with your payment reference.';
+    $('courseLink').href = 'my-courses.html';
+    $('courseLink').textContent = 'Open My Courses';
+    show('success');
+    return;
+  }
+
+  const { data: existing } = await sb.from('enrollments').select('id').eq('user_email', email).eq('course_id', slug).eq('status', 'active').maybeSingle();
+
+  if (!existing) {
+    const { error: insErr } = await sb.from('enrollments').insert({
+      user_email: email, course_id: slug, course_title: courseTitle || slug,
+      tier: 'premium', status: 'active', payment_status: 'paid', amount_paid: 5.00
+    });
+    if (insErr) {
+      console.error('[enrolled] insert failed:', insErr);
+      fail('We could not activate your course automatically. Email all@riseafricaskills.com with your Stripe receipt reference and we will activate it within 2 hours.');
+      return;
+    }
+  }
+
+  try { localStorage.removeItem('rasPendingCourse'); } catch (e) {}
+  $('summary').innerHTML = '<strong>' + (courseTitle || slug) + '</strong><br>US$5.00 &middot; All modules unlocked &middot; Lifetime access';
+  $('courseLink').href = slug + '-course.html';
+  show('success');
+})();
+</script>
+</body>
+</html>

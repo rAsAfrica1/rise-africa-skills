@@ -77,54 +77,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="info-box">
     <strong>✓ Secure Payment:</strong>Secure payment via EcoCash, M-Pesa, bank transfer or card. You pay directly — we never touch your card details.</div>
 
-  <div class="pricing-grid">
-    <!-- FULL COURSE -->
+  <div class="pricing-grid" style="max-width:520px;margin:0 auto;">
     <div class="price-card featured">
-      <div class="price-tag">Most Popular</div>
-      <h3 style="color:#fff;margin-bottom:0.5rem">Full Course Access</h3>
+      <div class="price-tag">Everything Included</div>
+      <h3 style="color:#fff;margin-bottom:0.5rem">Full Access — $5</h3>
       <div class="price">$5</div>
-      <p class="description">Complete online course with all lessons, videos, assignments, and quizzes. Lifetime access.</p>
+      <p class="description">One price. Full course, certificate record, and downloadable materials.</p>
       <ul class="features">
-        <li>6 months of content</li>
-        <li>Videos & lessons</li>
-        <li>Practical assignments</li>
-        <li>Quizzes & tests</li>
+        <li>All 12 modules &middot; videos &middot; quizzes</li>
+        <li>Business Seed Record on completion</li>
+        <li>Printable / downloadable materials</li>
         <li>Lifetime access</li>
       </ul>
-      <button class="btn btn-primary" onclick="enrollCourse('course', 8.00)">Enroll Now</button>
-    </div>
-
-    <!-- CERTIFICATE OPTION -->
-    <div class="price-card">
-      <div class="price-tag">Premium</div>
-      <h3 style="color:#fff;margin-bottom:0.5rem">Seed + Certificate</h3>
-      <div class="price">$5</div>
-      <p class="description">Full course access + Business Seed Record certificate upon completion.</p>
-      <ul class="features">
-        <li>Everything in Full Course</li>
-        <li>Business Seed Record*</li>
-        <li>Digital certificate</li>
-        <li>Shareable credential</li>
-        <li>Professional recognition</li>
-      </ul>
-      <button class="btn btn-primary" onclick="enrollCourse('cert', 10.00)">Enroll Now</button>
-      <p style="font-size:0.75rem;color:var(--muted);margin-top:0.5rem">*Certificate after completion</p>
-    </div>
-
-    <!-- PRINT OPTION -->
-    <div class="price-card">
-      <div class="price-tag">Offline</div>
-      <h3 style="color:#fff;margin-bottom:0.5rem">Print / Download</h3>
-      <div class="price">$5</div>
-      <p class="description">Complete PDF course material. Download and study offline anywhere.</p>
-      <ul class="features">
-        <li>Printable PDF</li>
-        <li>Study offline</li>
-        <li>Save to device</li>
-        <li>Professional layout</li>
-        <li>Share with team</li>
-      </ul>
-      <button class="btn btn-primary" onclick="enrollCourse('print', 3.50)">Enroll Now</button>
+      <button class="btn btn-primary" onclick="enrollCourse('course', 5.00)">Enroll Now — $5</button>
     </div>
   </div>
 
@@ -181,6 +146,7 @@ function enrollCourse(tier, price) {
   const tierName = tierNames[tier] || tier;
 
   const ref = courseName + ' - ' + tierName;
+  try { const _u = new URLSearchParams(location.search); const _slug = _u.get('slug') || ''; localStorage.setItem('rasPendingCourse', JSON.stringify({ course: courseName, slug: _slug, tier: tierName, price: 5.00, at: Date.now() })); } catch(e) {}
   const stripeUrl = STRIPE_ONE_DOLLAR + '?client_reference_id=' + encodeURIComponent(ref);
 
   window.open(stripeUrl, '_blank');
