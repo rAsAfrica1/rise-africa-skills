@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Preview - rise AFRICA skills</title>
+<title>Admin - rise AFRICA skills</title>
 <link rel="stylesheet" href="styles.css">
 <style>
 .gate{max-width:420px;margin:4rem auto;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:2rem;text-align:center}
@@ -22,7 +22,7 @@
 .course-block{background:var(--card);border:1px solid var(--border);border-radius:8px;margin-bottom:.75rem;overflow:hidden}
 .course-block summary{padding:.8rem 1rem;cursor:pointer;font-weight:600;color:var(--text);list-style:none;display:flex;justify-content:space-between;align-items:center}
 .course-block summary::-webkit-details-marker{display:none}
-.course-block summary .num{color:var(--gold);font-size:.85rem;margin-right:.5rem}
+.course-block.enhanced summary{background:rgba(201,162,39,.15)}
 .module-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.35rem;padding:.75rem}
 .module-grid a{display:block;padding:.4rem .6rem;background:var(--darker);border:1px solid var(--border);border-radius:5px;text-decoration:none;color:var(--text);font-size:.85rem}
 .module-grid a:hover{border-color:var(--gold);color:var(--gold)}
@@ -34,7 +34,7 @@
 
 <div id="gate" class="gate">
 <h1>Admin Preview</h1>
-<p style="color:var(--muted);font-size:.9rem">Enter the admin password to browse all courses and modules.</p>
+<p style="color:var(--muted);font-size:.9rem">Enter the admin password.</p>
 <input type="password" id="pw" placeholder="Password" autofocus>
 <button id="unlockBtn">Unlock</button>
 <div class="err" id="err"></div>
@@ -47,50 +47,242 @@
 </div>
 <div class="stats" id="stats">Loading...</div>
 <div class="controls">
-<input type="text" id="filter" placeholder="Filter courses (poultry, solar, goat...)">
+<input type="text" id="filter" placeholder="Filter courses...">
 <button onclick="clearFilter()">Clear</button>
 </div>
 <div id="courseList"></div>
-<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-top:1.5rem">
-<h3 style="margin-top:0;color:var(--gold)">Custom slug - generate 50 module links</h3>
-<div class="controls">
-<input type="text" id="customSlug" placeholder="course-slug (e.g. yam-farming)">
-<button onclick="generateCustom()">Generate</button>
-</div>
-<div id="customOut" class="module-grid" style="padding:0"></div>
-</div>
 </div>
 
 <script>
-const ADMIN_PASSWORD = 'rise-admin-2026';
-const MODULES_PER_COURSE = 50;
-const COURSES = [
-{num:'01',name:'Farm Produce',slug:'farm-produce'},
-{num:'02',name:'Block Making',slug:'block-making'},
-{num:'03',name:'Poultry Farming',slug:'poultry-farming'},
-{num:'04',name:'Fish Farming',slug:'fish-farming'},
-{num:'05',name:'Pig Farming',slug:'pig-farming'},
-{num:'06',name:'Goat & Sheep Rearing',slug:'goat-sheep-rearing'},
-{num:'07',name:'Cattle Rearing',slug:'cattle-rearing'},
-{num:'08',name:'Beekeeping',slug:'beekeeping'},
-{num:'09',name:'Mushroom Farming',slug:'mushroom-farming'},
-{num:'10',name:'Vegetable Gardening',slug:'vegetable-gardening'},
-{num:'11',name:'Fruit Tree Farming',slug:'fruit-tree-farming'},
-{num:'12',name:'Rabbit Farming',slug:'rabbit-farming'},
-{num:'13',name:'Snail Farming',slug:'snail-farming'},
-{num:'14',name:'Soap Making',slug:'soap-making'},
-{num:'15',name:'Detergent & Cleaning',slug:'detergent-cleaning-products'},
-{num:'16',name:'Cosmetics & Skincare',slug:'cosmetics-skincare'},
-{num:'17',name:'Candle Making',slug:'candle-making'},
-{num:'18',name:'Tailoring & Fashion',slug:'tailoring-fashion-design'},
-{num:'19',name:'Carpentry & Furniture',slug:'carpentry-furniture'},
-{num:'20',name:'Welding & Metal Fab',slug:'welding-metal-fabrication'},
-{num:'21',name:'Solar Panel Installation',slug:'solar-panel-installation'},
-{num:'22',name:'Electrical Installation',slug:'electrical-installation'},
-{num:'23',name:'Plumbing',slug:'plumbing'},
-{num:'24',name:'Painting & Decorating',slug:'painting-decorating'},
-{num:'25',name:'Catering & Food',slug:'catering-food-processing'},
-{num:'26',name:'Processing Farm Produce',slug:'processing-farm-produce'}
+const ADMIN_PASSWORD='rise-admin-2026';
+// Only Block Making and Farm Produce have 50 modules. All others have 12.
+const COURSES=[
+{name:'Farm Produce and Post-Harvest Handling',slug:'farm-produce',modules:50},
+{name:'Block Making and Concrete Products',slug:'block-making',modules:50},
+{name:'Advanced Welding Techniques',slug:'advanced-welding',modules:12},
+{name:'African Black Soap & Skincare',slug:'african-black-soap-amp-skincare',modules:12},
+{name:'African Street Food Business',slug:'african-street-food',modules:12},
+{name:'Aged Beef 21 to 101 Day',slug:'aged-beef-21-to-101-day',modules:12},
+{name:'Agricultural Cooperative Formation',slug:'agricultural-cooperative-formation',modules:12},
+{name:'Agricultural Irrigation Technician',slug:'agricultural-irrigation-technician',modules:12},
+{name:'Agricultural Produce Sourcing Business',slug:'agricultural-produce-sourcing-business',modules:12},
+{name:'Agricultural Record Keeping',slug:'agricultural-record-keeping',modules:12},
+{name:'AI Fundamentals',slug:'ai-fundamentals',modules:12},
+{name:'Aluminium Welding Fundamentals',slug:'aluminium-welding-fundamentals',modules:12},
+{name:'Aluminum Windows & Doors',slug:'aluminum-windows-amp-doors',modules:12},
+{name:'Arabic Language',slug:'arabic-language',modules:12},
+{name:'Artisan Gold Mining',slug:'artisan-gold-mining',modules:12},
+{name:'Auto Parts & Assembly',slug:'auto-parts-amp-assembly',modules:12},
+{name:'Avocado Farming',slug:'avocado-farming',modules:12},
+{name:'Bakery Business',slug:'bakery-business',modules:12},
+{name:'Banana Farming',slug:'banana-farming',modules:12},
+{name:'Baobab Powder Products',slug:'baobab-powder-products',modules:12},
+{name:"Barbering & Men's Grooming Business",slug:'barbering-amp-men-s-grooming-business',modules:12},
+{name:'Basic Blacksmithing',slug:'basic-blacksmithing',modules:12},
+{name:'Basic First Aid for Business and Community',slug:'basic-first-aid-for-business-and-community',modules:12},
+{name:'Bee Farming and Honey Production',slug:'bee-farming-and-honey-production',modules:12},
+{name:'Beehive Construction',slug:'beehive-construction',modules:12},
+{name:'Biogas Systems',slug:'biogas-systems',modules:12},
+{name:'Black Soldier Fly Larvae Farming',slug:'black-soldier-fly-larvae-farming',modules:12},
+{name:'Bladesmithing',slug:'bladesmithing',modules:12},
+{name:'Bottled Water Production',slug:'bottled-water-production',modules:12},
+{name:'Breakfast Cereals',slug:'breakfast-cereals',modules:12},
+{name:'Brewery: Wine, Gin, Cider & Beer',slug:'brewery-wine-gin-cider-amp-beer',modules:12},
+{name:'Brick & Paver Making',slug:'brick-amp-paver-making',modules:12},
+{name:'Brick Making Business with Bank and Mobile Money Integration',slug:'brick-making-business-with-bank-and-mobile-money-integration',modules:12},
+{name:'Briquettes & Pellets',slug:'briquettes-amp-pellets',modules:12},
+{name:'Broiler and Layer Feed Formulation',slug:'broiler-and-layer-feed-formulation',modules:12},
+{name:'Broiler Farming',slug:'broiler-farming',modules:12},
+{name:'Broiler Production',slug:'broiler-production',modules:12},
+{name:'Buildings for Preservation (10 Methods)',slug:'buildings-for-preservation-10-methods',modules:12},
+{name:'Business Chinese, Arabic and Russian Translation',slug:'business-chinese-arabic-russian-translation',modules:12},
+{name:'Business Plan Development',slug:'business-plan-development',modules:12},
+{name:'Butchery',slug:'butchery',modules:12},
+{name:'Cabbage Farming',slug:'cabbage-farming',modules:12},
+{name:'Car Breakers & Metal Scrapyard',slug:'car-breakers-amp-metal-scrapyard',modules:12},
+{name:'Car Washing and Detailing Business',slug:'car-washing-and-detailing-business',modules:12},
+{name:'Cassava Bread & Baking',slug:'cassava-bread-amp-baking',modules:12},
+{name:'Cassava Farming and Processing',slug:'cassava-farming-and-processing',modules:12},
+{name:'Cassava Starch Extraction',slug:'cassava-starch-extraction',modules:12},
+{name:'Cattle and Steer Feed Formulation',slug:'cattle-and-steer-feed-formulation',modules:12},
+{name:'Cattle Farming',slug:'cattle-farming',modules:12},
+{name:'Cement & Blocks',slug:'cement-amp-blocks',modules:12},
+{name:'Charcoal Types',slug:'charcoal-types-course',modules:12},
+{name:'Chinese / Mandarin',slug:'chinese-mandarin',modules:12},
+{name:'Chocolate & Candy',slug:'chocolate-amp-candy',modules:12},
+{name:'Citrus Farming',slug:'citrus-farming',modules:12},
+{name:'Coconut Oil & Shea Oil',slug:'coconut-oil-amp-shea-oil',modules:12},
+{name:'Cold Room for 4-10 Beasts',slug:'cold-room-for-4-10-beasts',modules:12},
+{name:'Cold Storage',slug:'cold-storage',modules:12},
+{name:'Convert a Car Engine to an Irrigation Water Pump',slug:'convert-car-engine-to-irrigation-water-pump',modules:12},
+{name:'Cooking Oil Production',slug:'cooking-oil-production',modules:12},
+{name:'Cosmetics: Lip Balms, Body Butters & Hair Oils',slug:'cosmetics-lip-balms-body-butters-amp-hair-oils',modules:12},
+{name:'Crisis Response for Underserved Communities',slug:'crisis-response-for-underserved-communities',modules:12},
+{name:'Crocodile Farming',slug:'crocodile-farming',modules:12},
+{name:'Customs Brokerage',slug:'customs-brokerage',modules:12},
+{name:'Daily Bread Sales',slug:'daily-bread-sales',modules:12},
+{name:'Daily Broiler Sales',slug:'daily-broiler-sales',modules:12},
+{name:'Daily Egg Sales',slug:'daily-egg-sales',modules:12},
+{name:'Daily Milk Sales',slug:'daily-milk-sales',modules:12},
+{name:'Daily Pig Sales',slug:'daily-pig-sales',modules:12},
+{name:'Dairy Production',slug:'dairy-production',modules:12},
+{name:'Detergents Manufacturing',slug:'detergents-manufacturing',modules:12},
+{name:'Distillery & Spirits',slug:'distillery-amp-spirits',modules:12},
+{name:'DJ and Event Entertainment Business',slug:'dj-and-event-entertainment-business',modules:12},
+{name:'Dog and Cat Feed Formulation',slug:'dog-and-cat-feed-formulation',modules:12},
+{name:'Dried Fruit & Vegetable Processing',slug:'dried-fruit-amp-vegetable-processing',modules:12},
+{name:'Drone Technology',slug:'drone-technology',modules:12},
+{name:'Duck Farming',slug:'duck-farming',modules:12},
+{name:'Education and Training Business',slug:'education-and-training-business',modules:12},
+{name:'Electronics Assembly',slug:'electronics-assembly',modules:12},
+{name:'Entrepreneurship',slug:'entrepreneurship',modules:12},
+{name:'Errands and Personal Assistant Service',slug:'errands-and-personal-assistant-service',modules:12},
+{name:'Essential Oils',slug:'essential-oils',modules:12},
+{name:'EV Motorbike Assembly',slug:'ev-motorbike-assembly',modules:12},
+{name:'Event Services Business',slug:'event-services-business',modules:12},
+{name:'Export Sales Agent',slug:'export-sales-agent',modules:12},
+{name:'Export Standards & Certification',slug:'export-standards-amp-certification',modules:12},
+{name:'Farm Building Construction',slug:'farm-building-construction',modules:12},
+{name:'Farm Labor Management',slug:'farm-labor-management',modules:12},
+{name:'Farm Market Access & Pricing',slug:'farm-market-access-amp-pricing',modules:12},
+{name:'Fertilizer Blending',slug:'fertilizer-blending',modules:12},
+{name:'Fish Farming',slug:'fish-farming',modules:12},
+{name:'Fish Feed Formulation',slug:'fish-feed-formulation',modules:12},
+{name:'Fish Fingerling Production',slug:'fish-fingerling-production',modules:12},
+{name:'Fish Pond Construction',slug:'fish-pond-construction',modules:12},
+{name:'Fish Processing (Smoking & Canning)',slug:'fish-processing-smoking-amp-canning',modules:12},
+{name:'Flour Milling',slug:'flour-milling',modules:12},
+{name:'Food Preservation (10 Methods)',slug:'food-preservation-10-methods',modules:12},
+{name:'Foreign Trade Negotiation',slug:'foreign-trade-negotiation',modules:12},
+{name:'Fortified Corn-Soy Porridge',slug:'fortified-corn-soy-porridge',modules:12},
+{name:'Fruit Juice & Concentrates',slug:'fruit-juice-amp-concentrates',modules:12},
+{name:'Furniture Manufacturing',slug:'furniture-manufacturing',modules:12},
+{name:'Gate and Fence Making',slug:'gate-and-fence-making',modules:12},
+{name:'Ginger & Turmeric Shots & Teas',slug:'ginger-amp-turmeric-shots-amp-teas',modules:12},
+{name:'Glass Processing',slug:'glass-processing',modules:12},
+{name:'Goat Farming',slug:'goat-farming',modules:12},
+{name:'Gold Smelting and Refining',slug:'gold-smelting-and-refining',modules:12},
+{name:'Grafting, Budding & Orchards',slug:'grafting-budding-amp-orchards',modules:12},
+{name:'Grasscutter Farming',slug:'grasscutter-farming',modules:12},
+{name:'Greenhouse Vegetable Farming',slug:'greenhouse-vegetable-farming',modules:12},
+{name:'Guinea Fowl & Quail Farming',slug:'guinea-fowl-amp-quail-farming',modules:12},
+{name:'Hair Care for Natural Hair',slug:'hair-care-for-natural-hair',modules:12},
+{name:'Hair Salon and Beauty Business',slug:'hair-salon-and-beauty-business',modules:12},
+{name:'Herbal and Natural Skincare Products',slug:'herbal-and-natural-skincare-products',modules:12},
+{name:'Herbal Medicine & Nutraceuticals',slug:'herbal-medicine-amp-nutraceuticals',modules:12},
+{name:'Herbal Teas & Infusions',slug:'herbal-teas-amp-infusions',modules:12},
+{name:'Hibiscus (Zobo/Sobolo) Drink Concentrate',slug:'hibiscus-zobo-sobolo-drink-concentrate',modules:12},
+{name:'Home and Office Cleaning Business',slug:'home-and-office-cleaning-business',modules:12},
+{name:'Home-Based Catering for Small Events',slug:'home-based-catering-for-small-events',modules:12},
+{name:'Honey Processing & Packaging',slug:'honey-processing-amp-packaging',modules:12},
+{name:'Horse Breeding',slug:'horse-breeding',modules:12},
+{name:'How to Start a Business in Africa',slug:'how-to-start-a-business-in-africa',modules:12},
+{name:'Ice Cream Production',slug:'ice-cream-production',modules:12},
+{name:'International Trade Basics',slug:'international-trade-basics',modules:12},
+{name:'Irrigation Systems for Smallholds',slug:'irrigation-systems-for-smallholds',modules:12},
+{name:'Jam Making',slug:'jam-making',modules:12},
+{name:'Knife Blacksmith',slug:'knife-blacksmith',modules:12},
+{name:'Layer Farming',slug:'layer-farming',modules:12},
+{name:'Layers Production',slug:'layers-production',modules:12},
+{name:'Leather Making and Tanning',slug:'leather-making-and-tanning',modules:12},
+{name:'Machinery Operation and Repair',slug:'machinery-operation-and-repair',modules:12},
+{name:'Massage and Spa Home Visit Business',slug:'massage-and-spa-home-visit-business',modules:12},
+{name:'Maximise 1 Hectare - Vegetables for Profit',slug:'maximise-1-hectare-vegetables-for-profit',modules:12},
+{name:'Meat Curing & Charcuterie',slug:'meat-curing-amp-charcuterie',modules:12},
+{name:'Medicinal & Herbal Plant Cultivation',slug:'medicinal-amp-herbal-plant-cultivation',modules:12},
+{name:'Metal Casting and Foundry Work',slug:'metal-casting-and-foundry-work',modules:12},
+{name:'Metal Furniture Making',slug:'metal-furniture-making',modules:12},
+{name:'Metal Sculpture',slug:'metal-sculpture',modules:12},
+{name:'Moringa Powder & Supplements',slug:'moringa-powder-amp-supplements',modules:12},
+{name:'Mushroom Farming',slug:'mushroom-farming',modules:12},
+{name:'Mushroom Seed (Spawn) Production Business',slug:'mushroom-seed-spawn-production-business',modules:12},
+{name:'Onion Farming',slug:'onion-farming',modules:12},
+{name:'Organic Fertilizer & Compost',slug:'organic-fertilizer-amp-compost',modules:12},
+{name:'Organic Manure with 33 Ingredients',slug:'organic-manure-with-33-ingredients',modules:12},
+{name:'Ornamental Ironwork',slug:'ornamental-ironwork',modules:12},
+{name:'Ostrich Farming',slug:'ostrich-farming',modules:12},
+{name:'Packaging for Export Markets',slug:'packaging-for-export-markets',modules:12},
+{name:'Packaging Materials',slug:'packaging-materials',modules:12},
+{name:'Paint Manufacturing',slug:'paint-manufacturing',modules:12},
+{name:'Painting and Decorating',slug:'painting-and-decorating',modules:12},
+{name:'Peanut Butter & Nut Pastes',slug:'peanut-butter-amp-nut-pastes',modules:12},
+{name:'Perfume Oils & Incense',slug:'perfume-oils-amp-incense',modules:12},
+{name:'Pest Control Business',slug:'pest-control-business',modules:12},
+{name:'Pesticides & Agrochemicals',slug:'pesticides-amp-agrochemicals',modules:12},
+{name:'Petrol and Diesel Engine Fundamentals',slug:'petrol-and-diesel-engine-fundamentals',modules:12},
+{name:'Pharmaceuticals',slug:'pharmaceuticals',modules:12},
+{name:'Pig Farming',slug:'pig-farming',modules:12},
+{name:'Pig Feed Formulation',slug:'pig-feed-formulation',modules:12},
+{name:'Pizza Oven Construction',slug:'pizza-oven-construction',modules:12},
+{name:'Plumbing',slug:'plumbing',modules:12},
+{name:'Potato Farming',slug:'potato-farming',modules:12},
+{name:'Processing a Pig Fully',slug:'processing-a-pig-fully',modules:12},
+{name:'Project Management',slug:'project-management',modules:12},
+{name:'Purchasing and Procurement',slug:'purchasing-and-procurement',modules:12},
+{name:'PVC & Plumbing Pipes',slug:'pvc-amp-plumbing-pipes',modules:12},
+{name:'Rabbit Farming',slug:'rabbit-farming',modules:12},
+{name:'Recycling and Green Business',slug:'recycling-and-green-business',modules:12},
+{name:'Reselling on Social Media Platforms',slug:'reselling-on-social-media-platforms',modules:12},
+{name:'Rice Milling',slug:'rice-milling',modules:12},
+{name:'Riveting and Fastener Work',slug:'riveting-and-fastener-work',modules:12},
+{name:'Road Construction',slug:'road-construction',modules:12},
+{name:'Robotics',slug:'robotics',modules:12},
+{name:'Roofing Sheets',slug:'roofing-sheets',modules:12},
+{name:'Russian Language',slug:'russian-language',modules:12},
+{name:'Sanitary Pads',slug:'sanitary-pads',modules:12},
+{name:'Scaffolding',slug:'scaffolding',modules:12},
+{name:'Second-Hand / Thrift Shop Business (Okrika)',slug:'second-hand-thrift-shop-business-okrika',modules:12},
+{name:'Seedling Nursery for Farmers',slug:'seedling-nursery-for-farmers',modules:12},
+{name:'Sheep Farming',slug:'sheep-farming',modules:12},
+{name:'Sheet Metal Work',slug:'sheet-metal-work',modules:12},
+{name:'Shona Language',slug:'shona-language',modules:12},
+{name:'Silage & Hay Making',slug:'silage-amp-hay-making',modules:12},
+{name:'Small Chinese Machines',slug:'small-chinese-machines',modules:12},
+{name:'Small Kiosk and Tuck Shop Business',slug:'small-kiosk-and-tuck-shop-business',modules:12},
+{name:'Small Machines & Pharmaceuticals Import Business',slug:'small-machines-amp-pharmaceuticals-import-business',modules:12},
+{name:'Small Shop and Market Trading',slug:'small-shop-and-market-trading',modules:12},
+{name:'Smelting Fundamentals',slug:'smelting-fundamentals',modules:12},
+{name:'Snail Farming (Heliciculture) Business',slug:'snail-farming-heliciculture-business',modules:12},
+{name:'Soap Making',slug:'soap-making',modules:12},
+{name:'Social Media Influencer Business',slug:'social-media-influencer-business',modules:12},
+{name:'Soft Drinks Production',slug:'soft-drinks-production',modules:12},
+{name:'Solar Installation in the Community',slug:'solar-installation-in-the-community',modules:12},
+{name:'Solar Inverters & Batteries',slug:'solar-inverters-amp-batteries',modules:12},
+{name:'Solar Panel Assembly',slug:'solar-panel-assembly',modules:12},
+{name:'Solar Pump for Dam',slug:'solar-pump-for-dam',modules:12},
+{name:'Sorghum & Millet Farming',slug:'sorghum-amp-millet-farming',modules:12},
+{name:'Sourcing and Reselling Business',slug:'sourcing-and-reselling-business',modules:12},
+{name:'Soybean Farming',slug:'soybean-farming',modules:12},
+{name:'Spanish Language',slug:'spanish-language',modules:12},
+{name:'Spice Blending & Packaging',slug:'spice-blending-amp-packaging',modules:12},
+{name:'Spices Course',slug:'spices-course',modules:12},
+{name:'Steel Fabrication',slug:'steel-fabrication',modules:12},
+{name:'Steel Fixing (Rebar)',slug:'steel-fixing-rebar',modules:12},
+{name:'Steer Fattening',slug:'steer-fattening',modules:12},
+{name:'Street Food / Take Away',slug:'street-food-take-away',modules:12},
+{name:'Sugar Processing',slug:'sugar-processing',modules:12},
+{name:'Sunflower Farming',slug:'sunflower-farming',modules:12},
+{name:'Supply Chain Management',slug:'supply-chain-management',modules:12},
+{name:'Swahili Language',slug:'swahili-language',modules:12},
+{name:'Sweet Potato Farming',slug:'sweet-potato-farming',modules:12},
+{name:'Tech and Digital Services Business',slug:'tech-and-digital-services-business',modules:12},
+{name:'Tiles & Ceramics',slug:'tiles-amp-ceramics',modules:12},
+{name:'Tissues & Paper Products',slug:'tissues-amp-paper-products',modules:12},
+{name:'Tomato Farming',slug:'tomato-farming',modules:12},
+{name:'Tomato Paste & Sauce',slug:'tomato-paste-amp-sauce',modules:12},
+{name:'Tool Making for Agriculture',slug:'tool-making-for-agriculture',modules:12},
+{name:'Township and Village Enterprise Management',slug:'township-and-village-enterprise-management',modules:12},
+{name:'Transport and Logistics Business',slug:'transport-and-logistics-business',modules:12},
+{name:'Tropical Fruit Farming',slug:'tropical-fruit-farming',modules:12},
+{name:'Turkey Farming',slug:'turkey-farming',modules:12},
+{name:'Water Tank Construction',slug:'water-tank-construction',modules:12},
+{name:'Welding Fundamentals',slug:'welding-fundamentals',modules:12},
+{name:'Wheat & Barley Farming',slug:'wheat-amp-barley-farming',modules:12},
+{name:'Wind Turbine Basics',slug:'wind-turbine-basics',modules:12},
+{name:'Wok and Pan Blacksmith',slug:'wok-and-pan-blacksmith',modules:12},
+{name:'Yam Farming',slug:'yam-farming',modules:12},
+{name:'Yogurt Production',slug:'yogurt-production',modules:12},
+{name:'Young Animal Milk Replacer and Supplement Feeding',slug:'young-animal-milk-replacer-and-supplement-feeding',modules:12}
 ];
 const gate=document.getElementById('gate');
 const admin=document.getElementById('admin');
@@ -99,54 +291,44 @@ const err=document.getElementById('err');
 function unlock(){
   if(pwInput.value===ADMIN_PASSWORD){
     localStorage.setItem('ras_admin','1');
-    showAdmin();
+    gate.classList.add('hidden');
+    admin.classList.remove('hidden');
+    render();
   }else{
     err.textContent='Incorrect password.';
     pwInput.value='';
   }
 }
-function showAdmin(){
+function logout(){localStorage.removeItem('ras_admin');location.reload();}
+document.getElementById('unlockBtn').addEventListener('click',unlock);
+pwInput.addEventListener('keydown',function(e){if(e.key==='Enter')unlock();});
+if(localStorage.getItem('ras_admin')==='1'){
   gate.classList.add('hidden');
   admin.classList.remove('hidden');
   render();
 }
-function logout(){
-  localStorage.removeItem('ras_admin');
-  location.reload();
-}
-document.getElementById('unlockBtn').addEventListener('click',unlock);
-pwInput.addEventListener('keydown',function(e){if(e.key==='Enter')unlock();});
-if(localStorage.getItem('ras_admin')==='1')showAdmin();
 function render(filterText){
   filterText=filterText||'';
   const list=document.getElementById('courseList');
   const f=filterText.trim().toLowerCase();
-  const filtered=f?COURSES.filter(function(c){return c.name.toLowerCase().indexOf(f)>-1||c.slug.indexOf(f)>-1;}):COURSES;
-  document.getElementById('stats').textContent='Showing '+filtered.length+' of '+COURSES.length+' courses - '+(COURSES.length*MODULES_PER_COURSE)+' modules total';
+  const filtered=f?COURSES.filter(function(c){return c.name.toLowerCase().indexOf(f)>-1;}):COURSES;
+  let total=0;
+  COURSES.forEach(function(c){total+=c.modules;});
+  document.getElementById('stats').textContent='Showing '+filtered.length+' of '+COURSES.length+' courses - '+total+' modules total';
   list.innerHTML='';
   filtered.forEach(function(c){
     const d=document.createElement('details');
-    d.className='course-block';
+    d.className='course-block'+(c.modules===50?' enhanced':'');
     let links='';
-    for(var i=1;i<=MODULES_PER_COURSE;i++){
+    for(var i=1;i<=c.modules;i++){
       links+='<a href="'+c.slug+'-module-'+i+'.html" target="_blank">Module '+i+'</a>';
     }
-    d.innerHTML='<summary><span><span class="num">COURSE '+c.num+'</span>'+c.name+'</span><span style="font-size:.85rem;color:var(--muted);font-weight:400">'+MODULES_PER_COURSE+' modules</span></summary><div class="module-grid">'+links+'</div>';
+    d.innerHTML='<summary><span>'+c.name+'</span><span style="font-size:.85rem;color:var(--muted);font-weight:400">'+c.modules+' modules</span></summary><div class="module-grid">'+links+'</div>';
     list.appendChild(d);
   });
 }
 document.getElementById('filter').addEventListener('input',function(e){render(e.target.value);});
 function clearFilter(){document.getElementById('filter').value='';render();}
-function generateCustom(){
-  const slug=document.getElementById('customSlug').value.trim().toLowerCase().replace(/[^a-z0-9-]/g,'');
-  const out=document.getElementById('customOut');
-  if(!slug){out.innerHTML='';return;}
-  let h='';
-  for(var i=1;i<=MODULES_PER_COURSE;i++){
-    h+='<a href="'+slug+'-module-'+i+'.html" target="_blank">Module '+i+'</a>';
-  }
-  out.innerHTML=h;
-}
 </script>
 </body>
 </html>
