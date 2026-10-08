@@ -3,13 +3,150 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>rise AFRICA skills</title>
+<title>Admin Preview - rise AFRICA skills</title>
 <link rel="stylesheet" href="styles.css">
+<style>
+.gate{max-width:420px;margin:4rem auto;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:2rem;text-align:center}
+.gate h1{margin-top:0;color:var(--gold)}
+.gate input{width:100%;padding:.7rem;font-size:1rem;background:var(--darker);color:var(--text);border:1px solid var(--border);border-radius:6px;margin:.75rem 0}
+.gate button{width:100%;padding:.65rem;background:var(--gold);color:#111;border:none;border-radius:6px;font-weight:700;cursor:pointer}
+.gate .err{color:#e74c3c;font-size:.9rem;min-height:1.2em;margin-top:.5rem}
+.admin-wrap{max-width:1100px;margin:0 auto;padding:1rem}
+.admin-header{background:var(--card);border:1px solid var(--border);padding:1rem;border-radius:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
+.admin-header h1{margin:0;font-size:1.2rem;color:var(--gold)}
+.admin-header button{background:var(--gold);color:#111;border:none;padding:.5rem .9rem;border-radius:6px;cursor:pointer;font-weight:600}
+.stats{background:rgba(201,162,39,.1);border-left:4px solid var(--gold);padding:.75rem 1rem;border-radius:4px;margin-bottom:1rem;font-size:.9rem}
+.controls{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
+.controls input{flex:1;min-width:200px;padding:.6rem;background:var(--darker);color:var(--text);border:1px solid var(--border);border-radius:6px}
+.controls button{padding:.6rem 1rem;background:var(--gold);color:#111;border:none;border-radius:6px;cursor:pointer;font-weight:600}
+.course-block{background:var(--card);border:1px solid var(--border);border-radius:8px;margin-bottom:.75rem;overflow:hidden}
+.course-block summary{padding:.8rem 1rem;cursor:pointer;font-weight:600;color:var(--text);list-style:none;display:flex;justify-content:space-between;align-items:center}
+.course-block summary::-webkit-details-marker{display:none}
+.course-block summary .num{color:var(--gold);font-size:.85rem;margin-right:.5rem}
+.module-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.35rem;padding:.75rem}
+.module-grid a{display:block;padding:.4rem .6rem;background:var(--darker);border:1px solid var(--border);border-radius:5px;text-decoration:none;color:var(--text);font-size:.85rem}
+.module-grid a:hover{border-color:var(--gold);color:var(--gold)}
+.hidden{display:none!important}
+</style>
 </head>
 <body>
-<main class="container">
+<header class="site-header"><div class="container"><a href="index.html" class="logo">rise AFRICA skills</a><nav><a href="index.html">Home</a></nav></div></header>
 
-</main>
-<footer>&copy; 2026 rise AFRICA skills</footer>
+<div id="gate" class="gate">
+<h1>Admin Preview</h1>
+<p style="color:var(--muted);font-size:.9rem">Enter the admin password to browse all courses and modules.</p>
+<input type="password" id="pw" placeholder="Password" autofocus>
+<button id="unlockBtn">Unlock</button>
+<div class="err" id="err"></div>
+</div>
+
+<div id="admin" class="admin-wrap hidden">
+<div class="admin-header">
+<h1>Admin Preview - rise AFRICA skills</h1>
+<div><button onclick="logout()">Logout</button></div>
+</div>
+<div class="stats" id="stats">Loading...</div>
+<div class="controls">
+<input type="text" id="filter" placeholder="Filter courses (poultry, solar, goat...)">
+<button onclick="clearFilter()">Clear</button>
+</div>
+<div id="courseList"></div>
+<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-top:1.5rem">
+<h3 style="margin-top:0;color:var(--gold)">Custom slug - generate 50 module links</h3>
+<div class="controls">
+<input type="text" id="customSlug" placeholder="course-slug (e.g. yam-farming)">
+<button onclick="generateCustom()">Generate</button>
+</div>
+<div id="customOut" class="module-grid" style="padding:0"></div>
+</div>
+</div>
+
+<script>
+const ADMIN_PASSWORD = 'rise-admin-2026';
+const MODULES_PER_COURSE = 50;
+const COURSES = [
+{num:'01',name:'Farm Produce',slug:'farm-produce'},
+{num:'02',name:'Block Making',slug:'block-making'},
+{num:'03',name:'Poultry Farming',slug:'poultry-farming'},
+{num:'04',name:'Fish Farming',slug:'fish-farming'},
+{num:'05',name:'Pig Farming',slug:'pig-farming'},
+{num:'06',name:'Goat & Sheep Rearing',slug:'goat-sheep-rearing'},
+{num:'07',name:'Cattle Rearing',slug:'cattle-rearing'},
+{num:'08',name:'Beekeeping',slug:'beekeeping'},
+{num:'09',name:'Mushroom Farming',slug:'mushroom-farming'},
+{num:'10',name:'Vegetable Gardening',slug:'vegetable-gardening'},
+{num:'11',name:'Fruit Tree Farming',slug:'fruit-tree-farming'},
+{num:'12',name:'Rabbit Farming',slug:'rabbit-farming'},
+{num:'13',name:'Snail Farming',slug:'snail-farming'},
+{num:'14',name:'Soap Making',slug:'soap-making'},
+{num:'15',name:'Detergent & Cleaning',slug:'detergent-cleaning-products'},
+{num:'16',name:'Cosmetics & Skincare',slug:'cosmetics-skincare'},
+{num:'17',name:'Candle Making',slug:'candle-making'},
+{num:'18',name:'Tailoring & Fashion',slug:'tailoring-fashion-design'},
+{num:'19',name:'Carpentry & Furniture',slug:'carpentry-furniture'},
+{num:'20',name:'Welding & Metal Fab',slug:'welding-metal-fabrication'},
+{num:'21',name:'Solar Panel Installation',slug:'solar-panel-installation'},
+{num:'22',name:'Electrical Installation',slug:'electrical-installation'},
+{num:'23',name:'Plumbing',slug:'plumbing'},
+{num:'24',name:'Painting & Decorating',slug:'painting-decorating'},
+{num:'25',name:'Catering & Food',slug:'catering-food-processing'},
+{num:'26',name:'Processing Farm Produce',slug:'processing-farm-produce'}
+];
+const gate=document.getElementById('gate');
+const admin=document.getElementById('admin');
+const pwInput=document.getElementById('pw');
+const err=document.getElementById('err');
+function unlock(){
+  if(pwInput.value===ADMIN_PASSWORD){
+    localStorage.setItem('ras_admin','1');
+    showAdmin();
+  }else{
+    err.textContent='Incorrect password.';
+    pwInput.value='';
+  }
+}
+function showAdmin(){
+  gate.classList.add('hidden');
+  admin.classList.remove('hidden');
+  render();
+}
+function logout(){
+  localStorage.removeItem('ras_admin');
+  location.reload();
+}
+document.getElementById('unlockBtn').addEventListener('click',unlock);
+pwInput.addEventListener('keydown',function(e){if(e.key==='Enter')unlock();});
+if(localStorage.getItem('ras_admin')==='1')showAdmin();
+function render(filterText){
+  filterText=filterText||'';
+  const list=document.getElementById('courseList');
+  const f=filterText.trim().toLowerCase();
+  const filtered=f?COURSES.filter(function(c){return c.name.toLowerCase().indexOf(f)>-1||c.slug.indexOf(f)>-1;}):COURSES;
+  document.getElementById('stats').textContent='Showing '+filtered.length+' of '+COURSES.length+' courses - '+(COURSES.length*MODULES_PER_COURSE)+' modules total';
+  list.innerHTML='';
+  filtered.forEach(function(c){
+    const d=document.createElement('details');
+    d.className='course-block';
+    let links='';
+    for(var i=1;i<=MODULES_PER_COURSE;i++){
+      links+='<a href="'+c.slug+'-module-'+i+'.html" target="_blank">Module '+i+'</a>';
+    }
+    d.innerHTML='<summary><span><span class="num">COURSE '+c.num+'</span>'+c.name+'</span><span style="font-size:.85rem;color:var(--muted);font-weight:400">'+MODULES_PER_COURSE+' modules</span></summary><div class="module-grid">'+links+'</div>';
+    list.appendChild(d);
+  });
+}
+document.getElementById('filter').addEventListener('input',function(e){render(e.target.value);});
+function clearFilter(){document.getElementById('filter').value='';render();}
+function generateCustom(){
+  const slug=document.getElementById('customSlug').value.trim().toLowerCase().replace(/[^a-z0-9-]/g,'');
+  const out=document.getElementById('customOut');
+  if(!slug){out.innerHTML='';return;}
+  let h='';
+  for(var i=1;i<=MODULES_PER_COURSE;i++){
+    h+='<a href="'+slug+'-module-'+i+'.html" target="_blank">Module '+i+'</a>';
+  }
+  out.innerHTML=h;
+}
+</script>
 </body>
 </html>
