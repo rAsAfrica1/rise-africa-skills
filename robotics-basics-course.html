@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-T2QNRTGJQ3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-T2QNRTGJQ3');
+</script>
+<!-- End Google tag -->
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PFMTN937');</script>
+<!-- End Google Tag Manager -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Robotics Basics — 6 Modules — rise AFRICA skills</title>
+<meta name="description" content="Motors, sensors, and control logic. Build simple automated machines for sorting, packing, and irrigation.">
+<style>
+:root{--gold:#c9a227;--dark:#1a1a2e;--darker:#0f0f1a;--card:#1e1e32;--muted:#9a9ab0;--green:#27ae60}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--darker);color:#fff;line-height:1.65}
+a{color:var(--gold)}
+header{position:sticky;top:0;background:rgba(15,15,26,0.95);backdrop-filter:blur(8px);border-bottom:1px solid rgba(201,162,39,0.2);padding:0.7rem 1rem;display:flex;align-items:center;gap:0.6rem;z-index:100}
+.logo-icon{width:34px;height:34px;border-radius:8px;background:var(--gold);color:var(--darker);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.8rem}
+header .brand{font-weight:700;font-size:0.95rem}
+header a.back{margin-left:auto;text-decoration:none;font-size:0.85rem;border:1px solid var(--gold);padding:0.35rem 0.8rem;border-radius:20px}
+.hero{max-width:920px;margin:0 auto;padding:2.5rem 1rem 1.2rem;text-align:center}
+.cat-tag{display:inline-block;background:rgba(201,162,39,0.15);color:var(--gold);border:1px solid var(--gold);border-radius:20px;padding:0.25rem 0.9rem;font-size:0.75rem;font-weight:700;letter-spacing:1px}
+.hero h1{font-size:1.9rem;margin:0.8rem 0 0.4rem;color:var(--gold)}
+.hero p.tag{color:var(--muted);max-width:680px;margin:0 auto}
+.badges{display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;margin-top:1rem}
+.badge{background:var(--card);border:1px solid rgba(201,162,39,0.25);border-radius:8px;padding:0.4rem 0.8rem;font-size:0.75rem}
+main{max-width:920px;margin:0 auto;padding:0 1rem 3rem}
+h2{color:var(--gold);font-size:1.3rem;margin:2rem 0 0.8rem}
+p,li{font-size:0.92rem;color:#ddd}
+ul{margin:0.3rem 0 0.8rem 1.3rem}
+li{margin-bottom:0.3rem}
+.box{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:1.2rem;margin-bottom:0.8rem}
+details.month{background:var(--card);border:1px solid rgba(201,162,39,0.2);border-radius:14px;margin-bottom:1rem;overflow:hidden}
+details.month>summary{cursor:pointer;padding:1.1rem 1.3rem;font-weight:800;font-size:1.02rem;color:var(--gold);list-style:none;display:flex;justify-content:space-between;gap:1rem;align-items:center}
+details.month>summary::-webkit-details-marker{display:none}
+details.month[open]>summary{border-bottom:1px solid rgba(201,162,39,0.2)}
+.month-body{padding:1.1rem 1.3rem}
+.practical{background:rgba(201,162,39,0.08);border-left:3px solid var(--gold);padding:0.7rem 0.9rem;border-radius:0 8px 8px 0;font-size:0.88rem;margin:0.8rem 0}
+.practical strong{color:var(--gold)}
+.open-btn{display:inline-block;background:var(--gold);color:var(--darker);font-weight:800;padding:0.6rem 1.2rem;border-radius:8px;text-decoration:none;font-size:0.85rem;margin-top:0.6rem}
+.open-btn:hover{filter:brightness(1.1)}
+.pricing{display:flex;gap:0.8rem;flex-wrap:wrap;margin:1rem 0}
+.ptier{flex:1;min-width:180px;background:var(--card);border:1px solid rgba(201,162,39,0.25);border-radius:12px;padding:1rem}
+.ptier .amt{font-size:1.5rem;font-weight:800;color:#fff}
+.ptier h3{color:var(--gold);font-size:0.95rem;margin-bottom:0.3rem}
+.cta{display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:1rem}
+.cta a{padding:0.7rem 1.3rem;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.88rem}
+.cta .enroll{background:var(--gold);color:var(--darker)}
+.cta .wa{background:#25D366;color:#fff}
+footer{border-top:1px solid rgba(255,255,255,0.08);padding:1.5rem 1rem;text-align:center;color:var(--muted);font-size:0.8rem}
+.mnum{background:rgba(201,162,39,0.15);border:1px solid var(--gold);color:var(--gold);border-radius:6px;padding:0.15rem 0.5rem;font-size:0.75rem;font-weight:700;flex-shrink:0}
+</style><!--ras-social-meta-->
+<link rel="canonical" href="https://www.riseafricaskills.com/robotics-basics-course.html">
+<meta property="og:site_name" content="rise AFRICA skills">
+<meta property="og:locale" content="en_ZW">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.riseafricaskills.com/robotics-basics-course.html">
+<meta property="og:title" content="Robotics Basics — 6 Modules — rise AFRICA skills">
+<meta property="og:description" content="Motors, sensors, and control logic. Build simple automated machines for sorting, packing, and irrigation.">
+<meta property="og:image" content="https://www.riseafricaskills.com/og-image.png">
+<meta property="og:image:secure_url" content="https://www.riseafricaskills.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="rise AFRICA skills — learn practical skills, start your business">
+<meta property="og:image:type" content="image/png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@riseafricaskills">
+<meta name="twitter:creator" content="@riseafricaskills">
+<meta name="twitter:title" content="Robotics Basics — 6 Modules — rise AFRICA skills">
+<meta name="twitter:description" content="Motors, sensors, and control logic. Build simple automated machines for sorting, packing, and irrigation.">
+<meta name="twitter:image" content="https://www.riseafricaskills.com/og-image.png">
+<meta name="twitter:image:alt" content="rise AFRICA skills">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#0f0f1a">
+<meta name="author" content="rise AFRICA skills">
+<link rel="icon" href="/og-image.png" type="image/png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Course", "name": "Robotics Basics", "description": "Motors, sensors, and control logic. Build simple automated machines for sorting, packing, and irrigation.", "url": "https://www.riseafricaskills.com/robotics-basics-course.html", "provider": {"@type": "EducationalOrganization", "name": "rise AFRICA skills", "url": "https://www.riseafricaskills.com/"}, "inLanguage": "en"}</script>
+</head>
+<body>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PFMTN937"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<header><div class="logo-icon">rAs</div><div class="brand">rise AFRICA skills</div><a class="back" href="index.html">← All Courses</a></header>
+<div class="hero">
+<span class="cat-tag">TECHNOLOGY</span>
+<h1>Robotics Basics</h1>
+<p class="tag">Motors, sensors, and control logic. Build simple automated machines for sorting, packing, and irrigation.</p>
+<div class="badges"><span class="badge">6 modules</span><span class="badge">30 video lessons</span><span class="badge">6 knowledge checks</span><span class="badge">Capstone project</span><span class="badge">Lifetime access</span></div>
+</div>
+<main>
+<div class="box"><strong style="color:var(--gold)">✅ Iron-Clad Price Check</strong><p>Before you buy any equipment or input mentioned in this course, call 3 suppliers and compare. Prices vary widely between towns and seasons. This course teaches you the method — you confirm the local price.</p></div>
+
+<h2>What this course covers</h2>
+<details class="month" open><summary><span><span class="mnum">MODULE 1</span> &nbsp;Module 1</span><span style="font-size:0.75rem;color:var(--muted)">5 videos</span></summary>
+<div class="month-body"><p><strong style="color:#fff">What you will be able to do:</strong></p><ul><li>Master robotics fundamentals for Module 1</li><li>Understand mechanics, electronics, and programming</li><li>Learn hands-on robot building and troubleshooting</li><li>Develop problem-solving with robotics</li><li>Explore robotics applications in industry and innovation</li><li>Build foundation for advanced robotics learning</li></ul>
+<div class="practical"><strong>Included in this module:</strong> 5 video lessons, a comparison table you can use as a working reference, a 6-step implementation guide, a scored knowledge check, and an 8-phase capstone project you complete on your own operation.</div>
+<a class="open-btn" href="robotics-basics-module-1.html">📖 Open Module 1</a></div></details><details class="month"><summary><span><span class="mnum">MODULE 2</span> &nbsp;Module 2</span><span style="font-size:0.75rem;color:var(--muted)">5 videos</span></summary>
+<div class="month-body"><p><strong style="color:#fff">What you will be able to do:</strong></p><ul><li>Master robotics fundamentals for Module 2</li><li>Understand mechanics, electronics, and programming</li><li>Learn hands-on robot building and troubleshooting</li><li>Develop problem-solving with robotics</li><li>Explore robotics applications in industry and innovation</li><li>Build foundation for advanced robotics learning</li></ul>
+<div class="practical"><strong>Included in this module:</strong> 5 video lessons, a comparison table you can use as a working reference, a 6-step implementation guide, a scored knowledge check, and an 8-phase capstone project you complete on your own operation.</div>
+<a class="open-btn" href="robotics-basics-module-2.html">📖 Open Module 2</a></div></details><details class="month"><summary><span><span class="mnum">MODULE 3</span> &nbsp;Module 3</span><span style="font-size:0.75rem;color:var(--muted)">5 videos</span></summary>
+<div class="month-body"><p><strong style="color:#fff">What you will be able to do:</strong></p><ul><li>Master robotics fundamentals for Module 3</li><li>Understand mechanics, electronics, and programming</li><li>Learn hands-on robot building and troubleshooting</li><li>Develop problem-solving with robotics</li><li>Explore robotics applications in industry and innovation</li><li>Build foundation for advanced robotics learning</li></ul>
+<div class="practical"><strong>Included in this module:</strong> 5 video lessons, a comparison table you can use as a working reference, a 6-step implementation guide, a scored knowledge check, and an 8-phase capstone project you complete on your own operation.</div>
+<a class="open-btn" href="robotics-basics-module-3.html">📖 Open Module 3</a></div></details><details class="month"><summary><span><span class="mnum">MODULE 4</span> &nbsp;Module 4</span><span style="font-size:0.75rem;color:var(--muted)">5 videos</span></summary>
+<div class="month-body"><p><strong style="color:#fff">What you will be able to do:</strong></p><ul><li>Master robotics fundamentals for Module 4</li><li>Understand mechanics, electronics, and programming</li><li>Learn hands-on robot building and troubleshooting</li><li>Develop problem-solving with robotics</li><li>Explore robotics applications in industry and innovation</li><li>Build foundation for advanced robotics learning</li></ul>
+<div class="practical"><strong>Included in this module:</strong> 5 video lessons, a comparison table you can use as a working reference, a 6-step implementation guide, a scored knowledge check, and an 8-phase capstone project you complete on your own operation.</div>
+<a class="open-btn" href="robotics-basics-module-4.html">📖 Open Module 4</a></div></details><details class="month"><summary><span><span class="mnum">MODULE 5</span> &nbsp;Module 5</span><span style="font-size:0.75rem;color:var(--muted)">5 videos</span></summary>
+<div class="month-body"><p><strong style="color:#fff">What you will be able to do:</strong></p><ul><li>Master robotics fundamentals for Module 5</li><li>Understand mechanics, electronics, and programming</li><li>Learn hands-on robot building and troubleshooting</li><li>Develop problem-solving with robotics</li><li>Explore robotics applications in industry and innovation</li><li>Build foundation for advanced robotics learning</li></ul>
+<div class="practical"><strong>Included in this module:</strong> 5 video lessons, a comparison table you can use as a working reference, a 6-step implementation guide, a scored knowledge check, and an 8-phase capstone project you complete on your own operation.</div>
+<a class="open-btn" href="robotics-basics-module-5.html">📖 Open Module 5</a></div></details><details class="month"><summary><span><span class="mnum">MODULE 6</span> &nbsp;Module 6</span><span style="font-size:0.75rem;color:var(--muted)">5 videos</span></summary>
+<div class="month-body"><p><strong style="color:#fff">What you will be able to do:</strong></p><ul><li>Master robotics fundamentals for Module 6</li><li>Understand mechanics, electronics, and programming</li><li>Learn hands-on robot building and troubleshooting</li><li>Develop problem-solving with robotics</li><li>Explore robotics applications in industry and innovation</li><li>Build foundation for advanced robotics learning</li></ul>
+<div class="practical"><strong>Included in this module:</strong> 5 video lessons, a comparison table you can use as a working reference, a 6-step implementation guide, a scored knowledge check, and an 8-phase capstone project you complete on your own operation.</div>
+<a class="open-btn" href="robotics-basics-module-6.html">📖 Open Module 6</a></div></details>
+
+<h2>Pricing</h2>
+<div class="pricing">
+<div class="ptier"><h3>Full Course Access</h3><div class="amt">$8.00</div><p style="font-size:0.82rem;color:var(--muted)">All 6 modules, 30 video lessons, quizzes, capstone. Lifetime access.</p></div>
+<div class="ptier"><h3>Course + Business Seed Record</h3><div class="amt">$10.00</div><p style="font-size:0.82rem;color:var(--muted)">Everything above plus a verifiable Business Seed Record with a unique number. This is a record of completion, not an accredited qualification.</p></div>
+<div class="ptier"><h3>Print / Download / Share</h3><div class="amt">$3.50</div><p style="font-size:0.82rem;color:var(--muted)">High-resolution PDF of your record, print-ready, shareable.</p></div>
+</div>
+<div class="cta">
+<a class="enroll" href="index.html#courses">Enroll — $8.00</a>
+<a class="wa" href="https://wa.me/447359834272?text=Hi%20rAs%2C%20I%20want%20to%20enroll%20in%20Robotics%20Basics" target="_blank" rel="noopener">💬 Enroll on WhatsApp</a>
+</div>
+<p style="margin-top:1.2rem;font-size:0.82rem;color:var(--muted)">rise AFRICA skills is not a school and does not award accredited qualifications. We teach practical method and issue a Business Seed Record confirming you completed the work.</p>
+</main>
+<footer>rise AFRICA skills · +44 7359 834272 · all@riseafricaskills.com · riseafricaskills.com</footer>
+<script src="/paywall.js"></script>
+<!-- REVENUE MODULE START -->
+<section style="max-width:960px;margin:40px auto;padding:20px;font-family:system-ui,sans-serif;line-height:1.6;color:#222">
+
+<hr style="border:none;border-top:3px solid #f9a825;margin:40px 0">
+
+<h2 style="color:#b8860b;font-size:1.4rem">Tools, Certificate &amp; Support</h2>
+
+<h3 style="color:#2a7">1. Recommended Tools for This Course</h3>
+<p style="font-size:.9rem">These tools will improve your results. Buy from local suppliers where possible. Links marked "affiliate" earn us a small commission at no extra cost to you.</p>
+<ul style="font-size:.9rem">
+<li style='margin:.4rem 0'>Digital scale — <a href='https://www.amazon.com/s?k=Digital+scale&tag=riseafricaski-20' target='_blank' rel='noopener sponsored' style='color:#2a7'>Check price</a> <span style='font-size:.75rem;color:#888'>(affiliate link)</span></li>
+<li style='margin:.4rem 0'>Record book — <a href='https://www.amazon.com/s?k=Record+book&tag=riseafricaski-20' target='_blank' rel='noopener sponsored' style='color:#2a7'>Check price</a> <span style='font-size:.75rem;color:#888'>(affiliate link)</span></li>
+<li style='margin:.4rem 0'>Measuring tools — <a href='https://www.amazon.com/s?k=Measuring+tools&tag=riseafricaski-20' target='_blank' rel='noopener sponsored' style='color:#2a7'>Check price</a> <span style='font-size:.75rem;color:#888'>(affiliate link)</span></li>
+<li style='margin:.4rem 0'>Safety equipment — <a href='https://www.amazon.com/s?k=Safety+equipment&tag=riseafricaski-20' target='_blank' rel='noopener sponsored' style='color:#2a7'>Check price</a> <span style='font-size:.75rem;color:#888'>(affiliate link)</span></li>
+</ul>
+
+<h3 style="color:#2a7">2. Get Your Certificate of Completion</h3>
+<div style="background:#e8f5e9;border-left:4px solid #2a7;padding:16px;border-radius:6px;margin:16px 0">
+<p style="margin:0 0 8px"><strong>Finish all 12 modules and pass the final quiz to earn a rise AFRICA skills Certificate.</strong></p>
+<p style="margin:0;font-size:.9rem">Show it to buyers, lenders, and employers. Printed and digital versions available.</p>
+<p style="margin:10px 0 0;font-size:.85rem">Request via WhatsApp: <a href="https://wa.me/447359834272" target="_blank" rel="noopener" style="color:#2a7">+263 77 688 1941</a></p>
+</div>
+
+<h3 style="color:#2a7">3. Find a Local Supplier</h3>
+<p style="font-size:.9rem">We are building a directory of vetted local suppliers for African farmers. If you supply tools, feed, or equipment, contact us to be listed here.</p>
+<p style="font-size:.85rem">Contact: <a href="https://wa.me/447359834272" target="_blank" rel="noopener" style="color:#2a7">WhatsApp +263 77 688 1941</a></p>
+
+<h3 style="color:#2a7">4. Book a Consultation</h3>
+<div style="background:#e3f2fd;border-left:4px solid #1976d2;padding:16px;border-radius:6px;margin:16px 0">
+<p style="margin:0 0 8px"><strong>Need one-on-one help?</strong></p>
+<p style="margin:0;font-size:.9rem">Book a 30-minute consultation with a specialist. Custom profit plan, disease prevention checklist, and market strategy.</p>
+<p style="margin:10px 0 0;font-size:.85rem">Book via WhatsApp: <a href="https://wa.me/447359834272" target="_blank" rel="noopener" style="color:#1976d2">+263 77 688 1941</a></p>
+</div>
+
+<h3 style="color:#2a7">5. Support This Course</h3>
+<p style="font-size:.9rem">rise AFRICA skills is free for everyone. If this course helped you, consider supporting us so we can keep creating free content.</p>
+<p style="font-size:.85rem"><a href="https://riseafricaskills.com/support.html" style="color:#2a7">Support Us →</a></p>
+
+<p style="font-size:.78rem;color:#777;margin-top:24px;border-top:1px solid #e0e0e0;padding-top:12px">
+Affiliate links: We earn a small commission if you buy through these links. This does not affect the price you pay. All recommendations are based on practical usefulness, not commission rates.
+</p>
+
+</section>
+<!-- REVENUE MODULE END -->
+<!-- ENRICHMENT START -->
+<section>
+<h2>Practical Reference</h2>
+
+<p>This section is your workshop bench. Everything below is written for the operator, technician or entrepreneur who needs to quote a job, size a system or price a product this week. Robotics in Africa is rarely about humanoids on a factory floor â it is about a $40 conveyor that sorts tomatoes, a $120 pump controller that waters a greenhouse on schedule, and a $15 sensor that stops a grain mill before it jams. Treat robotics as a cost-reduction and consistency tool, and the business case writes itself.</p>
+
+<figure style="margin:1.2rem 0;background:var(--card);border:1px solid rgba(201,162,39,0.25);border-radius:12px;padding:1rem">
+<svg viewBox="0 0 760 360" role="img" aria-labelledby="robotLoopTitle robotLoopDesc" style="width:100%;height:auto;display:block">
+<title id="robotLoopTitle">Sense-plan-act control loop for a small automated sorting machine</title>
+<desc id="robotLoopDesc">Diagram showing a sensor block feeding a microcontroller controller, which drives an actuator, with feedback returning to the sensor. A power supply feeds all three stages.</desc>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L0,6 L9,3 z" fill="#c9a227"/>
+</marker>
+</defs>
+<rect x="20" y="20" width="720" height="320" rx="14" fill="#14142a" stroke="#c9a227" stroke-opacity="0.35"/>
+<text x="380" y="52" text-anchor="middle" fill="#c9a227" font-family="Segoe UI, sans-serif" font-size="17" font-weight="700">The Sense - Plan - Act Loop</text>
+
+<rect x="45" y="120" width="170" height="90" rx="10" fill="#1e1e32" stroke="#c9a227"/>
+<text x="130" y="152" text-anchor="middle" fill="#ffffff" font-family="Segoe UI, sans-serif" font-size="15" font-weight="700">1. SENSE</text>
+<text x="130" y="175" text-anchor="middle" fill="#9a9ab0" font-family="Segoe UI, sans-serif" font-size="12">IR / ultrasonic / load cell</text>
+<text x="130" y="193" text-anchor="middle" fill="#9a9ab0" font-family="Segoe UI, sans-serif" font-size="12">soil moisture, limit switch</text>
+
+<rect x="295" y="120" width="170" height="90" rx="10" fill="#1e1e32" stroke="#c9a227"/>
+<text x="380" y="152" text-anchor="middle" fill="#ffffff" font-family="Segoe UI, sans-serif" font-size="15" font-weight="700">2. PLAN</text>
+<text x="380" y="175" text-anchor="middle" fill="#9a9ab0" font-family="Segoe UI, sans-serif" font-size="12">Arduino / ESP32 / PLC</text>
+<text x="380" y="193" text-anchor="middle" fill="#9a9ab0" font-family="Segoe UI, sans-serif" font-size="12">thresholds and logic</text>
+
+<rect x="545" y="120" width="170" height="90" rx="10" fill="#1e1e32" stroke="#c9a227"/>
+<text x="630" y="152" text-anchor="middle" fill="#ffffff" font-family="Segoe UI, sans-serif" font-size="15" font-weight="700">3. ACT</text>
+<text x="630" y="175" text-anchor="middle" fill="#9a9ab0" font-family="Segoe UI, sans-serif" font-size="12">motor / solenoid / relay</text>
+<text x="630" y="193" text-anchor="middle" fill="#9a9ab0" font-family="Segoe UI, sans-serif" font-size="12">servo, pump, conveyor</text>
+
+<line x1="215" y1="165" x2="288" y2="165" stroke="#c9a227" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="465" y1="165" x2="538" y2="165" stroke="#c9a227" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+<path d="M630,215 C630,285 130,285 130,215" fill="none" stroke="#27ae60" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#arrow)"/>
+<text x="380" y="305" text-anchor="middle" fill="#27ae60" font-family="Segoe UI, sans-serif" font-size="13" font-weight="700">Feedback: the result changes what the sensor reads next</text>
+
+<rect x="45" y="70" width="670" height="32" rx="8" fill="#1a1a2e" stroke="#9a9ab0" stroke-opacity="0.5"/>
+<text x="380" y="91" text-anchor="middle" fill="#9a9ab0" font-family="Segoe UI, sans-serif" font-size="13">POWER: 12V DC supply - fuse the positive line - common ground across all three stages</text>
+</svg>
+<figcaption style="color:var(--muted);font-size:0.8rem;margin-top:0.6rem">Source: Adapted from the standard closed-loop control model described in FAO/UNIDO appropriate-technology guidance and the Arduino Reference, "Control Structures and Feedback" (docs.arduino.cc).</figcaption>
+</figure>
+
+<h3 style="color:#fff;font-size:1.05rem;margin:1.4rem 0 0.5rem">Table 1: Indicative small-robot build costs (USD, 2025)</h3>
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;background:var(--card);border-radius:10px;overflow:hidden">
+<caption style="caption-side:top;text-align:left;color:var(--muted);font-size:0.78rem;padding-bottom:0.4rem">Component pricing for three entry-level automation builds. Prices are indicative landed costs for Sub-Saharan Africa and will vary with duty, shipping and exchange rate.</caption>
+<thead>
+<tr style="background:rgba(201,162,39,0.15)">
+<th scope="col" style="text-align:left;padding:0.6rem;border-bottom:1px solid rgba(201,162,39,0.3)">Build</th>
+<th scope="col" style="text-align:left;padding:0.6rem;border-bottom:1px solid rgba(201,162,39,0.3)">Core components</th>
+<th scope="col" style="text-align:left;padding:0.6rem;border-bottom:1px solid rgba(201,162,39,0.3)">Parts cost</th>
+<th scope="col" style="text-align:left;padding:0.6rem;border-bottom:1px solid rgba(201,162,39,0.3)">Labour (est.)</th>
+<th scope="col" style="text-align:left;padding:0.6rem;border-bottom:1px solid rgba(201,162,39,0.3)">Typical payback</th>
+</tr>
+</thead>
+<tbody>
+<tr><td style="padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.06)">Gravity tomato sorter</td><td style="padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.06)">Arduino Nano, IR sensor, SG90 servo, 12V PSU, frame</td><td style="padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.06)">$55 - $95</td><td style="padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.06)">2-3 days</td><td style="padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.06)">1-2 seasons</td></tr>
+<tr><td style="padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.06)">Soil-moisture irrigation controller</td><td style="padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.06)">ESP32, capacitive probe, 12V solenoid valve, relay board</td><td style="padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.06)">$70 - $130</td><td style="padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.06)">1-2 days</td><td style="padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.06)">Under 1 season</td></tr>
+<tr><td style="padding:0.6rem">Small conveyor + counter</td><td style="padding:0.6rem">Geared DC motor, L298N driver, IR break-beam, bearing rollers</td><td style="padding:0.6rem">$140 - $260</td><td style="padding:0.6rem">4-6 days</td><td style="padding:0.6rem">2-3 seasons</td></tr>
+</tbody>
+</table>
+<p style="color:var(--muted);font-size:0.78rem;margin-top:0.4rem">Source: Component price bands compiled from open listings on Mouser Electronics, RS Components and local Sub-Saharan distributor catalogues (2025). Labour and payback estimates are rise AFRICA skills field benchmarks â verify against your own quotes.</p>
+
+<h3 style="color:#fff;font-size:1.05rem;margin:1.6rem 0 0.5rem">Table 2: Robot adoption in African agriculture and industry</h3>
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;background:var(--card);border-radius:10px;overflow:hidden">
+<caption style="caption-side:top;text-align:left;color:var(--muted);font-size:0.78rem;padding-bottom:0.4rem">Context indicators that support the business case for low-cost automation on the continent.</caption>
+<thead>
+<tr style="background:rgba(201,162,39,0.15)">
+<th scope="col" style="text-align:left;padding:0.6rem;border-bottom:1px solid rgba(201,162,39,0.3)">Indicator</th>
+<th scope="col" style="text-align:left;padding:0.6rem;border-bottom:1px solid rgba(201,162,39,0.3)">Figure</th>
+<th scope="col" style="text-align:left;padding:0.6rem;border-bottom:1px solid rgba(201,162,39,0.3)">Why it matters to you</th>
+</tr>
+</thead>
+<tbody>
+<tr><td style="padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.06)">Sub-Saharan Africa population (2023)</td><td style="padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.06)">~1.26 billion</td><td style="padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.06)">Growing domestic food demand rewards consistent, high-volume processors.</td></tr>
+<tr><td style="padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.06)">Share of workforce in agriculture</td><td style="padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.06)">Over 50% in most countries</td><td style="padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.06)">Labour is available but seasonal; automation smooths peak-harvest bottlenecks.</td></tr>
+<tr><td style="padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.06)">Global industrial robot installations (2023)</td><td style="padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.06)">~541,000 units</td><td style="padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.06)">Africa's share is still under 1% â an open, under-served market.</td></tr>
+<tr><td style="padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.06)">Global operational stock of industrial robots (2023)</td><td style="padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.06)">~4.28 million units</td><td style="padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.06)">Spare parts, training and retrofit services are a growing niche.</td></tr>
+<tr><td style="padding:0.6rem">Africa's share of global robot installations</td><td style="padding:0.6rem">Under 1%</td><td style="padding:0.6rem">Early movers capture service contracts before the market matures.</td></tr>
+</tbody>
+</table>
+<p style="color:var(--muted);font-size:0.78rem;margin-top:0.4rem">Sources: World Bank Open Data, population and employment indicators (data.worldbank.org); International Federation of Robotics, <em>World Robotics 2024</em> (ifr.org).</p>
+
+<div style="background:rgba(192,57,43,0.12);border-left:4px solid #c0392b;border-radius:0 10px 10px 0;padding:1rem 1.1rem;margin:1.4rem 0">
+<strong style="color:#ff6b6b;display:block;margin-bottom:0.4rem">SAFETY WARNING â ELECTRICAL AND MACHINE HAZARDS</strong>
+<p style="font-size:0.88rem;margin-bottom:0.5rem">Robotics work combines live electricity, stored energy and moving parts. Treat every build as hazardous until proven otherwise.</p>
+<ul style="font-size:0.88rem;margin-left:1.2rem">
+<li><strong>Isolate before touching.</strong> Switch off and unplug the supply before wiring. Never work on a live circuit â 12V can still burn, and mains-powered chargers and pumps can kill.</li>
+<li><strong>Fuse everything.</strong> Fit an inline fuse on the positive line close to the battery or supply. An unfused short can start a fire in seconds.</li>
+<li><strong>Guard the moving parts.</strong> Any belt, roller, blade or linkage must have a physical guard. Loose clothing, sleeves and jewellery must be removed before testing.</li>
+<li><strong>Never bypass a limit switch or emergency stop</strong> to "make it run". These are the last line of defence for fingers and hands.</li>
+<li><strong>Batteries:</strong> use the correct charger, never charge lithium packs unattended, and never short the terminals. Swollen or punctured cells must be disposed of at a proper collection point, not in household waste.</li>
+<li><strong>Water and power together:</strong> irrigation controllers must use low-voltage DC solenoids and a residual-current device (RCD) on any mains supply. Keep all electronics in an IP-rated enclosure.</li>
+<li><strong>If in doubt, stop and get a qualified electrician.</strong> A burnt-out controller is a cost; a burnt-out workshop is a business.</li>
+</ul>
+</div>
+
+<h3 style="color:#fff;font-size:1.05rem;margin:1.6rem 0 0.5rem">Quick Reference Checklist</h3>
+<div class="box">
+<ul>
+<li><strong>Define the one job.</strong> Write the single task the machine must do in one sentence. If you cannot, the scope is too wide â cut it.</li>
+<li><strong>Price three suppliers.</strong> Get written quotes for every component before committing. Compare landed cost, not shelf price.</li>
+<li><strong>Sketch the sense-plan-act loop.</strong> Name the sensor, the controller and the actuator before you buy anything.</li>
+<li><strong>Build a bench prototype first.</strong> Test the logic on a table with no load, no water and no product at risk.</li>
+<li><strong>Fuse and guard.</strong> No build goes into service without an inline fuse, a physical guard and an accessible off switch.</li>
+<li><strong>Run a 7-day trial.</strong> Log every failure, false trigger and jam. Fix the top three before you scale.</li>
+<li><strong>Document the build.</strong> Photograph the wiring, label every cable and keep a parts list. This is what makes the machine serviceable and sellable.</li>
+<li><strong>Calculate payback.</strong> Divide total build cost by monthly savings in labour, waste or water. If payback exceeds two seasons, redesign before you build.</li>
+</ul>
+</div>
+
+<h3 style="color:#fff;font-size:1.05rem;margin:1.6rem 0 0.5rem">Further Reading</h3>
+<ul>
+<li><a href="https://docs.arduino.cc/" target="_blank" rel="noopener">Arduino Documentation</a> â free official reference for boards, sensors and control code used in almost every entry-level build.</li>
+<li><a href="https://www.ifr.org/ifr-press-releases/" target="_blank" rel="noopener">International Federation of Robotics â Press Releases and World Robotics data</a> â free statistics on global and regional robot adoption.</li>
+<li><a href="https://data.worldbank.org/topic/agriculture-and-rural-development" target="_blank" rel="noopener">World Bank Open Data â Agriculture and Rural Development</a> â free datasets on employment, output and mechanisation across African economies.</li>
+<li><a href="https://www.fao.org/faostat/en/" target="_blank" rel="noopener">FAO FAOSTAT</a> â free production, trade and food-loss data to size your market before you automate.</li>
+<li><a href="https://www.itu.int/en/ITU-D/Statistics/Pages/stat/default.aspx" target="_blank" rel="noopener">ITU Statistics</a> â free connectivity and ICT indicators, useful for planning remote-monitoring features.</li>
+</ul>
+
+<div class="practical" style="margin-top:1.4rem"><strong>Bottom line:</strong> the money in African robotics is not in the machine â it is in the service contract, the retrofit and the training you sell alongside it. Build one reliable unit, document it properly, and you have a product. Build ten without documentation and you have a maintenance debt. Start small, price honestly, and scale on proven payback.</div>
+</section>
+<!-- ENRICHMENT END -->
+</body></html>
