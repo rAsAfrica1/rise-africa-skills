@@ -2,7 +2,42 @@
 <html lang="en">
 <head>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-T2QNRTGJQ3"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-T2QNRTGJQ3">
+// rAs FIX: read course, tier, slug, price from URL
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var course = params.get('course') || '';
+  var tier   = params.get('tier')   || 'course';
+  var slug   = params.get('slug')   || '';
+  var price  = params.get('price')  || '5';
+
+  document.querySelectorAll('.unknown-course, .course-unknown').forEach(function(el){
+    el.style.display = 'none';
+  });
+  document.querySelectorAll('#courseName, #selectedCourse, .course-name, [data-course-name], .checkout-course-name').forEach(function(el){
+    el.textContent = course || 'Select a course';
+  });
+  var sel = document.getElementById('regCourse') || document.querySelector('select[name="course"]');
+  if (sel && course) {
+    for (var i = 0; i < sel.options.length; i++) {
+      var v = sel.options[i].value.trim();
+      var t = sel.options[i].textContent.trim();
+      if (v === course || t === course || t.indexOf(course) !== -1) {
+        sel.selectedIndex = i; break;
+      }
+    }
+  }
+  document.querySelectorAll('input[name="tier"], input[name="purchase"]').forEach(function(r){
+    r.checked = (r.value === tier);
+  });
+  var tierSel = document.getElementById('regTier') || document.querySelector('select[name="tier"]');
+  if (tierSel) tierSel.value = tier;
+  document.querySelectorAll('.price-display, [data-price-display], #totalPrice, .total-price').forEach(function(el){
+    el.textContent = '$' + parseFloat(price).toFixed(2);
+  });
+  window.rAsEnroll = { course: course, tier: tier, slug: slug, price: price };
+})();
+</script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
