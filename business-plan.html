@@ -3,30 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>💼 Business Plan & Cashflow Calculator — Rise Africa Skills</title>
+<title>💼 Business Plan & Executive Summary — Rise Africa Skills</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,sans-serif;}
-body{background:#f5f7f5;padding:16px;color:#333;line-height:1.5;}
-.header{background:linear-gradient(135deg,#1B5E20,#2E7D32);color:#fff;padding:24px;border-radius:16px;margin-bottom:20px;}
+body{background:#f5f7f5;padding:16px;color:#333;line-height:1.6;}
+.header{background:linear-gradient(135deg,#1B5E20,#2E7D32);color:#fff;padding:24px;border-radius:16px;margin-bottom:16px;}
 .header h1{font-size:22px;margin-bottom:6px;}
 .header p{font-size:13px;opacity:.9;}
-.steps{background:#fff3e0;padding:14px;border-radius:12px;margin-bottom:20px;border-left:4px solid #E65100;}
-.steps h3{color:#E65100;font-size:14px;margin-bottom:8px;}
-.steps ol{padding-left:20px;font-size:13px;}
-.steps li{margin-bottom:4px;}
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+.nav a{background:#fff;color:#1B5E20;padding:6px 12px;border-radius:20px;font-size:13px;text-decoration:none;font-weight:bold;border:1px solid #1B5E20;}
 .card{background:#fff;border-radius:12px;padding:18px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);}
-.card h2{color:#1B5E20;font-size:16px;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid #e8f5e9;}
-.card h2 .num{background:#1B5E20;color:#fff;display:inline-block;width:24px;height:24px;line-height:24px;text-align:center;border-radius:50%;font-size:13px;margin-right:8px;}
-select,input{width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;font-size:14px;background:#fafafa;margin-bottom:10px;}
+.card h2{color:#1B5E20;font-size:17px;margin-bottom:12px;border-bottom:2px solid #e8f5e9;padding-bottom:8px;}
+.card h2 .num{background:#1B5E20;color:#fff;display:inline-block;width:26px;height:26px;line-height:26px;text-align:center;border-radius:50%;font-size:14px;margin-right:8px;}
+select,input,textarea{width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;font-size:14px;background:#fafafa;margin-bottom:10px;}
 label{display:block;font-weight:bold;font-size:12px;margin-bottom:4px;color:#555;}
 .row{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:6px;align-items:center;padding:6px 0;border-bottom:1px solid #eee;font-size:13px;}
 .row input{padding:6px;font-size:13px;margin:0;text-align:right;}
 .row.header-row{background:#e8f5e9;padding:8px;border-radius:6px;font-weight:bold;}
 .del{background:#f44336;color:#fff;border:none;width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:14px;}
-.btn{background:#1B5E20;color:#fff;border:none;padding:10px 16px;border-radius:8px;font-size:13px;font-weight:bold;cursor:pointer;margin-top:8px;margin-right:6px;}
+.btn{background:#1B5E20;color:#fff;border:none;padding:10px 16px;border-radius:8px;font-size:13px;font-weight:bold;cursor:pointer;margin-top:8px;margin-right:6px;text-decoration:none;display:inline-block;}
 .btn-blue{background:#0D47A1;}
 .btn-orange{background:#E65100;}
 .btn-red{background:#B71C1C;}
+.btn-wa{background:#25D366;}
 .btn-small{padding:6px 12px;font-size:12px;}
 .total{background:#e8f5e9;padding:12px;border-radius:10px;margin-top:10px;font-size:14px;line-height:1.8;border-left:4px solid #1B5E20;}
 .total strong{color:#1B5E20;font-size:16px;}
@@ -38,34 +37,51 @@ table.cash{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px;}
 table.cash th{background:#1B5E20;color:#fff;padding:6px;text-align:left;}
 table.cash td{padding:6px;border-bottom:1px solid #eee;}
 table.cash tr:nth-child(even){background:#f8faf8;}
-@media print{.header,.steps,.btn,.del{display:none !important;}}
+/* Executive Summary */
+.exec-summary{background:#FFF8E1;border-radius:12px;padding:20px;margin-bottom:16px;border-left:5px solid #FF9800;}
+.exec-summary h2{color:#E65100;font-size:20px;margin-bottom:4px;border-bottom:none;padding-bottom:0;}
+.exec-summary .subtitle{font-size:13px;color:#777;margin-bottom:14px;font-style:italic;}
+.exec-summary h3{color:#1B5E20;font-size:14px;margin-top:14px;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;}
+.exec-summary p{font-size:13px;color:#333;line-height:1.7;margin-bottom:8px;}
+.exec-summary ul{padding-left:20px;font-size:13px;line-height:1.8;margin-bottom:8px;}
+.exec-summary li{margin-bottom:4px;}
+.exec-summary .metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0;}
+.exec-summary .metric{background:#fff;padding:12px;border-radius:10px;text-align:center;border-left:3px solid #1B5E20;}
+.exec-summary .metric .label{font-size:11px;color:#777;text-transform:uppercase;}
+.exec-summary .metric .value{font-size:20px;font-weight:bold;color:#1B5E20;margin-top:4px;}
+.exec-summary .risk{background:#FFEBEE;padding:10px;border-radius:8px;font-size:12px;border-left:4px solid #f44336;margin-top:8px;}
+.exec-summary .success{background:#E8F5E9;padding:10px;border-radius:8px;font-size:12px;border-left:4px solid #4CAF50;margin-top:8px;}
+.placeholder{background:#f0f0f0;padding:40px;text-align:center;border-radius:12px;color:#777;font-size:14px;margin-bottom:16px;border:2px dashed #ccc;}
+@media print{.header,.nav,.btn,.del{display:none !important;}}
+@media (max-width:500px){.exec-summary .metrics{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
 <div class="header">
-<h1>💼 Business Plan &amp; Cashflow Calculator</h1>
-<p>Rise Africa Skills — pick your business, adjust the numbers, print your plan. Everything saves on your device.</p>
+<h1>💼 Business Plan &amp; Executive Summary</h1>
+<p>Pick your business, read the executive summary, adjust the numbers, print your plan. Everything saves on your device — nothing is sent anywhere.</p>
 </div>
 
-<div class="steps">
-<h3>📋 The 5-step process</h3>
-<ol>
-<li><strong>Startup Costs</strong> — every one-time expense. This is your seed capital.</li>
-<li><strong>Operating</strong> — monthly fixed costs: rent, transport, electricity, labour.</li>
-<li><strong>Pricing &amp; Break-even</strong> — what you sell, for how much, at what cost.</li>
-<li><strong>12-Month Cash Flow</strong> — month by month, will you stay positive?</li>
-<li><strong>Loan</strong> — if you borrow, can your profit cover the payment?</li>
-</ol>
+<div class="nav">
+<a href="index.html">🏠 Home</a>
+<a href="all-courses.html">📚 All Courses</a>
+<a href="bundles.html">📦 Bundles</a>
+<a href="value-added.html">💰 Services</a>
+<a href="business-plan.html">💼 Business Plan</a>
 </div>
 
 <div class="card">
 <h2>Choose your business</h2>
 <label>Select a course or business type</label>
 <select id="businessSelect"><option value="">— Select a business —</option></select>
-<button class="btn btn-orange" onclick="resetAll()">🔄 Reset Calculator</button>
-<button class="btn btn-blue" onclick="window.print()">🖨️ Print Business Plan</button>
+<button class="btn btn-orange" onclick="resetAll()">🔄 Reset</button>
+<button class="btn btn-blue" onclick="window.print()">🖨️ Print Full Plan</button>
 </div>
+
+<div id="execSummaryContainer"></div>
+
+<div id="calculatorContainer" style="display:none;">
 
 <div class="card">
 <h2><span class="num">1</span>Startup Costs (One-time)</h2>
@@ -111,82 +127,289 @@ table.cash tr:nth-child(even){background:#f8faf8;}
 <div id="loanResult" class="result-box" style="display:none;"></div>
 </div>
 
+<div class="card" style="background:#FFF3E0;border-left:4px solid #E65100;">
+<h2 style="color:#E65100;border-bottom-color:#FFCC80;">💬 Get Expert Help</h2>
+<p style="font-size:13px;color:#333;">Want our team to review your business plan, financials, or help you apply for funding?</p>
+<a class="btn btn-wa" href="https://wa.me/263773001353?text=Hi%20Rise%20Africa%20Skills%2C%20I%20need%20help%20with%20my%20Business%20Plan.">💬 Business Plan Review on WhatsApp</a>
+<a class="btn btn-wa" href="https://wa.me/263773001353?text=Hi%20Rise%20Africa%20Skills%2C%20I%20need%20a%20Financial%20Review.">💬 Financial Review on WhatsApp</a>
+</div>
+
+</div>
+
+<div id="placeholderBox" class="placeholder">
+📋 Select a business above to see its Executive Summary and Business Plan Calculator
+</div>
+
 <script>
-// ============ BUSINESS TEMPLATES ============
+// ============ BUSINESS DATA ============
 const TEMPLATES = {
 "Modern Small-Scale Piggery": {
-startup:[["Purchase of 2 gilts &amp; 1 boar",450],["Pig pen construction",300],["Feeding troughs &amp; drinkers",80],["Initial feed (500kg)",250],["Vet &amp; vaccines (initial)",60],["Water tank &amp; pipes",90]],
-operating:[["Feed (monthly)",180],["Vet &amp; vaccines",20],["Water &amp; electricity",30],["Labour (part-time)",80],["Transport",40]],
+exec:{
+tagline:"Raising quality pigs for meat production and breeding stock.",
+overview:"A small-scale piggery starting with 2 gilts and 1 boar produces weaner piglets for sale and fattened pigs for the meat market. Pigs are efficient converters of feed to meat and can be raised on small land with proper management.",
+market:"Local butcheries, pork traders, restaurants, and individual families buying weaners for fattening. Demand for pork is high year-round, especially in urban areas and around holidays.",
+products:["Weaner piglets (8 weeks) — $35 each","Market-weight pigs (80kg) — $180 each","Breeding sows — $220 each","Pig manure for gardens — $5/bag"],
+startupTotal:1180,
+monthlyProfit:520,
+breakevenMonths:4,
+success:["Clean, dry housing with good ventilation","Consistent feeding schedule","Record keeping for breeding and health","Regular vaccination against common diseases"],
+risks:["African Swine Fever (ASF) — vaccinate and isolate new pigs","Feed price increases — buy in bulk with other farmers","Theft — secure pens and count animals daily"],
+legal:["Register with local council","Get a livestock movement permit","Vet inspection for meat sales"]
+},
+startup:[["Purchase of 2 gilts & 1 boar",450],["Pig pen construction (materials)",300],["Feeding troughs & drinkers",80],["Initial feed (500kg)",250],["Vet & vaccines (initial)",60],["Water tank & pipes",90]],
+operating:[["Feed (monthly)",180],["Vet & vaccines",20],["Water & electricity",30],["Labour (part-time)",80],["Transport",40]],
 pricing:[["Weaner piglet",35,12],["Market pig (80kg)",180,95],["Breeding sow",220,120]]
 },
+
 "Poultry Farming (Broilers & Eggs)": {
-startup:[["Purchase of 50 day-old chicks",60],["Brooder &amp; housing",150],["Feeders &amp; drinkers",40],["Initial feed (200kg)",90],["Vaccines",25]],
-operating:[["Feed (monthly)",120],["Vaccines &amp; meds",10],["Labour",50],["Water &amp; electricity",20]],
+exec:{
+tagline:"Producing broilers and eggs for the daily food market.",
+overview:"Poultry farming is one of the fastest cash-returning livestock ventures. Broilers mature in 6-8 weeks, and layers start producing eggs at 18-20 weeks. Even 50 birds can generate meaningful monthly income.",
+market:"Restaurants, butcheries, local markets, supermarkets, and households. Eggs sell daily; broilers peak during holidays and weekends.",
+products:["Live broiler chicken (1.8kg) — $12","Eggs (tray of 30) — $5","Day-old chicks — $1.50","Manure for compost — $3/bag"],
+startupTotal:365,
+monthlyProfit:280,
+breakevenMonths:3,
+success:["Clean housing and disinfection between batches","Strict vaccination programme","Fresh feed and water at all times","Keep records of mortality and feed conversion"],
+risks:["Newcastle disease — vaccinate on schedule","Heat stress — provide shade and water","Predators (hawks, snakes) — secure housing"],
+legal:["Council registration for poultry","Health certificate for selling eggs and meat"]
+},
+startup:[["Purchase of 50 day-old chicks",60],["Brooder & housing",150],["Feeders & drinkers",40],["Initial feed (200kg)",90],["Vaccines",25]],
+operating:[["Feed (monthly)",120],["Vaccines & meds",10],["Labour",50],["Water & electricity",20]],
 pricing:[["Live chicken (1.8kg)",12,6],["Eggs (tray of 30)",5,3],["Day-old chick",1.5,0.8]]
 },
+
 "Goat Rearing": {
-startup:[["Purchase of 5 does &amp; 1 buck",750],["Goat house construction",200],["Fencing",150],["Initial feed",100],["Vet &amp; vaccines",80]],
-operating:[["Feed (monthly)",120],["Vet &amp; vaccines",15],["Labour",60],["Water",20]],
+exec:{
+tagline:"Hardy livestock for meat, milk, and breeding.",
+overview:"Goats are ideal for African conditions — they tolerate drought, eat a wide range of plants, and produce meat, milk, and skins. Starting with 5 does and 1 buck gives you a breeding cycle producing 5-10 kids per year.",
+market:"Local markets, butcheries, wedding and funeral buyers, and live export trade. Goat meat (chevon) is a premium product.",
+products:["Mature goat — $150","Young goat — $80","Goat milk — $3/litre","Skins — $10 each"],
+startupTotal:1280,
+monthlyProfit:380,
+breakevenMonths:7,
+success:["Rotational grazing to prevent parasites","Regular deworming","Good shelter from rain and wind","Breeding records for quality bloodlines"],
+risks:["Internal parasites — deworm every 3 months","Foot rot in wet conditions — keep dry bedding","Predators (dogs, jackals) — secure night shelter"],
+legal:["Livestock registration with council","Vet certificate for movement"]
+},
+startup:[["Purchase of 5 does & 1 buck",750],["Goat house construction",200],["Fencing",150],["Initial feed",100],["Vet & vaccines",80]],
+operating:[["Feed (monthly)",120],["Vet & vaccines",15],["Labour",60],["Water",20]],
 pricing:[["Mature goat",150,85],["Young goat",80,45],["Milk (per litre)",3,1.5]]
 },
+
 "Maize Farming": {
-startup:[["Seed (10kg)",40],["Fertiliser (basal + top)",180],["Ploughing &amp; harrowing",120],["Herbicides &amp; pesticides",60],["Transport &amp; bags",50]],
-operating:[["Labour (weeding, harvesting)",150],["Transport to market",80],["Tools &amp; maintenance",40]],
+exec:{
+tagline:"Staple grain production for household and market.",
+overview:"Maize is the staple crop across much of Africa. A one-hectare plot can yield 3-5 tonnes with good seed, fertiliser, and rain. Half the harvest feeds the family; the other half goes to market.",
+market:"Local millers, traders at markets, schools, and households. Peak prices in the dry season (September to December).",
+products:["Maize (per 50kg bag) — $25","Maize (per tonne) — $450","Maize flour (milled) — $35/50kg","Maize cobs (stock feed) — $15/bag"],
+startupTotal:450,
+monthlyProfit:200,
+breakevenMonths:6,
+success:["Buy certified hybrid seed","Apply fertiliser at right time","Control weeds early","Harvest and dry properly to prevent rot"],
+risks:["Drought — plant early, use drought-tolerant seed","Armyworm — scout weekly and spray early","Poor storage — use hermetic bags or grain protectant"],
+legal:["Land ownership or lease agreement","Grain marketing permit"]
+},
+startup:[["Seed (10kg)",40],["Fertiliser (basal + top)",180],["Ploughing & harrowing",120],["Herbicides & pesticides",60],["Transport & bags",50]],
+operating:[["Labour (weeding, harvesting)",150],["Transport to market",80],["Tools & maintenance",40]],
 pricing:[["Maize (per 50kg bag)",25,15],["Maize (per tonne)",450,280]]
 },
+
 "Vegetable Farming": {
-startup:[["Seeds (variety pack)",80],["Drip irrigation kit",200],["Fencing",250],["Compost &amp; fertiliser",120],["Tools",80]],
-operating:[["Labour (monthly)",120],["Water &amp; electricity",60],["Transport",80],["Packaging",40]],
+exec:{
+tagline:"Year-round vegetable production for daily markets.",
+overview:"Vegetable farming gives fast returns — 8 to 12 weeks from planting to harvest. With drip irrigation, you can produce year-round and supply tomatoes, leafy greens, and onions to local markets.",
+market:"Local markets, restaurants, hotels, schools, and neighbourhood traders. High demand in towns.",
+products:["Tomatoes — $3/kg","Leafy greens (covo, rape) — $2.50/kg","Onions — $3.50/kg","Carrots — $3/kg"],
+startupTotal:730,
+monthlyProfit:350,
+breakevenMonths:4,
+success:["Drip irrigation for water efficiency","Crop rotation to prevent disease","Compost and manure for soil health","Weekly scouting for pests"],
+risks:["Drought — install drip and harvest rainwater","Pests (aphids, whitefly) — spray early","Market oversupply — grow multiple crops"],
+legal:["Land use agreement","Health certificate for market sales"]
+},
+startup:[["Seeds (variety pack)",80],["Drip irrigation kit",200],["Fencing",250],["Compost & fertiliser",120],["Tools",80]],
+operating:[["Labour (monthly)",120],["Water & electricity",60],["Transport",80],["Packaging",40]],
 pricing:[["Tomatoes (per kg)",3,1.2],["Leafy greens (per kg)",2.5,1],["Onions (per kg)",3.5,1.5]]
 },
+
 "Food Processing (Baking & Snacks)": {
-startup:[["Oven &amp; baking equipment",350],["Mixer &amp; utensils",150],["Initial ingredients",200],["Packaging materials",120],["Health certificate &amp; licence",80]],
+exec:{
+tagline:"Turning raw ingredients into high-value packaged foods.",
+overview:"A home or small commercial bakery produces bread, cakes, and snacks that sell daily. Margins are good because you turn $1 of flour into $4 of bread. Start small, grow with demand.",
+market:"Local shops, schools, offices, tuckshops, and individual customers. Peak demand in the morning and evening.",
+products:["Bread (loaf) — $1.50","Cake (small) — $8","Snacks (per pack) — $2","Buns (pack of 6) — $3"],
+startupTotal:900,
+monthlyProfit:520,
+breakevenMonths:3,
+success:["Consistent recipes and quality","Fresh products daily","Attractive packaging and branding","Delivery to regular customers"],
+risks:["Ingredient price rises — buy in bulk","Health regulations — get certified","Competition — build regular customers"],
+legal:["Health certificate and food handling licence","Council trading licence","Tax registration"]
+},
+startup:[["Oven & baking equipment",350],["Mixer & utensils",150],["Initial ingredients",200],["Packaging materials",120],["Health certificate & licence",80]],
 operating:[["Ingredients (monthly)",300],["Packaging",80],["Rent of kitchen space",100],["Labour",150],["Transport",50]],
 pricing:[["Bread (loaf)",1.5,0.8],["Cake (small)",8,3.5],["Snacks (per pack)",2,0.9]]
 },
+
 "African Black Soap & Cosmetics": {
-startup:[["Raw materials (shea, ash, oils)",180],["Moulds &amp; containers",80],["Packaging materials",120],["Mixing equipment",150],["Labels &amp; branding",100]],
+exec:{
+tagline:"Handmade natural soaps and cosmetics for local and export markets.",
+overview:"African black soap and natural cosmetics are in high demand locally and overseas. Made from shea butter, plantain ash, and oils, this business uses cheap raw materials and sells premium-priced finished products.",
+market:"Local markets, cosmetics shops, tourist shops, online, and export to diaspora buyers.",
+products:["Soap bar (100g) — $3","Soap bar (250g) — $6","Gift set — $15","Body butter — $8"],
+startupTotal:630,
+monthlyProfit:380,
+breakevenMonths:3,
+success:["Consistent quality and recipe","Beautiful packaging and labels","Social media marketing","Retail partnerships"],
+risks:["Raw material price changes — stock up","Quality issues — test each batch","Copycats — build a strong brand"],
+legal:["Council trading licence","Cosmetic product registration where required"]
+},
+startup:[["Raw materials (shea, ash, oils)",180],["Moulds & containers",80],["Packaging materials",120],["Mixing equipment",150],["Labels & branding",100]],
 operating:[["Raw materials (monthly)",150],["Packaging",60],["Labour",100],["Marketing",40]],
 pricing:[["Soap bar (100g)",3,1.2],["Soap bar (250g)",6,2.5],["Gift set",15,6]]
 },
+
 "Welding & Metalwork": {
-startup:[["Welding machine",450],["Grinder &amp; tools",180],["Safety gear",120],["Initial metal stock",200],["Workshop rent (deposit)",150]],
+exec:{
+tagline:"Fabricating metal products and repairs for homes and farms.",
+overview:"A welding and metalwork business fabricates gates, window frames, doors, burglar bars, and farm equipment. Steady demand from households, farms, and construction sites.",
+market:"Households, farmers, hardware shops, construction companies, and property developers.",
+products:["Gate (per unit) — $250","Window frame — $80","Burglar bar — $120","Repair job — $40"],
+startupTotal:1100,
+monthlyProfit:650,
+breakevenMonths:3,
+success:["Precise measuring and quality welding","Fast turnaround for customers","Strong reputation built on referrals","Safety gear for the team"],
+risks:["Metal price rises — quote with margin","Injury — strict safety protocols","Electricity outages — backup generator if possible"],
+legal:["Council trading licence","Workshop safety certificate"]
+},
+startup:[["Welding machine",450],["Grinder & tools",180],["Safety gear",120],["Initial metal stock",200],["Workshop rent (deposit)",150]],
 operating:[["Metal stock (monthly)",300],["Electricity",80],["Workshop rent",150],["Transport",60]],
 pricing:[["Gate (per unit)",250,140],["Window frame",80,45],["Repair job",40,15]]
 },
+
 "Carpentry & Furniture": {
+exec:{
+tagline:"Making quality furniture and wooden products.",
+overview:"Carpentry turns timber into chairs, tables, beds, and wardrobes that families buy for their homes. Skilled work earns well and customers return for more.",
+market:"Households, offices, schools, hotels, and furniture shops.",
+products:["Chair — $40","Table — $120","Wardrobe — $250","Bed frame — $180"],
+startupTotal:1180,
+monthlyProfit:720,
+breakevenMonths:3,
+success:["Quality finishes and joinery","On-time delivery","Sample showroom of work","Custom designs for customers"],
+risks:["Timber price rises — buy dry timber in bulk","Tool breakage — keep spares","Fire — store timber safely"],
+legal:["Council trading licence","Workshop compliance"]
+},
 startup:[["Power tools (saw, drill, sander)",500],["Hand tools",180],["Initial timber stock",300],["Workshop setup",200]],
 operating:[["Timber (monthly)",400],["Workshop rent",150],["Transport",80],["Electricity",60]],
 pricing:[["Chair",40,22],["Table",120,65],["Wardrobe",250,140]]
 },
+
 "Solar Installation Services": {
-startup:[["Solar panels (starter stock)",800],["Batteries",500],["Inverter",300],["Tools &amp; cabling",250],["Vehicle or transport",400]],
-operating:[["Transport",120],["Phone &amp; marketing",50],["Tools maintenance",40],["Assistant wages",150]],
+exec:{
+tagline:"Powering homes and businesses with clean solar energy.",
+overview:"Solar installation is a growing service business — demand is high as electricity costs rise and grid reliability falls. You buy panels and batteries, install them, and provide after-sales support.",
+market:"Households, farms, small businesses, clinics, schools, and NGOs.",
+products:["Small home solar install — $500","Large home solar install — $1,200","Maintenance visit — $50","Battery replacement — $200"],
+startupTotal:2250,
+monthlyProfit:880,
+breakevenMonths:4,
+success:["Certified installation quality","Warranty and after-sales support","Trusted pricing and quotes","Referrals from satisfied clients"],
+risks:["Component price rises — quote with buffer","Warranty claims — buy from reputable suppliers","Technical faults — stay trained on latest products"],
+legal:["ZERA licence (Zimbabwe) or equivalent","Electrical contractor registration"]
+},
+startup:[["Solar panels (starter stock)",800],["Batteries",500],["Inverter",300],["Tools & cabling",250],["Vehicle or transport",400]],
+operating:[["Transport",120],["Phone & marketing",50],["Tools maintenance",40],["Assistant wages",150]],
 pricing:[["Home solar install (small)",500,320],["Home solar install (large)",1200,780],["Maintenance visit",50,20]]
 },
+
 "Phone Repair & Tech Services": {
-startup:[["Repair toolkit",150],["Spare parts stock",400],["Workbench &amp; lighting",120],["Software licences",80],["Shop deposit",200]],
+exec:{
+tagline:"Fixing phones, tablets, and laptops — fast turnaround.",
+overview:"Phone repair is one of the most in-demand small services. Every cracked screen, dead battery, or software issue is a paying job. Work from a small shop or market stall.",
+market:"Walk-in customers, local shops, offices, schools, and phone traders.",
+products:["Screen replacement — $60","Battery replacement — $25","Software unlock — $20","Water damage repair — $40"],
+startupTotal:950,
+monthlyProfit:680,
+breakevenMonths:2,
+success:["Fast turnaround (same day)","Genuine parts and warranty","Clean, professional workspace","Good reviews and word of mouth"],
+risks:["Damaging a customer's phone — insurance and care","Parts shortages — supplier relationships","Theft — keep stock locked"],
+legal:["Council trading licence","Business registration"]
+},
+startup:[["Repair toolkit",150],["Spare parts stock",400],["Workbench & lighting",120],["Software licences",80],["Shop deposit",200]],
 operating:[["Spare parts (monthly)",300],["Shop rent",200],["Electricity",50],["Internet",40]],
 pricing:[["Screen replacement",60,30],["Battery replacement",25,10],["Software unlock",20,5]]
 },
+
 "Car Wash & Auto Services": {
-startup:[["Pressure washer",250],["Water tank &amp; piping",180],["Car wash soap &amp; supplies",80],["Vacuum cleaner",150],["Signage",60]],
-operating:[["Water &amp; soap (monthly)",120],["Labour",200],["Electricity",60],["Site rent",150]],
+exec:{
+tagline:"Convenient car washing and basic auto care.",
+overview:"A car wash in a busy location earns steady cash. Small cars take 20 minutes to wash and cost $5; larger vehicles cost $10-15. Add interior cleaning and vacuuming to increase margins.",
+market:"Taxi drivers, commuters, businesses, offices, and residential areas.",
+products:["Car wash (small) — $5","Car wash (large) — $10","Interior clean — $15","Monthly subscription — $40"],
+startupTotal:720,
+monthlyProfit:530,
+breakevenMonths:2,
+success:["Prime location with vehicle traffic","Fast, quality service","Soap, water, and equipment always ready","Loyalty packages for regulars"],
+risks:["Water shortages — install a tank","Competition — differentiate on quality","Weather — cover or indoor option"],
+legal:["Council trading licence","Water usage permit","Environmental compliance for runoff"]
+},
+startup:[["Pressure washer",250],["Water tank & piping",180],["Car wash soap & supplies",80],["Vacuum cleaner",150],["Signage",60]],
+operating:[["Water & soap (monthly)",120],["Labour",200],["Electricity",60],["Site rent",150]],
 pricing:[["Car wash (small)",5,1.5],["Car wash (large)",10,3],["Interior clean",15,4]]
 },
+
 "Hairdressing & Beauty Salon": {
-startup:[["Salon equipment",400],["Chairs &amp; mirrors",200],["Initial product stock",250],["Salon setup &amp; decor",150],["Licence",80]],
-operating:[["Products (monthly)",150],["Salon rent",250],["Water &amp; electricity",60],["Assistant wages",200]],
-pricing:[["Hair braiding",25,8],["Wash &amp; blow",15,5],["Relaxer treatment",30,10]]
+exec:{
+tagline:"Styling hair and beauty services for loyal clients.",
+overview:"Hairdressing and beauty is a personal-service business with high margins and repeat clients. Braiding, relaxers, and treatments bring regular customers who return every 2-4 weeks.",
+market:"Local women, brides, students, professional women, and men (barbering).",
+products:["Hair braiding — $25","Wash & blow — $15","Relaxer treatment — $30","Nail care — $20"],
+startupTotal:1080,
+monthlyProfit:620,
+breakevenMonths:3,
+success:["Stylish, current techniques","Friendly, welcoming space","Instagram/WhatsApp bookings","Loyalty to regulars"],
+risks:["Rent increases — negotiate long lease","Competition — build a niche","Skill obsolescence — keep learning"],
+legal:["Council trading licence","Health and hygiene compliance"]
 },
+startup:[["Salon equipment",400],["Chairs & mirrors",200],["Initial product stock",250],["Salon setup & decor",150],["Licence",80]],
+operating:[["Products (monthly)",150],["Salon rent",250],["Water & electricity",60],["Assistant wages",200]],
+pricing:[["Hair braiding",25,8],["Wash & blow",15,5],["Relaxer treatment",30,10]]
+},
+
 "Paper Bag & Packaging Production": {
+exec:{
+tagline:"Making eco-friendly paper bags for shops and bakeries.",
+overview:"As plastic bags are banned across Africa, paper bags are in demand. Buy paper rolls, print logos, and sell to shops, bakeries, and supermarkets by the 100-pack.",
+market:"Bakeries, supermarkets, fast-food outlets, tailors, and event planners.",
+products:["Small bag (100 pcs) — $8","Medium bag (100 pcs) — $12","Custom printed (100 pcs) — $20","Large bag (100 pcs) — $18"],
+startupTotal:1200,
+monthlyProfit:530,
+breakevenMonths:4,
+success:["Good print quality","Bulk deals for regulars","Recyclable credentials","Reliable delivery"],
+risks:["Paper price rises — buy in bulk","Competition — build client relationships","Machine breakdown — maintenance plan"],
+legal:["Council trading licence","Business registration"]
+},
 startup:[["Bag-making machine",600],["Paper rolls (initial)",250],["Printing setup",200],["Workshop rent deposit",150]],
-operating:[["Paper rolls (monthly)",300],["Ink &amp; glue",80],["Workshop rent",150],["Labour",150]],
+operating:[["Paper rolls (monthly)",300],["Ink & glue",80],["Workshop rent",150],["Labour",150]],
 pricing:[["Small bag (100 pcs)",8,3],["Medium bag (100 pcs)",12,5],["Custom printed (100 pcs)",20,9]]
 },
+
 "Online Business & Digital Services": {
-startup:[["Laptop or tablet",400],["Internet setup",100],["Website &amp; hosting",120],["Branding &amp; logo",80],["Marketing budget (initial)",100]],
-operating:[["Internet (monthly)",60],["Hosting &amp; domain",15],["Marketing",80],["Software subscriptions",40]],
+exec:{
+tagline:"Earning online through websites, social media, and digital work.",
+overview:"A digital services business runs from a laptop and phone. Design websites, manage social media, run marketing for clients — with almost no overhead. Clients pay monthly, giving recurring income.",
+market:"Small businesses, schools, farms, NGOs, and individuals needing online presence.",
+products:["Website design — $300","Social media management — $150/mo","Logo design — $80","Online ads management — $200/mo"],
+startupTotal:800,
+monthlyProfit:980,
+breakevenMonths:2,
+success:["Strong portfolio and case studies","Reliable internet and laptop","Regular client communication","Deliver on time, every time"],
+risks:["Client churn — keep quality high","Payment delays — take deposits","Tech changes — keep learning"],
+legal:["Business registration","Tax registration","Client contracts"]
+},
+startup:[["Laptop or tablet",400],["Internet setup",100],["Website & hosting",120],["Branding & logo",80],["Marketing budget (initial)",100]],
+operating:[["Internet (monthly)",60],["Hosting & domain",15],["Marketing",80],["Software subscriptions",40]],
 pricing:[["Website design",300,120],["Social media management (monthly)",150,60],["Logo design",80,20]]
 }
 };
@@ -203,29 +426,74 @@ sel.appendChild(opt);
 sel.addEventListener('change', function(e){
 const t = TEMPLATES[e.target.value];
 if(!t) return;
+renderExecSummary(e.target.value, t.exec);
 loadTemplate(t);
 });
 });
 
-// ============ TEMPLATE LOADING ============
+// ============ EXECUTIVE SUMMARY ============
+function renderExecSummary(name, x){
+const container = document.getElementById('execSummaryContainer');
+const html = `
+<div class="exec-summary">
+<h2>📋 Executive Summary</h2>
+<div class="subtitle">${name} — ${x.tagline}</div>
+
+<h3>1. Business Overview</h3>
+<p>${x.overview}</p>
+
+<h3>2. Target Market</h3>
+<p>${x.market}</p>
+
+<h3>3. Products &amp; Services</h3>
+<ul>${x.products.map(p=>'<li>'+p+'</li>').join('')}</ul>
+
+<h3>4. Key Numbers</h3>
+<div class="metrics">
+<div class="metric"><div class="label">Startup Capital</div><div class="value">$${x.startupTotal}</div></div>
+<div class="metric"><div class="label">Monthly Profit</div><div class="value">$${x.monthlyProfit}</div></div>
+<div class="metric"><div class="label">Break-even</div><div class="value">${x.breakevenMonths} mo</div></div>
+</div>
+
+<h3>5. Key Success Factors</h3>
+<ul>${x.success.map(s=>'<li>✅ '+s+'</li>').join('')}</ul>
+
+<h3>6. Risks to Watch</h3>
+<div class="risk">${x.risks.map(r=>'⚠️ '+r).join('<br>')}</div>
+
+<h3>7. Legal &amp; Compliance</h3>
+<ul>${x.legal.map(l=>'<li>📄 '+l+'</li>').join('')}</ul>
+
+<h3>8. Funding Ask</h3>
+<div class="success">
+<strong>You need $${x.startupTotal} to start this business.</strong><br>
+At a monthly profit of $${x.monthlyProfit}, you will recover your investment in about ${x.breakevenMonths} months.<br>
+For funding, use the Loan Repayment calculator below to check affordability.
+</div>
+
+<a class="btn btn-wa" href="https://wa.me/263773001353?text=Hi%20Rise%20Africa%20Skills%2C%20I%20am%20starting%20a%20${encodeURIComponent(name)}.%20Please%20help%20me%20with%20a%20full%20business%20plan%20and%20funding%20application.">💬 Get Full Business Plan on WhatsApp</a>
+</div>
+`;
+container.innerHTML = html;
+document.getElementById('placeholderBox').style.display = 'none';
+document.getElementById('calculatorContainer').style.display = 'block';
+}
+
+// ============ LOAD TEMPLATE NUMBERS ============
 function loadTemplate(t){
-// Startup
 const sl = document.getElementById('startupList');
 sl.innerHTML = '';
 t.startup.forEach(function(row){ addRow('startupList', row[0], row[1]); });
-// Operating
 const ol = document.getElementById('operatingList');
 ol.innerHTML = '';
 t.operating.forEach(function(row){ addRow('operatingList', row[0], row[1]); });
-// Pricing
 const pl = document.getElementById('pricingList');
 pl.innerHTML = '';
 t.pricing.forEach(function(row){ addPricingRowData(row[0], row[1], row[2]); });
 calcAll();
-window.scrollTo({top: 200, behavior: 'smooth'});
 }
 
-// ============ ADD ROWS ============
+// ============ ROWS ============
 function addRow(listId, name, cost){
 const list = document.getElementById(listId);
 const row = document.createElement('div');
@@ -235,12 +503,10 @@ list.appendChild(row);
 }
 function addStartupRow(){ addRow('startupList','',0); }
 function addOperatingRow(){ addRow('operatingList','',0); }
-
 function addPricingRowData(name, price, cost){
 const list = document.getElementById('pricingList');
 const row = document.createElement('div');
 row.className = 'row';
-row.style.gridTemplateColumns = '2fr 1fr 1fr auto';
 row.innerHTML = '<input type="text" value="'+(name||'')+'" placeholder="Item"><input type="number" value="'+(price||0)+'" placeholder="Price" oninput="calcAll()"><input type="number" value="'+(cost||0)+'" placeholder="Cost" oninput="calcAll()"><button class="del" onclick="this.parentElement.remove();calcAll();">✕</button>';
 list.appendChild(row);
 }
@@ -266,17 +532,14 @@ totalCost += parseFloat(inputs[1].value)||0;
 });
 return {price: totalPrice, cost: totalCost};
 }
-
 function calcAll(){
 const startup = sumList('startupList');
 const operating = sumList('operatingList');
 document.getElementById('startupTotal').textContent = '$' + startup.toFixed(2);
 document.getElementById('operatingTotal').textContent = '$' + operating.toFixed(2);
-
 const p = sumPricing();
 const profitPerUnit = p.price - p.cost;
 document.getElementById('profitPerUnit').textContent = '$' + profitPerUnit.toFixed(2);
-
 const units = document.getElementById('unitsPerMonth');
 if(profitPerUnit > 0){
 const be = Math.ceil(operating / profitPerUnit);
@@ -288,9 +551,9 @@ document.getElementById('breakEvenUnits').textContent = '—';
 calcCashflow();
 calcLoan();
 }
-
 function calcCashflow(){
-const profitPerUnit = (()=>{const p=sumPricing();return p.price - p.cost;})();
+const p = sumPricing();
+const profitPerUnit = p.price - p.cost;
 const units = parseFloat(document.getElementById('unitsPerMonth').value)||0;
 const startingCash = parseFloat(document.getElementById('startingCash').value)||0;
 const operating = sumList('operatingList');
@@ -298,15 +561,15 @@ const monthlyProfit = (profitPerUnit * units) - operating;
 let cash = startingCash;
 let html = '<table class="cash"><tr><th>Month</th><th>Cash Start</th><th>Profit</th><th>Cash End</th></tr>';
 for(let m=1;m<=12;m++){
+const cashStart = cash;
 cash += monthlyProfit;
 const cls = cash < 0 ? 'bad' : 'good';
-html += '<tr><td>Month '+m+'</td><td>$'+(cash-monthlyProfit).toFixed(2)+'</td><td class="'+(monthlyProfit>=0?'good':'bad')+'">$'+monthlyProfit.toFixed(2)+'</td><td class="'+cls+'">$'+cash.toFixed(2)+'</td></tr>';
+html += '<tr><td>Month '+m+'</td><td>$'+cashStart.toFixed(2)+'</td><td class="'+(monthlyProfit>=0?'good':'bad')+'">$'+monthlyProfit.toFixed(2)+'</td><td class="'+cls+'">$'+cash.toFixed(2)+'</td></tr>';
 }
 html += '</table>';
 html += '<div class="total"><strong>Monthly Profit:</strong> <span class="'+(monthlyProfit>=0?'good':'bad')+'">$'+monthlyProfit.toFixed(2)+'</span><br><strong>Year-end Cash:</strong> <span class="'+(cash>=0?'good':'bad')+'">$'+cash.toFixed(2)+'</span></div>';
 document.getElementById('cashflowResult').innerHTML = html;
 }
-
 function calcLoan(){
 const amount = parseFloat(document.getElementById('loanAmount').value)||0;
 const rate = parseFloat(document.getElementById('loanRate').value)||0;
@@ -322,7 +585,8 @@ monthly = amount / term;
 }
 const totalPaid = monthly * term;
 const totalInterest = totalPaid - amount;
-const profitPerUnit = (()=>{const p=sumPricing();return p.price-p.cost;})();
+const p = sumPricing();
+const profitPerUnit = p.price - p.cost;
 const units = parseFloat(document.getElementById('unitsPerMonth').value)||0;
 const operating = sumList('operatingList');
 const monthlyProfit = (profitPerUnit*units) - operating;
@@ -344,7 +608,6 @@ html += '<br><span class="good">✅ This loan is affordable.</span>';
 }
 box.innerHTML = html;
 }
-
 function resetAll(){
 if(!confirm('Clear all data?')) return;
 document.getElementById('startupList').innerHTML = '';
@@ -354,7 +617,9 @@ document.getElementById('businessSelect').value = '';
 document.getElementById('unitsPerMonth').value = 0;
 document.getElementById('startingCash').value = 0;
 document.getElementById('loanAmount').value = 0;
-calcAll();
+document.getElementById('execSummaryContainer').innerHTML = '';
+document.getElementById('calculatorContainer').style.display = 'none';
+document.getElementById('placeholderBox').style.display = 'block';
 }
 </script>
 </body>
