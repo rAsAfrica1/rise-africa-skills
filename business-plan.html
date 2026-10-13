@@ -1,62 +1,361 @@
-﻿<!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Business Plan & Cashflow — rise AFRICA skills</title>
-<link rel="stylesheet" href="assets/business-tools.css">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>💼 Business Plan & Cashflow Calculator — Rise Africa Skills</title>
 <style>
-body{font-family:system-ui,sans-serif;max-width:960px;margin:0 auto;padding:1rem 1.2rem 3rem;line-height:1.6;background:#fafaf7;color:#222}
-h1{font-size:1.7rem;margin:.3rem 0}.sub{color:#666;margin-bottom:1.5rem}
-.pick{background:#fff;padding:1.2rem;border:1px solid #e5e5e5;border-radius:10px;margin-bottom:1.5rem}
-.pick label{display:block;font-weight:600;margin-bottom:.5rem}
-.pick select{width:100%;padding:.6rem;border:1px solid #ccc;border-radius:6px;font-size:1rem;font-family:inherit}
-.steps{background:#f0f8f0;border-left:4px solid #2a7;padding:1rem 1.2rem;border-radius:8px;margin-bottom:1.5rem}
-.steps h2{margin:0 0 .8rem;font-size:1.1rem;color:#1a5}
-.steps ol{margin:0;padding-left:1.2rem}.steps li{margin:.4rem 0;font-size:.95rem}
-.steps li strong{color:#1a5}
-.empty{padding:2rem;text-align:center;color:#888;font-style:italic;background:#fff;border-radius:10px;border:1px dashed #ccc}
-</style></head><body>
-<div style="background:#fff;border-bottom:1px solid #e5e5e5;padding:.7rem 1.2rem;margin:-1.2rem -1.2rem 1.5rem;font-size:.9rem"><a href="index.html" style="color:#2a7;text-decoration:none;font-weight:600;margin-right:1rem">🏠 Home</a><a href="index.html#courses" style="color:#2a7;text-decoration:none;font-weight:600;margin-right:1rem">📚 All Courses</a><a href="bundles.html" style="color:#2a7;text-decoration:none;font-weight:600;margin-right:1rem">📦 Bundles</a><a href="value-added.html" style="color:#2a7;text-decoration:none;font-weight:600;margin-right:1rem">💰 Services</a><a href="business-plan.html" style="color:#2a7;text-decoration:none;font-weight:600">💼 Business Plan</a></div>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,sans-serif;}
+body{background:#f5f7f5;padding:16px;color:#333;line-height:1.5;}
+.header{background:linear-gradient(135deg,#1B5E20,#2E7D32);color:#fff;padding:24px;border-radius:16px;margin-bottom:20px;}
+.header h1{font-size:22px;margin-bottom:6px;}
+.header p{font-size:13px;opacity:.9;}
+.steps{background:#fff3e0;padding:14px;border-radius:12px;margin-bottom:20px;border-left:4px solid #E65100;}
+.steps h3{color:#E65100;font-size:14px;margin-bottom:8px;}
+.steps ol{padding-left:20px;font-size:13px;}
+.steps li{margin-bottom:4px;}
+.card{background:#fff;border-radius:12px;padding:18px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.card h2{color:#1B5E20;font-size:16px;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid #e8f5e9;}
+.card h2 .num{background:#1B5E20;color:#fff;display:inline-block;width:24px;height:24px;line-height:24px;text-align:center;border-radius:50%;font-size:13px;margin-right:8px;}
+select,input{width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;font-size:14px;background:#fafafa;margin-bottom:10px;}
+label{display:block;font-weight:bold;font-size:12px;margin-bottom:4px;color:#555;}
+.row{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:6px;align-items:center;padding:6px 0;border-bottom:1px solid #eee;font-size:13px;}
+.row input{padding:6px;font-size:13px;margin:0;text-align:right;}
+.row.header-row{background:#e8f5e9;padding:8px;border-radius:6px;font-weight:bold;}
+.del{background:#f44336;color:#fff;border:none;width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:14px;}
+.btn{background:#1B5E20;color:#fff;border:none;padding:10px 16px;border-radius:8px;font-size:13px;font-weight:bold;cursor:pointer;margin-top:8px;margin-right:6px;}
+.btn-blue{background:#0D47A1;}
+.btn-orange{background:#E65100;}
+.btn-red{background:#B71C1C;}
+.btn-small{padding:6px 12px;font-size:12px;}
+.total{background:#e8f5e9;padding:12px;border-radius:10px;margin-top:10px;font-size:14px;line-height:1.8;border-left:4px solid #1B5E20;}
+.total strong{color:#1B5E20;font-size:16px;}
+.result-box{background:#e3f2fd;padding:14px;border-radius:10px;margin-top:10px;font-size:14px;line-height:1.8;border-left:4px solid #0D47A1;}
+.good{color:#2E7D32;font-weight:bold;}
+.bad{color:#c62828;font-weight:bold;}
+.warn{color:#E65100;font-weight:bold;}
+table.cash{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px;}
+table.cash th{background:#1B5E20;color:#fff;padding:6px;text-align:left;}
+table.cash td{padding:6px;border-bottom:1px solid #eee;}
+table.cash tr:nth-child(even){background:#f8faf8;}
+@media print{.header,.steps,.btn,.del{display:none !important;}}
+</style>
+</head>
+<body>
 
-<h1>💼 Business Plan & Cashflow Calculator</h1>
-<p class="sub">Pick your business, adjust the numbers, print your plan. Everything saves on your device — nothing is sent anywhere.</p>
+<div class="header">
+<h1>💼 Business Plan &amp; Cashflow Calculator</h1>
+<p>Rise Africa Skills — pick your business, adjust the numbers, print your plan. Everything saves on your device.</p>
+</div>
 
 <div class="steps">
-<h2>📋 The 5-step process</h2>
+<h3>📋 The 5-step process</h3>
 <ol>
 <li><strong>Startup Costs</strong> — every one-time expense. This is your seed capital.</li>
 <li><strong>Operating</strong> — monthly fixed costs: rent, transport, electricity, labour.</li>
-<li><strong>Pricing & Break-even</strong> — what you sell, for how much, at what cost.</li>
+<li><strong>Pricing &amp; Break-even</strong> — what you sell, for how much, at what cost.</li>
 <li><strong>12-Month Cash Flow</strong> — month by month, will you stay positive?</li>
 <li><strong>Loan</strong> — if you borrow, can your profit cover the payment?</li>
 </ol>
 </div>
 
-<div class="pick">
-<label for="courseSelect">Choose your business:</label>
-<select id="courseSelect"><option value="">— Select a course —</option></select>
+<div class="card">
+<h2>Choose your business</h2>
+<label>Select a course or business type</label>
+<select id="businessSelect"><option value="">— Select a business —</option></select>
+<button class="btn btn-orange" onclick="resetAll()">🔄 Reset Calculator</button>
+<button class="btn btn-blue" onclick="window.print()">🖨️ Print Business Plan</button>
 </div>
 
-<div id="toolArea"><div class="empty">Select a course above to load its business plan calculator.</div></div>
+<div class="card">
+<h2><span class="num">1</span>Startup Costs (One-time)</h2>
+<div id="startupList"></div>
+<button class="btn btn-small" onclick="addStartupRow()">➕ Add Item</button>
+<div class="total"><strong>Total Startup Capital Needed:</strong> <span id="startupTotal">$0</span></div>
+</div>
 
-<script src="assets/course-configs.js"></script>
-<script src="assets/business-tools.js"></script>
+<div class="card">
+<h2><span class="num">2</span>Operating Costs (Monthly)</h2>
+<div id="operatingList"></div>
+<button class="btn btn-small" onclick="addOperatingRow()">➕ Add Item</button>
+<div class="total"><strong>Total Monthly Operating Costs:</strong> <span id="operatingTotal">$0</span></div>
+</div>
+
+<div class="card">
+<h2><span class="num">3</span>Pricing &amp; Break-even</h2>
+<div id="pricingList"></div>
+<button class="btn btn-small" onclick="addPricingRow()">➕ Add Item</button>
+<div class="total">
+<strong>Gross Profit per unit:</strong> <span id="profitPerUnit">$0</span><br>
+<strong>Break-even units per month:</strong> <span id="breakEvenUnits">0</span>
+</div>
+</div>
+
+<div class="card">
+<h2><span class="num">4</span>12-Month Cash Flow</h2>
+<label>Units sold per month (estimate)</label>
+<input type="number" id="unitsPerMonth" value="0" oninput="calcCashflow()">
+<label>Month 1 starting cash</label>
+<input type="number" id="startingCash" value="0" oninput="calcCashflow()">
+<div id="cashflowResult"></div>
+</div>
+
+<div class="card">
+<h2><span class="num">5</span>Loan Repayment</h2>
+<label>Loan amount</label>
+<input type="number" id="loanAmount" value="0" oninput="calcLoan()">
+<label>Annual interest rate (%)</label>
+<input type="number" id="loanRate" value="12" oninput="calcLoan()">
+<label>Loan term (months)</label>
+<input type="number" id="loanTerm" value="24" oninput="calcLoan()">
+<div id="loanResult" class="result-box" style="display:none;"></div>
+</div>
+
 <script>
-document.addEventListener('DOMContentLoaded',function(){
-  var sel=document.getElementById('courseSelect');
-  var area=document.getElementById('toolArea');
-  var configs=window.COURSE_CONFIGS||{};
-  Object.keys(configs).sort().forEach(function(slug){
-    var opt=document.createElement('option');
-    opt.value=slug;
-    opt.textContent=configs[slug].title||slug;
-    sel.appendChild(opt);
-  });
-  sel.addEventListener('change',function(){
-    var slug=sel.value;
-    if(!slug){area.innerHTML='<div class="empty">Select a course above to load its business plan calculator.</div>';return;}
-    area.innerHTML='<div class="biz-tools" data-course="'+slug+'"></div>';
-    window.location.reload();
-  });
-});
-</script>
-</body></html>
+// ============ BUSINESS TEMPLATES ============
+const TEMPLATES = {
+"Modern Small-Scale Piggery": {
+startup:[["Purchase of 2 gilts &amp; 1 boar",450],["Pig pen construction",300],["Feeding troughs &amp; drinkers",80],["Initial feed (500kg)",250],["Vet &amp; vaccines (initial)",60],["Water tank &amp; pipes",90]],
+operating:[["Feed (monthly)",180],["Vet &amp; vaccines",20],["Water &amp; electricity",30],["Labour (part-time)",80],["Transport",40]],
+pricing:[["Weaner piglet",35,12],["Market pig (80kg)",180,95],["Breeding sow",220,120]]
+},
+"Poultry Farming (Broilers & Eggs)": {
+startup:[["Purchase of 50 day-old chicks",60],["Brooder &amp; housing",150],["Feeders &amp; drinkers",40],["Initial feed (200kg)",90],["Vaccines",25]],
+operating:[["Feed (monthly)",120],["Vaccines &amp; meds",10],["Labour",50],["Water &amp; electricity",20]],
+pricing:[["Live chicken (1.8kg)",12,6],["Eggs (tray of 30)",5,3],["Day-old chick",1.5,0.8]]
+},
+"Goat Rearing": {
+startup:[["Purchase of 5 does &amp; 1 buck",750],["Goat house construction",200],["Fencing",150],["Initial feed",100],["Vet &amp; vaccines",80]],
+operating:[["Feed (monthly)",120],["Vet &amp; vaccines",15],["Labour",60],["Water",20]],
+pricing:[["Mature goat",150,85],["Young goat",80,45],["Milk (per litre)",3,1.5]]
+},
+"Maize Farming": {
+startup:[["Seed (10kg)",40],["Fertiliser (basal + top)",180],["Ploughing &amp; harrowing",120],["Herbicides &amp; pesticides",60],["Transport &amp; bags",50]],
+operating:[["Labour (weeding, harvesting)",150],["Transport to market",80],["Tools &amp; maintenance",40]],
+pricing:[["Maize (per 50kg bag)",25,15],["Maize (per tonne)",450,280]]
+},
+"Vegetable Farming": {
+startup:[["Seeds (variety pack)",80],["Drip irrigation kit",200],["Fencing",250],["Compost &amp; fertiliser",120],["Tools",80]],
+operating:[["Labour (monthly)",120],["Water &amp; electricity",60],["Transport",80],["Packaging",40]],
+pricing:[["Tomatoes (per kg)",3,1.2],["Leafy greens (per kg)",2.5,1],["Onions (per kg)",3.5,1.5]]
+},
+"Food Processing (Baking & Snacks)": {
+startup:[["Oven &amp; baking equipment",350],["Mixer &amp; utensils",150],["Initial ingredients",200],["Packaging materials",120],["Health certificate &amp; licence",80]],
+operating:[["Ingredients (monthly)",300],["Packaging",80],["Rent of kitchen space",100],["Labour",150],["Transport",50]],
+pricing:[["Bread (loaf)",1.5,0.8],["Cake (small)",8,3.5],["Snacks (per pack)",2,0.9]]
+},
+"African Black Soap & Cosmetics": {
+startup:[["Raw materials (shea, ash, oils)",180],["Moulds &amp; containers",80],["Packaging materials",120],["Mixing equipment",150],["Labels &amp; branding",100]],
+operating:[["Raw materials (monthly)",150],["Packaging",60],["Labour",100],["Marketing",40]],
+pricing:[["Soap bar (100g)",3,1.2],["Soap bar (250g)",6,2.5],["Gift set",15,6]]
+},
+"Welding & Metalwork": {
+startup:[["Welding machine",450],["Grinder &amp; tools",180],["Safety gear",120],["Initial metal stock",200],["Workshop rent (deposit)",150]],
+operating:[["Metal stock (monthly)",300],["Electricity",80],["Workshop rent",150],["Transport",60]],
+pricing:[["Gate (per unit)",250,140],["Window frame",80,45],["Repair job",40,15]]
+},
+"Carpentry & Furniture": {
+startup:[["Power tools (saw, drill, sander)",500],["Hand tools",180],["Initial timber stock",300],["Workshop setup",200]],
+operating:[["Timber (monthly)",400],["Workshop rent",150],["Transport",80],["Electricity",60]],
+pricing:[["Chair",40,22],["Table",120,65],["Wardrobe",250,140]]
+},
+"Solar Installation Services": {
+startup:[["Solar panels (starter stock)",800],["Batteries",500],["Inverter",300],["Tools &amp; cabling",250],["Vehicle or transport",400]],
+operating:[["Transport",120],["Phone &amp; marketing",50],["Tools maintenance",40],["Assistant wages",150]],
+pricing:[["Home solar install (small)",500,320],["Home solar install (large)",1200,780],["Maintenance visit",50,20]]
+},
+"Phone Repair & Tech Services": {
+startup:[["Repair toolkit",150],["Spare parts stock",400],["Workbench &amp; lighting",120],["Software licences",80],["Shop deposit",200]],
+operating:[["Spare parts (monthly)",300],["Shop rent",200],["Electricity",50],["Internet",40]],
+pricing:[["Screen replacement",60,30],["Battery replacement",25,10],["Software unlock",20,5]]
+},
+"Car Wash & Auto Services": {
+startup:[["Pressure washer",250],["Water tank &amp; piping",180],["Car wash soap &amp; supplies",80],["Vacuum cleaner",150],["Signage",60]],
+operating:[["Water &amp; soap (monthly)",120],["Labour",200],["Electricity",60],["Site rent",150]],
+pricing:[["Car wash (small)",5,1.5],["Car wash (large)",10,3],["Interior clean",15,4]]
+},
+"Hairdressing & Beauty Salon": {
+startup:[["Salon equipment",400],["Chairs &amp; mirrors",200],["Initial product stock",250],["Salon setup &amp; decor",150],["Licence",80]],
+operating:[["Products (monthly)",150],["Salon rent",250],["Water &amp; electricity",60],["Assistant wages",200]],
+pricing:[["Hair braiding",25,8],["Wash &amp; blow",15,5],["Relaxer treatment",30,10]]
+},
+"Paper Bag & Packaging Production": {
+startup:[["Bag-making machine",600],["Paper rolls (initial)",250],["Printing setup",200],["Workshop rent deposit",150]],
+operating:[["Paper rolls (monthly)",300],["Ink &amp; glue",80],["Workshop rent",150],["Labour",150]],
+pricing:[["Small bag (100 pcs)",8,3],["Medium bag (100 pcs)",12,5],["Custom printed (100 pcs)",20,9]]
+},
+"Online Business & Digital Services": {
+startup:[["Laptop or tablet",400],["Internet setup",100],["Website &amp; hosting",120],["Branding &amp; logo",80],["Marketing budget (initial)",100]],
+operating:[["Internet (monthly)",60],["Hosting &amp; domain",15],["Marketing",80],["Software subscriptions",40]],
+pricing:[["Website design",300,120],["Social media management (monthly)",150,60],["Logo design",80,20]]
+}
+};
 
+// ============ LOAD DROPDOWN ============
+document.addEventListener('DOMContentLoaded',function(){
+const sel = document.getElementById('businessSelect');
+Object.keys(TEMPLATES).forEach(function(name){
+const opt = document.createElement('option');
+opt.value = name;
+opt.textContent = name;
+sel.appendChild(opt);
+});
+sel.addEventListener('change', function(e){
+const t = TEMPLATES[e.target.value];
+if(!t) return;
+loadTemplate(t);
+});
+});
+
+// ============ TEMPLATE LOADING ============
+function loadTemplate(t){
+// Startup
+const sl = document.getElementById('startupList');
+sl.innerHTML = '';
+t.startup.forEach(function(row){ addRow('startupList', row[0], row[1]); });
+// Operating
+const ol = document.getElementById('operatingList');
+ol.innerHTML = '';
+t.operating.forEach(function(row){ addRow('operatingList', row[0], row[1]); });
+// Pricing
+const pl = document.getElementById('pricingList');
+pl.innerHTML = '';
+t.pricing.forEach(function(row){ addPricingRowData(row[0], row[1], row[2]); });
+calcAll();
+window.scrollTo({top: 200, behavior: 'smooth'});
+}
+
+// ============ ADD ROWS ============
+function addRow(listId, name, cost){
+const list = document.getElementById(listId);
+const row = document.createElement('div');
+row.className = 'row';
+row.innerHTML = '<input type="text" value="'+(name||'')+'" placeholder="Item"><input type="number" value="'+(cost||0)+'" oninput="calcAll()"><span></span><button class="del" onclick="this.parentElement.remove();calcAll();">✕</button>';
+list.appendChild(row);
+}
+function addStartupRow(){ addRow('startupList','',0); }
+function addOperatingRow(){ addRow('operatingList','',0); }
+
+function addPricingRowData(name, price, cost){
+const list = document.getElementById('pricingList');
+const row = document.createElement('div');
+row.className = 'row';
+row.style.gridTemplateColumns = '2fr 1fr 1fr auto';
+row.innerHTML = '<input type="text" value="'+(name||'')+'" placeholder="Item"><input type="number" value="'+(price||0)+'" placeholder="Price" oninput="calcAll()"><input type="number" value="'+(cost||0)+'" placeholder="Cost" oninput="calcAll()"><button class="del" onclick="this.parentElement.remove();calcAll();">✕</button>';
+list.appendChild(row);
+}
+function addPricingRow(){ addPricingRowData('',0,0); }
+
+// ============ CALCULATIONS ============
+function sumList(listId){
+let total = 0;
+document.querySelectorAll('#'+listId+' .row').forEach(function(row){
+const inputs = row.querySelectorAll('input[type="number"]');
+if(inputs[0]) total += parseFloat(inputs[0].value)||0;
+});
+return total;
+}
+function sumPricing(){
+let totalPrice = 0, totalCost = 0;
+document.querySelectorAll('#pricingList .row').forEach(function(row){
+const inputs = row.querySelectorAll('input[type="number"]');
+if(inputs.length >= 2){
+totalPrice += parseFloat(inputs[0].value)||0;
+totalCost += parseFloat(inputs[1].value)||0;
+}
+});
+return {price: totalPrice, cost: totalCost};
+}
+
+function calcAll(){
+const startup = sumList('startupList');
+const operating = sumList('operatingList');
+document.getElementById('startupTotal').textContent = '$' + startup.toFixed(2);
+document.getElementById('operatingTotal').textContent = '$' + operating.toFixed(2);
+
+const p = sumPricing();
+const profitPerUnit = p.price - p.cost;
+document.getElementById('profitPerUnit').textContent = '$' + profitPerUnit.toFixed(2);
+
+const units = document.getElementById('unitsPerMonth');
+if(profitPerUnit > 0){
+const be = Math.ceil(operating / profitPerUnit);
+document.getElementById('breakEvenUnits').textContent = be + ' units';
+if(!units.value || units.value == '0') units.value = be;
+} else {
+document.getElementById('breakEvenUnits').textContent = '—';
+}
+calcCashflow();
+calcLoan();
+}
+
+function calcCashflow(){
+const profitPerUnit = (()=>{const p=sumPricing();return p.price - p.cost;})();
+const units = parseFloat(document.getElementById('unitsPerMonth').value)||0;
+const startingCash = parseFloat(document.getElementById('startingCash').value)||0;
+const operating = sumList('operatingList');
+const monthlyProfit = (profitPerUnit * units) - operating;
+let cash = startingCash;
+let html = '<table class="cash"><tr><th>Month</th><th>Cash Start</th><th>Profit</th><th>Cash End</th></tr>';
+for(let m=1;m<=12;m++){
+cash += monthlyProfit;
+const cls = cash < 0 ? 'bad' : 'good';
+html += '<tr><td>Month '+m+'</td><td>$'+(cash-monthlyProfit).toFixed(2)+'</td><td class="'+(monthlyProfit>=0?'good':'bad')+'">$'+monthlyProfit.toFixed(2)+'</td><td class="'+cls+'">$'+cash.toFixed(2)+'</td></tr>';
+}
+html += '</table>';
+html += '<div class="total"><strong>Monthly Profit:</strong> <span class="'+(monthlyProfit>=0?'good':'bad')+'">$'+monthlyProfit.toFixed(2)+'</span><br><strong>Year-end Cash:</strong> <span class="'+(cash>=0?'good':'bad')+'">$'+cash.toFixed(2)+'</span></div>';
+document.getElementById('cashflowResult').innerHTML = html;
+}
+
+function calcLoan(){
+const amount = parseFloat(document.getElementById('loanAmount').value)||0;
+const rate = parseFloat(document.getElementById('loanRate').value)||0;
+const term = parseFloat(document.getElementById('loanTerm').value)||0;
+const box = document.getElementById('loanResult');
+if(amount<=0||term<=0){ box.style.display='none'; return; }
+const monthlyRate = (rate/100)/12;
+let monthly;
+if(monthlyRate>0){
+monthly = amount * monthlyRate * Math.pow(1+monthlyRate, term) / (Math.pow(1+monthlyRate, term) - 1);
+} else {
+monthly = amount / term;
+}
+const totalPaid = monthly * term;
+const totalInterest = totalPaid - amount;
+const profitPerUnit = (()=>{const p=sumPricing();return p.price-p.cost;})();
+const units = parseFloat(document.getElementById('unitsPerMonth').value)||0;
+const operating = sumList('operatingList');
+const monthlyProfit = (profitPerUnit*units) - operating;
+const afterLoan = monthlyProfit - monthly;
+box.style.display = 'block';
+let html = '<strong>📋 Loan Summary</strong><br>';
+html += 'Monthly payment: <strong>$'+monthly.toFixed(2)+'</strong><br>';
+html += 'Total to repay: <strong>$'+totalPaid.toFixed(2)+'</strong><br>';
+html += 'Total interest: <strong>$'+totalInterest.toFixed(2)+'</strong><br><br>';
+html += '<strong>Can you afford it?</strong><br>';
+html += 'Monthly profit: $'+monthlyProfit.toFixed(2)+'<br>';
+html += 'After loan payment: <span class="'+(afterLoan>=0?'good':'bad')+'">$'+afterLoan.toFixed(2)+'</span><br>';
+if(afterLoan<0){
+html += '<br><span class="bad">⚠️ WARNING: This loan is too expensive. You will lose money each month.</span>';
+} else if(afterLoan < monthly*0.2){
+html += '<br><span class="warn">⚠️ Tight. Little room for emergencies.</span>';
+} else {
+html += '<br><span class="good">✅ This loan is affordable.</span>';
+}
+box.innerHTML = html;
+}
+
+function resetAll(){
+if(!confirm('Clear all data?')) return;
+document.getElementById('startupList').innerHTML = '';
+document.getElementById('operatingList').innerHTML = '';
+document.getElementById('pricingList').innerHTML = '';
+document.getElementById('businessSelect').value = '';
+document.getElementById('unitsPerMonth').value = 0;
+document.getElementById('startingCash').value = 0;
+document.getElementById('loanAmount').value = 0;
+calcAll();
+}
+</script>
+</body>
+</html>
