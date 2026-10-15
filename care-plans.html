@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1B5E20">
+<title>Animal Care Plans — rise AFRICA skills</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,sans-serif;}
+body{background:#f5f7f5;padding:12px;padding-bottom:90px;color:#333;line-height:1.6;}
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;padding:8px 0;}
+.nav a{background:#fff;color:#1B5E20;padding:6px 12px;border-radius:20px;font-size:12px;text-decoration:none;font-weight:bold;border:1px solid #1B5E20;}
+.header{background:linear-gradient(135deg,#1B5E20,#2E7D32);color:#fff;padding:20px;border-radius:16px;margin-bottom:14px;}
+.header h1{font-size:20px;font-weight:bold;}
+.header p{font-size:12px;opacity:.9;margin-top:4px;}
+.animal-tabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:14px;padding-bottom:6px;scrollbar-width:none;}
+.animal-tabs::-webkit-scrollbar{display:none;}
+.animal-tab{background:#fff;color:#1B5E20;padding:10px 16px;border-radius:24px;font-size:13px;font-weight:bold;border:2px solid #1B5E20;cursor:pointer;white-space:nowrap;flex-shrink:0;text-align:center;min-width:70px;}
+.animal-tab.active{background:#1B5E20;color:#fff;}
+.animal-tab .emoji{font-size:20px;display:block;margin-bottom:2px;}
+.hero{background:linear-gradient(135deg,#E8F5E9,#FFF8E1);padding:18px;border-radius:14px;margin-bottom:14px;border-left:5px solid #1B5E20;}
+.hero h2{color:#1B5E20;font-size:20px;margin-bottom:6px;}
+.hero .tagline{font-size:13px;color:#555;font-style:italic;}
+.hero .overview{font-size:13px;color:#333;margin-top:10px;line-height:1.7;}
+.stage{background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;border-left:5px solid #1B5E20;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+.stage.gestation{border-left-color:#FF9800;}
+.stage.birth{border-left-color:#E91E63;}
+.stage.newborn{border-left-color:#9C27B0;}
+.stage.growing{border-left-color:#0D47A1;}
+.stage.finishing{border-left-color:#4E342E;}
+.stage.processing{border-left-color:#B71C1C;}
+.stage h3{color:#1B5E20;font-size:15px;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.stage h3 .stage-icon{font-size:18px;}
+.stage ul{padding-left:20px;font-size:13px;line-height:1.8;color:#333;}
+.stage ul li{margin-bottom:5px;}
+.stage ul li strong{color:#1B5E20;}
+.holistic{background:#F3E5F5;border-radius:12px;padding:14px;margin-bottom:14px;border-left:5px solid #6A1B9A;}
+.holistic h3{color:#6A1B9A;font-size:15px;margin-bottom:8px;}
+.holistic ul{padding-left:20px;font-size:13px;line-height:1.8;}
+.holistic ul li{margin-bottom:6px;}
+.holistic ul li strong{color:#6A1B9A;}
+.quick-ref{background:#E3F2FD;border-radius:12px;padding:14px;margin-bottom:14px;border-left:5px solid #0D47A1;}
+.quick-ref h3{color:#0D47A1;font-size:15px;margin-bottom:10px;}
+.quick-ref table{width:100%;border-collapse:collapse;font-size:12px;}
+.quick-ref table td{padding:6px 0;border-bottom:1px solid #e0e0e0;}
+.quick-ref table td:first-child{font-weight:bold;color:#0D47A1;width:50%;}
+.quick-ref table tr:last-child td{border-bottom:none;}
+.alert-box{background:#FFF3E0;border-radius:10px;padding:12px;margin-bottom:14px;border-left:5px solid #E65100;font-size:13px;line-height:1.7;}
+.alert-box strong{color:#E65100;}
+.cta{background:#E8F5E9;border-radius:12px;padding:16px;margin-bottom:14px;border-left:5px solid #4CAF50;text-align:center;}
+.cta p{font-size:13px;color:#333;margin-bottom:10px;}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:bold;text-decoration:none;margin:4px;cursor:pointer;border:none;}
+.btn-wa{background:#25D366;color:#fff;}
+.btn-eco{background:#E65100;color:#fff;}
+footer{text-align:center;font-size:11px;color:#777;padding:20px 0;}
+@media (max-width:500px){.header h1{font-size:17px;}.hero h2{font-size:17px;}.stage h3{font-size:14px;}.nav a{font-size:11px;padding:5px 10px;}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+<a href="index.html">🏠 Home</a>
+<a href="all-courses.html">📚 All Courses</a>
+<a href="bundles.html">📦 Bundles</a>
+<a href="value-added.html">💰 Services</a>
+<a href="business-plan.html">💼 Business Plan</a>
+<a href="care-plans.html" style="background:#1B5E20;color:#fff;">📋 Care Plans</a>
+</nav>
+
+<div class="header">
+<h1>📋 Animal Care Plans</h1>
+<p>Full lifecycle guide — from conception to butchery. The holistic approach.</p>
+</div>
+
+<div class="animal-tabs" id="animalTabs"></div>
+<div id="careContent"></div>
+
+<div class="cta">
+<p>💬 Want the full course with daily action steps, feed formulas, and budget calculator?</p>
+<a class="btn btn-wa" href="https://wa.me/447359724755?text=Hi%20rise%20AFRICA%20skills%2C%20I%20want%20the%20full%20course%20for%20this%20animal.">💬 Get Full Course on WhatsApp</a>
+<a class="btn btn-eco" href="value-added.html">💰 See All Services</a>
+</div>
+
+<footer>
+<p>© 2026 rise AFRICA skills · riseafricaskills.com</p>
+</footer>
+
+<script>
+const CARE_PLANS = {
+pig:{
+emoji:"🐖",name:"Pig",
+tagline:"Raising quality pigs for meat production and breeding stock.",
+overview:"A well-managed piggery starting with gilts and a boar produces weaner piglets for sale and fattened pigs for the meat market. Pigs are efficient feed converters and can be raised on small land with proper management.",
+stages:[
+{icon:"💑",name:"Breeding & Conception",cls:"",points:[
+"<strong>Gilts first breeding:</strong> 7-8 months old, 120-140 kg",
+"<strong>Flushing:</strong> Feed extra 1-2 kg maize/day for 10-14 days before mating to boost ovulation",
+"<strong>Signs of heat:</strong> Standing reflex, swollen vulva, mucus discharge",
+"<strong>Mating:</strong> Serve twice — morning and evening of same day for best conception",
+"<strong>Boar care:</strong> Use a proven boar no older than 3 years"
+]},
+{icon:"🤰",name:"Gestation (114 days)",cls:"gestation",points:[
+"<strong>Reduce feed on breeding day:</strong> Drop to 1.6-1.8 kg to prevent embryo loss",
+"<strong>Weeks 1-5:</strong> 1.8-2.0 kg gestation feed daily",
+"<strong>Weeks 6-12:</strong> 2.0-2.2 kg daily",
+"<strong>Weeks 13-15:</strong> Increase to 3.0-3.5 kg for piglet growth",
+"<strong>Vaccinate:</strong> Parvovirus + Lepto 2 weeks pre-breeding; E. coli 6 weeks pre-farrowing",
+"<strong>Wash sow</strong> and move to farrowing pen 3-7 days before due date"
+]},
+{icon:"🐖",name:"Farrowing & Birth",cls:"birth",points:[
+"<strong>Signs of farrowing:</strong> Nesting, restlessness, milk let-down, water bag",
+"<strong>Duration:</strong> 2-3 hours. Assist only if sow strains over 1 hour",
+"<strong>First piglets:</strong> Every 15-20 minutes",
+"<strong>Do NOT leave sow unattended</strong> during first farrowing"
+]},
+{icon:"👶",name:"Newborn Care (Days 1-3)",cls:"newborn",points:[
+"<strong>Wipe nose and mouth</strong> of each piglet immediately",
+"<strong>Dip navel in iodine</strong> to prevent infection",
+"<strong>Colostrum within 1-2 hours</strong> — vital for immunity",
+"<strong>Iron injection</strong> at day 3 (prevents anaemia)",
+"<strong>Clip needle teeth</strong> carefully",
+"<strong>Dock tails</strong> to prevent biting (optional)",
+"<strong>Keep pen warm</strong> — 30-32°C for piglets"
+]},
+{icon:"🍼",name:"Weaning & Growing",cls:"growing",points:[
+"<strong>Wean at 3-4 weeks</strong> — move to clean nursery pen",
+"<strong>Feed:</strong> Weaner pellet (19% protein) from weeks 4-8",
+"<strong>Then:</strong> Grower pellet (17% protein) from 9 weeks",
+"<strong>Vaccinate for Erysipelas</strong> at 6-8 weeks",
+"<strong>Deworm</strong> every 3-4 months",
+"<strong>Water:</strong> Always clean and available"
+]},
+{icon:"⚖️",name:"Finishing",cls:"finishing",points:[
+"<strong>Feed:</strong> Finisher ration (13-15% protein) free-choice",
+"<strong>Daily gain target:</strong> 700-900 g/day",
+"<strong>Market weight:</strong> 110-115 kg live weight",
+"<strong>Feed conversion:</strong> 2.5-3.0 kg feed per 1 kg gain",
+"<strong>Reduce stress</strong> before transport"
+]},
+{icon:"🔪",name:"Butchery & Processing",cls:"processing",points:[
+"<strong>Withdraw feed</strong> 8-12 hours before slaughter (water allowed)",
+"<strong>Handle gently</strong> — pigs stress easily",
+"<strong>Stunning:</strong> Electrical or captive bolt",
+"<strong>Bleeding:</strong> Immediately after stunning",
+"<strong>Scalding:</strong> 60-62°C water to loosen hair",
+"<strong>Dehairing, evisceration, chilling</strong> within 1 hour",
+"<strong>Carcass yield:</strong> ~75% of live weight"
+]}
+],
+holistic:[
+"<strong>Housing:</strong> Provide straw for rooting and enrichment to reduce stress",
+"<strong>Gut health:</strong> Use fermented products to build good bacteria in piglets",
+"<strong>Biosecurity:</strong> Clean pens, quarantine new pigs, control pests to reduce antibiotics",
+"<strong>African Swine Fever (ASF):</strong> NO vaccine — prevent by strict hygiene and no swill feeding",
+"<strong>Rotation:</strong> Move pigs to fresh pens every 6-8 weeks to break parasite cycles",
+"<strong>Manure:</strong> Compost for gardens — a second income stream"
+],
+quickRef:{
+"Breeding age":"7-8 months",
+"Gestation":"114 days (3m 3w 3d)",
+"Weaning":"3-4 weeks",
+"Market weight":"110-115 kg",
+"Slaughter age":"~6 months",
+"Carcass yield":"~75%"
+}
+},
+cattle:{
+emoji:"🐄",name:"Cattle",
+tagline:"Beef and dairy production — the long game of patience and quality.",
+overview:"Cattle require more patience and land than other livestock but yield high value in meat, milk, and calves. Proper breeding, nutrition, and health management are key to a profitable herd.",
+stages:[
+{icon:"💑",name:"Breeding & Conception",cls:"",points:[
+"<strong>Heifer readiness:</strong> 15-24 months old, 60-65% of mature weight",
+"<strong>Body condition:</strong> Score 5 on 1-10 scale at calving",
+"<strong>Heat cycle:</strong> Every 21 days, standing heat 12-18 hours",
+"<strong>Serve:</strong> 12 hours after standing heat starts",
+"<strong>Bull care:</strong> 1 bull per 25-30 cows; replace every 3-4 years"
+]},
+{icon:"🤰",name:"Gestation (283 days)",cls:"gestation",points:[
+"<strong>Pregnancy scan:</strong> 35-90 days after service",
+"<strong>Dry off cows:</strong> 60 days before calving",
+"<strong>Vaccinate for scour:</strong> 3-12 weeks before calving",
+"<strong>Feed:</strong> Good quality silage/hay; supplement minerals",
+"<strong>Comfort:</strong> Clean, dry calving area"
+]},
+{icon:"🐄",name:"Calving & Birth",cls:"birth",points:[
+"<strong>Signs:</strong> Udder fills, vulva swells, restlessness, mucus",
+"<strong>Stage 1 labour:</strong> 2-6 hours — cervix dilating",
+"<strong>Stage 2 labour:</strong> 30 min - 2 hours — calf delivery",
+"<strong>Assist</strong> if no progress after 2 hours",
+"<strong>Do not pull</strong> without proper chains or vet advice"
+]},
+{icon:"👶",name:"Newborn Calf Care",cls:"newborn",points:[
+"<strong>Colostrum within 2 hours:</strong> 2-3 litres (or 10% of body weight)",
+"<strong>Dip navel in iodine</strong>",
+"<strong>Ensure calf breathes</strong> — clear airways if needed",
+"<strong>Ear tag</strong> for records",
+"<strong>Weigh and record</strong> birth weight"
+]},
+{icon:"🍼",name:"Weaning & Growing",cls:"growing",points:[
+"<strong>Wean at 5-11 months</strong> depending on system",
+"<strong>Vaccinate for pneumonia</strong> before weaning",
+"<strong>Feed:</strong> Good quality grass/hay + 1-2 kg concentrates",
+"<strong>Deworm</strong> regularly",
+"<strong>Target daily gain:</strong> 0.8-1.2 kg/day"
+]},
+{icon:"⚖️",name:"Finishing",cls:"finishing",points:[
+"<strong>Finishing period:</strong> 90-120 days",
+"<strong>Feed:</strong> High-energy silage + 2 kg/day concentrates",
+"<strong>Daily gain:</strong> 1.2-1.6 kg/day",
+"<strong>Target:</strong> 560-700 kg (steers); 520-630 kg (heifers)",
+"<strong>Fat cover:</strong> Even, not excessive"
+]},
+{icon:"🔪",name:"Butchery & Processing",cls:"processing",points:[
+"<strong>Withdraw feed</strong> 12-24 hours; water available",
+"<strong>Handle calmly</strong> to reduce stress",
+"<strong>Stunning:</strong> Captive bolt or electrical",
+"<strong>Bleeding:</strong> Immediately (kill shot)",
+"<strong>Skinning, evisceration, chilling</strong>",
+"<strong>Carcass weight:</strong> 300-380 kg (target)",
+"<strong>Ageing:</strong> 7-14 days for tenderness"
+]}
+],
+holistic:[
+"<strong>Rotational grazing:</strong> Move cattle frequently between paddocks — pasture recovers, soil builds, water retention improves",
+"<strong>Silvopasture:</strong> Integrate trees for shade, shelter, and extra income",
+"<strong>365-day calving interval:</strong> Keep cows cycling regularly — key efficiency metric",
+"<strong>Breeding for your climate:</strong> Choose indigenous or adapted breeds (Boran, Nkone, Mashona)",
+"<strong>Mineral supplements:</strong> Match to your soil — check with local extension officer",
+"<strong>Record keeping:</strong> Track every calving, weight, and treatment"
+],
+quickRef:{
+"Breeding age":"15-24 months",
+"Gestation":"~283 days (9+ months)",
+"Weaning":"5-11 months",
+"Market weight":"560-700 kg",
+"Slaughter age":"15-30 months",
+"Carcass yield":"~55-60%"
+}
+},
+goat:{
+emoji:"🐐",name:"Goat",
+tagline:"Hardy livestock for meat, milk, and breeding — perfect for small farms.",
+overview:"Goats thrive in African conditions — they tolerate drought, eat a wide range of plants, and produce meat, milk, and skins. Excellent for small-scale farmers and growing businesses.",
+stages:[
+{icon:"💑",name:"Breeding & Conception",cls:"",points:[
+"<strong>Breeding readiness:</strong> 60-70% of mature weight (~30-35 kg)",
+"<strong>Heat cycle:</strong> Every 18-21 days; cycle longer in cold months",
+"<strong>Serve:</strong> 12-24 hours after heat begins",
+"<strong>Buck:</strong> 1 buck per 30-50 does; replace every 2-3 years",
+"<strong>Flush:</strong> Feed extra 2 weeks before breeding"
+]},
+{icon:"🤰",name:"Gestation (150 days)",cls:"gestation",points:[
+"<strong>Pregnancy:</strong> Usually 143-152 days (approximately 5 months)",
+"<strong>Nutrition:</strong> Increase in last 6 weeks",
+"<strong>Vaccinate:</strong> Clostridial vaccine (pulpy kidney, tetanus) pre-kidding",
+"<strong>Prepare kidding pen:</strong> Clean, dry, warm"
+]},
+{icon:"🐐",name:"Kidding & Birth",cls:"birth",points:[
+"<strong>Signs:</strong> Restlessness, isolated, udder developing, discharge",
+"<strong>Labour:</strong> Usually 1-2 hours",
+"<strong>Twins common</strong> — be prepared",
+"<strong>Assist</strong> if no progress after 2 hours"
+]},
+{icon:"👶",name:"Newborn Kid Care",cls:"newborn",points:[
+"<strong>Colostrum within 24 hours</strong> (ideally 1-2 hours)",
+"<strong>Dip navel in iodine</strong>",
+"<strong>Disbud at 7-14 days</strong> if hornless desired",
+"<strong>Castrate males</strong> at 2-4 weeks if not breeding",
+"<strong>Keep warm and dry</strong>"
+]},
+{icon:"🍼",name:"Weaning & Growing",cls:"growing",points:[
+"<strong>Wean at 2-3 months</strong> or when 12-15 kg",
+"<strong>Feed:</strong> Good hay + concentrates (16-18% protein)",
+"<strong>Deworm</strong> every 3-4 months",
+"<strong>Regular hoof trimming</strong> every 6-8 weeks",
+"<strong>Vaccinate:</strong> Clostridial annually"
+]},
+{icon:"⚖️",name:"Finishing",cls:"finishing",points:[
+"<strong>Target age:</strong> 6-8 months for meat",
+"<strong>Weight:</strong> 32-36 kg live weight",
+"<strong>Feed:</strong> High-energy finishing ration",
+"<strong>Premium kids:</strong> 3-4 months, lighter weight for specialty markets"
+]},
+{icon:"🔪",name:"Butchery & Processing",cls:"processing",points:[
+"<strong>Withdraw feed</strong> 12 hours before slaughter",
+"<strong>Handle calmly</strong> — goats are sensitive",
+"<strong>Stunning:</strong> Captive bolt or electrical",
+"<strong>Bleeding:</strong> Immediate after stunning",
+"<strong>Skinning:</strong> Keep skin intact for leather",
+"<strong>Chilling</strong> within 1 hour",
+"<strong>Carcass yield:</strong> ~45-50%"
+]}
+],
+holistic:[
+"<strong>Rotational grazing:</strong> Very important — breaks parasite cycle",
+"<strong>Browse:</strong> Goats prefer shrubs and trees over grass",
+"<strong>Shelter:</strong> MUST have dry shelter from rain to prevent pneumonia and foot rot",
+"<strong>Low-stress handling:</strong> Calm, patient — goats stress easily",
+"<strong>Fencing:</strong> Secure fencing essential — goats escape easily",
+"<strong>Mixed grazing</strong> with cattle reduces parasites naturally"
+],
+quickRef:{
+"Breeding age":"13-17 months",
+"Gestation":"~150 days (5 months)",
+"Weaning":"2-3 months",
+"Market weight":"32-36 kg",
+"Slaughter age":"6-8 months",
+"Carcass yield":"~45-50%"
+}
+},
+sheep:{
+emoji:"🐑",name:"Sheep",
+tagline:"Meat and wool production — manageable and profitable.",
+overview:"Sheep are manageable livestock producing meat, wool, and skins. With proper flock management, they can be very profitable on small to medium farms.",
+stages:[
+{icon:"💑",name:"Breeding & Conception",cls:"",points:[
+"<strong>Ewe lambs:</strong> Breed at 60% of mature weight — increases lifetime productivity 20%",
+"<strong>Heat cycle:</strong> Every 14-19 days; season in some breeds",
+"<strong>Serve:</strong> 12-18 hours after heat starts",
+"<strong>Ram:</strong> 1 ram per 30-50 ewes",
+"<strong>Flush:</strong> Extra feed 2-3 weeks before joining"
+]},
+{icon:"🤰",name:"Gestation (147 days)",cls:"gestation",points:[
+"<strong>Approximately 147 days (5 months)</strong>",
+"<strong>Nutrition:</strong> Critical in last 6 weeks — prevents pregnancy toxaemia",
+"<strong>Vaccinate:</strong> Clostridial vaccine pre-lambing",
+"<strong>Do NOT shear</strong> within 4-6 weeks after lambing"
+]},
+{icon:"🐑",name:"Lambing & Birth",cls:"birth",points:[
+"<strong>Signs:</strong> Restlessness, separation, water bag",
+"<strong>Labour:</strong> 1-2 hours",
+"<strong>Twins common</strong>",
+"<strong>Assist</strong> if no progress after 1 hour"
+]},
+{icon:"👶",name:"Newborn Lamb Care",cls:"newborn",points:[
+"<strong>Colostrum within 2 hours</strong>",
+"<strong>Dip navel in iodine</strong>",
+"<strong>Ensure lambs are dry</strong>",
+"<strong>Tail dock</strong> at 1-2 weeks if needed",
+"<strong>Castrate males</strong> at 1-2 weeks if not breeding"
+]},
+{icon:"🍼",name:"Weaning & Growing",cls:"growing",points:[
+"<strong>Wean at 50-60 days</strong> or at 18 kg",
+"<strong>Feed:</strong> Good pasture + concentrates",
+"<strong>Deworm</strong> every 6-8 weeks",
+"<strong>Vaccinate</strong> for clostridial diseases",
+"<strong>Hoof trimming</strong> as needed"
+]},
+{icon:"⚖️",name:"Finishing",cls:"finishing",points:[
+"<strong>Target age:</strong> 4-6 months for meat",
+"<strong>Weight:</strong> 40-50 kg live weight",
+"<strong>Feed:</strong> High-energy finishing ration",
+"<strong>Wool sheep:</strong> Shear before sale for maximum value"
+]},
+{icon:"🔪",name:"Butchery & Processing",cls:"processing",points:[
+"<strong>Withdraw feed</strong> 12 hours before slaughter",
+"<strong>Stunning:</strong> Captive bolt or electrical",
+"<strong>Bleeding:</strong> Immediately after stunning",
+"<strong>Skinning:</strong> Preserve skin for leather",
+"<strong>Chilling</strong> within 1 hour",
+"<strong>Carcass yield:</strong> ~45-50%"
+]}
+],
+holistic:[
+"<strong>Mixed grazing</strong> with cattle reduces parasite loads",
+"<strong>Shearing:</strong> Fast sheep before shearing; provide feed and shelter 6-8 weeks after",
+"<strong>Wool:</strong> Manage flock for quality fleece — additional income",
+"<strong>Foxes and jackals:</strong> Secure night pen essential",
+"<strong>Foot care:</strong> Trim hooves regularly; treat foot rot early",
+"<strong>Flock records:</strong> Track lambing rate, weaning weight, wool yield"
+],
+quickRef:{
+"Breeding age":"6-18 months",
+"Gestation":"~147 days (5 months)",
+"Weaning":"50-60 days",
+"Market weight":"40-50 kg",
+"Slaughter age":"4-6 months",
+"Carcass yield":"~45-50%"
+}
+},
+poultry:{
+emoji:"🐔",name:"Poultry",
+tagline:"Fastest-returning livestock — perfect for beginners and scaling.",
+overview:"Poultry offers the fastest cash returns of any livestock. Broilers mature in 6-8 weeks, and layers produce eggs daily. Even 50 birds generate meaningful income.",
+stages:[
+{icon:"🥚",name:"Hatching & Incubation",cls:"",points:[
+"<strong>Incubation:</strong> 21 days at 37.5°C, 55-60% humidity",
+"<strong>Turn eggs</strong> 4-6 times daily (or use auto-turner)",
+"<strong>Candling</strong> at day 7 and day 14 to check fertility",
+"<strong>Lockdown:</strong> Day 18 — stop turning, increase humidity",
+"<strong>Hatch:</strong> Day 21"
+]},
+{icon:"🐣",name:"Brooding (Weeks 1-4)",cls:"gestation",points:[
+"<strong>Temperature:</strong> 35°C week 1, reduce 2-3°C weekly",
+"<strong>Feed:</strong> Chick starter (20-23% protein)",
+"<strong>Water:</strong> Always available; add vitamins first 3 days",
+"<strong>Beak trim layers</strong> in first 3 weeks to prevent cannibalism",
+"<strong>Vaccinate:</strong> Newcastle at day 7, Gumboro at day 14"
+]},
+{icon:"🐔",name:"Growing",cls:"growing",points:[
+"<strong>Broilers:</strong> Weeks 5-6 broiler finisher (22% protein)",
+"<strong>Layers:</strong> Switch to grower feed (16-18% protein)",
+"<strong>Space:</strong> Minimum 0.1 sqm/bird at 6 weeks",
+"<strong>Lighting:</strong> 23 hours for first week; then natural"
+]},
+{icon:"🥚",name:"Laying (For Layers)",cls:"newborn",points:[
+"<strong>Point of lay:</strong> 18-20 weeks",
+"<strong>Feed:</strong> Layer feed (16-18% protein) with calcium",
+"<strong>Egg production:</strong> Peak at 22-30 weeks",
+"<strong>Laying life:</strong> ~80 weeks before molting"
+]},
+{icon:"⚖️",name:"Finishing (Broilers)",cls:"finishing",points:[
+"<strong>Market age:</strong> 5.5-6 weeks (fast) or 9 weeks (slow)",
+"<strong>Target weight:</strong> 1.8-2.2 kg",
+"<strong>Feed conversion:</strong> 1.6-1.8 kg feed per 1 kg gain",
+"<strong>Withdraw feed</strong> 8 hours before processing"
+]},
+{icon:"🔪",name:"Processing",cls:"processing",points:[
+"<strong>Stunning:</strong> Electrical or gas",
+"<strong>Bleeding:</strong> Cut jugular; hang head-down",
+"<strong>Scalding:</strong> 55-60°C for 30-60 seconds",
+"<strong>Plucking:</strong> Mechanical or hand",
+"<strong>Evisceration:</strong> Remove internal organs carefully",
+"<strong>Chilling:</strong> Ice water bath for 1-2 hours",
+"<strong>Carcass yield:</strong> ~70-75%"
+]}
+],
+holistic:[
+"<strong>Free-range:</strong> Outdoor access improves meat and egg quality",
+"<strong>Integrated systems:</strong> Chickens after cattle in rotation reduce fly larvae",
+"<strong>Biosecurity:</strong> Essential — Newcastle disease kills whole flocks",
+"<strong>Predator protection:</strong> Secure night housing from hawks, snakes, jackals",
+"<strong>Bedding:</strong> Deep litter system builds compost for gardens",
+"<strong>Feed:</strong> Mix own feed with maize + soya + minerals to cut costs"
+],
+quickRef:{
+"Incubation":"21 days",
+"Brooding":"4 weeks",
+"Broiler market":"5.5-6 weeks",
+"Layers start":"18-20 weeks",
+"Target broiler weight":"1.8-2.2 kg",
+"Carcass yield":"~70-75%"
+}
+},
+rabbit:{
+emoji:"🐇",name:"Rabbit",
+tagline:"Fast-breeding, low-cost, high-value protein production.",
+overview:"Rabbits are efficient meat producers — a doe can produce 40-50 kg of meat per year on minimal feed. Perfect for small spaces and quick returns.",
+stages:[
+{icon:"💑",name:"Breeding & Conception",cls:"",points:[
+"<strong>Readiness:</strong> 5-6 months for small breeds; 8 months for large",
+"<strong>Induced ovulators:</strong> Mating triggers ovulation",
+"<strong>Always take doe to buck's cage</strong> — never the reverse",
+"<strong>Mate twice</strong> — morning and evening for best results",
+"<strong>Palpate at 10-14 days</strong> to confirm pregnancy"
+]},
+{icon:"🤰",name:"Gestation (31 days)",cls:"gestation",points:[
+"<strong>Very short:</strong> Only 31 days",
+"<strong>Nest box:</strong> Provide 3-4 days before due date with soft bedding",
+"<strong>Feed:</strong> Increase pellets slightly in last week",
+"<strong>Handle gently</strong> — do not disturb unnecessarily"
+]},
+{icon:"🐇",name:"Kindling & Birth",cls:"birth",points:[
+"<strong>Timing:</strong> Usually early morning or night",
+"<strong>Kindling:</strong> Fast — usually under 30 minutes",
+"<strong>Litter size:</strong> 6-12 kits typical",
+"<strong>Do NOT disturb</strong> the nest for first 2 days",
+"<strong>Check for dead kits</strong> after 24 hours"
+]},
+{icon:"👶",name:"Newborn Kit Care",cls:"newborn",points:[
+"<strong>Born blind and hairless</strong> — need warmth",
+"<strong>Doe nurses 1-2 times daily</strong> — that is normal",
+"<strong>Check nest daily</strong> — remove dead kits promptly",
+"<strong>Eyes open at 10-12 days</strong>",
+"<strong>Fur develops by day 7-10</strong>"
+]},
+{icon:"🍼",name:"Weaning & Growing",cls:"growing",points:[
+"<strong>Wean at 4-6 weeks</strong>",
+"<strong>Feed:</strong> Rabbit pellets + hay + fresh greens",
+"<strong>Water:</strong> Clean, always available",
+"<strong>Separate by sex</strong> at weaning to prevent early breeding",
+"<strong>Deworm and check teeth</strong> regularly"
+]},
+{icon:"⚖️",name:"Finishing",cls:"finishing",points:[
+"<strong>Target age:</strong> 8-12 weeks for meat",
+"<strong>Weight:</strong> 2-2.5 kg live weight",
+"<strong>Feed:</strong> High-protein pellets",
+"<strong>Feed conversion:</strong> 3-4 kg feed per 1 kg gain"
+]},
+{icon:"🔪",name:"Processing",cls:"processing",points:[
+"<strong>Withdraw feed</strong> 8 hours before slaughter",
+"<strong>Handle gently</strong> — rabbits stress easily",
+"<strong>Humane slaughter:</strong> Percussive blow to the head, then bleed",
+"<strong>Skin and gut</strong> within minutes",
+"<strong>Chill</strong> immediately",
+"<strong>Carcass yield:</strong> ~50-55%"
+]}
+],
+holistic:[
+"<strong>Housing:</strong> Safe from predators — snakes, dogs, birds of prey",
+"<strong>Space:</strong> Allow rabbits to hop and stand up fully",
+"<strong>Low-stress handling:</strong> Never pick up by ears; support the hind legs",
+"<strong>Heat stress:</strong> Very sensitive — provide shade and cool areas",
+"<strong>Greens:</strong> Fresh leaves, hay, and grass are essential for digestion",
+"<strong>Manure:</strong> Excellent garden fertiliser — a second income"
+],
+quickRef:{
+"Breeding age":"5-6 months",
+"Gestation":"~31 days",
+"Weaning":"4-6 weeks",
+"Market weight":"2-2.5 kg",
+"Slaughter age":"8-12 weeks",
+"Carcass yield":"~50-55%"
+}
+}
+};
+
+let currentAnimal = 'pig';
+function renderTabs(){
+const tabs = document.getElementById('animalTabs');
+let html = '';
+Object.keys(CARE_PLANS).forEach(function(key){
+const a = CARE_PLANS[key];
+const cls = key === currentAnimal ? 'animal-tab active' : 'animal-tab';
+html += '<div class="'+cls+'" onclick="showAnimal(\''+key+'\')"><span class="emoji">'+a.emoji+'</span>'+a.name+'</div>';
+});
+tabs.innerHTML = html;
+}
+function showAnimal(key){currentAnimal = key;renderTabs();renderContent();window.scrollTo({top:0,behavior:'smooth'});}
+function renderContent(){
+const a = CARE_PLANS[currentAnimal];
+let html = '';
+html += '<div class="hero"><h2>'+a.emoji+' '+a.name+'</h2><div class="tagline">'+a.tagline+'</div><div class="overview">'+a.overview+'</div></div>';
+html += '<div class="quick-ref"><h3>⚡ Quick Reference</h3><table>';
+Object.keys(a.quickRef).forEach(function(k){html += '<tr><td>'+k+'</td><td>'+a.quickRef[k]+'</td></tr>';});
+html += '</table></div>';
+a.stages.forEach(function(stage){html += '<div class="stage '+(stage.cls||'')+'"><h3><span class="stage-icon">'+stage.icon+'</span>'+stage.name+'</h3><ul>';stage.points.forEach(function(p){html += '<li>'+p+'</li>';});html += '</ul></div>';});
+html += '<div class="holistic"><h3>🌍 Holistic Considerations</h3><ul>';a.holistic.forEach(function(h){html += '<li>'+h+'</li>';});html += '</ul></div>';
+html += '<div class="alert-box"><strong>💡 Remember:</strong> The holistic approach cares for the animal, the land, and your farm\'s future. Healthy soil → healthy plants → healthy animals → healthy profits.</div>';
+document.getElementById('careContent').innerHTML = html;
+}
+renderTabs();renderContent();
+</script>
+</body>
+</html>
