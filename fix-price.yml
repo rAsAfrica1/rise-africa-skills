@@ -1,0 +1,65 @@
+name: Fix price ($1 to $5)
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type APPLY to change files. Anything else = dry run.'
+        required: true
+        default: 'dry-run'
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Find wrong prices in live pages
+        run: |
+          echo "Scanning live HTML files (excluding backups)..."
+          grep -rlE '\$1([^0-9]|$)|\bone dollar\b|\b1 dollar\b' \
+            --include='*.html' . \
+            | grep -vE '/_|/node_modules/' \
+            | sort > /tmp/files.txt
+          COUNT=$(wc -l < /tmp/files.txt)
+          echo "Found $COUNT files with wrong price strings."
+          echo "First 30:"
+          head -30 /tmp/files.txt
+          echo "files=$COUNT" >> $GITHUB_ENV
+
+      - name: Apply fix
+        if: inputs.confirm == 'APPLY'
+        run: |
+          echo "Applying fix to each file..."
+          while IFS= read -r f; do
+            sed -i -E \
+              -e 's/\$1([^0-9]|$)/$5\1/g' \
+              -e 's/\bone dollar\b/five dollars/gi' \
+              -e 's/\b1 dollar\b/5 dollars/gi' \
+              "$f"
+          done < /tmp/files.txt
+
+      - name: Commit and push
+        if: inputs.confirm == 'APPLY'
+        run: |
+          git config user.name "price-bot"
+          git config user.email "bot@riseafricaskills.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes — nothing to commit."
+          else
+            git commit -m "Fix price: \$1 -> \$5 across live pages"
+            git push
+            echo "✅ Pushed. GitHub Pages will redeploy in ~1 minute."
+          fi
+
+      - name: Summary
+        run: |
+          if [ "${{ inputs.confirm }}" = "APPLY" ]; then
+            echo "✅ Applied. Fixed $files files."
+          else
+            echo "🔍 Dry run complete. Found $files files. Re-run with 'APPLY' to fix."
+          fi
