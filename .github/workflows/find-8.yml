@@ -1,0 +1,18 @@
+name: Find $8 leftovers
+on: [workflow_dispatch]
+jobs:
+  find:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Search for $8 and language-course Stripe links
+        run: |
+          echo "=== Files mentioning \$8 ==="
+          grep -rlE '\$8([^0-9]|$)|8\.00' --include='*.html' . \
+            | grep -vE '/_|node_modules' | head -50
+          echo ""
+          echo "=== Stripe links on language course pages ==="
+          for s in arabic-language chinese-language chinese-mandarin russian-language shona-language spanish-language swahili-language; do
+            grep -rn "buy.stripe.com\|checkout.stripe.com" \
+              --include="${s}*.html" . 2>/dev/null | head -3
+          done
