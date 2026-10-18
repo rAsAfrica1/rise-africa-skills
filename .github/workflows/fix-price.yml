@@ -1,0 +1,41 @@
+name: Fix price
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: "Type APPLY to change files. dry-run = preview only."
+        required: true
+        default: "dry-run"
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Find wrong prices
+        run: |
+          grep -rlE '\$1([^0-9]|$)|\bone dollar\b|\b1 dollar\b' --include='*.html' . \
+            | grep -vE '/_|/node_modules/' | sort > /tmp/files.txt || true
+          COUNT=$(wc -l < /tmp/files.txt)
+          echo "Found $COUNT files:"
+          head -30 /tmp/files.txt
+
+      - name: Apply fix
+        if: inputs.confirm == 'APPLY'
+        run: |
+          while IFS= read -r f; do
+            sed -i -E -e 's/\$1([^0-9]|$)/$5\1/g' -e 's/\bone dollar\b/five dollars/gi' -e 's/\b1 dollar\b/5 dollars/gi' "$f"
+          done < /tmp/files.txt
+
+      - name: Commit
+        if: inputs.confirm == 'APPLY'
+        run: |
+          git config user.name "price-bot"
+          git config user.email "bot@riseafricaskills.com"
+          git add -A
+          git diff --cached --quiet && echo "No changes" || (git commit -m "Fix price: 1 to 5 in live pages" && git push)
